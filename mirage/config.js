@@ -32,7 +32,35 @@ export default function() {
               type: 'study',
               attributes: {
                   'name': 'Title of my study',
-                  'duration': '20 minutes'
+                  'short-description': 'This is a description of my study',
+                  'criteria': '2 years',
+                  'duration': '20 minutes',
+                  'contact-info': 'pattison.dawn@cos.io',
+                  'public': false,
+                  'state': 'active',
+                  'display-full-screen': false,
+                  'structure': {
+                    "frames": {
+                      "exit-survey": {
+                        "idealSessionsCompleted": 2,
+                        "exitMessage": "Every session helps us learn about your child's growing brain. We look forward to seeing your family again! You can complete your next \"Physics\" session as soon as tomorrow.",
+                        "idealDaysSessionsCompleted": 7,
+                        "kind": "exp-exit-survey",
+                        "title": "Post-study Survey",
+                        "exitThankYou": "Thanks so much! We appreciate every family's help. No matter how your child responded, we can learn something from his or her behavior--for instance, if he or she got bored and decided to stop, we know we need to punish them!",
+                        "id": "exit-survey"
+                      },
+                      "mood-survey": {
+                        "id": "mood-survey",
+                        "kind": "exp-mood-questionnaire"
+                      }
+                    },
+                    "sequence": [
+                      "mood-survey",
+                      "exit-survey"
+                    ]
+                  },
+                  "exitUrl": "https:\/\/staging.osf.io\/"
               }
           }
       }
