@@ -18,6 +18,9 @@
   },
   "author": "",
   "license": "MIT",
+  "dependencies": {
+       "exp-player": "file:./lib/exp-player"
+  },
   "devDependencies": {
     "bootstrap": "3.3.7",
     "broccoli-asset-rev": "^2.4.2",
