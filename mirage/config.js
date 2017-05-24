@@ -25,90 +25,142 @@ export default function() {
 
   */
   this.namespace = '/api';
+  this.post('/responses', function() {
+      return {
+        "data": {
+            "id": "67890",
+            "type": "response",
+            "attributes": {
+                "exp-data": {},
+                "sequence": [],
+                "feedback": "",
+                "global-event-timing": [],
+                "completed": false
+            },
+            "relationships": {
+                "study": {
+                  "links": {
+                    "self": "/responses/67890/relationships/study",
+                    "related": "/responses/67890/study"
+                  }
+                },
+                "profile": {
+                    "links": {
+                        "self": "/responses/67890/relationships/profile",
+                        "related": "/responses/67890/profile"
+                    }
+                }
+            },
+            "links": {
+                "self": "/response/67890"
+            }
+        }
+    };
+  });
+  this.get('/users/abcde/profiles', function() {
+      return {
+            "data": [{
+                "id": "fghij",
+                "type": "profile",
+                "attributes": {
+                    "additional-information": "",
+                    "age-at-birth": "40 or more weeks",
+                    "gender": "female",
+                    "deleted": false,
+                    "birthday": "2017-01-01",
+                    "first-name": "Latte"
+                },
+                "relationships": {
+                    "user": {
+                        "links": {
+                            "self": "/profiles/fghij/relationships/user",
+                            "related": "/profiles/fghij/user"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "/profiles/fghij"
+                }
+            }]
+        };
+  });
   this.get('/users/:id', function() {
      return {
-          "data": {
-            "type": "user",
+        "data": {
             "id": "abcde",
-            "relationships": {
-                "profiles": {
-                    "data": [
-                        {
-                          "profileId": "fghij",
-                          "additionalInformation": "",
-                          "ageAtBirth": "40 or more weeks",
-                          "gender": "female",
-                          "deleted": false,
-                          "birthday": "2015-05-01T04:00:00.000Z",
-                          "firstName": "Test Child"
-                        }
-
-                    ]
-                }
-            },
+            "type": "user",
             "attributes": {
-              "additional-comments": null,
-              "demographicsGender": "female",
-              "spouse-education-level": "graduate or professional degree",
-              "profiles": [
-                {
-                  "profileId": "fghij",
-                  "additionalInformation": "",
-                  "ageAtBirth": "40 or more weeks",
-                  "gender": "female",
-                  "deleted": false,
-                  "birthday": "2015-05-01T04:00:00.000Z",
-                  "firstName": "Test Child"
-                }
-              ],
-              "state": "TX",
-              "annual-income": "over 200000",
-              "number-of-guardians-explanation": null,
-              "name": null,
-              "number-of-books": 1000000000,
-              "education-level": "graduate or professional degree",
-              "age": "70 or over",
-              "number-of-guardians": "2",
-              "password": "$2b$12$SbNsmUQzpd4.PCp2x7ywq.l11TQU3WADvpD0kEGbJZwNPEsy4xub.",
-              "languages-spoken-at-home": null,
-              "email": "pattison.dawn.r@gmail.com",
-              "child-birthdays": [
-
-              ],
-              "race-identification": [
-                "White"
-              ],
-              "number-of-children": null,
-              "density": null,
-              "country": "US"
+                "given_name": "Dawn",
+                "middle_name": "Nutella and toast",
+                "family_name": "Pattison",
+                "is-active": true,
+                "is-staff": true,
+                "number-of-children": "1",
+                "child-birthdays": [
+                    "2017-01-01"
+                ],
+                "languages-spoken-at-home": "English",
+                "number-of-guardians": "2",
+                "numer-of-guardians-explanation": "",
+                "race-identification": "other",
+                "age": "45-59",
+                "gender": "f",
+                "education-level": "bach",
+                "spouse-education-level": "prof",
+                "annual-income": "5000",
+                "number-of-books": 100000,
+                "additional-comments": "My child can see through walls.",
+                "country": "US",
+                "state": "TN",
+                "density": "suburban",
+                "extra": {}
             },
-            "meta": {
-              "permissions": "CRUD",
-              "created-on": "2017-05-17T14:44:11.254007",
-              "created-by": "jam-experimenter:accounts-pattisdr",
-              "modified-on": "2017-05-17T15:00:19.406697",
-              "modified-by": "jam-experimenter:accounts-pattisdr"
+            "relationships": {
+                "organization": {
+                  "links": {
+                    "self": "/users/abcde/relationships/organization",
+                    "related": "/users/abcde/organization"
+                  }
+                },
+                "demographic-data": {
+                  "links": {
+                    "self": "/users/abcde/relationships/demographic-data",
+                    "related": "/users/abcde/demographic-data"
+                  }
+                },
+                "profiles": {
+                    "links": {
+                        "self": "/users/abcde/relationships/profiles",
+                        "related": "profiles"
+                    }
+                }
+            },
+            "links": {
+                "self": "/users/abcde"
             }
-          }
-      };
+        }
+    };
   });
   this.get('/studies/:id', function() {
       return {
-          'data': {
-              id: '12345',
-              type: 'study',
-              attributes: {
-                  'name': 'Title of my study',
-                  'short-description': 'This is a description of my study',
-                  'criteria': '2 years',
-                  'duration': '20 minutes',
-                  'contact-info': 'pattison.dawn@cos.io',
-                  'public': false,
-                  'state': 'active',
-                  'display-full-screen': false,
-                  'structure': {
-                    "frames": {
-                      "exit-survey": {
+        "data": {
+            "id": "12345",
+            "type": "study",
+            "attributes": {
+                "contact-info": "pattison.dawn@cos.io",
+                "criteria": "Child must be at least four years old",
+                "display-full-screen": true,
+                "duration": "The study will take roughly 20 minutes",
+                "exit-url": "https://osf.io/",
+                "image": {},
+                "long-description": "In each study frame, the child will be asked to guess in which box a toy will appear",
+                "name": "Can Children Predict the Future?",
+                "public": true,
+                "short-description": "The purpose of this experiment is to see if children exhibit signs of ESP",
+                "state": "active",
+                "structure": {
+                "frames": {
+                    "exit-survey": {
                         "idealSessionsCompleted": 2,
                         "exitMessage": "Every session helps us learn about your child's growing brain. We look forward to seeing your family again! You can complete your next \"Physics\" session as soon as tomorrow.",
                         "idealDaysSessionsCompleted": 7,
@@ -116,20 +168,35 @@ export default function() {
                         "title": "Post-study Survey",
                         "exitThankYou": "Thanks so much! We appreciate every family's help. No matter how your child responded, we can learn something from his or her behavior--for instance, if he or she got bored and decided to stop, we know we need to punish them!",
                         "id": "exit-survey"
-                      },
-                      "mood-survey": {
+                    },
+                    "mood-survey": {
                         "id": "mood-survey",
                         "kind": "exp-mood-questionnaire"
-                      }
-                    },
-                    "sequence": [
-                      "mood-survey",
-                      "exit-survey"
-                    ]
-                  },
-                  "exitUrl": "https:\/\/staging.osf.io\/"
-              }
-          }
-      };
+                    }
+                },
+                "sequence": [
+                    "mood-survey",
+                    "exit-survey"
+                ]}
+            },
+            "relationships": {
+                "organization": {
+                  "links": {
+                    "self": "/studies/12345/relationships/organization",
+                    "related": "/studies/12345/organization"
+                  }
+                },
+                "responses": {
+                  "links": {
+                    "self": "/studies/12345/relationships/responses",
+                    "related": "/studies/12345/responses"
+                  }
+                }
+            },
+            "links": {
+                "self": "/studies/12345"
+            }
+        }
+    };
   });
 }
