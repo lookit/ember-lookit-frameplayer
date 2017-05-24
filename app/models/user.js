@@ -25,5 +25,6 @@ export default DS.Model.extend({
     country: DS.attr('string'),
     state: DS.attr('string'),
     density: DS.attr('string'),
-    extra: DS.attr('string')
+    extra: DS.attr('string'),
+    profiles: DS.hasMany('profile')
 });
