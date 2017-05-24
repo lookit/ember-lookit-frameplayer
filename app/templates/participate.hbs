@@ -1,5 +1,6 @@
 <div class="row">
     <div class="col-xs-12">
+        <h1>Make sure models are loaded: </h1>
         <ul>
             <li> Study: {{study.id}} </li>
             <li> Participant {{participant.id}} </li>
@@ -7,4 +8,15 @@
             <li> Child {{child.id}} </li>
         </ul>
     </div>
+</div>
+
+<div id="expContainer">
+    {{exp-player
+      experiment=study
+      session=response
+      pastSessions=pastResponses
+      saveHandler=(action 'saveResponse')
+      frameIndex=0
+      fullScreenElementId='expContainer'
+      }}
 </div>
