@@ -25,7 +25,7 @@ export default Ember.Route.extend({
             // TODO redirect to study detail
         }
     },
-    _getChild(params, participant) {
+    _getChildren(params, participant) {
         const childId = this._getChildIdFromSession();
         const childIdFromParams = this.splitUserParams(params)[1];
         if (childId && childIdFromParams === childId) {
@@ -49,10 +49,29 @@ export default Ember.Route.extend({
             })
             .then((participant) => {
                 this.set('participant', participant);
-                return this._getChild(params, participant)
+                return this._getChildren(params, participant)
 
             })
-            .catch(() => {
+            .then((children) => {
+                this.set('children', children);
+                children.forEach(child => {
+                    if (child.get('id') === this._getChildIdFromSession()) {
+                        this.set('child', child);
+                    }
+                });
+                let response = this.store.createRecord('response', {
+                    completed: false,
+                    feedback: '',
+                    hasReadFeedback: '',
+                    expData: {},
+                    sequence: []
+                });
+                response.set('study', this.get('study'));
+                response.set('profile', this.get('child'));
+                response.set('participant', this.get('participant'));
+                return response.save();
+            })
+            .catch((errors) => {
                 window.console.log('issues')
             });
     }
