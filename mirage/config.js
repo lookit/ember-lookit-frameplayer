@@ -178,9 +178,9 @@ export default function() {
             "id": "abcde",
             "type": "user",
             "attributes": {
-                "given_name": "Dawn",
-                "middle_name": "Nutella and toast",
-                "family_name": "Pattison",
+                "given-name": "Dawn",
+                "middle-name": "Nutella and toast",
+                "family-name": "Pattison",
                 "is-active": true,
                 "is-staff": true,
                 "number-of-children": "1",
