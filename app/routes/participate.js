@@ -35,11 +35,11 @@ export default Ember.Route.extend({
     splitUserParams(params) {
         return params.participant_child_ids.split('.');
     },
-    beforeModel(transition) {
-        // TODO transition back to study detail page if no child profile
-    },
+    // beforeModel(transition) {
+    //     // TODO transition back to study detail page if no child profile
+    // },
     model(params) {
-        return Promise.resolve()
+        return Ember.RSVP.Promise.resolve()
             .then(() => {
                 return this._getStudy(params);
             })
@@ -49,8 +49,7 @@ export default Ember.Route.extend({
             })
             .then((participant) => {
                 this.set('participant', participant);
-                return this._getChildren(params, participant)
-
+                return this._getChildren(params, participant);
             })
             .then((children) => {
                 this.set('children', children);
@@ -70,9 +69,21 @@ export default Ember.Route.extend({
                 response.set('profile', this.get('child'));
                 response.set('participant', this.get('participant'));
                 return response.save();
+            }).then((response) => {
+                this.set('response', response);
+                this.set('pastResponses', [response]);
             })
             .catch((errors) => {
-                window.console.log('issues')
+                window.console.log(errors);
             });
+    },
+    setupController(controller) {
+        this._super(controller);
+        controller.set('study', this.get('study'));
+        controller.set('child', this.get('child'));
+        controller.set('participant', this.get('participant'));
+        controller.set('response', this.get('response'));
+        controller.set('pastResponses', this.get('pastResponses'));
     }
+
 });

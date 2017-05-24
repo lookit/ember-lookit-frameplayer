@@ -44,6 +44,12 @@ export default function() {
                     "related": "/responses/67890/study"
                   }
                 },
+                "user": {
+                  "links": {
+                    "self": "/responses/67890/relationships/user",
+                    "related": "/responses/67890/user"
+                  }
+                },
                 "profile": {
                     "links": {
                         "self": "/responses/67890/relationships/profile",

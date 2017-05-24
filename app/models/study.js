@@ -14,5 +14,6 @@ export default DS.Model.extend({
     public: DS.attr('boolean'),
     displayFullScreen: DS.attr('boolean'),
     structure: DS.attr(),
-    exitURL: DS.attr('string')
+    exitURL: DS.attr('string'),
+    responses: DS.hasMany('response')
 });
