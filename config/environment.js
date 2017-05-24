@@ -6,6 +6,11 @@ module.exports = function(environment) {
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
+    sentry: {
+        dsn: process.env.SENTRY_DSN || '',
+        cdn: 'https://cdn.ravenjs.com/3.5.1/ember/raven.min.js',
+        development: true
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
