@@ -73,6 +73,7 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
         return response;
     },
     model(params) {
+        // TODO - too many requests!
         return Ember.RSVP.Promise.resolve()
             .then(() => {
                 return this._getStudy(params);
