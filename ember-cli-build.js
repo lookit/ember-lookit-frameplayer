@@ -1,14 +1,30 @@
 /* eslint-env node */
 /* global require, module */
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
-
+require('dotenv').config();
 module.exports = function(defaults) {
-  var app = new EmberApp(defaults, {
-    'ember-bootstrap': {
-      'bootstrapVersion': 3,
-      'importBootstrapFont': true,
-      'importBootstrapCSS': true
-    }
+    var app = new EmberApp(defaults, {
+          sourcemaps: {
+              enabled: true
+          },
+          minifyJS: {
+              enabled: EmberApp.env() === 'production'
+          },
+          minifyCSS: {
+              enabled: EmberApp.env() === 'production'
+          },
+          emberWowza: {
+              // Config for video recorder config
+              asp: JSON.parse(process.env.WOWZA_ASP),
+              // Config for actual video recording
+              php: JSON.parse(process.env.WOWZA_PHP)
+          },
+          'ember-bootstrap': {
+              importBootstrapFont: true
+          },
+          'ember-bootstrap-datetimepicker': {
+              importBootstrapCSS: false
+          }
   });
 
   // Use `app.import` to add additional libraries to the generated
