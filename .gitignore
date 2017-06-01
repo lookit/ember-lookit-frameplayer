@@ -15,3 +15,15 @@
 /libpeerconnection.log
 npm-debug.log
 testem.log
+
+# HDFVR flash video recorder
+/public/VideoRecorder.swf
+
+# Sensitive settings- never commit to github!
+/.env
+/**/config.json
+
+# Virtualenv
+scripts/env
+
+migration/output/*
