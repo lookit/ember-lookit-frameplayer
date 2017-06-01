@@ -6,23 +6,21 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
     session: Ember.inject.service(),
     _study: null, // Experiment
     _child: null, // Particular child that is taking this study
-    _pastResponses: Ember.A(), // Past responses to this study (by this participant and this child)
+    _pastResponses: Ember.A(), // Past responses to this study (by this child)
     _getStudy(params) {
         return this.get('store').findRecord('study', params.study_id);
     },
     _getChildProfile(params) {
         // If child id in injected session matches child id in URL params, fetch child profile.
-        // Otherwise redirect to study detail
         const childId = this._getChildIdFromSession();
         const childIdFromParams = this.splitUserParams(params)[1];
         if (childIdFromParams === childId) {
             // TODO - can the number of requests be minimized? Can we access child endpoint directly?
             return this.get('store').findRecord('profile', childId);
         } else {
-            // TODO redirect to study detail?
+            // TODO redirect to 1) study detail 2) forbidden or 3) not found
             // Child doesn't match child from params
             window.console.log('Redirected to study detail - child ID and child ID in params did not match')
-
         }
     },
     _getChildIdFromSession() {
@@ -50,7 +48,6 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
         });
         response.set('study', this.get('_study'));
         response.set('profile', this.get('_child'));
-        response.set('participant', this.get('_participant'));
         return response;
     },
     model(params) {
@@ -82,7 +79,6 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
         this._super(controller); // TODO Why are pastSessions passed into controller?
         controller.set('study', this.get('_study'));
         controller.set('child', this.get('_child'));
-        controller.set('participant', this.get('_participant'));
         controller.set('response', this.get('_response'));
         controller.set('pastResponses', this.get('_pastResponses'));
     }
