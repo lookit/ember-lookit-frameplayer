@@ -5,50 +5,31 @@ import { get } from 'lodash';
 export default Ember.Route.extend(WarnOnExitRouteMixin, {
     session: Ember.inject.service(),
     _study: null, // Experiment
-    _participant: null, // Adult user that is taking study with child
-    _children: null, // All children associated with the user
     _child: null, // Particular child that is taking this study
     _pastResponses: Ember.A(), // Past responses to this study (by this participant and this child)
     _getStudy(params) {
         return this.get('store').findRecord('study', params.study_id);
     },
-    _getUserIdFromSession() {
-        // Pull user id from injected session
-        const session = this.get('session');
-        return session.get('isAuthenticated') ? get(session, 'data.authenticated.id'): null;
-    },
-    _getChildIdFromSession() {
-        // Pull child id from injected session
-        const session = this.get('session');
-        return session.get('isAuthenticated') ? get(session, 'data.profile.profileId'): null;
-    },
-    _getParticipant(params) {
-        // If participant id in injected session matches part id in URL params, fetch this user.
-        // Otherwise, redirect to study detail.
-        const participantId = this._getUserIdFromSession();
-        const partIdFromParams = this.splitUserParams(params)[0];
-        if (partIdFromParams === participantId) {
-            return this.get('store').findRecord('user', participantId);
-        } else {
-            // TODO redirect to study detail?
-            // Session user doesn't match user from params
-            window.console.log('Redirected to study detail - participant ID and user ID in params did not match')
-        }
-    },
-    _getChildren(params, participant) {
-        // If child id in injected session matches child id in URL params, fetch user's children
-        // Otherwise, redirect to study detail.
+    _getChildProfile(params) {
+        // If child id in injected session matches child id in URL params, fetch child profile.
+        // Otherwise redirect to study detail
         const childId = this._getChildIdFromSession();
         const childIdFromParams = this.splitUserParams(params)[1];
         if (childIdFromParams === childId) {
             // TODO - can the number of requests be minimized? Can we access child endpoint directly?
-            return participant.get('profiles');
+            return this.get('store').findRecord('profile', childId);
         } else {
             // TODO redirect to study detail?
             // Child doesn't match child from params
             window.console.log('Redirected to study detail - child ID and child ID in params did not match')
 
         }
+    },
+    _getChildIdFromSession() {
+        // Pull child id from injected session
+        const session = this.get('session');
+        // TODO Modify to match structure Chris is using to place profile id in session
+        return session.get('isAuthenticated') ? get(session, 'data.profile.profileId'): null;
     },
     splitUserParams(params) {
         // participate_child_ids params should be in format "user-id.profile-id".
@@ -80,27 +61,12 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
             })
             .then((study) => {
                 this.set('_study', study);
-                return this._getParticipant(params);
+                return this._getChildProfile(params);
             })
-            .then((participant) => {
-                this.set('_participant', participant);
-                return this._getChildren(params, participant);
-            })
-            .then((children) => {
-                this.set('_children', children);
-                (children || []).forEach(child => {
-                    if (child.get('id') === this._getChildIdFromSession()) {
-                        this.set('_child', child);
-                    }
-                });
-                if (this.get('_child')) {
-                    const response = this.createStudyResponse();
-                    return response.save();
-                } else {
-                    window.console.log('Redirected to study detail - child is not found on this user profile')
-                    // TODO Redirect to study detail
-                }
-
+            .then((child) => {
+                this.set('_child', child);
+                const response = this.createStudyResponse();
+                return response.save();
             }).then((response) => {
                 this.set('_response', response);
                 // TODO - where are we storing past Responses?
