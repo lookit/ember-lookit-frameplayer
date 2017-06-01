@@ -5,18 +5,18 @@ export default ExpPlayer.extend({
     toast: Ember.inject.service(),
 
     messageEarlyExitModal: `
-If you're sure you'd like to leave this study early
-you can do so now.
+    If you're sure you'd like to leave this study early
+    you can do so now.
 
-We'd appreciate it if before you leave you fill out a
-very brief exit survey letting us know how we can use
-any video captured during this session. Press 'Stay on
-this Page' and you will be prompted to go to this
-exit survey.
+    We'd appreciate it if before you leave you fill out a
+    very brief exit survey letting us know how we can use
+    any video captured during this session. Press 'Stay on
+    this Page' and you will be prompted to go to this
+    exit survey.
 
-If leaving this page was an accident you will be
-able to continue the study.
-`,
+    If leaving this page was an accident you will be
+    able to continue the study.
+    `,
 
     _registerHandlers() {
         this._super();
