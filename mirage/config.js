@@ -172,7 +172,8 @@ export default function() {
             }
         }
   });
-  this.get('/responses?filter[profileId]=fghij&filter[studyId]=12345', function() {
+  this.get('/responses', function() {
+  // this.get('/responses?filter[profileId]=fghij&filter[studyId]=12345', function() {
       return {
       "data": [{
         "id": "00000",

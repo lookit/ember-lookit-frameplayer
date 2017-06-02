@@ -65,18 +65,19 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
                 return response.save();
             }).then((response) => {
                 this.set('_response', response);
-                // return this.get('store').findAll('response');
-                return this.get('store').query('response', {
-                  filter: {
-                    profileId: this.get('_child').id,
-                    studyId: this.get('_study').id
-                  }
-                })
+                return this.store.findAll('response');
+                // TODO restore once I know how responses will be queried
+                // return this.get('store').query('response', {
+                //   filter: {
+                //     profileId: this.get('_child').id,
+                //     studyId: this.get('_study').id
+                //   }
+                // })
             }).then((pastResponses) => {
                 const response = this.get('_response');
                 this.set('_pastResponses', pastResponses.toArray());
-                if (!pastResponses.includes(response)) {
-                    pastResponses.pushObject(response);
+                if (!this.get('_pastResponses').includes(response)) {
+                    this.get('_pastResponses').pushObject(response);
                 }
             })
             .catch((errors) => {
