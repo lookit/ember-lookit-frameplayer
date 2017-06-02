@@ -9,16 +9,16 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
     _child: null,
     _response: null,
     _pastResponses: Ember.A(),
-    _getStudy(params) {
-        return this.get('store').findRecord('study', params.study_id);
-    },
-    _getChildIdFromSession() {
+    sessionChildId: Ember.computed('session', function() {
         const session = this.get('session');
         // TODO Modify to match structure of injected session
         return session.get('isAuthenticated') ? get(session, 'data.profile.profileId'): null;
+    }),
+    _getStudy(params) {
+        return this.get('store').findRecord('study', params.study_id);
     },
     _getChildProfile(params) {
-        const childId = this._getChildIdFromSession();
+        const childId = this.get('sessionChildId');
         const childIdFromParams = this.splitUserParams(params)[1];
         if (childIdFromParams === childId) {
             return this.get('store').findRecord('profile', childId);
@@ -29,8 +29,7 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
         }
     },
     splitUserParams(params) {
-        // participant_child_ids params should be in format "user-id.profile-id".
-        // If this is not the case, transition to page-not-found.
+        // if user params not in format "participant_id.child_id", transition to Not Found
         const splitIds = (get(params, 'participant_child_ids') || "").split('.');
         return splitIds.length === 2 ? splitIds : this.transitionTo('/page-not-found');
     },
