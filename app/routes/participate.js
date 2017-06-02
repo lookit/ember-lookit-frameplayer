@@ -9,16 +9,16 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
     _response: null,
     _pastResponses: Ember.A(),
     sessionChildId: Ember.computed('session', function() {
-        // Pulls child profile info off of injected session
+        // Pulls child profile info from injected session
         const session = this.get('session');
-        // TODO Modify to match structure of injected session
+        // TODO Modify to match injected session structure
         return session.get('isAuthenticated') ? session.get('data.profile.profileId'): null;
     }),
     _getStudy(params) {
         return this.get('store').findRecord('study', params.study_id);
     },
-    _getChildProfile(params) {
-        const childIdFromParams = this.splitUserParams(params)[1];
+    _getChildProfile(params) { // currently user params format like this: - <participant_id.user_id> PROBABLY WILL CHANGE
+        const childIdFromParams = (params.participant_child_ids || "").split('.')[1];
         if (childIdFromParams === this.get('sessionChildId')) { // Child id in injected session and url params must match
             return this.get('store').findRecord('profile', childIdFromParams);
         } else {
@@ -39,11 +39,6 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
         response.set('profile', this.get('_child'));
         return response;
     },
-    splitUserParams(params) {
-        // if user params not in format "participant_id.child_id", transition to Not Found
-        // TODO URL FORMAT MIGHT CHANGE - we might not need participant ID in URL?
-        return (params.participant_child_ids || "").split('.');
-    },
     beforeModel (transition) {
         if (!this.get('session.data.profile')) {
             window.console.log('No child profile in injected session, so transitioning to study detail');
@@ -51,13 +46,11 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
         }
         return this._super(...arguments);
     },
-
     activate () {
         // Include response ID in any raven reports that occur during the experiment
         this.get('raven').callRaven('setExtraContext', { sessionID: this.get('_response.id') });
         return this._super(...arguments);
     },
-
     deactivate () {
         // Clear any extra context when user finishes an experiment
         this.get('raven').callRaven('setExtraContext');
