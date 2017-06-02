@@ -15,7 +15,6 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
         const childId = this._getChildIdFromSession();
         const childIdFromParams = this.splitUserParams(params)[1];
         if (childIdFromParams === childId) {
-            // TODO - can the number of requests be minimized? Can we access child endpoint directly?
             return this.get('store').findRecord('profile', childId);
         } else {
             // TODO redirect to 1) study detail 2) forbidden or 3) not found
@@ -66,8 +65,19 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
                 return response.save();
             }).then((response) => {
                 this.set('_response', response);
-                // TODO - where are we storing past Responses?
-                this.set('_pastResponses', [response]);
+                // return this.get('store').findAll('response');
+                return this.get('store').query('response', {
+                  filter: {
+                    profileId: this.get('_child').id,
+                    studyId: this.get('_study').id
+                  }
+                })
+            }).then((pastResponses) => {
+                const response = this.get('_response');
+                this.set('_pastResponses', pastResponses.toArray());
+                if (!pastResponses.includes(response)) {
+                    pastResponses.pushObject(response);
+                }
             })
             .catch((errors) => {
                 window.console.log(errors);

@@ -172,6 +172,91 @@ export default function() {
             }
         }
   });
+  this.get('/responses?filter[profileId]=fghij&filter[studyId]=12345', function() {
+      return {
+      "data": [{
+        "id": "00000",
+        "type": "response",
+        "attributes": {
+          "study-id": "12345",
+          "profile-id": "fghij",
+          "feedback": "",
+          "conditions": {
+
+          },
+          "global-event-timings": [
+
+          ],
+          "exp-data": {
+            "0-0-mood-survey": {
+              "active": "1",
+              "lastEat": "18:00",
+              "ontopofstuff": "1",
+              "napWakeUp": "14:00",
+              "rested": "0",
+              "nextNap": "14:00",
+              "usualNapSchedule": "yes",
+              "parentHappy": "1",
+              "doingBefore": "Eating ice cream",
+              "healthy": "3",
+              "childHappy": "5",
+              "energetic": "1",
+              "eventTimings": [
+                {
+                  "timestamp": "2017-05-17T17:22:57.535Z",
+                  "eventType": "nextFrame"
+                }
+              ]
+            },
+            "1-1-exit-survey": {
+              "useOfMedia": "private",
+              "idealSessionsCompleted": 2,
+              "birthDate": "2017-05-09T04:00:00.000Z",
+              "databraryShare": "no",
+              "idealDaysSessionsCompleted": 7,
+              "feedback": "",
+              "withdrawal": false,
+              "eventTimings": [
+
+              ]
+            }
+          },
+          "sequence": [
+            "0-0-mood-survey",
+            "1-1-exit-survey"
+          ],
+          "extra": {
+
+          },
+          "completed": false
+        },
+        "relationships": {
+          "study": {
+            "links": {
+              "self": "\/responses\/67890\/relationships\/study",
+              "related": "\/responses\/67890\/study"
+            }
+          },
+          "user": {
+            "links": {
+              "self": "\/responses\/67890\/relationships\/user",
+              "related": "\/responses\/67890\/user"
+            }
+          },
+          "profile": {
+            "links": {
+              "self": "\/responses\/67890\/relationships\/profile",
+              "related": "\/responses\/67890\/profile"
+            }
+          }
+        },
+        "links": {
+          "self": "\/response\/67890"
+        }
+      }]
+    }
+
+  });
   this.get('/users/:id', function() {
      return {
         "data": {

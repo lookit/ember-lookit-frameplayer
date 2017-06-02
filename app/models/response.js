@@ -10,4 +10,6 @@ export default DS.Model.extend({
     conditions: DS.attr(),
     sequence: DS.attr(),
     globalEventTimings: DS.attr({ defaultValue: () => [] }),
+    studyId: DS.attr('string'), // Do we need this? How else to filter responses endpoint?
+    profileId: DS.attr('string') // Do we need this? How else to filter responses endpoint?
 });
