@@ -2,16 +2,22 @@ import Ember from 'ember';
 import WarnOnExitRouteMixin from 'exp-player/mixins/warn-on-exit-route';
 import { get } from 'lodash';
 
+// Adapted from Lookit https://github.com/CenterForOpenScience/lookit
 export default Ember.Route.extend(WarnOnExitRouteMixin, {
     session: Ember.inject.service(),
-    _study: null, // Experiment
-    _child: null, // Particular child that is taking this study
-    _pastResponses: Ember.A(), // Past responses to this study (by this child)
+    _study: null,
+    _child: null,
+    _response: null,
+    _pastResponses: Ember.A(),
     _getStudy(params) {
         return this.get('store').findRecord('study', params.study_id);
     },
+    _getChildIdFromSession() {
+        const session = this.get('session');
+        // TODO Modify to match structure of injected session
+        return session.get('isAuthenticated') ? get(session, 'data.profile.profileId'): null;
+    },
     _getChildProfile(params) {
-        // If child id in injected session matches child id in URL params, fetch child profile.
         const childId = this._getChildIdFromSession();
         const childIdFromParams = this.splitUserParams(params)[1];
         if (childIdFromParams === childId) {
@@ -22,21 +28,12 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
             window.console.log('Redirected to study detail - child ID and child ID in params did not match')
         }
     },
-    _getChildIdFromSession() {
-        // Pull child id from injected session
-        const session = this.get('session');
-        // TODO Modify to match structure Chris is using to place profile id in session
-        return session.get('isAuthenticated') ? get(session, 'data.profile.profileId'): null;
-    },
     splitUserParams(params) {
-        // participate_child_ids params should be in format "user-id.profile-id".
+        // participant_child_ids params should be in format "user-id.profile-id".
         // If this is not the case, transition to page-not-found.
         const splitIds = (get(params, 'participant_child_ids') || "").split('.');
         return splitIds.length === 2 ? splitIds : this.transitionTo('/page-not-found');
     },
-    // beforeModel(transition) {
-    //     // TODO transition back to study detail page if no child profile
-    // },
     createStudyResponse() {
         let response = this.store.createRecord('response', {
             completed: false,
@@ -49,8 +46,28 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
         response.set('profile', this.get('_child'));
         return response;
     },
+    beforeModel (transition) {
+        const session = this.get('session');
+        if (!get(session, 'data.profile')) {
+            window.console.log('No child profile, so transitioning to study detail');
+            // TODO transition to django app study detail
+        }
+        return this._super(...arguments);
+    },
+
+    activate () {
+        let response = this.get('_response');
+        // Include response ID in any raven reports that occur during the experiment
+        this.get('raven').callRaven('setExtraContext', { sessionID: response.id });
+        return this._super(...arguments);
+    },
+
+    deactivate () {
+        // Clear any extra context when user finishes an experiment
+        this.get('raven').callRaven('setExtraContext');
+        return this._super(...arguments);
+    },
     model(params) {
-        // TODO - too many requests!
         return Ember.RSVP.Promise.resolve()
             .then(() => {
                 return this._getStudy(params);
@@ -61,8 +78,7 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
             })
             .then((child) => {
                 this.set('_child', child);
-                const response = this.createStudyResponse();
-                return response.save();
+                return this.createStudyResponse().save();
             }).then((response) => {
                 this.set('_response', response);
                 return this.store.findAll('response');
