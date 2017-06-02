@@ -62,7 +62,6 @@
     "ember-get-config": "0.0.2",
     "ember-inflector": "2.0.0",
     "ember-load-initializers": "^0.5.1",
-    "ember-lodash": "4.17.4",
     "ember-moment": "6.0.0",
     "ember-pikaday": "0.14.0",
     "ember-power-select": "1.0.0-beta.27",
