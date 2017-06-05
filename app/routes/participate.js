@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import WarnOnExitRouteMixin from 'exp-player/mixins/warn-on-exit-route';
+import FramePlayerRoute from '../mixins/frame-player-route';
 
-// Adapted from Lookit https://github.com/CenterForOpenScience/lookit
 export default Ember.Route.extend(WarnOnExitRouteMixin, {
     session: Ember.inject.service(),
     _study: null,
@@ -38,6 +38,8 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
         response.set('profile', this.get('_profile'));
         return response;
     },
+// Adapted from Lookit participate route https://github.com/CenterForOpenScience/lookit/blob/develop/app/routes/participate.js
+export default Ember.Route.extend(WarnOnExitRouteMixin, FramePlayerRoute, {
     beforeModel (transition) {
         if (!this.get('session.data.profile')) {
             window.console.log('No profile in injected session, so transitioning to study detail');

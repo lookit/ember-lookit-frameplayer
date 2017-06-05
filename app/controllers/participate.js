@@ -1,5 +1,6 @@
 import Ember from 'ember';
-// Adapted from Lookit https://github.com/CenterForOpenScience/lookit
+
+// Adapted from Lookit's participate controller https://github.com/CenterForOpenScience/lookit/blob/develop/app/controllers/participate.js
 export default Ember.Controller.extend({
     isDirty: function() {
         // TODO: check the response model to see if it contains unsaved data
