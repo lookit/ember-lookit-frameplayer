@@ -11,19 +11,19 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, FramePlayerRoute, {
         });
         return response.reopen({
             save() {
-                    console.log('Preview Data Save:', this.toJSON());
-                    if (this.get('completed')) {
-                        var controller = Ember.getOwner(this).lookup('controller:preview');
-                        controller.showPreviewData(this).then(() => {
-                            // Override the WarnOnExitMixin's behavior
-                            controller.set('forceExit', true);
-                            // TODO transition to study detail or study create?
-                            // return _this.transitionTo('experiments.info');
-                        });
-                        return Ember.RSVP.reject();
-                    } else {
-                        return Ember.RSVP.resolve(this);
-                    }
-                }});
+                console.log('Preview Data Save:', this.toJSON());
+                if (this.get('completed')) {
+                    var controller = Ember.getOwner(this).lookup('controller:preview');
+                    controller.showPreviewData(this).then(() => {
+                        // Override the WarnOnExitMixin's behavior
+                        controller.set('forceExit', true);
+                        // TODO transition to study detail or study create?
+                        // return _this.transitionTo('experiments.info');
+                    });
+                    return Ember.RSVP.reject();
+                } else {
+                    return Ember.RSVP.resolve(this);
+                }
+            }});
         }
 });
