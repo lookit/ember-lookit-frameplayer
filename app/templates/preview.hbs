@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-xs-12">
+        <h1> From API: Study and child Profile.  Response created.  Past responses retrieved. </h1>
+        <ul>
+            <li> Fetched Study: {{study.id}} </li>
+            <li> Fetched Profile {{profile.id}} </li>
+            <li> Created Response (NOT SAVED IN PREVIEW MODE) {{response.id}} </li>
+        </ul>
+
+        <h2> The study, response, and pastResponses are passed into the exp-player component below.</h2>
+    </div>
+</div>
+
+<div id="expContainer">
+    {{exp-player
+          experiment=study
+          session=response
+          pastSessions=pastResponses
+      }}
+</div>
+
+{{#bs-modal open=showData title="Data collected during this preview session" closeAction=(action 'toggleData')}}
+    {{#bs-modal-body}}
+        <pre class="preview-data">
+            {{previewData}}
+        </pre>
+        <hr>
+        <p>
+            <strong> Note: </strong>
+            This dialog will not appear to participants when they complete a study.
+        </p>
+    {{/bs-modal-body}}
+{{/bs-modal}}
