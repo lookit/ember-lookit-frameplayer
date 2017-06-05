@@ -5,11 +5,11 @@ import WarnOnExitRouteMixin from 'exp-player/mixins/warn-on-exit-route';
 export default Ember.Route.extend(WarnOnExitRouteMixin, {
     session: Ember.inject.service(),
     _study: null,
-    _child: null,
+    _profile: null,
     _response: null,
     _pastResponses: Ember.A(),
-    sessionChildId: Ember.computed('session', function() {
-        // Pulls child profile info from injected session
+    sessionProfileId: Ember.computed('session', function() {
+        // Pulls profile info from injected session
         const session = this.get('session');
         // TODO Modify to match injected session structure
         return session.get('isAuthenticated') ? session.get('data.profile.profileId'): null;
@@ -17,13 +17,12 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
     _getStudy(params) {
         return this.get('store').findRecord('study', params.study_id);
     },
-    _getChildProfile(params) { // currently user params format like this: - <participant_id.user_id> PROBABLY WILL CHANGE
-        const childIdFromParams = (params.participant_child_ids || "").split('.')[1];
-        if (childIdFromParams === this.get('sessionChildId')) { // Child id in injected session and url params must match
-            return this.get('store').findRecord('profile', childIdFromParams);
+    _getProfile(params) {
+        if (params.profile_id === this.get('sessionProfileId')) { // Profile id in injected session and url params must match
+            return this.get('store').findRecord('profile', params.profile_id);
         } else {
             // TODO redirect to 1) study detail 2) forbidden or 3) not found
-            window.console.log('Redirected to study detail - child ID and child ID in params did not match')
+            window.console.log('Redirected to study detail - profile id in session and profile id in URL params did not match')
             this.transitionTo('page-not-found');
         }
     },
@@ -36,12 +35,12 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
             sequence: []
         });
         response.set('study', this.get('_study'));
-        response.set('profile', this.get('_child'));
+        response.set('profile', this.get('_profile'));
         return response;
     },
     beforeModel (transition) {
         if (!this.get('session.data.profile')) {
-            window.console.log('No child profile in injected session, so transitioning to study detail');
+            window.console.log('No profile in injected session, so transitioning to study detail');
             // TODO transition to django app study detail
         }
         return this._super(...arguments);
@@ -63,10 +62,10 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
             })
             .then((study) => {
                 this.set('_study', study);
-                return this._getChildProfile(params);
+                return this._getProfile(params);
             })
-            .then((child) => {
-                this.set('_child', child);
+            .then((profile) => {
+                this.set('_profile', profile);
                 return this._createStudyResponse().save();
             }).then((response) => {
                 this.set('_response', response);
@@ -74,7 +73,7 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
                 // TODO restore once I know how responses will be queried
                 // return this.get('store').query('response', {
                 //   filter: {
-                //     profileId: this.get('_child').id,
+                //     profileId: this.get('_profile').id,
                 //     studyId: this.get('_study').id
                 //   }
                 // })
@@ -94,7 +93,7 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, {
     setupController(controller) {
         this._super(controller); // TODO Why are pastSessions passed into controller?
         controller.set('study', this.get('_study'));
-        controller.set('child', this.get('_child'));
+        controller.set('profile', this.get('_profile'));
         controller.set('response', this.get('_response'));
         controller.set('pastResponses', this.get('_pastResponses'));
     }
