@@ -1,8 +1,7 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-    profileId: DS.attr('string'),
-    firstName: DS.attr('string'),
+    givenName: DS.attr('string'),
     birthday: DS.attr('date'),
     gender: DS.attr('string'),
     ageAtBirth: DS.attr('string'),
