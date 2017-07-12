@@ -8,8 +8,8 @@ export default Ember.Service.extend({
       authenticated: {
           id: 'abcde'
       },
-      profile: Ember.Object.create({
-          profileId: "fghij",
+      child: Ember.Object.create({
+          childId: "0f8221bc-0de7-4ed2-b9e6-803860d9b962",
           firstName: "Test Child",
           birthday: "2015-05-01T04:00:00.000Z",
           gender: "female",

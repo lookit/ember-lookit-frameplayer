@@ -5,8 +5,8 @@ import FramePlayerRoute from '../mixins/frame-player-route';
 // Adapted from Lookit participate route https://github.com/CenterForOpenScience/lookit/blob/develop/app/routes/participate.js
 export default Ember.Route.extend(WarnOnExitRouteMixin, FramePlayerRoute, {
     beforeModel (transition) {
-        if (!this.get('session.data.profile')) {
-            window.console.log('No profile in injected session, so transitioning to study detail');
+        if (!this.get('session.data.child')) {
+            window.console.log('No child in injected session, so transitioning to study detail');
             // TODO transition to django app study detail
         }
         return this._super(...arguments);

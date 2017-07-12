@@ -4,26 +4,26 @@ import Ember from 'ember';
 export default Ember.Mixin.create({
     session: Ember.inject.service(),
     _study: null,
-    _profile: null,
+    _child: null,
     _response: null,
     _pastResponses: Ember.A(),
     _getStudy(params) {
         return this.get('store').findRecord('study', params.study_id);
     },
-    _getProfile(params) {
-        if (params.profile_id === this.get('sessionProfileId')) { // Profile id in injected session and url params must match
-            return this.get('store').findRecord('profile', params.profile_id);
+    _getChild(params) {
+        if (params.child_id === this.get('sessionChildId')) { // Child id in injected session and url params must match
+            return this.get('store').findRecord('child', params.child_id);
         } else {
             // TODO redirect to 1) study detail 2) forbidden or 3) not found
-            window.console.log('Redirected to study detail - profile id in session and profile id in URL params did not match')
+            window.console.log('Redirected to study detail - child id in session and child id in URL params did not match')
             this.transitionTo('page-not-found');
         }
     },
-    sessionProfileId: Ember.computed('session', function() {
-        // Pulls profile info from injected session
+    sessionChildId: Ember.computed('session', function() {
+        // Pulls child info from injected session
         const session = this.get('session');
         // TODO Modify to match injected session structure
-        return session.get('isAuthenticated') ? session.get('data.profile.profileId'): null;
+        return session.get('isAuthenticated') ? session.get('data.child.childId'): null;
     }),
 
     _createStudyResponse() {
@@ -35,7 +35,7 @@ export default Ember.Mixin.create({
             sequence: []
         });
         response.set('study', this.get('_study'));
-        response.set('profile', this.get('_profile'));
+        response.set('child', this.get('_child'));
         return response;
     },
     model(params) {
@@ -45,10 +45,10 @@ export default Ember.Mixin.create({
             })
             .then((study) => {
                 this.set('_study', study);
-                return this._getProfile(params);
+                return this._getChild(params);
             })
-            .then((profile) => {
-                this.set('_profile', profile);
+            .then((child) => {
+                this.set('_child', child);
                 return this._createStudyResponse().save();
             }).then((response) => {
                 this.set('_response', response);
@@ -56,7 +56,7 @@ export default Ember.Mixin.create({
                 // TODO restore once I know how responses will be queried
                 // return this.get('store').query('response', {
                 //   filter: {
-                //     profileId: this.get('_profile').id,
+                //     childId: this.get('_child').id,
                 //     studyId: this.get('_study').id
                 //   }
                 // })
@@ -76,7 +76,7 @@ export default Ember.Mixin.create({
     setupController(controller) {
         this._super(controller); // TODO Why are pastSessions passed into controller?
         controller.set('study', this.get('_study'));
-        controller.set('profile', this.get('_profile'));
+        controller.set('child', this.get('_child'));
         controller.set('response', this.get('_response'));
         controller.set('pastResponses', this.get('_pastResponses'));
     }
