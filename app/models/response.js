@@ -8,4 +8,5 @@ export default DS.Model.extend({
     completed: DS.attr('boolean'),
     child: DS.belongsTo('child'),
     study: DS.belongsTo('study'),
+    demographicSnapshot: DS.belongsTo('demographic')
 });
