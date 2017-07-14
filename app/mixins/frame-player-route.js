@@ -52,14 +52,7 @@ export default Ember.Mixin.create({
                 return this._createStudyResponse().save();
             }).then((response) => {
                 this.set('_response', response);
-                return this.store.findAll('response');
-                // TODO restore once I know how responses will be queried
-                // return this.get('store').query('response', {
-                //   filter: {
-                //     childId: this.get('_child').id,
-                //     studyId: this.get('_study').id
-                //   }
-                // })
+                return this.get('_study').query('responses', { 'child': this.get('_child').id })
             }).then((pastResponses) => {
                 const response = this.get('_response');
                 this.set('_pastResponses', pastResponses.toArray());
@@ -74,7 +67,7 @@ export default Ember.Mixin.create({
             });
     },
     setupController(controller) {
-        this._super(controller); // TODO Why are pastSessions passed into controller?
+        this._super(controller);
         controller.set('study', this.get('_study'));
         controller.set('child', this.get('_child'));
         controller.set('response', this.get('_response'));
