@@ -51,7 +51,6 @@ export default Ember.Mixin.create({
                 return this._createStudyResponse().save();
             }).then((response) => {
                 this.set('_response', response);
-                // return this.get('_study').query('responses', { 'child': this.get('_child').id })
                 return loadAll(this.get('_study'), 'responses', this.get('_pastResponses'), { 'child': this.get('_child').id })
             }).then(() => {
                 const response = this.get('_response');
