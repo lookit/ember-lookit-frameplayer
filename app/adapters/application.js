@@ -6,7 +6,7 @@ export default DS.JSONAPIAdapter.extend(HasManyQuery.RESTAdapterMixin, {
     host: config.host,
     namespace: 'api/v1',
     buildURL: function(type, id, record) {
-        // Add trailing slash to requests
+        // Add trailing slash to Lookit API requests
        return this._super(type, id, record) + '/';
      }
 });

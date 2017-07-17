@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import loadAll from '../utils/load-relationship';
 
-// Adapted from Lookit's participate route, Experimenter's preview route, and the exp-player route mixin ce/exp-addons/blob/develop/exp-player/addon/mixins/exp-player-route.js
+// Adapted from Lookit's participate route, Experimenter's preview route, and the exp-player route mixin
+// https://github.com/CenterForOpenScience/exp-addons/blob/develop/exp-player/addon/mixins/exp-player-route.js
 export default Ember.Mixin.create({
     session: Ember.inject.service(),
     _study: null,
