@@ -1,0 +1,15 @@
+/* PARTICIPATE */
+#expContainer:fullscreen {
+    width: 100vh;
+    height: 100vh;
+    padding: 25vw;
+}
+
+#expContainer.player-fullscreen {
+    width: 100%;
+    height: 100%;
+}
+
+#expContainer {
+    padding: 10px;
+}

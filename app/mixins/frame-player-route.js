@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import loadAll from '../utils/load-relationship';
 
 // Adapted from Lookit's participate route, Experimenter's preview route, and the exp-player route mixin ce/exp-addons/blob/develop/exp-player/addon/mixins/exp-player-route.js
 export default Ember.Mixin.create({
@@ -16,7 +17,7 @@ export default Ember.Mixin.create({
         } else {
             // TODO redirect to 1) study detail 2) forbidden or 3) not found
             window.console.log('Redirected to study detail - child id in session and child id in URL params did not match')
-            this.transitionTo('page-not-found');
+            return this.transitionTo('page-not-found');
         }
     },
     sessionChildId: Ember.computed('session', function() {
@@ -52,10 +53,10 @@ export default Ember.Mixin.create({
                 return this._createStudyResponse().save();
             }).then((response) => {
                 this.set('_response', response);
-                return this.get('_study').query('responses', { 'child': this.get('_child').id })
-            }).then((pastResponses) => {
+                // return this.get('_study').query('responses', { 'child': this.get('_child').id })
+                return loadAll(this.get('_study'), 'responses', this.get('_pastResponses'), { 'child': this.get('_child').id })
+            }).then(() => {
                 const response = this.get('_response');
-                this.set('_pastResponses', pastResponses.toArray());
                 if (!this.get('_pastResponses').includes(response)) {
                     this.get('_pastResponses').pushObject(response);
                 }
