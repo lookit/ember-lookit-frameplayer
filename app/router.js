@@ -7,8 +7,8 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('preview', {path: '/studies/:study_id/preview'});
   this.route('participate', {path: '/studies/:study_id/:child_id'});
-  this.route('preview', {path: '/studies/:study_id/:child_id/preview'});
   this.route('page-not-found', { path: '/*wildcard' });
   this.route('page-not-found');
 });

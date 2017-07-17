@@ -25,5 +25,11 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, FramePlayerRoute, {
                     return Ember.RSVP.resolve(this);
                 }
             }});
-        }
+    },
+    _getChild() {
+        let child = this.store.createRecord('child', {
+            id: "TEST_CHILD_DISREGARD"
+        });
+        return child;
+    }
 });
