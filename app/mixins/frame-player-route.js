@@ -15,9 +15,7 @@ export default Ember.Mixin.create({
         if (params.child_id === this.get('sessionChildId')) { // Child id in injected session and url params must match
             return this.get('store').findRecord('child', params.child_id);
         } else {
-            // TODO redirect to 1) study detail 2) forbidden or 3) not found
-            window.console.log('Redirected to study detail - child id in session and child id in URL params did not match')
-            return this.transitionTo('page-not-found');
+            return Ember.$.Deferred().reject('Child id in session and child id in URL params did not match');
         }
     },
     sessionChildId: Ember.computed('session', function() {
