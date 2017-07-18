@@ -5,12 +5,7 @@ export default PrimarySerializer.extend({
 
   serialize(snapshot, options) {
     let json = this._super(...arguments);
-    json.data.relationships.demographic_snapshot = { // TODO TEMPORARY UNTIL DEMOGRAPHIC SNAPSHOT NOT NEEDED - FOR DEMO ONLY
-        "data": {
-             "type": "demographics",
-             "id": "d7550b70-a72e-4403-acc4-36a2dbec514c"
-           }
-    }
+    delete json.data.relationships['demographic-snapshot']
     return json;
   },
 });
