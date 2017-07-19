@@ -4,7 +4,6 @@ import loadAll from '../utils/load-relationship';
 // Adapted from Lookit's participate route, Experimenter's preview route, and the exp-player route mixin
 // https://github.com/CenterForOpenScience/exp-addons/blob/develop/exp-player/addon/mixins/exp-player-route.js
 export default Ember.Mixin.create({
-    session: Ember.inject.service(),
     _study: null,
     _child: null,
     _response: null,
@@ -13,19 +12,8 @@ export default Ember.Mixin.create({
         return this.get('store').findRecord('study', params.study_id);
     },
     _getChild(params) {
-        if (params.child_id === this.get('sessionChildId')) { // Child id in injected session and url params must match
-            return this.get('store').findRecord('child', params.child_id);
-        } else {
-            return Ember.$.Deferred().reject('Child id in session and child id in URL params did not match');
-        }
+        return this.get('store').findRecord('child', params.child_id);
     },
-    sessionChildId: Ember.computed('session', function() {
-        // Pulls child info from injected session
-        const session = this.get('session');
-        // TODO Modify to match injected session structure
-        return session.get('isAuthenticated') ? session.get('data.child.childId'): null;
-    }),
-
     _createStudyResponse() {
         let response = this.store.createRecord('response', {
             completed: false,

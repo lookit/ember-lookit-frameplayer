@@ -45,7 +45,7 @@ export default ExpPlayer.extend({
                 exitType: 'manualInterrupt',  // User consciously chose to exit, eg by pressing F1 key
                 lastPageSeen: this.get('frameIndex') + 1
             });
-            this.get('session').save();
+            this.get('session').save(); // I think this is the response
 
             // Navigate to last page in experiment (assumed to be survey frame)
             var max = this.get('frames.length') - 1;
