@@ -20,7 +20,9 @@ module.exports = function(defaults) {
               php: JSON.parse(process.env.WOWZA_PHP)
           },
           'ember-bootstrap': {
-              importBootstrapFont: true
+            importBootstrapFont: true,
+            'bootstrapVersion': 3,
+            'importBootstrapCSS': true
           },
           'ember-bootstrap-datetimepicker': {
               importBootstrapCSS: false
