@@ -1,10 +1,12 @@
 <div id="expContainer">
-    {{exp-player
-          experiment=study
-          session=response
-          pastSessions=pastResponses
-          saveHandler=(action 'saveResponse')
-          frameIndex=0
-          fullScreenElementId='expContainer'
-      }}
+    {{#if response.study.id}}
+        {{exp-player
+              experiment=study
+              session=response
+              pastSessions=pastResponses
+              saveHandler=(action 'saveResponse')
+              frameIndex=0
+              fullScreenElementId='expContainer'
+          }}
+    {{/if}}
 </div>

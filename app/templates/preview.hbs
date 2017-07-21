@@ -1,9 +1,11 @@
 <div id="expContainer">
-    {{exp-player
-          experiment=study
-          session=response
-          pastSessions=pastResponses
-      }}
+    {{#if response.study.id}}
+      {{exp-player
+            experiment=study
+            session=response
+            pastSessions=pastResponses
+        }}
+    {{/if}}
 </div>
 
 {{#bs-modal open=showData title="Data collected during this preview session" closeAction=(action 'toggleData')}}
