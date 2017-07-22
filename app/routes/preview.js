@@ -11,7 +11,6 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, FramePlayerRoute, {
         });
         return response.reopen({
             save() {
-                console.log('Preview Data Save:', this.toJSON());
                 if (this.get('completed')) {
                     var controller = Ember.getOwner(this).lookup('controller:preview');
                     controller.showPreviewData(this).then(() => {
