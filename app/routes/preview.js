@@ -16,8 +16,7 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, FramePlayerRoute, {
                     controller.showPreviewData(this).then(() => {
                         // Override the WarnOnExitMixin's behavior
                         controller.set('forceExit', true);
-                        // TODO transition to study detail or study create?
-                        // return _this.transitionTo('experiments.info');
+                        window.location.href = '/exp/studies/';
                     });
                     return Ember.RSVP.reject();
                 } else {
