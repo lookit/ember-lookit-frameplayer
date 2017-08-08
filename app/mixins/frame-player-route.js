@@ -49,7 +49,6 @@ export default Ember.Mixin.create({
             })
             .catch((errors) => {
                 window.console.log(errors);
-                // TODO transition to Not Found in Django app?
                 this.transitionTo('page-not-found');
             });
     },
