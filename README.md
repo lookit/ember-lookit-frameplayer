@@ -1,7 +1,7 @@
 # Ember-frame-player
 
 This is a small Ember application that allows both researchers to preview an experiment and users to
-participate in an experiment. This is meant to be used in conjunction with the [Lookit API Django project] (https://github.com/CenterForOpenScience/lookit-api), which contains the Experimenter and Lookit applications.
+participate in an experiment. This is meant to be used in conjunction with the [Lookit API Django project](https://github.com/CenterForOpenScience/lookit-api), which contains the Experimenter and Lookit applications.
 The Django applications will proxy to these Ember routes for previewing/participating in an experiment.
 The Ember routes will fetch the appropriate models and then pass them to the exp-player component in [exp-addons](https://github.com/CenterForOpenScience/exp-addons).
 
@@ -16,17 +16,18 @@ You will need the following things properly installed on your computer.
 * [PhantomJS](http://phantomjs.org/)
 
 ## Installation
+```
+* git clone https://github.com/pattisdr/ember-frame-player.git
+* cd ember-frame-player
+* git submodule init
+* git submodule update
+* yarn install --pure-lockfile
+* bower install
 
-* `git clone https://github.com/pattisdr/ember-frame-player.git`
-* `cd ember-frame-player`
-* `git submodule init`
-* `git submodule update`
-* `yarn install --pure-lockfile`
-* `bower install`
-
-* `cd lib/exp-player`
-* `yarn install --pure-lockfile`
-* `bower install`
+* cd lib/exp-player
+* yarn install --pure-lockfile
+* bower install
+```
 
 To use the video capture facilities of Lookit, you will also need to place the file VideoRecorder.swf in your ember-frame-player/public/ folder. This file is not part of the git repository; it is from the HDFVR flash video recorder and must be obtained from a team member with access to the licensed version.
 
