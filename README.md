@@ -16,20 +16,23 @@ You will need the following things properly installed on your computer.
 * [PhantomJS](http://phantomjs.org/)
 
 ## Installation
-```
-* git clone https://github.com/pattisdr/ember-frame-player.git
-* cd ember-frame-player
-* git submodule init
-* git submodule update
-* yarn install --pure-lockfile
-* bower install
 
-* cd lib/exp-player
-* yarn install --pure-lockfile
-* bower install
+```bash
+ git clone https://github.com/pattisdr/ember-frame-player.git
+ cd ember-frame-player
+ git submodule init
+ git submodule update
+ yarn install --pure-lockfile
+ bower install
+
+ cd lib/exp-player
+ yarn install --pure-lockfile
+ bower install
 ```
 
-To use the video capture facilities of Lookit, you will also need to place the file VideoRecorder.swf in your ember-frame-player/public/ folder. This file is not part of the git repository; it is from the HDFVR flash video recorder and must be obtained from a team member with access to the licensed version.
+To use the video capture facilities of Lookit, you will also need to place the file `VideoRecorder.swf`
+in your `ember-frame-player/public/` folder. **This file is not part of the git repository**; it is from the HDFVR flash video 
+recorder and must be obtained from a team member with access to the licensed version.
 
 Create or open a file named '.env' in the root of the ember-frame-player directory, and add the following entries:
 
