@@ -17,6 +17,8 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
+Before beginning, you will need to install Yarn, a package manager (like npm).
+
 ```bash
  git clone https://github.com/pattisdr/ember-frame-player.git
  cd ember-frame-player
@@ -31,7 +33,7 @@ You will need the following things properly installed on your computer.
 ```
 
 To use the video capture facilities of Lookit, you will also need to place the file `VideoRecorder.swf`
-in your `ember-frame-player/public/` folder. **This file is not part of the git repository**; it is from the HDFVR flash video 
+in your `ember-frame-player/public/` folder. **This file is not part of the git repository**; it is from the HDFVR flash video
 recorder and must be obtained from a team member with access to the licensed version.
 
 Create or open a file named '.env' in the root of the ember-frame-player directory, and add the following entries:
