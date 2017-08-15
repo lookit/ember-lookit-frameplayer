@@ -26,6 +26,9 @@ module.exports = function(defaults) {
           },
           'ember-bootstrap-datetimepicker': {
               importBootstrapCSS: false
+          },
+          fingerprint: {
+              prepend: ''
           }
   });
 
