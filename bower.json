@@ -1,5 +1,5 @@
 {
-  "name": "ember-lookit-frame-player",
+  "name": "ember-lookit-frameplayer",
   "dependencies": {
     "ember": "~2.8.0",
     "bootstrap": "3.3.7",
