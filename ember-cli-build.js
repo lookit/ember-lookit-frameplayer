@@ -28,7 +28,8 @@ module.exports = function(defaults) {
               importBootstrapCSS: false
           },
           fingerprint: {
-              prepend: ''
+              prepend: '',
+              exclude: ['apple-touch-icon', 'favicon', 'mstile']
           }
   });
 
