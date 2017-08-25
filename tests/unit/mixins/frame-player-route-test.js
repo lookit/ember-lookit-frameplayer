@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import FramePlayerRouteMixin from 'ember-frame-player/mixins/frame-player-route';
+import FramePlayerRouteMixin from 'ember-lookit-frame-player/mixins/frame-player-route';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | frame player route');

@@ -1,4 +1,4 @@
-# Ember-frame-player
+# Ember-lookit-frame-player
 
 This is a small Ember application that allows both researchers to preview an experiment and users to
 participate in an experiment. This is meant to be used in conjunction with the [Lookit API Django project](https://github.com/CenterForOpenScience/lookit-api), which contains the Experimenter and Lookit applications.
@@ -20,8 +20,8 @@ You will need the following things properly installed on your computer.
 Before beginning, you will need to install Yarn, a package manager (like npm).
 
 ```bash
- git clone https://github.com/pattisdr/ember-frame-player.git
- cd ember-frame-player
+ git clone https://github.com/CenterForOpenScience/ember-lookit-frameplayer.git
+ cd ember-lookit-frame-player
  git submodule init
  git submodule update
  yarn install --pure-lockfile
@@ -33,10 +33,10 @@ Before beginning, you will need to install Yarn, a package manager (like npm).
 ```
 
 To use the video capture facilities of Lookit, you will also need to place the file `VideoRecorder.swf`
-in your `ember-frame-player/public/` folder. **This file is not part of the git repository**; it is from the HDFVR flash video
+in your `ember-lookit-frame-player/public/` folder. **This file is not part of the git repository**; it is from the HDFVR flash video
 recorder and must be obtained from a team member with access to the licensed version.
 
-Create or open a file named '.env' in the root of the ember-frame-player directory, and add the following entries:
+Create or open a file named '.env' in the root of the ember-lookit-frame-player directory, and add the following entries:
 
 ```
 WOWZA_PHP='{"minRecordTime":1,"showMenu":"false","showTimer":"false","enableBlinkingRec":1,"skipInitialScreen":1,"recordAgain":"false","showSoundBar":"true","hideDeviceSettingsButtons":1,"microphoneGain": 60,"connectionstring":"CONNECTIONSTRING"}'

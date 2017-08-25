@@ -2,7 +2,7 @@
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'ember-frame-player',
+    modulePrefix: 'ember-lookit-frame-player',
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
