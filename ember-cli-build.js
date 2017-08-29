@@ -29,7 +29,7 @@ module.exports = function(defaults) {
           },
           fingerprint: {
               prepend: '',
-              exclude: ['apple-touch-icon', 'favicon', 'mstile']
+              exclude: ['apple-touch-icon', 'favicon', 'mstile'],
           }
   });
 
