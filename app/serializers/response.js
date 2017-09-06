@@ -1,9 +1,9 @@
-import PrimarySerializer from './primary';
+import ApplicationSerializer from './application';
 
-export default PrimarySerializer.extend({
-  serialize(snapshot, options) {
-    let json = this._super(snapshot, options);
-    delete json.data.relationships['demographic-snapshot']
-    return json;
-  },
+export default ApplicationSerializer.extend({
+    serialize(snapshot, options) {
+        let json = this._super(snapshot, options);
+        delete json.data.relationships['demographic_snapshot']
+        return json;
+    },
 });

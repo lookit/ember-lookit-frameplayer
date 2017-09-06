@@ -2,6 +2,12 @@ import DS from 'ember-data';
 import Ember from 'ember';
 
 export default DS.JSONAPISerializer.extend({
+    keyForAttribute: function(attr) {
+        return Ember.String.underscore(attr);
+    },
+    keyForRelationship(key) {
+        return Ember.String.underscore(key);
+    },
     normalizeArrayResponse(store, primaryModelClass, payload) {
         // Adapted from CenterForOpenScience/ember-osf/serializers/osf-serializer to handle pagination from Lookit API -
         //
