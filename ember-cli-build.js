@@ -30,6 +30,9 @@ module.exports = function(defaults) {
           fingerprint: {
               prepend: '',
               exclude: ['apple-touch-icon', 'favicon', 'mstile'],
+          },
+          'ember-cli-dynamic-forms': {
+              includeBootstrapAssets: false
           }
   });
 

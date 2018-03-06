@@ -95,10 +95,6 @@ ansi-escapes@^1.1.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-1.4.0.tgz#d3a8a83b319aa67793662b13e761c7911422306e"
 
-ansi-regex@*, ansi-regex@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-3.0.0.tgz#ed0317c322064f79466c02966bddb605ab37d998"
-
 ansi-regex@^0.2.0, ansi-regex@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-0.2.1.tgz#0d8e946967a3d8143f93e24e298525fc1b2235f9"
@@ -106,6 +102,10 @@ ansi-regex@^0.2.0, ansi-regex@^0.2.1:
 ansi-regex@^2.0.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-2.1.1.tgz#c3b33ab5ee360d86e0e628f0468ae7ef27d654df"
+
+ansi-regex@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-3.0.0.tgz#ed0317c322064f79466c02966bddb605ab37d998"
 
 ansi-styles@^1.1.0:
   version "1.1.0"
@@ -2403,6 +2403,12 @@ ember-cli-dependency-checker@^1.2.0:
     is-git-url "^0.2.0"
     semver "^4.1.0"
 
+ember-cli-dynamic-forms@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-dynamic-forms/-/ember-cli-dynamic-forms-0.4.0.tgz#a8c127dc113335668a9d74177ecda85d3c5b25c9"
+  dependencies:
+    ember-cli-babel "^5.1.6"
+
 ember-cli-eslint@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-eslint/-/ember-cli-eslint-3.1.0.tgz#8d9e2a867654835ac1b24858d9117e143fa54bd4"
@@ -2862,11 +2868,11 @@ ember-getowner-polyfill@^1.0.1, ember-getowner-polyfill@^1.1.0:
     ember-cli-version-checker "^1.2.0"
     ember-factory-for-polyfill "^1.1.0"
 
-ember-inflector@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/ember-inflector/-/ember-inflector-2.0.0.tgz#ac0870e87c0724bd42cf5ed7ef166c49a296ecfb"
+ember-inflector@1.9.5:
+  version "1.9.5"
+  resolved "https://registry.yarnpkg.com/ember-inflector/-/ember-inflector-1.9.5.tgz#6a0bddf6824baa795e30d45125022accaaeba52c"
   dependencies:
-    ember-cli-babel "^6.0.0"
+    ember-cli-babel "^5.1.6"
 
 ember-inflector@^1.9.4:
   version "1.12.1"
@@ -4270,7 +4276,7 @@ image-size@^0.5.0:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/image-size/-/image-size-0.5.5.tgz#09dfd4ab9d20e29eb1c3e80b8990378df9e3cb9c"
 
-imurmurhash@*, imurmurhash@^0.1.4:
+imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/imurmurhash/-/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
 
