@@ -6,6 +6,8 @@ module.exports = function(environment) {
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
+    pipeLoc: process.env.PIPE_ACCOUNT_HASH,
+    pipeEnv: process.env.PIPE_ENVIRONMENT,
     sentry: {
         dsn: process.env.SENTRY_DSN || '',
         cdn: 'https://cdn.ravenjs.com/3.5.1/ember/raven.min.js',
