@@ -13,12 +13,6 @@ module.exports = function(defaults) {
           minifyCSS: {
               enabled: EmberApp.env() === 'production'
           },
-          emberWowza: {
-              // Config for video recorder config
-              asp: JSON.parse(process.env.WOWZA_ASP),
-              // Config for actual video recording
-              php: JSON.parse(process.env.WOWZA_PHP)
-          },
           'ember-bootstrap': {
             importBootstrapFont: true,
             'bootstrapVersion': 3,
@@ -30,6 +24,9 @@ module.exports = function(defaults) {
           fingerprint: {
               prepend: '',
               exclude: ['apple-touch-icon', 'favicon', 'mstile'],
+          },
+          'ember-cli-dynamic-forms': {
+              includeBootstrapAssets: false
           }
   });
 
