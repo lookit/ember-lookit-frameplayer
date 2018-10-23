@@ -19,11 +19,12 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "exp-player": "file:./lib/exp-player",
     "broccoli-auto-generated": "0.0.3",
     "dotenv": "^2.0.0",
     "ember-cp-validations": "2.9.7",
     "ember-data-url-templates": "^0.1.0",
+    "ember-js-pdf": "^0.4.2",
+    "exp-player": "file:./lib/exp-player",
     "request-promise": "^2.0.1"
   },
   "devDependencies": {
