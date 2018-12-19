@@ -10,25 +10,29 @@ export default ExpPlayer.extend({
         var _this = this;
         Ember.$(window).on('keydown', (e) => {
             if ((e.which === 112) || (e.ctrlKey && e.which == 88)) { // F1 key or ctrl-x
-              this.get('toast').warning("<br><button type='button' id='confirmationContinueStudy' class='btn btn-outline-secondary' style='color:black;'>Continue</button><button type='button' id='confirmationExitStudy' class='btn btn-danger' style='float:right;'>Exit</button>", 'Really exit study?',
-                {
-                    allowHtml: true,
-                    preventDuplicates: true,
-                    onclick: null,
-                    timeOut: 0,
-                    extendedTimeOut: 0,
-                    onShown: function () {
-                        Ember.$("#confirmationExitStudy").click(function(){
-                          _this.send('exitEarly');
-                        });
-                        Ember.$("#confirmationContinueStudy").click(function(){
-                          _this.get('toast').clear();
-                        });
-                      }
-                });
-
+                _this.showConfirmationDialog();
             }
         });
+    },
+
+    showConfirmationDialog() {
+        var _this = this;
+        this.get('toast').warning("<br><button type='button' id='confirmationContinueStudy' class='btn btn-outline-secondary' style='color:black;'>Continue</button><button type='button' id='confirmationExitStudy' class='btn btn-danger' style='float:right;'>Exit</button>", 'Really exit study?',
+          {
+              allowHtml: true,
+              preventDuplicates: true,
+              onclick: null,
+              timeOut: 0,
+              extendedTimeOut: 0,
+              onShown: function () {
+                  Ember.$("#confirmationExitStudy").click(function(){
+                    _this.send('exitEarly');
+                  });
+                  Ember.$("#confirmationContinueStudy").click(function(){
+                    _this.get('toast').clear();
+                  });
+                }
+          });
     },
 
     _removeHandlers() {
@@ -38,7 +42,8 @@ export default ExpPlayer.extend({
 
     beforeUnload() {
         if (!this.get('allowExit')) {
-            this.get('toast').warning('To leave the study early, please press F1 or Ctrl-X so you can select a privacy level for your videos.');
+            this.showConfirmationDialog();
+            this.get('toast').warning('To leave the study early, please press Exit below so you can select a privacy level for your videos.');
         }
         return this._super(...arguments);
     },
