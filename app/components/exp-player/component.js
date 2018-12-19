@@ -5,41 +5,48 @@ import ExpPlayer from 'exp-player/components/exp-player/component';
 export default ExpPlayer.extend({
     toast: Ember.inject.service(),
 
-    messageEarlyExitModal: `
-    If you're sure you'd like to leave this study early
-    you can do so now.
-
-    We'd appreciate it if before you leave you fill out a
-    very brief exit survey letting us know how we can use
-    any video captured during this session. Press 'Stay on
-    this Page' and you will be prompted to go to this
-    exit survey.
-
-    If leaving this page was an accident you will be
-    able to continue the study.
-    `,
-
     _registerHandlers() {
         this._super();
-        Ember.$(window).on('keyup', (e) => {
-            if (e.which === 112) { // F1 key
-                this.send('exitEarly');
+        var _this = this;
+        Ember.$(window).on('keydown', (e) => {
+            if ((e.which === 112) || (e.ctrlKey && e.which == 88)) { // F1 key or ctrl-x
+              this.get('toast').warning("<br><button type='button' id='confirmationContinueStudy' class='btn btn-outline-secondary' style='color:black;'>Continue</button><button type='button' id='confirmationExitStudy' class='btn btn-danger' style='float:right;'>Exit</button>", 'Really exit study?',
+                {
+                    allowHtml: true,
+                    preventDuplicates: true,
+                    onclick: null,
+                    timeOut: 0,
+                    extendedTimeOut: 0,
+                    onShown: function () {
+                        Ember.$("#confirmationExitStudy").click(function(){
+                          _this.send('exitEarly');
+                        });
+                        Ember.$("#confirmationContinueStudy").click(function(){
+                          _this.get('toast').clear();
+                        });
+                      }
+                });
+
             }
         });
     },
+
     _removeHandlers() {
-        Ember.$(window).off('keypress');
+        Ember.$(window).off('keydown');
         return this._super();
     },
+
     beforeUnload() {
         if (!this.get('allowExit')) {
-            this.get('toast').warning('To leave the study early, please press F1 and then select a privacy level for your videos');
+            this.get('toast').warning('To leave the study early, please press F1 or Ctrl-X so you can select a privacy level for your videos.');
         }
         return this._super(...arguments);
     },
+
     actions: {
         exitEarly() {
             this.set('hasAttemptedExit', false);
+            Ember.$(window).off('keydown');
             // Save any available data immediately
             this.send('setGlobalTimeEvent', 'exitEarly', {
                 exitType: 'manualInterrupt',  // User consciously chose to exit, eg by pressing F1 key
