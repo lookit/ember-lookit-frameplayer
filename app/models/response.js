@@ -6,7 +6,6 @@ export default DS.Model.extend({
     expData: DS.attr(),
     sequence: DS.attr(),
     completed: DS.attr('boolean'),
-    participantHasConsented: DS.attr('boolean', {defaultValue: false}),
     child: DS.belongsTo('child'),
     study: DS.belongsTo('study'),
     demographicSnapshot: DS.belongsTo('demographic'),
