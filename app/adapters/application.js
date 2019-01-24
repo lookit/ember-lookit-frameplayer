@@ -13,8 +13,7 @@ export default DS.JSONAPIAdapter.extend(HasManyQuery.RESTAdapterMixin, {
     headers: Ember.computed(function() {
         // Add cookie to http header
         return {
-            'X-CSRFTOKEN': Ember.get(document.cookie.match(/csrftoken\=([^;]*)/), '1'),
-            'Authorization': 'Token be90832a60736925c16b6314652fb7f9ee1584b1'
+            'X-CSRFTOKEN': Ember.get(document.cookie.match(/csrftoken\=([^;]*)/), '1')
         };
     }).volatile()
 });
