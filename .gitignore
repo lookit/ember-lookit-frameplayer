@@ -26,3 +26,5 @@ scripts/env
 migration/output/*
 
 themes/lookit/assets/screenshots/*
+
+/ssl
