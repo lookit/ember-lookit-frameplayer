@@ -1,0 +1,12 @@
+<div class="radio-group">
+    {{yield}}
+    <label class="label-left">
+        {{labelLeft}}
+    </label>
+    {{#each options as |option|}}
+        {{radio-button value=option checked=value name=elementId}}
+    {{/each}}
+    <label class="label-right">
+        {{labelRight}}
+    </label>
+</div>

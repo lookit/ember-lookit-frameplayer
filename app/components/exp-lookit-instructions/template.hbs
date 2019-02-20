@@ -1,0 +1,89 @@
+<div class="row exp-lookit-instructions">
+    <div class="vertical-pad"></div>
+
+    <div class="{{if showWebcam "col-md-6" "exp-text"}}">
+
+        {{#each blocks as |block idx|}}
+
+            {{exp-text-block block=block}}
+
+            {{#if block.mediaBlock}}
+
+                <div class="media-wrapper" id="media-{{idx}}">
+                    <p class={{if (eq size 'large') 'exp-text-large' 'exp-text-medium'}}>
+                        {{block.mediaBlock.title}}
+                    </p>
+
+                    {{#if block.mediaBlock.isVideo}}
+                        <video class="player-media"
+                                   controls
+                                   onended={{action 'mediaPlayed'}}
+                            >
+                                {{#each block.mediaBlock.sources as |source|}}
+                                    <source src={{source.src}} type={{source.type}}>
+                                {{/each}}
+                        </video>
+                    {{else}}
+                        <audio class="player-media"
+                                   controls
+                                   onended={{action 'mediaPlayed'}}
+                            >
+                                {{#each block.mediaBlock.sources as |source|}}
+                                    <source src={{source.src}} type={{source.type}}>
+                                {{/each}}
+                        </audio>
+                    {{/if}}
+
+                    <p>
+                        {{exp-format block.mediaBlock.text}}
+                    </p>
+
+                    {{#if showWarning}}
+                        <div class="media-warning">
+                            * {{block.mediaBlock.warningText}}
+                        </div>
+                    {{/if}}
+                </div>
+
+            {{/if}}
+
+        {{/each}}
+
+    </div>
+
+    {{#if showWebcam}}
+        <div class="col-md-2"></div>
+        <div class="col-md-4 recorder-col">
+            <div class="row exp-video-config recorder-container">
+                <div id="recorder" class="col-xs-12"></div>
+            </div>
+
+            {{#if webcamBlocks}}
+                <div class="vertical-pad"></div>
+                {{#each webcamBlocks as |block|}}
+                    {{exp-text-block block=block}}
+                {{/each}}
+            {{/if}}
+
+        </div>
+    {{/if}}
+
+</div>
+
+<div class="row exp-lookit-instructions">
+    <div class="{{if showWebcam "col-md-12" "exp-text"}}">
+        <div class="vertical-pad"></div>
+
+        {{#if showPreviousButton}}
+            <button class="btn btn-default pull-left" {{ action 'previous' }}>
+                Previous
+            </button>
+        {{/if}}
+
+        <button id="nextbutton" class="btn btn-success pull-right" {{ action 'checkAudioThenNext' }}>
+            {{exp-format nextButtonText}}
+        </button>
+
+    </div>
+
+</div>

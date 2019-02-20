@@ -1,0 +1,56 @@
+exp-lookit-mood-questionnaire .radio.block, .checkbox {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 20px;
+}
+
+.exp-lookit-mood-questionnaire .timepicker input {
+    width: 30%;
+}
+
+.exp-lookit-mood-questionnaire .alpaca-field-object {
+    border: none;
+    padding: 0px;
+}
+
+.exp-lookit-mood-questionnaire .row.body {
+    display: table;
+    width: 100%;
+}
+
+.exp-lookit-mood-questionnaire .left-side {
+    float: none;
+    display: table-cell;
+}
+
+.exp-lookit-mood-questionnaire .right-side {
+    float: none;
+    display: table-cell;
+}
+
+// A slight hack to fix bootstrap's datetimepicker
+// positioning
+.exp-lookit-mood-questionnaire .form-group {
+    position: relative;
+
+    // position it on top of input
+    .dropdown-menu {
+        bottom: -245px !important;
+    }
+}
+
+// Arrange for possible left/right labels for radio groups
+.exp-lookit-mood-questionnaire .exp-lookit-mood .alpaca-field-radio span {
+    text-align: center;
+    padding: 0px;
+}
+.exp-lookit-mood-questionnaire .exp-lookit-mood .alpaca-field-radio span:first-child {
+    text-align: right;
+}
+.exp-lookit-mood-questionnaire .exp-lookit-mood .alpaca-field-radio span:last-of-type {
+    text-align: left;
+}
+
+.exp-lookit-mood-questionnaire .exp-lookit-mood .alpaca-control-label.radio-label {
+    font-weight: normal;
+}

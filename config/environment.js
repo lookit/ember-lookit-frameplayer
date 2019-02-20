@@ -14,6 +14,7 @@ module.exports = function(environment) {
         development: process.env.SENTRY_DSN === ''
     },
     EmberENV: {
+      EXTEND_PROTOTYPES: true,
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
@@ -23,8 +24,20 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    // TODO: remove these, not actually applicable on Lookit
+    featureFlags: {
+        // Whether to load existing expData into the exp-frames
+        loadData: true,
+        // Whether to validate survey forms
+        validate: true,
+        // Whether to redirect users who have already taken the study to an error page
+        // Set to false to test study multiple times with the same account
+        showStudyCompletedPage: true
     }
   };
+
 
   if (environment === 'development') {
       ENV.host = 'http://localhost:8000';

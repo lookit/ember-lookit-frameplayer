@@ -1,8 +1,6 @@
 import Ember from 'ember';
 import loadAll from '../utils/load-relationship';
 
-// Adapted from Lookit's participate route, Experimenter's preview route, and the exp-player route mixin
-// https://github.com/CenterForOpenScience/exp-addons/blob/develop/exp-player/addon/mixins/exp-player-route.js
 export default Ember.Mixin.create({
     _study: null,
     _child: null,
@@ -33,10 +31,12 @@ export default Ember.Mixin.create({
             })
             .then((study) => {
                 this.set('_study', study);
+                console.log(study.id);
                 return this._getChild(params);
             })
             .then((child) => {
                 this.set('_child', child);
+                console.log(child.id);
                 return this._createStudyResponse().save();
             }).then((response) => {
                 this.set('_response', response);

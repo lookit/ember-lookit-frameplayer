@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/mixins/expand-assets.js - exp-player</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
+                            <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
+                            <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
+                            <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
+                            <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
+                            <li><a href="../classes/ExpLookitInstructions.html">ExpLookitInstructions</a></li>
+                            <li><a href="../classes/ExpLookitMoodQuestionnaire.html">ExpLookitMoodQuestionnaire</a></li>
+                            <li><a href="../classes/ExpLookitObservation.html">ExpLookitObservation</a></li>
+                            <li><a href="../classes/ExpLookitPreferentialLooking.html">ExpLookitPreferentialLooking</a></li>
+                            <li><a href="../classes/ExpLookitPreviewExplanation.html">ExpLookitPreviewExplanation</a></li>
+                            <li><a href="../classes/ExpLookitStoryPage.html">ExpLookitStoryPage</a></li>
+                            <li><a href="../classes/ExpLookitSurvey.html">ExpLookitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
+                            <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
+                            <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
+                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
+                            <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
+                            <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
+                            <li><a href="../classes/ExpVideoPreview.html">ExpVideoPreview</a></li>
+                            <li><a href="../classes/FullScreen.html">FullScreen</a></li>
+                            <li><a href="../classes/MediaReload.html">MediaReload</a></li>
+                            <li><a href="../classes/permute.html">permute</a></li>
+                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
+                            <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
+                            <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
+                            <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: addon/mixins/expand-assets.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import Ember from &#x27;ember&#x27;;
+
+let {
+    $
+} = Ember;
+
+/**
+ * @module exp-player
+ * @submodule mixins
+ */
+
+/**
+ * Allow users to provide audio/video and image source values as either relative paths
+ * within a base directory or as full paths.
+ *
+ * When adding this mixin to a frame, you will need to define a property of the frame
+ * &#x60;assetsToExpand&#x60;, which indicates which parameters might be source objects that need
+ * expansion. &#x60;assetsToExpand&#x60; should be an object with keys &#x60;image&#x60;, &#x60;video&#x60;, and &#x60;audio&#x60;,
+ * and each value should be an Array of parameter names that provide sources for resources
+ * of the corresponding type. E.g.,
+ &#x60;&#x60;&#x60;
+    {
+        &#x27;image&#x27;: [&#x27;leftObjectPic&#x27;, &#x27;rightObjectPic&#x27;],
+        &#x27;audio&#x27;: [&#x27;introAudio&#x27;, &#x27;testAudio&#x27;],
+        &#x27;video&#x27;: [&#x27;objectDemoVideo&#x27;]
+    }
+ &#x60;&#x60;&#x60;
+ *
+ * This is defined directly within your frame, e.g.:
+&#x60;&#x60;&#x60;
+    export default ExpFrameBaseComponent.extend(ExpandAssets, {
+        ...
+        type: &#x27;exp-my-cool-frame&#x27;,
+        assetsToExpand:     {
+            &#x27;image&#x27;: [&#x27;leftObjectPic&#x27;, &#x27;rightObjectPic&#x27;],
+            &#x27;audio&#x27;: [&#x27;introAudio&#x27;, &#x27;testAudio&#x27;],
+            &#x27;video&#x27;: [&#x27;objectDemoVideo&#x27;]
+            },
+        ...,
+        meta: {...},
+        actions: {...}
+    });
+&#x60;&#x60;&#x60;
+
+ *
+ *
+ * The *user* of your frame can then optionally provide &#x60;baseDir&#x60;, &#x60;audioTypes&#x60;, and
+ * &#x60;videoTypes&#x60; parameters to indicate how to expand relative paths.
+ *
+ * How expansion works:
+ * - **Images**: Suppose the list &#x60;assetsToExpand[&#x27;image&#x27;]&#x60; contains &#x60;centerStimulus&#x60;. If
+ *   &#x60;centerStimulus&#x60; is provided as a full URL (with &#x60;://&#x60; in it), nothing will happen to
+ *   it. But if &#x60;centerStimulus&#x60; is a string that is not a full URL, it will be transformed
+ *   during the &#x60;didReceiveAttrs&#x60; hook to &#x60;baseDir + &#x27;img/&#x27; + centerStimulus&#x60;.
+ *
+ * - **Audio**: Suppose the list &#x60;assetsToExpand[&#x27;audio&#x27;]&#x60; contains &#x60;utterance1&#x60;. If
+ *   &#x60;utterance1&#x60; is a nonempty string (rather than an object/Array), e.g., &#x60;goodmorning&#x60;,
+ *   and &#x60;audioTypes&#x60; has been set to &#x60;[&#x27;typeA&#x27;, &#x27;typeB&#x27;]&#x60;,
+ *   then &#x60;utterance1&#x60; will be expanded out to
+ &#x60;&#x60;&#x60;
+         [
+             {
+                 src: &#x27;baseDir&#x27; + &#x27;typeA/goodmorning.typeA&#x27;,
+                 type: &#x27;audio/typeA&#x27;
+             },
+             {
+                 src: &#x27;baseDir&#x27; + &#x27;typeB/goodmorning.typeB&#x27;,
+                 type: &#x27;audio/typeB&#x27;
+             }
+         ]
+ &#x60;&#x60;&#x60;
+ *
+ * - **Video**: Same as audio, but using the types from &#x60;videoTypes&#x60;.
+ *
+ * **Important**: During the &#x60;didReceiveAttrs&#x60; hook, your frame will acquire new properties &#x60;[parameterName]_parsed&#x60;
+ * for each of the parameters named in &#x60;assetsToExpand&#x60;. These properties will hold the
+ * expanded values. E.g., in the example above, you would now have a &#x60;centerStimulus_parsed&#x60;
+ * property. This is what you should use for showing/playing images/audio/video in your
+ * frame template.
+ *
+ * **Advanced use**: the property names in &#x60;assetsToExpand&#x60; can be either full parameter names
+ * as in the examples above, or can be of the form &#x60;parameterName/subProperty&#x60;. If using
+ * the &#x60;parameterName/subProperty&#x60; syntax, instead of processing the parameter &#x60;parameterName&#x60;,
+ * we will expect that that parameter is either an object with property &#x60;subProperty&#x60;
+ * (which will be expanded) or an Array of objects with property &#x60;subProperty&#x60; (which will
+ * be expanded). The original value of the &#x60;parameterName&#x60; parameter may in this case be
+ * mutated as assets are expanded. However, your frame will still also acquire a new
+ * property &#x60;[parameterName]_parsed&#x60; which you should use for accessing the processed
+ * values. This avoids potential problems with the template being rendered using the original
+ * values and not updated.
+ *
+ * @class ExpandAssets
+ */
+export default Ember.Mixin.create({
+    /**
+     * Object describing which properties may need expansion
+     * @property {String} assetsToExpand
+     */
+    assetsToExpand: {},
+
+    meta: {
+        parameters: {
+            type: &#x27;object&#x27;,
+            properties: {
+                /**
+                 * Base directory for where to find stimuli. Any image src
+                 * values that are not full paths will be expanded by prefixing
+                 * with &#x60;baseDir&#x60; + &#x60;img/&#x60;. Any audio/video src values provided as
+                 * strings rather than objects with &#x60;src&#x60; and &#x60;type&#x60; will be
+                 * expanded out to &#x60;baseDir/avtype/[stub].avtype&#x60;, where the potential
+                 * avtypes are given by &#x60;audioTypes&#x60; and &#x60;videoTypes&#x60;.
+                 *
+                 * baseDir should include a trailing slash
+                 * (e.g., &#x60;http://stimuli.org/myexperiment/&#x60;); if a value is provided that
+                 * does not end in a slash, one will be added.
+                 *
+                 * @property {String} baseDir
+                 * @default &#x27;&#x27;
+                 */
+                baseDir: {
+                    type: &#x27;string&#x27;,
+                    default: &#x27;&#x27;,
+                    description: &#x27;Base directory for all stimuli&#x27;
+                },
+                /**
+                 * List of audio types to expect for any audio specified just
+                 * with a string rather than with a list of src/type objects.
+                 * If audioTypes is &#x60;[&#x27;typeA&#x27;, &#x27;typeB&#x27;]&#x60; and an audio source
+                 * is given as &#x60;intro&#x60;, the audio source will be
+                 * expanded out to
+                 *
+                 *
+                 *     [
+                 *         {
+                 *             src: &#x27;baseDir&#x27; + &#x27;typeA/intro.typeA&#x27;,
+                 *             type: &#x27;audio/typeA&#x27;
+                 *         },
+                 *         {
+                 *             src: &#x27;baseDir&#x27; + &#x27;typeB/intro.typeB&#x27;,
+                 *             type: &#x27;audio/typeB&#x27;
+                 *         }
+                 *     ]
+                 *
+                 *
+                 * @property {String[]} audioTypes
+                 * @default [&#x27;mp3&#x27;, &#x27;ogg&#x27;]
+                 */
+                audioTypes: {
+                    type: &#x27;array&#x27;,
+                    default: [&#x27;mp3&#x27;, &#x27;ogg&#x27;],
+                    description: &#x27;List of audio types to expect for any audio sources specified as strings rather than lists of src/type pairs&#x27;
+                },
+                /**
+                 * List of video types to expect for any audio specified just
+                 * with a string rather than with a list of src/type objects.
+                 * If vidioTypes is &#x60;[&#x27;typeA&#x27;, &#x27;typeB&#x27;]&#x60; and a video source
+                 * is given as &#x60;intro&#x60;, the video source will be
+                 * expanded out to
+                 *
+                 *
+                 *     [
+                 *         {
+                 *             src: &#x27;baseDir&#x27; + &#x27;typeA/intro.typeA&#x27;,
+                 *             type: &#x27;video/typeA&#x27;
+                 *         },
+                 *         {
+                 *             src: &#x27;baseDir&#x27; + &#x27;typeB/intro.typeB&#x27;,
+                 *             type: &#x27;video/typeB&#x27;
+                 *         }
+                 *     ]
+                 *
+                 *
+                 * @property {String[]} videoTypes
+                 * @default [&#x27;mp4&#x27;, &#x27;webm&#x27;]
+                 */
+                videoTypes: {
+                    type: &#x27;array&#x27;,
+                    default: [&#x27;mp4&#x27;, &#x27;webm&#x27;],
+                    description: &#x27;List of audio types to expect for any video sources specified as strings rather than lists of src/type pairs&#x27;
+                }
+            }
+        }
+    },
+
+    // Utility to expand stubs into either full URLs (for images) or
+    // array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects (for audio/video).
+    expandAsset(asset, type) {
+        var fullAsset = asset;
+        var _this = this;
+
+        var typesDict = {
+            &#x27;audio&#x27;: this.get(&#x27;audioTypes&#x27;),
+            &#x27;video&#x27;: this.get(&#x27;videoTypes&#x27;)
+            };
+
+        switch (type) {
+          case &#x27;image&#x27;:
+            if (typeof asset === &#x27;string&#x27; &amp;&amp; !(asset.includes(&#x27;://&#x27;))) {
+                // Image: replace stub with full URL if needed
+                fullAsset = this.baseDir + &#x27;img/&#x27; + asset;
+            }
+            return fullAsset;
+            break;
+          case &#x27;audio&#x27;:
+          case &#x27;video&#x27;:
+            var types = typesDict[type];
+            // Replace any string sources with the appropriate expanded source objects
+            if (typeof asset === &#x27;string&#x27; &amp;&amp; asset) {
+                fullAsset = [];
+                for (var iType = 0; iType &lt; types.length; iType++) {
+                    fullAsset.push({
+                        src: _this.baseDir + types[iType] + &#x27;/&#x27; + asset + &#x27;.&#x27; + types[iType],
+                        type: type + &#x27;/&#x27; + types[iType]
+                    });
+                }
+            }
+            return fullAsset;
+            break;
+          default:
+            throw &quot;Unrecognized type of asset to expand. Options are &#x27;image&#x27;, &#x27;audio&#x27;, and &#x27;video&#x27;.&quot;;
+        }
+    },
+
+
+
+    didReceiveAttrs() {
+
+        this._super(...arguments);
+
+        // Add a trailing slash to baseDir if needed
+        var baseDir = this.get(&#x27;baseDir&#x27;);
+        if (baseDir &amp;&amp; baseDir.slice(-1) != &#x27;/&#x27;) {
+            baseDir = baseDir + &#x27;/&#x27;;
+            this.set(&#x27;baseDir&#x27;, baseDir);
+        }
+
+        var _this = this;
+        var assetTypes = [&#x27;audio&#x27;, &#x27;video&#x27;, &#x27;image&#x27;];
+
+        assetTypes.forEach((type) =&gt; {
+            if (_this.get(&#x27;assetsToExpand&#x27;, {}).hasOwnProperty(type)) {
+                var srcParameterNames = _this.get(&#x27;assetsToExpand&#x27;, {})[type];
+                srcParameterNames.forEach((paraName) =&gt; {
+                    var paraPieces = paraName.split(&#x27;/&#x27;);
+                    if (paraPieces.length == 1) { // If we have the full parameter name, just expand that param
+                        var sources = _this.get(paraName);
+                        if (sources) {
+                            _this.set(paraName + &#x27;_parsed&#x27;, _this.expandAsset(sources, type));
+                        }
+                    } else if (paraPieces.length == 2) { // If we have something of the form parameterName/propName
+                        var baseName = paraPieces[0];
+                        var propName = paraPieces[1]; //paraPieces.slice(1,).join(&#x27;/&#x27;);
+                        var sources = _this.get(baseName, {});
+                        if (sources) {
+                            if (Array.isArray(sources)) {  //expand this[parameterName][i][propName] for all i
+                                sources.forEach( (elem) =&gt; {
+                                    if (elem.hasOwnProperty(propName)) {
+                                        Ember.set(elem, propName, _this.expandAsset(elem[propName], type));
+                                    }
+                                });
+                                _this.set(baseName + &#x27;_parsed&#x27;, sources);
+                            } else { //expand this[parameterName][propName]
+                                if (sources.hasOwnProperty(propName)) {
+                                    Ember.set(sources, propName, _this.expandAsset(sources[propName], type));
+                                }
+                                _this.set(baseName + &#x27;_parsed&#x27;, sources);
+                            }
+                        }
+                    } else { // Have something like &#x27;a/b/c&#x27; with two or more slashes, not handled yet
+                        throw &quot;Nesting of parameter names to expand beyond two levels not supported (max one slash).&quot;;
+                    }
+
+                });
+            }
+        });
+    }
+
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

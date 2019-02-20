@@ -41,6 +41,17 @@ Before beginning, you will need to install Yarn, a package manager (like npm).
 
 Make use of the many generators for code, try `ember help generate` for more details
 
+### Updating docs
+Documentation of components is generated using YUIDoc:
+ ```
+ $ cd exp-player
+ $ yarn run docs
+ ```
+ 
+At the moment, this is a manual process: whatever 
+ files are in the top level `/docs/` folder of the master branch will be served via GitHub pages.
+      
+
 ### Running Tests
 
 * `ember test`

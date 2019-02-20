@@ -1,4 +1,5 @@
 /* eslint-env node */
+/* jshint node:true */
 /* global require, module */
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 require('dotenv').config();
@@ -27,6 +28,9 @@ module.exports = function(defaults) {
           },
           'ember-cli-dynamic-forms': {
               includeBootstrapAssets: false
+          },
+          'ember-cli-template-lint': {
+              testGenerator: 'qunit' // or 'mocha', etc.
           }
   });
 

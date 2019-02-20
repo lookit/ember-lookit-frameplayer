@@ -1,0 +1,32 @@
+<div class="row" id="experiment-player">
+    <div class="col-xs-12">
+        {{#if (and (not isFullscreen) experiment.displayFullscreen)}}
+            <p>
+                <button style="width: 100%" class="btn btn-warning" {{ action 'showFullscreen' }}>
+                    Return to fullscreen
+                </button>
+            </p>
+        {{/if}}
+
+        {{
+        component currentFrameTemplate
+
+                  frameIndex=frameIndex
+                  framePage=framePage
+                  updateFramePage=(action 'updateFramePage')
+                  frameConfig=currentFrameConfig
+                  frameContext=currentFrameContext
+
+                  session=session
+                  experiment=experiment
+
+                  next=(action 'next')
+                  previous=(action 'previous')
+                  saveHandler=(action 'saveFrame')
+                  skipone=(action 'skipone')
+                  sessionCompleted=(action 'sessionCompleted')
+
+                  extra=extra
+        }}
+    </div>
+</div>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/components/exp-lookit-preview-explanation/component.js - exp-player</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
+                            <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
+                            <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
+                            <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
+                            <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
+                            <li><a href="../classes/ExpLookitInstructions.html">ExpLookitInstructions</a></li>
+                            <li><a href="../classes/ExpLookitMoodQuestionnaire.html">ExpLookitMoodQuestionnaire</a></li>
+                            <li><a href="../classes/ExpLookitObservation.html">ExpLookitObservation</a></li>
+                            <li><a href="../classes/ExpLookitPreferentialLooking.html">ExpLookitPreferentialLooking</a></li>
+                            <li><a href="../classes/ExpLookitPreviewExplanation.html">ExpLookitPreviewExplanation</a></li>
+                            <li><a href="../classes/ExpLookitStoryPage.html">ExpLookitStoryPage</a></li>
+                            <li><a href="../classes/ExpLookitSurvey.html">ExpLookitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
+                            <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
+                            <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
+                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
+                            <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
+                            <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
+                            <li><a href="../classes/ExpVideoPreview.html">ExpVideoPreview</a></li>
+                            <li><a href="../classes/FullScreen.html">FullScreen</a></li>
+                            <li><a href="../classes/MediaReload.html">MediaReload</a></li>
+                            <li><a href="../classes/permute.html">permute</a></li>
+                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
+                            <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
+                            <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
+                            <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: addon/components/exp-lookit-preview-explanation/component.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import layout from &#x27;./template&#x27;;
+import ExpFrameBaseComponent from &#x27;../../components/exp-frame-base/component&#x27;;
+
+/**
+ * @module exp-player
+ * @submodule frames
+ */
+
+/**
+ * A frame that to explain any blinding procedures to parents, and offer them the option to preview stimuli before the study. Two buttons allow the user to move forward: one goes to the next frame (if the parent wants to preview stimuli), and one skips the next frame and goes to the one after that (if the parent declins). Therefore, this frame should be followed by an {{#crossLink &quot;ExpVideoPreview&quot;}}{{/crossLink}} frame.
+
+&#x60;&#x60;&#x60;json
+ &quot;frames&quot;: {
+    &quot;my-video-preview-explanation&quot;: {
+        &quot;introBlock&quot;: {
+            &quot;text&quot;: &quot;During the videos, we&#x27;ll ask that you hold your child over your shoulder like this, so that you&#x27;re facing face away from the screen.&quot;
+        },
+        &quot;image&quot;: {
+            &quot;alt&quot;: &quot;Father holding child looking over his shoulder&quot;,
+            &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/exp-physics/OverShoulder.jpg&quot;
+        },
+        &quot;kind&quot;: &quot;exp-lookit-preview-explanation&quot;,
+        &quot;skipButtonText&quot;: &quot;Skip preview&quot;,
+        &quot;previewButtonText&quot;: &quot;I&#x27;d like to preview the videos&quot;,
+        &quot;blocks&quot;: [
+            {
+                &quot;text&quot;: &quot;The reason we ask this is that your child is learning from you all the time. Even if he or she can&#x27;t see where you&#x27;re looking, you may unconsciously shift towards one side or the other and influence your child&#x27;s attention. We want to make sure we&#x27;re measuring your child&#x27;s preferences, not yours!&quot;
+            },
+            {
+                &quot;text&quot;: &quot;If you&#x27;d like to see the videos your child will be shown, you can take a look ahead of time now. It&#x27;s important that you preview the videos without your child, so that the videos will still be new to them.&quot;
+            }
+        ],
+        &quot;showPreviousButton&quot;: true
+    }
+ }
+
+ * &#x60;&#x60;&#x60;
+ * @class ExpLookitPreviewExplanation
+ * @extends ExpFrameBase
+ */
+
+export default ExpFrameBaseComponent.extend({
+    type: &#x27;exp-lookit-preview-explanation&#x27;,
+    layout: layout,
+    meta: {
+        name: &#x27;ExpLookitPreviewExplanation&#x27;,
+        description: &#x27;Let parents know about blinding, give option to preview videos.&#x27;,
+        parameters: {
+            type: &#x27;object&#x27;,
+            properties: {
+                /**
+                 * Whether to show a &#x27;previous&#x27; button
+                 *
+                 * @property {Boolean} showPreviousButton
+                 * @default true
+                 */
+                showPreviousButton: {
+                    type: &#x27;boolean&#x27;,
+                    default: true
+                },
+                /**
+                 * Array of text blocks (paragraphs) to display after the image.
+                 *
+                 * @property {Object} blocks
+                 *   @param {String} title title to display
+                 *   @param {String} text paragraph of text
+                 *   @param {Boolean} emph whether to bold this paragraph
+                 */
+                blocks: {
+                    type: &#x27;array&#x27;,
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            title: {
+                                type: &#x27;string&#x27;
+                            },
+                            text: {
+                                type: &#x27;string&#x27;
+                            },
+                            emph: {
+                                type: &#x27;boolean&#x27;
+                            }
+                        }
+                    },
+                    default: []
+                },
+                /**
+                 * Object specifying first block of text (pre-image) to display.
+                 *
+                 * @property {Object} introBlock
+                 *   @param {String} title title to display
+                 *   @param {String} text paragraph of text
+                 *   @param {Boolean} emph whether to bold this paragraph
+                 */
+                introBlock: {
+                    type: &#x27;object&#x27;,
+                    properties: {
+                        title: {
+                            type: &#x27;string&#x27;
+                        },
+                        text: {
+                            type: &#x27;string&#x27;
+                        },
+                        emph: {
+                            type: &#x27;boolean&#x27;
+                        }
+                    }
+                },
+                /**
+                 * Image to display after the intro block. (Displayed centered,
+                 * with border, max height 220px.) E.g., a picture of a parent
+                 * holding a child looking over their shoulder.
+                 *
+                 * @property {Object} image
+                 *   @param {String} src URL of image
+                 *   @param {String} alt alt-text
+                 */
+                image: {
+                    type: &#x27;object&#x27;,
+                    properties: {
+                        src: {
+                            type: &#x27;string&#x27;
+                        },
+                        alt: {
+                            type: &#x27;string&#x27;
+                        }
+                    }
+                },
+                /**
+                 * Text to display on the button to go to the next frame
+                 *
+                 * @property {String} previewButtonText
+                 * @default &#x27;I\&#x27;d like to preview the videos&#x27;
+                 */
+                previewButtonText: {
+                    type: &#x27;string&#x27;,
+                    default: &#x27;I\&#x27;d like to preview the videos&#x27;
+                },
+                /**
+                 * Text to display on the button to skip the next frame
+                 *
+                 * @property {String} skipButtonText
+                 * @default &#x27;Skip preview&#x27;
+                 */
+                skipButtonText: {
+                    type: &#x27;string&#x27;,
+                    default: &#x27;Skip preview&#x27;
+                }
+            }
+        },
+        data: {
+            type: &#x27;object&#x27;,
+            properties: {
+                // define data structure here
+            }
+        }
+    },
+    actions: {
+        skipone: function() {
+            this.get(&#x27;skipone&#x27;)();
+        }
+    }
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/components/exp-video-preview/component.js - exp-player</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
+                            <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
+                            <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
+                            <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
+                            <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
+                            <li><a href="../classes/ExpLookitInstructions.html">ExpLookitInstructions</a></li>
+                            <li><a href="../classes/ExpLookitMoodQuestionnaire.html">ExpLookitMoodQuestionnaire</a></li>
+                            <li><a href="../classes/ExpLookitObservation.html">ExpLookitObservation</a></li>
+                            <li><a href="../classes/ExpLookitPreferentialLooking.html">ExpLookitPreferentialLooking</a></li>
+                            <li><a href="../classes/ExpLookitPreviewExplanation.html">ExpLookitPreviewExplanation</a></li>
+                            <li><a href="../classes/ExpLookitStoryPage.html">ExpLookitStoryPage</a></li>
+                            <li><a href="../classes/ExpLookitSurvey.html">ExpLookitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
+                            <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
+                            <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
+                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
+                            <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
+                            <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
+                            <li><a href="../classes/ExpVideoPreview.html">ExpVideoPreview</a></li>
+                            <li><a href="../classes/FullScreen.html">FullScreen</a></li>
+                            <li><a href="../classes/MediaReload.html">MediaReload</a></li>
+                            <li><a href="../classes/permute.html">permute</a></li>
+                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
+                            <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
+                            <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
+                            <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: addon/components/exp-video-preview/component.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import Ember from &#x27;ember&#x27;;
+import layout from &#x27;./template&#x27;;
+
+import ExpFrameBaseComponent from &#x27;../../components/exp-frame-base/component&#x27;;
+import MediaReload from &#x27;../../mixins/media-reload&#x27;;
+import VideoRecord from &#x27;../../mixins/video-record&#x27;;
+import ExpandAssets from &#x27;../../mixins/expand-assets&#x27;;
+
+/**
+ * @module exp-player
+ * @submodule frames
+ */
+
+/**
+ * A frame that displays a series of videos to preview, without collecting data as a live experiment. User can go through these at their own pace and video controls are shown. Webcam video is recorded starting once the user presses a button to actually display the videos, so that researchers can check that the participant (infant/child) did not see the videos ahead of time.
+ &#x60;&#x60;&#x60;json
+ &quot;frames&quot;: {
+    &quot;my-sample-frame&quot;: {
+        &quot;id&quot;: &quot;video-preview&quot;,
+        &quot;kind&quot;: &quot;exp-video-preview&quot;,
+        &quot;text&quot;: &quot;Here are the videos your child will see in this study. You can watch them ahead of time--please just don&#x27;t show your child yet!&quot;,
+        &quot;prompt&quot;: &quot;My child can NOT see the screen. Start the preview!&quot;,
+        &quot;videos&quot;: [
+           {
+             &quot;caption&quot;: &quot;User-facing text that appears below the video&quot;,
+             &quot;baseDir&quot;: &quot;https://url.com/&quot;,
+             &quot;sources&quot;: &quot;example_intro&quot;,
+             &quot;videoTypes&quot;: [&quot;webm&quot;, &quot;mp4&quot;]
+           }
+         ]
+    }
+
+ * &#x60;&#x60;&#x60;
+ * @class ExpVideoPreview
+ * @extends ExpFrameBase
+ * @uses ExpandAssets
+ * @uses VideoRecord
+ * @uses MediaReload
+ */
+export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAssets, {
+    layout,
+    videoIndex: 0,
+
+    recordingStopped: false,
+    recordingStarted: false,
+
+    noNext: function() {
+        return this.get(&#x27;videoIndex&#x27;) &gt;= this.get(&#x27;videos.length&#x27;) - 1;
+    }.property(&#x27;videoIndex&#x27;),
+
+    noPrev: function() {
+        return this.get(&#x27;videoIndex&#x27;) &lt;= 0;
+    }.property(&#x27;videoIndex&#x27;),
+
+    currentVideo: Ember.computed(&#x27;videoIndex&#x27;, function() {
+        return this.get(&#x27;videos&#x27;)[this.get(&#x27;videoIndex&#x27;)];
+    }),
+
+    disableRecord: Ember.computed(&#x27;recorder.hasCamAccess&#x27;, &#x27;recorderReady&#x27;, function() {
+        return !(this.get(&#x27;recorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;recorderReady&#x27;));
+    }),
+
+    assetsToExpand: {
+        &#x27;audio&#x27;: [],
+        &#x27;video&#x27;: [&#x27;videos/sources&#x27;],
+        &#x27;image&#x27;: []
+    },
+
+    actions: {
+        accept() {
+            this.set(&#x27;prompt&#x27;, false);
+            if (this.get(&#x27;experiment&#x27;) &amp;&amp; this.get(&#x27;id&#x27;) &amp;&amp; this.get(&#x27;session&#x27;) &amp;&amp; !this.get(&#x27;isLast&#x27;)) {
+                this.startRecorder().then(() =&gt; {
+                    this.set(&#x27;recordingStarted&#x27;, true);
+                });
+            }
+        },
+        nextVideo() {
+            this.set(&#x27;videoIndex&#x27;, this.get(&#x27;videoIndex&#x27;) + 1);
+        },
+        previousVideo() {
+            this.set(&#x27;videoIndex&#x27;, this.get(&#x27;videoIndex&#x27;) - 1);
+        },
+        finish() {
+            if (!this.get(&#x27;recordingStopped&#x27;)) {
+                this.set(&#x27;recordingStopped&#x27;, true);
+                this.stopRecorder().then(() =&gt; {
+                    this.set(&#x27;stoppedRecording&#x27;, true);
+                    this.send(&#x27;next&#x27;);
+                });
+            }
+        }
+    },
+    type: &#x27;exp-video-preview&#x27;,
+    meta: {
+        name: &#x27;ExpVideoPreview&#x27;,
+        description: &#x27;Frame that displays a series of preview videos, self-paced with controls.&#x27;,
+        parameters: {
+            type: &#x27;object&#x27;,
+            properties: {
+                index: {
+                    type: &#x27;integer&#x27;,
+                    default: 0
+                },
+                /**
+                 * A series of preview videos to display within a single frame, defined as an array of objects.
+                 *
+                 * @property {Array} videos
+                 *   @param {String} caption Some text to appear under this video
+                 *   @param {Object[]} sources String indicating video path relative to baseDir (see baseDir), OR Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects.
+                 *   @param {String} imgSrc URL of image to display (optional; each preview video should designate either sources or imgSrc)
+                 */
+                videos: {
+                    type: &#x27;array&#x27;,
+                    description: &#x27;A list of videos to preview&#x27;,
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            imgSrc: {
+                                type: &#x27;string&#x27;,
+                                default: &#x27;&#x27;
+                            },
+                            sources: {
+                                type: &#x27;array&#x27;,
+                                default: [],
+                                items: {
+                                    type: &#x27;object&#x27;,
+                                    properties: {
+                                        src: {
+                                            type: &#x27;string&#x27;
+                                        },
+                                        type: {
+                                            type: &#x27;string&#x27;
+                                        }
+                                    },
+                                    required: [&#x27;src&#x27;, &#x27;type&#x27;]
+                                }
+                            },
+                            caption: {
+                                type: &#x27;string&#x27;
+                            }
+                        },
+                        required: [&#x27;sources&#x27;, &#x27;caption&#x27;]
+                    },
+                    default: []
+                },
+                /**
+                 * Text on the button prompt asking the user to continue to the videos
+                 *
+                 * @property {String} prompt
+                 */
+                prompt: {
+                    type: &#x27;object&#x27;,
+                    description: &#x27;Text on the button prompt asking the user to continue to the videos&#x27;,
+                    properties: {
+                        title: {
+                            type: &#x27;string&#x27;
+                        },
+                        text: {
+                            type: &#x27;string&#x27;
+                        }
+                    },
+                    default: null
+                },
+                /**
+                 * Informational text to display to the user before videos are shown, along with button to continue
+                 *
+                 * @property {String} text
+                 */
+                text: {
+                    type: &#x27;string&#x27;,
+                    description: &#x27;Informational text to display to the user before videos are shown, along with button to continue&#x27;,
+                    default: &#x27;&#x27;
+                }
+            },
+            required: [&#x27;videos&#x27;]
+        },
+        data: {
+            type: &#x27;object&#x27;,
+            /**
+             * Parameters captured and sent to the server
+             *
+             * @method serializeContent
+             * @param {String} videoID The ID of any webcam video recorded during this frame
+             * @param {List} videoList a list of webcam video IDs in case there are &gt;1
+             * @param {Object} eventTimings
+             * @return {Object} The payload sent to the server
+             */
+            properties: {
+                videoId: {
+                    type: &#x27;string&#x27;
+                },
+                videoList: {
+                    type: &#x27;list&#x27;
+                }
+            },
+            // No fields are required
+        }
+    }
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

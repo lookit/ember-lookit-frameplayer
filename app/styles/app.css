@@ -1,3 +1,113 @@
+// Exp and Lookit
+@import "components/exp-video-config";
+@import "components/exp-video-config-quality";
+@import "components/exp-lookit-mood-questionnaire";
+@import "components/exp-lookit-preview-exp";
+@import "components/exp-lookit-instructions";
+@import "components/exp-lookit-exit-survey";
+@import "components/exp-lookit-geometry-alternation";
+@import "components/exp-video-preview";
+@import "components/exit-warning";
+@import "full-screen";
+@import "components/exp-lookit-preferential-looking";
+@import "components/exp-lookit-story-page";
+@import "components/exp-lookit-dialogue-page";
+@import "components/radio-group";
+@import "components/exp-lookit-video";
+@import "components/exp-lookit-video-consent";
+@import "components/exp-lookit-survey";
+@import "components/exp-lookit-observation";
+
+// Physics study only
+@import "components/exp-exit-survey";
+
+.exp-text-large {
+    font-size: 2em;
+}
+.exp-text-medium {
+    font-size: 1.5em;
+}
+.exp-text-heavy {
+    font-weight: 750;
+}
+
+.breaklines {
+    white-space: pre-wrap
+}
+
+.exp-controls {
+    margin: 5px;
+}
+
+#expContainer {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.exp-text {
+    margin: auto;
+    max-width: 65em;
+}
+
+.vertical-pad {
+    height: 8vh !important;
+}
+
+.modal-dialog {
+    width: 80%;
+}
+
+.break-line {
+  white-space: pre-line;
+}
+
+// Pad next button so it's not awkwardly flush at bottom of page
+#nextbutton {
+    margin-bottom: 3em;
+}
+
+// Don't show the 'powered by Pipe' link on video recorder
+p#pipeClickPowered {
+    display:none;
+}
+
+// Size the Pipe video ourselves, don't rely on fixed size that needs to be
+// handed to it
+#hdfvr-content, #hdfvr-content #pipeVrec, #hdfvr-content #pipeVideoInput {
+    height: 100% !important;
+    width: 100% !important;
+}
+
+// Make sure the microphone symbol and meter show up even if aspect ratio is such that
+// bottom border of area is black
+#hdfvr-content #pipeVrec #pipeMicContainer {
+    background-color: gray;
+    padding: 2px;
+}
+
+// Pipe video recorder div formatting
+.recorder-container {
+    height: 30vh;
+    margin: 0px;
+}
+
+.recorder-container #recorder {
+    height: 100%;
+}
+
+.video-recorder-hidden {
+    top: -10000px;
+    left: -10000px;
+    z-index: -1;
+    position: absolute;
+}
+
+#experiment-player {
+    background-color: #FFFFFF !important;
+}
+
+
+
 /* PARTICIPATE */
 #expContainer:fullscreen {
     width: 100vh;

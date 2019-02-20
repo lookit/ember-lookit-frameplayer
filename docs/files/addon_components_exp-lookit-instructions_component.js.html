@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/components/exp-lookit-instructions/component.js - exp-player</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
+                            <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
+                            <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
+                            <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
+                            <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
+                            <li><a href="../classes/ExpLookitInstructions.html">ExpLookitInstructions</a></li>
+                            <li><a href="../classes/ExpLookitMoodQuestionnaire.html">ExpLookitMoodQuestionnaire</a></li>
+                            <li><a href="../classes/ExpLookitObservation.html">ExpLookitObservation</a></li>
+                            <li><a href="../classes/ExpLookitPreferentialLooking.html">ExpLookitPreferentialLooking</a></li>
+                            <li><a href="../classes/ExpLookitPreviewExplanation.html">ExpLookitPreviewExplanation</a></li>
+                            <li><a href="../classes/ExpLookitStoryPage.html">ExpLookitStoryPage</a></li>
+                            <li><a href="../classes/ExpLookitSurvey.html">ExpLookitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
+                            <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
+                            <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
+                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
+                            <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
+                            <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
+                            <li><a href="../classes/ExpVideoPreview.html">ExpVideoPreview</a></li>
+                            <li><a href="../classes/FullScreen.html">FullScreen</a></li>
+                            <li><a href="../classes/MediaReload.html">MediaReload</a></li>
+                            <li><a href="../classes/permute.html">permute</a></li>
+                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
+                            <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
+                            <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
+                            <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: addon/components/exp-lookit-instructions/component.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import Em from &#x27;ember&#x27;;
+
+import layout from &#x27;./template&#x27;;
+import ExpFrameBaseComponent from &#x27;../../components/exp-frame-base/component&#x27;;
+import VideoRecord from &#x27;../../mixins/video-record&#x27;;
+
+let {
+    $
+} = Em;
+
+/**
+ * @module exp-player
+ * @submodule frames
+ */
+
+/**
+ * A frame to display instructions to the user. The user&#x27;s webcam may optionally be
+ * displayed, and audio and video clips may be included in the instructions (and may be
+ * required to be played before moving on).
+ *
+ * Each element of the &#x27;blocks&#x27; parameter is rendered using {{#crossLink &quot;ExpTextBlock&quot;}}{{/crossLink}}.
+
+&#x60;&#x60;&#x60;json
+ &quot;frames&quot;: {
+        &quot;instructions&quot;: {
+            &quot;kind&quot;: &quot;exp-lookit-instructions&quot;,
+            &quot;blocks&quot;: [
+                {
+                    &quot;title&quot;: &quot;Parent&#x27;s role&quot;,
+                    &quot;listblocks&quot;: [
+                        {
+                            &quot;text&quot;: &quot;Follow instructions&quot;
+                        },
+                        {
+                            &quot;text&quot;: &quot;Only do each joke once&quot;
+                        }
+                    ]
+                },
+                {
+                    &quot;text&quot;: &quot;It&#x27;s important that we can see you&quot;,
+                    &quot;image&quot;: {
+                        &quot;alt&quot;: &quot;Father holding child looking over his shoulder&quot;,
+                        &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/exp-physics/OverShoulder.jpg&quot;
+                    },
+                    &quot;title&quot;: &quot;Camera position&quot;
+                },
+                {
+                    &quot;text&quot;: &quot;Here&#x27;s some audio you have to play&quot;,
+                    &quot;title&quot;: &quot;Test&quot;,
+                    &quot;mediaBlock&quot;: {
+                        &quot;text&quot;: &quot;You should hear &#x27;Ready to go?&#x27;&quot;,
+                        &quot;isVideo&quot;: false,
+                        &quot;sources&quot;: [
+                            {
+                                &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/exp-physics-final/audio/ready.mp3&quot;,
+                                &quot;type&quot;: &quot;audio/mp3&quot;
+                            },
+                            {
+                                &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/exp-physics-final/audio/ready.ogg&quot;,
+                                &quot;type&quot;: &quot;audio/ogg&quot;
+                            }
+                        ],
+                        &quot;mustPlay&quot;: true,
+                        &quot;warningText&quot;: &quot;Please try playing the sample audio.&quot;
+                    }
+                },
+                {
+                    &quot;text&quot;: &quot;Here&#x27;s a video you don&#x27;t have to play!&quot;,
+                    &quot;title&quot;: &quot;Test&quot;,
+                    &quot;mediaBlock&quot;: {
+                        &quot;text&quot;: &quot;Look at that.&quot;,
+                        &quot;isVideo&quot;: true,
+                        &quot;sources&quot;: [
+                            {
+                                &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/exp-physics-final/examples/7_control_same.mp4&quot;,
+                                &quot;type&quot;: &quot;video/mp4&quot;
+                            },
+                            {
+                                &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/exp-physics-final/examples/7_control_same.webm&quot;,
+                                &quot;type&quot;: &quot;video/webm&quot;
+                            }
+                        ],
+                        &quot;mustPlay&quot;: false
+                    }
+                }
+            ],
+            &quot;showWebcam&quot;: true,
+            &quot;webcamBlocks&quot;: [
+                {
+                    &quot;title&quot;: &quot;Some webcam instructions&quot;,
+                    &quot;listblocks&quot;: [
+                        {
+                            &quot;text&quot;: &quot;Like this!&quot;
+                        },
+                        {
+                            &quot;text&quot;: &quot;Be careful your webcam does not have tape over it&quot;
+                        }
+                    ]
+                }
+            ],
+            &quot;nextButtonText&quot;: &quot;Next&quot;
+        }
+ }
+
+ * &#x60;&#x60;&#x60;
+ * @class ExpLookitInstructions
+ * @extends ExpFrameBase
+ * @extends VideoRecord
+ */
+
+export default ExpFrameBaseComponent.extend(VideoRecord, {
+    layout: layout,
+    type: &#x27;exp-lookit-instructions&#x27;,
+    doUseCamera: Em.computed.alias(&#x27;showWebcam&#x27;),
+    meta: {
+        name: &#x27;ExpLookitInstructions&#x27;,
+        description: &#x27;A frame to display bulleted instructions to the user, along with an audio clip to make sure sound playback is working.&#x27;,
+        parameters: {
+            type: &#x27;object&#x27;,
+            properties: {
+                /**
+                 * Whether to display the user&#x27;s webcam
+                 *
+                 * @property {Boolean} showWebcam
+                 * @default false
+                 */
+                showWebcam: {
+                    type: &#x27;boolean&#x27;,
+                    description: &#x27;Whether to display the user\&#x27;s webcam&#x27;,
+                    default: false
+                },
+
+                /**
+                 * Array of blocks for {{#crossLink &quot;ExpTextBlock&quot;}}{{/crossLink}}, specifying text/images of instructions to display
+                 *
+                 * @property {Object[]} blocks
+                 *   @param {String} title Title of this section
+                 *   @param {String} text Paragraph text of this section
+                 *   @param {Object[]} listblocks Object specifying bulleted points for this section. Each object is of the form:
+                 *   {text: &#x27;text of bullet point&#x27;, image: {src: &#x27;url&#x27;, alt: &#x27;alt-text&#x27;}}. Images are optional.
+                 *   @param {Object} mediaBlock Object specifying audio or video clip to include (optional). mediaBlock should be of form:
+                 *   {title: &#x27;title text to show above audio&#x27;, text: &#x27;text to show below controls&#x27;, warningText: &#x27;Text to show in red if user tries to proceed but hasn&#x27;t played; only used if mustPlay is true&#x27;, sources: &#x27;sources Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects specifying audio sources&#x27;, isVideo: &#x27;boolean, whether video or audio&#x27;, mustPlay: &#x27;boolean, whether clip has to be played to proceed&#x27;}
+                 *
+                 */
+                blocks: {
+                    type: &#x27;array&#x27;,
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            title: {
+                                type: &#x27;string&#x27;
+                            },
+                            text: {
+                                type: &#x27;string&#x27;
+                            },
+                            listblocks: {
+                                type: &#x27;array&#x27;,
+                                items: {
+                                    type: &#x27;object&#x27;,
+                                    properties: {
+                                        text: {
+                                            type: &#x27;string&#x27;
+                                        },
+                                        image: {
+                                            type: &#x27;object&#x27;,
+                                            properties: {
+                                                src: {
+                                                    type: &#x27;string&#x27;
+                                                },
+                                                alt: {
+                                                    type: &#x27;string&#x27;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            mediaBlock: {
+                                type: &#x27;object&#x27;,
+                                default: {},
+                                properties: {
+                                    title: {
+                                        type: &#x27;string&#x27;
+                                    },
+                                    text: {
+                                        type: &#x27;string&#x27;
+                                    },
+                                    warningText: {
+                                        type: &#x27;string&#x27;
+                                    },
+                                    sources: {
+                                        type: &#x27;array&#x27;,
+                                        items: {
+                                            type: &#x27;object&#x27;,
+                                            properties: {
+                                                src: {
+                                                    type: &#x27;string&#x27;
+                                                },
+                                                type: {
+                                                    type: &#x27;string&#x27;
+                                                }
+                                            }
+                                        }
+                                    },
+                                    isVideo: {
+                                        type: &#x27;boolean&#x27;,
+                                        default: false
+                                    },
+                                    mustPlay: {
+                                        type: &#x27;boolean&#x27;,
+                                        default: false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    default: []
+                },
+                /**
+                 * Array of objects specifying text/images of instructions to display under webcam view (if webcam is shown)
+                 *
+                 * @property {Object[]} blocks
+                 *   @param {String} title Title of this section
+                 *   @param {String} text Paragraph text of this section
+                 *   @param {Object[]} listblocks Object specifying bulleted points for this section. Each object is of the form:
+                 *   {text: &#x27;text of bullet point&#x27;, image: {src: &#x27;url&#x27;, alt: &#x27;alt-text&#x27;}}. Images are optional.
+                 */
+                webcamBlocks: {
+                    type: &#x27;array&#x27;,
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            title: {
+                                type: &#x27;string&#x27;
+                            },
+                            text: {
+                                type: &#x27;string&#x27;
+                            },
+                            listblocks: {
+                                type: &#x27;array&#x27;,
+                                items: {
+                                    type: &#x27;object&#x27;,
+                                    properties: {
+                                        text: {
+                                            type: &#x27;string&#x27;
+                                        },
+                                        image: {
+                                            type: &#x27;object&#x27;,
+                                            properties: {
+                                                src: {
+                                                    type: &#x27;string&#x27;
+                                                },
+                                                alt: {
+                                                    type: &#x27;string&#x27;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    default: []
+                },
+                /**
+                 * Whether to show a &#x27;previous&#x27; button
+                 *
+                 * @property {Boolean} showPreviousButton
+                 * @default true
+                 */
+                showPreviousButton: {
+                    type: &#x27;boolean&#x27;,
+                    default: true
+                },
+                /**
+                 * Text to display on the &#x27;next frame&#x27; button
+                 *
+                 * @property {String} nextButtonText
+                 * @default &#x27;Start the videos! \n (You\&#x27;ll have a moment to turn around.)&#x27;
+                 */
+                nextButtonText: {
+                    type: &#x27;string&#x27;,
+                    default: &#x27;Start the videos! \n (You\&#x27;ll have a moment to turn around.)&#x27;
+                }
+            },
+            required: []
+        },
+        data: {
+            /**
+             * Parameters captured and sent to the server
+             *
+             * @method serializeContent
+             * @param {Boolean} showWarning whether the warning about sound being played is currently shown
+             * @return {Object} The payload sent to the server
+             */
+            type: &#x27;object&#x27;,
+            properties: {
+                showWarning: {
+                    type: &#x27;boolean&#x27;,
+                    default: false
+                }
+            },
+            required: [&#x27;showWarning&#x27;]
+        }
+    },
+
+    actions: {
+        mediaPlayed(e) {
+            $(e.srcElement).attr(&#x27;completed&#x27;, true);
+            $(e.srcElement).parent().attr(&#x27;showWarning&#x27;, false);
+        },
+        checkAudioThenNext() {
+            if (this.shouldPreventNext()) {
+                this.set(&#x27;showWarning&#x27;, true);
+            } else {
+                this.send(&#x27;next&#x27;);
+            }
+        }
+    },
+
+    shouldPreventNext() {
+        var done = true;
+        var blocks = this.get(&#x27;blocks&#x27;);
+        for (var iBlock = 0; iBlock &lt; blocks.length; iBlock++) { // for each block
+            if (blocks[iBlock].hasOwnProperty(&#x27;mediaBlock&#x27;)) {   // if it has a mediaBlock
+                // find the appropriate element
+                var $elem = $(&#x27;#media-&#x27; + iBlock + &#x27; .player-media&#x27;);
+                if (blocks[iBlock].mediaBlock.hasOwnProperty(&#x27;mustPlay&#x27;) &amp;&amp; blocks[iBlock].mediaBlock.mustPlay) { // if the mediaBlock must be played
+                    // if it&#x27;s not completed
+                    if ($elem.attr(&#x27;completed&#x27;) != &#x27;true&#x27;) {
+                        done = false;
+                        $elem.parent().attr(&#x27;showWarning&#x27;, true);
+                    }
+                } else { // does not have to be played
+                    $elem.parent().attr(&#x27;showWarning&#x27;, false); // Set this explicitly
+                    // so the warning isn&#x27;t visible, although :not([showWarning])
+                    // selector should handle in almost all browsers
+                }
+            }
+        }
+        return !done;
+    }
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

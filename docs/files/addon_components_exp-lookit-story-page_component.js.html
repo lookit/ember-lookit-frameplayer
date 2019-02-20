@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/components/exp-lookit-story-page/component.js - exp-player</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
+                            <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
+                            <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
+                            <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
+                            <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
+                            <li><a href="../classes/ExpLookitInstructions.html">ExpLookitInstructions</a></li>
+                            <li><a href="../classes/ExpLookitMoodQuestionnaire.html">ExpLookitMoodQuestionnaire</a></li>
+                            <li><a href="../classes/ExpLookitObservation.html">ExpLookitObservation</a></li>
+                            <li><a href="../classes/ExpLookitPreferentialLooking.html">ExpLookitPreferentialLooking</a></li>
+                            <li><a href="../classes/ExpLookitPreviewExplanation.html">ExpLookitPreviewExplanation</a></li>
+                            <li><a href="../classes/ExpLookitStoryPage.html">ExpLookitStoryPage</a></li>
+                            <li><a href="../classes/ExpLookitSurvey.html">ExpLookitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
+                            <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
+                            <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
+                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
+                            <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
+                            <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
+                            <li><a href="../classes/ExpVideoPreview.html">ExpVideoPreview</a></li>
+                            <li><a href="../classes/FullScreen.html">FullScreen</a></li>
+                            <li><a href="../classes/MediaReload.html">MediaReload</a></li>
+                            <li><a href="../classes/permute.html">permute</a></li>
+                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
+                            <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
+                            <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
+                            <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: addon/components/exp-lookit-story-page/component.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import Ember from &#x27;ember&#x27;;
+import layout from &#x27;./template&#x27;;
+import ExpFrameBaseComponent from &#x27;../../components/exp-frame-base/component&#x27;;
+import FullScreen from &#x27;../../mixins/full-screen&#x27;;
+import VideoRecord from &#x27;../../mixins/video-record&#x27;;
+import ExpandAssets from &#x27;../../mixins/expand-assets&#x27;;
+
+let {
+    $
+} = Ember;
+
+/**
+ * @module exp-player
+ * @submodule frames
+ */
+
+/**
+ * Frame to implement a basic &quot;storybook page&quot; trial, with images placed on the
+ * screen within a display area and a sequence of audio files played.
+ * Optionally, images may be highlighted at specified times during the audio
+ * files.
+ *
+ * Webcam recording may be turned on or off; if on, the page is not displayed
+ * or audio started until recording begins.
+ *
+ * Frame is displayed fullscreen, but is not paused or otherwise disabled if the
+ * user leaves fullscreen. A button appears prompting the user to return to
+ * fullscreen mode.
+ *
+ * The parent may press &#x27;next&#x27; to proceed, or the study may proceed
+ * automatically when audio finishes (autoProceed).
+ *
+ * Any number of images may be placed on the screen, and their position
+ * specified. (Aspect ratio will be the same as the original image.)
+ *
+ * This frame is displayed fullscreen; if the frame before it is not, that frame
+ * needs to include a manual &quot;next&quot; button so that there&#x27;s a user interaction
+ * event to trigger fullscreen mode. (Browsers don&#x27;t allow us to switch to FS
+ * without a user event.)
+
+&#x60;&#x60;&#x60;json
+ &quot;frames&quot;: {
+    &quot;story-intro-1&quot;: {
+            &quot;doRecording&quot;: false,
+            &quot;autoProceed&quot;: true,
+            &quot;baseDir&quot;: &quot;https://s3.amazonaws.com/lookitcontents/ingroupobligations/&quot;,
+            &quot;audioTypes&quot;: [&quot;mp3&quot;, &quot;ogg&quot;],
+            &quot;parentTextBlock&quot;: {
+                &quot;title&quot;: &quot;Parents!&quot;,
+                &quot;text&quot;: &quot;some instructions&quot;,
+                &quot;emph&quot;: true,
+                &quot;css&quot;: {
+                    &quot;color&quot;: &quot;red&quot;,
+                    &quot;font-size&quot;: &quot;12px&quot;
+                }
+            },
+            &quot;images&quot;: [
+                {
+                    &quot;id&quot;: &quot;leftA&quot;,
+                    &quot;src&quot;: &quot;flurps1.jpg&quot;,
+                    &quot;left&quot;: &quot;10&quot;,
+                    &quot;width&quot;: &quot;30&quot;,
+                    &quot;top&quot;: &quot;34.47&quot;
+                },
+                {
+                    &quot;id&quot;: &quot;rightA&quot;,
+                    &quot;src&quot;: &quot;zazzes1.jpg&quot;,
+                    &quot;left&quot;: &quot;60&quot;,
+                    &quot;width&quot;: &quot;30&quot;,
+                    &quot;top&quot;: &quot;34.47&quot;
+                }
+            ],
+            &quot;kind&quot;: &quot;exp-lookit-story-page&quot;,
+            &quot;audioSources&quot;: [
+                {
+                    &quot;audioId&quot;: &quot;firstAudio&quot;,
+                    &quot;sources&quot;: &quot;intro1&quot;,
+                    &quot;highlights&quot;: [
+                        {&quot;range&quot;: [3.017343,	5.600283], &quot;image&quot;: 	&quot;leftA&quot;},
+                        {&quot;range&quot;: [5.752911,	8.899402], &quot;image&quot;: 	&quot;rightA&quot;}
+                    ]
+                }
+            ]
+        }
+ }
+
+ * &#x60;&#x60;&#x60;
+ * @class ExpLookitStoryPage
+ * @extends ExpFrameBase
+ * @uses FullScreen
+ * @uses VideoRecord
+ * @uses ExpandAssets
+ */
+
+export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
+    type: &#x27;exp-lookit-story-page&#x27;,
+    layout: layout,
+    displayFullscreen: true, // force fullscreen for all uses of this component
+    fullScreenElementId: &#x27;experiment-player&#x27;, // which element to send fullscreen
+    fsButtonID: &#x27;fsButton&#x27;, // ID of button to go to fullscreen
+
+    // Track state of experiment
+    completedAudio: false,
+    completedAttn: false,
+    currentSegment: &#x27;intro&#x27;, // &#x27;calibration&#x27;, &#x27;test&#x27;, &#x27;finalaudio&#x27; (mutually exclusive)
+    previousSegment: &#x27;intro&#x27;, // used when pausing/unpausing - refers to segment that study was paused during
+
+    currentAudioIndex: -1, // during initial sequential audio, holds an index into audioSources
+
+    // Override setting in VideoRecord mixin - only use camera if doing recording
+    doUseCamera: Ember.computed.alias(&#x27;doRecording&#x27;),
+    // Don&#x27;t need to override startRecordingAutomatically as we override the observer
+    // whenPossibleToRecord directly.
+
+    assetsToExpand: {
+        &#x27;audio&#x27;: [&#x27;audioSources/sources&#x27;],
+        &#x27;video&#x27;: [],
+        &#x27;image&#x27;: [&#x27;images/src&#x27;]
+    },
+
+    meta: {
+        name: &#x27;ExpLookitStoryPage&#x27;,
+        description: &#x27;Frame to display a basic storybook page trial, with images and audio&#x27;,
+        parameters: {
+            type: &#x27;object&#x27;,
+            properties: {
+                /**
+                 * Whether to do webcam recording (will wait for webcam
+                 * connection before starting audio if so)
+                 *
+                 * @property {Boolean} doRecording
+                 */
+                doRecording: {
+                    type: &#x27;boolean&#x27;,
+                    description: &#x27;Whether to do webcam recording (will wait for webcam connection before starting audio if so&#x27;
+                },
+                /**
+                 * Whether to proceed automatically after audio (and hide
+                 * replay/next buttons)
+                 *
+                 * @property {Boolean} autoProceed
+                 */
+                autoProceed: {
+                    type: &#x27;boolean&#x27;,
+                    description: &#x27;Whether to proceed automatically after audio (and hide replay/next buttons)&#x27;
+                },
+                /**
+                 * Array of objects describing audio to play at the start of
+                 * this frame. Each element describes a separate audio segment.
+                 *
+                 * @property {Object[]} audioSources
+                 *   @param {String} audioId unique string identifying this
+                 *      audio segment
+                 *   @param {Object[]} sources Array of {src: &#x27;url&#x27;, type:
+                 *      &#x27;MIMEtype&#x27;} objects with audio sources for this segment
+                 *
+                 * Can also give a single string &#x60;filename&#x60;, which will
+                 * be expanded out to the appropriate array based on &#x60;baseDir&#x60;
+                 * and &#x60;audioTypes&#x60; values; see &#x60;audioTypes&#x60;.
+                 *
+                 *   @param {Object[]} highlights Array of {&#x27;range&#x27;: [startT,
+                 *      endT], &#x27;image&#x27;: &#x27;imageId&#x27;} objects, where the imageId
+                 *      values correspond to the ids given in images
+                 */
+                audioSources: {
+                    type: &#x27;array&#x27;,
+                    description: &#x27;List of objects specifying audio src and type for audio played during test trial&#x27;,
+                    default: [],
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            &#x27;audioId&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;sources&#x27;: {
+                                type: &#x27;array&#x27;,
+                                items: {
+                                    type: &#x27;object&#x27;,
+                                    properties: {
+                                        &#x27;src&#x27;: {
+                                            type: &#x27;string&#x27;
+                                        },
+                                        &#x27;type&#x27;: {
+                                            type: &#x27;string&#x27;
+                                        }
+                                    }
+                                }
+                            },
+                            &#x27;highlights&#x27;: {
+                                type: &#x27;array&#x27;,
+                                items: {
+                                    type: &#x27;object&#x27;,
+                                    properties: {
+                                        &#x27;range&#x27;: {
+                                            type: &#x27;array&#x27;,
+                                            items: {
+                                                type: &#x27;number&#x27;
+                                            }
+                                        },
+                                        &#x27;image&#x27;: {
+                                            &#x27;type&#x27;: &#x27;string&#x27;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                /**
+                 * Text block to display to parent.  (Each field is optional)
+                 *
+                 * @property {Object} parentTextBlock
+                 *   @param {String} title title to display
+                 *   @param {String} text paragraph of text
+                 *   @param {Boolean} emph whether to bold this paragraph
+                 *   @param {Object} css object specifying any css properties
+                 *      to apply to this section, and their values - e.g.
+                 *      {&#x27;color&#x27;: &#x27;red&#x27;, &#x27;font-size&#x27;: &#x27;12px&#x27;}
+                 */
+                parentTextBlock: {
+                    type: &#x27;object&#x27;,
+                    properties: {
+                        title: {
+                            type: &#x27;string&#x27;
+                        },
+                        text: {
+                            type: &#x27;string&#x27;
+                        },
+                        emph: {
+                            type: &#x27;boolean&#x27;
+                        },
+                        css: {
+                            type: &#x27;object&#x27;,
+                            default: {}
+                        }
+                    },
+                    default: {}
+                },
+                /**
+                 * Array of images to display and information about their placement
+                 *
+                 * @property {Object[]} images
+                 *   @param {String} id unique ID for this image
+                 *   @param {String} src URL of image source. This can be a full
+                 *     URL, or relative to baseDir (see baseDir).
+                 *   @param {String} left left margin, as percentage of story area width
+                 *   @param {String} width image width, as percentage of story area width
+                 *   @param {String} top top margin, as percentage of story area height
+
+                 */
+                images: {
+                    type: &#x27;array&#x27;,
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            &#x27;id&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;src&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;left&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;width&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;top&#x27;: {
+                                type: &#x27;string&#x27;
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        data: {
+            type: &#x27;object&#x27;,
+            /**
+             * Parameters captured and sent to the server
+             *
+             * @method serializeContent
+             * @param {Object} eventTimings
+             * @param {String} videoID The ID of any webcam video recorded during this frame
+             * @param {List} videoList a list of webcam video IDs in case there are &gt;1
+             * @return {Object} The payload sent to the server
+             */
+            properties: {
+                videoId: {
+                    type: &#x27;string&#x27;
+                },
+                videoList: {
+                    type: &#x27;list&#x27;
+                }
+            },
+        }
+    },
+
+    // Override to do a bit extra when recording
+    whenPossibleToRecord: function() {
+        if (this.get(&#x27;doRecording&#x27;)) {
+            var _this = this;
+            if (this.get(&#x27;recorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;recorderReady&#x27;)) {
+                this.startRecorder().then(() =&gt; {
+                    _this.set(&#x27;currentAudioIndex&#x27;, -1);
+                    _this.send(&#x27;playNextAudioSegment&#x27;);
+                    _this.set(&#x27;recorderReady&#x27;, false);
+                    $(&#x27;#waitForVideo&#x27;).hide();
+                    $(&#x27;.story-image-container&#x27;).show();
+                });
+            }
+        }
+    }.observes(&#x27;recorder.hasCamAccess&#x27;, &#x27;recorderReady&#x27;),
+
+    actions: {
+
+        // During playing audio
+        updateCharacterHighlighting() {
+
+            var thisAudioData = this.get(&#x27;audioSources&#x27;)[this.currentAudioIndex];
+            var t = $(&#x27;#&#x27; + thisAudioData.audioId)[0].currentTime;
+
+            $(&#x27;.story-image-container&#x27;).removeClass(&#x27;highlight&#x27;);
+
+            thisAudioData.highlights.forEach(function (h) {
+                if (t &gt; h.range[0] &amp;&amp; t &lt; h.range[1]) {
+                    $(&#x27;#&#x27; + h.image).addClass(&#x27;highlight&#x27;);
+                }
+            });
+        },
+
+        replay() {
+            // pause any current audio, and set times to 0
+            $(&#x27;audio&#x27;).each(function() {
+                this.pause();
+                this.currentTime = 0;
+            });
+            // reset to index -1 as at start of study
+            this.set(&#x27;currentAudioIndex&#x27;, -1);
+            // restart audio
+            this.send(&#x27;playNextAudioSegment&#x27;);
+        },
+
+        finish() {
+            var _this = this;
+            this.stopRecorder().then(() =&gt; {
+                _this.set(&#x27;stoppedRecording&#x27;, true);
+                _this.send(&#x27;next&#x27;);
+            }, () =&gt; {
+                _this.send(&#x27;next&#x27;);
+            });
+        },
+
+        playNextAudioSegment() {
+            this.set(&#x27;currentAudioIndex&#x27;, this.get(&#x27;currentAudioIndex&#x27;) + 1);
+            if (this.currentAudioIndex &lt; this.get(&#x27;audioSources&#x27;).length) {
+                $(&#x27;#&#x27; + this.get(&#x27;audioSources&#x27;)[this.currentAudioIndex].audioId)[0].play();
+            } else {
+                if (this.get(&#x27;autoProceed&#x27;)) {
+                    this.send(&#x27;finish&#x27;);
+                } else {
+                    $(&#x27;#nextbutton&#x27;).prop(&#x27;disabled&#x27;, false);
+                }
+            }
+        }
+
+    },
+
+    didInsertElement() {
+
+        this._super(...arguments);
+
+        // Apply user-provided CSS to parent text block
+        var parentTextBlock = this.get(&#x27;parentTextBlock&#x27;) || {};
+        var css = parentTextBlock.css || {};
+        $(&#x27;#parenttext&#x27;).css(css);
+
+        this.send(&#x27;showFullscreen&#x27;);
+        $(&#x27;#nextbutton&#x27;).prop(&#x27;disabled&#x27;, true);
+
+        // If not recording, go to audio right away! Otherwise will be triggered when
+        // recording starts.
+        if (!this.get(&#x27;doRecording&#x27;)) {
+            this.send(&#x27;playNextAudioSegment&#x27;);
+        }
+
+    },
+
+    // Hide story once rendered (as long as story hasn&#x27;t started yet anyway)
+    didRender() {
+        if (this.get(&#x27;doRecording&#x27;) &amp;&amp; this.get(&#x27;currentAudioIndex&#x27;) == -1) {
+            $(&#x27;.story-image-container&#x27;).hide();
+        }
+    }
+
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
