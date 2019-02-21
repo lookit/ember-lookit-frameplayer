@@ -3,7 +3,7 @@ import Ember from 'ember';
 import { module } from 'qunit';
 import test from 'ember-sinon-qunit/test-support/test';
 
-import { getConditions, getLastSession } from 'exp-player/randomizers/pref-phys';
+import { getConditions, getLastSession } from '../../../randomizers/pref-phys';
 
 module('Unit | Randomizer | pref phys');
 

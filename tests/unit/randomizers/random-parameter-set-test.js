@@ -1,7 +1,8 @@
 import { module, skip } from 'qunit';
 import test from 'ember-sinon-qunit/test-support/test';
 
-import { getRandomElement, randomizer } from 'exp-player/randomizers/random-parameter-set';
+
+import { getRandomElement, randomizer } from '../../../randomizers/random-parameter-set';
 import ExperimentParser from '../../../utils/parse-experiment';
 
 module('Unit | Randomizer | random parameter set');
