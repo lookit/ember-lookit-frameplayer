@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>addon/components/exp-lookit-text/component.js - exp-player</title>
+    <title>app/components/exp-video-config-quality/component.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -103,12 +103,14 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: addon/components/exp-lookit-text/component.js</h1>
+<h1 class="file-heading">File: app/components/exp-video-config-quality/component.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 import layout from &#x27;./template&#x27;;
-import ExpFrameBaseComponent from &#x27;../../components/exp-frame-base/component&#x27;;
+
+import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
+import VideoRecord from &#x27;../../mixins/video-record&#x27;;
 
 /**
  * @module exp-player
@@ -116,86 +118,38 @@ import ExpFrameBaseComponent from &#x27;../../components/exp-frame-base/componen
  */
 
 /**
- * A frame to display text-only instructions, etc. to the user.
+Video configuration frame showing webcam view at right and instructions for checking video quality for preferential looking setup at left, with pictures. Content is hard-coded for preferential looking requirements and images; this frame can serve as a template for other applications (e.g., verbal responses, where we might care less about lighting but want to generally be able to see the child&#x27;s face) or can be generalized to show an arbitrary set of instructions/images.
 
 &#x60;&#x60;&#x60;json
 &quot;frames&quot;: {
-    &quot;study-intro&quot;: {
-        &quot;blocks&quot;: [
-            {
-                &quot;emph&quot;: true,
-                &quot;text&quot;: &quot;Important: your child does not need to be with you until the videos begin. First, let&#x27;s go over what will happen!&quot;,
-                &quot;title&quot;: &quot;Your baby, the physicist&quot;
-            },
-            {
-                &quot;text&quot;: &quot;Some introductory text about this study.&quot;
-            },
-            {
-                &quot;text&quot;: &quot;Another paragraph about this study.&quot;
-            }
-        ],
-        &quot;showPreviousButton&quot;: false,
-        &quot;kind&quot;: &quot;exp-lookit-text&quot;
+    &quot;video-quality&quot;: {
+        &quot;kind&quot;: &quot;exp-video-config-quality&quot;
     }
- }
+}
+&#x60;&#x60;&#x60;
 
- * &#x60;&#x60;&#x60;
- * @class ExpLookitText
- * @extends ExpFrameBase
- */
+@class ExpVideoConfigQuality
+@extends ExpFrameBase
+@extends VideoRecord
 
-export default ExpFrameBaseComponent.extend({
-    type: &#x27;exp-lookit-text&#x27;,
-    layout: layout,
+*/
+
+export default ExpFrameBaseComponent.extend(VideoRecord, {
+    layout,
+
+    type: &#x27;exp-video-config-quality&#x27;,
     meta: {
-        name: &#x27;ExpLookitText&#x27;,
-        description: &#x27;Text-only frame for a Lookit study&#x27;,
+        name: &#x27;Video Recorder Configuration for preferential looking&#x27;,
+        description: &#x27;Video configuration frame showing webcam view at right and instructions for checking video quality for preferential looking setup at left, with pictures.&#x27;,
         parameters: {
             type: &#x27;object&#x27;,
             properties: {
-                /**
-                 * Whether to show a &#x27;previous&#x27; button
-                 *
-                 * @property {Boolean} showPreviousButton
-                 * @default true
-                 */
-                showPreviousButton: {
-                    type: &#x27;boolean&#x27;,
-                    default: true
-                },
-                /**
-                 * Array of text blocks (paragraphs) to display.
-                 *
-                 * @property {Object} blocks
-                 *   @param {String} title title to display
-                 *   @param {String} text paragraph of text
-                 *   @param {Boolean} emph whether to bold this paragraph
-                 */
-                blocks: {
-                    type: &#x27;array&#x27;,
-                    items: {
-                        type: &#x27;object&#x27;,
-                        properties: {
-                            title: {
-                                type: &#x27;string&#x27;
-                            },
-                            text: {
-                                type: &#x27;string&#x27;
-                            },
-                            emph: {
-                                type: &#x27;boolean&#x27;
-                            }
-                        }
-                    },
-                    default: []
-                }
-            }
+            },
+            required: []
         },
         data: {
             type: &#x27;object&#x27;,
-            properties: {
-
-            }
+            properties: {}
         }
     }
 });

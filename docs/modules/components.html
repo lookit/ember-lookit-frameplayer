@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>components - exp-player</title>
+    <title>components - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -108,14 +108,23 @@
 
 
           <div class="foundat">
-              Defined in: <a href="../files/addon_components_exp-player_component.js.html#l16"><code>addon&#x2F;components&#x2F;exp-player&#x2F;component.js:16</code></a>
+              Defined in: <a href="../files/app_components_exp-player_component.js.html#l16"><code>app&#x2F;components&#x2F;exp-player&#x2F;component.js:16</code></a>
           </div>
 
   </div>
 
 
   <div class="box intro">
-      <p>Reusable components for UI rendering and interactivity</p>
+      <p>Experiment player: a component that renders a series of frames that define an experiment</p>
+<p>Sample usage:</p>
+<pre class="code prettyprint"><code class="language-handlebars">{{exp-player
+  experiment=experiment
+  session=session
+  pastSessions=pastSessions
+  saveHandler=(action 'saveSession')
+  frameIndex=0
+  fullScreenElementId='expContainer'}}
+</code></pre>
 
   </div>
 

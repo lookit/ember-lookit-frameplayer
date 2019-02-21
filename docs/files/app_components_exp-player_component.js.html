@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>addon/components/exp-player/component.js - exp-player</title>
+    <title>app/components/exp-player/component.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -103,7 +103,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: addon/components/exp-player/component.js</h1>
+<h1 class="file-heading">File: app/components/exp-player/component.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -155,6 +155,8 @@ export default Ember.Component.extend(FullScreen, {
     allowExit: false,
     hasAttemptedExit: false,
 
+    toast: Ember.inject.service(),
+
     // Any additional properties we might wish to pass from the player to individual frames. Allows passing of arbitrary config
     // by individual consuming applications to suit custom needs.
     extra: {},
@@ -172,7 +174,10 @@ export default Ember.Component.extend(FullScreen, {
      * @return {String|null} If string is provided, triggers a modal to confirm user wants to leave page
      */
     beforeUnload(event) {
+
         if (!this.get(&#x27;allowExit&#x27;)) {
+            this.showConfirmationDialog();
+            this.get(&#x27;toast&#x27;).warning(&#x27;To leave the study early, please press Exit below so you can select a privacy level for your videos.&#x27;);
             this.set(&#x27;hasAttemptedExit&#x27;, true);
             this.send(&#x27;exitFullscreen&#x27;);
 
@@ -195,10 +200,39 @@ export default Ember.Component.extend(FullScreen, {
         return null;
     },
 
+    showConfirmationDialog() {
+        var _this = this;
+        this.get(&#x27;toast&#x27;).warning(&quot;&lt;br&gt;&lt;button type=&#x27;button&#x27; id=&#x27;confirmationContinueStudy&#x27; class=&#x27;btn btn-outline-secondary&#x27; style=&#x27;color:black;&#x27;&gt;Continue&lt;/button&gt;&lt;button type=&#x27;button&#x27; id=&#x27;confirmationExitStudy&#x27; class=&#x27;btn btn-danger&#x27; style=&#x27;float:right;&#x27;&gt;Exit&lt;/button&gt;&quot;, &#x27;Really exit study?&#x27;,
+          {
+              allowHtml: true,
+              preventDuplicates: true,
+              onclick: null,
+              timeOut: 0,
+              extendedTimeOut: 0,
+              onShown: function () {
+                  Ember.$(&quot;#confirmationExitStudy&quot;).click(function(){
+                    _this.send(&#x27;exitEarly&#x27;);
+                  });
+                  Ember.$(&quot;#confirmationContinueStudy&quot;).click(function(){
+                    _this.get(&#x27;toast&#x27;).clear();
+                  });
+                }
+          });
+    },
+
     _registerHandlers() {
         $(window).on(&#x27;beforeunload&#x27;, this.beforeUnload.bind(this));
+        var _this = this;
+        Ember.$(window).on(&#x27;keydown&#x27;, (e) =&gt; {
+            if ((e.which === 112) || (e.ctrlKey &amp;&amp; e.which == 88)) { // F1 key or ctrl-x
+                _this.showConfirmationDialog();
+            }
+        });
     },
+
+
     _removeHandlers() {
+        Ember.$(window).off(&#x27;keydown&#x27;);
         $(window).off(&#x27;beforeunload&#x27;);
     },
     onFrameIndexChange: Ember.observer(&#x27;frameIndex&#x27;, function() {
@@ -214,6 +248,7 @@ export default Ember.Component.extend(FullScreen, {
     },
 
     init: function() {
+
         this._super(...arguments);
         this._registerHandlers();
 
@@ -328,7 +363,22 @@ export default Ember.Component.extend(FullScreen, {
 
         updateFramePage(framePage) {
             this.set(&#x27;framePage&#x27;, framePage);
-        }
+        },
+
+        exitEarly() {
+            this.set(&#x27;hasAttemptedExit&#x27;, false);
+            Ember.$(window).off(&#x27;keydown&#x27;);
+            // Save any available data immediately
+            this.send(&#x27;setGlobalTimeEvent&#x27;, &#x27;exitEarly&#x27;, {
+                exitType: &#x27;manualInterrupt&#x27;,  // User consciously chose to exit, eg by pressing F1 key
+                lastPageSeen: this.get(&#x27;frameIndex&#x27;) + 1
+            });
+            this.get(&#x27;session&#x27;).save(); // I think this is the response
+
+            // Navigate to last page in experiment (assumed to be survey frame)
+            var max = this.get(&#x27;frames.length&#x27;) - 1;
+            this.set(&#x27;frameIndex&#x27;, max);
+        },
     }
 });
 

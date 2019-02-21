@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>addon/components/exp-lookit-story-page/component.js - exp-player</title>
+    <title>app/components/exp-lookit-story-page/component.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -103,16 +103,17 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: addon/components/exp-lookit-story-page/component.js</h1>
+<h1 class="file-heading">File: app/components/exp-lookit-story-page/component.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 import Ember from &#x27;ember&#x27;;
 import layout from &#x27;./template&#x27;;
-import ExpFrameBaseComponent from &#x27;../../components/exp-frame-base/component&#x27;;
+import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
 import FullScreen from &#x27;../../mixins/full-screen&#x27;;
 import VideoRecord from &#x27;../../mixins/video-record&#x27;;
 import ExpandAssets from &#x27;../../mixins/expand-assets&#x27;;
+import { observer } from &#x27;@ember/object&#x27;;
 
 let {
     $
@@ -405,7 +406,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     // Override to do a bit extra when recording
-    whenPossibleToRecord: function() {
+    whenPossibleToRecord: observer(&#x27;recorder.hasCamAccess&#x27;, &#x27;recorderReady&#x27;, function() {
         if (this.get(&#x27;doRecording&#x27;)) {
             var _this = this;
             if (this.get(&#x27;recorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;recorderReady&#x27;)) {
@@ -418,7 +419,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 });
             }
         }
-    }.observes(&#x27;recorder.hasCamAccess&#x27;, &#x27;recorderReady&#x27;),
+    }),
 
     actions: {
 

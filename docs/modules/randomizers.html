@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>randomizers - exp-player</title>
+    <title>randomizers - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -108,20 +108,54 @@
 
 
           <div class="foundat">
-              Defined in: <a href="../files/addon_randomizers_random-parameter-set.js.html#l8"><code>addon&#x2F;randomizers&#x2F;random-parameter-set.js:8</code></a>
+              Defined in: <a href="../files/app_randomizers_random-parameter-set.js.html#l8"><code>app&#x2F;randomizers&#x2F;random-parameter-set.js:8</code></a>
           </div>
 
   </div>
 
 
   <div class="box intro">
-      <p>Reusable randomizers that can be used as part of user-defined experiments.
-Randomizers allow researchers to specify how to select which frames or
-sequences of frames to use as part of a particular session of a given
-experiment, for instance in order to counterbalance stimuli used across
-subjects, assign subjects randomly to different experimental conditions, or
-implement a longitudinal design where the frames used in this study depend on
-the frames used in the participant's last session.</p>
+      <p>Randomizer to allow random ordering of a list of frames. Intended to be
+useful for e.g. randomly permuting the order of particular stimuli used during
+a set of trials (although frames need not be of the same kind to permute).</p>
+<p>To use, define a frame with &quot;kind&quot;: &quot;choice&quot; and &quot;sampler&quot;: &quot;permute&quot;,
+as shown below, in addition to the parameters described under 'properties'.</p>
+<pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
+   &quot;test-trials&quot;: {
+       &quot;sampler&quot;: &quot;permute&quot;,
+       &quot;kind&quot;: &quot;choice&quot;,
+       &quot;commonFrameProperties&quot;: {
+           &quot;showPreviousButton&quot;: false
+       },
+       &quot;frameOptions&quot;: [
+           {
+               &quot;blocks&quot;: [
+                   {
+                       &quot;emph&quot;: true,
+                       &quot;text&quot;: &quot;Let's think about hippos!&quot;,
+                       &quot;title&quot;: &quot;hippos!&quot;
+                   },
+                   {
+                       &quot;text&quot;: &quot;Some more about hippos...&quot;
+                   }
+               ],
+               &quot;kind&quot;: &quot;exp-lookit-text&quot;
+           },
+           {
+               &quot;blocks&quot;: [
+                   {
+                       &quot;emph&quot;: false,
+                       &quot;text&quot;: &quot;Let's think about dolphins!&quot;,
+                       &quot;title&quot;: &quot;dolphins!&quot;
+                   }
+               ],
+               &quot;kind&quot;: &quot;exp-lookit-text&quot;
+           }
+       ]
+   }
+}
+
+</code></pre>
 
   </div>
 

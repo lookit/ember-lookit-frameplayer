@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>addon/components/exp-lookit-exit-survey/component.js - exp-player</title>
+    <title>app/components/exp-lookit-mood-questionnaire/component.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -103,7 +103,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: addon/components/exp-lookit-exit-survey/component.js</h1>
+<h1 class="file-heading">File: app/components/exp-lookit-mood-questionnaire/component.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -111,173 +111,209 @@ import layout from &#x27;./template&#x27;;
 
 import {validator, buildValidations} from &#x27;ember-cp-validations&#x27;;
 
-import ExpFrameBaseComponent from &#x27;../../components/exp-frame-base/component&#x27;;
-import FullScreen from &#x27;exp-player/mixins/full-screen&#x27;;
+import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
+
+let pad = function(number) {
+    return (&#x27;00&#x27; + (number || 0)).slice(-2);
+};
 
 /**
  * @module exp-player
  * @submodule frames
  */
 
+/**
+ * A standard mood survey with questions about factors that might affect a
+ * child&#x27;s responses. Includes Likert-type ratings of the CHILD&#x27;s position on
+ * the following scales:
+ * - Tired - Rested
+ * - Sick - Healthy
+ * - Fussy - Happy
+ * - Calm - Active
+ *
+ * and of the PARENT&#x27;s position on:
+ * - Tired - Energetic
+ * - Overwhelmed - On top of things
+ * - Upset - Happy
+ *
+ * It also asks for a response in hours:minutes for:
+ * - how long ago the child last woke up from sleep or a nap
+ * - how long until he/she is due for another nap/sleep (if regular nap schedule)
+ * - how long ago the child last ate/drank
+ *
+ * and for what the child was doing just before this (free-response). Responses
+ * to all questions are required to move on.
+ *
+ * This frame can be used as a starting point/example for other custom survey frames, or development of a customizable survey frame.
+
+&#x60;&#x60;&#x60;json
+ &quot;frames&quot;: {
+    &quot;mood-survey&quot;: {
+        &quot;introText&quot;: &quot;How are you two doing? We really want to know: we’re interested in how your child’s mood affects his or her looking preferences.&quot;,
+        &quot;kind&quot;: &quot;exp-lookit-mood-questionnaire&quot;
+    }
+ }
+
+ * &#x60;&#x60;&#x60;
+ * @class ExpLookitMoodQuestionnaire
+ * @extends ExpFrameBase
+ */
+
 const Validations = buildValidations({
-    birthDate: validator(&#x27;presence&#x27;, {
+    napWakeUp: validator(&#x27;presence&#x27;, {
         presence: true,
         message: &#x27;This field is required&#x27;
     }),
-    useOfMedia: validator(&#x27;presence&#x27;, {
+    usualNapSchedule: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;
+    }),
+    lastEat: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;
+    }),
+    doingBefore: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;
+    }),
+    nextNap: validator(&#x27;presence&#x27;, {
         presence: true,
         message: &#x27;This field is required&#x27;,
+        dependentKeys: [&#x27;usualNapSchedule&#x27;],
         disabled(model) {
-            return model.get(&#x27;withdrawal&#x27;);
+            return model.get(&#x27;usualNapSchedule&#x27;) !== &#x27;yes&#x27;;
         }
     }),
-    databraryShare: validator(&#x27;presence&#x27;, {
+    rested: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;
+    }),
+    healthy: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;
+    }),
+    childHappy: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;
+    }),
+    active: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;
+    }),
+    energetic: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;
+    }),
+    ontopofstuff: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;
+    }),
+    parentHappy: validator(&#x27;presence&#x27;, {
         presence: true,
         message: &#x27;This field is required&#x27;
     })
 });
 
-/**
-Standard exit survey for Lookit studies: confirm participant birthdate, ask user for video sharing permission level &amp; Databrary sharing, option to withdraw, freeform comments, debriefing/thank you text. Leaves fullscreen mode.
-
-&#x60;&#x60;&#x60;json
-&quot;frames&quot;: {
-    &quot;my-exit-survey&quot;: {
-        &quot;kind&quot;: &quot;exp-lookit-exit-survey&quot;,
-        &quot;debriefing&quot;: {
-            &quot;title&quot;: &quot;Thank you!&quot;,
-            &quot;text&quot;: &quot;Learning how children react to ducks will help scientists design better rubber ducks.&quot;,
-            &quot;image&quot;: {
-                &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/ducks/duck.png&quot;,
-                &quot;alt&quot;: &quot;Very cute duck&quot;
-            }
-        }
-    }
-}
-&#x60;&#x60;&#x60;
-
-@class ExpLookitExitSurvey
-@extends ExpFrameBase
-
-@uses FullScreen
-@uses Validations
-*/
-
-export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
+export default ExpFrameBaseComponent.extend(Validations, {
     layout: layout,
-    type: &#x27;exp-lookit-exit-survey&#x27;,
-    fullScreenElementId: &#x27;experiment-player&#x27;,
+    type: &#x27;exp-lookit-mood-questionnaire&#x27;,
     meta: {
-        name: &#x27;ExpLookitExitSurvey&#x27;,
-        description: &#x27;Exit survey for Lookit.&#x27;,
+        name: &#x27;ExpLookitMoodQuestionnaire&#x27;,
+        description: &#x27;Mood questionnaire for Lookit studies, very slightly generalized from physics version exp-mood-questionnaire&#x27;,
         parameters: {
             type: &#x27;object&#x27;,
             properties: {
                 /**
-                Object specifying information to show on second page of exit survey, before returning to main Lookit site.
-                @property {Object} debriefing
-                    @param {String} title Title of debriefing page
-                    @param {String} text Paragraph to show as debriefing
-                    @param {Object} image Object specifying source URL [src] &amp; alt-text [alt] for any image to show during debriefing (optional). Example: &#x60;{
-                &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/ducks/duck.png&quot;,
-                &quot;alt&quot;: &quot;Very cute duck&quot;
-                }&#x60;
-                */
-                debriefing: {
-                    type: &#x27;object&#x27;,
-                    properties: {
-                        title: {
-                            type: &#x27;string&#x27;,
-                            default: &#x27;Thank you!&#x27;
-                        },
-                        text: {
-                            type: &#x27;string&#x27;
-                        },
-                        image: {
-                            type: &#x27;object&#x27;,
-                            properties: {
-                                src: {
-                                    type: &#x27;string&#x27;
-                                },
-                                alt: {
-                                    type: &#x27;string&#x27;
-                                }
-                            }
-                        }
-                    }
-                },
-                required: [&#x27;debriefing&#x27;]
-            }
+                 * Intro paragraph describing why we want mood info
+                 *
+                 * @property {String} introText
+                 * @default &#x27;How are you two doing? We really want to know: we’re interested in how your child’s mood affects his or her looking preferences.&#x27;
+                 */
+                introText: {
+                    type: &#x27;string&#x27;,
+                    description: &#x27;Intro paragraph describing why we want mood info&#x27;,
+                    default: &#x27;How are you two doing? We really want to know: we’re interested in how your child’s mood affects his or her looking preferences.&#x27;
+                }
+            },
+            required: []
         },
         data: {
             /**
              * Parameters captured and sent to the server
              *
              * @method serializeContent
-             * @param {String} birthDate Child&#x27;s birthdate as entered into exit survey; timestamp string starting YYYY-mm-dd.
-             * @param {String} databraryShare Whether data can be shared with Databrary: &#x27;yes&#x27; or &#x27;no&#x27;
-             * @param {String} useOfMedia Video privacy level: &#x27;private&#x27;, &#x27;scientific&#x27;, or &#x27;public&#x27;
-             * @param {Boolean} withdrawal Whether the user checked the box to withdraw video data
-             * @param {String} feedback Freeform comments entered by parent
-             * @param {Object} eventTimings Only event captured during this frame is &#x27;nextFrame&#x27;; example eventTimings value: &#x60;[{u&#x27;eventType&#x27;: u&#x27;nextFrame&#x27;, u&#x27;timestamp&#x27;: u&#x27;2016-08-03T00:45:37.157Z&#x27;}]&#x60;
+             * @param {String} rested Rating for CHILD on tired - rested scale, &#x27;1&#x27; to &#x27;7&#x27; where &#x27;7&#x27; is rested
+             * @param {String} healthy Rating for CHILD on sick - healthy scale, &#x27;1&#x27; to &#x27;7&#x27; where &#x27;7&#x27; is healthy
+             * @param {String} childHappy Rating for CHILD on fussy - happy scale, &#x27;1&#x27; to &#x27;7&#x27; where &#x27;7&#x27; is happy
+             * @param {String} active Rating for CHILD on calm - active scale, &#x27;1&#x27; to &#x27;7&#x27; where &#x27;7&#x27; is active
+             * @param {String} energetic Rating for PARENT on tired - energetic scale, &#x27;1&#x27; to &#x27;7&#x27; where &#x27;7&#x27; is energetic
+             * @param {String} ontopofstuff Rating for PARENT on overwhelmed - on top of stuff scale, &#x27;1&#x27; to &#x27;7&#x27; where &#x27;7&#x27; is on top of stuff
+             * @param {String} healthy Rating for PARENT on upset - happy scale, &#x27;1&#x27; to &#x27;7&#x27; where &#x27;7&#x27; is happy
+             * @param {String} napWakeUp how long since the child woke up from nap, HH:mm
+             * @param {String} usualNapSchedule whether the child has a typical nap schedule: &#x27;no&#x27;, &#x27;yes&#x27;, or &#x27;yes-overdue&#x27; if child is overdue for nap
+             * @param {String} nextNap only valid if usualNapSchedule is &#x27;yes&#x27;;  how long until child is due to sleep again, HH:mm
+             * @param {String} lastEat how long since the child ate/drank, HH:mm
+             * @param {String} doingBefore what the child was doing before this (free response)
              * @return {Object} The payload sent to the server
              */
             type: &#x27;object&#x27;,
             properties: {
-                birthDate: {
+                rested: {
+                    type: &#x27;string&#x27;
+                },
+                healthy: {
+                    type: &#x27;string&#x27;
+                },
+                childHappy: {
+                    type: &#x27;string&#x27;
+                },
+                active: {
+                    type: &#x27;string&#x27;
+                },
+                energetic: {
+                    type: &#x27;string&#x27;
+                },
+                ontopofstuff: {
+                    type: &#x27;string&#x27;
+                },
+                parentHappy: {
+                    type: &#x27;string&#x27;
+                },
+                napWakeUp: {
                     type: &#x27;string&#x27;,
                     default: null
                 },
-                databraryShare: {
+                usualNapSchedule: {
                     type: &#x27;string&#x27;
                 },
-                useOfMedia: {
+                nextNap: {
                     type: &#x27;string&#x27;
                 },
-                withdrawal: {
-                    type: &#x27;boolean&#x27;,
-                    default: false
-                },
-                feedback: {
+                lastEat: {
                     type: &#x27;string&#x27;,
-                    default: &#x27;&#x27;
+                    default: null
+                },
+                doingBefore: {
+                    type: &#x27;string&#x27;
                 }
             }
         }
     },
-    section1: true,
-    showWithdrawalConfirmation: false,
+    moodOptions: [&#x27;1&#x27;, &#x27;2&#x27;, &#x27;3&#x27;, &#x27;4&#x27;, &#x27;5&#x27;, &#x27;6&#x27;, &#x27;7&#x27;],
     showValidation: false,
     actions: {
-        advanceToProgressBar() {
-            // Move from section 1 (survey) to section 2 (progress bar/ finish button)
-            // Mark the session complete at this stage, as all data has been entered
-            this.sendAction(&#x27;sessionCompleted&#x27;);
-            this._save()
-                .then(()=&gt; {
-                    this.set(&#x27;section1&#x27;, false);
-                })
-                .catch(err =&gt; this.displayError(err));
-        },
         continue() {
-            // Check whether exit survey is valid, and if so, advance to next screen
             if (this.get(&#x27;validations.isValid&#x27;)) {
-                if (this.get(&#x27;withdrawal&#x27;)) {
-                    this.set(&#x27;showWithdrawalConfirmation&#x27;, true);
-                } else {
-                    this.send(&#x27;advanceToProgressBar&#x27;);
-                }
+                this.send(&#x27;next&#x27;);
             } else {
                 this.set(&#x27;showValidation&#x27;, true);
             }
         },
-        finish() {
-            this.send(&#x27;next&#x27;);
+        setTime(target, value) {
+            this.set(target, &#x60;${value.hours()}:${pad(value.minutes())}&#x60;);
         }
-    },
-    willRender() {
-        this.send(&#x27;exitFullscreen&#x27;);
     }
+
 });
 
     </pre>

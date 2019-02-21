@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>addon/yuidoc-prose.js - exp-player</title>
+    <title>app/components/exp-video-config/component.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -103,65 +103,88 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: addon/yuidoc-prose.js</h1>
+<h1 class="file-heading">File: app/components/exp-video-config/component.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-// Prose for YUIDoc: define text used in module descriptions
+import Em from &#x27;ember&#x27;;
+import layout from &#x27;./template&#x27;;
+
+import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
+import VideoRecord from &#x27;../../mixins/video-record&#x27;;
 
 /**
- * Reusable parts of experiments. Includes frame definitions, randomizers, and utilities.
- * @module exp-player
- * @main
- */
-
-/**
- * Reusable components for UI rendering and interactivity
- *
- * @module exp-player
- * @submodule components
- * @main
- */
-
-/**
- * Reusable frames that can be used as part of user-defined experiments. This is the main reference for researchers
- *   looking to build their own experiment definitions on the experimenter platform.
- *
  * @module exp-player
  * @submodule frames
- * @main
  */
 
 /**
- * Reusable randomizers that can be used as part of user-defined experiments.
- * Randomizers allow researchers to specify how to select which frames or
- * sequences of frames to use as part of a particular session of a given
- * experiment, for instance in order to counterbalance stimuli used across
- * subjects, assign subjects randomly to different experimental conditions, or
- * implement a longitudinal design where the frames used in this study depend on
- * the frames used in the participant&#x27;s last session.
- *
- * @module exp-player
- * @submodule randomizers
- * @main
- */
+Video configuration frame guiding user through making sure permissions are set appropriately and microphone is working, with troubleshooting text. All content is hard-coded for a general-purpose technical setup frame.
 
-/**
- * Mixins that can be used to add functionality to specific frames
- *
- * @module exp-player
- * @submodule mixins
- * @main
- */
+&#x60;&#x60;&#x60;json
+&quot;frames&quot;: {
+    &quot;video-config&quot;: {
+        &quot;kind&quot;: &quot;exp-video-config&quot;
+    }
+}
+&#x60;&#x60;&#x60;
 
-/**
- * Services used to provide centralized functionality
- *
- * @module exp-player
- * @submodule services
- * @main
- */
+@class ExpVideoConfig
+@extends ExpFrameBase
+@extends VideoRecord
+*/
 
+export default ExpFrameBaseComponent.extend(VideoRecord, {
+    layout,
+    showWarning: false,
+    micChecked: Em.computed.alias(&#x27;recorder.micChecked&#x27;),
+    hasCamAccess: Em.computed.alias(&#x27;recorder.hasCamAccess&#x27;),
+    hasWebCam: Em.computed.alias(&#x27;recorder.hasWebCam&#x27;),
+
+    actions: {
+
+        checkAudioThenNext() {
+            if (!this.get(&#x27;micChecked&#x27;)) {
+                this.set(&#x27;showWarning&#x27;, true);
+            } else if (this.get(&#x27;hasWebCam&#x27;)) {
+                this.send(&#x27;next&#x27;);
+            }
+        },
+
+        reloadRecorder() {
+            this.set(&#x27;showWarning&#x27;, false);
+            this.destroyRecorder();
+            this.setupRecorder(this.$(this.get(&#x27;recorderElement&#x27;)), false);
+        },
+    },
+
+    type: &#x27;exp-videoconfig&#x27;,
+    meta: {
+        name: &#x27;Video Recorder Configuration&#x27;,
+        description: &#x27;Frame guiding the user through setting up webcam, with no recording.&#x27;,
+        parameters: {
+            type: &#x27;object&#x27;,
+            properties: {
+                /**
+                Text to show as the introduction to the troubleshooting tips section
+                @property {String} troubleshootingIntro
+                @default &quot;Some families are having trouble initially getting their webcams to work on Lookit. We&#x27;re sorry, and we&#x27;re working on switching away from Flash to make recording more reliable! In the meantime, these instructions should fix most problems.&quot;
+                */
+                troubleshootingIntro: {
+                    type: &#x27;string&#x27;,
+                    description: &#x27;Text to show as introduction to troubleshooting tips section&#x27;,
+                    default: &quot;We&#x27;re just getting started with a new method for video recording! If you&#x27;re having trouble and the instructions below don&#x27;t fix it, we&#x27;re sorry - and we&#x27;d love to hear from you so we can improve the system.&quot;
+                }
+
+            },
+            required: []
+        },
+        data: {
+            type: &#x27;object&#x27;,
+            properties: {}
+        }
+    }
+});
 
     </pre>
 </div>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>addon/components/exp-lookit-preview-explanation/component.js - exp-player</title>
+    <title>app/components/exp-lookit-text/component.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -103,12 +103,12 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: addon/components/exp-lookit-preview-explanation/component.js</h1>
+<h1 class="file-heading">File: app/components/exp-lookit-text/component.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 import layout from &#x27;./template&#x27;;
-import ExpFrameBaseComponent from &#x27;../../components/exp-frame-base/component&#x27;;
+import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
 
 /**
  * @module exp-player
@@ -116,44 +116,40 @@ import ExpFrameBaseComponent from &#x27;../../components/exp-frame-base/componen
  */
 
 /**
- * A frame that to explain any blinding procedures to parents, and offer them the option to preview stimuli before the study. Two buttons allow the user to move forward: one goes to the next frame (if the parent wants to preview stimuli), and one skips the next frame and goes to the one after that (if the parent declins). Therefore, this frame should be followed by an {{#crossLink &quot;ExpVideoPreview&quot;}}{{/crossLink}} frame.
+ * A frame to display text-only instructions, etc. to the user.
 
 &#x60;&#x60;&#x60;json
- &quot;frames&quot;: {
-    &quot;my-video-preview-explanation&quot;: {
-        &quot;introBlock&quot;: {
-            &quot;text&quot;: &quot;During the videos, we&#x27;ll ask that you hold your child over your shoulder like this, so that you&#x27;re facing face away from the screen.&quot;
-        },
-        &quot;image&quot;: {
-            &quot;alt&quot;: &quot;Father holding child looking over his shoulder&quot;,
-            &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/exp-physics/OverShoulder.jpg&quot;
-        },
-        &quot;kind&quot;: &quot;exp-lookit-preview-explanation&quot;,
-        &quot;skipButtonText&quot;: &quot;Skip preview&quot;,
-        &quot;previewButtonText&quot;: &quot;I&#x27;d like to preview the videos&quot;,
+&quot;frames&quot;: {
+    &quot;study-intro&quot;: {
         &quot;blocks&quot;: [
             {
-                &quot;text&quot;: &quot;The reason we ask this is that your child is learning from you all the time. Even if he or she can&#x27;t see where you&#x27;re looking, you may unconsciously shift towards one side or the other and influence your child&#x27;s attention. We want to make sure we&#x27;re measuring your child&#x27;s preferences, not yours!&quot;
+                &quot;emph&quot;: true,
+                &quot;text&quot;: &quot;Important: your child does not need to be with you until the videos begin. First, let&#x27;s go over what will happen!&quot;,
+                &quot;title&quot;: &quot;Your baby, the physicist&quot;
             },
             {
-                &quot;text&quot;: &quot;If you&#x27;d like to see the videos your child will be shown, you can take a look ahead of time now. It&#x27;s important that you preview the videos without your child, so that the videos will still be new to them.&quot;
+                &quot;text&quot;: &quot;Some introductory text about this study.&quot;
+            },
+            {
+                &quot;text&quot;: &quot;Another paragraph about this study.&quot;
             }
         ],
-        &quot;showPreviousButton&quot;: true
+        &quot;showPreviousButton&quot;: false,
+        &quot;kind&quot;: &quot;exp-lookit-text&quot;
     }
  }
 
  * &#x60;&#x60;&#x60;
- * @class ExpLookitPreviewExplanation
+ * @class ExpLookitText
  * @extends ExpFrameBase
  */
 
 export default ExpFrameBaseComponent.extend({
-    type: &#x27;exp-lookit-preview-explanation&#x27;,
+    type: &#x27;exp-lookit-text&#x27;,
     layout: layout,
     meta: {
-        name: &#x27;ExpLookitPreviewExplanation&#x27;,
-        description: &#x27;Let parents know about blinding, give option to preview videos.&#x27;,
+        name: &#x27;ExpLookitText&#x27;,
+        description: &#x27;Text-only frame for a Lookit study&#x27;,
         parameters: {
             type: &#x27;object&#x27;,
             properties: {
@@ -168,7 +164,7 @@ export default ExpFrameBaseComponent.extend({
                     default: true
                 },
                 /**
-                 * Array of text blocks (paragraphs) to display after the image.
+                 * Array of text blocks (paragraphs) to display.
                  *
                  * @property {Object} blocks
                  *   @param {String} title title to display
@@ -192,81 +188,14 @@ export default ExpFrameBaseComponent.extend({
                         }
                     },
                     default: []
-                },
-                /**
-                 * Object specifying first block of text (pre-image) to display.
-                 *
-                 * @property {Object} introBlock
-                 *   @param {String} title title to display
-                 *   @param {String} text paragraph of text
-                 *   @param {Boolean} emph whether to bold this paragraph
-                 */
-                introBlock: {
-                    type: &#x27;object&#x27;,
-                    properties: {
-                        title: {
-                            type: &#x27;string&#x27;
-                        },
-                        text: {
-                            type: &#x27;string&#x27;
-                        },
-                        emph: {
-                            type: &#x27;boolean&#x27;
-                        }
-                    }
-                },
-                /**
-                 * Image to display after the intro block. (Displayed centered,
-                 * with border, max height 220px.) E.g., a picture of a parent
-                 * holding a child looking over their shoulder.
-                 *
-                 * @property {Object} image
-                 *   @param {String} src URL of image
-                 *   @param {String} alt alt-text
-                 */
-                image: {
-                    type: &#x27;object&#x27;,
-                    properties: {
-                        src: {
-                            type: &#x27;string&#x27;
-                        },
-                        alt: {
-                            type: &#x27;string&#x27;
-                        }
-                    }
-                },
-                /**
-                 * Text to display on the button to go to the next frame
-                 *
-                 * @property {String} previewButtonText
-                 * @default &#x27;I\&#x27;d like to preview the videos&#x27;
-                 */
-                previewButtonText: {
-                    type: &#x27;string&#x27;,
-                    default: &#x27;I\&#x27;d like to preview the videos&#x27;
-                },
-                /**
-                 * Text to display on the button to skip the next frame
-                 *
-                 * @property {String} skipButtonText
-                 * @default &#x27;Skip preview&#x27;
-                 */
-                skipButtonText: {
-                    type: &#x27;string&#x27;,
-                    default: &#x27;Skip preview&#x27;
                 }
             }
         },
         data: {
             type: &#x27;object&#x27;,
             properties: {
-                // define data structure here
+
             }
-        }
-    },
-    actions: {
-        skipone: function() {
-            this.get(&#x27;skipone&#x27;)();
         }
     }
 });

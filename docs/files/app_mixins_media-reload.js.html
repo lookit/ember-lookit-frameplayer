@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>addon/components/exp-video-config-quality/component.js - exp-player</title>
+    <title>app/mixins/media-reload.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -103,53 +103,39 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: addon/components/exp-video-config-quality/component.js</h1>
+<h1 class="file-heading">File: app/mixins/media-reload.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-import layout from &#x27;./template&#x27;;
-
-import ExpFrameBaseComponent from &#x27;../../components/exp-frame-base/component&#x27;;
-import VideoRecord from &#x27;../../mixins/video-record&#x27;;
+import Ember from &#x27;ember&#x27;;
 
 /**
  * @module exp-player
- * @submodule frames
+ * @submodule mixins
  */
 
 /**
-Video configuration frame showing webcam view at right and instructions for checking video quality for preferential looking setup at left, with pictures. Content is hard-coded for preferential looking requirements and images; this frame can serve as a template for other applications (e.g., verbal responses, where we might care less about lighting but want to generally be able to see the child&#x27;s face) or can be generalized to show an arbitrary set of instructions/images.
+ * Allow any media-containing frame to correctly reset.
+ * Fix LEI-93, an issue where the second of two consecutive videos did not play correctly.
 
-&#x60;&#x60;&#x60;json
-&quot;frames&quot;: {
-    &quot;video-quality&quot;: {
-        &quot;kind&quot;: &quot;exp-video-config-quality&quot;
-    }
-}
-&#x60;&#x60;&#x60;
+ * Due to an internal ember quirk/optimization, the component instance is not destroyed if two of the same thing are
+ *  used in a row, which means the same video tag was being dynamically reassigned- something HTML does not normally
+ * allow. The page needs to be manually told to load the correct new video.
+ *
+ * See commentary here: http://stackoverflow.com/a/18454389/1422268
+ *
+ * @class MediaReload
+ */
+export default Ember.Mixin.create({
+    mediaTags: [&#x27;audio&#x27;, &#x27;video&#x27;],
 
-@class ExpVideoConfigQuality
-@extends ExpFrameBase
-@extends VideoRecord
-
-*/
-
-export default ExpFrameBaseComponent.extend(VideoRecord, {
-    layout,
-
-    type: &#x27;exp-video-config-quality&#x27;,
-    meta: {
-        name: &#x27;Video Recorder Configuration for preferential looking&#x27;,
-        description: &#x27;Video configuration frame showing webcam view at right and instructions for checking video quality for preferential looking setup at left, with pictures.&#x27;,
-        parameters: {
-            type: &#x27;object&#x27;,
-            properties: {
-            },
-            required: []
-        },
-        data: {
-            type: &#x27;object&#x27;,
-            properties: {}
+    didRender() {
+        this._super(...arguments);
+        for (var selector of this.get(&#x27;mediaTags&#x27;)) {
+            Ember.$(selector).each(function () {
+                this.pause();
+                this.load();
+            });
         }
     }
 });

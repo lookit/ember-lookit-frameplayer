@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>addon/randomizers/pref-phys.js - exp-player</title>
+    <title>app/randomizers/pref-phys.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -103,7 +103,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: addon/randomizers/pref-phys.js</h1>
+<h1 class="file-heading">File: app/randomizers/pref-phys.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -1713,7 +1713,8 @@ function toFrames(frameId, eventVideos, BASE_DIR) {
 }
 
 var randomizer = function(frameId, frame, pastSessions, resolveFrame) {
-    var MAX_VIDEOS = 24;
+    var MAX_VIDEOS = frame.MAX_VIDEOS || 24;
+
     var BASE_DIR = &#x27;https://s3.amazonaws.com/lookitcontents/exp-physics-final/&#x27;;
 
    // TODO: In the future, we may want to identify the specific frame # to fetch instead of generic frame name

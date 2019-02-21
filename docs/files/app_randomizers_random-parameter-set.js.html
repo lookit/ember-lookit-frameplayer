@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>addon/randomizers/random-parameter-set.js - exp-player</title>
+    <title>app/randomizers/random-parameter-set.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -103,7 +103,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: addon/randomizers/random-parameter-set.js</h1>
+<h1 class="file-heading">File: app/randomizers/random-parameter-set.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -447,45 +447,45 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
                 if (typeof obj[property] === &#x27;object&#x27;) { // recursively handle objects
                     obj[property] = replaceValues(obj[property], rep);
                 } else if (Array.isArray(obj[property])) { // and lists
-                    for (var iElement=0; iElement &lt; obj[property].length; iElement++) {
+                    for (var iElement = 0; iElement &lt; obj[property].length; iElement++) {
                         obj[property][iElement] = replaceValues(obj[property][iElement], rep);
                     }
                 } else if (typeof obj[property] === &#x27;string&#x27;) { // do substitution for strings
                     // If rep has this exact property, just sub in that value
                     if (rep.hasOwnProperty(obj[property])) {
                         obj[property] = rep[obj[property]];
-                    } else if (typeof obj[property] === &quot;string&quot; &amp;&amp; obj[property].includes(&quot;#&quot;)) { // Also check for selector syntax:
-                    // property of form X__Y, rep has property X, Y is a valid selector.
-                        var segments = obj[property].split(&quot;#&quot;);
+                    } else if (typeof obj[property] === &#x27;string&#x27; &amp;&amp; obj[property].includes(&#x27;#&#x27;)) { // Also check for selector syntax:
+                        // property of form X__Y, rep has property X, Y is a valid selector.
+                        var segments = obj[property].split(&#x27;#&#x27;);
                         var propName = segments[0];
-                        var selector = segments.slice(1).join(&quot;#&quot;);
+                        var selector = segments.slice(1).join(&#x27;#&#x27;);
                         if (rep.hasOwnProperty(propName)) {
                             var theList = rep[propName];
                             if (!Array.isArray(theList)) {
-                                throw &quot;Selector syntax used in frame but corresponding value in parameterSet is not a list&quot;
+                                throw &#x27;Selector syntax used in frame but corresponding value in parameterSet is not a list&#x27;;
                             }
                             if (Ember.$.isNumeric(selector)) {
                                 var index = Math.round(selector);
                                 obj[property] = theList[index];
-                            } else if (selector === &quot;RAND&quot;) {
-                                obj[property] = theList[Math.floor(Math.random()*theList.length)];
-                            } else if (selector === &quot;PERM&quot;) {
+                            } else if (selector === &#x27;RAND&#x27;) {
+                                obj[property] = theList[Math.floor(Math.random() * theList.length)];
+                            } else if (selector === &#x27;PERM&#x27;) {
                                 obj[property] = shuffleArray(theList);
-                            } else if (selector === &quot;UNIQ&quot;) {
+                            } else if (selector === &#x27;UNIQ&#x27;) {
                                 // If no shuffled version &amp; index stored for this property, create
                                 if (!storedProperties.hasOwnProperty(propName)) {
                                     storedProperties[propName] = {&#x27;shuffledArray&#x27;: shuffleArray(theList), &#x27;index&#x27;: 0};
                                 }
                                 // Fetch current element from shuffled array
-                                obj[property] = storedProperties[propName][&#x27;shuffledArray&#x27;][storedProperties[propName][&#x27;index&#x27;]];
+                                obj[property] = storedProperties[propName].shuffledArray[storedProperties[propName].index];
                                 // Move to next for next UNIQ element using this property
-                                storedProperties[propName][&#x27;index&#x27;] = storedProperties[propName][&#x27;index&#x27;] + 1;
+                                storedProperties[propName].index = storedProperties[propName].index + 1;
                                 // Loop around to start if needed
-                                if (storedProperties[propName][&#x27;index&#x27;] == storedProperties[propName][&#x27;shuffledArray&#x27;].length) {
-                                    storedProperties[propName][&#x27;index&#x27;] = 0;
+                                if (storedProperties[propName].index == storedProperties[propName].shuffledArray.length) {
+                                    storedProperties[propName].index = 0;
                                 }
                             } else {
-                                throw &quot;Unknown selector after # in parameter specification&quot;;
+                                throw &#x27;Unknown selector after # in parameter specification&#x27;;
                             }
                         }
                     }
@@ -494,7 +494,6 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
         }
         return obj;
     }
-
 
     // Select a parameter set to use for this trial.
     if (!(frameConfig.hasOwnProperty(&#x27;parameterSetWeights&#x27;))) {
@@ -527,9 +526,9 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
         thisFrame = replaceValues(thisFrame, parameterSet);
 
         // Assign frame ID
-        thisFrame.id = &#x60;${frameId}&#x60;;
+        //thisFrame.id = &#x60;${frameId}&#x60;;
 
-        thisFrame = resolveFrame(thisFrame.id, thisFrame)[0];
+        thisFrame = resolveFrame(frameId, thisFrame)[0];
         frames.push(...thisFrame); // spread syntax important here -- a list of frames is returned by resolveFrame.
     }
 
@@ -544,10 +543,11 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
     return [frames, {&#x27;conditionNum&#x27;: parameterSetIndex, &#x27;parameterSet&#x27;: parameterSet}];
 
 };
+
 export default randomizer;
 
 // Export helper functions to support unit testing
-export { getRandomElement };
+export { getRandomElement, randomizer };
 
     </pre>
 </div>

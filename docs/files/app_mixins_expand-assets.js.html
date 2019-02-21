@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>addon/mixins/expand-assets.js - exp-player</title>
+    <title>app/mixins/expand-assets.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -103,15 +103,11 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: addon/mixins/expand-assets.js</h1>
+<h1 class="file-heading">File: app/mixins/expand-assets.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 import Ember from &#x27;ember&#x27;;
-
-let {
-    $
-} = Ember;
 
 /**
  * @module exp-player
@@ -300,37 +296,33 @@ export default Ember.Mixin.create({
         var typesDict = {
             &#x27;audio&#x27;: this.get(&#x27;audioTypes&#x27;),
             &#x27;video&#x27;: this.get(&#x27;videoTypes&#x27;)
-            };
+        };
 
         switch (type) {
-          case &#x27;image&#x27;:
-            if (typeof asset === &#x27;string&#x27; &amp;&amp; !(asset.includes(&#x27;://&#x27;))) {
-                // Image: replace stub with full URL if needed
-                fullAsset = this.baseDir + &#x27;img/&#x27; + asset;
-            }
-            return fullAsset;
-            break;
-          case &#x27;audio&#x27;:
-          case &#x27;video&#x27;:
-            var types = typesDict[type];
-            // Replace any string sources with the appropriate expanded source objects
-            if (typeof asset === &#x27;string&#x27; &amp;&amp; asset) {
-                fullAsset = [];
-                for (var iType = 0; iType &lt; types.length; iType++) {
-                    fullAsset.push({
-                        src: _this.baseDir + types[iType] + &#x27;/&#x27; + asset + &#x27;.&#x27; + types[iType],
-                        type: type + &#x27;/&#x27; + types[iType]
-                    });
+            case &#x27;image&#x27;:
+                if (typeof asset === &#x27;string&#x27; &amp;&amp; !(asset.includes(&#x27;://&#x27;))) {
+                    // Image: replace stub with full URL if needed
+                    fullAsset = this.baseDir + &#x27;img/&#x27; + asset;
                 }
-            }
-            return fullAsset;
-            break;
-          default:
-            throw &quot;Unrecognized type of asset to expand. Options are &#x27;image&#x27;, &#x27;audio&#x27;, and &#x27;video&#x27;.&quot;;
+                return fullAsset;
+            case &#x27;audio&#x27;:
+            case &#x27;video&#x27;:
+                var types = typesDict[type];
+                // Replace any string sources with the appropriate expanded source objects
+                if (typeof asset === &#x27;string&#x27; &amp;&amp; asset) {
+                    fullAsset = [];
+                    for (var iType = 0; iType &lt; types.length; iType++) {
+                        fullAsset.push({
+                            src: _this.baseDir + types[iType] + &#x27;/&#x27; + asset + &#x27;.&#x27; + types[iType],
+                            type: type + &#x27;/&#x27; + types[iType]
+                        });
+                    }
+                }
+                return fullAsset;
+            default:
+                throw &quot;Unrecognized type of asset to expand. Options are &#x27;image&#x27;, &#x27;audio&#x27;, and &#x27;video&#x27;.&quot;;
         }
     },
-
-
 
     didReceiveAttrs() {
 
@@ -345,6 +337,7 @@ export default Ember.Mixin.create({
 
         var _this = this;
         var assetTypes = [&#x27;audio&#x27;, &#x27;video&#x27;, &#x27;image&#x27;];
+        var sources;
 
         assetTypes.forEach((type) =&gt; {
             if (_this.get(&#x27;assetsToExpand&#x27;, {}).hasOwnProperty(type)) {
@@ -352,17 +345,17 @@ export default Ember.Mixin.create({
                 srcParameterNames.forEach((paraName) =&gt; {
                     var paraPieces = paraName.split(&#x27;/&#x27;);
                     if (paraPieces.length == 1) { // If we have the full parameter name, just expand that param
-                        var sources = _this.get(paraName);
+                        sources = _this.get(paraName);
                         if (sources) {
                             _this.set(paraName + &#x27;_parsed&#x27;, _this.expandAsset(sources, type));
                         }
                     } else if (paraPieces.length == 2) { // If we have something of the form parameterName/propName
                         var baseName = paraPieces[0];
                         var propName = paraPieces[1]; //paraPieces.slice(1,).join(&#x27;/&#x27;);
-                        var sources = _this.get(baseName, {});
+                        sources = _this.get(baseName, {});
                         if (sources) {
                             if (Array.isArray(sources)) {  //expand this[parameterName][i][propName] for all i
-                                sources.forEach( (elem) =&gt; {
+                                sources.forEach((elem) =&gt; {
                                     if (elem.hasOwnProperty(propName)) {
                                         Ember.set(elem, propName, _this.expandAsset(elem[propName], type));
                                     }
@@ -376,7 +369,7 @@ export default Ember.Mixin.create({
                             }
                         }
                     } else { // Have something like &#x27;a/b/c&#x27; with two or more slashes, not handled yet
-                        throw &quot;Nesting of parameter names to expand beyond two levels not supported (max one slash).&quot;;
+                        throw &#x27;Nesting of parameter names to expand beyond two levels not supported (max one slash).&#x27;;
                     }
 
                 });

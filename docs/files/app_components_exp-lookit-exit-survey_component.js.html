@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>addon/components/exp-video-config/component.js - exp-player</title>
+    <title>app/components/exp-lookit-exit-survey/component.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -103,86 +103,180 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: addon/components/exp-video-config/component.js</h1>
+<h1 class="file-heading">File: app/components/exp-lookit-exit-survey/component.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-import Em from &#x27;ember&#x27;;
 import layout from &#x27;./template&#x27;;
 
-import ExpFrameBaseComponent from &#x27;../../components/exp-frame-base/component&#x27;;
-import VideoRecord from &#x27;../../mixins/video-record&#x27;;
+import {validator, buildValidations} from &#x27;ember-cp-validations&#x27;;
+
+import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
+import FullScreen from &#x27;../../mixins/full-screen&#x27;;
 
 /**
  * @module exp-player
  * @submodule frames
  */
 
+const Validations = buildValidations({
+    birthDate: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;
+    }),
+    useOfMedia: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;,
+        disabled(model) {
+            return model.get(&#x27;withdrawal&#x27;);
+        }
+    }),
+    databraryShare: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;
+    })
+});
+
 /**
-Video configuration frame guiding user through making sure permissions are set appropriately and microphone is working, with troubleshooting text. All content is hard-coded for a general-purpose technical setup frame.
+Standard exit survey for Lookit studies: confirm participant birthdate, ask user for video sharing permission level &amp; Databrary sharing, option to withdraw, freeform comments, debriefing/thank you text. Leaves fullscreen mode.
 
 &#x60;&#x60;&#x60;json
 &quot;frames&quot;: {
-    &quot;video-config&quot;: {
-        &quot;kind&quot;: &quot;exp-video-config&quot;
+    &quot;my-exit-survey&quot;: {
+        &quot;kind&quot;: &quot;exp-lookit-exit-survey&quot;,
+        &quot;debriefing&quot;: {
+            &quot;title&quot;: &quot;Thank you!&quot;,
+            &quot;text&quot;: &quot;Learning how children react to ducks will help scientists design better rubber ducks.&quot;,
+            &quot;image&quot;: {
+                &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/ducks/duck.png&quot;,
+                &quot;alt&quot;: &quot;Very cute duck&quot;
+            }
+        }
     }
 }
 &#x60;&#x60;&#x60;
 
-@class ExpVideoConfig
+@class ExpLookitExitSurvey
 @extends ExpFrameBase
-@extends VideoRecord
+
+@uses FullScreen
+@uses Validations
 */
 
-export default ExpFrameBaseComponent.extend(VideoRecord, {
-    layout,
-    showWarning: false,
-    micChecked: Em.computed.alias(&#x27;recorder.micChecked&#x27;),
-    hasCamAccess: Em.computed.alias(&#x27;recorder.hasCamAccess&#x27;),
-    hasWebCam: Em.computed.alias(&#x27;recorder.hasWebCam&#x27;),
-
-    actions: {
-
-        checkAudioThenNext() {
-            if (!this.get(&#x27;micChecked&#x27;)) {
-                this.set(&#x27;showWarning&#x27;, true);
-            } else if (this.get(&#x27;hasWebCam&#x27;)) {
-                this.send(&#x27;next&#x27;);
-            }
-        },
-
-        reloadRecorder() {
-            this.set(&#x27;showWarning&#x27;, false);
-            this.destroyRecorder();
-            this.setupRecorder(this.$(this.get(&#x27;recorderElement&#x27;)), false);
-        },
-    },
-
-    type: &#x27;exp-videoconfig&#x27;,
+export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
+    layout: layout,
+    type: &#x27;exp-lookit-exit-survey&#x27;,
+    fullScreenElementId: &#x27;experiment-player&#x27;,
     meta: {
-        name: &#x27;Video Recorder Configuration&#x27;,
-        description: &#x27;Frame guiding the user through setting up webcam, with no recording.&#x27;,
+        name: &#x27;ExpLookitExitSurvey&#x27;,
+        description: &#x27;Exit survey for Lookit.&#x27;,
         parameters: {
             type: &#x27;object&#x27;,
             properties: {
                 /**
-                Text to show as the introduction to the troubleshooting tips section
-                @property {String} troubleshootingIntro
-                @default &quot;Some families are having trouble initially getting their webcams to work on Lookit. We&#x27;re sorry, and we&#x27;re working on switching away from Flash to make recording more reliable! In the meantime, these instructions should fix most problems.&quot;
+                Object specifying information to show on second page of exit survey, before returning to main Lookit site.
+                @property {Object} debriefing
+                    @param {String} title Title of debriefing page
+                    @param {String} text Paragraph to show as debriefing
+                    @param {Object} image Object specifying source URL [src] &amp; alt-text [alt] for any image to show during debriefing (optional). Example: &#x60;{
+                &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/ducks/duck.png&quot;,
+                &quot;alt&quot;: &quot;Very cute duck&quot;
+                }&#x60;
                 */
-                troubleshootingIntro: {
-                    type: &#x27;string&#x27;,
-                    description: &#x27;Text to show as introduction to troubleshooting tips section&#x27;,
-                    default: &quot;We&#x27;re just getting started with a new method for video recording! If you&#x27;re having trouble and the instructions below don&#x27;t fix it, we&#x27;re sorry - and we&#x27;d love to hear from you so we can improve the system.&quot;
-                }
-
-            },
-            required: []
+                debriefing: {
+                    type: &#x27;object&#x27;,
+                    properties: {
+                        title: {
+                            type: &#x27;string&#x27;,
+                            default: &#x27;Thank you!&#x27;
+                        },
+                        text: {
+                            type: &#x27;string&#x27;
+                        },
+                        image: {
+                            type: &#x27;object&#x27;,
+                            properties: {
+                                src: {
+                                    type: &#x27;string&#x27;
+                                },
+                                alt: {
+                                    type: &#x27;string&#x27;
+                                }
+                            }
+                        }
+                    }
+                },
+                required: [&#x27;debriefing&#x27;]
+            }
         },
         data: {
+            /**
+             * Parameters captured and sent to the server
+             *
+             * @method serializeContent
+             * @param {String} birthDate Child&#x27;s birthdate as entered into exit survey; timestamp string starting YYYY-mm-dd.
+             * @param {String} databraryShare Whether data can be shared with Databrary: &#x27;yes&#x27; or &#x27;no&#x27;
+             * @param {String} useOfMedia Video privacy level: &#x27;private&#x27;, &#x27;scientific&#x27;, or &#x27;public&#x27;
+             * @param {Boolean} withdrawal Whether the user checked the box to withdraw video data
+             * @param {String} feedback Freeform comments entered by parent
+             * @param {Object} eventTimings Only event captured during this frame is &#x27;nextFrame&#x27;; example eventTimings value: &#x60;[{u&#x27;eventType&#x27;: u&#x27;nextFrame&#x27;, u&#x27;timestamp&#x27;: u&#x27;2016-08-03T00:45:37.157Z&#x27;}]&#x60;
+             * @return {Object} The payload sent to the server
+             */
             type: &#x27;object&#x27;,
-            properties: {}
+            properties: {
+                birthDate: {
+                    type: &#x27;string&#x27;,
+                    default: null
+                },
+                databraryShare: {
+                    type: &#x27;string&#x27;
+                },
+                useOfMedia: {
+                    type: &#x27;string&#x27;
+                },
+                withdrawal: {
+                    type: &#x27;boolean&#x27;,
+                    default: false
+                },
+                feedback: {
+                    type: &#x27;string&#x27;,
+                    default: &#x27;&#x27;
+                }
+            }
         }
+    },
+    section1: true,
+    showWithdrawalConfirmation: false,
+    showValidation: false,
+    actions: {
+        advanceToProgressBar() {
+            // Move from section 1 (survey) to section 2 (progress bar/ finish button)
+            // Mark the session complete at this stage, as all data has been entered
+            this.sendAction(&#x27;sessionCompleted&#x27;);
+            this._save()
+                .then(()=&gt; {
+                    this.set(&#x27;section1&#x27;, false);
+                })
+                .catch(err =&gt; this.displayError(err));
+        },
+        continue() {
+            // Check whether exit survey is valid, and if so, advance to next screen
+            if (this.get(&#x27;validations.isValid&#x27;)) {
+                if (this.get(&#x27;withdrawal&#x27;)) {
+                    this.set(&#x27;showWithdrawalConfirmation&#x27;, true);
+                } else {
+                    this.send(&#x27;advanceToProgressBar&#x27;);
+                }
+            } else {
+                this.set(&#x27;showValidation&#x27;, true);
+            }
+        },
+        finish() {
+            this.send(&#x27;next&#x27;);
+        }
+    },
+    willRender() {
+        this.send(&#x27;exitFullscreen&#x27;);
     }
 });
 

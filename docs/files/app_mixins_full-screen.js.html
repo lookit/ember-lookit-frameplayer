@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>addon/components/exp-video-consent/component.js - exp-player</title>
+    <title>app/mixins/full-screen.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -103,142 +103,190 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: addon/components/exp-video-consent/component.js</h1>
+<h1 class="file-heading">File: app/mixins/full-screen.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-import layout from &#x27;./template&#x27;;
+import Ember from &#x27;ember&#x27;;
 
-import ExpLookitVideoConsent from &#x27;../../components/exp-lookit-video-consent/component&#x27;;
-import VideoRecord from &#x27;../../mixins/video-record&#x27;;
+let {
+    $
+} = Ember;
 
 /**
  * @module exp-player
- * @submodule frames
+ * @submodule mixins
  */
 
 /**
-Video consent frame for Lookit studies UNDER INITIAL MIT PROTOCOL ONLY, with consent document displayed at left and instructions to start recording, read a statement out loud, and send.
-This version allows custom specification of consent form text.
-For studies by researchers who have signed the Lookit Usage Agreement and have approval from their own IRB, please use exp-lookit-video-consent frame.
-Consent document can be downloaded as PDF document by participant.
+ * Allow components to specify fullscreen capabilities based on minimal configuration options
+ * @class FullScreen
+ */
+export default Ember.Mixin.create({
+    /**
+     *  The element ID of the thing to make full screen (video element, div, etc)
+     * @property {String} fullScreenElementId
+     */
+    fullScreenElementId: &#x27;experiment-player&#x27;,
+    displayFullscreen: false,
 
-&#x60;&#x60;&#x60;json
-&quot;frames&quot;: {
-    &quot;video-consent&quot;: {
-        &quot;blocks&quot;: [
-            {
-                 &quot;text&quot;: &quot;Observing your child&#x27;s behavior during this experimental session will help us to understand how infants and children use evidence to learn and make predictions about the world.&quot;,
-                &quot;title&quot;: &quot;About the study&quot;
-            },
-            {
-                &quot;text&quot;: &quot;Your and your child&#x27;s participation in this session are completely voluntary. If you and your child choose to participate, you may stop the session at any point with no penalty. Please pause or stop the session if your child becomes very fussy or does not want to participate. If this is a study with multiple sessions, there are no penalties for not completing all sessions.&quot;,
-                &quot;title&quot;: &quot;Participation&quot;
-            },
-            {
-                &quot;text&quot;: &quot;During the session, you and your child will be recorded via your computer&#x27;s webcam and microphone while watching a video or completing an activity. Video recordings and other data you enter are sent securely to our lab. At the end of the session, or when you end it early, you will be prompted to choose a privacy level for your webcam recordings. &quot;,
-                &quot;title&quot;: &quot;Webcam recording&quot;
-            },
-            {
-                &quot;text&quot;: &quot;Recordings and survey responses will be stored on a password-protected server and accessed only by the Lookit researchers working on this study and any other groups you allow when selecting a privacy level. A researcher may transcribe responses or record information such as where you or your child is looking. Data will not be used to identify you or your child. The results of the research may be presented at scientific meetings or published in scientific journals, but no video clips will be shared unless you allow this when selecting a privacy level.\n\nRaw data may also be published when it can not identify children; for instance, we may publish children’s looking times to the left versus right of the screen, or parent comments with children’s names removed. We may also study your child’s responses in connection with his or her previous responses to this or other studies, siblings’ responses, or demographic survey responses. We never publish children’s birthdates or names, and we never publish your demographic data in conjunction with your child’s video.&quot;,
-                &quot;title&quot;: &quot;Use of data&quot;
-            },
-            {
-                &quot;text&quot;: &quot;If you or your child have any questions or concerns about this research, you may contact Professor Laura Schulz: {contact}&quot;,
-                &quot;title&quot;: &quot;Contact information&quot;
+    /**
+     * The element ID of a button to show if the user leaves fullscreen mode
+     * @property {String} fsButtonID
+     */
+    fsButtonID: false,
+
+    // Note: to avoid handler being called repeatedly (bubbling
+    // up?) I&#x27;m just having components that extend FullScreen call
+    // showFullscreen themselves. --kim
+
+    // These are ridiculous workarounds for rare but reproducible problems with
+    // updating the isFullscreen field...
+
+    counter: 0,
+
+    updatedIsFullscreen: Ember.computed(&#x27;counter&#x27;, function () {
+        return this.checkFullscreen();
+    }),
+
+    isFullscreen: false, // Keep track of state
+
+    checkFullscreen: function () {  // Abstract away vendor-prefixed APIs
+
+        var opts = [&#x27;fullscreenElement&#x27;, &#x27;webkitFullscreenElement&#x27;, &#x27;mozFullScreenElement&#x27;, &#x27;msFullscreenElement&#x27;];
+        for (var opt of opts) {
+            if (!!document[opt]) {  // eslint-disable-line no-extra-boolean-cast
+                return true;
             }
-        ],
-        &quot;prompt&quot;: &quot;\&quot;I have read and understand the consent document. I am this child&#x27;s parent or legal guardian and we both agree to participate in this study.\&quot;&quot;,
-        &quot;kind&quot;: &quot;exp-video-consent&quot;
-    }
-}
-&#x60;&#x60;&#x60;
+        }
+        return false;
+    },
 
-@class ExpVideoConsent
-@extends ExpLookitVideoConsent
+    onFullscreen: function ($element) {
+        if (this.get(&#x27;isDestroyed&#x27;)) {
+            // Short-circuit if object is destroyed (eg we leave fullscreen because a video frame ended)
+            return false;
+        }
+        this.set(&#x27;counter&#x27;, this.get(&#x27;counter&#x27;) + 1);
 
-@uses VideoRecord
-*/
+        var isFS = this.checkFullscreen();
+        this.set(&#x27;isFullscreen&#x27;, isFS);
 
-export default ExpLookitVideoConsent.extend(VideoRecord, {
-    layout,
+        var $button = $(&#x60;#${this.get(&#x27;fsButtonID&#x27;)}&#x60;);
+        if (isFS) { // just entered FS mode
+            if (this.get(&#x27;displayFullscreenOverride&#x27;) &amp;&amp; !this.get(&#x27;displayFullscreen&#x27;)) {
+                $element.addClass(&#x27;player-fullscreen-override&#x27;);
+            } else {
+                $element.addClass(&#x27;player-fullscreen&#x27;);
+            }
+            if (this.displayFullscreen &amp;&amp; this.fsButtonID) {
+                $button.hide();
+            }
+            /**
+             * Upon detecting change to fullscreen mode
+             *
+             * @event enteredFullscreen
+            */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;enteredFullscreen&#x27;);
+        } else { // just exited FS mode
+            $element.removeClass(&#x27;player-fullscreen&#x27;);
+            $element.removeClass(&#x27;player-fullscreen-override&#x27;);
+            if (this.displayFullscreen &amp;&amp; this.fsButtonID) {
+                $button.show();
+            }
+            /**
+             * Upon detecting change out of fullscreen mode
+             *
+             * @event leftFullscreen
+            */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;leftFullscreen&#x27;);
+        }
+    },
+
+    displayError(error) {  // eslint-disable-line no-unused-vars
+        // Exit fullscreen first to make sure error is visible to users.
+        this.send(&#x27;exitFullscreen&#x27;);
+        return this._super(...arguments);
+    },
+
+    actions: {
+        /**
+         * Make a specified element fullscreen
+         * @method showFullscreen
+         */
+        showFullscreen: function () {
+
+            var elementId = this.get(&#x27;fullScreenElementId&#x27;);
+            if (!elementId) {
+                throw Error(&#x27;Must specify element Id to make fullscreen&#x27;);
+            }
+
+            var buttonId = this.get(&#x27;fsButtonID&#x27;);
+            var buttonSel = Ember.$(&#x60;#${buttonId}&#x60;);
+
+            var selector = Ember.$(&#x60;#${elementId}&#x60;);
+            var elem = selector[0];
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            } else if (elem.mozRequestFullScreen) {
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            } else {
+                console.log(&#x27;Your browser does not appear to support fullscreen rendering.&#x27;);
+            }
+
+            //this.checkFullscreen();
+
+            Ember.$(document).off(&#x27;webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange&#x27;);
+            Ember.$(document).on(&#x27;webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange&#x27;, this.onFullscreen.bind(this, selector, buttonSel));
+        },
+        /**
+         * Exit fullscreen mode
+         * @method exitFullscreen
+         */
+        exitFullscreen: function () {
+            console.log(&#x27;exiting FS mode&#x27;);
+            if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement) {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+            }
+            this.set(&#x27;isFullscreen&#x27;, false);
+            // Note: we may be leaving fullscreen from a different frame, and no longer
+            // know which element .player-fullscreen was attached to. Remove it from all
+            // elements, otherwise we don&#x27;t leave cleanly if a custom ID was specified!
+            Ember.$(&#x27;*&#x27;).removeClass(&#x27;player-fullscreen&#x27;);
+            Ember.$(&#x27;*&#x27;).removeClass(&#x27;player-fullscreen-override&#x27;);
+        }
+    },
 
     meta: {
-        name: &#x27;Video Consent Form&#x27;,
-        description: &#x27;A video consent form.&#x27;,
         parameters: {
             type: &#x27;object&#x27;,
             properties: {
                 /**
-                Title of the consent document
-                @property {String} title
-                @default &#x27;Consent to participate in behavioral research: &lt;br&gt; Inference and induction study&#x27;
-                */
-                title: {
-                    type: &#x27;string&#x27;,
-                    default: &#x27;Consent to participate in behavioral research: &lt;br&gt; Inference and induction study&#x27;
-                },
-
-                /**
-                Array of paragraphs of the consent document, each with title and text.
-                @property {Array} blocks
-                    @param {String} title
-                    @param {String} text
-                @default []
-                */
-                blocks: {
-                    type: &#x27;array&#x27;,
-                    items: {
-                        type: &#x27;object&#x27;,
-                        properties: {
-                            title: {
-                                type: &#x27;string&#x27;
-                            },
-                            text: {
-                                type: &#x27;string&#x27;
-                            }
-                        }
-                    },
-                    default: []
-                },
-
-                /**
-                Text the user is asked to read aloud to consent
-                @property {String} prompt
-                @default &#x27;I consent to participate in this study&#x27;
-                */
-                prompt: {
-                    type: &#x27;string&#x27;,
-                    default: &#x27;I consent to participate in this study&#x27;
+                 * Whether to display this frame as fullscreen, even though it is not
+                 * generally used that way.
+                 *
+                 * @property {String} displayFullscreenOverride
+                 */
+                displayFullscreenOverride: {
+                    type: &#x27;boolean&#x27;,
+                    description: &#x27;Whether to override default and display this frame as fullscreen&#x27;,
+                    default: false
                 }
             }
-        },
-        data: {
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {String} consentFormText the exact text shown in the consent document during this frame
-             * @param {String} videoID The ID of any webcam video recorded during this frame
-             * @param {List} videoList a list of webcam video IDs in case there are &gt;1
-             * @param {Object} eventTimings
-             * @return {Object} The payload sent to the server
-             */
-            type: &#x27;object&#x27;,
-            properties: {
-                videoId: {
-                    type: &#x27;string&#x27;
-                },
-                videoList: {
-                    type: &#x27;list&#x27;
-                },
-                consentFormText: {
-                    type: &#x27;string&#x27;
-                }
-            },
-            required: [&#x27;videoId&#x27;]
         }
-    }
+    },
 });
 
     </pre>

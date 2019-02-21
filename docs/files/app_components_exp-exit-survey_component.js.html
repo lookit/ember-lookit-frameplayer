@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>addon/randomizers/permute.js - exp-player</title>
+    <title>app/components/exp-exit-survey/component.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -103,161 +103,163 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: addon/randomizers/permute.js</h1>
+<h1 class="file-heading">File: app/components/exp-exit-survey/component.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-/**
-* @module exp-player
-* @submodule randomizers
-*/
+import Ember from &#x27;ember&#x27;;
+import layout from &#x27;./template&#x27;;
+
+import {validator, buildValidations} from &#x27;ember-cp-validations&#x27;;
+
+import moment from &#x27;moment&#x27;;
+
+import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
+import FullScreen from &#x27;../../mixins/full-screen&#x27;;
 
 /**
-* Randomizer to allow random ordering of a list of frames. Intended to be
-* useful for e.g. randomly permuting the order of particular stimuli used during
-* a set of trials (although frames need not be of the same kind to permute).
-*
-* To use, define a frame with &quot;kind&quot;: &quot;choice&quot; and &quot;sampler&quot;: &quot;permute&quot;,
-* as shown below, in addition to the parameters described under &#x27;properties&#x27;.
-*
-&#x60;&#x60;&#x60;json
-&quot;frames&quot;: {
-    &quot;test-trials&quot;: {
-        &quot;sampler&quot;: &quot;permute&quot;,
-        &quot;kind&quot;: &quot;choice&quot;,
-        &quot;commonFrameProperties&quot;: {
-            &quot;showPreviousButton&quot;: false
-        },
-        &quot;frameOptions&quot;: [
-            {
-                &quot;blocks&quot;: [
-                    {
-                        &quot;emph&quot;: true,
-                        &quot;text&quot;: &quot;Let&#x27;s think about hippos!&quot;,
-                        &quot;title&quot;: &quot;hippos!&quot;
-                    },
-                    {
-                        &quot;text&quot;: &quot;Some more about hippos...&quot;
-                    }
-                ],
-                &quot;kind&quot;: &quot;exp-lookit-text&quot;
-            },
-            {
-                &quot;blocks&quot;: [
-                    {
-                        &quot;emph&quot;: false,
-                        &quot;text&quot;: &quot;Let&#x27;s think about dolphins!&quot;,
-                        &quot;title&quot;: &quot;dolphins!&quot;
-                    }
-                ],
-                &quot;kind&quot;: &quot;exp-lookit-text&quot;
-            }
-        ]
-    }
-}
-*
-* &#x60;&#x60;&#x60;
-* @class permute
+ * @module exp-player
+ * @submodule frames
+ */
+
+/**
+This is the exit survey used by &quot;Your baby the physicist&quot;. Use the updated frame {{#crossLink &quot;ExpLookitExitSurvey&quot;}}{{/crossLink}} instead.
+
+@class ExpExitSurvey
+@extends ExpFrameBase
+@uses Validations
+@uses FullScreen
 */
 
-var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
-
-    // Data provided to randomizer (properties of frameConfig):
-
-    /**
-     * List of frames to be created by this randomizer. Each frame is an
-     * object with any necessary frame-specific properties specified. The
-     * &#x27;kind&#x27; of frame can be specified either here (per frame) or in
-     * commonFrameProperties. If a property is defined for a given frame both
-     * in this frame list and in commonFrameProperties, the value in the frame
-     * list will take precedence.
-     *
-     * (E.g., you could include &#x27;kind&#x27;: &#x27;normal-frame&#x27; in
-     * commmonFrameProperties, but for a single frame in frameOptions, include
-     * &#x27;kind&#x27;: &#x27;special-frame&#x27;.)
-     *
-     * @property {Object[]} frameOptions
-     */
-
-    /**
-     * List of sets of frame properties of the same length as frameOptions. The order
-     * of this list will be preserved; the properties in orderedFrameOptions[0] will be added to the
-     * frame shown first, the properties in orderedFrameOptions[1] will be added to the
-     * frame shown second, etc. Properties are applied in this order:
-     * commonFrameProperties, frameOptions, orderedFrameOptions
-     * so orderedFrameOptions properties will take priority over regular frameOptions.
-     * This allows you to, for instance, do something different during the first or last
-     * trial (e.g., a practice/training trial or a debriefing trial).
-     * If &#x60;parameterSets&#x60; is included as one of the properties in orderedFrameOptions[n],
-     * the values will be added to any parameterSets property on the existing frame
-     * (value-by-value, iterating through corresponding parameterSets)
-     * rather than overwriting the whole property.
-     *
-     * @property {Object[]} orderedFrameOptions
-     */
-
-    /**
-     * Object describing common parameters to use in EVERY frame created
-     * by this randomizer. Parameter names and values are as described in
-     * the documentation for the frameType used.
-     *
-     * @property {Object} commonFrameProperties
-     */
-
-    // TODO: input checking. Make sure all parameters are given or impute empty vals if
-    // not; make sure orderedFrameOptions.length == frameOptions.length if both are given
-
-    // TODO: allow optional specification of how many frames to create!
-
-    /*
-     * Randomize array element order in-place.
-     * Using Durstenfeld shuffle algorithm.
-     */
-    var array = frameConfig.frameOptions.slice();
-    for (var i = array.length - 1; i &gt; 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-
-    var thisFrame = {};
-    var frames = [];
-    for (var iFrame = 0; iFrame &lt; array.length; iFrame++) {
-        // Assign parameters common to all frames made by this randomizer
-        thisFrame = {};
-        Object.assign(thisFrame, frameConfig.commonFrameProperties);
-
-        // Assign parameters specific to this frame (allow to override
-        // common parameters assigned above)
-        Object.assign(thisFrame, array[iFrame]);
-
-        // Assign parameters specific to the frame occupying this position
-        // in the ordered list. These override everything else. If &#x60;parameterSets&#x60; are
-        // included, they are *added* to any parameterSets, rather than overwriting.
-        if (frameConfig.hasOwnProperty(&#x27;orderedFrameOptions&#x27;) &amp;&amp; frameConfig.orderedFrameOptions.length &gt; iFrame) {
-            if (frameConfig.orderedFrameOptions[iFrame].hasOwnProperty(&#x27;parameterSets&#x27;) &amp;&amp; thisFrame.hasOwnProperty(&#x27;parameterSets&#x27;)) {
-                for (var iPS = 0; iPS &lt; thisFrame.parameterSets.length; iPS++) {
-                    Object.assign(thisFrame.parameterSets[iPS], frameConfig.orderedFrameOptions[iFrame].parameterSets[iPS]);
-                }
-                delete frameConfig.orderedFrameOptions[iFrame].parameterSets;
-            }
-            Object.assign(thisFrame, frameConfig.orderedFrameOptions[iFrame]);
+const Validations = buildValidations({
+    birthDate: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;
+    }),
+    useOfMedia: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;,
+        disabled(model) {
+            return model.get(&#x27;withdrawal&#x27;);
         }
+    }),
+    databraryShare: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;
+    })
+});
 
-        thisFrame = resolveFrame(frameId, thisFrame)[0];
-        frames.push(...thisFrame);
+export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
+    layout: layout,
+    type: &#x27;exp-exit-survey&#x27;,
+    fullScreenElementId: &#x27;experiment-player&#x27;,
+    meta: {
+        name: &#x27;ExpExitSurvey&#x27;,
+        description: &#x27;Exit survey for Lookit.&#x27;,
+        parameters: {
+            type: &#x27;object&#x27;,
+            properties: {
+            }
+        },
+        data: {
+            type: &#x27;object&#x27;,
+            properties: {
+                birthDate: {
+                    type: &#x27;string&#x27;,
+                    default: null
+                },
+                databraryShare: {
+                    type: &#x27;string&#x27;
+                },
+                useOfMedia: {
+                    type: &#x27;string&#x27;
+                },
+                withdrawal: {
+                    type: &#x27;boolean&#x27;,
+                    default: false
+                },
+                feedback: {
+                    type: &#x27;string&#x27;,
+                    default: &#x27;&#x27;
+                },
+                idealSessionsCompleted: {
+                    type: &#x27;integer&#x27;,
+                    default: 3
+                },
+                idealDaysSessionsCompleted: {
+                    type: &#x27;integer&#x27;,
+                    default: 14
+                }
+            }
+        }
+    },
+    today: new Date(),
+    section1: true,
+    minVideosToCountSession: 6,
+    showWithdrawalConfirmation: false,
+    showValidation: false,
+    actions: {
+        advanceToProgressBar() {
+            // Move from section 1 (survey) to section 2 (progress bar/ finish button)
+            // Mark the session complete at this stage, as all data has been entered
+            this.sendAction(&#x27;sessionCompleted&#x27;);
+            this._save()
+                .then(()=&gt; {
+                    this.set(&#x27;section1&#x27;, false);
+                })
+                .catch(err =&gt; this.displayError(err));
+        },
+        continue() {
+            // Check whether exit survey is valid, and if so, advance to next screen
+            if (this.get(&#x27;validations.isValid&#x27;)) {
+                if (this.get(&#x27;withdrawal&#x27;)) {
+                    this.set(&#x27;showWithdrawalConfirmation&#x27;, true);
+                } else {
+                    this.send(&#x27;advanceToProgressBar&#x27;);
+                }
+            } else {
+                this.set(&#x27;showValidation&#x27;, true);
+            }
+        },
+        finish() {
+            this.send(&#x27;next&#x27;);
+        }
+    },
+
+    currentSessionStatus: Ember.computed(&#x27;frameContext.pastSessions&#x27;, function() {
+        let nSessions = 0;
+        const sessionDates = [];
+        this.get(&#x27;frameContext.pastSessions&#x27;).forEach(session =&gt; {
+            let nVideos = 0;
+            Object.keys(session.get(&#x27;expData&#x27;)).forEach(frameKeyName =&gt; {
+                if (frameKeyName.includes(&#x27;pref-phys-videos&#x27;)) {
+                    nVideos++;
+                }
+            });
+            // Count only sessions with at least minVideos pref-phys-videos frames
+            if (nVideos &gt;= this.get(&#x27;minVideosToCountSession&#x27;)) {
+                nSessions++;
+                sessionDates.pushObject(moment(session.get(&#x27;createdOn&#x27;)));
+            }
+        });
+        return {&#x27;nSessions&#x27;: nSessions, &#x27;daysSessionsCompleted&#x27;: moment.max(sessionDates).diff(moment.min(sessionDates), &#x27;days&#x27;) + 1 };
+    }),
+
+    currentSessionsCompleted: Ember.computed(&#x27;currentSessionStatus&#x27;, function()    {
+        return this.get(&#x27;currentSessionStatus.nSessions&#x27;);
+    }),
+
+    currentDaysSessionsCompleted: Ember.computed(&#x27;currentSessionStatus&#x27;, function() {
+        return this.get(&#x27;currentSessionStatus.daysSessionsCompleted&#x27;);
+    }),
+
+    progressValue: Ember.computed(&#x27;currentSessionsCompleted&#x27;, &#x27;idealSessionsCompleted&#x27;, function() {
+        return Math.min(100, Math.ceil((this.get(&#x27;currentSessionsCompleted&#x27;) / this.get(&#x27;idealSessionsCompleted&#x27;)) * 100));
+    }),
+    willRender() {
+        this.send(&#x27;exitFullscreen&#x27;);
     }
-
-    /**
-     * Parameters captured and sent to the server
-     *
-     * @method conditions
-     * @param {Object[]} frameList the list of frames used, in the final shuffled order
-     */
-    return [frames, {&#x27;frameList&#x27;: array}];
-};
-export default randomizer;
+});
 
     </pre>
 </div>

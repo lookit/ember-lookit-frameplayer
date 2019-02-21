@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>addon/components/exp-lookit-video-consent/component.js - exp-player</title>
+    <title>app/components/exp-lookit-video-consent/component.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -103,14 +103,14 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: addon/components/exp-lookit-video-consent/component.js</h1>
+<h1 class="file-heading">File: app/components/exp-lookit-video-consent/component.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 import Em from &#x27;ember&#x27;;
 import layout from &#x27;./template&#x27;;
 
-import ExpFrameBaseComponent from &#x27;../../components/exp-frame-base/component&#x27;;
+import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
 import VideoRecord from &#x27;../../mixins/video-record&#x27;;
 
 let {
@@ -167,6 +167,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         finish() {
             if (!this.get(&#x27;stoppedRecording&#x27;)) {
                 this.stopRecorder().then(() =&gt; {
+                    this.session.set(&#x27;completedConsentFrame&#x27;, true);
                     this.set(&#x27;stoppedRecording&#x27;, true);
                     this.send(&#x27;next&#x27;);
                 });
