@@ -2,6 +2,7 @@ import ExpFrameBaseComponent from '../exp-frame-base/component';
 import VideoRecord from '../../mixins/video-record';
 import layout from './template';
 import Em from 'ember';
+import { observer } from '@ember/object';
 
 let {
     $
@@ -221,7 +222,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     },
 
     // Override to deal with whether or not recording is starting automatically
-    whenPossibleToRecord: function() {
+    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
         if (this.get('startRecordingAutomatically')) {
             if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
                 this.send('record');
@@ -243,7 +244,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
              */
             this.send('setTimeEvent', 'hideWebcam');
         }
-    }.observes('recorder.hasCamAccess', 'recorderReady'),
+    }),
 
     didInsertElement() { // initial state of all buttons/text
         $('#hiddenWebcamMessage').hide();

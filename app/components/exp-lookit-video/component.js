@@ -5,6 +5,7 @@ import FullScreen from '../../mixins/full-screen';
 import MediaReload from '../../mixins/media-reload';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
+import { observer } from '@ember/object';
 
 let {
     $
@@ -783,7 +784,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
      * stuff at this point!
      * @method whenPossibleToRecord
      */
-    whenPossibleToRecord: function() {
+    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
         if (this.get('doRecording')) {
             var _this = this;
             if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
@@ -792,7 +793,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 });
             }
         }
-    }.observes('recorder.hasCamAccess', 'recorderReady'),
+    }),
 
     willDestroyElement() { // remove event handler
         $(document).off('keyup.pauser');

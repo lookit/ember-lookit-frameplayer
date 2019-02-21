@@ -4,6 +4,7 @@ import ExpFrameBaseComponent from '../exp-frame-base/component';
 import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
+import { observer } from '@ember/object';
 
 let {
     $
@@ -296,7 +297,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     // Override to do a bit extra when recording
-    whenPossibleToRecord: function() {
+    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
         if (this.get('doRecording')) {
             var _this = this;
             if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
@@ -309,7 +310,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 });
             }
         }
-    }.observes('recorder.hasCamAccess', 'recorderReady'),
+    }),
 
     actions: {
 
