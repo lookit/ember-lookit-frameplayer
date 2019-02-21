@@ -192,14 +192,11 @@ export default Ember.Component.extend(FullScreen, {
         this.set('_currentFrameTemplate', null);
     },
     _exit() {
-        this.send('sessionCompleted');
+        this.setSessionCompleted();
         this.get('session').save().then(() => window.location = this.get('experiment.exitUrl') || '/');
     },
 
     actions: {
-        sessionCompleted() {
-            this.get('session').set('completed', true);
-        },
 
         setGlobalTimeEvent(eventName, extra) {
             // Set a timing event not tied to any one frame

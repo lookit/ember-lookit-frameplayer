@@ -42,8 +42,6 @@ import FullScreen from '../../mixins/full-screen';
         previous=(action 'previous')
         saveHandler=(action 'saveFrame')
         skipone=(action 'skipone')
-        sessionCompleted=(action 'sessionCompleted')
-
         extra=extra
     }}
  * ```
@@ -211,6 +209,10 @@ export default Ember.Component.extend(FullScreen, {
         };
         Ember.merge(eventData, extra);
         return eventData;
+    },
+
+    setSessionCompleted() {
+        this.get('session').set('completed', true);
     },
 
     actions: {
