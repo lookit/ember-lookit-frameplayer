@@ -98,30 +98,37 @@
 
             {{#bs-accordion-item value="chrome" title="Camera setup instructions for Chrome"}}
                 <ol>
-                    <li> When you load this page for the first time, you should see a prompt like the one below. Click "Allow" to let Lookit access the webcam and microphone.
+                    <li>
+                        When you load this page for the first time, you should see a prompt like the one below. Click "Allow" to let Lookit access the webcam and microphone.
                         <img class="screenshot" src="assets/webrtc_chrome_initialprompt.png" alt="Chrome permissions prompt">
                     </li>
-                    <li> If you didn't see that prompt, or if you clicked "Block," you can change the settings by clicking on the green lock icon next to the URL. You'll see that Camera and Microphone are set to "Ask" or "Block." Set them both to "Allow," and then refresh this page.
+                    <li>
+                        If you didn't see that prompt, or if you clicked "Block," you can change the settings by clicking on the green lock icon next to the URL. You'll see that Camera and Microphone are set to "Ask" or "Block." Set them both to "Allow," and then refresh this page.
                         <img class="screenshot" src="assets/webrtc_chrome_fix_step1.png" alt="Editing microphone and camera permissions in Chrome, step 1">
                     </li>
 
-                    <li> Having trouble passing the sound check? Chrome may be using the wrong input device - unfortunately it doesn't let you pick which microphone when you click "Allow". You can select the correct microphone at chrome://settings/content/microphone (copy and paste that as a URL). Then refresh this page to try again.
+                    <li>
+                        Having trouble passing the sound check? Chrome may be using the wrong input device - unfortunately it doesn't let you pick which microphone when you click "Allow". You can select the correct microphone at chrome://settings/content/microphone (copy and paste that as a URL). Then refresh this page to try again.
                     </li>
 
-                    <li> Seeing the wrong camera view - like your built-in laptop camera instead of a USB webcam? You can select the correct camera at chrome://settings/content/camera (copy and paste that as a URL). Then refresh this page to try again.
+                    <li>
+                        Seeing the wrong camera view - like your built-in laptop camera instead of a USB webcam? You can select the correct camera at chrome://settings/content/camera (copy and paste that as a URL). Then refresh this page to try again.
                     </li>
 
-                    <li> You can also refer to <a href="https://support.google.com/chrome/answer/2693767?hl=en" target="_blank"> these directions from Chrome </a>.
+                    <li>
+                        You can also refer to <a href="https://support.google.com/chrome/answer/2693767?hl=en" target="_blank" rel="noopener"> these directions from Chrome </a>.
                     </li>
                 </ol>
             {{/bs-accordion-item}}
 
             {{#bs-accordion-item value="firefox" title="Camera setup instructions for Firefox"}}
                 <ol>
-                     <li> When you load this page for the first time, you should see a prompt like the one below. Select the camera and microphone you want to use, check "Remember this decision," and click "Allow":
+                    <li>
+                        When you load this page for the first time, you should see a prompt like the one below. Select the camera and microphone you want to use, check "Remember this decision," and click "Allow":
                         <img class="screenshot" src="assets/webrtc_firefox_initialprompt.png" alt="Firefox permissions prompt">
                     </li>
-                    <li> If you didn't see that prompt, or if you clicked "Don't Allow" at first, you can change the settings by clicking on crossed-out camera and/or microphone next to the URL. Click the "X" next to each setting, then refresh the page.
+                    <li>
+                        If you didn't see that prompt, or if you clicked "Don't Allow" at first, you can change the settings by clicking on crossed-out camera and/or microphone next to the URL. Click the "X" next to each setting, then refresh the page.
                         <img class="screenshot" src="assets/webrtc_firefox_fix_step1.png" alt="Editing microphone and camera permissions in Firefox">
                     </li>
                 </ol>
@@ -129,7 +136,7 @@
 
             {{#bs-accordion-item value="whatelse" title="It's just not working - what else can I try?"}}
 
-            <p> First, you are a very dedicated citizen scientist and we're grateful for your help! We're sorry you're having trouble.</p>
+                <p> First, you are a very dedicated citizen scientist and we're grateful for your help! We're sorry you're having trouble.</p>
                 <ol>
                     <li>
                         Make sure you're able to view your webcam video outside of Lookit. (For example, on a Mac, try Photobooth.)
@@ -139,7 +146,8 @@
                         The easiest approach is to try a different web browser if you have one installed anyway. For instance, if you're using Firefox, switch to Chrome, or vice versa. Also, update the browser if you're not using the latest version. You can check by going to "Chrome" -> "About Chrome" or "Firefox" -> "About Firefox" in the menu bar. (This is a good idea to make sure you've gotten any security updates anyway.)
                     </li>
 
-                    <li> Using Chrome?
+                    <li>
+                        Using Chrome?
                         <ul>
                             <li>Make sure you're not using an Incognito window - you won't be able to save and use settings throughout the study.</li>
                             <li>Go to your Chrome settings for lookit.mit.edu here:
@@ -151,8 +159,10 @@
                         </ul>
                     </li>
 
-                    <li> Using Firefox?
-                        <p class="indent"> The following may work on some versions of Firefox. Go to "Firefox" on the menu bar, then "Preferences."
+                    <li>
+                        Using Firefox?
+                        <p class="indent">
+                            The following may work on some versions of Firefox. Go to "Firefox" on the menu bar, then "Preferences."
                             <img class="screenshot" src="assets/firefox_menu.png" alt="Firefox menu bar">
                             Find "Privacy & Security" on the left menu. Scroll down to "Permissions." Click on "Camera" and enter https://lookit.mit.edu/ as an allowed site. Do the same for "Microphone."
                         </p>
@@ -167,7 +177,7 @@
 
             {{/bs-accordion-item}}
 
-            {{/bs-accordion}}
+        {{/bs-accordion}}
 
     </div>
 

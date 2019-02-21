@@ -9,15 +9,15 @@
         </div>
 
         <div class="col-md-8 col-md-offset-2">
-            {{#unless prompt}}
-                {{currentVideo.caption}}
-                <br> <br>
-            {{else}}
+            {{#if prompt}}
                 {{text}}
                 <br> <br>
                 <button class="btn btn-success btn-block" disabled={{disableRecord}} {{action 'accept'}}>{{prompt}}</button>
                 <hr>
-            {{/unless}}
+            {{else}}
+                {{currentVideo.caption}}
+                <br> <br>
+            {{/if}}
         </div>
 
 

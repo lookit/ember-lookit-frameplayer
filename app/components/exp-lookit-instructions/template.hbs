@@ -1,3 +1,4 @@
+{{! template-lint-disable invalid-interactive}}
 <div class="row exp-lookit-instructions">
     <div class="vertical-pad"></div>
 
@@ -19,18 +20,18 @@
                                    controls
                                    onended={{action 'mediaPlayed'}}
                             >
-                                {{#each block.mediaBlock.sources as |source|}}
-                                    <source src={{source.src}} type={{source.type}}>
-                                {{/each}}
+                            {{#each block.mediaBlock.sources as |source|}}
+                                <source src={{source.src}} type={{source.type}}>
+                            {{/each}}
                         </video>
                     {{else}}
                         <audio class="player-media"
                                    controls
                                    onended={{action 'mediaPlayed'}}
                             >
-                                {{#each block.mediaBlock.sources as |source|}}
-                                    <source src={{source.src}} type={{source.type}}>
-                                {{/each}}
+                            {{#each block.mediaBlock.sources as |source|}}
+                                <source src={{source.src}} type={{source.type}}>
+                            {{/each}}
                         </audio>
                     {{/if}}
 

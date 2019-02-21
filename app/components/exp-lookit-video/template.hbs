@@ -1,4 +1,6 @@
 {{! template-lint-disable invalid-interactive}}
+{{! template-lint-disable html-comments}}
+
 <div class="input-group exp-lookit-video row col-md-6 ">
 
     <!--RECORDER-->
@@ -45,9 +47,9 @@
     <!--PAUSE AUDIO-->
     {{#if isPaused }}
         <audio id="pause-audio" autoplay="autoplay">
-        {{#each pauseAudio_parsed as |stream|}}
-            <source src="{{stream.src}}" type="{{stream.type}}">
-        {{/each}}
+            {{#each pauseAudio_parsed as |stream|}}
+                <source src="{{stream.src}}" type="{{stream.type}}">
+            {{/each}}
         </audio>
     {{/if}}
 
