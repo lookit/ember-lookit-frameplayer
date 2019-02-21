@@ -26,9 +26,7 @@ export default Ember.Mixin.create({
     },
     model(params) {
         return Ember.RSVP.Promise.resolve()
-            .then(() => {
-                return this._getStudy(params);
-            })
+            .then(() => this._getStudy(params))
             .then((study) => {
                 this.set('_study', study);
                 console.log(study.id);
@@ -40,7 +38,7 @@ export default Ember.Mixin.create({
                 return this._createStudyResponse().save();
             }).then((response) => {
                 this.set('_response', response);
-                return loadAll(this.get('_study'), 'responses', this.get('_pastResponses'), { 'child': this.get('_child').id })
+                return loadAll(this.get('_study'), 'responses', this.get('_pastResponses'), { 'child': this.get('_child').id });
             }).then(() => {
                 const response = this.get('_response');
                 if (!this.get('_pastResponses').includes(response)) {

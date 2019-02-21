@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { observer } from '@ember/object';
 
-
 let {
     $
 } = Ember;
@@ -343,10 +342,6 @@ export default Ember.Mixin.create({
             }
         }
     }),
-
-
-
-
 
     /**
      * Hide the recorder from display. Useful if you would like to keep recording without extra UI elements to

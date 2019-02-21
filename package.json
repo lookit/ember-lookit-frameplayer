@@ -130,7 +130,8 @@
       "tmp",
       "vendor",
       "app/locales",
-      "tests"
+      "tests",
+      "themes"
     ],
     "requireSpacesInsideObjectBrackets": false,
     "requireSpacesInsideImportedObjectBraces": false,

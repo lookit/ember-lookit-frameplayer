@@ -4,12 +4,12 @@ import FramePlayerRoute from '../mixins/frame-player-route';
 
 // Adapted from Lookit participate route https://github.com/CenterForOpenScience/lookit/blob/develop/app/routes/participate.js
 export default Ember.Route.extend(WarnOnExitRoute, FramePlayerRoute, {
-    activate () {
+    activate() {
         // Include response ID in any raven reports that occur during the experiment
         this.get('raven').callRaven('setExtraContext', { sessionID: this.get('_response.id') });
         return this._super(...arguments);
     },
-    deactivate () {
+    deactivate() {
         // Clear any extra context when user finishes an experiment
         this.get('raven').callRaven('setExtraContext');
         return this._super(...arguments);

@@ -94,21 +94,21 @@ export default Ember.Component.extend(FullScreen, {
     showConfirmationDialog() {
         var _this = this;
         this.get('toast').warning("<br><button type='button' id='confirmationContinueStudy' class='btn btn-outline-secondary' style='color:black;'>Continue</button><button type='button' id='confirmationExitStudy' class='btn btn-danger' style='float:right;'>Exit</button>", 'Really exit study?',
-          {
-              allowHtml: true,
-              preventDuplicates: true,
-              onclick: null,
-              timeOut: 0,
-              extendedTimeOut: 0,
-              onShown: function () {
-                  Ember.$("#confirmationExitStudy").click(function(){
-                    _this.send('exitEarly');
-                  });
-                  Ember.$("#confirmationContinueStudy").click(function(){
-                    _this.get('toast').clear();
-                  });
+            {
+                allowHtml: true,
+                preventDuplicates: true,
+                onclick: null,
+                timeOut: 0,
+                extendedTimeOut: 0,
+                onShown: function () {
+                    Ember.$('#confirmationExitStudy').click(function() {
+                        _this.send('exitEarly');
+                    });
+                    Ember.$('#confirmationContinueStudy').click(function() {
+                        _this.get('toast').clear();
+                    });
                 }
-          });
+            });
     },
 
     _registerHandlers() {
@@ -121,11 +121,11 @@ export default Ember.Component.extend(FullScreen, {
         });
     },
 
-
     _removeHandlers() {
         Ember.$(window).off('keydown');
         $(window).off('beforeunload');
     },
+
     onFrameIndexChange: Ember.observer('frameIndex', function() {
         var max = this.get('frames.length') - 1;
         var frameIndex = this.get('frameIndex');
@@ -133,6 +133,7 @@ export default Ember.Component.extend(FullScreen, {
             this._removeHandlers();
         }
     }),
+
     willDestroy() {
         this._super(...arguments);
         this._removeHandlers();
