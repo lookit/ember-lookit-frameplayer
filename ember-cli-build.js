@@ -25,7 +25,7 @@ module.exports = function(defaults) {
           'ember-bootstrap': {
             importBootstrapFont: true,
             'bootstrapVersion': 3,
-            'importBootstrapCSS': true
+            'importBootstrapCSS': false
           },
           'ember-bootstrap-datetimepicker': {
               importBootstrapCSS: false
