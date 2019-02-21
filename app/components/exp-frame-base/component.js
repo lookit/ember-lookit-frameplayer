@@ -75,6 +75,7 @@ export default Ember.Component.extend(FullScreen, {
     frameConfig: null,
     frameContext: null,
     eventTimings: null,
+    _oldFrameIndex: null,
 
     session: null,
 
@@ -89,17 +90,16 @@ export default Ember.Component.extend(FullScreen, {
         return null;
     },
 
-    didReceiveAttrs: function (options) {
+    didReceiveAttrs: function () {
         this._super(...arguments);
 
         if (!this.get('frameConfig')) {
             return;
         }
 
-        var newAttrs = options.newAttrs || {};
-        var oldAttrs = options.oldAttrs || {};
+        let currentFrameIndex = this.get('frameIndex', null);
 
-        let clean = Ember.get(newAttrs, 'frameIndex.value') !== Ember.get(oldAttrs, 'frameIndex.value');
+        let clean = currentFrameIndex !== this.get('_oldFrameIndex');
         var defaultParams = this.setupParams(clean);
         if (clean) {
             Object.keys(defaultParams).forEach((key) => {
@@ -123,6 +123,8 @@ export default Ember.Component.extend(FullScreen, {
                 }
             }
         }
+
+        this.set('_oldFrameIndex', currentFrameIndex);
     },
 
     // Internal save logic
