@@ -186,8 +186,8 @@ export default Ember.Mixin.create({
         const videoId = this._generateVideoId();
         this.set('videoId', videoId);
         const recorder = this.get('videoRecorder').start(videoId, element, settings);
-        const pipeLoc = this.container.lookupFactory('config:environment').pipeLoc;
-        const pipeEnv = this.container.lookupFactory('config:environment').pipeEnv;
+        const pipeLoc = Ember.getOwner(this).resolveRegistration('config:environment').pipeLoc;
+        const pipeEnv = Ember.getOwner(this).resolveRegistration('config:environment').pipeEnv;
         const installPromise = recorder.install({record}, this.get('videoId'), pipeLoc, pipeEnv);
 
         // Track specific events for all frames that use  VideoRecorder
