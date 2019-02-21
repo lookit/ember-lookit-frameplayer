@@ -2,11 +2,19 @@
 /* jshint node:true */
 /* global require, module */
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+var nodeSass = require('node-sass'); // yarn install sometimes fails to create the 'vendor'
+// directory in node_modules/node-sass; using yarn install --force makes it work if you're
+// seeing Could not require 'ember-cli-build.js': ENOENT: no such file or directory,
+// scandir 'ember-lookit-frameplayer/node_modules/node-sass/vendor'
+// (per https://github.com/yarnpkg/yarn/issues/4867)
 require('dotenv').config();
 module.exports = function(defaults) {
     var app = new EmberApp(defaults, {
           sourcemaps: {
               enabled: true
+          },
+          sassOptions: {
+            implementation: nodeSass
           },
           minifyJS: {
               enabled: EmberApp.env() === 'production'
