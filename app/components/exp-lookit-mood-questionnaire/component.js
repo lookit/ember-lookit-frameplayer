@@ -1,6 +1,7 @@
 import layout from './template';
 
 import {validator, buildValidations} from 'ember-cp-validations';
+import { observer } from '@ember/object';
 
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 
@@ -203,6 +204,23 @@ export default ExpFrameBaseComponent.extend(Validations, {
         setTime(target, value) {
             this.set(target, `${value.hours()}:${pad(value.minutes())}`);
         }
+    },
+
+    toggleNapScheduleQ: observer('usualNapSchedule', function() {
+        if (this.get('usualNapSchedule') == 'yes') {
+            $('div.usualNapSchedule').show();
+        } else {
+            $('div.usualNapSchedule').hide();
+        }
+    }),
+
+    didInsertElement() {
+      this._super(...arguments);
+      this.toggleNapScheduleQ();
+      $('.timepicker input').each(function () {
+          $(this).data("DateTimePicker").defaultDate('00:00');
+          $(this).data("DateTimePicker").clear();
+      });
     }
 
 });

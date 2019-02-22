@@ -146,27 +146,25 @@
                             </label>
                         </div>
                     </div>
-                    {{#if (eq usualNapSchedule 'yes') }}
-                        <div class="form-group timepicker">
-                            <label>
-                                About how much longer until his/her next nap (or bedtime)?
-                            </label>
-                            {{#if showValidation}}
-                                <p class="text text-danger">
-                                    {{ validations.attrs.nextNap.messages }}
-                                </p>
-                            {{/if}}
-                            {{bs-datetimepicker
-                                    date=nextNap
-                                    format="HH:mm"
-                                    pickDate=false
-                                    noIcon=true
-                                    allowInputToggle=true
-                                    placeholder="hours:minutes"
-                                    useCurrent=false
-                                    updateDate=(action 'setTime' 'nextNap')}}
-                        </div>
-                    {{/if}}
+                    <div class="form-group timepicker usualNapSchedule">
+                        <label>
+                            About how much longer until his/her next nap (or bedtime)?
+                        </label>
+                        {{#if showValidation}}
+                            <p class="text text-danger">
+                                {{ validations.attrs.nextNap.messages }}
+                            </p>
+                        {{/if}}
+                        {{bs-datetimepicker
+                                date=nextNap
+                                format="HH:mm"
+                                useCurrent=false
+                                pickDate=false
+                                noIcon=true
+                                allowInputToggle=true
+                                placeholder="hours:minutes"
+                                updateDate=(action 'setTime' 'nextNap')}}
+                    </div>
                     <div class="form-group timepicker">
                         <label>
                             About how long ago did your child last eat or drink?
