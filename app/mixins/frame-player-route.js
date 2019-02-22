@@ -38,9 +38,15 @@ export default Ember.Mixin.create({
                 return this._createStudyResponse().save();
             }).then((response) => {
                 this.set('_response', response);
+                // merge each page of previous responses into _pastResponses
                 return loadAll(this.get('_study'), 'responses', this.get('_pastResponses'), { 'child': this.get('_child').id });
             }).then(() => {
                 const response = this.get('_response');
+                // WARNING: it seems to be necessary to re-set the response.study property
+                // here or else response.study.id isn't available in the template if there
+                // is more than one page of past responses - but we don't know why!!
+                response.set('study', this.get('_study'));
+                response.set('child', this.get('_child'));
                 if (!this.get('_pastResponses').includes(response)) {
                     this.get('_pastResponses').pushObject(response);
                 }
