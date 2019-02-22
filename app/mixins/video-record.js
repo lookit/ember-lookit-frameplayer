@@ -287,7 +287,9 @@ export default Ember.Mixin.create({
     destroyRecorder() {
         const recorder = this.get('recorder');
         if (recorder) {
-            this.send('setTimeEvent', 'destroyingRecorder');
+            if ( !(this.get('isDestroyed') || this.get('isDestroying')) ) {
+                this.send('setTimeEvent', 'destroyingRecorder');
+            }
             recorder.destroy();
         }
     },

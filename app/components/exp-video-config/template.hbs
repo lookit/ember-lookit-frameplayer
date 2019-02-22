@@ -94,9 +94,9 @@
             {{exp-format troubleshootingIntro}}
         </p>
 
-        {{#bs-accordion selected=selected collapsed=collapsed}}
+        {{#bs-accordion selected=selected collapsed=collapsed as |acc|}}
 
-            {{#bs-accordion-item value="chrome" title="Camera setup instructions for Chrome"}}
+            {{#acc.item value="chrome" title="Camera setup instructions for Chrome"}}
                 <ol>
                     <li>
                         When you load this page for the first time, you should see a prompt like the one below. Click "Allow" to let Lookit access the webcam and microphone.
@@ -119,9 +119,9 @@
                         You can also refer to <a href="https://support.google.com/chrome/answer/2693767?hl=en" target="_blank" rel="noopener"> these directions from Chrome </a>.
                     </li>
                 </ol>
-            {{/bs-accordion-item}}
+            {{/acc.item}}
 
-            {{#bs-accordion-item value="firefox" title="Camera setup instructions for Firefox"}}
+            {{#acc.item value="firefox" title="Camera setup instructions for Firefox"}}
                 <ol>
                     <li>
                         When you load this page for the first time, you should see a prompt like the one below. Select the camera and microphone you want to use, check "Remember this decision," and click "Allow":
@@ -132,9 +132,9 @@
                         <img class="screenshot" src="assets/webrtc_firefox_fix_step1.png" alt="Editing microphone and camera permissions in Firefox">
                     </li>
                 </ol>
-            {{/bs-accordion-item}}
+            {{/acc.item}}
 
-            {{#bs-accordion-item value="whatelse" title="It's just not working - what else can I try?"}}
+            {{#acc.item value="whatelse" title="It's just not working - what else can I try?"}}
 
                 <p> First, you are a very dedicated citizen scientist and we're grateful for your help! We're sorry you're having trouble.</p>
                 <ol>
@@ -175,7 +175,7 @@
 
                 </ol>
 
-            {{/bs-accordion-item}}
+            {{/acc.item}}
 
         {{/bs-accordion}}
 
