@@ -26,16 +26,9 @@ module.exports = function(environment) {
       // when it is created
     },
 
-    // TODO: remove these, not actually applicable on Lookit
     featureFlags: {
-        // Whether to load existing expData into the exp-frames
-        loadData: true,
-        // Whether to validate survey forms
-        validate: true,
-        // Whether to redirect users who have already taken the study to an error page
-        // Set to false to test study multiple times with the same account
-        showStudyCompletedPage: true
     }
+
   };
 
 
@@ -57,6 +50,7 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+
   }
 
   if (environment === 'production') {

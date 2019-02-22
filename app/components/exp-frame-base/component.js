@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-import config from 'ember-get-config';
+//import config from 'ember-get-config';
 import FullScreen from '../../mixins/full-screen';
 
 /**
@@ -113,7 +113,7 @@ export default Ember.Component.extend(FullScreen, {
             this.set('id', `${kind}-${frameIndex}`);
         }
 
-        if (clean && config.featureFlags.loadData) {
+        if (clean) {
             var session = this.get('session');
             var expData = session ? session.get('expData') : null;
             if (session && session.get('expData')) {

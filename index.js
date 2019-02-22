@@ -14,13 +14,6 @@ module.exports = {
         // In the future we should implement, eg, initializers. Many of these current flags are ISP-specific.
         return {
             featureFlags: {
-                // Whether to load existing expData into the exp-frames
-                loadData: true,
-                // Whether to validate survey forms
-                validate: true,
-                // Whether to redirect users who have already taken the study to an error page
-                // Set to false to test study multiple times with the same account
-                showStudyCompletedPage: true
             }
         };
     },
