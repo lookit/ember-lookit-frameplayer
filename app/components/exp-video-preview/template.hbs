@@ -32,8 +32,8 @@
                     {{else}}
 
                         <video class="exp-lookit-preview-video" controls style="width: 100%;">
-                            {{#each currentVideo.sources as |source|}}
-                                <source src={{source.src}} type={{source.type}}>
+                            {{#each currentVideo.sources as |vidsource|}}
+                                <source src={{vidsource.src}} type={{vidsource.type}}>
                             {{/each}}
                             Your browser does not support the video tag.
                         </video>
