@@ -20,8 +20,8 @@
                                    controls
                                    onended={{action 'mediaPlayed'}}
                             >
-                            {{#each block.mediaBlock.sources as |source|}}
-                                <source src={{source.src}} type={{source.type}}>
+                            {{#each block.mediaBlock.sources as |mediaSource|}}
+                                <source src={{mediaSource.src}} type={{mediaSource.type}}>
                             {{/each}}
                         </video>
                     {{else}}
@@ -29,8 +29,8 @@
                                    controls
                                    onended={{action 'mediaPlayed'}}
                             >
-                            {{#each block.mediaBlock.sources as |source|}}
-                                <source src={{source.src}} type={{source.type}}>
+                            {{#each block.mediaBlock.sources as |mediaSource|}}
+                                <source src={{mediaSource.src}} type={{mediaSource.type}}>
                             {{/each}}
                         </audio>
                     {{/if}}
