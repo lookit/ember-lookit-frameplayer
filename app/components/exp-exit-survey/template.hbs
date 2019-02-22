@@ -23,41 +23,41 @@
                     </p>
                 {{/if}}
                 <hr>
-                <label>
-                    <i class="fa fa-star"></i> Would you like to share your video and other data from this session
-                    with authorized users of the secure data library Databrary?
-                </label>
-                <div class="radio">
-                    <label>
-                        <span class="radio-holder">
-                            {{radio-button value="no" checked=databraryShare name="databraryShare"}}
-                        </span>
-                        No
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <span class="radio-holder">
-                            {{radio-button value="yes" checked=databraryShare name="databraryShare"}}
-                        </span>
-                        Yes
-                    </label>
-                </div>
-                <div class="extra-info">
-                    Only authorized researchers will have access to information in the library.
-                    Researchers who are granted access must agree to maintain confidentiality and not use information
-                    for commercial purposes. Data sharing will lead to faster progress in research on human development
-                    and behavior. If you have any questions about the data-sharing library, please visit
-                    <a href="https://nyu.databrary.org/" target="_blank" rel="noopener">Databrary</a> or email
-                    ethics@databrary.org.
-                </div>
-                {{#if showValidation}}
-                    <p class="text text-danger">
-                        {{validations.attrs.databraryShare.messages}}
-                    </p>
-                {{/if}}
-                <hr>
                 <fieldset disabled={{withdrawal}} class="{{if withdrawal 'text-muted'}}">
+                    <label>
+                        <i class="fa fa-star"></i> Would you like to share your video and other data from this session
+                        with authorized users of the secure data library Databrary?
+                    </label>
+                    <div class="radio">
+                        <label>
+                            <span class="radio-holder">
+                                {{radio-button value="no" checked=databraryShare name="databraryShare"}}
+                            </span>
+                            No
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <span class="radio-holder">
+                                {{radio-button value="yes" checked=databraryShare name="databraryShare"}}
+                            </span>
+                            Yes
+                        </label>
+                    </div>
+                    <div class="extra-info">
+                        Only authorized researchers will have access to information in the library.
+                        Researchers who are granted access must agree to maintain confidentiality and not use information
+                        for commercial purposes. Data sharing will lead to faster progress in research on human development
+                        and behavior. If you have any questions about the data-sharing library, please visit
+                        <a href="https://nyu.databrary.org/" target="_blank" rel="noopener">Databrary</a> or email
+                        ethics@databrary.org.
+                    </div>
+                    {{#if showValidation}}
+                        <p class="text text-danger">
+                            {{validations.attrs.databraryShare.messages}}
+                        </p>
+                    {{/if}}
+                    <hr>
                     <label><i class="fa fa-star"></i> Use of video clips and images:</label>
                     <div class="radio">
                         <label>
@@ -120,19 +120,19 @@
                     {{textarea class="input-text" value=feedback name="feedback" rows=3 cols=40}}
                 </div>
                 <hr>
-                {{bs-button class="pull-right" defaultText="Submit" type="success" action='continue'}}
+                {{bs-button class="pull-right" defaultText="Submit" type="success" onClick=(action "continue")}}
             {{/bs-form}}
 
             {{!-- Withdrawal confirmation modal --}}
-            {{#bs-modal open=showWithdrawalConfirmation body=false footer=false submitAction=(action "advanceToProgressBar")}}
-                {{#bs-modal-body}}
+            {{#bs-modal open=showWithdrawalConfirmation onSubmit=(action "submitWithdrawalConfirmation") onHide=(action "hideWithdrawalConfirmation") as |modal|}}
+                {{#modal.body}}
                     You have chosen to withdraw your video data from the study. Any video beyond your consent recording
                     will be deleted without viewing. Are you sure?
-                {{/bs-modal-body}}
-                {{#bs-modal-footer as |footer|}}
-                    {{#bs-button type="default" action=(action "close" target=footer)}}Cancel{{/bs-button}}
-                    {{#bs-button type="danger" buttonType="submit"}}Withdraw{{/bs-button}}
-                {{/bs-modal-footer}}
+                {{/modal.body}}
+                {{#modal.footer as |footer|}}
+                    {{#bs-button type="default" onClick=(action modal.close)}}Cancel{{/bs-button}}
+                    {{#bs-button type="danger" buttonType="submit" onClick=(action modal.submit)}}Withdraw{{/bs-button}}
+                {{/modal.footer}}
             {{/bs-modal}}
         {{else}}
             <h4>{{title2}}</h4>
@@ -153,12 +153,7 @@
                 </div>
             </div>
             <hr>
-            {{!--
-            <div class="form-group">
-            <label>{{input type="checkbox" checked=emailOptOut name="emailOptOut"}}<span class="extra-info">&nbsp;&nbsp;&nbsp; Receive email reminders about this study.</span> </label>
-            </div>
-            --}}
-            {{bs-button class="pull-right" defaultText="Finish" type="success" action='finish'}}
+            {{bs-button class="pull-right" defaultText="Finish" type="success" onClick=(action "finish")}}
         {{/if}}
     </div>
 </div>

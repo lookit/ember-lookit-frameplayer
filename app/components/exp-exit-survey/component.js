@@ -89,28 +89,38 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
     minVideosToCountSession: 6,
     showWithdrawalConfirmation: false,
     showValidation: false,
+
+    advanceToProgressBar() {
+        // Move from section 1 (survey) to section 2 (progress bar/ finish button)
+        // Mark the session complete at this stage, as all data has been entered
+        this.setSessionCompleted();
+        this._save()
+            .then(()=> {
+                this.set('section1', false);
+            })
+            .catch(err => this.displayError(err));
+    },
+
     actions: {
-        advanceToProgressBar() {
-            // Move from section 1 (survey) to section 2 (progress bar/ finish button)
-            // Mark the session complete at this stage, as all data has been entered
-            this.setSessionCompleted();
-            this._save()
-                .then(()=> {
-                    this.set('section1', false);
-                })
-                .catch(err => this.displayError(err));
-        },
         continue() {
             // Check whether exit survey is valid, and if so, advance to next screen
             if (this.get('validations.isValid')) {
                 if (this.get('withdrawal')) {
                     this.set('showWithdrawalConfirmation', true);
                 } else {
-                    this.send('advanceToProgressBar');
+                    this.advanceToProgressBar();
                 }
             } else {
                 this.set('showValidation', true);
             }
+        },
+        submitWithdrawalConfirmation() {
+            this.set('showWithdrawalConfirmation', false);
+            this.advanceToProgressBar();
+        },
+        hideWithdrawalConfirmation() {
+            this.set('showWithdrawalConfirmation', false);
+            this.set('withdrawal', false);
         },
         finish() {
             this.send('next');
