@@ -129,7 +129,7 @@
                     You have chosen to withdraw your video data from the study. Any video beyond your consent recording
                     will be deleted without viewing. Are you sure?
                 {{/modal.body}}
-                {{#modal.footer as |footer|}}
+                {{#modal.footer}}
                     {{#bs-button type="default" onClick=(action modal.close)}}Cancel{{/bs-button}}
                     {{#bs-button type="danger" buttonType="submit" onClick=(action modal.submit)}}Withdraw{{/bs-button}}
                 {{/modal.footer}}

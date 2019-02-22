@@ -1,9 +1,14 @@
 import layout from './template';
 
+import Ember from 'ember';
 import {validator, buildValidations} from 'ember-cp-validations';
 import { observer } from '@ember/object';
 
 import ExpFrameBaseComponent from '../exp-frame-base/component';
+
+let {
+    $
+} = Ember;
 
 let pad = function(number) {
     return ('00' + (number || 0)).slice(-2);
@@ -215,12 +220,12 @@ export default ExpFrameBaseComponent.extend(Validations, {
     }),
 
     didInsertElement() {
-      this._super(...arguments);
-      this.toggleNapScheduleQ();
-      $('.timepicker input').each(function () {
-          $(this).data("DateTimePicker").defaultDate('00:00');
-          $(this).data("DateTimePicker").clear();
-      });
+        this._super(...arguments);
+        this.toggleNapScheduleQ();
+        $('.timepicker input').each(function () {
+            $(this).data('DateTimePicker').defaultDate('00:00');
+            $(this).data('DateTimePicker').clear();
+        });
     }
 
 });

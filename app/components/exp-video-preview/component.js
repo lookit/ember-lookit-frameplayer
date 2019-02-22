@@ -7,7 +7,6 @@ import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
 import { computed } from '@ember/object';
 
-
 /**
  * @module exp-player
  * @submodule frames
