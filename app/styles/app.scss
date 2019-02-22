@@ -1,3 +1,6 @@
+
+@import "ember-bootstrap/bootstrap";
+
 // Exp and Lookit
 @import "components/exp-video-config";
 @import "components/exp-video-config-quality";
@@ -17,6 +20,7 @@
 @import "components/exp-lookit-video-consent";
 @import "components/exp-lookit-survey";
 @import "components/exp-lookit-observation";
+@import "components/radio-group";
 
 // Physics study only
 @import "components/exp-exit-survey";
@@ -37,11 +41,6 @@
 
 .exp-controls {
     margin: 5px;
-}
-
-#expContainer {
-    max-width: 1200px;
-    margin: auto;
 }
 
 .exp-text {
@@ -122,6 +121,7 @@ p#pipeClickPowered {
 
 #expContainer {
     padding: 10px;
+    max-width: 1200px;
+    margin: auto;
 }
 
-@import "ember-bootstrap/bootstrap";

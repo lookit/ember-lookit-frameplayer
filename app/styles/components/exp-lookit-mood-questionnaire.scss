@@ -54,3 +54,18 @@ exp-lookit-mood-questionnaire .radio.block, .checkbox {
 .exp-lookit-mood-questionnaire .exp-lookit-mood .alpaca-control-label.radio-label {
     font-weight: normal;
 }
+
+.exp-lookit-mood-questionnaire input[type='radio'] {
+  min-width: 20px;
+  min-height: 20px;
+}
+
+.exp-lookit-mood-questionnaire .radio-group-label {
+  padding: 0;
+  margin: 0;
+}
+
+.exp-lookit-mood-questionnaire .radio-group-label:hover {
+  background-color: #ccc;
+  border-radius: 5px;
+}

@@ -4,7 +4,9 @@
         {{labelLeft}}
     </label>
     {{#each options as |option|}}
-        {{radio-button value=option checked=value name=elementId}}
+        <label class="radio-group-label">
+            {{radio-button value=option checked=value name=elementId}}
+        </label>
     {{/each}}
     <label class="label-right">
         {{labelRight}}
