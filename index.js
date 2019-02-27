@@ -2,7 +2,6 @@
 'use strict';
 var path = require('path');
 var Funnel = require('broccoli-funnel');
-var generate = require('broccoli-auto-generated');
 var BroccoliMergeTrees = require('broccoli-merge-trees');
 
 module.exports = {
