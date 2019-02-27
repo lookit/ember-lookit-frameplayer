@@ -166,7 +166,7 @@ export default Ember.Component.extend(FullScreen, {
             }
         });
 
-        Ember.merge(defaultParams, params);
+        Ember.assign(defaultParams, params);
         return defaultParams;
     },
 
@@ -209,7 +209,7 @@ export default Ember.Component.extend(FullScreen, {
             eventType: `${this.get('kind', 'unknown-frame')}:${eventName}`,
             timestamp: curTime.toISOString()
         };
-        Ember.merge(eventData, extra);
+        Ember.assign(eventData, extra);
         return eventData;
     },
 

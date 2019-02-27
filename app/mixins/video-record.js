@@ -166,7 +166,7 @@ export default Ember.Mixin.create({
         // All frames using this mixin will add videoId and streamTime to every server event
         let base = this._super(eventName, extra);
         const streamTime = this.get('recorder') ? this.get('recorder').getTime() : null;
-        Ember.merge(base, {
+        Ember.assign(base, {
             videoId: this.get('videoId'),
             pipeId: this.get('recorder') ? this.get('recorder').get('pipeVideoName') : null,
             streamTime: streamTime

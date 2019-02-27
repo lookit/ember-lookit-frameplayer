@@ -205,7 +205,7 @@ export default Ember.Component.extend(FullScreen, {
                 eventType: eventName,
                 timestamp: curTime.toISOString()
             };
-            Ember.merge(eventData, extra || {});
+            Ember.assign(eventData, extra || {});
             let session = this.get('session');
             session.get('globalEventTimings').pushObject(eventData);
         },

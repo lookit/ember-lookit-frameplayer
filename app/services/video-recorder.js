@@ -393,7 +393,7 @@ export default Ember.Service.extend({
             config: false,
             hidden: false
         };
-        Ember.merge(defaults, settings);
+        Ember.assign(defaults, settings);
 
         var props = {
             flashVars: Ember.copy(FLASHVARS, true),
