@@ -17,4 +17,4 @@ install:
 script:
   - pwd
   - yarn test
-  - ember build
+  - ember build --ssl false
