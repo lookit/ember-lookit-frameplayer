@@ -5,8 +5,10 @@ import {moduleForComponent, skip} from 'ember-qunit';
 import sinon from 'sinon';
 
 /**
+ * COPIED FROM EXP-ADDONS
  * These tests work when inside an app, but not when they are part of an addon.
- * There may be some weird rules for addons/ registry/ dynamic templates to be resolved before we can make this work
+ * There may be some weird rules for addons/ registry/ dynamic templates to be
+ * resolved before we can make this work
  */
 
 /*

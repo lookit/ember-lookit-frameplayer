@@ -4,23 +4,23 @@ import hbs from 'htmlbars-inline-precompile';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 
-let pastResponses = Ember.A([1,2,3])
-
 // See https://dockyard.com/blog/2018/01/11/modern-ember-testing for transition to newer
 // style of integration (template) testing
 
-module('exp-player', 'Integration | Component | exp-player', function(hooks) {
+module('exp-player', function(hooks) {
   setupRenderingTest(hooks);
 
-  skip('it renders', async function(assert) {
+  test('it renders', async function(assert) {
 
+    let pastResponses = Ember.A([1,2,3]);
+    this.set('pastResponses', pastResponses);
     let noop = () => {};
 
     let study = {
         id: '12345',
         name: 'My Study',
-        structure: {
-            "frames": {
+        structure:{
+            frames: {
                "mood-survey": {
                    "introText": "How are you two doing?",
                    "id": "mood-survey",
@@ -37,8 +37,13 @@ module('exp-player', 'Integration | Component | exp-player', function(hooks) {
           sequence: [],
           completed: false,
           study: study,
-          save: noop
+          save: noop,
+          pastSessions: pastResponses
     });
+    // Note: the values study, response, pastResponses seem to be loaded from the object
+    // this, not from the context here - so need to explicitly set them
+    this.set('study', study);
+    this.set('response', response);
     await render(hbs`{{exp-player
         experiment=study
         session=response
@@ -47,7 +52,7 @@ module('exp-player', 'Integration | Component | exp-player', function(hooks) {
         fullScreenElementId='expContainer'
     }}`);
 
-    assert.equal(this.element.querySelector('h4')[0].innerText, 'Mood Questionnaire');
+    assert.equal(this.$('h4')[0].innerText, 'Mood Questionnaire');
 
   });
 });
