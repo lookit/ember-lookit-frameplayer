@@ -27,7 +27,6 @@
     "alpaca": "1.5.22",
     "bcryptjs": "^2.3.0",
     "bootstrap-sass": "^3.4.0",
-    "broccoli-auto-generated": "0.0.3",
     "broccoli-funnel": "^2.0.2",
     "broccoli-merge-trees": "^3.0.2",
     "dotenv": "^2.0.0",
