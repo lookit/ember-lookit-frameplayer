@@ -64,7 +64,7 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
     assetsToExpand: {
         'audio': [],
         'video': ['videos/sources'],
-        'image': []
+        'image': ['videos/imgSrc']
     },
 
     actions: {
