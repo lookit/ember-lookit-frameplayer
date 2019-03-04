@@ -35,8 +35,7 @@
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "font-awesome": "~4.5.0",
     "handlebars": "^4.1.0",
-    "node-sass": "^4.11.0",
-    "lodash": "~4.6.1",
+    "lodash": "~4.17.11",
     "node-sass": "^4.11.0"
   },
   "devDependencies": {
@@ -76,10 +75,9 @@
     "ember-simple-auth": "1.1.0",
     "ember-sinon": "3.0.0",
     "ember-sinon-qunit": "3.3.0",
-    "ember-source": "^3.4.8",
+    "ember-source": ">=3.4.8 <3.5.0",
     "ember-toastr": "1.7.2",
     "ember-truth-helpers": "^2.1.0",
-    "ember-try": "~1.1.0",
     "jscs": "^3.0.7",
     "loader.js": "^4.7.0",
     "moment": "^2.22.2",
