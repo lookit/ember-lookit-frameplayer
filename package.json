@@ -52,6 +52,7 @@
     "ember-cli-htmlbars": "^3.0.1",
     "ember-cli-htmlbars-inline-precompile": "^2.1.0",
     "ember-cli-inject-live-reload": "^2.0.1",
+    "ember-cli-jwt-decode": "0.0.2",
     "ember-cli-moment-shim": "3.7.1",
     "ember-cli-sass": "8.0.1",
     "ember-cli-sentry": "2.4.2",
