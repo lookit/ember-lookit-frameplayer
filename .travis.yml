@@ -8,11 +8,11 @@ before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
   - echo $HOME && echo $PATH
+  - npm install -g bower
 
 install:
   - yarn install --pure-lockfile
-  - rm node_modules/ember-cli/blueprints/module-unification-app/files/src/ui/routes/application/template.hbs
-  - cp node_modules/handlebars/dist/handlebars.js node_modules/handlebars/handlebars.js
+  - bower install --config.interactive=false
 
 script:
   - pwd
