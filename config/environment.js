@@ -10,7 +10,7 @@ module.exports = function(environment) {
     pipeEnv: process.env.PIPE_ENVIRONMENT,
     sentry: {
         dsn: process.env.SENTRY_DSN || '',
-        cdn: 'https://cdn.ravenjs.com/3.5.1/ember/raven.min.js',
+        cdn: 'https://cdn.ravenjs.com/3.26.4/ember/raven.min.js',
         development: process.env.SENTRY_DSN === ''
     },
     EmberENV: {
