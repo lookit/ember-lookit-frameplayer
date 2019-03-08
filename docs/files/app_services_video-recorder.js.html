@@ -137,7 +137,7 @@ const ATTRIBUTES = {
     name: &#x27;VideoRecorder&#x27;
 };
 
-const MIN_VOLUME = 5;
+const MIN_VOLUME = 1;
 
 const FLASHVARS = {
     recorderId: &#x27;123&#x27;,
@@ -502,7 +502,7 @@ export default Ember.Service.extend({
             config: false,
             hidden: false
         };
-        Ember.merge(defaults, settings);
+        Ember.assign(defaults, settings);
 
         var props = {
             flashVars: Ember.copy(FLASHVARS, true),

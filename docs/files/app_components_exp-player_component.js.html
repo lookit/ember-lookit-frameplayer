@@ -203,21 +203,21 @@ export default Ember.Component.extend(FullScreen, {
     showConfirmationDialog() {
         var _this = this;
         this.get(&#x27;toast&#x27;).warning(&quot;&lt;br&gt;&lt;button type=&#x27;button&#x27; id=&#x27;confirmationContinueStudy&#x27; class=&#x27;btn btn-outline-secondary&#x27; style=&#x27;color:black;&#x27;&gt;Continue&lt;/button&gt;&lt;button type=&#x27;button&#x27; id=&#x27;confirmationExitStudy&#x27; class=&#x27;btn btn-danger&#x27; style=&#x27;float:right;&#x27;&gt;Exit&lt;/button&gt;&quot;, &#x27;Really exit study?&#x27;,
-          {
-              allowHtml: true,
-              preventDuplicates: true,
-              onclick: null,
-              timeOut: 0,
-              extendedTimeOut: 0,
-              onShown: function () {
-                  Ember.$(&quot;#confirmationExitStudy&quot;).click(function(){
-                    _this.send(&#x27;exitEarly&#x27;);
-                  });
-                  Ember.$(&quot;#confirmationContinueStudy&quot;).click(function(){
-                    _this.get(&#x27;toast&#x27;).clear();
-                  });
+            {
+                allowHtml: true,
+                preventDuplicates: true,
+                onclick: null,
+                timeOut: 0,
+                extendedTimeOut: 0,
+                onShown: function () {
+                    Ember.$(&#x27;#confirmationExitStudy&#x27;).click(function() {
+                        _this.send(&#x27;exitEarly&#x27;);
+                    });
+                    Ember.$(&#x27;#confirmationContinueStudy&#x27;).click(function() {
+                        _this.get(&#x27;toast&#x27;).clear();
+                    });
                 }
-          });
+            });
     },
 
     _registerHandlers() {
@@ -230,11 +230,11 @@ export default Ember.Component.extend(FullScreen, {
         });
     },
 
-
     _removeHandlers() {
         Ember.$(window).off(&#x27;keydown&#x27;);
         $(window).off(&#x27;beforeunload&#x27;);
     },
+
     onFrameIndexChange: Ember.observer(&#x27;frameIndex&#x27;, function() {
         var max = this.get(&#x27;frames.length&#x27;) - 1;
         var frameIndex = this.get(&#x27;frameIndex&#x27;);
@@ -242,6 +242,7 @@ export default Ember.Component.extend(FullScreen, {
             this._removeHandlers();
         }
     }),
+
     willDestroy() {
         this._super(...arguments);
         this._removeHandlers();
@@ -300,14 +301,11 @@ export default Ember.Component.extend(FullScreen, {
         this.set(&#x27;_currentFrameTemplate&#x27;, null);
     },
     _exit() {
-        this.send(&#x27;sessionCompleted&#x27;);
+        this.setSessionCompleted();
         this.get(&#x27;session&#x27;).save().then(() =&gt; window.location = this.get(&#x27;experiment.exitUrl&#x27;) || &#x27;/&#x27;);
     },
 
     actions: {
-        sessionCompleted() {
-            this.get(&#x27;session&#x27;).set(&#x27;completed&#x27;, true);
-        },
 
         setGlobalTimeEvent(eventName, extra) {
             // Set a timing event not tied to any one frame
@@ -316,7 +314,7 @@ export default Ember.Component.extend(FullScreen, {
                 eventType: eventName,
                 timestamp: curTime.toISOString()
             };
-            Ember.merge(eventData, extra || {});
+            Ember.assign(eventData, extra || {});
             let session = this.get(&#x27;session&#x27;);
             session.get(&#x27;globalEventTimings&#x27;).pushObject(eventData);
         },

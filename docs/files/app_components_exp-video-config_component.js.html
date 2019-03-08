@@ -119,12 +119,17 @@ import VideoRecord from &#x27;../../mixins/video-record&#x27;;
  */
 
 /**
-Video configuration frame guiding user through making sure permissions are set appropriately and microphone is working, with troubleshooting text. All content is hard-coded for a general-purpose technical setup frame.
+Video configuration frame guiding user through making sure permissions are set
+appropriately and microphone is working, with troubleshooting text. Almost all content is
+hard-coded, to provide a general-purpose technical setup frame.
 
 &#x60;&#x60;&#x60;json
 &quot;frames&quot;: {
     &quot;video-config&quot;: {
-        &quot;kind&quot;: &quot;exp-video-config&quot;
+        &quot;kind&quot;: &quot;exp-video-config&quot;,
+        &quot;troubleshootingIntro&quot;: &quot;If you&#x27;re having any trouble getting your webcam set up,
+          please feel free to call the XYZ lab at (123) 456-7890 and we&#x27;d be glad to
+          help you out!&quot;
     }
 }
 &#x60;&#x60;&#x60;
@@ -139,14 +144,13 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     showWarning: false,
     micChecked: Em.computed.alias(&#x27;recorder.micChecked&#x27;),
     hasCamAccess: Em.computed.alias(&#x27;recorder.hasCamAccess&#x27;),
-    hasWebCam: Em.computed.alias(&#x27;recorder.hasWebCam&#x27;),
 
     actions: {
 
         checkAudioThenNext() {
             if (!this.get(&#x27;micChecked&#x27;)) {
                 this.set(&#x27;showWarning&#x27;, true);
-            } else if (this.get(&#x27;hasWebCam&#x27;)) {
+            } else if (this.get(&#x27;hasCamAccess&#x27;)) {
                 this.send(&#x27;next&#x27;);
             }
         },
@@ -168,12 +172,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 /**
                 Text to show as the introduction to the troubleshooting tips section
                 @property {String} troubleshootingIntro
-                @default &quot;Some families are having trouble initially getting their webcams to work on Lookit. We&#x27;re sorry, and we&#x27;re working on switching away from Flash to make recording more reliable! In the meantime, these instructions should fix most problems.&quot;
+                @default &quot;&quot;
                 */
                 troubleshootingIntro: {
                     type: &#x27;string&#x27;,
                     description: &#x27;Text to show as introduction to troubleshooting tips section&#x27;,
-                    default: &quot;We&#x27;re just getting started with a new method for video recording! If you&#x27;re having trouble and the instructions below don&#x27;t fix it, we&#x27;re sorry - and we&#x27;d love to hear from you so we can improve the system.&quot;
+                    default: &#x27;&#x27;
                 }
 
             },

@@ -114,6 +114,7 @@ import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
 import MediaReload from &#x27;../../mixins/media-reload&#x27;;
 import VideoRecord from &#x27;../../mixins/video-record&#x27;;
 import ExpandAssets from &#x27;../../mixins/expand-assets&#x27;;
+import { computed } from &#x27;@ember/object&#x27;;
 
 /**
  * @module exp-player
@@ -153,15 +154,15 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
     recordingStopped: false,
     recordingStarted: false,
 
-    noNext: function() {
+    noNext: computed(&#x27;videoIndex&#x27;, function() {
         return this.get(&#x27;videoIndex&#x27;) &gt;= this.get(&#x27;videos.length&#x27;) - 1;
-    }.property(&#x27;videoIndex&#x27;),
+    }),
 
-    noPrev: function() {
+    noPrev: computed(&#x27;videoIndex&#x27;, function() {
         return this.get(&#x27;videoIndex&#x27;) &lt;= 0;
-    }.property(&#x27;videoIndex&#x27;),
+    }),
 
-    currentVideo: Ember.computed(&#x27;videoIndex&#x27;, function() {
+    currentVideo: computed(&#x27;videoIndex&#x27;, function() {
         return this.get(&#x27;videos&#x27;)[this.get(&#x27;videoIndex&#x27;)];
     }),
 
@@ -172,7 +173,7 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
     assetsToExpand: {
         &#x27;audio&#x27;: [],
         &#x27;video&#x27;: [&#x27;videos/sources&#x27;],
-        &#x27;image&#x27;: []
+        &#x27;image&#x27;: [&#x27;videos/imgSrc&#x27;]
     },
 
     actions: {

@@ -109,7 +109,7 @@
     <pre class="code prettyprint linenums">
 import Ember from &#x27;ember&#x27;;
 
-import config from &#x27;ember-get-config&#x27;;
+//import config from &#x27;ember-get-config&#x27;;
 import FullScreen from &#x27;../../mixins/full-screen&#x27;;
 
 /**
@@ -151,8 +151,6 @@ import FullScreen from &#x27;../../mixins/full-screen&#x27;;
         previous=(action &#x27;previous&#x27;)
         saveHandler=(action &#x27;saveFrame&#x27;)
         skipone=(action &#x27;skipone&#x27;)
-        sessionCompleted=(action &#x27;sessionCompleted&#x27;)
-
         extra=extra
     }}
  * &#x60;&#x60;&#x60;
@@ -186,6 +184,7 @@ export default Ember.Component.extend(FullScreen, {
     frameConfig: null,
     frameContext: null,
     eventTimings: null,
+    _oldFrameIndex: null,
 
     session: null,
 
@@ -200,17 +199,16 @@ export default Ember.Component.extend(FullScreen, {
         return null;
     },
 
-    didReceiveAttrs: function (options) {
+    didReceiveAttrs: function () {
         this._super(...arguments);
 
         if (!this.get(&#x27;frameConfig&#x27;)) {
             return;
         }
 
-        var newAttrs = options.newAttrs || {};
-        var oldAttrs = options.oldAttrs || {};
+        let currentFrameIndex = this.get(&#x27;frameIndex&#x27;, null);
 
-        let clean = Ember.get(newAttrs, &#x27;frameIndex.value&#x27;) !== Ember.get(oldAttrs, &#x27;frameIndex.value&#x27;);
+        let clean = currentFrameIndex !== this.get(&#x27;_oldFrameIndex&#x27;);
         var defaultParams = this.setupParams(clean);
         if (clean) {
             Object.keys(defaultParams).forEach((key) =&gt; {
@@ -224,7 +222,7 @@ export default Ember.Component.extend(FullScreen, {
             this.set(&#x27;id&#x27;, &#x60;${kind}-${frameIndex}&#x60;);
         }
 
-        if (clean &amp;&amp; config.featureFlags.loadData) {
+        if (clean) {
             var session = this.get(&#x27;session&#x27;);
             var expData = session ? session.get(&#x27;expData&#x27;) : null;
             if (session &amp;&amp; session.get(&#x27;expData&#x27;)) {
@@ -234,6 +232,8 @@ export default Ember.Component.extend(FullScreen, {
                 }
             }
         }
+
+        this.set(&#x27;_oldFrameIndex&#x27;, currentFrameIndex);
     },
 
     // Internal save logic
@@ -275,7 +275,7 @@ export default Ember.Component.extend(FullScreen, {
             }
         });
 
-        Ember.merge(defaultParams, params);
+        Ember.assign(defaultParams, params);
         return defaultParams;
     },
 
@@ -318,8 +318,12 @@ export default Ember.Component.extend(FullScreen, {
             eventType: &#x60;${this.get(&#x27;kind&#x27;, &#x27;unknown-frame&#x27;)}:${eventName}&#x60;,
             timestamp: curTime.toISOString()
         };
-        Ember.merge(eventData, extra);
+        Ember.assign(eventData, extra);
         return eventData;
+    },
+
+    setSessionCompleted() {
+        this.get(&#x27;session&#x27;).set(&#x27;completed&#x27;, true);
     },
 
     actions: {

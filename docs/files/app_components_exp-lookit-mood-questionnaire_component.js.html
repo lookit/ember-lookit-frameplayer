@@ -109,9 +109,15 @@
     <pre class="code prettyprint linenums">
 import layout from &#x27;./template&#x27;;
 
+import Ember from &#x27;ember&#x27;;
 import {validator, buildValidations} from &#x27;ember-cp-validations&#x27;;
+import { observer } from &#x27;@ember/object&#x27;;
 
 import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
+
+let {
+    $
+} = Ember;
 
 let pad = function(number) {
     return (&#x27;00&#x27; + (number || 0)).slice(-2);
@@ -312,6 +318,23 @@ export default ExpFrameBaseComponent.extend(Validations, {
         setTime(target, value) {
             this.set(target, &#x60;${value.hours()}:${pad(value.minutes())}&#x60;);
         }
+    },
+
+    toggleNapScheduleQ: observer(&#x27;usualNapSchedule&#x27;, function() {
+        if (this.get(&#x27;usualNapSchedule&#x27;) == &#x27;yes&#x27;) {
+            $(&#x27;div.usualNapSchedule&#x27;).show();
+        } else {
+            $(&#x27;div.usualNapSchedule&#x27;).hide();
+        }
+    }),
+
+    didInsertElement() {
+        this._super(...arguments);
+        this.toggleNapScheduleQ();
+        $(&#x27;.timepicker input&#x27;).each(function () {
+            $(this).data(&#x27;DateTimePicker&#x27;).defaultDate(&#x27;00:00&#x27;);
+            $(this).data(&#x27;DateTimePicker&#x27;).clear();
+        });
     }
 
 });

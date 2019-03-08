@@ -269,7 +269,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         &#x27;image&#x27;: [
             &#x27;leftImage&#x27;,
             &#x27;rightImage&#x27;,
-            &#x27;centerImage&#x27;
+            &#x27;centerImage&#x27;,
+            &#x27;possibleImages&#x27;
         ]
     },
 
@@ -403,11 +404,67 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                  * stub that will be appended to &#x60;baseDir&#x60; + &#x60;img/&#x60; (see
                  * baseDir).
                  *
-                 * @property {String} right
+                 * @property {String} rightImage
                  */
                 rightImage: {
                     type: &#x27;string&#x27;,
                     description: &#x27;URL of image to show on left&#x27;
+                },
+
+                /**
+                 * List of possible images that may be shown. Can be full URLs or
+                 * stubs that will be appended to &#x60;baseDir&#x60; + &#x60;img/&#x60; (see
+                 * baseDir). If leftImageIndex, rightImageIndex, and/or centerImageIndex
+                 * are provided, they indicate the index of the item in this list.
+                 *
+                 * @property {String} possibleImages
+                 */
+                possibleImages: {
+                    type: &#x27;array&#x27;,
+                    description: &#x27;list of possible images to use for centerImage, leftImage, rightImage&#x27;,
+                    default: [],
+                    items: {
+                        type: &#x27;string&#x27;
+                    }
+                },
+
+                /**
+                 * Index in possibleImages for image to use on left. This will be overridden
+                 * by any actual value provided for leftImage. Index must be in range
+                 * [0, len(possibleImages)]. Omit or -1 not to use.
+                 *
+                 * @property {String} leftImageIndex
+                 */
+                leftImageIndex: {
+                    type: &#x27;number&#x27;,
+                    description: &#x27;index in possibleImages for image to use on left.&#x27;,
+                    default: -1
+                },
+
+                /**
+                 * Index in possibleImages for image to use on right. This will be overridden
+                 * by any actual value provided for rightImage. Index must be in range
+                 * [0, len(possibleImages)].  Omit or -1 not to use.
+                 *
+                 * @property {String} rightImageIndex
+                 */
+                rightImageIndex: {
+                    type: &#x27;number&#x27;,
+                    description: &#x27;index in possibleImages for image to use on right.&#x27;,
+                    default: -1
+                },
+
+                /**
+                 * Index in possibleImages for center image. This will be overridden
+                 * by any actual value provided for centerImage. Index must be in range
+                 * [0, len(possibleImages)].  Omit or -1 not to use.
+                 *
+                 * @property {String} centerImageIndex
+                 */
+                centerImageIndex: {
+                    type: &#x27;number&#x27;,
+                    description: &#x27;index in possibleImages for image to use on center.&#x27;,
+                    default: -1
                 },
                 /**
                  * URL of image to show at center, if any. Can be a full URL or
@@ -641,6 +698,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
              * @param {String} leftImage URL of image shown on left (given as a property of the frame)
              * @param {String} centerImage URL of image shown at center (given as a property of the frame)
              * @param {Number} testLength seconds to display images/loop videos (given as a property of the frame), if using time-based limit
+             * @param {String} baseDir location of stimuli
+             * @param {String} testAudio test audio file played, if any
              * @return {Object} The payload sent to the server
              */
             properties: {
@@ -662,6 +721,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 },
                 testLength: {
                     type: &#x27;number&#x27;
+                },
+                testAudio: {
+                    type: &#x27;string&#x27;
+                },
+                baseDir: {
+                    type: &#x27;string&#x27;
                 }
             }
             // No fields are required
@@ -1008,6 +1073,19 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
 
     didInsertElement() {
         this._super(...arguments);
+
+        // Replace leftImage, rightImage, centerImage if appropriate
+        if (this.get(&#x27;possibleImages&#x27;).length) {
+            if (!this.get(&#x27;leftImage&#x27;) &amp;&amp; this.get(&#x27;leftImageIndex&#x27;) != -1) {
+                this.set(&#x27;leftImage&#x27;, this.get(&#x27;possibleImages&#x27;)[this.get(&#x27;leftImageIndex&#x27;)]);
+            }
+            if (!this.get(&#x27;rightImage&#x27;) &amp;&amp; this.get(&#x27;rightImageIndex&#x27;) != -1) {
+                this.set(&#x27;rightImage&#x27;, this.get(&#x27;possibleImages&#x27;)[this.get(&#x27;rightImageIndex&#x27;)]);
+            }
+            if (!this.get(&#x27;centerImage&#x27;) &amp;&amp; this.get(&#x27;centerImageIndex&#x27;) != -1) {
+                this.set(&#x27;centerImage&#x27;, this.get(&#x27;possibleImages&#x27;)[this.get(&#x27;centerImageIndex&#x27;)]);
+            }
+        }
 
         $(document).on(&#x27;keyup.pauser&#x27;, (e) =&gt; {
             if (this.checkFullscreen()) {
