@@ -1,0 +1,184 @@
+<div class="row exp-video-config">
+
+    <div class="col-md-10 col-md-offset-1">
+
+        <h2> Basic webcam setup </h2>
+
+        <p id="not-recording-note">
+            No recording during this section
+        </p>
+
+        <hr>
+
+    </div>
+</div>
+
+<div class="row exp-video-config">
+
+    <div class="col-md-5 col-md-offset-1">
+        <div class="row exp-video-config recorder-container">
+            <div id="recorder" class="col-xs-12"></div>
+        </div>
+        <p> Note: Lookit is currently only supported on recent versions of Firefox and Chrome. It is not supported on mobile devices like phones or tablets.</p>
+    </div>
+
+    <div class="col-md-5">
+
+        {{#if showWebCamWarning }}
+            <h4 class="text-warning">
+                We couldn't connect to your webcam. Please make sure you have a webcam connected and <button class="btn btn-default" {{action 'reloadRecorder'}}>click here to detect</button>. (See the troubleshooting directions below if you're having trouble!)
+            </h4>
+        {{/if}}
+
+        {{#unless showWebCamWarning }}
+
+
+
+            <ol>
+                <li>
+                    Make sure you can see yourself to the left! You will need to allow lookit.mit.edu to access your webcam and microphone.
+
+                    {{#if hasWebCam}}
+                        <div id="camCheckBox" class={{if hasWebCam 'checkComplete'}}>
+                            Looks good!
+                        </div>
+                    {{else}}
+                        <div id="camCheckBox" class={{if hasWebCam 'checkComplete'}}>
+                            We're not detecting a webcam yet. <button id="reloadButton" class="btn btn-default" {{action 'reloadRecorder'}}>Retry <i class="fa fa-refresh"></i></button>
+                        </div>
+
+                    {{/if}}
+
+                </li>
+
+                <li>
+                    Make sure we'll be able to hear you! This box will be filled in once we hear a loud enough sound:
+
+                    <div id="soundCheckBox" class={{if micChecked 'checkComplete'}}>
+                        {{#if micChecked}}
+                            Sounds good!
+                        {{else}}
+                            Try clapping or saying hi.
+                        {{/if}}
+                    </div>
+
+                </li>
+
+            </ol>
+
+        {{/unless}}
+
+
+        {{#if (and showWarning (not micChecked))}}
+            <div class="reload-warning">
+                * Please check that your recording audio is loud enough first. Make some noise!
+            </div>
+        {{/if}}
+
+        <button id="nextbutton" disabled={{if (not hasCamAccess) true false}} class="btn btn-success pull-right {{if (or (not hasCamAccess) (not hasWebCam)) 'disabled' ''}}" {{ action 'checkAudioThenNext' }} >
+            Next
+        </button>
+    </div>
+
+
+</div>
+
+
+<div class="row exp-video-config">
+    <div class="col-md-10 col-md-offset-1">
+
+        <h2> Setup tips and troubleshooting</h2>
+        <hr>
+
+        <p>
+            {{exp-format troubleshootingIntro}}
+        </p>
+
+        {{#bs-accordion selected=selected collapsed=collapsed as |acc|}}
+
+            {{#acc.item value="chrome" title="Camera setup instructions for Chrome"}}
+                <ol>
+                    <li>
+                        When you load this page for the first time, you should see a prompt like the one below. Click "Allow" to let Lookit access the webcam and microphone.
+                        <img class="screenshot" src="assets/webrtc_chrome_initialprompt.png" alt="Chrome permissions prompt">
+                    </li>
+                    <li>
+                        If you didn't see that prompt, or if you clicked "Block," you can change the settings by clicking on the green lock icon next to the URL. You'll see that Camera and Microphone are set to "Ask" or "Block." Set them both to "Allow," and then refresh this page.
+                        <img class="screenshot" src="assets/webrtc_chrome_fix_step1.png" alt="Editing microphone and camera permissions in Chrome, step 1">
+                    </li>
+
+                    <li>
+                        Having trouble passing the sound check? Chrome may be using the wrong input device - unfortunately it doesn't let you pick which microphone when you click "Allow". You can select the correct microphone at chrome://settings/content/microphone (copy and paste that as a URL). Then refresh this page to try again.
+                    </li>
+
+                    <li>
+                        Seeing the wrong camera view - like your built-in laptop camera instead of a USB webcam? You can select the correct camera at chrome://settings/content/camera (copy and paste that as a URL). Then refresh this page to try again.
+                    </li>
+
+                    <li>
+                        You can also refer to <a href="https://support.google.com/chrome/answer/2693767?hl=en" target="_blank" rel="noopener"> these directions from Chrome </a>.
+                    </li>
+                </ol>
+            {{/acc.item}}
+
+            {{#acc.item value="firefox" title="Camera setup instructions for Firefox"}}
+                <ol>
+                    <li>
+                        When you load this page for the first time, you should see a prompt like the one below. Select the camera and microphone you want to use, check "Remember this decision," and click "Allow":
+                        <img class="screenshot" src="assets/webrtc_firefox_initialprompt.png" alt="Firefox permissions prompt">
+                    </li>
+                    <li>
+                        If you didn't see that prompt, or if you clicked "Don't Allow" at first, you can change the settings by clicking on crossed-out camera and/or microphone next to the URL. Click the "X" next to each setting, then refresh the page.
+                        <img class="screenshot" src="assets/webrtc_firefox_fix_step1.png" alt="Editing microphone and camera permissions in Firefox">
+                    </li>
+                </ol>
+            {{/acc.item}}
+
+            {{#acc.item value="whatelse" title="It's just not working - what else can I try?"}}
+
+                <p> First, you are a very dedicated citizen scientist and we're grateful for your help! We're sorry you're having trouble.</p>
+                <ol>
+                    <li>
+                        Make sure you're able to view your webcam video outside of Lookit. (For example, on a Mac, try Photobooth.)
+                    </li>
+
+                    <li>
+                        The easiest approach is to try a different web browser if you have one installed anyway. For instance, if you're using Firefox, switch to Chrome, or vice versa. Also, update the browser if you're not using the latest version. You can check by going to "Chrome" -> "About Chrome" or "Firefox" -> "About Firefox" in the menu bar. (This is a good idea to make sure you've gotten any security updates anyway.)
+                    </li>
+
+                    <li>
+                        Using Chrome?
+                        <ul>
+                            <li>Make sure you're not using an Incognito window - you won't be able to save and use settings throughout the study.</li>
+                            <li>Go to your Chrome settings for lookit.mit.edu here:
+                                <a href="chrome://settings/content/siteDetails?site=https://lookit.mit.edu" target="_blank" rel="noopener">chrome://settings/content/siteDetails?site=https://lookit.mit.edu</a>.
+                                Set "Camera" and "Microphone" permissions to "Allow," like this. Then refresh this page.
+                                <img class="screenshot" src="assets/chrome_settings.png" alt="Chrome Lookit permissions settings">
+
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        Using Firefox?
+                        <p class="indent">
+                            The following may work on some versions of Firefox. Go to "Firefox" on the menu bar, then "Preferences."
+                            <img class="screenshot" src="assets/firefox_menu.png" alt="Firefox menu bar">
+                            Find "Privacy & Security" on the left menu. Scroll down to "Permissions." Click on "Camera" and enter https://lookit.mit.edu/ as an allowed site. Do the same for "Microphone."
+                        </p>
+
+                    </li>
+
+                    <li>
+                        If you're stumped, it's our fault. Please let us know so we can improve these directions! Email us at lookit-tech@mit.edu with a short description of what's happening. Please include the web browser you're using (Firefox, Chrome, IE, Safari, etc.), what steps you've tried, and this session ID: {{session.id}}
+                    </li>
+
+                </ol>
+
+            {{/acc.item}}
+
+        {{/bs-accordion}}
+
+    </div>
+
+</div>

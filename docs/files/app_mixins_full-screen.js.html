@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>app/mixins/full-screen.js - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
+                            <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
+                            <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
+                            <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
+                            <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
+                            <li><a href="../classes/ExpLookitInstructions.html">ExpLookitInstructions</a></li>
+                            <li><a href="../classes/ExpLookitMoodQuestionnaire.html">ExpLookitMoodQuestionnaire</a></li>
+                            <li><a href="../classes/ExpLookitObservation.html">ExpLookitObservation</a></li>
+                            <li><a href="../classes/ExpLookitPreferentialLooking.html">ExpLookitPreferentialLooking</a></li>
+                            <li><a href="../classes/ExpLookitPreviewExplanation.html">ExpLookitPreviewExplanation</a></li>
+                            <li><a href="../classes/ExpLookitStoryPage.html">ExpLookitStoryPage</a></li>
+                            <li><a href="../classes/ExpLookitSurvey.html">ExpLookitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
+                            <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
+                            <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
+                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
+                            <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
+                            <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
+                            <li><a href="../classes/ExpVideoPreview.html">ExpVideoPreview</a></li>
+                            <li><a href="../classes/FullScreen.html">FullScreen</a></li>
+                            <li><a href="../classes/MediaReload.html">MediaReload</a></li>
+                            <li><a href="../classes/permute.html">permute</a></li>
+                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
+                            <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
+                            <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
+                            <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: app/mixins/full-screen.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import Ember from &#x27;ember&#x27;;
+
+let {
+    $
+} = Ember;
+
+/**
+ * @module exp-player
+ * @submodule mixins
+ */
+
+/**
+ * Allow components to specify fullscreen capabilities based on minimal configuration options
+ * @class FullScreen
+ */
+export default Ember.Mixin.create({
+    /**
+     *  The element ID of the thing to make full screen (video element, div, etc)
+     * @property {String} fullScreenElementId
+     */
+    fullScreenElementId: &#x27;experiment-player&#x27;,
+    displayFullscreen: false,
+
+    /**
+     * The element ID of a button to show if the user leaves fullscreen mode
+     * @property {String} fsButtonID
+     */
+    fsButtonID: false,
+
+    // Note: to avoid handler being called repeatedly (bubbling
+    // up?) I&#x27;m just having components that extend FullScreen call
+    // showFullscreen themselves. --kim
+
+    // These are ridiculous workarounds for rare but reproducible problems with
+    // updating the isFullscreen field...
+
+    counter: 0,
+
+    updatedIsFullscreen: Ember.computed(&#x27;counter&#x27;, function () {
+        return this.checkFullscreen();
+    }),
+
+    isFullscreen: false, // Keep track of state
+
+    checkFullscreen: function () {  // Abstract away vendor-prefixed APIs
+
+        var opts = [&#x27;fullscreenElement&#x27;, &#x27;webkitFullscreenElement&#x27;, &#x27;mozFullScreenElement&#x27;, &#x27;msFullscreenElement&#x27;];
+        for (var opt of opts) {
+            if (!!document[opt]) {  // eslint-disable-line no-extra-boolean-cast
+                return true;
+            }
+        }
+        return false;
+    },
+
+    onFullscreen: function ($element) {
+        if (this.get(&#x27;isDestroyed&#x27;)) {
+            // Short-circuit if object is destroyed (eg we leave fullscreen because a video frame ended)
+            return false;
+        }
+        this.set(&#x27;counter&#x27;, this.get(&#x27;counter&#x27;) + 1);
+
+        var isFS = this.checkFullscreen();
+        this.set(&#x27;isFullscreen&#x27;, isFS);
+
+        var $button = $(&#x60;#${this.get(&#x27;fsButtonID&#x27;)}&#x60;);
+        if (isFS) { // just entered FS mode
+            if (this.get(&#x27;displayFullscreenOverride&#x27;) &amp;&amp; !this.get(&#x27;displayFullscreen&#x27;)) {
+                $element.addClass(&#x27;player-fullscreen-override&#x27;);
+            } else {
+                $element.addClass(&#x27;player-fullscreen&#x27;);
+            }
+            if (this.displayFullscreen &amp;&amp; this.fsButtonID) {
+                $button.hide();
+            }
+            /**
+             * Upon detecting change to fullscreen mode
+             *
+             * @event enteredFullscreen
+            */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;enteredFullscreen&#x27;);
+        } else { // just exited FS mode
+            $element.removeClass(&#x27;player-fullscreen&#x27;);
+            $element.removeClass(&#x27;player-fullscreen-override&#x27;);
+            if (this.displayFullscreen &amp;&amp; this.fsButtonID) {
+                $button.show();
+            }
+            /**
+             * Upon detecting change out of fullscreen mode
+             *
+             * @event leftFullscreen
+            */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;leftFullscreen&#x27;);
+        }
+    },
+
+    displayError(error) {  // eslint-disable-line no-unused-vars
+        // Exit fullscreen first to make sure error is visible to users.
+        this.send(&#x27;exitFullscreen&#x27;);
+        return this._super(...arguments);
+    },
+
+    actions: {
+        /**
+         * Make a specified element fullscreen
+         * @method showFullscreen
+         */
+        showFullscreen: function () {
+
+            var elementId = this.get(&#x27;fullScreenElementId&#x27;);
+            if (!elementId) {
+                throw Error(&#x27;Must specify element Id to make fullscreen&#x27;);
+            }
+
+            var buttonId = this.get(&#x27;fsButtonID&#x27;);
+            var buttonSel = Ember.$(&#x60;#${buttonId}&#x60;);
+
+            var selector = Ember.$(&#x60;#${elementId}&#x60;);
+            var elem = selector[0];
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            } else if (elem.mozRequestFullScreen) {
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            } else {
+                console.log(&#x27;Your browser does not appear to support fullscreen rendering.&#x27;);
+            }
+
+            //this.checkFullscreen();
+
+            Ember.$(document).off(&#x27;webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange&#x27;);
+            Ember.$(document).on(&#x27;webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange&#x27;, this.onFullscreen.bind(this, selector, buttonSel));
+        },
+        /**
+         * Exit fullscreen mode
+         * @method exitFullscreen
+         */
+        exitFullscreen: function () {
+            console.log(&#x27;exiting FS mode&#x27;);
+            if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement) {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+            }
+            this.set(&#x27;isFullscreen&#x27;, false);
+            // Note: we may be leaving fullscreen from a different frame, and no longer
+            // know which element .player-fullscreen was attached to. Remove it from all
+            // elements, otherwise we don&#x27;t leave cleanly if a custom ID was specified!
+            Ember.$(&#x27;*&#x27;).removeClass(&#x27;player-fullscreen&#x27;);
+            Ember.$(&#x27;*&#x27;).removeClass(&#x27;player-fullscreen-override&#x27;);
+        }
+    },
+
+    meta: {
+        parameters: {
+            type: &#x27;object&#x27;,
+            properties: {
+                /**
+                 * Whether to display this frame as fullscreen, even though it is not
+                 * generally used that way.
+                 *
+                 * @property {String} displayFullscreenOverride
+                 */
+                displayFullscreenOverride: {
+                    type: &#x27;boolean&#x27;,
+                    description: &#x27;Whether to override default and display this frame as fullscreen&#x27;,
+                    default: false
+                }
+            }
+        }
+    },
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

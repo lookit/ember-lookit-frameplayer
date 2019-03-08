@@ -16,9 +16,6 @@
 npm-debug.log
 testem.log
 
-# HDFVR flash video recorder
-/public/VideoRecorder.swf
-
 # Sensitive settings- never commit to github!
 /.env
 /**/config.json
@@ -27,3 +24,7 @@ testem.log
 scripts/env
 
 migration/output/*
+
+themes/lookit/assets/screenshots/*
+
+/ssl

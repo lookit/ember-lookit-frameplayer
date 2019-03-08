@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>app/services/video-recorder.js - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
+                            <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
+                            <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
+                            <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
+                            <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
+                            <li><a href="../classes/ExpLookitInstructions.html">ExpLookitInstructions</a></li>
+                            <li><a href="../classes/ExpLookitMoodQuestionnaire.html">ExpLookitMoodQuestionnaire</a></li>
+                            <li><a href="../classes/ExpLookitObservation.html">ExpLookitObservation</a></li>
+                            <li><a href="../classes/ExpLookitPreferentialLooking.html">ExpLookitPreferentialLooking</a></li>
+                            <li><a href="../classes/ExpLookitPreviewExplanation.html">ExpLookitPreviewExplanation</a></li>
+                            <li><a href="../classes/ExpLookitStoryPage.html">ExpLookitStoryPage</a></li>
+                            <li><a href="../classes/ExpLookitSurvey.html">ExpLookitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
+                            <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
+                            <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
+                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
+                            <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
+                            <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
+                            <li><a href="../classes/ExpVideoPreview.html">ExpVideoPreview</a></li>
+                            <li><a href="../classes/FullScreen.html">FullScreen</a></li>
+                            <li><a href="../classes/MediaReload.html">MediaReload</a></li>
+                            <li><a href="../classes/permute.html">permute</a></li>
+                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
+                            <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
+                            <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
+                            <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: app/services/video-recorder.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import Ember from &#x27;ember&#x27;;
+
+/**
+ * @module exp-player
+ * @submodule services
+ */
+
+let {
+    $,
+    RSVP
+} = Ember;
+
+// List of hooks and internal flash widget recorder methods:
+//    https://addpipe.com/docs#javascript-events-api
+//    New events available in HTML5: onRecorderInit, onRecorderReady, onConnectionClosed,
+//     onMicActivityLevel, onSaveOk
+const HOOKS = [&#x27;onRecordingStarted&#x27;,
+                &#x27;onCamAccess&#x27;,
+                &#x27;onRecorderReady&#x27;,
+                &#x27;onUploadDone&#x27;,
+                &#x27;userHasCamMic&#x27;,
+                &#x27;onConnectionStatus&#x27;,
+                &#x27;onMicActivityLevel&#x27;];
+
+const ATTRIBUTES = {
+    align: &#x27;middle&#x27;,
+    id: &#x27;hdfvr-content&#x27;,
+    name: &#x27;VideoRecorder&#x27;
+};
+
+const MIN_VOLUME = 5;
+
+const FLASHVARS = {
+    recorderId: &#x27;123&#x27;,
+    qualityurl: &#x27;avq/480p.xml&#x27;,
+    showMenu: &#x27;false&#x27;, // show recording button menu. Yes, STRING &quot;true&quot;/&quot;false&quot; sigh.
+    mrt: 100000000, // max recording time in seconds (don&#x27;t use)
+    sis: 1, // skip initial screen
+    asv: 1, // autosave recordings
+    st: 0, // don&#x27;t show timer
+    mv: 0,
+    dpv: 0,
+    ao: 0, // audio-only
+    dup: 0 // allow file uploads
+};
+
+/**
+ * An instance of a video recorder tied to or used by one specific page. A given experiment may use more than one
+ *   video recorder depending on the number of video capture frames.
+ * @class VideoRecorderObject
+ */
+const VideoRecorder = Ember.Object.extend({
+    manager: null,
+
+    height: &#x27;auto&#x27;,
+    width: &#x27;100%&#x27;,
+    element: null,
+
+    attributes: {},
+    flashVars: {},
+
+    divId: Ember.computed.alias(&#x27;attributes.id&#x27;),
+    videoId: Ember.computed.alias(&#x27;flashVars.userId&#x27;),
+    recorderId: Ember.computed.alias(&#x27;flashVars.recorderId&#x27;),
+    pipeVideoName: &#x27;&#x27;,
+
+    started: Ember.computed.alias(&#x27;_started&#x27;).readOnly(),
+    hasCamAccess: false,
+    hasWebCam: false,
+    recording: Ember.computed.alias(&#x27;_recording&#x27;).readOnly(),
+    flashReady: Ember.computed.alias(&#x27;_recorderReady&#x27;).readOnly(),
+    connected: false,
+    uploadTimeout: null, // timer counting from attempt to stop until we should just
+    //resolve the stopPromise
+
+    debug: false,
+    _started: false,
+    _camAccess: false,
+    _recording: false,
+    _recorderReady: false,
+
+    _recordPromise: null,
+    _stopPromise: null,
+
+    micChecked: false,
+
+    recorder: Ember.computed(function () {
+        return document.VideoRecorder;
+    }).volatile(),
+
+    /**
+     * Install a recorder onto the page and optionally begin recording immediately.
+     *
+     * @method install
+     * @param record
+     * @return {Promise} Indicate whether widget was successfully installed and started
+     */
+
+    install({record: record} = {record: false}, videoFilename = &#x27;&#x27;, pipeKey = &#x27;&#x27;, pipeEnv = 1) {
+
+        let origDivId = this.get(&#x27;divId&#x27;);
+
+        this.set(&#x27;divId&#x27;, &#x60;${this.get(&#x27;divId&#x27;)}-${this.get(&#x27;recorderId&#x27;)}&#x60;);
+
+        var $element = $(this.get(&#x27;element&#x27;));
+        let hidden = this.get(&#x27;hidden&#x27;);
+        if (hidden) {
+            $element = $(&#x27;body&#x27;);
+        }
+
+        let divId = this.get(&#x27;divId&#x27;);
+        let videoId = this.get(&#x27;videoId&#x27;);
+
+        var $container = $(&#x27;&lt;div&gt;&#x27;, {
+            id: &#x60;${divId}-container&#x60;,
+            &#x27;data-videoid&#x27;: videoId,
+            css: {
+                height: &#x27;100%&#x27;
+            }
+        });
+        this.set(&#x27;$container&#x27;, $container);
+        $container.append($(&#x27;&lt;div&gt;&#x27;, {id: origDivId}));
+        $element.append($container);
+
+        return new RSVP.Promise((resolve, reject) =&gt; { // eslint-disable-line no-unused-vars
+            window.size = { // just display size when showing to user. We override css.
+                width: 320,
+                height: 240
+            };
+
+            // Include videoId as payload and make flashvars available globally for Pipe.
+            var fv = Ember.copy(FLASHVARS, true);
+            fv.payload = videoFilename;
+            fv.accountHash = pipeKey;
+            fv.eid = pipeEnv;
+            window.flashvars = fv;
+
+            // TODO: can we put this elsewhere instead of loading here?
+            $.getScript(&#x27;https://cdn.addpipe.com/1.3/pipe.js&#x27;);
+
+            this.set(&#x27;_started&#x27;, true);
+
+            if (record) {
+                return this.record();
+            } else {
+                return resolve();
+            }
+        });
+    },
+
+    /**
+     * Start recording a video, and allow the state of the recording to be accessed for later usage
+     *
+     * @method record
+     * @return {Promise}
+     */
+    record() {
+        if (!this.get(&#x27;started&#x27;)) {
+            throw new Error(&#x27;Must call start before record&#x27;);
+        }
+        let count = 0;
+        var _this = this;
+        let id = window.setInterval(() =&gt; {
+            if (++count &gt; 50) { // stop trying - failure (5s)
+                if (_this.get(&#x27;onCamAccess&#x27;)) {
+                    _this.get(&#x27;onCamAccess&#x27;).call(_this, false);
+                }
+                return window.clearInterval(id), _this.get(&#x27;_recordPromise&#x27;).reject();
+            }
+            if (!_this.get(&#x27;recorder&#x27;) || !(_this.get(&#x27;recorder&#x27;).record)) {
+                return null;
+            }
+            _this.get(&#x27;recorder&#x27;).record();
+            window.clearInterval(id); // stop trying - success
+            return null;
+        }, 100); // try every 100ms
+
+        return new Ember.RSVP.Promise((resolve, reject) =&gt; {
+            _this.set(&#x27;_recordPromise&#x27;, {
+                resolve,
+                reject
+            });
+        });
+    },
+
+    /**
+     * Get a timestamp based on the current recording position. Useful to ensure that tracked timing events
+     *  line up with the video.
+     * @method getTime
+     * @return {Date|null}
+     */
+    getTime() {
+        let recorder = this.get(&#x27;recorder&#x27;);
+        if (recorder &amp;&amp; recorder.getStreamTime) {
+            return parseFloat(recorder.getStreamTime());
+        }
+        return null;
+    },
+
+    /**
+     * Stop recording and save the video to the server
+     * @method stop
+     */
+    stop() {
+        function sleep(time) {
+            return new Promise((resolve) =&gt; setTimeout(resolve, time));
+        }
+
+        // Force at least 3 seconds of video to be recorded to ensure upload is called.
+        // Not thoroughly tested that this is still necessary w webRTC recorder.
+        var timeLeft = 3 - this.getTime();
+        if (this.get(&#x27;hasCamAccess&#x27;) &amp;&amp; (timeLeft &gt; 0)) {
+            // sleep time expects milliseconds
+            return sleep(timeLeft * 1000).then(() =&gt; this.stop());
+        } else {
+            var recorder = this.get(&#x27;recorder&#x27;);
+            if (recorder) {
+                Ember.run.next(this, () =&gt; {
+                    try {
+                        recorder.stopVideo();
+                    } catch (e) {
+                        // TODO: Under some conditions there is no stopVideo method- can we do a better job of
+                        //  identifying genuine errors?
+                    }
+                    this.set(&#x27;_recording&#x27;, false);
+                });
+            }
+
+            var _this = this;
+
+            // If we don&#x27;t end up uploading within 10 seconds, call reject
+            this.set(&#x27;uploadTimeout&#x27;, window.setTimeout(function() {
+                    window.clearTimeout(_this.get(&#x27;uploadTimeout&#x27;));
+                    _this.get(&#x27;_stopPromise&#x27;).reject();
+                }, 10000));
+
+            var _stopPromise = new Ember.RSVP.Promise((resolve, reject) =&gt; {
+                this.set(&#x27;_stopPromise&#x27;, {
+                    resolve: resolve,
+                    reject: reject
+                });
+            });
+            return _stopPromise;
+        }
+    },
+
+    /**
+     * Destroy video recorder and remove from list of recorders. Use this to remove
+     * the video recorder when destroying a frame, if not triggered via upload.
+     *
+     * @method destroy
+     */
+    destroy() {
+        this.get(&#x27;manager&#x27;).destroy(this);
+    },
+
+    /**
+     * Uninstall the video recorder from the page
+     *
+     * @method uninstall
+     */
+    uninstall() {
+        console.log(&#x60;Destroying the videoRecorder: ${this.get(&#x27;divId&#x27;)}&#x60;);
+        //removePipeRecorder(); // TODO: this may affect ALL recorders, not just this one.
+        $(&#x60;#${this.get(&#x27;divId&#x27;)}-container&#x60;).remove();
+        this.set(&#x27;_recording&#x27;, false);
+    },
+
+    finish() {
+        return new Ember.RSVP.Promise((resolve) =&gt; {
+            // todo
+            resolve();
+        });
+    },
+
+    on(eName, func) {
+        if (HOOKS.indexOf(eName) === -1 &amp;&amp; eName !== &#x27;onCamAccessConfirm&#x27;) {
+            throw &#x60;Invalid event ${eName}&#x60;;
+        }
+        this.set(eName, func);
+    },
+
+    // Begin Flash hooks
+    _onRecordingStarted(recorderId) { // eslint-disable-line no-unused-vars
+        this.set(&#x27;_recording&#x27;, true);
+        this.set(&#x27;pipeVideoName&#x27;, this.get(&#x27;recorder&#x27;).getStreamName());
+        if (this.get(&#x27;_recordPromise&#x27;)) {
+            this.get(&#x27;_recordPromise&#x27;).resolve(this);
+        }
+    },
+
+    _onUploadDone(streamName, streamDuration, userId, recorderId) { // eslint-disable-line no-unused-vars
+        //this.destroy();
+        window.clearTimeout(this.get(&#x27;uploadTimeout&#x27;));
+        if (this.get(&#x27;_stopPromise&#x27;)) {
+            console.log(&#x27;Resolving stop promise...&#x27;);
+            console.log(streamName);
+            this.get(&#x27;_stopPromise&#x27;).resolve();
+        }
+    },
+
+    _onCamAccess(allowed, recorderId) { // eslint-disable-line no-unused-vars
+        console.log(&#x27;onCamAccess: &#x27; + recorderId);
+        this.set(&#x27;hasCamAccess&#x27;, allowed);
+    },
+
+    _onRecorderReady(recorderId, recorderType) { // eslint-disable-line no-unused-vars
+        this.set(&#x27;_recorderReady&#x27;, true);
+    },
+
+    _userHasCamMic(camNumber, micNumber, recorderId) { // eslint-disable-line no-unused-vars
+        this.set(&#x27;hasWebCam&#x27;, Boolean(camNumber));
+    },
+
+    _onConnectionStatus(status, recorderId) { // eslint-disable-line no-unused-vars
+        if (status === &#x27;connected&#x27;) {
+            this.set(&#x27;connected&#x27;, true);
+        } else {
+            this.set(&#x27;connected&#x27;, false);
+        }
+    },
+
+    _onMicActivityLevel(recorderId, currentActivityLevel) { // eslint-disable-line no-unused-vars
+        if (currentActivityLevel &gt; MIN_VOLUME) {
+            this.set(&#x27;micChecked&#x27;, true);
+        }
+    }
+    // End Flash hooks
+});
+
+/**
+ * A service designed to facilitate video recording by providing helper methods and managing multiple recorder objects
+ *  Using a persistent service is intended to ensure we destroy recorder elements when the video is done uploading,
+ *  rather than just when the user exits the frame
+ *
+ * @class videoRecorder
+ */
+export default Ember.Service.extend({
+    _recorders: {},
+
+    //Initial setup, installs webcam hooks into the page
+    init() {
+        var runHandler = function (recorder, hookName, args) {
+            if (recorder.get(&#x27;debug&#x27;)) {
+                console.log(hookName, args);
+            }
+            if (recorder.get(&#x27;_&#x27; + hookName)) {
+                recorder.get(&#x27;_&#x27; + hookName).apply(recorder, args);
+            }
+            if (recorder.get(hookName)) {
+                recorder.get(hookName).apply(recorder, args);
+            }
+        };
+
+        HOOKS.forEach(hookName =&gt; {
+            var _this = this;
+            window[hookName] = function () {
+                var args = Array.prototype.slice.call(arguments);
+                var recorder;
+                var recorderIdPositions = {
+                    &#x27;onUploadDone&#x27;: 3,
+                    &#x27;userHasCamMic&#x27;: 2,
+                    &#x27;onCamAccess&#x27;: 1,
+                    &#x27;onConnectionStatus&#x27;: 1,
+                    &#x27;onSaveOk&#x27;: 5
+                };
+                var recorderIdPos = recorderIdPositions[hookName] || 0;
+                var recorderId = args[recorderIdPos];
+
+                // Make sure this recorder ID is actually in _recorders;
+                // otherwise fails by returning all of _recorders in this case.
+                if (_this._recorders.hasOwnProperty(recorderId)) {
+                    recorder = _this.get(&#x60;_recorders.${recorderId}&#x60;);
+                }
+                if (!recorder) {
+                    Object.keys(_this.get(&#x27;_recorders&#x27;)).forEach((id) =&gt; {
+                        recorder = _this.get(&#x60;_recorders.${id}&#x60;);
+                        runHandler(recorder, hookName, args);
+                    });
+                } else {
+                    runHandler(recorder, hookName, args);
+                }
+            };
+        });
+    },
+
+    //Insert the recorder
+    start(videoId, element, settings = {}) {
+        if (typeof (videoId) !== &#x27;string&#x27;) {
+            throw new Error(&#x27;videoId must be a string&#x27;);
+        }
+        var defaults = {
+            config: false,
+            hidden: false
+        };
+        Ember.merge(defaults, settings);
+
+        var props = {
+            flashVars: Ember.copy(FLASHVARS, true),
+            attributes: Ember.copy(ATTRIBUTES, true),
+            manager: this
+        };
+        props.flashVars.recorderId = (new Date().getTime() + &#x27;&#x27;);
+        props.element = element;
+        props.hidden = defaults.hidden;
+        let handle = new VideoRecorder(props);
+        this.set(&#x60;_recorders.${props.flashVars.recorderId}&#x60;, handle);
+        console.log(&#x27;created new video recorder &#x27; + props.flashVars.recorderId);
+        return handle;
+    },
+    destroy(recorder) {
+        var recorders = this.get(&#x27;_recorders&#x27;);
+        delete recorders[recorder.get(&#x27;recorderId&#x27;)];
+        this.set(&#x27;_recorders&#x27;, recorders);
+        recorder.uninstall();
+    }
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

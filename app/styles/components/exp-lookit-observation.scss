@@ -1,0 +1,93 @@
+
+
+.exp-lookit-observation .exp-lookit-observation-main {
+    height: 80vh;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    padding: 0;
+    overflow-y: scroll;
+}
+
+.exp-lookit-observation .instructionspic {
+    float: right;
+    max-height: 180px;
+    border-radius: 10%;
+    border: thin solid black;
+}
+
+.exp-lookit-observation li {
+    margin-bottom: 20px;
+}
+
+.exp-lookit-observation #recordingControls > * {
+	font-size:large;
+}
+
+.exp-lookit-observation .recorder-container {
+	width:100%;
+	height:50vh;
+	margin: 0px;
+}
+
+.exp-lookit-observation .recorder div.exp-lookit-observation-hidevideo :not(#hiddenWebcamMessage) :not(#progressbar) {
+    top: -10000px;
+    left: -10000px;
+    z-index: -1;
+    position: absolute;
+}
+
+.exp-lookit-observation .recorder {
+	padding: 0px;
+	margin-bottom: 1em;
+	margin-top: 1em;
+	background-color: #ccc;
+	width: 110%;
+	height:100%;
+	min-width:450px;
+	margin-left:-10%;
+	clear:both !important;
+	position: relative;
+}
+
+.exp-lookit-observation #hiddenWebcamMessage {
+    position: absolute;
+    font-size: 2em;
+    text-align: center;
+    margin: 30% 0 0 30%;
+}
+
+.exp-lookit-observation #webcamToggleButton {
+	font-size: 80%;
+}
+
+.exp-lookit-observation .Blink {
+  animation: exp-lookit-observation-blinker 1.0s cubic-bezier(.5, 0, 1, 1) infinite alternate;
+  float:left;
+  font-size:large;
+  margin-right: .5em;
+}
+@keyframes exp-lookit-observation-blinker {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.exp-lookit-observation .exp-lookit-observation-controls {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.exp-lookit-observation .progress {
+    position:absolute;
+    z-index:100;
+    right:0;
+    left:0;
+    height:5px;
+    clear:both;
+    background-color: transparent;
+    bottom:0px;
+    margin:0;
+    margin-top:5px;
+}
+
+

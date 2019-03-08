@@ -1,0 +1,74 @@
+.exp-lookit-instructions {
+    h2 {
+        font-size: large;
+    }
+
+    .exp-text {
+        float: none;
+    }
+
+    em {
+        font-weight: bold;
+        font-style: normal;
+    }
+
+    li img.text-block-img {
+        float: right;
+    }
+
+    img.text-block-img {
+        max-height: 180px;
+        border-radius: 10%;
+        border: thin solid black;
+    }
+
+    li {
+        margin-bottom: 20px;
+    }
+
+    .media-wrapper {
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        display: block;
+        margin-bottom: 20px;
+    }
+
+    .media-warning {
+        color: red;
+    }
+
+    // Pipe video recorder div formatting
+    .recorder-container {
+        height: 40vh;
+    }
+
+    .recorder-col, .recorder-col .recorder-container * {
+        //float: right;
+        padding: 0;
+        margin: 0;
+    }
+
+    .media-wrapper {
+        width: 100%;
+    }
+
+    .player-media {
+        max-width: 100%;
+    }
+
+    .media-wrapper[showWarning="false"] .media-warning {
+        display: none;
+    }
+
+    .media-wrapper:not([showWarning]) .media-warning {
+        display: none;
+    }
+
+    .media-wrapper[showWarning="true"] .media-warning {
+        display: block;
+    }
+}
+
+

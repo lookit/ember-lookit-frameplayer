@@ -1,0 +1,35 @@
+.exp-video-config-quality h2 {
+    float:left;
+}
+
+.exp-video-config-quality #not-recording-note {
+    color:red;
+    float:right;
+}
+
+.exp-video-config-quality .example {
+    display:block;
+    margin:auto;
+}
+
+.exp-video-config-quality-summary {
+    font-weight: bold;
+}
+
+.exp-video-config-quality ol {
+    list-style-position: inside;
+    padding: 0;
+}
+
+.exp-video-config-quality ol li {
+    padding: 1%;
+    margin-left: 0;
+    margin-bottom: 4%;
+    border: medium solid #6E6E6E;
+    border-radius: 5px;
+    background-color: #EFFBF5;
+}
+
+.exp-video-config-quality .nextButton {
+    margin-bottom: 20px;
+}

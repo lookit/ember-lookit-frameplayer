@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>app/components/exp-player/component.js - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
+                            <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
+                            <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
+                            <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
+                            <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
+                            <li><a href="../classes/ExpLookitInstructions.html">ExpLookitInstructions</a></li>
+                            <li><a href="../classes/ExpLookitMoodQuestionnaire.html">ExpLookitMoodQuestionnaire</a></li>
+                            <li><a href="../classes/ExpLookitObservation.html">ExpLookitObservation</a></li>
+                            <li><a href="../classes/ExpLookitPreferentialLooking.html">ExpLookitPreferentialLooking</a></li>
+                            <li><a href="../classes/ExpLookitPreviewExplanation.html">ExpLookitPreviewExplanation</a></li>
+                            <li><a href="../classes/ExpLookitStoryPage.html">ExpLookitStoryPage</a></li>
+                            <li><a href="../classes/ExpLookitSurvey.html">ExpLookitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
+                            <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
+                            <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
+                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
+                            <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
+                            <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
+                            <li><a href="../classes/ExpVideoPreview.html">ExpVideoPreview</a></li>
+                            <li><a href="../classes/FullScreen.html">FullScreen</a></li>
+                            <li><a href="../classes/MediaReload.html">MediaReload</a></li>
+                            <li><a href="../classes/permute.html">permute</a></li>
+                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
+                            <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
+                            <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
+                            <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: app/components/exp-player/component.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import Ember from &#x27;ember&#x27;;
+import layout from &#x27;./template&#x27;;
+
+import FullScreen from &#x27;../../mixins/full-screen&#x27;;
+import ExperimentParser from &#x27;../../utils/parse-experiment&#x27;;
+
+let {
+    $
+} = Ember;
+
+/**
+ * @module exp-player
+ * @submodule components
+ */
+
+/**
+ * Experiment player: a component that renders a series of frames that define an experiment
+ *
+ * Sample usage:
+ * &#x60;&#x60;&#x60;handlebars
+ * {{exp-player
+ *   experiment=experiment
+ *   session=session
+ *   pastSessions=pastSessions
+ *   saveHandler=(action &#x27;saveSession&#x27;)
+ *   frameIndex=0
+ *   fullScreenElementId=&#x27;expContainer&#x27;}}
+ * &#x60;&#x60;&#x60;
+ * @class ExpPlayer
+ */
+export default Ember.Component.extend(FullScreen, {
+    layout: layout,
+
+    experiment: null, // Experiment model
+    session: null,
+    pastSessions: null,
+    frames: null,
+    conditions: null,
+
+    frameIndex: 0, // Index of the currently active frame
+    framePage: 0, // Index of the currently visible page within a frame
+
+    displayFullscreen: false,
+    fullScreenElementId: &#x27;experiment-player&#x27;,
+
+    allowExit: false,
+    hasAttemptedExit: false,
+
+    toast: Ember.inject.service(),
+
+    // Any additional properties we might wish to pass from the player to individual frames. Allows passing of arbitrary config
+    // by individual consuming applications to suit custom needs.
+    extra: {},
+
+    /**
+     * The message to display in the early exit modal. Newer browsers may not respect this message.
+     * @property {String|null} messageEarlyExitModal
+     */
+    messageEarlyExitModal: &#x27;Are you sure you want to leave this page? You may lose unsaved data.&#x27;,
+
+    /**
+     * Customize what happens when the user exits the page
+     * @method beforeUnload
+     * @param {event} event The event to be handled
+     * @return {String|null} If string is provided, triggers a modal to confirm user wants to leave page
+     */
+    beforeUnload(event) {
+
+        if (!this.get(&#x27;allowExit&#x27;)) {
+            this.showConfirmationDialog();
+            this.get(&#x27;toast&#x27;).warning(&#x27;To leave the study early, please press Exit below so you can select a privacy level for your videos.&#x27;);
+            this.set(&#x27;hasAttemptedExit&#x27;, true);
+            this.send(&#x27;exitFullscreen&#x27;);
+
+            // Log that the user attempted to leave early, via browser navigation.
+            // There is no guarantee that the server request to save this event will finish before exit completed;
+            //   we are limited in our ability to prevent willful exits
+            this.send(&#x27;setGlobalTimeEvent&#x27;, &#x27;exitEarly&#x27;, {
+                exitType: &#x27;browserNavigationAttempt&#x27;, // Page navigation, closed browser, etc
+                lastPageSeen: this.get(&#x27;frameIndex&#x27;)
+            });
+            //Ensure sync - try to force save to finish before exit
+            Ember.run(() =&gt; this.get(&#x27;session&#x27;).save());
+
+            // Then attempt to warn the user and exit
+            // Newer browsers will ignore the custom message below. See https://bugs.chromium.org/p/chromium/issues/detail?id=587940
+            const message = this.get(&#x27;messageEarlyExitModal&#x27;);
+            event.returnValue = message;
+            return message;
+        }
+        return null;
+    },
+
+    showConfirmationDialog() {
+        var _this = this;
+        this.get(&#x27;toast&#x27;).warning(&quot;&lt;br&gt;&lt;button type=&#x27;button&#x27; id=&#x27;confirmationContinueStudy&#x27; class=&#x27;btn btn-outline-secondary&#x27; style=&#x27;color:black;&#x27;&gt;Continue&lt;/button&gt;&lt;button type=&#x27;button&#x27; id=&#x27;confirmationExitStudy&#x27; class=&#x27;btn btn-danger&#x27; style=&#x27;float:right;&#x27;&gt;Exit&lt;/button&gt;&quot;, &#x27;Really exit study?&#x27;,
+          {
+              allowHtml: true,
+              preventDuplicates: true,
+              onclick: null,
+              timeOut: 0,
+              extendedTimeOut: 0,
+              onShown: function () {
+                  Ember.$(&quot;#confirmationExitStudy&quot;).click(function(){
+                    _this.send(&#x27;exitEarly&#x27;);
+                  });
+                  Ember.$(&quot;#confirmationContinueStudy&quot;).click(function(){
+                    _this.get(&#x27;toast&#x27;).clear();
+                  });
+                }
+          });
+    },
+
+    _registerHandlers() {
+        $(window).on(&#x27;beforeunload&#x27;, this.beforeUnload.bind(this));
+        var _this = this;
+        Ember.$(window).on(&#x27;keydown&#x27;, (e) =&gt; {
+            if ((e.which === 112) || (e.ctrlKey &amp;&amp; e.which == 88)) { // F1 key or ctrl-x
+                _this.showConfirmationDialog();
+            }
+        });
+    },
+
+
+    _removeHandlers() {
+        Ember.$(window).off(&#x27;keydown&#x27;);
+        $(window).off(&#x27;beforeunload&#x27;);
+    },
+    onFrameIndexChange: Ember.observer(&#x27;frameIndex&#x27;, function() {
+        var max = this.get(&#x27;frames.length&#x27;) - 1;
+        var frameIndex = this.get(&#x27;frameIndex&#x27;);
+        if (frameIndex === max) {
+            this._removeHandlers();
+        }
+    }),
+    willDestroy() {
+        this._super(...arguments);
+        this._removeHandlers();
+    },
+
+    init: function() {
+
+        this._super(...arguments);
+        this._registerHandlers();
+
+        var parser = new ExperimentParser({
+            structure: this.get(&#x27;experiment.structure&#x27;),
+            pastSessions: this.get(&#x27;pastSessions&#x27;).toArray()
+        });
+        var [frameConfigs, conditions] = parser.parse();
+        this.set(&#x27;frames&#x27;, frameConfigs); // When player loads, convert structure to list of frames
+        this.set(&#x27;displayFullscreen&#x27;, this.get(&#x27;experiment.displayFullscreen&#x27;) || false); // Choose whether to display this experiment fullscreen (default false)
+
+        var session = this.get(&#x27;session&#x27;);
+        session.set(&#x27;conditions&#x27;, conditions);
+        session.save();
+    },
+
+    currentFrameConfig: Ember.computed(&#x27;frames&#x27;, &#x27;frameIndex&#x27;, function() {
+        var frames = this.get(&#x27;frames&#x27;) || [];
+        var frameIndex = this.get(&#x27;frameIndex&#x27;);
+        return frames[frameIndex];
+    }),
+
+    _currentFrameTemplate: null,
+    currentFrameTemplate: Ember.computed(&#x27;currentFrameConfig&#x27;, &#x27;_currentFrameTemplate&#x27;, function() {
+        var currentFrameTemplate = this.get(&#x27;_currentFrameTemplate&#x27;);
+        if (currentFrameTemplate) {
+            return currentFrameTemplate;
+        }
+
+        var currentFrameConfig = this.get(&#x27;currentFrameConfig&#x27;);
+        var componentName = &#x60;${currentFrameConfig.kind}&#x60;;
+
+        if (!Ember.getOwner(this).lookup(&#x60;component:${componentName}&#x60;)) {
+            console.warn(&#x60;No component named ${componentName} is registered.&#x60;);
+        }
+        return componentName;
+    }),
+
+    currentFrameContext: Ember.computed(&#x27;pastSessions&#x27;, function() {
+        return {
+            pastSessions: this.get(&#x27;pastSessions&#x27;)
+        };
+    }),
+
+    _transition() {
+        Ember.run(() =&gt; {
+            this.set(&#x27;_currentFrameTemplate&#x27;, &#x27;exp-blank&#x27;);
+        });
+        this.set(&#x27;_currentFrameTemplate&#x27;, null);
+    },
+    _exit() {
+        this.send(&#x27;sessionCompleted&#x27;);
+        this.get(&#x27;session&#x27;).save().then(() =&gt; window.location = this.get(&#x27;experiment.exitUrl&#x27;) || &#x27;/&#x27;);
+    },
+
+    actions: {
+        sessionCompleted() {
+            this.get(&#x27;session&#x27;).set(&#x27;completed&#x27;, true);
+        },
+
+        setGlobalTimeEvent(eventName, extra) {
+            // Set a timing event not tied to any one frame
+            let curTime = new Date();
+            let eventData = {
+                eventType: eventName,
+                timestamp: curTime.toISOString()
+            };
+            Ember.merge(eventData, extra || {});
+            let session = this.get(&#x27;session&#x27;);
+            session.get(&#x27;globalEventTimings&#x27;).pushObject(eventData);
+        },
+
+        saveFrame(frameId, frameData) {
+            // Save the data from a completed frame to the session data item
+            this.get(&#x27;session.sequence&#x27;).push(frameId);
+            this.get(&#x27;session.expData&#x27;)[frameId] = frameData;
+            return this.get(&#x27;session&#x27;).save();
+        },
+
+        next() {
+            var frameIndex = this.get(&#x27;frameIndex&#x27;);
+            if (frameIndex &lt; (this.get(&#x27;frames&#x27;).length - 1)) {
+                this._transition();
+                this.set(&#x27;frameIndex&#x27;, frameIndex + 1);
+                this.set(&#x27;framePage&#x27;, 0);
+                return;
+            }
+            this._exit();
+        },
+
+        skipone() {
+            var frameIndex = this.get(&#x27;frameIndex&#x27;);
+            if (frameIndex &lt; (this.get(&#x27;frames&#x27;).length - 2)) {
+                this._transition();
+                this.set(&#x27;frameIndex&#x27;, frameIndex + 2);
+                return;
+            }
+            this._exit();
+        },
+
+        previous() {
+            var frameIndex = this.get(&#x27;frameIndex&#x27;);
+            if (frameIndex !== 0) {
+                this._transition();
+                this.set(&#x27;frameIndex&#x27;, frameIndex - 1);
+            }
+        },
+
+        closeExitWarning() {
+            this.set(&#x27;hasAttemptedExit&#x27;, false);
+        },
+
+        updateFramePage(framePage) {
+            this.set(&#x27;framePage&#x27;, framePage);
+        },
+
+        exitEarly() {
+            this.set(&#x27;hasAttemptedExit&#x27;, false);
+            Ember.$(window).off(&#x27;keydown&#x27;);
+            // Save any available data immediately
+            this.send(&#x27;setGlobalTimeEvent&#x27;, &#x27;exitEarly&#x27;, {
+                exitType: &#x27;manualInterrupt&#x27;,  // User consciously chose to exit, eg by pressing F1 key
+                lastPageSeen: this.get(&#x27;frameIndex&#x27;) + 1
+            });
+            this.get(&#x27;session&#x27;).save(); // I think this is the response
+
+            // Navigate to last page in experiment (assumed to be survey frame)
+            var max = this.get(&#x27;frames.length&#x27;) - 1;
+            this.set(&#x27;frameIndex&#x27;, max);
+        },
+    }
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

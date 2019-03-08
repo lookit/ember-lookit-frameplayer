@@ -1,0 +1,36 @@
+.player-fullscreen {
+    width: 100%;
+    height: 100%;
+    background-color:#FFFFFF;
+}
+
+.player-fullscreen-override {
+    overflow: scroll;
+}
+
+#experiment-player.player-fullscreen div {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+#experiment-player.player-fullscreen > div > div {
+    display: table;
+}
+
+#experiment-player.player-fullscreen > div > div > div  {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+video.player-fullscreen::-webkit-media-controls {
+  display:none !important;
+}
+
+#experiment-player.player-fullscreen, #experiment-player.player-fullscreen * {
+    // blank cursor (1px transparent image)
+    cursor: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7), none;
+}
+

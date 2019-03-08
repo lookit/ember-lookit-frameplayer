@@ -7,8 +7,7 @@ export default function loadAll(model, relationship, dest, options = {}) {
         'page[size]': 10,
         page: page
     };
-    query = Ember.merge(query, options || {});
-    Ember.set(model, 'query-params', query);
+    query = Ember.assign(query, options || {});
 
     return model.query(relationship, query).then(results => {
         dest.pushObjects(results.toArray());

@@ -10,10 +10,11 @@ module.exports = function(environment) {
     pipeEnv: process.env.PIPE_ENVIRONMENT,
     sentry: {
         dsn: process.env.SENTRY_DSN || '',
-        cdn: 'https://cdn.ravenjs.com/3.5.1/ember/raven.min.js',
+        cdn: 'https://cdn.ravenjs.com/3.26.4/ember/raven.min.js', // probably unused
         development: process.env.SENTRY_DSN === ''
     },
     EmberENV: {
+      EXTEND_PROTOTYPES: true,
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
@@ -23,8 +24,13 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    featureFlags: {
     }
+
   };
+
 
   if (environment === 'development') {
       ENV.host = 'http://localhost:8000';
@@ -44,6 +50,8 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+    ENV.APP.autoboot = false;
+
   }
 
   if (environment === 'production') {

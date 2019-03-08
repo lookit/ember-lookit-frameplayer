@@ -1,0 +1,79 @@
+{{! template-lint-disable unused-block-params }}
+
+<div class="exp-lookit-observation">
+
+    <div class="row exp-lookit-observation-main">
+
+        <div class="col-sm-6 exp-text">
+
+            {{#each blocks as |block idx|}}
+
+                {{exp-text-block block=block}}
+
+            {{/each}}
+
+        </div>
+
+        <div class="col-sm-5 col-sm-offset-1">
+
+            <button class="btn btn-default pull-right" id="webcamToggleButton" {{action 'toggleWebcamButton'}}>
+                Hide
+            </button>
+
+
+            <div class="row recorder-container">
+                <div id="recorder" class="recorder col-xs-12">
+                    <div id="hiddenWebcamMessage"> Webcam feed <br>not displayed </div>
+                    {{#if recordSegmentLength}}
+                        <div class="progress" id="progressbar">
+                            <div class="progress-bar bg-info progress-bar-striped" role="progressbar" style="width:100%" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    {{/if}}
+                </div>
+
+            </div>
+
+            <div id="recordingControls">
+
+
+
+                <span id="recordingStatus">
+                    <i class="fa fa-circle text-danger Blink" id="recordingIndicator"></i>
+                    <span id="recordingText"> Recording... </span>
+                </span>
+
+
+
+                {{#unless hideControls}}
+                    <button class="btn btn-default pull-right" id="pauseButton" {{action 'pause'}}>
+                        <i class="fa fa-pause" id="pauseButtonIcon"></i>
+                        <span id="pauseButtonText">Pause</span>
+                    </button>
+
+                    <button class="btn btn-default pull-right" id="recordButton" {{action 'record'}}>
+                        <i class="fa fa-play" id="recordButtonIcon"></i>
+                        <span id="recordButtonText">Resume</span>
+                    </button>
+                {{/unless}}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row exp-lookit-observation-controls">
+        <div class="col-sm-12 pull-down">
+            {{#if showPreviousButton}}
+                <button class="btn btn-default pull-left" {{ action 'previous' }}>
+                    Previous
+                </button>
+            {{/if}}
+
+            <button id="nextbutton" class="btn btn-success pull-right" {{ action 'proceed' }}>
+                {{exp-format nextButtonText}}
+            </button>
+
+        </div>
+    </div>
+</div>
+
+

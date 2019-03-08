@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>app/components/exp-lookit-exit-survey/component.js - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
+                            <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
+                            <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
+                            <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
+                            <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
+                            <li><a href="../classes/ExpLookitInstructions.html">ExpLookitInstructions</a></li>
+                            <li><a href="../classes/ExpLookitMoodQuestionnaire.html">ExpLookitMoodQuestionnaire</a></li>
+                            <li><a href="../classes/ExpLookitObservation.html">ExpLookitObservation</a></li>
+                            <li><a href="../classes/ExpLookitPreferentialLooking.html">ExpLookitPreferentialLooking</a></li>
+                            <li><a href="../classes/ExpLookitPreviewExplanation.html">ExpLookitPreviewExplanation</a></li>
+                            <li><a href="../classes/ExpLookitStoryPage.html">ExpLookitStoryPage</a></li>
+                            <li><a href="../classes/ExpLookitSurvey.html">ExpLookitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
+                            <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
+                            <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
+                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
+                            <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
+                            <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
+                            <li><a href="../classes/ExpVideoPreview.html">ExpVideoPreview</a></li>
+                            <li><a href="../classes/FullScreen.html">FullScreen</a></li>
+                            <li><a href="../classes/MediaReload.html">MediaReload</a></li>
+                            <li><a href="../classes/permute.html">permute</a></li>
+                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
+                            <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
+                            <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
+                            <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: app/components/exp-lookit-exit-survey/component.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import layout from &#x27;./template&#x27;;
+
+import {validator, buildValidations} from &#x27;ember-cp-validations&#x27;;
+
+import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
+import FullScreen from &#x27;../../mixins/full-screen&#x27;;
+
+/**
+ * @module exp-player
+ * @submodule frames
+ */
+
+const Validations = buildValidations({
+    birthDate: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;
+    }),
+    useOfMedia: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;,
+        disabled(model) {
+            return model.get(&#x27;withdrawal&#x27;);
+        }
+    }),
+    databraryShare: validator(&#x27;presence&#x27;, {
+        presence: true,
+        message: &#x27;This field is required&#x27;
+    })
+});
+
+/**
+Standard exit survey for Lookit studies: confirm participant birthdate, ask user for video sharing permission level &amp; Databrary sharing, option to withdraw, freeform comments, debriefing/thank you text. Leaves fullscreen mode.
+
+&#x60;&#x60;&#x60;json
+&quot;frames&quot;: {
+    &quot;my-exit-survey&quot;: {
+        &quot;kind&quot;: &quot;exp-lookit-exit-survey&quot;,
+        &quot;debriefing&quot;: {
+            &quot;title&quot;: &quot;Thank you!&quot;,
+            &quot;text&quot;: &quot;Learning how children react to ducks will help scientists design better rubber ducks.&quot;,
+            &quot;image&quot;: {
+                &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/ducks/duck.png&quot;,
+                &quot;alt&quot;: &quot;Very cute duck&quot;
+            }
+        }
+    }
+}
+&#x60;&#x60;&#x60;
+
+@class ExpLookitExitSurvey
+@extends ExpFrameBase
+
+@uses FullScreen
+@uses Validations
+*/
+
+export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
+    layout: layout,
+    type: &#x27;exp-lookit-exit-survey&#x27;,
+    fullScreenElementId: &#x27;experiment-player&#x27;,
+    meta: {
+        name: &#x27;ExpLookitExitSurvey&#x27;,
+        description: &#x27;Exit survey for Lookit.&#x27;,
+        parameters: {
+            type: &#x27;object&#x27;,
+            properties: {
+                /**
+                Object specifying information to show on second page of exit survey, before returning to main Lookit site.
+                @property {Object} debriefing
+                    @param {String} title Title of debriefing page
+                    @param {String} text Paragraph to show as debriefing
+                    @param {Object} image Object specifying source URL [src] &amp; alt-text [alt] for any image to show during debriefing (optional). Example: &#x60;{
+                &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/ducks/duck.png&quot;,
+                &quot;alt&quot;: &quot;Very cute duck&quot;
+                }&#x60;
+                */
+                debriefing: {
+                    type: &#x27;object&#x27;,
+                    properties: {
+                        title: {
+                            type: &#x27;string&#x27;,
+                            default: &#x27;Thank you!&#x27;
+                        },
+                        text: {
+                            type: &#x27;string&#x27;
+                        },
+                        image: {
+                            type: &#x27;object&#x27;,
+                            properties: {
+                                src: {
+                                    type: &#x27;string&#x27;
+                                },
+                                alt: {
+                                    type: &#x27;string&#x27;
+                                }
+                            }
+                        }
+                    }
+                },
+                required: [&#x27;debriefing&#x27;]
+            }
+        },
+        data: {
+            /**
+             * Parameters captured and sent to the server
+             *
+             * @method serializeContent
+             * @param {String} birthDate Child&#x27;s birthdate as entered into exit survey; timestamp string starting YYYY-mm-dd.
+             * @param {String} databraryShare Whether data can be shared with Databrary: &#x27;yes&#x27; or &#x27;no&#x27;
+             * @param {String} useOfMedia Video privacy level: &#x27;private&#x27;, &#x27;scientific&#x27;, or &#x27;public&#x27;
+             * @param {Boolean} withdrawal Whether the user checked the box to withdraw video data
+             * @param {String} feedback Freeform comments entered by parent
+             * @param {Object} eventTimings Only event captured during this frame is &#x27;nextFrame&#x27;; example eventTimings value: &#x60;[{u&#x27;eventType&#x27;: u&#x27;nextFrame&#x27;, u&#x27;timestamp&#x27;: u&#x27;2016-08-03T00:45:37.157Z&#x27;}]&#x60;
+             * @return {Object} The payload sent to the server
+             */
+            type: &#x27;object&#x27;,
+            properties: {
+                birthDate: {
+                    type: &#x27;string&#x27;,
+                    default: null
+                },
+                databraryShare: {
+                    type: &#x27;string&#x27;
+                },
+                useOfMedia: {
+                    type: &#x27;string&#x27;
+                },
+                withdrawal: {
+                    type: &#x27;boolean&#x27;,
+                    default: false
+                },
+                feedback: {
+                    type: &#x27;string&#x27;,
+                    default: &#x27;&#x27;
+                }
+            }
+        }
+    },
+    section1: true,
+    showWithdrawalConfirmation: false,
+    showValidation: false,
+    actions: {
+        advanceToProgressBar() {
+            // Move from section 1 (survey) to section 2 (progress bar/ finish button)
+            // Mark the session complete at this stage, as all data has been entered
+            this.sendAction(&#x27;sessionCompleted&#x27;);
+            this._save()
+                .then(()=&gt; {
+                    this.set(&#x27;section1&#x27;, false);
+                })
+                .catch(err =&gt; this.displayError(err));
+        },
+        continue() {
+            // Check whether exit survey is valid, and if so, advance to next screen
+            if (this.get(&#x27;validations.isValid&#x27;)) {
+                if (this.get(&#x27;withdrawal&#x27;)) {
+                    this.set(&#x27;showWithdrawalConfirmation&#x27;, true);
+                } else {
+                    this.send(&#x27;advanceToProgressBar&#x27;);
+                }
+            } else {
+                this.set(&#x27;showValidation&#x27;, true);
+            }
+        },
+        finish() {
+            this.send(&#x27;next&#x27;);
+        }
+    },
+    willRender() {
+        this.send(&#x27;exitFullscreen&#x27;);
+    }
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

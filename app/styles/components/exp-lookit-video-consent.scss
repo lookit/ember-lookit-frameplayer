@@ -1,0 +1,71 @@
+.exp-lookit-video-consent .exp-lookit-video-consent-prompt {
+    display: block;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.exp-lookit-video-consent .well.video-consent-prompt {
+    background-color: #d4efdf;
+}
+
+.exp-lookit-video-consent blockquote {
+    border-left: 8px solid #d4efdf;
+}
+
+.exp-lookit-video-consent .exp-consent-title {
+    font-weight: bold;
+}
+
+.exp-lookit-video-consent .video-consent-doc p:not(.exp-text-medium) {
+        font-size: 0.8em;
+}
+
+.exp-lookit-video-consent .video-consent-doc .exp-text-medium {
+        font-size: 1.1em;
+}
+
+.exp-lookit-video-consent .video-consent-direction button {
+    display: inline;
+    float: none !important;
+    font-size: .8em;
+}
+
+.exp-lookit-video-consent .video-consent-body * {
+    text-align:left;
+}
+
+.exp-lookit-video-consent .video-consent-numbered-direction {
+    font-weight: bold;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.exp-lookit-video-consent .video-consent-number {
+    color: #04631c;
+    font-size: 1.5em;
+    font-weight: bold;
+    background-color: #d4efdf;
+    border-radius:15px;
+    padding:2px 6px;
+    margin:2px;
+    border: thin solid #04631c;
+}
+
+.exp-lookit-video-consent .video-consent-direction {
+    color: #04631c;
+    font-size: 1.5em;
+    vertical-align: center;
+}
+
+.exp-lookit-video-consent .video-consent-outloud {
+    font-size: 1.2em;
+}
+
+.exp-lookit-video-consent button.right {
+    right: 1vw;
+    position: absolute;
+}
+
+.exp-lookit-video-consent #downloadbutton {
+    border: thin solid #cccccc;
+}
