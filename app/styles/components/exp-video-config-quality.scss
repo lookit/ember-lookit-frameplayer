@@ -1,35 +1,99 @@
-.exp-video-config-quality h2 {
-    float:left;
-}
+$light-focus-color: #EFFBF5;
+$medium-focus-color: #87b79f;
 
-.exp-video-config-quality #not-recording-note {
-    color:red;
-    float:right;
-}
+.exp-video-config-quality {
+    h2 {
+        float:left;
+    }
 
-.exp-video-config-quality .example {
-    display:block;
-    margin:auto;
-}
+    #not-recording-note {
+        color:red;
+        float:right;
+    }
 
-.exp-video-config-quality-summary {
-    font-weight: bold;
-}
+    img {
+        display:block;
+        margin:auto;
+        max-width: 95%;
+        max-height: 20em;
+    }
 
-.exp-video-config-quality ol {
-    list-style-position: inside;
-    padding: 0;
-}
+    .nextButton {
+        margin-bottom: 20px;
+        bottom: 0;
+    }
 
-.exp-video-config-quality ol li {
-    padding: 1%;
-    margin-left: 0;
-    margin-bottom: 4%;
-    border: medium solid #6E6E6E;
-    border-radius: 5px;
-    background-color: #EFFBF5;
-}
+    &div {
+        max-height: 100vh;
+        height:100vh;
+    }
 
-.exp-video-config-quality .nextButton {
-    margin-bottom: 20px;
+    .row.footer {
+        bottom: 0;
+    }
+
+    .list-container {
+        overflow-y: auto;
+        height: 65vh;
+    }
+
+    ol {
+        width: 95%;
+        counter-reset: instructions-counter;
+        list-style: none;
+        padding-left: 3em;
+        margin-left: 10px;
+
+        li {
+            counter-increment: instructions-counter;
+            position: relative;
+            padding: 1em;
+            margin-left: 0;
+            margin-bottom: 4%;
+            border: medium solid $medium-focus-color;
+            border-radius: 5px;
+            background-color: $light-focus-color;
+            clear: both;
+
+            &::before {
+                content: counter(instructions-counter);
+                margin-top: 0.5em;
+                color: black;
+                font-size: 1.5em;
+                font-weight: bold;
+                position: absolute;
+                --size: 2em;
+                left: calc(-1 * var(--size) - 10px);
+                line-height: var(--size);
+                width: var(--size);
+                height: var(--size);
+                top: 0;
+                transform: rotate(-10deg);
+                background: $medium-focus-color;
+                border-radius: 50%;
+                text-align: center;
+                box-shadow: 1px 1px 0 #999;
+            }
+
+        }
+    }
+
+    .warning {
+        color: red;
+        text-align: right;
+    }
+
+    .form-check .checkbox-container {
+        float: right;
+        font-size: 1.5em;
+        margin-top: 1em;
+        margin-bottom: 2em;
+
+        input {
+            zoom: 1.75;
+        }
+
+        label {
+        }
+    }
 }
