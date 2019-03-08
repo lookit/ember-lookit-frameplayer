@@ -55,7 +55,9 @@ export default ExpFrameBaseComponent.extend({
                     default: true
                 },
                 /**
-                 * Array of text blocks (paragraphs) to display.
+                 * Array of text blocks (paragraphs) to display. Rendered using
+                 * {{#crossLink "ExpTextBlock"}}{{/crossLink}}, so all parameters
+                 * of ExpTextBlock can be used.
                  *
                  * @property {Object} blocks
                  *   @param {String} title title to display
