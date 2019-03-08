@@ -28,7 +28,7 @@ const ATTRIBUTES = {
     name: 'VideoRecorder'
 };
 
-const MIN_VOLUME = 5;
+const MIN_VOLUME = 1;
 
 const FLASHVARS = {
     recorderId: '123',
