@@ -34,6 +34,9 @@ appear disabled until the participant has checked off all buttons, although if t
 it anyway they will get an informative warning and the instructions section will scroll
 to the first unchecked item.
 
+Participants can also be optionally required to create and view a short recording, e.g. to
+check their child will be audible or their child's eyes will be visible in a particular position.
+
 You can also customize any or all text and images as in the following example.
 
 ```json

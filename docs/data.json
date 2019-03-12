@@ -743,7 +743,7 @@
             "namespace": "",
             "file": "app/components/exp-video-config-quality/component.js",
             "line": 16,
-            "description": "Video configuration frame showing webcam view at right and instructions for checking\nvideo quality for preferential looking setup at left. Default content is hard-coded to\nprovide a reasonable set of instructions for preferential looking setups, so the frame can\nbe used as follows with no parameters besides `kind`:\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\"\n    }\n}\n```\n\nOptionally,\nparticipants can be required to check off each item before they can proceed to the next\nframe. If `requireItemConfirmation` is true (default), then the 'next' button will\nappear disabled until the participant has checked off all buttons, although if they click\nit anyway they will get an informative warning and the instructions section will scroll\nto the first unchecked item.\n\nYou can also customize any or all text and images as in the following example.\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\",\n        \"title\": \"Webcam setup for preferential looking\",\n        \"introText\": \"We'll be analyzing where your child chooses to look during the videos--but only if we can tell where that is! Please check each of the following to ensure we're able to use your video:\",\n        \"requireItemConfirmation\": true,\n        \"completedItemText\": \"Did it!\",\n        \"instructionBlocks\": [\n            {\n                text: '<strong>Make sure the webcam you\\'re using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!',\n                image: {\n                    src: 'assets/centering.png',\n                    alt: 'Example images of using centered external webcam on monitor or built-in webcam on laptop.'\n                }\n            },\n            {\n                text: '<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there\\'s just one monitor, you\\'re all set!)',\n                image: {\n                    src: 'assets/monitors.png',\n                    alt: 'Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.'\n                }\n            }\n        ],\n        \"requireTestVideo\": true,\n        \"showRecordMenu\": true,\n        \"recordingInstructionText\": \"You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.\"\n    }\n}\n```",
+            "description": "Video configuration frame showing webcam view at right and instructions for checking\nvideo quality for preferential looking setup at left. Default content is hard-coded to\nprovide a reasonable set of instructions for preferential looking setups, so the frame can\nbe used as follows with no parameters besides `kind`:\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\"\n    }\n}\n```\n\nOptionally,\nparticipants can be required to check off each item before they can proceed to the next\nframe. If `requireItemConfirmation` is true (default), then the 'next' button will\nappear disabled until the participant has checked off all buttons, although if they click\nit anyway they will get an informative warning and the instructions section will scroll\nto the first unchecked item.\n\nParticipants can also be optionally required to create and view a short recording, e.g. to\ncheck their child will be audible or their child's eyes will be visible in a particular position.\n\nYou can also customize any or all text and images as in the following example.\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\",\n        \"title\": \"Webcam setup for preferential looking\",\n        \"introText\": \"We'll be analyzing where your child chooses to look during the videos--but only if we can tell where that is! Please check each of the following to ensure we're able to use your video:\",\n        \"requireItemConfirmation\": true,\n        \"completedItemText\": \"Did it!\",\n        \"instructionBlocks\": [\n            {\n                text: '<strong>Make sure the webcam you\\'re using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!',\n                image: {\n                    src: 'assets/centering.png',\n                    alt: 'Example images of using centered external webcam on monitor or built-in webcam on laptop.'\n                }\n            },\n            {\n                text: '<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there\\'s just one monitor, you\\'re all set!)',\n                image: {\n                    src: 'assets/monitors.png',\n                    alt: 'Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.'\n                }\n            }\n        ],\n        \"requireTestVideo\": true,\n        \"showRecordMenu\": true,\n        \"recordingInstructionText\": \"You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.\"\n    }\n}\n```",
             "extends": "VideoRecord"
         },
         "ExpVideoConsent": {
@@ -3468,7 +3468,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 87,
+            "line": 90,
             "description": "Text to show as the introduction to the list of things to check. Can include\nHTML.",
             "itemtype": "property",
             "name": "introText",
@@ -3480,7 +3480,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 98,
+            "line": 101,
             "description": "Title to display to participant",
             "itemtype": "property",
             "name": "title",
@@ -3492,7 +3492,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 108,
+            "line": 111,
             "description": "Whether to show checkboxes under each instruction item and require\nparticipant to check them off to proceed.",
             "itemtype": "property",
             "name": "requireItemConfirmation",
@@ -3504,7 +3504,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 119,
+            "line": 122,
             "description": "Whether to require participant to make and view a test video. Ignored if\nshowRecordMenu is false.",
             "itemtype": "property",
             "name": "requireTestVideo",
@@ -3516,7 +3516,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 130,
+            "line": 133,
             "description": "Whether to display record/replay menu to participant. If false,\nrequireTestVideo value is ignored.",
             "itemtype": "property",
             "name": "showRecordMenu",
@@ -3528,7 +3528,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 141,
+            "line": 144,
             "description": "Text to show below the webcam view. For instance, you might instruct\nfamilies to make a short recording in the position they will be in for the\nexperiment, and make sure that the infant's eyes are visible or that the\nchild is audible. HTML is allowed.",
             "itemtype": "property",
             "name": "recordingInstructionText",
@@ -3540,7 +3540,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 154,
+            "line": 157,
             "description": "Text to show next to instructions checkboxes, if participant is required\nto check off each instruction (see requireItemConfirmation). Ignored if\nrequireItemConfirmation is false.",
             "itemtype": "property",
             "name": "completedItemText",
@@ -3552,7 +3552,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 166,
+            "line": 169,
             "description": "List of instruction segments to display to participant. Rendered using\n{{#crossLink \"ExpTextBlock\"}}{{/crossLink}}, so all parameters\nof ExpTextBlock can be used.",
             "itemtype": "property",
             "name": "instructionBlocks",
