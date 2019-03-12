@@ -25,6 +25,13 @@
             </p>
 
         </div>
+
+        <div class="col-md-4">
+            <button id="reloadButton" class="btn btn-default" {{action 'reloadRecorder'}}>
+                Reload webcam
+                <i class="fa fa-refresh"></i>
+            </button>
+        </div>
     </div>
 
     <div class="row">
@@ -57,8 +64,15 @@
         </div>
 
         <div class="col-md-4">
+
             <div class="row recorder-container">
                 <div id="recorder" class="col-xs-12"></div>
+            </div>
+
+            <div class="recording-instructions">
+
+
+                <p>{{exp-format recordingInstructionText}}</p>
             </div>
         </div>
 

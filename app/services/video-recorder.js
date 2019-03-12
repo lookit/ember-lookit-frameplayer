@@ -327,7 +327,8 @@ const VideoRecorder = Ember.Object.extend({
         }
     },
 
-    _btPlayPressed(recorderId) { // could also use onPlaybackComplete
+    _btPlayPressed(recorderId) {  // eslint-disable-line no-unused-vars
+        // could also use onPlaybackComplete
         this.set('_hasPlayedBack', true);
     },
 

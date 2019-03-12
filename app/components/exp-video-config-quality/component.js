@@ -3,7 +3,6 @@ import layout from './template';
 import Ember from 'ember';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 import VideoRecord from '../../mixins/video-record';
-import { observer } from '@ember/object';
 
 let {
     $
@@ -113,6 +112,29 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                     type: 'boolean',
                     description: 'Whether to show checkboxes under each instruction item',
                     default: true
+                },
+                /**
+                Whether to require participant to make and view a test video
+                @property {Boolean} requireTestVideo
+                @default true
+                */
+                requireTestVideo: {
+                    type: 'boolean',
+                    description: 'Whether to require participant to record and view a test video',
+                    default: true
+                },
+                /**
+                Text to show below the webcam view. For instance, you might instruct
+                families to make a short recording in the position they will be in for the
+                experiment, and make sure that the infant's eyes are visible or that the
+                child is audible. HTML is allowed.
+                @property {String} recordingInstructionText
+                @default "Did it!"
+                */
+                recordingInstructionText: {
+                    type: 'string',
+                    description: 'Text to show below the webcam view',
+                    default: 'You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.'
                 },
                 /**
                 Text to show next to instructions checkboxes, if participant is required
@@ -227,7 +249,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         }
 
         // See if recording has been made and viewed (if required)
-        let recordCheck = this.get('recorder.hasCreatedRecording') && this.get('recorder.hasPlayedBack');
+        let recordCheck = !this.get('requireTestVideo') || (this.get('recorder.hasCreatedRecording') && this.get('recorder.hasPlayedBack'));
         if (recordCheck) {
             this.set('showRecorderWarning', false);
         }
@@ -284,11 +306,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         },
 
         finish() {
-            var _this = this;
 
             this.checkIfDone();
 
-            // If needed, display warning about checking all boxes and scroll to first unchecked
+            // If needed, display warning about checking all boxes and scroll to first unchecked.
+            // (note - removal of warnings done in checkIfDone)
             if (this.get('requireItemConfirmation')) {
                 let firstUnchecked = this.uncheckedBoxes();
                 if (firstUnchecked != -1) {
@@ -298,16 +320,20 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             }
 
             // If needed, display warning about making a recording
-            if (!this.get('recorder.hasCreatedRecording') || !this.get('recorder.hasPlayedBack')) {
+            if (this.get('requireTestVideo') && (!this.get('recorder.hasCreatedRecording') || !this.get('recorder.hasPlayedBack'))) {
                 this.set('showRecorderWarning', true);
-            } else {
-                this.set('showRecorderWarning', false);
             }
 
             // Actually proceed if ready
             if (this.get('readyToProceed')) {
                 this.send('next');
             }
+        },
+
+        reloadRecorder() {
+            this.set('showWarning', false);
+            this.destroyRecorder();
+            this.setupRecorder(this.$(this.get('recorderElement')), false);
         },
     }
 });
