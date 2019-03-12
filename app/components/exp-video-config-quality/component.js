@@ -59,7 +59,10 @@ You can also customize any or all text and images as in the following example.
                     alt: 'Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.'
                 }
             }
-        ]
+        ],
+        "requireTestVideo": true,
+        "showRecordMenu": true,
+        "recordingInstructionText": "You should be able to see your camera view above. You can create and view a short recording to see how your setup looks."
     }
 }
 ```
@@ -114,13 +117,25 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                     default: true
                 },
                 /**
-                Whether to require participant to make and view a test video
+                Whether to require participant to make and view a test video. Ignored if
+                showRecordMenu is false.
                 @property {Boolean} requireTestVideo
                 @default true
                 */
                 requireTestVideo: {
                     type: 'boolean',
                     description: 'Whether to require participant to record and view a test video',
+                    default: true
+                },
+                /**
+                Whether to display record/replay menu to participant. If false,
+                requireTestVideo value is ignored.
+                @property {Boolean} showRecordMenu
+                @default true
+                */
+                showRecordMenu: {
+                    type: 'boolean',
+                    description: 'Whether to display record/replay menu to participant',
                     default: true
                 },
                 /**
@@ -229,6 +244,16 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     didInsertElement() {
         this._super(...arguments);
         this.checkIfDone();
+
+        if (!this.get('showRecordMenu')) {
+            this.set('requireTestVideo', false);
+            $('body').append($("<style>")
+                .prop("type", "text/css")
+                .html("\
+                    .exp-video-config-quality #pipeMenu {\
+                        display: none !important;\
+                    }"));
+        }
     },
 
     showCheckboxWarning: false,
