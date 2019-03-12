@@ -69,7 +69,13 @@
         <div class="col-md-12">
             {{#if showCheckboxWarning}}
                 <p class="warning">
-                    Please check off the "{{completedItemText}}" box under each instruction to proceed.
+                    Please check off the "{{completedItemText}}" box under each instruction before continuing.
+                </p>
+            {{/if}}
+
+            {{#if showRecorderWarning}}
+                <p class="warning">
+                    Please try recording and viewing a video before continuing.
                 </p>
             {{/if}}
             <button id="nextbutton" class="btn btn-success pull-right nextButton {{if readyToProceed "" "disabled"}}" {{ action 'finish' }} > Next</button>

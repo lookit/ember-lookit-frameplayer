@@ -20,7 +20,8 @@ const HOOKS = ['onRecordingStarted',
                 'onUploadDone',
                 'userHasCamMic',
                 'onConnectionStatus',
-                'onMicActivityLevel'];
+                'onMicActivityLevel',
+                'btPlayPressed'];
 
 const ATTRIBUTES = {
     align: 'middle',
@@ -69,6 +70,8 @@ const VideoRecorder = Ember.Object.extend({
     hasWebCam: false,
     recording: Ember.computed.alias('_recording').readOnly(),
     flashReady: Ember.computed.alias('_recorderReady').readOnly(),
+    hasCreatedRecording: Ember.computed.alias('_hasCreatedRecording').readOnly(),
+    hasPlayedBack: Ember.computed.alias('_hasPlayedBack').readOnly(),
     connected: false,
     uploadTimeout: null, // timer counting from attempt to stop until we should just
     //resolve the stopPromise
@@ -78,6 +81,8 @@ const VideoRecorder = Ember.Object.extend({
     _camAccess: false,
     _recording: false,
     _recorderReady: false,
+    _hasCreatedRecording: false,
+    _hasPlayedBack: false,
 
     _recordPromise: null,
     _stopPromise: null,
@@ -284,6 +289,7 @@ const VideoRecorder = Ember.Object.extend({
     // Begin Flash hooks
     _onRecordingStarted(recorderId) { // eslint-disable-line no-unused-vars
         this.set('_recording', true);
+        this.set('_hasCreatedRecording', true);
         this.set('pipeVideoName', this.get('recorder').getStreamName());
         if (this.get('_recordPromise')) {
             this.get('_recordPromise').resolve(this);
@@ -319,6 +325,10 @@ const VideoRecorder = Ember.Object.extend({
         } else {
             this.set('connected', false);
         }
+    },
+
+    _btPlayPressed(recorderId) { // could also use onPlaybackComplete
+        this.set('_hasPlayedBack', true);
     },
 
     _onMicActivityLevel(recorderId, currentActivityLevel) { // eslint-disable-line no-unused-vars

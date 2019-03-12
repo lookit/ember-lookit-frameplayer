@@ -3,6 +3,7 @@ import layout from './template';
 import Ember from 'ember';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 import VideoRecord from '../../mixins/video-record';
+import { observer } from '@ember/object';
 
 let {
     $
@@ -205,26 +206,49 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     didInsertElement() {
         this._super(...arguments);
-        if (this.get('requireItemConfirmation')) {
-            this.set('readyToProceed', false);
-        }
-
-        $('#pipeCounter').hide();
-        $('#pipeCounter').change(function() {
-            let count = $('#pipeCounter').html();
-            if (count.indexOf('/') == -1) {
-                console.log('no slash');
-                $('#pipeCounter').hide();
-            } else {
-                console.log('slash');
-                $('#pipeCounter').show();
-            }
-
-        });
+        this.checkIfDone();
     },
 
     showCheckboxWarning: false,
-    readyToProceed: true,
+    showRecorderWarning: false,
+
+    completedBoxes: false,
+    readyToProceed: false,
+
+    checkIfDone() {
+        // Checks if conditions are met to move on from this frame, setting 'readyToProceed'
+        // accordingly. REMOVES warnings if appropriate, but does not add them (so that
+        // warnings are only shown if the user tries to proceed too soon, not immediately)
+
+        // See if checkboxes are all checked (if required)
+        let boxCheck = !this.get('requireItemConfirmation') || this.get('completedBoxes');
+        if (boxCheck) {
+            this.set('showCheckboxWarning', false);
+        }
+
+        // See if recording has been made and viewed (if required)
+        let recordCheck = this.get('recorder.hasCreatedRecording') && this.get('recorder.hasPlayedBack');
+        if (recordCheck) {
+            this.set('showRecorderWarning', false);
+        }
+
+        // The Pipe menu takes a little while to get set up, so if we try to bind an
+        // event to it e.g. upon didRender, it doesn't end up bound. Additionally, the
+        // #pipeRec and #pipePlay buttons have their behavior OVERWRITTEN by Pipe,
+        // e.g. pipePlay's handler changes after there's a recording available, so
+        // we don't want to bind to those. But adding the handler here means that at
+        // least once someone tries to proceed by clicking 'next', they'll now get an
+        // update on when the condition is met - and other actions like clicking checkboxes
+        // will also trigger this so we can ensure that the 'next' button doesn't look
+        // disabled once the user can proceed.
+        var _this = this;
+        $('#pipeMenu').off('click');
+        $('#pipeMenu').click(function() {
+            _this.checkIfDone();
+        });
+
+        this.set('readyToProceed', boxCheck && recordCheck);
+    },
 
     uncheckedBoxes() {
         if (!this.get('requireItemConfirmation')) {
@@ -234,11 +258,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         // returns index of first unchecked box, or -1 if all boxes are checked
         for (var i = 0; i < this.get('instructionBlocks').length; i++) {
             if (!$('#checkbox-' + i).prop('checked')) {
-                this.set('readyToProceed', false);
+                this.set('completedBoxes', false);
                 return i;
             }
         }
-        this.set('readyToProceed', true);
+        this.set('completedBoxes', true);
         return -1;
     },
 
@@ -251,11 +275,19 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 }
             }
             if (this.uncheckedBoxes() == -1) {
-                this.set('showCheckboxWarning', false);
+                this.set('completedBoxes', true);
+                this.checkIfDone();
+            } else {
+                this.set('completedBoxes', false);
+                this.checkIfDone();
             }
         },
 
         finish() {
+            var _this = this;
+
+            this.checkIfDone();
+
             // If needed, display warning about checking all boxes and scroll to first unchecked
             if (this.get('requireItemConfirmation')) {
                 let firstUnchecked = this.uncheckedBoxes();
@@ -263,6 +295,13 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                     this.set('showCheckboxWarning', true);
                     $('#instructions-' + firstUnchecked)[0].scrollIntoView({behavior: 'smooth', block: 'start'});
                 }
+            }
+
+            // If needed, display warning about making a recording
+            if (!this.get('recorder.hasCreatedRecording') || !this.get('recorder.hasPlayedBack')) {
+                this.set('showRecorderWarning', true);
+            } else {
+                this.set('showRecorderWarning', false);
             }
 
             // Actually proceed if ready
