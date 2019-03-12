@@ -96,7 +96,7 @@ const VideoRecorder = Ember.Object.extend({
      * @return {Promise} Indicate whether widget was successfully installed and started
      */
 
-    install({record: record} = {record: false}, videoFilename = '', pipeKey = '', pipeEnv = 1) {
+    install({record: record} = {record: false}, videoFilename = '', pipeKey = '', pipeEnv = 1, maxRecordingTime = 100000000) {
 
         let origDivId = this.get('divId');
 
@@ -133,6 +133,7 @@ const VideoRecorder = Ember.Object.extend({
             fv.payload = videoFilename;
             fv.accountHash = pipeKey;
             fv.eid = pipeEnv;
+            fv.mrt = maxRecordingTime;
             window.flashvars = fv;
 
             // TODO: can we put this elsewhere instead of loading here?

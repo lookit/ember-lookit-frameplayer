@@ -74,6 +74,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     layout,
 
     type: 'exp-video-config-quality',
+    maxRecordingLength: 60,
     meta: {
         name: 'Video Recorder Configuration for preferential looking',
         description: 'Video configuration frame showing webcam view at right and instructions for checking video quality for preferential looking setup at left, with pictures.',
@@ -207,6 +208,19 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         if (this.get('requireItemConfirmation')) {
             this.set('readyToProceed', false);
         }
+
+        $('#pipeCounter').hide();
+        $('#pipeCounter').change(function() {
+            let count = $('#pipeCounter').html();
+            if (count.indexOf('/') == -1) {
+                console.log('no slash');
+                $('#pipeCounter').hide();
+            } else {
+                console.log('slash');
+                $('#pipeCounter').show();
+            }
+
+        });
     },
 
     showCheckboxWarning: false,
