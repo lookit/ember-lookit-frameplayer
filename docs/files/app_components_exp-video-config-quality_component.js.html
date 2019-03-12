@@ -168,7 +168,10 @@ You can also customize any or all text and images as in the following example.
                     alt: &#x27;Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.&#x27;
                 }
             }
-        ]
+        ],
+        &quot;requireTestVideo&quot;: true,
+        &quot;showRecordMenu&quot;: true,
+        &quot;recordingInstructionText&quot;: &quot;You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.&quot;
     }
 }
 &#x60;&#x60;&#x60;
@@ -183,6 +186,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     layout,
 
     type: &#x27;exp-video-config-quality&#x27;,
+    maxRecordingLength: 60,
     meta: {
         name: &#x27;Video Recorder Configuration for preferential looking&#x27;,
         description: &#x27;Video configuration frame showing webcam view at right and instructions for checking video quality for preferential looking setup at left, with pictures.&#x27;,
@@ -220,6 +224,41 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                     type: &#x27;boolean&#x27;,
                     description: &#x27;Whether to show checkboxes under each instruction item&#x27;,
                     default: true
+                },
+                /**
+                Whether to require participant to make and view a test video. Ignored if
+                showRecordMenu is false.
+                @property {Boolean} requireTestVideo
+                @default true
+                */
+                requireTestVideo: {
+                    type: &#x27;boolean&#x27;,
+                    description: &#x27;Whether to require participant to record and view a test video&#x27;,
+                    default: true
+                },
+                /**
+                Whether to display record/replay menu to participant. If false,
+                requireTestVideo value is ignored.
+                @property {Boolean} showRecordMenu
+                @default true
+                */
+                showRecordMenu: {
+                    type: &#x27;boolean&#x27;,
+                    description: &#x27;Whether to display record/replay menu to participant&#x27;,
+                    default: true
+                },
+                /**
+                Text to show below the webcam view. For instance, you might instruct
+                families to make a short recording in the position they will be in for the
+                experiment, and make sure that the infant&#x27;s eyes are visible or that the
+                child is audible. HTML is allowed.
+                @property {String} recordingInstructionText
+                @default &quot;Did it!&quot;
+                */
+                recordingInstructionText: {
+                    type: &#x27;string&#x27;,
+                    description: &#x27;Text to show below the webcam view&#x27;,
+                    default: &#x27;You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.&#x27;
                 },
                 /**
                 Text to show next to instructions checkboxes, if participant is required
@@ -313,13 +352,59 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     didInsertElement() {
         this._super(...arguments);
-        if (this.get(&#x27;requireItemConfirmation&#x27;)) {
-            this.set(&#x27;readyToProceed&#x27;, false);
+        this.checkIfDone();
+
+        if (!this.get(&#x27;showRecordMenu&#x27;)) {
+            this.set(&#x27;requireTestVideo&#x27;, false);
+            $(&#x27;body&#x27;).append($(&quot;&lt;style&gt;&quot;)
+                .prop(&quot;type&quot;, &quot;text/css&quot;)
+                .html(&quot;\
+                    .exp-video-config-quality #pipeMenu {\
+                        display: none !important;\
+                    }&quot;));
         }
     },
 
     showCheckboxWarning: false,
-    readyToProceed: true,
+    showRecorderWarning: false,
+
+    completedBoxes: false,
+    readyToProceed: false,
+
+    checkIfDone() {
+        // Checks if conditions are met to move on from this frame, setting &#x27;readyToProceed&#x27;
+        // accordingly. REMOVES warnings if appropriate, but does not add them (so that
+        // warnings are only shown if the user tries to proceed too soon, not immediately)
+
+        // See if checkboxes are all checked (if required)
+        let boxCheck = !this.get(&#x27;requireItemConfirmation&#x27;) || this.get(&#x27;completedBoxes&#x27;);
+        if (boxCheck) {
+            this.set(&#x27;showCheckboxWarning&#x27;, false);
+        }
+
+        // See if recording has been made and viewed (if required)
+        let recordCheck = !this.get(&#x27;requireTestVideo&#x27;) || (this.get(&#x27;recorder.hasCreatedRecording&#x27;) &amp;&amp; this.get(&#x27;recorder.hasPlayedBack&#x27;));
+        if (recordCheck) {
+            this.set(&#x27;showRecorderWarning&#x27;, false);
+        }
+
+        // The Pipe menu takes a little while to get set up, so if we try to bind an
+        // event to it e.g. upon didRender, it doesn&#x27;t end up bound. Additionally, the
+        // #pipeRec and #pipePlay buttons have their behavior OVERWRITTEN by Pipe,
+        // e.g. pipePlay&#x27;s handler changes after there&#x27;s a recording available, so
+        // we don&#x27;t want to bind to those. But adding the handler here means that at
+        // least once someone tries to proceed by clicking &#x27;next&#x27;, they&#x27;ll now get an
+        // update on when the condition is met - and other actions like clicking checkboxes
+        // will also trigger this so we can ensure that the &#x27;next&#x27; button doesn&#x27;t look
+        // disabled once the user can proceed.
+        var _this = this;
+        $(&#x27;#pipeMenu&#x27;).off(&#x27;click&#x27;);
+        $(&#x27;#pipeMenu&#x27;).click(function() {
+            _this.checkIfDone();
+        });
+
+        this.set(&#x27;readyToProceed&#x27;, boxCheck &amp;&amp; recordCheck);
+    },
 
     uncheckedBoxes() {
         if (!this.get(&#x27;requireItemConfirmation&#x27;)) {
@@ -329,11 +414,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         // returns index of first unchecked box, or -1 if all boxes are checked
         for (var i = 0; i &lt; this.get(&#x27;instructionBlocks&#x27;).length; i++) {
             if (!$(&#x27;#checkbox-&#x27; + i).prop(&#x27;checked&#x27;)) {
-                this.set(&#x27;readyToProceed&#x27;, false);
+                this.set(&#x27;completedBoxes&#x27;, false);
                 return i;
             }
         }
-        this.set(&#x27;readyToProceed&#x27;, true);
+        this.set(&#x27;completedBoxes&#x27;, true);
         return -1;
     },
 
@@ -346,12 +431,20 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 }
             }
             if (this.uncheckedBoxes() == -1) {
-                this.set(&#x27;showCheckboxWarning&#x27;, false);
+                this.set(&#x27;completedBoxes&#x27;, true);
+                this.checkIfDone();
+            } else {
+                this.set(&#x27;completedBoxes&#x27;, false);
+                this.checkIfDone();
             }
         },
 
         finish() {
-            // If needed, display warning about checking all boxes and scroll to first unchecked
+
+            this.checkIfDone();
+
+            // If needed, display warning about checking all boxes and scroll to first unchecked.
+            // (note - removal of warnings done in checkIfDone)
             if (this.get(&#x27;requireItemConfirmation&#x27;)) {
                 let firstUnchecked = this.uncheckedBoxes();
                 if (firstUnchecked != -1) {
@@ -360,10 +453,21 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 }
             }
 
+            // If needed, display warning about making a recording
+            if (this.get(&#x27;requireTestVideo&#x27;) &amp;&amp; (!this.get(&#x27;recorder.hasCreatedRecording&#x27;) || !this.get(&#x27;recorder.hasPlayedBack&#x27;))) {
+                this.set(&#x27;showRecorderWarning&#x27;, true);
+            }
+
             // Actually proceed if ready
             if (this.get(&#x27;readyToProceed&#x27;)) {
                 this.send(&#x27;next&#x27;);
             }
+        },
+
+        reloadRecorder() {
+            this.set(&#x27;showWarning&#x27;, false);
+            this.destroyRecorder();
+            this.setupRecorder(this.$(this.get(&#x27;recorderElement&#x27;)), false);
         },
     }
 });

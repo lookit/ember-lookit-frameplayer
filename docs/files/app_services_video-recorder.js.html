@@ -129,7 +129,8 @@ const HOOKS = [&#x27;onRecordingStarted&#x27;,
                 &#x27;onUploadDone&#x27;,
                 &#x27;userHasCamMic&#x27;,
                 &#x27;onConnectionStatus&#x27;,
-                &#x27;onMicActivityLevel&#x27;];
+                &#x27;onMicActivityLevel&#x27;,
+                &#x27;btPlayPressed&#x27;];
 
 const ATTRIBUTES = {
     align: &#x27;middle&#x27;,
@@ -178,6 +179,8 @@ const VideoRecorder = Ember.Object.extend({
     hasWebCam: false,
     recording: Ember.computed.alias(&#x27;_recording&#x27;).readOnly(),
     flashReady: Ember.computed.alias(&#x27;_recorderReady&#x27;).readOnly(),
+    hasCreatedRecording: Ember.computed.alias(&#x27;_hasCreatedRecording&#x27;).readOnly(),
+    hasPlayedBack: Ember.computed.alias(&#x27;_hasPlayedBack&#x27;).readOnly(),
     connected: false,
     uploadTimeout: null, // timer counting from attempt to stop until we should just
     //resolve the stopPromise
@@ -187,6 +190,8 @@ const VideoRecorder = Ember.Object.extend({
     _camAccess: false,
     _recording: false,
     _recorderReady: false,
+    _hasCreatedRecording: false,
+    _hasPlayedBack: false,
 
     _recordPromise: null,
     _stopPromise: null,
@@ -205,7 +210,7 @@ const VideoRecorder = Ember.Object.extend({
      * @return {Promise} Indicate whether widget was successfully installed and started
      */
 
-    install({record: record} = {record: false}, videoFilename = &#x27;&#x27;, pipeKey = &#x27;&#x27;, pipeEnv = 1) {
+    install({record: record} = {record: false}, videoFilename = &#x27;&#x27;, pipeKey = &#x27;&#x27;, pipeEnv = 1, maxRecordingTime = 100000000) {
 
         let origDivId = this.get(&#x27;divId&#x27;);
 
@@ -242,6 +247,7 @@ const VideoRecorder = Ember.Object.extend({
             fv.payload = videoFilename;
             fv.accountHash = pipeKey;
             fv.eid = pipeEnv;
+            fv.mrt = maxRecordingTime;
             window.flashvars = fv;
 
             // TODO: can we put this elsewhere instead of loading here?
@@ -392,6 +398,7 @@ const VideoRecorder = Ember.Object.extend({
     // Begin Flash hooks
     _onRecordingStarted(recorderId) { // eslint-disable-line no-unused-vars
         this.set(&#x27;_recording&#x27;, true);
+        this.set(&#x27;_hasCreatedRecording&#x27;, true);
         this.set(&#x27;pipeVideoName&#x27;, this.get(&#x27;recorder&#x27;).getStreamName());
         if (this.get(&#x27;_recordPromise&#x27;)) {
             this.get(&#x27;_recordPromise&#x27;).resolve(this);
@@ -427,6 +434,11 @@ const VideoRecorder = Ember.Object.extend({
         } else {
             this.set(&#x27;connected&#x27;, false);
         }
+    },
+
+    _btPlayPressed(recorderId) {  // eslint-disable-line no-unused-vars
+        // could also use onPlaybackComplete
+        this.set(&#x27;_hasPlayedBack&#x27;, true);
     },
 
     _onMicActivityLevel(recorderId, currentActivityLevel) { // eslint-disable-line no-unused-vars

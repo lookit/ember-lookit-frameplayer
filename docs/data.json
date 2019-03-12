@@ -313,7 +313,7 @@
             "fors": {},
             "namespaces": {},
             "file": "app/services/video-recorder.js",
-            "line": 331
+            "line": 343
         },
         "frames": {
             "name": "frames",
@@ -415,7 +415,7 @@
             "module": "exp-player",
             "namespace": "",
             "file": "app/services/video-recorder.js",
-            "line": 331,
+            "line": 343,
             "description": "An instance of a video recorder tied to or used by one specific page. A given experiment may use more than one\n  video recorder depending on the number of video capture frames."
         }
     },
@@ -743,7 +743,7 @@
             "namespace": "",
             "file": "app/components/exp-video-config-quality/component.js",
             "line": 16,
-            "description": "Video configuration frame showing webcam view at right and instructions for checking\nvideo quality for preferential looking setup at left. Default content is hard-coded to\nprovide a reasonable set of instructions for preferential looking setups, so the frame can\nbe used as follows with no parameters besides `kind`:\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\"\n    }\n}\n```\n\nOptionally,\nparticipants can be required to check off each item before they can proceed to the next\nframe. If `requireItemConfirmation` is true (default), then the 'next' button will\nappear disabled until the participant has checked off all buttons, although if they click\nit anyway they will get an informative warning and the instructions section will scroll\nto the first unchecked item.\n\nYou can also customize any or all text and images as in the following example.\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\",\n        \"title\": \"Webcam setup for preferential looking\",\n        \"introText\": \"We'll be analyzing where your child chooses to look during the videos--but only if we can tell where that is! Please check each of the following to ensure we're able to use your video:\",\n        \"requireItemConfirmation\": true,\n        \"completedItemText\": \"Did it!\",\n        \"instructionBlocks\": [\n            {\n                text: '<strong>Make sure the webcam you\\'re using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!',\n                image: {\n                    src: 'assets/centering.png',\n                    alt: 'Example images of using centered external webcam on monitor or built-in webcam on laptop.'\n                }\n            },\n            {\n                text: '<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there\\'s just one monitor, you\\'re all set!)',\n                image: {\n                    src: 'assets/monitors.png',\n                    alt: 'Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.'\n                }\n            }\n        ]\n    }\n}\n```",
+            "description": "Video configuration frame showing webcam view at right and instructions for checking\nvideo quality for preferential looking setup at left. Default content is hard-coded to\nprovide a reasonable set of instructions for preferential looking setups, so the frame can\nbe used as follows with no parameters besides `kind`:\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\"\n    }\n}\n```\n\nOptionally,\nparticipants can be required to check off each item before they can proceed to the next\nframe. If `requireItemConfirmation` is true (default), then the 'next' button will\nappear disabled until the participant has checked off all buttons, although if they click\nit anyway they will get an informative warning and the instructions section will scroll\nto the first unchecked item.\n\nYou can also customize any or all text and images as in the following example.\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\",\n        \"title\": \"Webcam setup for preferential looking\",\n        \"introText\": \"We'll be analyzing where your child chooses to look during the videos--but only if we can tell where that is! Please check each of the following to ensure we're able to use your video:\",\n        \"requireItemConfirmation\": true,\n        \"completedItemText\": \"Did it!\",\n        \"instructionBlocks\": [\n            {\n                text: '<strong>Make sure the webcam you\\'re using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!',\n                image: {\n                    src: 'assets/centering.png',\n                    alt: 'Example images of using centered external webcam on monitor or built-in webcam on laptop.'\n                }\n            },\n            {\n                text: '<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there\\'s just one monitor, you\\'re all set!)',\n                image: {\n                    src: 'assets/monitors.png',\n                    alt: 'Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.'\n                }\n            }\n        ],\n        \"requireTestVideo\": true,\n        \"showRecordMenu\": true,\n        \"recordingInstructionText\": \"You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.\"\n    }\n}\n```",
             "extends": "VideoRecord"
         },
         "ExpVideoConsent": {
@@ -907,7 +907,7 @@
             "submodule": "services",
             "namespace": "",
             "file": "app/services/video-recorder.js",
-            "line": 47,
+            "line": 48,
             "description": "An instance of a video recorder tied to or used by one specific page. A given experiment may use more than one\n  video recorder depending on the number of video capture frames."
         },
         "videoRecorder": {
@@ -922,7 +922,7 @@
             "submodule": "services",
             "namespace": "",
             "file": "app/services/video-recorder.js",
-            "line": 331,
+            "line": 343,
             "description": "A service designed to facilitate video recording by providing helper methods and managing multiple recorder objects\n Using a persistent service is intended to ensure we destroy recorder elements when the video is done uploading,\n rather than just when the user exits the frame"
         }
     },
@@ -3468,7 +3468,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 83,
+            "line": 87,
             "description": "Text to show as the introduction to the list of things to check. Can include\nHTML.",
             "itemtype": "property",
             "name": "introText",
@@ -3480,7 +3480,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 94,
+            "line": 98,
             "description": "Title to display to participant",
             "itemtype": "property",
             "name": "title",
@@ -3492,7 +3492,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 104,
+            "line": 108,
             "description": "Whether to show checkboxes under each instruction item and require\nparticipant to check them off to proceed.",
             "itemtype": "property",
             "name": "requireItemConfirmation",
@@ -3504,7 +3504,43 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 115,
+            "line": 119,
+            "description": "Whether to require participant to make and view a test video. Ignored if\nshowRecordMenu is false.",
+            "itemtype": "property",
+            "name": "requireTestVideo",
+            "type": "Boolean",
+            "default": "true",
+            "class": "ExpVideoConfigQuality",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-video-config-quality/component.js",
+            "line": 130,
+            "description": "Whether to display record/replay menu to participant. If false,\nrequireTestVideo value is ignored.",
+            "itemtype": "property",
+            "name": "showRecordMenu",
+            "type": "Boolean",
+            "default": "true",
+            "class": "ExpVideoConfigQuality",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-video-config-quality/component.js",
+            "line": 141,
+            "description": "Text to show below the webcam view. For instance, you might instruct\nfamilies to make a short recording in the position they will be in for the\nexperiment, and make sure that the infant's eyes are visible or that the\nchild is audible. HTML is allowed.",
+            "itemtype": "property",
+            "name": "recordingInstructionText",
+            "type": "String",
+            "default": "\"Did it!\"",
+            "class": "ExpVideoConfigQuality",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-video-config-quality/component.js",
+            "line": 154,
             "description": "Text to show next to instructions checkboxes, if participant is required\nto check off each instruction (see requireItemConfirmation). Ignored if\nrequireItemConfirmation is false.",
             "itemtype": "property",
             "name": "completedItemText",
@@ -3516,7 +3552,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 127,
+            "line": 166,
             "description": "List of instruction segments to display to participant. Rendered using\n{{#crossLink \"ExpTextBlock\"}}{{/crossLink}}, so all parameters\nof ExpTextBlock can be used.",
             "itemtype": "property",
             "name": "instructionBlocks",
@@ -3944,7 +3980,19 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 124,
+            "line": 125,
+            "description": "Maximum recording length in seconds. Can be overridden by consuming frame.",
+            "itemtype": "property",
+            "name": "maxRecordingLength",
+            "type": "Number",
+            "default": "100000000",
+            "class": "VideoRecordMixin",
+            "module": "exp-player",
+            "submodule": "mixins"
+        },
+        {
+            "file": "app/mixins/video-record.js",
+            "line": 132,
             "description": "Whether to use the camera in this frame. Consuming frame should set this property\nto override if needed.",
             "itemtype": "property",
             "name": "[doUseCamera=true]",
@@ -3955,7 +4003,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 131,
+            "line": 139,
             "description": "Whether to start recording ASAP (only applies if doUseCamera). Consuming frame\nshould set to override if needed.",
             "itemtype": "property",
             "name": "[startRecordingAutomatically=false]",
@@ -3966,7 +4014,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 138,
+            "line": 146,
             "description": "A video ID to use for the current recording. Format is\n`videoStream_<experimentId>_<frameId>_<sessionId>_timestampMS_RRR`\nwhere RRR are random numeric digits.",
             "itemtype": "property",
             "name": "videoId",
@@ -3977,7 +4025,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 158,
+            "line": 166,
             "description": "Extend any base time event capture with information about the recorded video",
             "itemtype": "method",
             "name": "makeTimeEvent",
@@ -4001,7 +4049,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 177,
+            "line": 185,
             "description": "Set up a video recorder instance",
             "itemtype": "method",
             "name": "setupRecorder",
@@ -4032,7 +4080,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 209,
+            "line": 217,
             "description": "Pause the recorder (and capture timing events). For webRTC recorder, this is\njust a placeholder and doesn't actually pause the recording. If webRTC used,\nincludes extra data actuallyPaused: false. This is for backwards compatibility\nwith frames that pause/resume recording, and should not be used going forward -\ninstead stop/start and make separate clips if needed.",
             "itemtype": "method",
             "name": "pauseRecorder",
@@ -4050,7 +4098,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 229,
+            "line": 237,
             "description": "Resume a paused recording. For webRTC recorder, this is just a placeholder and\ndoesn't actually pause the recording. If webRTC used, includes extra data\nwasActuallyPaused: false. This is for backwards compatibility\nwith frames that pause/resume recording, and should not be used going forward -\ninstead stop/start and make separate clips if needed.",
             "itemtype": "method",
             "name": "resumeRecorder",
@@ -4060,7 +4108,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 247,
+            "line": 255,
             "description": "Start recording",
             "itemtype": "method",
             "name": "startRecorder",
@@ -4073,7 +4121,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 268,
+            "line": 276,
             "description": "Stop the recording",
             "itemtype": "method",
             "name": "stopRecorder",
@@ -4086,7 +4134,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 283,
+            "line": 291,
             "description": "Destroy recorder and stop accessing webcam",
             "itemtype": "method",
             "name": "destroyRecorder",
@@ -4096,7 +4144,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 319,
+            "line": 327,
             "description": "When video recorder has been installed",
             "itemtype": "event",
             "name": "recorderReady",
@@ -4106,7 +4154,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 332,
+            "line": 340,
             "description": "Observer that starts recording once recorder is ready. Override to do additional\nstuff at this point!",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -4116,7 +4164,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 348,
+            "line": 356,
             "description": "Hide the recorder from display. Useful if you would like to keep recording without extra UI elements to\n  distract the user.",
             "itemtype": "method",
             "name": "hideRecorder",
@@ -4126,7 +4174,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 357,
+            "line": 365,
             "description": "Show the recorder to the user. Useful if you want to temporarily show a hidden recorder- eg to let the user fix\n  a problem with video capture settings",
             "itemtype": "method",
             "name": "showRecorder",
@@ -4272,7 +4320,7 @@
         },
         {
             "file": "app/services/video-recorder.js",
-            "line": 91,
+            "line": 96,
             "description": "Install a recorder onto the page and optionally begin recording immediately.",
             "itemtype": "method",
             "name": "install",
@@ -4292,7 +4340,7 @@
         },
         {
             "file": "app/services/video-recorder.js",
-            "line": 151,
+            "line": 157,
             "description": "Start recording a video, and allow the state of the recording to be accessed for later usage",
             "itemtype": "method",
             "name": "record",
@@ -4306,7 +4354,7 @@
         },
         {
             "file": "app/services/video-recorder.js",
-            "line": 186,
+            "line": 192,
             "description": "Get a timestamp based on the current recording position. Useful to ensure that tracked timing events\n line up with the video.",
             "itemtype": "method",
             "name": "getTime",
@@ -4320,7 +4368,7 @@
         },
         {
             "file": "app/services/video-recorder.js",
-            "line": 200,
+            "line": 206,
             "description": "Stop recording and save the video to the server",
             "itemtype": "method",
             "name": "stop",
@@ -4330,7 +4378,7 @@
         },
         {
             "file": "app/services/video-recorder.js",
-            "line": 247,
+            "line": 253,
             "description": "Destroy video recorder and remove from list of recorders. Use this to remove\nthe video recorder when destroying a frame, if not triggered via upload.",
             "itemtype": "method",
             "name": "destroy",
@@ -4340,7 +4388,7 @@
         },
         {
             "file": "app/services/video-recorder.js",
-            "line": 257,
+            "line": 263,
             "description": "Uninstall the video recorder from the page",
             "itemtype": "method",
             "name": "uninstall",

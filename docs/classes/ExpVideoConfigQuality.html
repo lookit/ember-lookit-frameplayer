@@ -165,7 +165,10 @@ to the first unchecked item.</p>
                     alt: 'Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.'
                 }
             }
-        ]
+        ],
+        &quot;requireTestVideo&quot;: true,
+        &quot;showRecordMenu&quot;: true,
+        &quot;recordingInstructionText&quot;: &quot;You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.&quot;
     }
 }
 </code></pre>
@@ -202,7 +205,19 @@ to the first unchecked item.</p>
 
                             </li>
                             <li class="index-item property">
+                                <a href="#property_recordingInstructionText">recordingInstructionText</a>
+
+                            </li>
+                            <li class="index-item property">
                                 <a href="#property_requireItemConfirmation">requireItemConfirmation</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_requireTestVideo">requireTestVideo</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_showRecordMenu">showRecordMenu</a>
 
                             </li>
                             <li class="index-item property">
@@ -230,7 +245,7 @@ to the first unchecked item.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-config-quality_component.js.html#l115"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:115</code></a>
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l154"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:154</code></a>
         </p>
 
 
@@ -258,7 +273,7 @@ requireItemConfirmation is false.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-config-quality_component.js.html#l127"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:127</code></a>
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l166"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:166</code></a>
         </p>
 
 
@@ -310,7 +325,7 @@ of ExpTextBlock can be used.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-config-quality_component.js.html#l83"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:83</code></a>
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l87"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:87</code></a>
         </p>
 
 
@@ -326,6 +341,35 @@ HTML.</p>
 
 
 </div>
+<div id="property_recordingInstructionText" class="property item">
+    <h3 class="name"><code>recordingInstructionText</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l141"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:141</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Text to show below the webcam view. For instance, you might instruct
+families to make a short recording in the position they will be in for the
+experiment, and make sure that the infant's eyes are visible or that the
+child is audible. HTML is allowed.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> &quot;Did it!&quot;</p>
+
+
+</div>
 <div id="property_requireItemConfirmation" class="property item">
     <h3 class="name"><code>requireItemConfirmation</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
@@ -337,7 +381,7 @@ HTML.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-config-quality_component.js.html#l104"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:104</code></a>
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l108"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:108</code></a>
         </p>
 
 
@@ -346,6 +390,60 @@ HTML.</p>
     <div class="description">
         <p>Whether to show checkboxes under each instruction item and require
 participant to check them off to proceed.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> true</p>
+
+
+</div>
+<div id="property_requireTestVideo" class="property item">
+    <h3 class="name"><code>requireTestVideo</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l119"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:119</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Whether to require participant to make and view a test video. Ignored if
+showRecordMenu is false.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> true</p>
+
+
+</div>
+<div id="property_showRecordMenu" class="property item">
+    <h3 class="name"><code>showRecordMenu</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l130"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:130</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Whether to display record/replay menu to participant. If false,
+requireTestVideo value is ignored.</p>
 
     </div>
 
@@ -364,7 +462,7 @@ participant to check them off to proceed.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-config-quality_component.js.html#l94"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:94</code></a>
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l98"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:98</code></a>
         </p>
 
 
