@@ -192,8 +192,7 @@ export default Ember.Component.extend(FullScreen, {
         this.set('_currentFrameTemplate', null);
     },
     _exit() {
-        this.setSessionCompleted();
-        this.get('session').save().then(() => window.location = this.get('experiment.exitUrl') || '/');
+        this.get('session').save().then(() => window.location = this.get('experiment.exitURL') || '/');
     },
 
     actions: {
