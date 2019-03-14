@@ -328,6 +328,7 @@ export default ExpFrameBaseComponent.extend({
     formData: null,
     actions: {
         setupForm(form) {
+
             this.set(&#x27;form&#x27;, form);
             // If we&#x27;ve gotten here via &#x27;previous&#x27; and so already have data, set the
             // JSON value of this form to that data.
@@ -339,14 +340,17 @@ export default ExpFrameBaseComponent.extend({
                     return;
                 }
             });
+
         },
         finish() {
             var _this = this;
+
             // Don&#x27;t allow to progress until validation succeeds. It&#x27;s important
             // to do the check within the refreshValidationState callback rather than
             // separately because otherwise we may proceed before validation can
             // finish and return false.
             this.get(&#x27;form&#x27;).refreshValidationState(true, function() {
+                $(&#x27;div.alpaca-message.alpaca-message-notOptional&#x27;).html(&#x27;This field is required.&#x27;);
                 if (_this.get(&#x27;form&#x27;).isValid(true)) {
                     _this.set(&#x27;formData&#x27;, _this.get(&#x27;form&#x27;).getValue());
                     _this.send(&#x27;next&#x27;);
@@ -358,29 +362,6 @@ export default ExpFrameBaseComponent.extend({
 
         }
     }
-
-    // Set defaults for form options. Not needed here because apparently hideInitValidationError
-    // IS done by default.
-    //     willRender() {
-    //         this._super(...arguments);
-    //         var formSchemaProcessed = this.get(&#x27;formSchema&#x27;);
-    //         console.log(formSchemaProcessed);
-    //         if (formSchemaProcessed.options.hasOwnProperty(&#x27;fields&#x27;)) {
-    //             var fields = formSchemaProcessed.options.fields;
-    //             console.log(fields);
-    //             for (var property in fields) {
-    //                 console.log(property);
-    //                 if (fields.hasOwnProperty(property)) {
-    //                     console.log(property);
-    //                     if (!fields[property].hasOwnProperty(&#x27;hideInitValidationError&#x27;)) {
-    //                         fields[property].hideInitValidationError = true;
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //         formSchemaProcessed.fields = fields;
-    //         this.set(&#x27;formSchemaProcessed&#x27;, formSchemaProcessed);
-    //     }
 
 });
 

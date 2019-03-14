@@ -27,7 +27,7 @@
                 <div class="col-md-10 col-md-offset-1 text-center">
                     {{#if currentVideo.imgSrc}}
 
-                        <img class="exp-lookit-preview-video" style="width: 100%;" src={{currentVideo.imgSrc}} alt="Video preview">
+                        <img class="exp-lookit-preview-image" src={{currentVideo.imgSrc}} alt="Image preview">
 
                     {{else}}
 
@@ -51,12 +51,12 @@
             <div class="col-md-12 text-center">
                 {{!--<button class="btn btn-default pull-left" {{action 'next'}}>End preview</button>--}}
                 <button disabled={{noPrev}} {{action 'previousVideo'}} class="btn btn-primary pull-left">
-                    Previous video
+                    {{previousStimulusText}}
                 </button>
                 {{#if noNext}}
                     <button {{action 'finish'}} class="btn btn-success pull-right"> Continue</button>
                 {{else}}
-                    <button {{action 'nextVideo'}} class="btn btn-success pull-right"> Next video</button>
+                    <button {{action 'nextVideo'}} class="btn btn-success pull-right"> {{nextStimulusText}}</button>
                 {{/if}}
             </div>
         </div>

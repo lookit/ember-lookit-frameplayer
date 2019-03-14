@@ -141,12 +141,16 @@
        &quot;kind&quot;: &quot;exp-video-preview&quot;,
        &quot;text&quot;: &quot;Here are the videos your child will see in this study. You can watch them ahead of time--please just don't show your child yet!&quot;,
        &quot;prompt&quot;: &quot;My child can NOT see the screen. Start the preview!&quot;,
+       &quot;baseDir&quot;: &quot;https://url.com/&quot;,
+       &quot;videoTypes&quot;: [&quot;webm&quot;, &quot;mp4&quot;]
        &quot;videos&quot;: [
           {
             &quot;caption&quot;: &quot;User-facing text that appears below the video&quot;,
-            &quot;baseDir&quot;: &quot;https://url.com/&quot;,
-            &quot;sources&quot;: &quot;example_intro&quot;,
-            &quot;videoTypes&quot;: [&quot;webm&quot;, &quot;mp4&quot;]
+            &quot;sources&quot;: &quot;example_intro&quot;
+          },
+          {
+            &quot;caption&quot;: &quot;User-facing text that appears below the video&quot;,
+            &quot;imgSrc&quot;: &quot;caterpillar_picture&quot;
           }
         ]
    }
@@ -218,6 +222,14 @@
                             </li>
                             <li class="index-item property inherited">
                                 <a href="#property_fullScreenElementId">fullScreenElementId</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_nextStimulusText">nextStimulusText</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_previousStimulusText">previousStimulusText</a>
 
                             </li>
                             <li class="index-item property">
@@ -411,7 +423,7 @@ event sent by a particular frame</p>
                 ExpFrameBase
             </a>
             but overwritten in
-        <a href="../files/app_components_exp-video-preview_component.js.html#l181"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:181</code></a>
+        <a href="../files/app_components_exp-video-preview_component.js.html#l205"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:205</code></a>
         </p>
 
 
@@ -681,6 +693,56 @@ generally used that way.
 
 
 </div>
+<div id="property_nextStimulusText" class="property item">
+    <h3 class="name"><code>nextStimulusText</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-video-preview_component.js.html#l180"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:180</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Text on the button to proceed to the next example video/image</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_previousStimulusText" class="property item">
+    <h3 class="name"><code>previousStimulusText</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-video-preview_component.js.html#l190"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:190</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Text on the button to proceed to the previous example video/image</p>
+
+    </div>
+
+
+
+</div>
 <div id="property_prompt" class="property item">
     <h3 class="name"><code>prompt</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
@@ -692,7 +754,7 @@ generally used that way.
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-preview_component.js.html#l148"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:148</code></a>
+        <a href="../files/app_components_exp-video-preview_component.js.html#l152"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:152</code></a>
         </p>
 
 
@@ -717,7 +779,7 @@ generally used that way.
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-preview_component.js.html#l166"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:166</code></a>
+        <a href="../files/app_components_exp-video-preview_component.js.html#l170"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:170</code></a>
         </p>
 
 
@@ -742,7 +804,7 @@ generally used that way.
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-preview_component.js.html#l106"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:106</code></a>
+        <a href="../files/app_components_exp-video-preview_component.js.html#l110"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:110</code></a>
         </p>
 
 

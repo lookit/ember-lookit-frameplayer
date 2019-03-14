@@ -1,7 +1,15 @@
-.exp-video-preview .exp-lookit-preview-video {
-    max-height: 70vh;
-}
+.exp-video-preview {
+    .exp-lookit-preview-video {
+        max-height: 75vh;
+        max-width: 100%;
+    }
 
-.exp-video-preview #exp-lookit-preview-container {
-    height: 80vh;
+    .exp-lookit-preview-image {
+        height: 50%;
+        max-width: 100%;
+    }
+
+    .exp-video-preview #exp-lookit-preview-container {
+        height: 80vh;
+    }
 }

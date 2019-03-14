@@ -778,7 +778,7 @@
             "namespace": "",
             "file": "app/components/exp-video-preview/component.js",
             "line": 15,
-            "description": "A frame that displays a series of videos to preview, without collecting data as a live experiment. User can go through these at their own pace and video controls are shown. Webcam video is recorded starting once the user presses a button to actually display the videos, so that researchers can check that the participant (infant/child) did not see the videos ahead of time.\n```json\n\"frames\": {\n   \"my-sample-frame\": {\n       \"id\": \"video-preview\",\n       \"kind\": \"exp-video-preview\",\n       \"text\": \"Here are the videos your child will see in this study. You can watch them ahead of time--please just don't show your child yet!\",\n       \"prompt\": \"My child can NOT see the screen. Start the preview!\",\n       \"videos\": [\n          {\n            \"caption\": \"User-facing text that appears below the video\",\n            \"baseDir\": \"https://url.com/\",\n            \"sources\": \"example_intro\",\n            \"videoTypes\": [\"webm\", \"mp4\"]\n          }\n        ]\n   }\n\n```",
+            "description": "A frame that displays a series of videos to preview, without collecting data as a live experiment. User can go through these at their own pace and video controls are shown. Webcam video is recorded starting once the user presses a button to actually display the videos, so that researchers can check that the participant (infant/child) did not see the videos ahead of time.\n```json\n\"frames\": {\n   \"my-sample-frame\": {\n       \"id\": \"video-preview\",\n       \"kind\": \"exp-video-preview\",\n       \"text\": \"Here are the videos your child will see in this study. You can watch them ahead of time--please just don't show your child yet!\",\n       \"prompt\": \"My child can NOT see the screen. Start the preview!\",\n       \"baseDir\": \"https://url.com/\",\n       \"videoTypes\": [\"webm\", \"mp4\"]\n       \"videos\": [\n          {\n            \"caption\": \"User-facing text that appears below the video\",\n            \"sources\": \"example_intro\"\n          },\n          {\n            \"caption\": \"User-facing text that appears below the video\",\n            \"imgSrc\": \"caterpillar_picture\"\n          }\n        ]\n   }\n\n```",
             "extends": "ExpFrameBase",
             "uses": [
                 "ExpandAssets",
@@ -3274,7 +3274,7 @@
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 652,
+            "line": 655,
             "description": "Start of EACH calibration segment",
             "itemtype": "event",
             "name": "startCalibration",
@@ -3291,7 +3291,7 @@
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 782,
+            "line": 785,
             "description": "Observer that starts recording once recorder is ready. Override to do additional\nstuff at this point!",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -3660,7 +3660,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 106,
+            "line": 110,
             "description": "A series of preview videos to display within a single frame, defined as an array of objects.",
             "itemtype": "property",
             "name": "videos",
@@ -3688,7 +3688,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 148,
+            "line": 152,
             "description": "Text on the button prompt asking the user to continue to the videos",
             "itemtype": "property",
             "name": "prompt",
@@ -3699,7 +3699,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 166,
+            "line": 170,
             "description": "Informational text to display to the user before videos are shown, along with button to continue",
             "itemtype": "property",
             "name": "text",
@@ -3710,7 +3710,29 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 181,
+            "line": 180,
+            "description": "Text on the button to proceed to the next example video/image",
+            "itemtype": "property",
+            "name": "nextStimulusText",
+            "type": "String",
+            "class": "ExpVideoPreview",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-video-preview/component.js",
+            "line": 190,
+            "description": "Text on the button to proceed to the previous example video/image",
+            "itemtype": "property",
+            "name": "previousStimulusText",
+            "type": "String",
+            "class": "ExpVideoPreview",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-video-preview/component.js",
+            "line": 205,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "serializeContent",
@@ -3980,7 +4002,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 125,
+            "line": 124,
             "description": "Maximum recording length in seconds. Can be overridden by consuming frame.",
             "itemtype": "property",
             "name": "maxRecordingLength",
@@ -3992,7 +4014,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 132,
+            "line": 131,
             "description": "Whether to use the camera in this frame. Consuming frame should set this property\nto override if needed.",
             "itemtype": "property",
             "name": "[doUseCamera=true]",
@@ -4003,7 +4025,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 139,
+            "line": 138,
             "description": "Whether to start recording ASAP (only applies if doUseCamera). Consuming frame\nshould set to override if needed.",
             "itemtype": "property",
             "name": "[startRecordingAutomatically=false]",
@@ -4014,7 +4036,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 146,
+            "line": 145,
             "description": "A video ID to use for the current recording. Format is\n`videoStream_<experimentId>_<frameId>_<sessionId>_timestampMS_RRR`\nwhere RRR are random numeric digits.",
             "itemtype": "property",
             "name": "videoId",
@@ -4025,7 +4047,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 166,
+            "line": 165,
             "description": "Extend any base time event capture with information about the recorded video",
             "itemtype": "method",
             "name": "makeTimeEvent",
@@ -4049,7 +4071,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 185,
+            "line": 184,
             "description": "Set up a video recorder instance",
             "itemtype": "method",
             "name": "setupRecorder",
@@ -4080,7 +4102,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 217,
+            "line": 216,
             "description": "Pause the recorder (and capture timing events). For webRTC recorder, this is\njust a placeholder and doesn't actually pause the recording. If webRTC used,\nincludes extra data actuallyPaused: false. This is for backwards compatibility\nwith frames that pause/resume recording, and should not be used going forward -\ninstead stop/start and make separate clips if needed.",
             "itemtype": "method",
             "name": "pauseRecorder",
@@ -4098,7 +4120,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 237,
+            "line": 236,
             "description": "Resume a paused recording. For webRTC recorder, this is just a placeholder and\ndoesn't actually pause the recording. If webRTC used, includes extra data\nwasActuallyPaused: false. This is for backwards compatibility\nwith frames that pause/resume recording, and should not be used going forward -\ninstead stop/start and make separate clips if needed.",
             "itemtype": "method",
             "name": "resumeRecorder",
@@ -4108,7 +4130,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 255,
+            "line": 254,
             "description": "Start recording",
             "itemtype": "method",
             "name": "startRecorder",
@@ -4121,7 +4143,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 276,
+            "line": 275,
             "description": "Stop the recording",
             "itemtype": "method",
             "name": "stopRecorder",
@@ -4134,7 +4156,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 291,
+            "line": 290,
             "description": "Destroy recorder and stop accessing webcam",
             "itemtype": "method",
             "name": "destroyRecorder",
@@ -4144,7 +4166,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 327,
+            "line": 326,
             "description": "When video recorder has been installed",
             "itemtype": "event",
             "name": "recorderReady",
@@ -4154,7 +4176,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 340,
+            "line": 339,
             "description": "Observer that starts recording once recorder is ready. Override to do additional\nstuff at this point!",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -4164,7 +4186,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 356,
+            "line": 355,
             "description": "Hide the recorder from display. Useful if you would like to keep recording without extra UI elements to\n  distract the user.",
             "itemtype": "method",
             "name": "hideRecorder",
@@ -4174,7 +4196,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 365,
+            "line": 364,
             "description": "Show the recorder to the user. Useful if you want to temporarily show a hidden recorder- eg to let the user fix\n  a problem with video capture settings",
             "itemtype": "method",
             "name": "showRecorder",
