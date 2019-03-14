@@ -68,6 +68,8 @@ let {
  * Current limitations: you are NOT
  * able to provide custom functions (e.g. validators, custom dataSource functions)
  * directly to the formSchema.
+ *
+ * Here is an example of a reasonably simple survey using this frame:
 
 
 ```json
@@ -124,6 +126,382 @@ let {
             "nextButtonText": "Moving on..."
         }
     }
+    * ```
+    *
+    * And here is an example of re-implementing the exp-lookit-mood-questionnaire, using
+    * custom formatting, time-pickers, dependencies, and question groups.
+
+```json
+ "frames": {
+            "survey-sample-3": {
+            "kind": "exp-lookit-survey",
+            "formSchema": {
+                "view": {
+                    "fields": {
+                        "/child/happy": {
+                            "templates": {
+                                "control": "<div>{{#if options.leftLabel}}<label class='label-left'>{{{options.leftLabel}}}</label>{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}<label class='label-right'>{{{options.rightLabel}}}</label>{{/if}}</div>"
+                            }
+                        },
+                        "/child/active": {
+                            "templates": {
+                                "control": "<div>{{#if options.leftLabel}}<label class='label-left'>{{{options.leftLabel}}}</label>{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}<label class='label-right'>{{{options.rightLabel}}}</label>{{/if}}</div>"
+                            }
+                        },
+                        "/child/rested": {
+                            "templates": {
+                                "control": "<div>{{#if options.leftLabel}}<label class='label-left'>{{{options.leftLabel}}}</label>{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}<label class='label-right'>{{{options.rightLabel}}}</label>{{/if}}</div>"
+                            }
+                        },
+                        "/child/healthy": {
+                            "templates": {
+                                "control": "<div>{{#if options.leftLabel}}<label class='label-left'>{{{options.leftLabel}}}</label>{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}<label class='label-right'>{{{options.rightLabel}}}</label>{{/if}}</div>"
+                            }
+                        },
+                        "/parent/energetic": {
+                            "templates": {
+                                "control": "<div>{{#if options.leftLabel}}<label class='label-left'>{{{options.leftLabel}}}</label>{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}<label class='label-right'>{{{options.rightLabel}}}</label>{{/if}}</div>"
+                            }
+                        },
+                        "/parent/parentHappy": {
+                            "templates": {
+                                "control": "<div>{{#if options.leftLabel}}<label class='label-left'>{{{options.leftLabel}}}</label>{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}<label class='label-right'>{{{options.rightLabel}}}</label>{{/if}}</div>"
+                            }
+                        },
+                        "/parent/ontopofstuff": {
+                            "templates": {
+                                "control": "<div>{{#if options.leftLabel}}<label class='label-left'>{{{options.leftLabel}}}</label>{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}<label class='label-right'>{{{options.rightLabel}}}</label>{{/if}}</div>"
+                            }
+                        }
+                    },
+                    "layout": {
+                        "bindings": {
+                            "child": "#child",
+                            "parent": "#parent",
+                            "lastEat": "#lastEat",
+                            "nextNap": "#nextNap",
+                            "napWakeUp": "#napWakeUp",
+                            "doingBefore": "#doingBefore",
+                            "usualNapSchedule": "#usualNapSchedule"
+                        },
+                        "template": "<div class='row exp-text exp-lookit-mood-questionnaire'><h4>{{{options.formTitle}}}</h4><p>{{{options.introText}}}</p><div id='child'></div><div id='parent'></div><div id='napWakeUp'></div><div id='usualNapSchedule'></div><div id='nextNap'></div><div id='lastEat'></div><div id='doingBefore'></div></div>"
+                    },
+                    "parent": "bootstrap-edit"
+                },
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "child": {
+                            "type": "object",
+                            "title": "How is your CHILD feeling right now?",
+                            "properties": {
+                                "happy": {
+                                    "enum": [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5",
+                                        "6",
+                                        "7"
+                                    ],
+                                    "required": true
+                                },
+                                "active": {
+                                    "enum": [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5",
+                                        "6",
+                                        "7"
+                                    ],
+                                    "required": true
+                                },
+                                "rested": {
+                                    "enum": [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5",
+                                        "6",
+                                        "7"
+                                    ],
+                                    "required": true
+                                },
+                                "healthy": {
+                                    "enum": [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5",
+                                        "6",
+                                        "7"
+                                    ],
+                                    "required": true
+                                }
+                            }
+                        },
+                        "parent": {
+                            "type": "object",
+                            "title": "How are YOU feeling right now?",
+                            "properties": {
+                                "energetic": {
+                                    "enum": [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5",
+                                        "6",
+                                        "7"
+                                    ],
+                                    "required": true
+                                },
+                                "parentHappy": {
+                                    "enum": [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5",
+                                        "6",
+                                        "7"
+                                    ],
+                                    "required": true
+                                },
+                                "ontopofstuff": {
+                                    "enum": [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5",
+                                        "6",
+                                        "7"
+                                    ],
+                                    "required": true
+                                }
+                            }
+                        },
+                        "lastEat": {
+                            "title": "About how long ago did your child last eat or drink?",
+                            "required": true
+                        },
+                        "nextNap": {
+                            "title": "About how much longer until his/her next nap (or bedtime)?",
+                            "required": true
+                        },
+                        "napWakeUp": {
+                            "title": "About how long ago did your child last wake up from sleep or a nap?",
+                            "required": true
+                        },
+                        "doingBefore": {
+                            "title": "What was your child doing before this?",
+                            "required": true
+                        },
+                        "usualNapSchedule": {
+                            "enum": [
+                                "yes",
+                                "no",
+                                "yes-overdue"
+                            ],
+                            "title": "Does your child have a usual nap schedule?",
+                            "required": true
+                        }
+                    },
+                    "dependencies": {
+                        "nextNap": [
+                            "usualNapSchedule"
+                        ]
+                    }
+                },
+                "options": {
+                    "fields": {
+                        "child": {
+                            "fields": {
+                                "happy": {
+                                    "type": "radio",
+                                    "order": 3,
+                                    "vertical": false,
+                                    "leftLabel": "Fussy",
+                                    "fieldClass": "aligned-radio-group",
+                                    "rightLabel": "Happy",
+                                    "optionLabels": [
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        ""
+                                    ]
+                                },
+                                "active": {
+                                    "type": "radio",
+                                    "order": 4,
+                                    "vertical": false,
+                                    "leftLabel": "Calm",
+                                    "fieldClass": "aligned-radio-group",
+                                    "rightLabel": "Active",
+                                    "optionLabels": [
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        ""
+                                    ]
+                                },
+                                "rested": {
+                                    "type": "radio",
+                                    "order": 1,
+                                    "vertical": false,
+                                    "leftLabel": "Tired",
+                                    "fieldClass": "aligned-radio-group",
+                                    "rightLabel": "Rested",
+                                    "optionLabels": [
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        ""
+                                    ]
+                                },
+                                "healthy": {
+                                    "type": "radio",
+                                    "order": 2,
+                                    "vertical": false,
+                                    "leftLabel": "Sick",
+                                    "fieldClass": "aligned-radio-group",
+                                    "rightLabel": "Healthy",
+                                    "optionLabels": [
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        "parent": {
+                            "fields": {
+                                "energetic": {
+                                    "type": "radio",
+                                    "order": 1,
+                                    "vertical": false,
+                                    "leftLabel": "Tired",
+                                    "fieldClass": "aligned-radio-group",
+                                    "rightLabel": "Energetic",
+                                    "optionLabels": [
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        ""
+                                    ]
+                                },
+                                "parentHappy": {
+                                    "type": "radio",
+                                    "order": 3,
+                                    "vertical": false,
+                                    "leftLabel": "Upset",
+                                    "fieldClass": "aligned-radio-group",
+                                    "rightLabel": "Happy",
+                                    "optionLabels": [
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        ""
+                                    ]
+                                },
+                                "ontopofstuff": {
+                                    "type": "radio",
+                                    "order": 2,
+                                    "vertical": false,
+                                    "leftLabel": "Overwhelmed",
+                                    "fieldClass": "aligned-radio-group",
+                                    "rightLabel": "On top of things",
+                                    "optionLabels": [
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        "lastEat": {
+                            "size": 10,
+                            "type": "time",
+                            "picker": {
+                                "useCurrent": "day"
+                            },
+                            "dateFormat": "HH:mm",
+                            "placeholder": "hours:minutes"
+                        },
+                        "nextNap": {
+                            "size": 10,
+                            "type": "time",
+                            "picker": {
+                                "useCurrent": "day"
+                            },
+                            "dateFormat": "HH:mm",
+                            "placeholder": "hours:minutes",
+                            "dependencies": {
+                                "usualNapSchedule": "yes"
+                            }
+                        },
+                        "napWakeUp": {
+                            "size": 10,
+                            "type": "time",
+                            "picker": {
+                                "useCurrent": "day"
+                            },
+                            "dateFormat": "HH:mm",
+                            "placeholder": "hours:minutes"
+                        },
+                        "doingBefore": {
+                            "type": "text",
+                            "placeholder": "examples: having lunch, playing outside, going to the store with me"
+                        },
+                        "usualNapSchedule": {
+                            "sort": false,
+                            "type": "select",
+                            "hideNone": false,
+                            "noneLabel": "",
+                            "optionLabels": [
+                                "Yes",
+                                "No",
+                                "Yes, and he/she is already due for a nap"
+                            ],
+                            "removeDefaultNone": false
+                        }
+                    },
+                    "formTitle": "Mood Questionnaire",
+                    "introText": "How are you two doing? We really want to know: we’re interested in how your child’s mood affects which sorts of surprising physical events he/she notices. You can help us find out what babies are really learning as they get older... and what they already knew, but weren’t calm and focused enough to show us!",
+                    "hideInitValidationError": true
+                }
+            },
+            "nextButtonText": "Next"
+        }
 
  * ```
  * @class ExpLookitSurvey
@@ -219,6 +597,7 @@ export default ExpFrameBaseComponent.extend({
     formData: null,
     actions: {
         setupForm(form) {
+
             this.set('form', form);
             // If we've gotten here via 'previous' and so already have data, set the
             // JSON value of this form to that data.
@@ -230,14 +609,17 @@ export default ExpFrameBaseComponent.extend({
                     return;
                 }
             });
+
         },
         finish() {
             var _this = this;
+
             // Don't allow to progress until validation succeeds. It's important
             // to do the check within the refreshValidationState callback rather than
             // separately because otherwise we may proceed before validation can
             // finish and return false.
             this.get('form').refreshValidationState(true, function() {
+                $('div.alpaca-message.alpaca-message-notOptional').html('This field is required.');
                 if (_this.get('form').isValid(true)) {
                     _this.set('formData', _this.get('form').getValue());
                     _this.send('next');
@@ -249,29 +631,6 @@ export default ExpFrameBaseComponent.extend({
 
         }
     }
-
-    // Set defaults for form options. Not needed here because apparently hideInitValidationError
-    // IS done by default.
-    //     willRender() {
-    //         this._super(...arguments);
-    //         var formSchemaProcessed = this.get('formSchema');
-    //         console.log(formSchemaProcessed);
-    //         if (formSchemaProcessed.options.hasOwnProperty('fields')) {
-    //             var fields = formSchemaProcessed.options.fields;
-    //             console.log(fields);
-    //             for (var property in fields) {
-    //                 console.log(property);
-    //                 if (fields.hasOwnProperty(property)) {
-    //                     console.log(property);
-    //                     if (!fields[property].hasOwnProperty('hideInitValidationError')) {
-    //                         fields[property].hideInitValidationError = true;
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //         formSchemaProcessed.fields = fields;
-    //         this.set('formSchemaProcessed', formSchemaProcessed);
-    //     }
 
 });
 
