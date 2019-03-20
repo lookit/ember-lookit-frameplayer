@@ -62,19 +62,28 @@ div.exp-video-config {
     margin-left: 3em;
 }
 
-.exp-video-config #soundCheckBox, .exp-video-config #camCheckBox {
-    border: medium solid gray;
+.exp-video-config .statusBox {
     width: 50%;
     margin-left: 25%;
     text-align: center;
     padding: 2px;
     margin-top: 5px;
     border-radius: 5px;
+
+    &.border {
+        border: medium solid gray;
+    }
+
+    button {
+        float: right;
+    }
 }
 
 .exp-video-config .checkComplete {
     background-color: #d4efdf;
 }
 
-.exp-video-config #reloadButton {
+.exp-video-config .support-note {
+    font-size: small;
+    padding-top: 25px;
 }

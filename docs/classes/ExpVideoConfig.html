@@ -126,10 +126,15 @@
 </div>
 
 <div class="box intro">
-    <p>Video configuration frame guiding user through making sure permissions are set appropriately and microphone is working, with troubleshooting text. All content is hard-coded for a general-purpose technical setup frame.</p>
+    <p>Video configuration frame guiding user through making sure permissions are set
+appropriately and microphone is working, with troubleshooting text. Almost all content is
+hard-coded, to provide a general-purpose technical setup frame.</p>
 <pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
     &quot;video-config&quot;: {
-        &quot;kind&quot;: &quot;exp-video-config&quot;
+        &quot;kind&quot;: &quot;exp-video-config&quot;,
+        &quot;troubleshootingIntro&quot;: &quot;If you're having any trouble getting your webcam set up,
+          please feel free to call the XYZ lab at (123) 456-7890 and we'd be glad to
+          help you out!&quot;
     }
 }
 </code></pre>
@@ -178,7 +183,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-config_component.js.html#l59"><code>app&#x2F;components&#x2F;exp-video-config&#x2F;component.js:59</code></a>
+        <a href="../files/app_components_exp-video-config_component.js.html#l63"><code>app&#x2F;components&#x2F;exp-video-config&#x2F;component.js:63</code></a>
         </p>
 
 
@@ -189,7 +194,7 @@
 
     </div>
 
-        <p><strong>Default:</strong> &quot;Some families are having trouble initially getting their webcams to work on Lookit. We&#x27;re sorry, and we&#x27;re working on switching away from Flash to make recording more reliable! In the meantime, these instructions should fix most problems.&quot;</p>
+        <p><strong>Default:</strong> &quot;&quot;</p>
 
 
 </div>

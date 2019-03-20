@@ -110,7 +110,6 @@
 import Ember from &#x27;ember&#x27;;
 import { observer } from &#x27;@ember/object&#x27;;
 
-
 let {
     $
 } = Ember;
@@ -232,6 +231,13 @@ export default Ember.Mixin.create({
     recorderReady: false,
 
     /**
+     * Maximum recording length in seconds. Can be overridden by consuming frame.
+     * @property {Number} maxRecordingLength
+     * @default 100000000
+     */
+    maxRecordingLength: 100000000,
+
+    /**
      * Whether to use the camera in this frame. Consuming frame should set this property
      * to override if needed.
      * @property {Boolean} [doUseCamera=true]
@@ -276,7 +282,7 @@ export default Ember.Mixin.create({
         // All frames using this mixin will add videoId and streamTime to every server event
         let base = this._super(eventName, extra);
         const streamTime = this.get(&#x27;recorder&#x27;) ? this.get(&#x27;recorder&#x27;).getTime() : null;
-        Ember.merge(base, {
+        Ember.assign(base, {
             videoId: this.get(&#x27;videoId&#x27;),
             pipeId: this.get(&#x27;recorder&#x27;) ? this.get(&#x27;recorder&#x27;).get(&#x27;pipeVideoName&#x27;) : null,
             streamTime: streamTime
@@ -296,9 +302,9 @@ export default Ember.Mixin.create({
         const videoId = this._generateVideoId();
         this.set(&#x27;videoId&#x27;, videoId);
         const recorder = this.get(&#x27;videoRecorder&#x27;).start(videoId, element, settings);
-        const pipeLoc = this.container.lookupFactory(&#x27;config:environment&#x27;).pipeLoc;
-        const pipeEnv = this.container.lookupFactory(&#x27;config:environment&#x27;).pipeEnv;
-        const installPromise = recorder.install({record}, this.get(&#x27;videoId&#x27;), pipeLoc, pipeEnv);
+        const pipeLoc = Ember.getOwner(this).resolveRegistration(&#x27;config:environment&#x27;).pipeLoc;
+        const pipeEnv = Ember.getOwner(this).resolveRegistration(&#x27;config:environment&#x27;).pipeEnv;
+        const installPromise = recorder.install({record}, this.get(&#x27;videoId&#x27;), pipeLoc, pipeEnv, this.get(&#x27;maxRecordingLength&#x27;));
 
         // Track specific events for all frames that use  VideoRecorder
         var _this = this;
@@ -397,7 +403,9 @@ export default Ember.Mixin.create({
     destroyRecorder() {
         const recorder = this.get(&#x27;recorder&#x27;);
         if (recorder) {
-            this.send(&#x27;setTimeEvent&#x27;, &#x27;destroyingRecorder&#x27;);
+            if (!(this.get(&#x27;isDestroyed&#x27;) || this.get(&#x27;isDestroying&#x27;))) {
+                this.send(&#x27;setTimeEvent&#x27;, &#x27;destroyingRecorder&#x27;);
+            }
             recorder.destroy();
         }
     },
@@ -452,10 +460,6 @@ export default Ember.Mixin.create({
             }
         }
     }),
-
-
-
-
 
     /**
      * Hide the recorder from display. Useful if you would like to keep recording without extra UI elements to

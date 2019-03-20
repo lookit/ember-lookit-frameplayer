@@ -10,12 +10,17 @@ import VideoRecord from '../../mixins/video-record';
  */
 
 /**
-Video configuration frame guiding user through making sure permissions are set appropriately and microphone is working, with troubleshooting text. All content is hard-coded for a general-purpose technical setup frame.
+Video configuration frame guiding user through making sure permissions are set
+appropriately and microphone is working, with troubleshooting text. Almost all content is
+hard-coded, to provide a general-purpose technical setup frame.
 
 ```json
 "frames": {
     "video-config": {
-        "kind": "exp-video-config"
+        "kind": "exp-video-config",
+        "troubleshootingIntro": "If you're having any trouble getting your webcam set up,
+          please feel free to call the XYZ lab at (123) 456-7890 and we'd be glad to
+          help you out!"
     }
 }
 ```
@@ -30,14 +35,13 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     showWarning: false,
     micChecked: Em.computed.alias('recorder.micChecked'),
     hasCamAccess: Em.computed.alias('recorder.hasCamAccess'),
-    hasWebCam: Em.computed.alias('recorder.hasWebCam'),
 
     actions: {
 
         checkAudioThenNext() {
             if (!this.get('micChecked')) {
                 this.set('showWarning', true);
-            } else if (this.get('hasWebCam')) {
+            } else if (this.get('hasCamAccess')) {
                 this.send('next');
             }
         },
@@ -59,12 +63,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 /**
                 Text to show as the introduction to the troubleshooting tips section
                 @property {String} troubleshootingIntro
-                @default "Some families are having trouble initially getting their webcams to work on Lookit. We're sorry, and we're working on switching away from Flash to make recording more reliable! In the meantime, these instructions should fix most problems."
+                @default ""
                 */
                 troubleshootingIntro: {
                     type: 'string',
                     description: 'Text to show as introduction to troubleshooting tips section',
-                    default: "We're just getting started with a new method for video recording! If you're having trouble and the instructions below don't fix it, we're sorry - and we'd love to hear from you so we can improve the system."
+                    default: ''
                 }
 
             },

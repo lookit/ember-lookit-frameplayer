@@ -313,7 +313,7 @@
             "fors": {},
             "namespaces": {},
             "file": "app/services/video-recorder.js",
-            "line": 331
+            "line": 343
         },
         "frames": {
             "name": "frames",
@@ -346,7 +346,7 @@
             "module": "exp-player",
             "namespace": "",
             "file": "app/components/exp-video-preview/component.js",
-            "line": 14,
+            "line": 15,
             "description": "This is the exit survey used by \"Your baby the physicist\". Use the updated frame {{#crossLink \"ExpLookitExitSurvey\"}}{{/crossLink}} instead."
         },
         "components": {
@@ -381,7 +381,7 @@
             "module": "exp-player",
             "namespace": "",
             "file": "app/mixins/video-record.js",
-            "line": 14,
+            "line": 13,
             "description": "Allow users to provide audio/video and image source values as either relative paths\nwithin a base directory or as full paths.\n\nWhen adding this mixin to a frame, you will need to define a property of the frame\n`assetsToExpand`, which indicates which parameters might be source objects that need\nexpansion. `assetsToExpand` should be an object with keys `image`, `video`, and `audio`,\nand each value should be an Array of parameter names that provide sources for resources\nof the corresponding type. E.g.,\n```\n   {\n       'image': ['leftObjectPic', 'rightObjectPic'],\n       'audio': ['introAudio', 'testAudio'],\n       'video': ['objectDemoVideo']\n   }\n```\n\nThis is defined directly within your frame, e.g.:\n```\n   export default ExpFrameBaseComponent.extend(ExpandAssets, {\n       ...\n       type: 'exp-my-cool-frame',\n       assetsToExpand:     {\n           'image': ['leftObjectPic', 'rightObjectPic'],\n           'audio': ['introAudio', 'testAudio'],\n           'video': ['objectDemoVideo']\n           },\n       ...,\n       meta: {...},\n       actions: {...}\n   });\n```\n\n\n\nThe *user* of your frame can then optionally provide `baseDir`, `audioTypes`, and\n`videoTypes` parameters to indicate how to expand relative paths.\n\nHow expansion works:\n- **Images**: Suppose the list `assetsToExpand['image']` contains `centerStimulus`. If\n  `centerStimulus` is provided as a full URL (with `://` in it), nothing will happen to\n  it. But if `centerStimulus` is a string that is not a full URL, it will be transformed\n  during the `didReceiveAttrs` hook to `baseDir + 'img/' + centerStimulus`.\n\n- **Audio**: Suppose the list `assetsToExpand['audio']` contains `utterance1`. If\n  `utterance1` is a nonempty string (rather than an object/Array), e.g., `goodmorning`,\n  and `audioTypes` has been set to `['typeA', 'typeB']`,\n  then `utterance1` will be expanded out to\n```\n        [\n            {\n                src: 'baseDir' + 'typeA/goodmorning.typeA',\n                type: 'audio/typeA'\n            },\n            {\n                src: 'baseDir' + 'typeB/goodmorning.typeB',\n                type: 'audio/typeB'\n            }\n        ]\n```\n\n- **Video**: Same as audio, but using the types from `videoTypes`.\n\n**Important**: During the `didReceiveAttrs` hook, your frame will acquire new properties `[parameterName]_parsed`\nfor each of the parameters named in `assetsToExpand`. These properties will hold the\nexpanded values. E.g., in the example above, you would now have a `centerStimulus_parsed`\nproperty. This is what you should use for showing/playing images/audio/video in your\nframe template.\n\n**Advanced use**: the property names in `assetsToExpand` can be either full parameter names\nas in the examples above, or can be of the form `parameterName/subProperty`. If using\nthe `parameterName/subProperty` syntax, instead of processing the parameter `parameterName`,\nwe will expect that that parameter is either an object with property `subProperty`\n(which will be expanded) or an Array of objects with property `subProperty` (which will\nbe expanded). The original value of the `parameterName` parameter may in this case be\nmutated as assets are expanded. However, your frame will still also acquire a new\nproperty `[parameterName]_parsed` which you should use for accessing the processed\nvalues. This avoids potential problems with the template being rendered using the original\nvalues and not updated."
         },
         "randomizers": {
@@ -415,7 +415,7 @@
             "module": "exp-player",
             "namespace": "",
             "file": "app/services/video-recorder.js",
-            "line": 331,
+            "line": 343,
             "description": "An instance of a video recorder tied to or used by one specific page. A given experiment may use more than one\n  video recorder depending on the number of video capture frames."
         }
     },
@@ -453,7 +453,7 @@
             "namespace": "",
             "file": "app/components/exp-frame-base/component.js",
             "line": 11,
-            "description": "This provides common base behavior required for any experiment frame. All experiment frames must extend this one.\nThis frame has no configuration options because all of its logic is internal, and is almost never directly used\n   in an experiment. It exports no data. Sample experiment definition usage (provided for completeness):\n  ```json\n    \"frames\": {\n       \"my-sample-frame\": {\n         \"kind\": \"exp-base-frame\"\n       }\n    }\n ```\nAs a user you will almost never need to insert a component into a template directly- the platform should handle that\n   by automatically inserting `exp-player` when your experiment starts.\n However, a sample template usage is provided below for completeness.\n```handlebars\n  {{\n      component currentFrameTemplate\n        frameIndex=frameIndex\n        framePage=framePage\n        updateFramePage=(action 'updateFramePage')\n        frameConfig=currentFrameConfig\n        frameContext=currentFrameContext\n       session=session\n        experiment=experiment\n       next=(action 'next')\n        previous=(action 'previous')\n        saveHandler=(action 'saveFrame')\n        skipone=(action 'skipone')\n        sessionCompleted=(action 'sessionCompleted')\n       extra=extra\n    }}\n ```",
+            "description": "This provides common base behavior required for any experiment frame. All experiment frames must extend this one.\nThis frame has no configuration options because all of its logic is internal, and is almost never directly used\n   in an experiment. It exports no data. Sample experiment definition usage (provided for completeness):\n  ```json\n    \"frames\": {\n       \"my-sample-frame\": {\n         \"kind\": \"exp-base-frame\"\n       }\n    }\n ```\nAs a user you will almost never need to insert a component into a template directly- the platform should handle that\n   by automatically inserting `exp-player` when your experiment starts.\n However, a sample template usage is provided below for completeness.\n```handlebars\n  {{\n      component currentFrameTemplate\n        frameIndex=frameIndex\n        framePage=framePage\n        updateFramePage=(action 'updateFramePage')\n        frameConfig=currentFrameConfig\n        frameContext=currentFrameContext\n       session=session\n        experiment=experiment\n       next=(action 'next')\n        previous=(action 'previous')\n        saveHandler=(action 'saveFrame')\n        skipone=(action 'skipone')\n        extra=extra\n    }}\n ```",
             "uses": [
                 "FullScreen"
             ]
@@ -547,7 +547,7 @@
             "submodule": "frames",
             "namespace": "",
             "file": "app/components/exp-lookit-mood-questionnaire/component.js",
-            "line": 16,
+            "line": 22,
             "description": "A standard mood survey with questions about factors that might affect a\nchild's responses. Includes Likert-type ratings of the CHILD's position on\nthe following scales:\n- Tired - Rested\n- Sick - Healthy\n- Fussy - Happy\n- Calm - Active\n\nand of the PARENT's position on:\n- Tired - Energetic\n- Overwhelmed - On top of things\n- Upset - Happy\n\nIt also asks for a response in hours:minutes for:\n- how long ago the child last woke up from sleep or a nap\n- how long until he/she is due for another nap/sleep (if regular nap schedule)\n- how long ago the child last ate/drank\n\nand for what the child was doing just before this (free-response). Responses\nto all questions are required to move on.\n\nThis frame can be used as a starting point/example for other custom survey frames, or development of a customizable survey frame.\n\n```json\n\"frames\": {\n   \"mood-survey\": {\n       \"introText\": \"How are you two doing? We really want to know: we’re interested in how your child’s mood affects his or her looking preferences.\",\n       \"kind\": \"exp-lookit-mood-questionnaire\"\n   }\n}\n\n```",
             "extends": "ExpFrameBase"
         },
@@ -639,7 +639,7 @@
             "namespace": "",
             "file": "app/components/exp-lookit-survey/component.js",
             "line": 14,
-            "description": "Basic survey frame allowing researcher to specify question text and types.\n\nThis frame uses ember-cli-dynamic-forms as a wrapper for alpacajs, a powerful\nlibrary for generating online forms. To specify the structure of your form\n(questions, answer types, validation), you provide a single 'formSchema' structure.\nThe 'formSchema' consists of a 'schema' object and an 'options' object, described\nunder Properties.\n\nYou can choose from any question types listed at http://www.alpacajs.org/documentation.html.\nIn that documentation, you will see that each field type - e.g., Checkbox, Radio, Text -\nhas some 'Schema' properties and some 'Options' properties. The properties under 'Schema'\nwill be defined in the 'schema' object of your formSchema. The properties under 'Options'\nwill be defined in the 'options' object of your formSchema.\n\nMany question types allow you to easily validate answers. For instance, for a \"number\"\nfield you can set minimum and maximum values, and entries will automatically be\nrequired to be numeric (http://www.alpacajs.org/docs/fields/number.html). You can also\neither set required: true in the schema->properties entry for this field OR set\nvalidator: required-field in the options->fields entry if you want to require that the\nparticipant enters something. A validation error message will be displayed next to\nany fields that fail validation checks and the participant will not be able to proceed until\nthese are addressed.\n\nAlpacajs is fairly powerful, and you are essentially using it directly. In general, you can copy\nand paste any object passed to alpaca in the alpaca docs right in as your formSchema to\nsee that example in action on Lookit. Not all features of alpaca are detailed here,\nbut they can be used: e.g., advanced users can enter 'views' and 'data' in the\nformSchema to customize the layout of their forms and the initial data. A 'dataSource'\nmay be specified under options to populate a question's potential answers (e.g., to\nload a list of countries from some other source rather than hard-coding it, or to\nprovide checkboxes with vocabulary items from an externally-defined inventory).\n\nYou can also use alpacajs's \"dependencies\" and \"conditional dependencies\" functionality to\nset up fields that depend on other fields - e.g., asking if the child speaks any\nlanguage besides English in the home and only if so displaying a dropdown to select the\nlanguage(s), or asking if the child likes Elmo or Grover better and then asking a question\nspecific to the preferred character. Or if you have questions only relevant to the\nbirth mother of the child, you could ask if the participant is the birth mother and show\nthose questions conditionally.\n\nNote that question titles are interpreted as HTML and can include images, audio/video\nelements, and inline CSS.\n\nIf a participant returns to this frame after continuing, via a 'Previous' button on the\nnext frame, then the values in this form are pre-filled.\n\nNo video recording is conducted on this frame.\n\nA previous button may optionally be included on this frame.\n\nThe form itself occupies a maximum of 800px horizontally and takes up 80% of the vertical\nheight of the window (it will scroll to fit).\n\nCurrent limitations: you are NOT\nable to provide custom functions (e.g. validators, custom dataSource functions)\ndirectly to the formSchema.\n\n\n```json\n\"frames\": {\n       \"pet-survey\": {\n           \"kind\": \"exp-lookit-survey\",\n           \"formSchema\": {\n               \"schema\": {\n                   \"type\": \"object\",\n                   \"title\": \"Tell us about your pet!\",\n                   \"properties\": {\n                       \"age\": {\n                           \"type\": \"integer\",\n                           \"title\": \"Age\",\n                           \"maximum\": 200,\n                           \"minimum\": 0,\n                           \"required\": true\n                       },\n                       \"name\": {\n                           \"type\": \"string\",\n                           \"title\": \"Name\",\n                           \"required\": true\n                       },\n                       \"species\": {\n                           \"enum\": [\n                               \"dog\",\n                               \"cat\",\n                               \"fish\",\n                               \"bird\",\n                               \"raccoon\"\n                           ],\n                           \"type\": \"string\",\n                           \"title\": \"What type of animal?\",\n                           \"default\": \"\"\n                       }\n                   }\n               },\n               \"options\": {\n                   \"fields\": {\n                       \"age\": {\n                           \"numericEntry\": true\n                       },\n                       \"name\": {\n                           \"placeholder\": \"a name...\"\n                       },\n                       \"species\": {\n                           \"type\": \"radio\",\n                           \"message\": \"Seriously, what species??\",\n                           \"validator\": \"required-field\"\n                       }\n                   }\n               }\n           },\n           \"nextButtonText\": \"Moving on...\"\n       }\n   }\n\n```",
+            "description": "Basic survey frame allowing researcher to specify question text and types.\n\nThis frame uses ember-cli-dynamic-forms as a wrapper for alpacajs, a powerful\nlibrary for generating online forms. To specify the structure of your form\n(questions, answer types, validation), you provide a single 'formSchema' structure.\nThe 'formSchema' consists of a 'schema' object and an 'options' object, described\nunder Properties.\n\nYou can choose from any question types listed at http://www.alpacajs.org/documentation.html.\nIn that documentation, you will see that each field type - e.g., Checkbox, Radio, Text -\nhas some 'Schema' properties and some 'Options' properties. The properties under 'Schema'\nwill be defined in the 'schema' object of your formSchema. The properties under 'Options'\nwill be defined in the 'options' object of your formSchema.\n\nMany question types allow you to easily validate answers. For instance, for a \"number\"\nfield you can set minimum and maximum values, and entries will automatically be\nrequired to be numeric (http://www.alpacajs.org/docs/fields/number.html). You can also\neither set required: true in the schema->properties entry for this field OR set\nvalidator: required-field in the options->fields entry if you want to require that the\nparticipant enters something. A validation error message will be displayed next to\nany fields that fail validation checks and the participant will not be able to proceed until\nthese are addressed.\n\nAlpacajs is fairly powerful, and you are essentially using it directly. In general, you can copy\nand paste any object passed to alpaca in the alpaca docs right in as your formSchema to\nsee that example in action on Lookit. Not all features of alpaca are detailed here,\nbut they can be used: e.g., advanced users can enter 'views' and 'data' in the\nformSchema to customize the layout of their forms and the initial data. A 'dataSource'\nmay be specified under options to populate a question's potential answers (e.g., to\nload a list of countries from some other source rather than hard-coding it, or to\nprovide checkboxes with vocabulary items from an externally-defined inventory).\n\nYou can also use alpacajs's \"dependencies\" and \"conditional dependencies\" functionality to\nset up fields that depend on other fields - e.g., asking if the child speaks any\nlanguage besides English in the home and only if so displaying a dropdown to select the\nlanguage(s), or asking if the child likes Elmo or Grover better and then asking a question\nspecific to the preferred character. Or if you have questions only relevant to the\nbirth mother of the child, you could ask if the participant is the birth mother and show\nthose questions conditionally.\n\nNote that question titles are interpreted as HTML and can include images, audio/video\nelements, and inline CSS.\n\nIf a participant returns to this frame after continuing, via a 'Previous' button on the\nnext frame, then the values in this form are pre-filled.\n\nNo video recording is conducted on this frame.\n\nA previous button may optionally be included on this frame.\n\nThe form itself occupies a maximum of 800px horizontally and takes up 80% of the vertical\nheight of the window (it will scroll to fit).\n\nCurrent limitations: you are NOT\nable to provide custom functions (e.g. validators, custom dataSource functions)\ndirectly to the formSchema.\n\nHere is an example of a reasonably simple survey using this frame:\n\n\n```json\n\"frames\": {\n       \"pet-survey\": {\n           \"kind\": \"exp-lookit-survey\",\n           \"formSchema\": {\n               \"schema\": {\n                   \"type\": \"object\",\n                   \"title\": \"Tell us about your pet!\",\n                   \"properties\": {\n                       \"age\": {\n                           \"type\": \"integer\",\n                           \"title\": \"Age\",\n                           \"maximum\": 200,\n                           \"minimum\": 0,\n                           \"required\": true\n                       },\n                       \"name\": {\n                           \"type\": \"string\",\n                           \"title\": \"Name\",\n                           \"required\": true\n                       },\n                       \"species\": {\n                           \"enum\": [\n                               \"dog\",\n                               \"cat\",\n                               \"fish\",\n                               \"bird\",\n                               \"raccoon\"\n                           ],\n                           \"type\": \"string\",\n                           \"title\": \"What type of animal?\",\n                           \"default\": \"\"\n                       }\n                   }\n               },\n               \"options\": {\n                   \"fields\": {\n                       \"age\": {\n                           \"numericEntry\": true\n                       },\n                       \"name\": {\n                           \"placeholder\": \"a name...\"\n                       },\n                       \"species\": {\n                           \"type\": \"radio\",\n                           \"message\": \"Seriously, what species??\",\n                           \"validator\": \"required-field\"\n                       }\n                   }\n               }\n           },\n           \"nextButtonText\": \"Moving on...\"\n       }\n   }\n```\n\nAnd here is an example of re-implementing the exp-lookit-mood-questionnaire, using\ncustom formatting, time-pickers, dependencies, and question groups.\n\n```json\n\"frames\": {\n           \"survey-sample-3\": {\n           \"kind\": \"exp-lookit-survey\",\n           \"formSchema\": {\n               \"view\": {\n                   \"fields\": {\n                       \"/child/happy\": {\n                           \"templates\": {\n                               \"control\": \"<div>{{#if options.leftLabel}}<label class='label-left'>{{{options.leftLabel}}}</label>{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}<label class='label-right'>{{{options.rightLabel}}}</label>{{/if}}</div>\"\n                           }\n                       },\n                       \"/child/active\": {\n                           \"templates\": {\n                               \"control\": \"<div>{{#if options.leftLabel}}<label class='label-left'>{{{options.leftLabel}}}</label>{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}<label class='label-right'>{{{options.rightLabel}}}</label>{{/if}}</div>\"\n                           }\n                       },\n                       \"/child/rested\": {\n                           \"templates\": {\n                               \"control\": \"<div>{{#if options.leftLabel}}<label class='label-left'>{{{options.leftLabel}}}</label>{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}<label class='label-right'>{{{options.rightLabel}}}</label>{{/if}}</div>\"\n                           }\n                       },\n                       \"/child/healthy\": {\n                           \"templates\": {\n                               \"control\": \"<div>{{#if options.leftLabel}}<label class='label-left'>{{{options.leftLabel}}}</label>{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}<label class='label-right'>{{{options.rightLabel}}}</label>{{/if}}</div>\"\n                           }\n                       },\n                       \"/parent/energetic\": {\n                           \"templates\": {\n                               \"control\": \"<div>{{#if options.leftLabel}}<label class='label-left'>{{{options.leftLabel}}}</label>{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}<label class='label-right'>{{{options.rightLabel}}}</label>{{/if}}</div>\"\n                           }\n                       },\n                       \"/parent/parentHappy\": {\n                           \"templates\": {\n                               \"control\": \"<div>{{#if options.leftLabel}}<label class='label-left'>{{{options.leftLabel}}}</label>{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}<label class='label-right'>{{{options.rightLabel}}}</label>{{/if}}</div>\"\n                           }\n                       },\n                       \"/parent/ontopofstuff\": {\n                           \"templates\": {\n                               \"control\": \"<div>{{#if options.leftLabel}}<label class='label-left'>{{{options.leftLabel}}}</label>{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}<label class='label-right'>{{{options.rightLabel}}}</label>{{/if}}</div>\"\n                           }\n                       }\n                   },\n                   \"layout\": {\n                       \"bindings\": {\n                           \"child\": \"#child\",\n                           \"parent\": \"#parent\",\n                           \"lastEat\": \"#lastEat\",\n                           \"nextNap\": \"#nextNap\",\n                           \"napWakeUp\": \"#napWakeUp\",\n                           \"doingBefore\": \"#doingBefore\",\n                           \"usualNapSchedule\": \"#usualNapSchedule\"\n                       },\n                       \"template\": \"<div class='row exp-text exp-lookit-mood-questionnaire'><h4>{{{options.formTitle}}}</h4><p>{{{options.introText}}}</p><div id='child'></div><div id='parent'></div><div id='napWakeUp'></div><div id='usualNapSchedule'></div><div id='nextNap'></div><div id='lastEat'></div><div id='doingBefore'></div></div>\"\n                   },\n                   \"parent\": \"bootstrap-edit\"\n               },\n               \"schema\": {\n                   \"type\": \"object\",\n                   \"properties\": {\n                       \"child\": {\n                           \"type\": \"object\",\n                           \"title\": \"How is your CHILD feeling right now?\",\n                           \"properties\": {\n                               \"happy\": {\n                                   \"enum\": [\n                                       \"1\",\n                                       \"2\",\n                                       \"3\",\n                                       \"4\",\n                                       \"5\",\n                                       \"6\",\n                                       \"7\"\n                                   ],\n                                   \"required\": true\n                               },\n                               \"active\": {\n                                   \"enum\": [\n                                       \"1\",\n                                       \"2\",\n                                       \"3\",\n                                       \"4\",\n                                       \"5\",\n                                       \"6\",\n                                       \"7\"\n                                   ],\n                                   \"required\": true\n                               },\n                               \"rested\": {\n                                   \"enum\": [\n                                       \"1\",\n                                       \"2\",\n                                       \"3\",\n                                       \"4\",\n                                       \"5\",\n                                       \"6\",\n                                       \"7\"\n                                   ],\n                                   \"required\": true\n                               },\n                               \"healthy\": {\n                                   \"enum\": [\n                                       \"1\",\n                                       \"2\",\n                                       \"3\",\n                                       \"4\",\n                                       \"5\",\n                                       \"6\",\n                                       \"7\"\n                                   ],\n                                   \"required\": true\n                               }\n                           }\n                       },\n                       \"parent\": {\n                           \"type\": \"object\",\n                           \"title\": \"How are YOU feeling right now?\",\n                           \"properties\": {\n                               \"energetic\": {\n                                   \"enum\": [\n                                       \"1\",\n                                       \"2\",\n                                       \"3\",\n                                       \"4\",\n                                       \"5\",\n                                       \"6\",\n                                       \"7\"\n                                   ],\n                                   \"required\": true\n                               },\n                               \"parentHappy\": {\n                                   \"enum\": [\n                                       \"1\",\n                                       \"2\",\n                                       \"3\",\n                                       \"4\",\n                                       \"5\",\n                                       \"6\",\n                                       \"7\"\n                                   ],\n                                   \"required\": true\n                               },\n                               \"ontopofstuff\": {\n                                   \"enum\": [\n                                       \"1\",\n                                       \"2\",\n                                       \"3\",\n                                       \"4\",\n                                       \"5\",\n                                       \"6\",\n                                       \"7\"\n                                   ],\n                                   \"required\": true\n                               }\n                           }\n                       },\n                       \"lastEat\": {\n                           \"title\": \"About how long ago did your child last eat or drink?\",\n                           \"required\": true\n                       },\n                       \"nextNap\": {\n                           \"title\": \"About how much longer until his/her next nap (or bedtime)?\",\n                           \"required\": true\n                       },\n                       \"napWakeUp\": {\n                           \"title\": \"About how long ago did your child last wake up from sleep or a nap?\",\n                           \"required\": true\n                       },\n                       \"doingBefore\": {\n                           \"title\": \"What was your child doing before this?\",\n                           \"required\": true\n                       },\n                       \"usualNapSchedule\": {\n                           \"enum\": [\n                               \"yes\",\n                               \"no\",\n                               \"yes-overdue\"\n                           ],\n                           \"title\": \"Does your child have a usual nap schedule?\",\n                           \"required\": true\n                       }\n                   },\n                   \"dependencies\": {\n                       \"nextNap\": [\n                           \"usualNapSchedule\"\n                       ]\n                   }\n               },\n               \"options\": {\n                   \"fields\": {\n                       \"child\": {\n                           \"fields\": {\n                               \"happy\": {\n                                   \"type\": \"radio\",\n                                   \"order\": 3,\n                                   \"vertical\": false,\n                                   \"leftLabel\": \"Fussy\",\n                                   \"fieldClass\": \"aligned-radio-group\",\n                                   \"rightLabel\": \"Happy\",\n                                   \"optionLabels\": [\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\"\n                                   ]\n                               },\n                               \"active\": {\n                                   \"type\": \"radio\",\n                                   \"order\": 4,\n                                   \"vertical\": false,\n                                   \"leftLabel\": \"Calm\",\n                                   \"fieldClass\": \"aligned-radio-group\",\n                                   \"rightLabel\": \"Active\",\n                                   \"optionLabels\": [\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\"\n                                   ]\n                               },\n                               \"rested\": {\n                                   \"type\": \"radio\",\n                                   \"order\": 1,\n                                   \"vertical\": false,\n                                   \"leftLabel\": \"Tired\",\n                                   \"fieldClass\": \"aligned-radio-group\",\n                                   \"rightLabel\": \"Rested\",\n                                   \"optionLabels\": [\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\"\n                                   ]\n                               },\n                               \"healthy\": {\n                                   \"type\": \"radio\",\n                                   \"order\": 2,\n                                   \"vertical\": false,\n                                   \"leftLabel\": \"Sick\",\n                                   \"fieldClass\": \"aligned-radio-group\",\n                                   \"rightLabel\": \"Healthy\",\n                                   \"optionLabels\": [\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\"\n                                   ]\n                               }\n                           }\n                       },\n                       \"parent\": {\n                           \"fields\": {\n                               \"energetic\": {\n                                   \"type\": \"radio\",\n                                   \"order\": 1,\n                                   \"vertical\": false,\n                                   \"leftLabel\": \"Tired\",\n                                   \"fieldClass\": \"aligned-radio-group\",\n                                   \"rightLabel\": \"Energetic\",\n                                   \"optionLabels\": [\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\"\n                                   ]\n                               },\n                               \"parentHappy\": {\n                                   \"type\": \"radio\",\n                                   \"order\": 3,\n                                   \"vertical\": false,\n                                   \"leftLabel\": \"Upset\",\n                                   \"fieldClass\": \"aligned-radio-group\",\n                                   \"rightLabel\": \"Happy\",\n                                   \"optionLabels\": [\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\"\n                                   ]\n                               },\n                               \"ontopofstuff\": {\n                                   \"type\": \"radio\",\n                                   \"order\": 2,\n                                   \"vertical\": false,\n                                   \"leftLabel\": \"Overwhelmed\",\n                                   \"fieldClass\": \"aligned-radio-group\",\n                                   \"rightLabel\": \"On top of things\",\n                                   \"optionLabels\": [\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\",\n                                       \"\"\n                                   ]\n                               }\n                           }\n                       },\n                       \"lastEat\": {\n                           \"size\": 10,\n                           \"type\": \"time\",\n                           \"picker\": {\n                               \"useCurrent\": \"day\"\n                           },\n                           \"dateFormat\": \"HH:mm\",\n                           \"placeholder\": \"hours:minutes\"\n                       },\n                       \"nextNap\": {\n                           \"size\": 10,\n                           \"type\": \"time\",\n                           \"picker\": {\n                               \"useCurrent\": \"day\"\n                           },\n                           \"dateFormat\": \"HH:mm\",\n                           \"placeholder\": \"hours:minutes\",\n                           \"dependencies\": {\n                               \"usualNapSchedule\": \"yes\"\n                           }\n                       },\n                       \"napWakeUp\": {\n                           \"size\": 10,\n                           \"type\": \"time\",\n                           \"picker\": {\n                               \"useCurrent\": \"day\"\n                           },\n                           \"dateFormat\": \"HH:mm\",\n                           \"placeholder\": \"hours:minutes\"\n                       },\n                       \"doingBefore\": {\n                           \"type\": \"text\",\n                           \"placeholder\": \"examples: having lunch, playing outside, going to the store with me\"\n                       },\n                       \"usualNapSchedule\": {\n                           \"sort\": false,\n                           \"type\": \"select\",\n                           \"hideNone\": false,\n                           \"noneLabel\": \"\",\n                           \"optionLabels\": [\n                               \"Yes\",\n                               \"No\",\n                               \"Yes, and he/she is already due for a nap\"\n                           ],\n                           \"removeDefaultNone\": false\n                       }\n                   },\n                   \"formTitle\": \"Mood Questionnaire\",\n                   \"introText\": \"How are you two doing? We really want to know: we’re interested in how your child’s mood affects which sorts of surprising physical events he/she notices. You can help us find out what babies are really learning as they get older... and what they already knew, but weren’t calm and focused enough to show us!\",\n                   \"hideInitValidationError\": true\n               }\n           },\n           \"nextButtonText\": \"Next\"\n       }\n\n```",
             "extends": "ExpFrameBase"
         },
         "ExpLookitText": {
@@ -727,7 +727,7 @@
             "namespace": "",
             "file": "app/components/exp-video-config/component.js",
             "line": 12,
-            "description": "Video configuration frame guiding user through making sure permissions are set appropriately and microphone is working, with troubleshooting text. All content is hard-coded for a general-purpose technical setup frame.\n\n```json\n\"frames\": {\n    \"video-config\": {\n        \"kind\": \"exp-video-config\"\n    }\n}\n```",
+            "description": "Video configuration frame guiding user through making sure permissions are set\nappropriately and microphone is working, with troubleshooting text. Almost all content is\nhard-coded, to provide a general-purpose technical setup frame.\n\n```json\n\"frames\": {\n    \"video-config\": {\n        \"kind\": \"exp-video-config\",\n        \"troubleshootingIntro\": \"If you're having any trouble getting your webcam set up,\n          please feel free to call the XYZ lab at (123) 456-7890 and we'd be glad to\n          help you out!\"\n    }\n}\n```",
             "extends": "VideoRecord"
         },
         "ExpVideoConfigQuality": {
@@ -742,8 +742,8 @@
             "submodule": "frames",
             "namespace": "",
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 11,
-            "description": "Video configuration frame showing webcam view at right and instructions for checking video quality for preferential looking setup at left, with pictures. Content is hard-coded for preferential looking requirements and images; this frame can serve as a template for other applications (e.g., verbal responses, where we might care less about lighting but want to generally be able to see the child's face) or can be generalized to show an arbitrary set of instructions/images.\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\"\n    }\n}\n```",
+            "line": 16,
+            "description": "Video configuration frame showing webcam view at right and instructions for checking\nvideo quality for preferential looking setup at left. Default content is hard-coded to\nprovide a reasonable set of instructions for preferential looking setups, so the frame can\nbe used as follows with no parameters besides `kind`:\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\"\n    }\n}\n```\n\nOptionally,\nparticipants can be required to check off each item before they can proceed to the next\nframe. If `requireItemConfirmation` is true (default), then the 'next' button will\nappear disabled until the participant has checked off all buttons, although if they click\nit anyway they will get an informative warning and the instructions section will scroll\nto the first unchecked item.\n\nParticipants can also be optionally required to create and view a short recording, e.g. to\ncheck their child will be audible or their child's eyes will be visible in a particular position.\n\nYou can also customize any or all text and images as in the following example.\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\",\n        \"title\": \"Webcam setup for preferential looking\",\n        \"introText\": \"We'll be analyzing where your child chooses to look during the videos--but only if we can tell where that is! Please check each of the following to ensure we're able to use your video:\",\n        \"requireItemConfirmation\": true,\n        \"completedItemText\": \"Did it!\",\n        \"instructionBlocks\": [\n            {\n                text: '<strong>Make sure the webcam you\\'re using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!',\n                image: {\n                    src: 'assets/centering.png',\n                    alt: 'Example images of using centered external webcam on monitor or built-in webcam on laptop.'\n                }\n            },\n            {\n                text: '<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there\\'s just one monitor, you\\'re all set!)',\n                image: {\n                    src: 'assets/monitors.png',\n                    alt: 'Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.'\n                }\n            }\n        ],\n        \"requireTestVideo\": true,\n        \"showRecordMenu\": true,\n        \"recordingInstructionText\": \"You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.\"\n    }\n}\n```",
             "extends": "VideoRecord"
         },
         "ExpVideoConsent": {
@@ -777,8 +777,8 @@
             "submodule": "frames",
             "namespace": "",
             "file": "app/components/exp-video-preview/component.js",
-            "line": 14,
-            "description": "A frame that displays a series of videos to preview, without collecting data as a live experiment. User can go through these at their own pace and video controls are shown. Webcam video is recorded starting once the user presses a button to actually display the videos, so that researchers can check that the participant (infant/child) did not see the videos ahead of time.\n```json\n\"frames\": {\n   \"my-sample-frame\": {\n       \"id\": \"video-preview\",\n       \"kind\": \"exp-video-preview\",\n       \"text\": \"Here are the videos your child will see in this study. You can watch them ahead of time--please just don't show your child yet!\",\n       \"prompt\": \"My child can NOT see the screen. Start the preview!\",\n       \"videos\": [\n          {\n            \"caption\": \"User-facing text that appears below the video\",\n            \"baseDir\": \"https://url.com/\",\n            \"sources\": \"example_intro\",\n            \"videoTypes\": [\"webm\", \"mp4\"]\n          }\n        ]\n   }\n\n```",
+            "line": 15,
+            "description": "A frame that displays a series of videos to preview, without collecting data as a live experiment. User can go through these at their own pace and video controls are shown. Webcam video is recorded starting once the user presses a button to actually display the videos, so that researchers can check that the participant (infant/child) did not see the videos ahead of time.\n```json\n\"frames\": {\n   \"my-sample-frame\": {\n       \"id\": \"video-preview\",\n       \"kind\": \"exp-video-preview\",\n       \"text\": \"Here are the videos your child will see in this study. You can watch them ahead of time--please just don't show your child yet!\",\n       \"prompt\": \"My child can NOT see the screen. Start the preview!\",\n       \"baseDir\": \"https://url.com/\",\n       \"videoTypes\": [\"webm\", \"mp4\"]\n       \"videos\": [\n          {\n            \"caption\": \"User-facing text that appears below the video\",\n            \"sources\": \"example_intro\"\n          },\n          {\n            \"caption\": \"User-facing text that appears below the video\",\n            \"imgSrc\": \"caterpillar_picture\"\n          }\n        ]\n   }\n\n```",
             "extends": "ExpFrameBase",
             "uses": [
                 "ExpandAssets",
@@ -862,7 +862,7 @@
             "submodule": "mixins",
             "namespace": "",
             "file": "app/mixins/video-record.js",
-            "line": 14,
+            "line": 13,
             "description": "A mixin that can be used to add basic support for video recording to a particular experiment frame\n\nBy default, the recorder will be installed when this frame loads, but recording\nwill not start automatically. To override either of these settings, set\nthe properties `doUseCamera` and/or `startRecordingAutomatically` in the consuming\nframe.\n\nYou will also need to set `recorderElement` if the recorder is to be housed other than\nin an element identified by the ID `recorder`.\n\nThe properties `recorder`, `videoList`, `stoppedRecording`, `recorderReady`, and\n`videoId` become available to the consuming frame. The recorder object has fields\nthat give information about its state: `hasWebCam`, 'hasCamAccess`, `recording`,\n`connected`, and `micChecked` - for details, see services/video-recorder.js. These\ncan be accessed from the consuming frame as e.g. `this.get('recorder').get('hasWebCam')`.\n\nIf starting recording automatically, the function `whenPossibleToRecord` will be called\nonce recording is possible, and will start recording. If you want to do other things\nat this point, like proceeding to a test trial, you can override this function in your\nframe.\n\nSee 'methods' for the functions you can use on a frame that extends VideoRecord.\n\nEvents recorded in a frame that extends VideoRecord will automatically have additional\nfields videoId (video filename), pipeId (temporary filename initially assigned by\nthe recording service),\nand streamTime (when in the video they happened, in s).\n\nSetting up the camera is handled in didInsertElement, and making sure recording is\nstopped is handled in willDestroyElement (Ember hooks that fire during the component\nlifecycle). It is very important (in general, but especially when using this mixin)\nthat you call `this._super(...arguments);` in any functions where your frame overrides\nhooks like this, so that the mixin's functions get called too!"
         },
         "permute": {
@@ -907,7 +907,7 @@
             "submodule": "services",
             "namespace": "",
             "file": "app/services/video-recorder.js",
-            "line": 47,
+            "line": 48,
             "description": "An instance of a video recorder tied to or used by one specific page. A given experiment may use more than one\n  video recorder depending on the number of video capture frames."
         },
         "videoRecorder": {
@@ -922,7 +922,7 @@
             "submodule": "services",
             "namespace": "",
             "file": "app/services/video-recorder.js",
-            "line": 331,
+            "line": 343,
             "description": "A service designed to facilitate video recording by providing helper methods and managing multiple recorder objects\n Using a persistent service is intended to ensure we destroy recorder elements when the video is done uploading,\n rather than just when the user exits the frame"
         }
     },
@@ -978,7 +978,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 232,
+            "line": 236,
             "description": "Move to next frame",
             "itemtype": "event",
             "name": "nextFrame",
@@ -988,7 +988,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 255,
+            "line": 259,
             "description": "Move to previous frame",
             "itemtype": "event",
             "name": "previousFrame",
@@ -1838,7 +1838,7 @@
         },
         {
             "file": "app/components/exp-lookit-mood-questionnaire/component.js",
-            "line": 117,
+            "line": 123,
             "description": "Intro paragraph describing why we want mood info",
             "itemtype": "property",
             "name": "introText",
@@ -1850,7 +1850,7 @@
         },
         {
             "file": "app/components/exp-lookit-mood-questionnaire/component.js",
-            "line": 132,
+            "line": 138,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "serializeContent",
@@ -2109,7 +2109,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 200,
+            "line": 201,
             "description": "Array of objects specifying video src and type for test video (these should be the same video, but multiple sources--e.g. mp4 and webm--are generally needed for cross-browser support). If none provided, skip test phase.\n\nExample value:\n\n```[{'src': 'http://.../video1.mp4', 'type': 'video/mp4'}, {'src': 'http://.../video1.webm', 'type': 'video/webm'}]```",
             "itemtype": "property",
             "name": "testVideo",
@@ -2133,7 +2133,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 217,
+            "line": 218,
             "description": "Array of objects specifying video src and type for alternate test video, as for testVideo. Alternate test video will be shown if the first test is paused, after restarting the trial. If alternate test video is also paused, we just move on. If altTestVideo is not provided, defaults to playing same test video again (but still only one pause of test video allowed per trial).",
             "itemtype": "property",
             "name": "altTestVideo",
@@ -2157,7 +2157,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 230,
+            "line": 231,
             "description": "Array of objects specifying intro video src and type, as for testVideo.\nIf empty, intro segment will be skipped.",
             "itemtype": "property",
             "name": "introVideo",
@@ -2181,7 +2181,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 244,
+            "line": 245,
             "description": "Array of objects specifying attention-grabber video src and type, as for testVideo. The attention-grabber video is shown (looping) during the announcement phase and when the study is paused.",
             "itemtype": "property",
             "name": "announcementVideo",
@@ -2205,7 +2205,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 256,
+            "line": 257,
             "description": "minimum amount of time to show attention-getter in seconds. Announcement phase (attention-getter plus audio) will last the minimum of announcementLength and the duration of any announcement audio.",
             "itemtype": "property",
             "name": "announcementLength",
@@ -2217,7 +2217,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 267,
+            "line": 268,
             "description": "List of objects specifying intro announcement src and type. If empty and minimum announcementLength is 0, announcement is skipped.\nExample: `[{'src': 'http://.../audio1.mp3', 'type': 'audio/mp3'}, {'src': 'http://.../audio1.ogg', 'type': 'audio/ogg'}]`",
             "itemtype": "property",
             "name": "announcementAudio",
@@ -2241,7 +2241,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 281,
+            "line": 282,
             "description": "URL of image to show on left, if any. Can be a full URL or a\nstub that will be appended to `baseDir` + `img/` (see\nbaseDir).",
             "itemtype": "property",
             "name": "leftImage",
@@ -2252,10 +2252,10 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 292,
+            "line": 293,
             "description": "URL of image to show on right, if any. Can be a full URL or a\nstub that will be appended to `baseDir` + `img/` (see\nbaseDir).",
             "itemtype": "property",
-            "name": "right",
+            "name": "rightImage",
             "type": "String",
             "class": "ExpLookitPreferentialLooking",
             "module": "exp-player",
@@ -2263,7 +2263,51 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 303,
+            "line": 305,
+            "description": "List of possible images that may be shown. Can be full URLs or\nstubs that will be appended to `baseDir` + `img/` (see\nbaseDir). If leftImageIndex, rightImageIndex, and/or centerImageIndex\nare provided, they indicate the index of the item in this list.",
+            "itemtype": "property",
+            "name": "possibleImages",
+            "type": "String",
+            "class": "ExpLookitPreferentialLooking",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-preferential-looking/component.js",
+            "line": 322,
+            "description": "Index in possibleImages for image to use on left. This will be overridden\nby any actual value provided for leftImage. Index must be in range\n[0, len(possibleImages)]. Omit or -1 not to use.",
+            "itemtype": "property",
+            "name": "leftImageIndex",
+            "type": "String",
+            "class": "ExpLookitPreferentialLooking",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-preferential-looking/component.js",
+            "line": 335,
+            "description": "Index in possibleImages for image to use on right. This will be overridden\nby any actual value provided for rightImage. Index must be in range\n[0, len(possibleImages)].  Omit or -1 not to use.",
+            "itemtype": "property",
+            "name": "rightImageIndex",
+            "type": "String",
+            "class": "ExpLookitPreferentialLooking",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-preferential-looking/component.js",
+            "line": 348,
+            "description": "Index in possibleImages for center image. This will be overridden\nby any actual value provided for centerImage. Index must be in range\n[0, len(possibleImages)].  Omit or -1 not to use.",
+            "itemtype": "property",
+            "name": "centerImageIndex",
+            "type": "String",
+            "class": "ExpLookitPreferentialLooking",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-preferential-looking/component.js",
+            "line": 360,
             "description": "URL of image to show at center, if any. Can be a full URL or\na stub that will be appended to `baseDir` + `img/` (see\nbaseDir).",
             "itemtype": "property",
             "name": "centerImage",
@@ -2274,7 +2318,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 315,
+            "line": 372,
             "description": "List of objects specifying test audio src and type, as for announcementAudio.\nIf empty, no additional test audio is played besides any audio in testVideo.",
             "itemtype": "property",
             "name": "testAudio",
@@ -2302,7 +2346,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 330,
+            "line": 387,
             "description": "Whether test audio should loop",
             "itemtype": "property",
             "name": "loopTestAudio",
@@ -2314,7 +2358,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 341,
+            "line": 398,
             "description": "Whether to allow participant to pause study during test. If no, study still\npauses but upon unpausing moves to next trial. If yes, study restarts from\nbeginning upon unpausing (with alternate sources).",
             "itemtype": "property",
             "name": "allowPauseDuringTest",
@@ -2326,7 +2370,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 354,
+            "line": 411,
             "description": "Length to loop test videos, in seconds. Set if you want a time-based limit. E.g., setting testLength to 20 means that the first 20 seconds of the video will be played, with shorter videos looping until they get to 20s. Leave out or set to Infinity  to play the video through to the end a set number of times instead. If a testLength is set, it overrides any value set in testCount.",
             "itemtype": "property",
             "name": "testLength",
@@ -2338,7 +2382,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 365,
+            "line": 422,
             "description": "Number of times to play test video before moving on. This is ignored if\ntestLength is set to a finite value.",
             "itemtype": "property",
             "name": "testCount",
@@ -2350,7 +2394,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 377,
+            "line": 434,
             "description": "Whether to do any video recording during this frame. Default true. Set to false for e.g. last frame where just doing an announcement.",
             "itemtype": "property",
             "name": "doRecording",
@@ -2362,7 +2406,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 387,
+            "line": 444,
             "description": "length of single calibration segment in ms. 0 to skip calibration.",
             "itemtype": "property",
             "name": "calibrationLength",
@@ -2374,7 +2418,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 398,
+            "line": 455,
             "description": "Ordered list of positions to show calibration segment in. Options are\n\"center\", \"left\", \"right\". Ignored if calibrationLength is 0.",
             "itemtype": "property",
             "name": "calibrationPositions",
@@ -2386,7 +2430,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 410,
+            "line": 467,
             "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\ncalibration audio (played at each calibration position).\nIgnored if calibrationLength is 0.",
             "itemtype": "property",
             "name": "calibrationAudio",
@@ -2398,7 +2442,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 434,
+            "line": 491,
             "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\ncalibration video (played from start at each calibration position).\nIgnored if calibrationLength is 0.",
             "itemtype": "property",
             "name": "calibrationVideo",
@@ -2410,7 +2454,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 458,
+            "line": 515,
             "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\naudio played upon pausing study",
             "itemtype": "property",
             "name": "pauseAudio",
@@ -2422,7 +2466,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 481,
+            "line": 538,
             "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\naudio played upon unpausing study. Unpausing audio will always be played\nbefore proceeding to next trial, even if this trial will not be redone\n(e.g. because it was paused during test and allowPauseDuringTest is\nset to false)",
             "itemtype": "property",
             "name": "unpauseAudio",
@@ -2434,7 +2478,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 507,
+            "line": 564,
             "description": "Text to show under \"Study paused / Press space to resume\" when study is paused.\nDefault: (You'll have a moment to turn around again.)",
             "itemtype": "property",
             "name": "pauseText",
@@ -2446,7 +2490,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 524,
+            "line": 581,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "serializeContent",
@@ -2485,6 +2529,16 @@
                     "name": "testLength",
                     "description": "seconds to display images/loop videos (given as a property of the frame), if using time-based limit",
                     "type": "Number"
+                },
+                {
+                    "name": "baseDir",
+                    "description": "location of stimuli",
+                    "type": "String"
+                },
+                {
+                    "name": "testAudio",
+                    "description": "test audio file played, if any",
+                    "type": "String"
                 }
             ],
             "return": {
@@ -2497,7 +2551,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 772,
+            "line": 837,
             "description": "Start of EACH calibration segment",
             "itemtype": "event",
             "name": "startCalibration",
@@ -2514,7 +2568,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 921,
+            "line": 999,
             "description": "Observer that starts recording once recorder is ready. Override to do additional\nstuff at this point!",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -2791,7 +2845,7 @@
         },
         {
             "file": "app/components/exp-lookit-survey/component.js",
-            "line": 142,
+            "line": 520,
             "description": "Whether to show a 'previous' button",
             "itemtype": "property",
             "name": "showPreviousButton",
@@ -2803,7 +2857,7 @@
         },
         {
             "file": "app/components/exp-lookit-survey/component.js",
-            "line": 152,
+            "line": 530,
             "description": "Text to display on the 'next frame' button",
             "itemtype": "property",
             "name": "nextButtonText",
@@ -2815,7 +2869,7 @@
         },
         {
             "file": "app/components/exp-lookit-survey/component.js",
-            "line": 162,
+            "line": 540,
             "description": "Object specifying the content of the form. This is in the same format as\nthe example definition of the const 'schema' at http://toddjordan.github.io/ember-cli-dynamic-forms/#/demos/data:\na schema and options are designated separately. Each field of the form\nmust be defined in schema. Options may additionally be specified in options.",
             "itemtype": "property",
             "name": "formSchema",
@@ -2838,7 +2892,7 @@
         },
         {
             "file": "app/components/exp-lookit-survey/component.js",
-            "line": 198,
+            "line": 576,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "serializeContent",
@@ -2882,7 +2936,7 @@
         {
             "file": "app/components/exp-lookit-text/component.js",
             "line": 57,
-            "description": "Array of text blocks (paragraphs) to display.",
+            "description": "Array of text blocks (paragraphs) to display. Rendered using\n{{#crossLink \"ExpTextBlock\"}}{{/crossLink}}, so all parameters\nof ExpTextBlock can be used.",
             "itemtype": "property",
             "name": "blocks",
             "type": "Object",
@@ -3220,7 +3274,7 @@
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 652,
+            "line": 655,
             "description": "Start of EACH calibration segment",
             "itemtype": "event",
             "name": "startCalibration",
@@ -3237,7 +3291,7 @@
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 782,
+            "line": 785,
             "description": "Observer that starts recording once recorder is ready. Override to do additional\nstuff at this point!",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -3402,15 +3456,123 @@
         },
         {
             "file": "app/components/exp-video-config/component.js",
-            "line": 59,
+            "line": 63,
             "description": "Text to show as the introduction to the troubleshooting tips section",
             "itemtype": "property",
             "name": "troubleshootingIntro",
             "type": "String",
-            "default": "\"Some families are having trouble initially getting their webcams to work on Lookit. We're sorry, and we're working on switching away from Flash to make recording more reliable! In the meantime, these instructions should fix most problems.\"",
+            "default": "\"\"",
             "class": "ExpVideoConfig",
             "module": "exp-player",
             "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-video-config-quality/component.js",
+            "line": 90,
+            "description": "Text to show as the introduction to the list of things to check. Can include\nHTML.",
+            "itemtype": "property",
+            "name": "introText",
+            "type": "String",
+            "default": "\"\"",
+            "class": "ExpVideoConfigQuality",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-video-config-quality/component.js",
+            "line": 101,
+            "description": "Title to display to participant",
+            "itemtype": "property",
+            "name": "title",
+            "type": "String",
+            "default": "\"\"",
+            "class": "ExpVideoConfigQuality",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-video-config-quality/component.js",
+            "line": 111,
+            "description": "Whether to show checkboxes under each instruction item and require\nparticipant to check them off to proceed.",
+            "itemtype": "property",
+            "name": "requireItemConfirmation",
+            "type": "Boolean",
+            "default": "true",
+            "class": "ExpVideoConfigQuality",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-video-config-quality/component.js",
+            "line": 122,
+            "description": "Whether to require participant to make and view a test video. Ignored if\nshowRecordMenu is false.",
+            "itemtype": "property",
+            "name": "requireTestVideo",
+            "type": "Boolean",
+            "default": "true",
+            "class": "ExpVideoConfigQuality",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-video-config-quality/component.js",
+            "line": 133,
+            "description": "Whether to display record/replay menu to participant. If false,\nrequireTestVideo value is ignored.",
+            "itemtype": "property",
+            "name": "showRecordMenu",
+            "type": "Boolean",
+            "default": "true",
+            "class": "ExpVideoConfigQuality",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-video-config-quality/component.js",
+            "line": 144,
+            "description": "Text to show below the webcam view. For instance, you might instruct\nfamilies to make a short recording in the position they will be in for the\nexperiment, and make sure that the infant's eyes are visible or that the\nchild is audible. HTML is allowed.",
+            "itemtype": "property",
+            "name": "recordingInstructionText",
+            "type": "String",
+            "default": "\"Did it!\"",
+            "class": "ExpVideoConfigQuality",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-video-config-quality/component.js",
+            "line": 157,
+            "description": "Text to show next to instructions checkboxes, if participant is required\nto check off each instruction (see requireItemConfirmation). Ignored if\nrequireItemConfirmation is false.",
+            "itemtype": "property",
+            "name": "completedItemText",
+            "type": "String",
+            "default": "\"Did it!\"",
+            "class": "ExpVideoConfigQuality",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-video-config-quality/component.js",
+            "line": 169,
+            "description": "List of instruction segments to display to participant. Rendered using\n{{#crossLink \"ExpTextBlock\"}}{{/crossLink}}, so all parameters\nof ExpTextBlock can be used.",
+            "itemtype": "property",
+            "name": "instructionBlocks",
+            "type": "Object",
+            "default": "\"\"",
+            "class": "ExpVideoConfigQuality",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "text",
+                    "description": "instructions text (can include html)",
+                    "type": "String"
+                },
+                {
+                    "name": "image",
+                    "description": "image to display, with 'src' & 'alt' attributes",
+                    "type": "Object"
+                }
+            ]
         },
         {
             "file": "app/components/exp-video-consent/component.js",
@@ -3498,7 +3660,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 105,
+            "line": 110,
             "description": "A series of preview videos to display within a single frame, defined as an array of objects.",
             "itemtype": "property",
             "name": "videos",
@@ -3526,7 +3688,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 147,
+            "line": 152,
             "description": "Text on the button prompt asking the user to continue to the videos",
             "itemtype": "property",
             "name": "prompt",
@@ -3537,7 +3699,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 165,
+            "line": 170,
             "description": "Informational text to display to the user before videos are shown, along with button to continue",
             "itemtype": "property",
             "name": "text",
@@ -3549,6 +3711,28 @@
         {
             "file": "app/components/exp-video-preview/component.js",
             "line": 180,
+            "description": "Text on the button to proceed to the next example video/image",
+            "itemtype": "property",
+            "name": "nextStimulusText",
+            "type": "String",
+            "class": "ExpVideoPreview",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-video-preview/component.js",
+            "line": 190,
+            "description": "Text on the button to proceed to the previous example video/image",
+            "itemtype": "property",
+            "name": "previousStimulusText",
+            "type": "String",
+            "class": "ExpVideoPreview",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-video-preview/component.js",
+            "line": 205,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "serializeContent",
@@ -3699,7 +3883,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 53,
+            "line": 52,
             "description": "When recorder detects a change in camera access",
             "itemtype": "event",
             "name": "hasCamAccess",
@@ -3716,7 +3900,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 60,
+            "line": 59,
             "description": "When recorder detects a change in video stream connection status",
             "itemtype": "event",
             "name": "videoStreamConnection",
@@ -3733,7 +3917,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 68,
+            "line": 67,
             "description": "When pausing study, immediately before request to pause webcam recording",
             "itemtype": "event",
             "name": "pauseVideo",
@@ -3743,7 +3927,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 74,
+            "line": 73,
             "description": "When unpausing study, immediately before request to resume webcam recording",
             "itemtype": "event",
             "name": "unpauseVideo",
@@ -3753,7 +3937,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 80,
+            "line": 79,
             "description": "Just before stopping webcam video capture",
             "itemtype": "event",
             "name": "stoppingCapture",
@@ -3763,7 +3947,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 88,
+            "line": 87,
             "description": "The recorder object, accessible to the consuming frame. Includes properties\nrecorder.hasWebCam, recorder.hasCamAccess, recorder.micChecked, recorder.connected.",
             "itemtype": "property",
             "name": "recorder",
@@ -3774,7 +3958,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 97,
+            "line": 96,
             "description": "A list of all video IDs used in this mixing (a new one is created for each recording).\nAccessible to consuming frame.",
             "itemtype": "property",
             "name": "videoList",
@@ -3785,7 +3969,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 104,
+            "line": 103,
             "description": "Whether recording is stopped already, meaning it doesn't need to be re-stopped when\ndestroying frame. This should be set to true by the consuming frame when video is\nstopped.",
             "itemtype": "property",
             "name": "stoppedRecording",
@@ -3796,7 +3980,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 112,
+            "line": 111,
             "description": "JQuery string to identify the recorder element.",
             "itemtype": "property",
             "name": "[recorderElement='#recorder']",
@@ -3807,7 +3991,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 118,
+            "line": 117,
             "description": "Whether recorder has been set up yet. Automatically set when doing setup.\nAccessible to consuming frame.",
             "itemtype": "property",
             "name": "recorderReady",
@@ -3818,7 +4002,19 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 125,
+            "line": 124,
+            "description": "Maximum recording length in seconds. Can be overridden by consuming frame.",
+            "itemtype": "property",
+            "name": "maxRecordingLength",
+            "type": "Number",
+            "default": "100000000",
+            "class": "VideoRecordMixin",
+            "module": "exp-player",
+            "submodule": "mixins"
+        },
+        {
+            "file": "app/mixins/video-record.js",
+            "line": 131,
             "description": "Whether to use the camera in this frame. Consuming frame should set this property\nto override if needed.",
             "itemtype": "property",
             "name": "[doUseCamera=true]",
@@ -3829,7 +4025,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 132,
+            "line": 138,
             "description": "Whether to start recording ASAP (only applies if doUseCamera). Consuming frame\nshould set to override if needed.",
             "itemtype": "property",
             "name": "[startRecordingAutomatically=false]",
@@ -3840,7 +4036,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 139,
+            "line": 145,
             "description": "A video ID to use for the current recording. Format is\n`videoStream_<experimentId>_<frameId>_<sessionId>_timestampMS_RRR`\nwhere RRR are random numeric digits.",
             "itemtype": "property",
             "name": "videoId",
@@ -3851,7 +4047,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 159,
+            "line": 165,
             "description": "Extend any base time event capture with information about the recorded video",
             "itemtype": "method",
             "name": "makeTimeEvent",
@@ -3875,7 +4071,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 178,
+            "line": 184,
             "description": "Set up a video recorder instance",
             "itemtype": "method",
             "name": "setupRecorder",
@@ -3906,7 +4102,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 210,
+            "line": 216,
             "description": "Pause the recorder (and capture timing events). For webRTC recorder, this is\njust a placeholder and doesn't actually pause the recording. If webRTC used,\nincludes extra data actuallyPaused: false. This is for backwards compatibility\nwith frames that pause/resume recording, and should not be used going forward -\ninstead stop/start and make separate clips if needed.",
             "itemtype": "method",
             "name": "pauseRecorder",
@@ -3924,7 +4120,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 230,
+            "line": 236,
             "description": "Resume a paused recording. For webRTC recorder, this is just a placeholder and\ndoesn't actually pause the recording. If webRTC used, includes extra data\nwasActuallyPaused: false. This is for backwards compatibility\nwith frames that pause/resume recording, and should not be used going forward -\ninstead stop/start and make separate clips if needed.",
             "itemtype": "method",
             "name": "resumeRecorder",
@@ -3934,7 +4130,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 248,
+            "line": 254,
             "description": "Start recording",
             "itemtype": "method",
             "name": "startRecorder",
@@ -3947,7 +4143,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 269,
+            "line": 275,
             "description": "Stop the recording",
             "itemtype": "method",
             "name": "stopRecorder",
@@ -3960,7 +4156,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 284,
+            "line": 290,
             "description": "Destroy recorder and stop accessing webcam",
             "itemtype": "method",
             "name": "destroyRecorder",
@@ -3970,7 +4166,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 318,
+            "line": 326,
             "description": "When video recorder has been installed",
             "itemtype": "event",
             "name": "recorderReady",
@@ -3980,7 +4176,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 331,
+            "line": 339,
             "description": "Observer that starts recording once recorder is ready. Override to do additional\nstuff at this point!",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -3990,7 +4186,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 351,
+            "line": 355,
             "description": "Hide the recorder from display. Useful if you would like to keep recording without extra UI elements to\n  distract the user.",
             "itemtype": "method",
             "name": "hideRecorder",
@@ -4000,7 +4196,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 360,
+            "line": 364,
             "description": "Show the recorder to the user. Useful if you want to temporarily show a hidden recorder- eg to let the user fix\n  a problem with video capture settings",
             "itemtype": "method",
             "name": "showRecorder",
@@ -4146,7 +4342,7 @@
         },
         {
             "file": "app/services/video-recorder.js",
-            "line": 91,
+            "line": 96,
             "description": "Install a recorder onto the page and optionally begin recording immediately.",
             "itemtype": "method",
             "name": "install",
@@ -4166,7 +4362,7 @@
         },
         {
             "file": "app/services/video-recorder.js",
-            "line": 151,
+            "line": 157,
             "description": "Start recording a video, and allow the state of the recording to be accessed for later usage",
             "itemtype": "method",
             "name": "record",
@@ -4180,7 +4376,7 @@
         },
         {
             "file": "app/services/video-recorder.js",
-            "line": 186,
+            "line": 192,
             "description": "Get a timestamp based on the current recording position. Useful to ensure that tracked timing events\n line up with the video.",
             "itemtype": "method",
             "name": "getTime",
@@ -4194,7 +4390,7 @@
         },
         {
             "file": "app/services/video-recorder.js",
-            "line": 200,
+            "line": 206,
             "description": "Stop recording and save the video to the server",
             "itemtype": "method",
             "name": "stop",
@@ -4204,7 +4400,7 @@
         },
         {
             "file": "app/services/video-recorder.js",
-            "line": 247,
+            "line": 253,
             "description": "Destroy video recorder and remove from list of recorders. Use this to remove\nthe video recorder when destroying a frame, if not triggered via upload.",
             "itemtype": "method",
             "name": "destroy",
@@ -4214,7 +4410,7 @@
         },
         {
             "file": "app/services/video-recorder.js",
-            "line": 257,
+            "line": 263,
             "description": "Uninstall the video recorder from the page",
             "itemtype": "method",
             "name": "uninstall",

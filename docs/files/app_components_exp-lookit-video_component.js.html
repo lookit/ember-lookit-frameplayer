@@ -667,6 +667,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             this.set(&#x27;testVideosTimesPlayed&#x27;, 0);
             this.set(&#x27;completedAnnouncementAudio&#x27;, false);
             this.set(&#x27;completedAnnouncementTime&#x27;, false);
+            if ($(&#x27;video#player-video&#x27;).length) {
+                $(&#x27;video#player-video&#x27;)[0].pause();
+            }
             if ($(&#x27;audio#exp-music&#x27;).length) {
                 $(&#x27;audio#exp-music&#x27;)[0].pause();
             }
@@ -879,8 +882,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         });
 
         this.send(&#x27;showFullscreen&#x27;);
-        if (this.get(&#x27;sources&#x27;).length) {
-            this.set(&#x27;videosShown&#x27;, [this.get(&#x27;sources&#x27;)[0].src, this.get(&#x27;altSources&#x27;)[0].src]);
+        if (this.get(&#x27;sources_parsed&#x27;).length) {
+            this.set(&#x27;videosShown&#x27;, [this.get(&#x27;sources_parsed&#x27;)[0].src, this.get(&#x27;altSources_parsed&#x27;)[0].src]);
         } else {
             this.set(&#x27;videosShown&#x27;, []);
         }

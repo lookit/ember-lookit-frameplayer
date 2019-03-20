@@ -558,6 +558,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             this.set('testVideosTimesPlayed', 0);
             this.set('completedAnnouncementAudio', false);
             this.set('completedAnnouncementTime', false);
+            if ($('video#player-video').length) {
+                $('video#player-video')[0].pause();
+            }
             if ($('audio#exp-music').length) {
                 $('audio#exp-music')[0].pause();
             }
@@ -770,8 +773,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         });
 
         this.send('showFullscreen');
-        if (this.get('sources').length) {
-            this.set('videosShown', [this.get('sources')[0].src, this.get('altSources')[0].src]);
+        if (this.get('sources_parsed').length) {
+            this.set('videosShown', [this.get('sources_parsed')[0].src, this.get('altSources_parsed')[0].src]);
         } else {
             this.set('videosShown', []);
         }

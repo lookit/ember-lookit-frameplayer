@@ -21,12 +21,16 @@ import { computed } from '@ember/object';
         "kind": "exp-video-preview",
         "text": "Here are the videos your child will see in this study. You can watch them ahead of time--please just don't show your child yet!",
         "prompt": "My child can NOT see the screen. Start the preview!",
+        "baseDir": "https://url.com/",
+        "videoTypes": ["webm", "mp4"]
         "videos": [
            {
              "caption": "User-facing text that appears below the video",
-             "baseDir": "https://url.com/",
-             "sources": "example_intro",
-             "videoTypes": ["webm", "mp4"]
+             "sources": "example_intro"
+           },
+           {
+             "caption": "User-facing text that appears below the video",
+             "imgSrc": "caterpillar_picture"
            }
          ]
     }
@@ -141,7 +145,7 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
                                 type: 'string'
                             }
                         },
-                        required: ['sources', 'caption']
+                        required: ['caption']
                     },
                     default: []
                 },
@@ -172,6 +176,26 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
                     type: 'string',
                     description: 'Informational text to display to the user before videos are shown, along with button to continue',
                     default: ''
+                },
+                /**
+                 * Text on the button to proceed to the next example video/image
+                 *
+                 * @property {String} nextStimulusText
+                 */
+                nextStimulusText: {
+                    type: 'string',
+                    description: 'Text on the button to proceed to the next example video/image',
+                    default: 'Next'
+                },
+                /**
+                 * Text on the button to proceed to the previous example video/image
+                 *
+                 * @property {String} previousStimulusText
+                 */
+                previousStimulusText: {
+                    type: 'string',
+                    description: 'Text on the button to proceed to the previous example video/image',
+                    default: 'Previous'
                 }
             },
             required: ['videos']

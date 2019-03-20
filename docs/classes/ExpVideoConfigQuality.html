@@ -111,7 +111,7 @@
         </div>
 
         <div class="foundat">
-            Defined in: <a href="../files/app_components_exp-video-config-quality_component.js.html#l11"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:11</code></a>
+            Defined in: <a href="../files/app_components_exp-video-config-quality_component.js.html#l16"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:16</code></a>
         </div>
 
             Collection: <a href="../modules/frames.html">frames</a><br>
@@ -126,10 +126,51 @@
 </div>
 
 <div class="box intro">
-    <p>Video configuration frame showing webcam view at right and instructions for checking video quality for preferential looking setup at left, with pictures. Content is hard-coded for preferential looking requirements and images; this frame can serve as a template for other applications (e.g., verbal responses, where we might care less about lighting but want to generally be able to see the child's face) or can be generalized to show an arbitrary set of instructions/images.</p>
+    <p>Video configuration frame showing webcam view at right and instructions for checking
+video quality for preferential looking setup at left. Default content is hard-coded to
+provide a reasonable set of instructions for preferential looking setups, so the frame can
+be used as follows with no parameters besides <code>kind</code>:</p>
 <pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
     &quot;video-quality&quot;: {
         &quot;kind&quot;: &quot;exp-video-config-quality&quot;
+    }
+}
+</code></pre>
+<p>Optionally,
+participants can be required to check off each item before they can proceed to the next
+frame. If <code>requireItemConfirmation</code> is true (default), then the 'next' button will
+appear disabled until the participant has checked off all buttons, although if they click
+it anyway they will get an informative warning and the instructions section will scroll
+to the first unchecked item.</p>
+<p>Participants can also be optionally required to create and view a short recording, e.g. to
+check their child will be audible or their child's eyes will be visible in a particular position.</p>
+<p>You can also customize any or all text and images as in the following example.</p>
+<pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
+    &quot;video-quality&quot;: {
+        &quot;kind&quot;: &quot;exp-video-config-quality&quot;,
+        &quot;title&quot;: &quot;Webcam setup for preferential looking&quot;,
+        &quot;introText&quot;: &quot;We'll be analyzing where your child chooses to look during the videos--but only if we can tell where that is! Please check each of the following to ensure we're able to use your video:&quot;,
+        &quot;requireItemConfirmation&quot;: true,
+        &quot;completedItemText&quot;: &quot;Did it!&quot;,
+        &quot;instructionBlocks&quot;: [
+            {
+                text: '&lt;strong&gt;Make sure the webcam you\'re using is roughly centered&lt;/strong&gt; relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!',
+                image: {
+                    src: 'assets/centering.png',
+                    alt: 'Example images of using centered external webcam on monitor or built-in webcam on laptop.'
+                }
+            },
+            {
+                text: '&lt;strong&gt;Turn off any other monitors&lt;/strong&gt; connected to your computer, besides the one with the centered webcam. (If there\'s just one monitor, you\'re all set!)',
+                image: {
+                    src: 'assets/monitors.png',
+                    alt: 'Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.'
+                }
+            }
+        ],
+        &quot;requireTestVideo&quot;: true,
+        &quot;showRecordMenu&quot;: true,
+        &quot;recordingInstructionText&quot;: &quot;You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.&quot;
     }
 }
 </code></pre>
@@ -141,6 +182,7 @@
     <ul class="api-class-tabs">
         <li class="api-class-tab index"><a href="#index">Index</a></li>
 
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
     </ul>
 
     <div>
@@ -148,11 +190,296 @@
             <h2 class="off-left">Item Index</h2>
 
 
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties extends">
+                            <li class="index-item property">
+                                <a href="#property_completedItemText">completedItemText</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_instructionBlocks">instructionBlocks</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_introText">introText</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_recordingInstructionText">recordingInstructionText</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_requireItemConfirmation">requireItemConfirmation</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_requireTestVideo">requireTestVideo</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_showRecordMenu">showRecordMenu</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_title">title</a>
+
+                            </li>
+                    </ul>
+                </div>
 
 
         </div>
 
 
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+<div id="property_completedItemText" class="property item">
+    <h3 class="name"><code>completedItemText</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l157"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:157</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Text to show next to instructions checkboxes, if participant is required
+to check off each instruction (see requireItemConfirmation). Ignored if
+requireItemConfirmation is false.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> &quot;Did it!&quot;</p>
+
+
+</div>
+<div id="property_instructionBlocks" class="property item">
+    <h3 class="name"><code>instructionBlocks</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l169"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:169</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>List of instruction segments to display to participant. Rendered using
+ExpTextBlock, so all parameters
+of ExpTextBlock can be used.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> &quot;&quot;</p>
+
+
+        <h4>Sub-properties:</h4>
+
+        <ul class="params-list">
+            <li class="param">
+                    <code class="param-name">text</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                    <p>instructions text (can include html)</p>
+
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">image</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+                <div class="param-description">
+                    <p>image to display, with 'src' &amp; 'alt' attributes</p>
+
+                </div>
+
+            </li>
+        </ul>
+</div>
+<div id="property_introText" class="property item">
+    <h3 class="name"><code>introText</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l90"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:90</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Text to show as the introduction to the list of things to check. Can include
+HTML.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> &quot;&quot;</p>
+
+
+</div>
+<div id="property_recordingInstructionText" class="property item">
+    <h3 class="name"><code>recordingInstructionText</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l144"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:144</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Text to show below the webcam view. For instance, you might instruct
+families to make a short recording in the position they will be in for the
+experiment, and make sure that the infant's eyes are visible or that the
+child is audible. HTML is allowed.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> &quot;Did it!&quot;</p>
+
+
+</div>
+<div id="property_requireItemConfirmation" class="property item">
+    <h3 class="name"><code>requireItemConfirmation</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l111"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:111</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Whether to show checkboxes under each instruction item and require
+participant to check them off to proceed.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> true</p>
+
+
+</div>
+<div id="property_requireTestVideo" class="property item">
+    <h3 class="name"><code>requireTestVideo</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l122"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:122</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Whether to require participant to make and view a test video. Ignored if
+showRecordMenu is false.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> true</p>
+
+
+</div>
+<div id="property_showRecordMenu" class="property item">
+    <h3 class="name"><code>showRecordMenu</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l133"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:133</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Whether to display record/replay menu to participant. If false,
+requireTestVideo value is ignored.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> true</p>
+
+
+</div>
+<div id="property_title" class="property item">
+    <h3 class="name"><code>title</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l101"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:101</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Title to display to participant</p>
+
+    </div>
+
+        <p><strong>Default:</strong> &quot;&quot;</p>
+
+
+</div>
+            </div>
 
 
     </div>

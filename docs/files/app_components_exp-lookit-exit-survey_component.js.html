@@ -248,35 +248,42 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
     section1: true,
     showWithdrawalConfirmation: false,
     showValidation: false,
+
+    advanceToProgressBar() {
+        // Move from section 1 (survey) to section 2 (progress bar/ finish button)
+        // Mark the session complete at this stage, as all data has been entered
+        this.setSessionCompleted();
+        this._save()
+            .then(()=&gt; {
+                this.set(&#x27;section1&#x27;, false);
+            })
+            .catch(err =&gt; this.displayError(err));
+    },
     actions: {
-        advanceToProgressBar() {
-            // Move from section 1 (survey) to section 2 (progress bar/ finish button)
-            // Mark the session complete at this stage, as all data has been entered
-            this.sendAction(&#x27;sessionCompleted&#x27;);
-            this._save()
-                .then(()=&gt; {
-                    this.set(&#x27;section1&#x27;, false);
-                })
-                .catch(err =&gt; this.displayError(err));
-        },
+
         continue() {
             // Check whether exit survey is valid, and if so, advance to next screen
             if (this.get(&#x27;validations.isValid&#x27;)) {
                 if (this.get(&#x27;withdrawal&#x27;)) {
                     this.set(&#x27;showWithdrawalConfirmation&#x27;, true);
                 } else {
-                    this.send(&#x27;advanceToProgressBar&#x27;);
+                    this.advanceToProgressBar();
                 }
             } else {
                 this.set(&#x27;showValidation&#x27;, true);
             }
         },
+        submitWithdrawalConfirmation() {
+            this.set(&#x27;showWithdrawalConfirmation&#x27;, false);
+            this.advanceToProgressBar();
+        },
+        hideWithdrawalConfirmation() {
+            this.set(&#x27;showWithdrawalConfirmation&#x27;, false);
+            this.set(&#x27;withdrawal&#x27;, false);
+        },
         finish() {
             this.send(&#x27;next&#x27;);
         }
-    },
-    willRender() {
-        this.send(&#x27;exitFullscreen&#x27;);
     }
 });
 

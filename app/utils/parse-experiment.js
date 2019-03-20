@@ -29,7 +29,7 @@ ExperimentParser.prototype._reformatFrame = function (frame, index) {
  * frame config objects
  */
 ExperimentParser.prototype._resolveRandom = function (frame, frameId) {
-    var randomizer = frame.sampler || 'random';  // Random sampling by default
+    var randomizer = frame.sampler;
     if (!randomizers[randomizer]) {
         throw `Randomizer ${randomizer} not recognized`;
     } else {

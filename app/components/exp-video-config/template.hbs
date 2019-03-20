@@ -2,7 +2,7 @@
 
     <div class="col-md-10 col-md-offset-1">
 
-        <h2> Basic webcam setup </h2>
+        <h2> Webcam setup </h2>
 
         <p id="not-recording-note">
             No recording during this section
@@ -19,7 +19,8 @@
         <div class="row exp-video-config recorder-container">
             <div id="recorder" class="col-xs-12"></div>
         </div>
-        <p> Note: Lookit is currently only supported on recent versions of Firefox and Chrome. It is not supported on mobile devices like phones or tablets.</p>
+        <p class="support-note"> <em>Note:</em> Lookit is currently only supported on recent versions of Firefox and Chrome. It doesn't work on mobile devices like phones or tablets yet!</p>
+
     </div>
 
     <div class="col-md-5">
@@ -32,29 +33,37 @@
 
         {{#unless showWebCamWarning }}
 
-
-
             <ol>
                 <li>
                     Make sure you can see yourself to the left! You will need to allow lookit.mit.edu to access your webcam and microphone.
 
-                    {{#if hasWebCam}}
-                        <div id="camCheckBox" class={{if hasWebCam 'checkComplete'}}>
+                    {{#if hasCamAccess}}
+                        <div class="statusBox border checkComplete">
                             Looks good!
                         </div>
                     {{else}}
-                        <div id="camCheckBox" class={{if hasWebCam 'checkComplete'}}>
-                            We're not detecting a webcam yet. <button id="reloadButton" class="btn btn-default" {{action 'reloadRecorder'}}>Retry <i class="fa fa-refresh"></i></button>
+                        <div class="statusBox border">
+                            No webcam detected
                         </div>
-
                     {{/if}}
+
+                    <div class="statusBox">
+                        <button id="reloadButton" class="btn btn-default" {{action 'reloadRecorder'}}>
+                            {{#if hasCamAccess}}
+                                Redetect webcam
+                            {{else}}
+                                Detect webcam
+                            {{/if}}
+                            <i class="fa fa-refresh"></i>
+                        </button>
+                    </div>
 
                 </li>
 
                 <li>
                     Make sure we'll be able to hear you! This box will be filled in once we hear a loud enough sound:
 
-                    <div id="soundCheckBox" class={{if micChecked 'checkComplete'}}>
+                    <div class="statusBox border {{if micChecked "checkComplete" ""}}">
                         {{#if micChecked}}
                             Sounds good!
                         {{else}}
@@ -75,7 +84,7 @@
             </div>
         {{/if}}
 
-        <button id="nextbutton" disabled={{if (not hasCamAccess) true false}} class="btn btn-success pull-right {{if (or (not hasCamAccess) (not hasWebCam)) 'disabled' ''}}" {{ action 'checkAudioThenNext' }} >
+        <button id="nextbutton" disabled={{if (not hasCamAccess) true false}} class="btn btn-success pull-right" {{ action 'checkAudioThenNext' }} >
             Next
         </button>
     </div>
@@ -108,11 +117,11 @@
                     </li>
 
                     <li>
-                        Having trouble passing the sound check? Chrome may be using the wrong input device - unfortunately it doesn't let you pick which microphone when you click "Allow". You can select the correct microphone at chrome://settings/content/microphone (copy and paste that as a URL). Then refresh this page to try again.
+                        <em>Having trouble passing the sound check?</em> Chrome may be using the wrong input device - unfortunately it doesn't let you pick which microphone when you click "Allow". You can select the correct microphone at chrome://settings/content/microphone (copy and paste that as a URL). Then refresh this page to try again.
                     </li>
 
                     <li>
-                        Seeing the wrong camera view - like your built-in laptop camera instead of a USB webcam? You can select the correct camera at chrome://settings/content/camera (copy and paste that as a URL). Then refresh this page to try again.
+                        <em>Seeing the wrong camera view</em> - like your built-in laptop camera instead of a USB webcam? You can select the correct camera at chrome://settings/content/camera (copy and paste that as a URL). Then refresh this page to try again.
                     </li>
 
                     <li>
@@ -170,7 +179,7 @@
                     </li>
 
                     <li>
-                        If you're stumped, it's our fault. Please let us know so we can improve these directions! Email us at lookit-tech@mit.edu with a short description of what's happening. Please include the web browser you're using (Firefox, Chrome, IE, Safari, etc.), what steps you've tried, and this session ID: {{session.id}}
+                        If you're stumped, it's our fault. Please let us know so we can improve the site! Email us at lookit-tech@mit.edu with a short description of what's happening. Please include the web browser you're using (Firefox, Chrome, IE, Safari, etc.), what steps you've tried, and this session ID: {{session.id}}
                     </li>
 
                 </ol>

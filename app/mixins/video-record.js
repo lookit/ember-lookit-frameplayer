@@ -122,6 +122,13 @@ export default Ember.Mixin.create({
     recorderReady: false,
 
     /**
+     * Maximum recording length in seconds. Can be overridden by consuming frame.
+     * @property {Number} maxRecordingLength
+     * @default 100000000
+     */
+    maxRecordingLength: 100000000,
+
+    /**
      * Whether to use the camera in this frame. Consuming frame should set this property
      * to override if needed.
      * @property {Boolean} [doUseCamera=true]
@@ -188,7 +195,7 @@ export default Ember.Mixin.create({
         const recorder = this.get('videoRecorder').start(videoId, element, settings);
         const pipeLoc = Ember.getOwner(this).resolveRegistration('config:environment').pipeLoc;
         const pipeEnv = Ember.getOwner(this).resolveRegistration('config:environment').pipeEnv;
-        const installPromise = recorder.install({record}, this.get('videoId'), pipeLoc, pipeEnv);
+        const installPromise = recorder.install({record}, this.get('videoId'), pipeLoc, pipeEnv, this.get('maxRecordingLength'));
 
         // Track specific events for all frames that use  VideoRecorder
         var _this = this;

@@ -1,14 +1,87 @@
-.exp-lookit-survey .exp-lookit-survey-form {
-    margin-top: 5vh;
-    margin-bottom: 5vh;
-    padding: 0;
-    height: 80vh;
-    overflow-y: scroll;
-}
-
 .exp-lookit-survey {
+
     max-width: 800px;
     margin-left: auto !important;
     margin-right: auto !important;
     display: block;
+
+    .exp-lookit-survey-form {
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+        padding: 0;
+        height: 80vh;
+        overflow-y: scroll;
+    }
+
+    /* Hack: if displaying a "required field" message, don't additionally display other
+    validation errors at the same time */
+    div.alpaca-message.alpaca-message-notOptional ~ div.alpaca-message {
+        display: none;
+    }
+
+    legend.alpaca-container-label {
+        margin-top: 10px;
+    }
+
+    .aligned-radio-group {
+
+        label, div:not(.help-block) {
+            height: 100%;
+            vertical-align: middle;
+            display: inline-flex;
+        }
+
+        .label-left {
+            min-width: 10em;
+            font-weight: inherit;
+            text-align: right;
+            display: inline-block;
+            padding-right: 1em;
+        }
+        .label-right {
+            margin-left: 1em;
+            font-weight: inherit;
+            text-align: right;
+        }
+
+        .radio.alpaca-control {
+            width: 30px;
+            height: 30px;
+            margin: 0px;
+            padding: 0px;
+            display:inline-block !important;
+            label {
+                margin: 0;
+                padding: 0;
+                height: 2em;
+                width: 2em;
+                padding-top: .2em;
+                input[type="radio"] {
+                    width: 30px;
+                    margin-left: 5px;
+                }
+                &:hover {
+                    background-color: #ccc;
+                    border-radius: 5px;
+                }
+            }
+        }
+
+    }
+
+    .timepicker input {
+        width: 30%;
+    }
+
+    // A slight hack to fix bootstrap's datetimepicker
+    // positioning
+    .form-group {
+        position: relative;
+
+        // position it on top of input
+        .dropdown-menu {
+            bottom: -245px !important;
+        }
+    }
+
 }

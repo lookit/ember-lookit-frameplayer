@@ -1,81 +1,100 @@
-<div class="row exp-video-config-quality">
+<div class="exp-video-config-quality">
 
-    <div class="vertical-pad"></div>
+    <div class="row">
 
-    <div class="col-md-12">
+        <div class="col-md-12">
 
-        <h2> Webcam setup for preferential looking </h2>
+            <div class="vertical-pad"></div>
 
-        <p id="not-recording-note">
-            No recording during this section
-        </p>
+            <h2> {{title}} </h2>
 
-        <hr>
+            <p id="not-recording-note">
+                No recording during this section
+            </p>
 
-    </div>
-</div>
-
-<div class="row exp-video-config-quality">
-
-    <div class="col-md-8">
-
-        <p>
-            We'll be analyzing where your child chooses to look during the videos--but only if we can tell where that is!
-            Please check each of the following to ensure we're able to use your video:
-        </p>
-
-        <ol>
-
-            <li>
-                <span class='exp-video-config-quality-summary'>Make sure the webcam you're using is roughly centered</span>
-                relative to this monitor. This makes it much easier for us to tell whether your child is looking to the
-                left or right!
-                <img class="example" src="assets/centering.png" alt="Center the webcam">
-            </li>
-
-
-            <li>
-                <span class='exp-video-config-quality-summary'>Turn off any other monitors</span> connected to your
-                computer, besides the one with the centered webcam. (If there's just one monitor, you're all set!)
-                <img class="example" src="assets/monitors.png" alt="Turn off other monitors">
-            </li>
-
-
-            <li>
-                Check the lighting by making sure you can <span class='exp-video-config-quality-summary'>clearly see your own eyes</span> on
-                the webcam view to the right. You may need to either turn on a light or reduce light coming from behind you.
-                <img class="example" src="assets/lighting.png" alt="Lighting example">
-            </li>
-
-
-            <li>
-                During the study, we'll ask that you sit facing away from the monitor, holding your child over your shoulder, like this. (More on that in a moment!)
-                <span class='exp-video-config-quality-summary'>Make sure the webcam is angled up or down enough that your child's eyes are visible in this position</span>.
-                <img class="example" src="assets/over_shoulder.jpg" alt="Adjust the height">
-            </li>
-
-
-            <li>
-                If it's practical, <span class='exp-video-config-quality-summary'>minimize exciting things</span> that
-                are visible behind or to the side of the screen-- for instance, by facing a wall instead of the kitchen.
-                (If this isn't practical for you, don't worry about it!)
-                <img class="example" src="assets/distractions.png" alt="Distractions">
-            </li>
-
-        </ol>
-
+        </div>
 
     </div>
 
-    <div class="col-md-4">
-        <div class="row exp-video-config recorder-container">
-            <div id="recorder" class="col-xs-12"></div>
+    <div class="row">
+
+        <div class="col-md-8">
+
+            <p>
+                {{exp-format introText}}
+            </p>
+
+        </div>
+
+        <div class="col-md-4">
+            <button id="reloadButton" class="btn btn-default" {{action 'reloadRecorder'}}>
+                Reload webcam
+                <i class="fa fa-refresh"></i>
+            </button>
         </div>
     </div>
 
-    <div class="col-md-12">
-        <button id="nextbutton" class="btn btn-success pull-right nextButton" {{ action 'next' }} > Next</button>
+    <div class="row">
+
+        <div class="col-md-8">
+
+            <div class="list-container">
+                <ol>
+
+                    {{#each instructionBlocks as |instruction idx|}}
+                        <li id="instructions-{{idx}}">
+                            {{exp-text-block block=instruction}}
+
+                            {{#if requireItemConfirmation}}
+                                <div class="form-check form-check-inline">
+                                    <div class="checkbox-container">
+                                        <input class="form-check-input" type="checkbox" id="checkbox-{{idx}}" value="didit-{{idx}}" onChange={{action 'checkboxChanged' idx}}>
+                                        <label class="form-check-label" for="checkbox-{{idx}}">{{completedItemText}}</label>
+                                    </div>
+                                </div>
+                            {{/if}}
+
+                        </li>
+
+                    {{/each}}
+
+                </ol>
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="row recorder-container">
+                <div id="recorder" class="col-xs-12"></div>
+            </div>
+
+            <div class="recording-instructions">
+
+
+                <p>{{exp-format recordingInstructionText}}</p>
+            </div>
+        </div>
+
     </div>
 
+    <div class="row footer">
+
+        <div class="col-md-12">
+            {{#if showCheckboxWarning}}
+                <p class="warning">
+                    Please check off the "{{completedItemText}}" box under each instruction before continuing.
+                </p>
+            {{/if}}
+
+            {{#if showRecorderWarning}}
+                <p class="warning">
+                    Please try recording and viewing a video before continuing.
+                </p>
+            {{/if}}
+            <button id="nextbutton" class="btn btn-success pull-right nextButton {{if readyToProceed "" "disabled"}}" {{ action 'finish' }} > Next</button>
+        </div>
+
+    </div>
 
 </div>
