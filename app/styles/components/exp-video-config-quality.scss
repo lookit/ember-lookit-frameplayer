@@ -11,7 +11,7 @@ $medium-focus-color: #87b79f;
         float:right;
     }
 
-    :not(#pipeMenu) > img {
+    :not([id^=pipeMenu]) > img {
         display:block;
         margin:auto;
         max-width: 95%;
@@ -97,7 +97,7 @@ $medium-focus-color: #87b79f;
         }
     }
 
-    #pipeMenu {
+    [id^=pipeMenu] {
         display: block !important;
         width: 100% !important;
         height: 30px;
@@ -106,7 +106,7 @@ $medium-focus-color: #87b79f;
         border-bottom-right-radius: 8px;
         text-align: initial;
 
-        #pipeRec, #pipePlay {
+        [id^=pipeRec], [id^=pipePlay] {
             min-height: 20px;
             display: inline-block;
             cursor: pointer;
@@ -115,11 +115,11 @@ $medium-focus-color: #87b79f;
             transition: .1s ease-in-out;
         }
 
-        #pipePlay {
+        [id^=pipePlay] {
             float: right;
         }
 
-        #pipeCounter {
+        [id^=pipeTimer] {
             position: absolute;
             left: 0 !important;
             margin-top: 7px;
@@ -132,7 +132,7 @@ $medium-focus-color: #87b79f;
             z-index:0;
         }
 
-        #pipeMicContainer {
+        [id^=pipeMicContainer] {
             display: inline-block;
             float: right;
         }
@@ -141,7 +141,7 @@ $medium-focus-color: #87b79f;
 
     }
 
-    #pipeSmallVideo {
+    video[id^=pipeSmallVideo].pipeSmallNormal {
         left: 80% !important;
         top: 10px !important;
         height: 20% !important;

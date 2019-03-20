@@ -86,7 +86,7 @@ export default Ember.Mixin.create({
 
     /**
      * The recorder object, accessible to the consuming frame. Includes properties
-     * recorder.hasWebCam, recorder.hasCamAccess, recorder.micChecked, recorder.connected.
+     * recorder.nWebcams, recorder.hasCamAccess, recorder.micChecked, recorder.connected.
      * @property {VideoRecorder} recorder
      */
     recorder: null,
@@ -186,13 +186,12 @@ export default Ember.Mixin.create({
      * @method setupRecorder
      * @param {Node} element A DOM node representing where to mount the recorder
      * @param {Boolean} record Whether to start the recording immediately
-     * @param {Object} settings Config to pass to the newly created VideoRecorder
      * @return {Promise} A promise representing the result of installing the recorder
      */
-    setupRecorder(element, record, settings = {}) {
+    setupRecorder(element, record) {
         const videoId = this._generateVideoId();
         this.set('videoId', videoId);
-        const recorder = this.get('videoRecorder').start(videoId, element, settings);
+        const recorder = this.get('videoRecorder').start(videoId, element);
         const pipeLoc = Ember.getOwner(this).resolveRegistration('config:environment').pipeLoc;
         const pipeEnv = Ember.getOwner(this).resolveRegistration('config:environment').pipeEnv;
         const installPromise = recorder.install({record}, this.get('videoId'), pipeLoc, pipeEnv, this.get('maxRecordingLength'));
@@ -200,14 +199,18 @@ export default Ember.Mixin.create({
         // Track specific events for all frames that use  VideoRecorder
         var _this = this;
         recorder.on('onCamAccess', (hasAccess) => {
-            _this.send('setTimeEvent', 'recorder.hasCamAccess', {
-                hasCamAccess: hasAccess
-            });
+            if (!(_this.get('isDestroyed') || _this.get('isDestroying'))) {
+                _this.send('setTimeEvent', 'recorder.hasCamAccess', {
+                    hasCamAccess: hasAccess
+                });
+            }
         });
         recorder.on('onConnectionStatus', (status) => {
-            _this.send('setTimeEvent', 'videoStreamConnection', {
-                status: status
-            });
+            if (!(_this.get('isDestroyed') || _this.get('isDestroying'))) {
+                _this.send('setTimeEvent', 'videoStreamConnection', {
+                    status: status
+                });
+            }
         });
         this.set('recorder', recorder);
         return installPromise;

@@ -16,7 +16,8 @@ module.exports = {
     },
     globals: { // true to allow overwriting
         'moment': false,
-        'jsPDF': false
+        'jsPDF': false,
+        'PipeSDK': false
     },
     rules: { // 'warn', 'error', or 'off'
         'no-console': 'off' // allow console.log
