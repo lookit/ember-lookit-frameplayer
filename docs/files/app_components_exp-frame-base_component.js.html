@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>app/components/exp-frame-base/component.js - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
+                            <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
+                            <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
+                            <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
+                            <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
+                            <li><a href="../classes/ExpLookitInstructions.html">ExpLookitInstructions</a></li>
+                            <li><a href="../classes/ExpLookitMoodQuestionnaire.html">ExpLookitMoodQuestionnaire</a></li>
+                            <li><a href="../classes/ExpLookitObservation.html">ExpLookitObservation</a></li>
+                            <li><a href="../classes/ExpLookitPreferentialLooking.html">ExpLookitPreferentialLooking</a></li>
+                            <li><a href="../classes/ExpLookitPreviewExplanation.html">ExpLookitPreviewExplanation</a></li>
+                            <li><a href="../classes/ExpLookitStoryPage.html">ExpLookitStoryPage</a></li>
+                            <li><a href="../classes/ExpLookitSurvey.html">ExpLookitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
+                            <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
+                            <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
+                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
+                            <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
+                            <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
+                            <li><a href="../classes/ExpVideoPreview.html">ExpVideoPreview</a></li>
+                            <li><a href="../classes/FullScreen.html">FullScreen</a></li>
+                            <li><a href="../classes/MediaReload.html">MediaReload</a></li>
+                            <li><a href="../classes/permute.html">permute</a></li>
+                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
+                            <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
+                            <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
+                            <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: app/components/exp-frame-base/component.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import Ember from &#x27;ember&#x27;;
+
+//import config from &#x27;ember-get-config&#x27;;
+import FullScreen from &#x27;../../mixins/full-screen&#x27;;
+
+/**
+ * @module exp-player
+ * @submodule frames
+ */
+
+/** An abstract component for defining experimenter frames
+ *
+ * This provides common base behavior required for any experiment frame. All experiment frames must extend this one.
+ *
+ * This frame has no configuration options because all of its logic is internal, and is almost never directly used
+ *   in an experiment. It exports no data. Sample experiment definition usage (provided for completeness):
+  &#x60;&#x60;&#x60;json
+    &quot;frames&quot;: {
+       &quot;my-sample-frame&quot;: {
+         &quot;kind&quot;: &quot;exp-base-frame&quot;
+       }
+    }
+ * &#x60;&#x60;&#x60;
+ *
+ * As a user you will almost never need to insert a component into a template directly- the platform should handle that
+ *   by automatically inserting &#x60;exp-player&#x60; when your experiment starts.
+ * However, a sample template usage is provided below for completeness.
+ *
+ * &#x60;&#x60;&#x60;handlebars
+ *  {{
+      component currentFrameTemplate
+        frameIndex=frameIndex
+        framePage=framePage
+        updateFramePage=(action &#x27;updateFramePage&#x27;)
+        frameConfig=currentFrameConfig
+        frameContext=currentFrameContext
+
+        session=session
+        experiment=experiment
+
+        next=(action &#x27;next&#x27;)
+        previous=(action &#x27;previous&#x27;)
+        saveHandler=(action &#x27;saveFrame&#x27;)
+        skipone=(action &#x27;skipone&#x27;)
+        extra=extra
+    }}
+ * &#x60;&#x60;&#x60;
+ * @class ExpFrameBase
+ *
+ * @uses FullScreen
+ */
+export default Ember.Component.extend(FullScreen, {
+    toast: Ember.inject.service(),
+    // {String} the unique identifier for the _instance_
+    id: null,
+    kind: null,
+
+    extra: {},
+
+    meta: { // Configuration for all fields available on the component/template
+        name: &#x27;Base Experimenter Frame&#x27;,
+        description: &#x27;The abstract base frame for Experimenter frames.&#x27;,
+        parameters: { // Configuration parameters, which can be auto-populated from the experiment structure JSON
+            type: &#x27;object&#x27;,
+            properties: {}
+        },
+        data: { // Controls what and how parameters are serialized and sent to the server. Ideally there should be a validation mechanism.
+            type: &#x27;object&#x27;,
+            properties: {}
+        }
+    },
+    // {Number} the current exp-player frameIndex
+    frameIndex: null,
+    framePage: null,
+    frameConfig: null,
+    frameContext: null,
+    eventTimings: null,
+    _oldFrameIndex: null,
+
+    session: null,
+
+    // see https://github.com/emberjs/ember.js/issues/3908. Moved
+    // to init because we were losing the first event per instance of a frame
+    // when it was in didReceiveAttrs.
+    setTimings: Ember.on(&#x27;init&#x27;, function () {
+        this.set(&#x27;eventTimings&#x27;, []);
+    }),
+
+    loadData: function (frameData) { // eslint-disable-line no-unused-vars
+        return null;
+    },
+
+    didReceiveAttrs: function () {
+        this._super(...arguments);
+
+        if (!this.get(&#x27;frameConfig&#x27;)) {
+            return;
+        }
+
+        let currentFrameIndex = this.get(&#x27;frameIndex&#x27;, null);
+
+        let clean = currentFrameIndex !== this.get(&#x27;_oldFrameIndex&#x27;);
+        var defaultParams = this.setupParams(clean);
+        if (clean) {
+            Object.keys(defaultParams).forEach((key) =&gt; {
+                this.set(key, defaultParams[key]);
+            });
+        }
+
+        if (!this.get(&#x27;id&#x27;)) {
+            var frameIndex = this.get(&#x27;frameIndex&#x27;);
+            var kind = this.get(&#x27;kind&#x27;);
+            this.set(&#x27;id&#x27;, &#x60;${kind}-${frameIndex}&#x60;);
+        }
+
+        if (clean) {
+            var session = this.get(&#x27;session&#x27;);
+            var expData = session ? session.get(&#x27;expData&#x27;) : null;
+            if (session &amp;&amp; session.get(&#x27;expData&#x27;)) {
+                var key = this.get(&#x27;frameIndex&#x27;) + &#x27;-&#x27; + this.get(&#x27;id&#x27;);
+                if (expData[key]) {
+                    this.loadData(expData[key]);
+                }
+            }
+        }
+
+        this.set(&#x27;_oldFrameIndex&#x27;, currentFrameIndex);
+    },
+
+    // Internal save logic
+    _save() {
+        var frameId = &#x60;${this.get(&#x27;id&#x27;)}&#x60;;  // don&#x27;t prepend frameindex, done by parser
+        // When exiting frame, save the data to the base player using the provided saveHandler
+        const payload = this.serializeContent();
+        return this.attrs.saveHandler(frameId, payload);
+    },
+
+    // Display error messages related to save failures
+    displayError(error) { // eslint-disable-line no-unused-vars
+        // If the save failure was a server error, warn the user. This error should never disappear.
+        // Note: errors are not visible in FS mode, which is generally the desired behavior so as not to silently
+        // bias infant looking time towards right.
+        const msg = &#x27;Check your internet connection. If another error like this still shows up as you continue, please contact lookit-tech@mit.edu to let us know!&#x27;;
+        this.get(&#x27;toast&#x27;).error(msg, &#x27;Error: Could not save data&#x27;, {timeOut: 0, extendedTimeOut: 0});
+    },
+
+    setupParams(clean) {
+        // Add config properties and data to be serialized as instance parameters (overriding with values explicitly passed in)
+        var params = this.get(&#x27;frameConfig&#x27;);
+
+        var defaultParams = {};
+        Object.keys(this.get(&#x27;meta.parameters&#x27;).properties || {}).forEach((key) =&gt; {
+            defaultParams[key] = this.get(&#x60;meta.parameters.properties.${key}.default&#x60;);
+        });
+
+        Object.keys(this.get(&#x27;meta.data&#x27;).properties || {}).forEach((key) =&gt; {
+            if (this[key] &amp;&amp; this[key].isDescriptor) {
+                return;
+            }
+            var value = !clean ? this.get(key) : undefined;
+            if (typeof value === &#x27;undefined&#x27;) {
+                // Make deep copy of the default value (to avoid subtle reference errors from reusing mutable containers)
+                defaultParams[key] = Ember.copy(this.get(&#x60;meta.data.properties.${key}.default&#x60;), true);
+            } else {
+                defaultParams[key] = value;
+            }
+        });
+
+        Ember.assign(defaultParams, params);
+        return defaultParams;
+    },
+
+    /**
+     * The base class does not define any data to save to the server. It does, however, capture some basic event
+     *   timing data. (such as when the user clicks the &quot;next&quot; button)
+     *
+     * This section slightly breaks YUIDoc conventions- rather than being a literal guide to using the code, the
+     *   &quot;parameters&quot; here are abstract descriptions of what data is captured.
+     *
+     * Each frame that extends ExpFrameBase will send an array &#x60;eventTimings&#x60;
+     * back to the server upon completion. This array is an ordered list (oldest
+     * to newest) of every EVENT that happened during the frame. Each event is
+     * represented as an object with at least the properties
+     * &#x60;{&#x27;eventType&#x27;: EVENTNAME, &#x27;timestamp&#x27;: TIMESTAMP}&#x60;. Frame-specific events
+     * may define additional properties that are sent.
+     *
+     * @param {Array} eventTimings
+     * @method serializeContent
+     * @return {Object}
+     */
+    serializeContent() {
+        // Serialize selected parameters for this frame, plus eventTiming data
+        var serialized = this.getProperties(Object.keys(this.get(&#x27;meta.data.properties&#x27;) || {}));
+        serialized.eventTimings = this.get(&#x27;eventTimings&#x27;);
+        return serialized;
+    },
+
+    /**
+     * Create the time event payload for a particular frame / event. This can be overridden to add fields to every
+     *  event sent by a particular frame
+     * @method makeTimeEvent
+     * @param {String} eventName
+     * @param {Object} [extra] An object with additional properties to be sent to the server
+     * @return {Object} Event type, time, and any additional metadata provided
+     */
+    makeTimeEvent(eventName, extra) {
+        const curTime = new Date();
+        const eventData = {
+            eventType: &#x60;${this.get(&#x27;kind&#x27;, &#x27;unknown-frame&#x27;)}:${eventName}&#x60;,
+            timestamp: curTime.toISOString()
+        };
+        Ember.assign(eventData, extra);
+        return eventData;
+    },
+
+    setSessionCompleted() {
+        this.get(&#x27;session&#x27;).set(&#x27;completed&#x27;, true);
+    },
+
+    actions: {
+        setTimeEvent(eventName, extra) {
+            let eventData = this.makeTimeEvent(eventName, extra);
+            console.log(&#x60;Timing event captured for ${eventName}&#x60;, eventData);
+            // Copy timing event into a single dict for this component instance
+            let timings = this.get(&#x27;eventTimings&#x27;);
+            timings.push(eventData);
+            this.set(&#x27;eventTimings&#x27;, timings);
+        },
+
+        save() {
+            // Show an error if saving fails
+            this._save().catch(err =&gt; this.displayError(err));
+        },
+
+        next() {
+            /**
+             * Move to next frame
+             *
+             * @event nextFrame
+             */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;nextFrame&#x27;);
+            // Note: this will allow participant to proceed even if saving fails. The
+            // reason not to execute &#x27;next&#x27; within this._save().then() is that an action
+            // executed as a promise doesn&#x27;t count as a &#x27;user interaction&#x27; event, so
+            // we wouldn&#x27;t be able to enter FS mode upon starting the next frame. Given
+            // that the user is likely to have limited ability to FIX a save error, and the
+            // only thing they&#x27;ll really be able to do is try again anyway, preventing
+            // them from continuing is unnecessarily disruptive.
+            this.send(&#x27;save&#x27;);
+            this.sendAction(&#x27;next&#x27;);
+            window.scrollTo(0, 0);
+        },
+
+        last() {
+            this.sendAction(&#x27;last&#x27;);
+        },
+
+        previous() {
+            /**
+             * Move to previous frame
+             *
+             * @event previousFrame
+             */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;previousFrame&#x27;);
+            var frameId = &#x60;${this.get(&#x27;id&#x27;)}&#x60;; // don&#x27;t prepend frameindex, done by parser
+            console.log(&#x60;Previous: Leaving frame ID ${frameId}&#x60;);
+            this.sendAction(&#x27;previous&#x27;);
+            window.scrollTo(0, 0);
+        }
+    },
+
+    didInsertElement() {
+        // Add different classes depending on whether fullscreen mode is
+        // being triggered as part of standard frame operation or as an override to a frame
+        // that is not typically fullscreen. In latter case, keep formatting as close to
+        // before as possible, to enable forms etc. to work ok in fullscreen mode.
+        Ember.$(&#x27;*&#x27;).removeClass(&#x27;player-fullscreen&#x27;);
+        Ember.$(&#x27;*&#x27;).removeClass(&#x27;player-fullscreen-override&#x27;);
+        var $element = Ember.$(&#x60;#${this.get(&#x27;fullScreenElementId&#x27;)}&#x60;);
+        if (this.get(&#x27;displayFullscreenOverride&#x27;) &amp;&amp; !this.get(&#x27;displayFullscreen&#x27;)) {
+            $element.addClass(&#x27;player-fullscreen-override&#x27;);
+        } else {
+            $element.addClass(&#x27;player-fullscreen&#x27;);
+        }
+        // Set to non-fullscreen (or FS if overriding) immediately, except for frames displayed fullscreen.
+        // Note: if this is defined the same way in full-screen.js, it gets called twice
+        // for reasons I don&#x27;t yet understand.
+        if (this.get(&#x27;displayFullscreenOverride&#x27;)) {
+            this.send(&#x27;showFullscreen&#x27;);
+        } else if (!(this.get(&#x27;displayFullscreen&#x27;))) {
+            this.send(&#x27;exitFullscreen&#x27;);
+        }
+        this._super(...arguments);
+    }
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

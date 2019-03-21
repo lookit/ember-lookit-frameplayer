@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ExpLookitMoodQuestionnaire - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
+                            <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
+                            <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
+                            <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
+                            <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
+                            <li><a href="../classes/ExpLookitInstructions.html">ExpLookitInstructions</a></li>
+                            <li><a href="../classes/ExpLookitMoodQuestionnaire.html">ExpLookitMoodQuestionnaire</a></li>
+                            <li><a href="../classes/ExpLookitObservation.html">ExpLookitObservation</a></li>
+                            <li><a href="../classes/ExpLookitPreferentialLooking.html">ExpLookitPreferentialLooking</a></li>
+                            <li><a href="../classes/ExpLookitPreviewExplanation.html">ExpLookitPreviewExplanation</a></li>
+                            <li><a href="../classes/ExpLookitStoryPage.html">ExpLookitStoryPage</a></li>
+                            <li><a href="../classes/ExpLookitSurvey.html">ExpLookitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
+                            <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
+                            <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
+                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
+                            <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
+                            <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
+                            <li><a href="../classes/ExpVideoPreview.html">ExpVideoPreview</a></li>
+                            <li><a href="../classes/FullScreen.html">FullScreen</a></li>
+                            <li><a href="../classes/MediaReload.html">MediaReload</a></li>
+                            <li><a href="../classes/permute.html">permute</a></li>
+                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
+                            <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
+                            <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
+                            <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1>ExpLookitMoodQuestionnaire Class</h1>
+<div class="box meta">
+
+        <div class="extends">
+            Extends <a href="../classes/ExpFrameBase.html" class="crosslink">ExpFrameBase</a>
+        </div>
+
+        <div class="foundat">
+            Defined in: <a href="../files/app_components_exp-lookit-mood-questionnaire_component.js.html#l22"><code>app&#x2F;components&#x2F;exp-lookit-mood-questionnaire&#x2F;component.js:22</code></a>
+        </div>
+
+            Collection: <a href="../modules/frames.html">frames</a><br>
+
+</div>
+
+
+<div>
+
+    <img src="../assets/screenshots/ExpLookitMoodQuestionnaire.png" class="class-screenshot">
+
+</div>
+
+<div class="box intro">
+    <p>A standard mood survey with questions about factors that might affect a
+child's responses. Includes Likert-type ratings of the CHILD's position on
+the following scales:</p>
+<ul>
+<li>Tired - Rested</li>
+<li>Sick - Healthy</li>
+<li>Fussy - Happy</li>
+<li>Calm - Active</li>
+</ul>
+<p>and of the PARENT's position on:</p>
+<ul>
+<li>Tired - Energetic</li>
+<li>Overwhelmed - On top of things</li>
+<li>Upset - Happy</li>
+</ul>
+<p>It also asks for a response in hours:minutes for:</p>
+<ul>
+<li>how long ago the child last woke up from sleep or a nap</li>
+<li>how long until he/she is due for another nap/sleep (if regular nap schedule)</li>
+<li>how long ago the child last ate/drank</li>
+</ul>
+<p>and for what the child was doing just before this (free-response). Responses
+to all questions are required to move on.</p>
+<p>This frame can be used as a starting point/example for other custom survey frames, or development of a customizable survey frame.</p>
+<pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
+   &quot;mood-survey&quot;: {
+       &quot;introText&quot;: &quot;How are you two doing? We really want to know: we’re interested in how your child’s mood affects his or her looking preferences.&quot;,
+       &quot;kind&quot;: &quot;exp-lookit-mood-questionnaire&quot;
+   }
+}
+
+</code></pre>
+
+</div>
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+            <li class="api-class-tab events"><a href="#events">Events</a></li>
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods extends">
+                            <li class="index-item method inherited">
+                                <a href="#method_exitFullscreen">exitFullscreen</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#method_makeTimeEvent">makeTimeEvent</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#method_serializeContent">serializeContent</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#method_showFullscreen">showFullscreen</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties extends">
+                            <li class="index-item property inherited">
+                                <a href="#property_displayFullscreenOverride">displayFullscreenOverride</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_fsButtonID">fsButtonID</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_fullScreenElementId">fullScreenElementId</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_introText">introText</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+                <div class="index-section events">
+                    <h3>Events</h3>
+
+                    <ul class="index-list events extends">
+                            <li class="index-item event inherited">
+                                <a href="#event_enteredFullscreen">enteredFullscreen</a>
+
+                            </li>
+                            <li class="index-item event inherited">
+                                <a href="#event_leftFullscreen">leftFullscreen</a>
+
+                            </li>
+                            <li class="index-item event inherited">
+                                <a href="#event_nextFrame">nextFrame</a>
+
+                            </li>
+                            <li class="index-item event inherited">
+                                <a href="#event_previousFrame">previousFrame</a>
+
+                            </li>
+                    </ul>
+                </div>
+        </div>
+
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method_exitFullscreen" class="method item inherited">
+    <h3 class="name"><code>exitFullscreen</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/FullScreen.html#method_exitFullscreen">FullScreen</a>:
+        <a href="../files/app_mixins_full-screen.js.html#l137"><code>app&#x2F;mixins&#x2F;full-screen.js:137</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        Exit fullscreen mode
+    </div>
+
+
+
+
+</div>
+<div id="method_makeTimeEvent" class="method item inherited">
+    <h3 class="name"><code>makeTimeEvent</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>eventName</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[extra]</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/ExpFrameBase.html#method_makeTimeEvent">ExpFrameBase</a>:
+        <a href="../files/app_components_exp-frame-base_component.js.html#l198"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:198</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Create the time event payload for a particular frame / event. This can be overridden to add fields to every
+event sent by a particular frame</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">eventName</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name optional">[extra]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>An object with additional properties to be sent to the server</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                    <p>Event type, time, and any additional metadata provided</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_serializeContent" class="method item">
+    <h3 class="name"><code>serializeContent</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>rested</code>
+                </li>
+                <li class="arg">
+                        <code>healthy</code>
+                </li>
+                <li class="arg">
+                        <code>childHappy</code>
+                </li>
+                <li class="arg">
+                        <code>active</code>
+                </li>
+                <li class="arg">
+                        <code>energetic</code>
+                </li>
+                <li class="arg">
+                        <code>ontopofstuff</code>
+                </li>
+                <li class="arg">
+                        <code>healthy</code>
+                </li>
+                <li class="arg">
+                        <code>napWakeUp</code>
+                </li>
+                <li class="arg">
+                        <code>usualNapSchedule</code>
+                </li>
+                <li class="arg">
+                        <code>nextNap</code>
+                </li>
+                <li class="arg">
+                        <code>lastEat</code>
+                </li>
+                <li class="arg">
+                        <code>doingBefore</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+            <p>Inherited from
+            <a href="../classes/ExpFrameBase.html#method_serializeContent">
+                ExpFrameBase
+            </a>
+            but overwritten in
+        <a href="../files/app_components_exp-lookit-mood-questionnaire_component.js.html#l138"><code>app&#x2F;components&#x2F;exp-lookit-mood-questionnaire&#x2F;component.js:138</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Parameters captured and sent to the server</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">rested</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>Rating for CHILD on tired - rested scale, '1' to '7' where '7' is rested</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">healthy</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>Rating for CHILD on sick - healthy scale, '1' to '7' where '7' is healthy</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">childHappy</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>Rating for CHILD on fussy - happy scale, '1' to '7' where '7' is happy</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">active</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>Rating for CHILD on calm - active scale, '1' to '7' where '7' is active</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">energetic</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>Rating for PARENT on tired - energetic scale, '1' to '7' where '7' is energetic</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">ontopofstuff</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>Rating for PARENT on overwhelmed - on top of stuff scale, '1' to '7' where '7' is on top of stuff</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">healthy</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>Rating for PARENT on upset - happy scale, '1' to '7' where '7' is happy</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">napWakeUp</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>how long since the child woke up from nap, HH:mm</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">usualNapSchedule</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>whether the child has a typical nap schedule: 'no', 'yes', or 'yes-overdue' if child is overdue for nap</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">nextNap</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>only valid if usualNapSchedule is 'yes';  how long until child is due to sleep again, HH:mm</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">lastEat</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>how long since the child ate/drank, HH:mm</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">doingBefore</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>what the child was doing before this (free response)</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                    <p>The payload sent to the server</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_showFullscreen" class="method item inherited">
+    <h3 class="name"><code>showFullscreen</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/FullScreen.html#method_showFullscreen">FullScreen</a>:
+        <a href="../files/app_mixins_full-screen.js.html#l104"><code>app&#x2F;mixins&#x2F;full-screen.js:104</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        Make a specified element fullscreen
+    </div>
+
+
+
+
+</div>
+            </div>
+
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+<div id="property_displayFullscreenOverride" class="property item inherited">
+    <h3 class="name"><code>displayFullscreenOverride</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/FullScreen.html#property_displayFullscreenOverride">FullScreen</a>:
+        <a href="../files/app_mixins_full-screen.js.html#l167"><code>app&#x2F;mixins&#x2F;full-screen.js:167</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Whether to display this frame as fullscreen, even though it is not
+generally used that way.
+    </div>
+
+
+
+</div>
+<div id="property_fsButtonID" class="property item inherited">
+    <h3 class="name"><code>fsButtonID</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/FullScreen.html#property_fsButtonID">FullScreen</a>:
+        <a href="../files/app_mixins_full-screen.js.html#l24"><code>app&#x2F;mixins&#x2F;full-screen.js:24</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        The element ID of a button to show if the user leaves fullscreen mode
+    </div>
+
+
+
+</div>
+<div id="property_fullScreenElementId" class="property item inherited">
+    <h3 class="name"><code>fullScreenElementId</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/FullScreen.html#property_fullScreenElementId">FullScreen</a>:
+        <a href="../files/app_mixins_full-screen.js.html#l17"><code>app&#x2F;mixins&#x2F;full-screen.js:17</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        The element ID of the thing to make full screen (video element, div, etc)
+    </div>
+
+
+
+</div>
+<div id="property_introText" class="property item">
+    <h3 class="name"><code>introText</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-mood-questionnaire_component.js.html#l123"><code>app&#x2F;components&#x2F;exp-lookit-mood-questionnaire&#x2F;component.js:123</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Intro paragraph describing why we want mood info</p>
+
+    </div>
+
+        <p><strong>Default:</strong> &#x27;How are you two doing? We really want to know: we’re interested in how your child’s mood affects his or her looking preferences.&#x27;</p>
+
+
+</div>
+            </div>
+
+
+            <div id="events" class="api-class-tabpanel">
+                <h2 class="off-left">Events</h2>
+
+                    <div id="event_enteredFullscreen" class="events item inherited">
+                        <h3 class="name"><code>enteredFullscreen</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FullScreen.html#event_enteredFullscreen">FullScreen</a>:
+                            <a href="../files/app_mixins_full-screen.js.html#l76"><code>app&#x2F;mixins&#x2F;full-screen.js:76</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Upon detecting change to fullscreen mode
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_leftFullscreen" class="events item inherited">
+                        <h3 class="name"><code>leftFullscreen</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FullScreen.html#event_leftFullscreen">FullScreen</a>:
+                            <a href="../files/app_mixins_full-screen.js.html#l88"><code>app&#x2F;mixins&#x2F;full-screen.js:88</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Upon detecting change out of fullscreen mode
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_nextFrame" class="events item inherited">
+                        <h3 class="name"><code>nextFrame</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ExpFrameBase.html#event_nextFrame">ExpFrameBase</a>:
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l236"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:236</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Move to next frame</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_previousFrame" class="events item inherited">
+                        <h3 class="name"><code>previousFrame</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ExpFrameBase.html#event_previousFrame">ExpFrameBase</a>:
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l259"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:259</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Move to previous frame</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+            </div>
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

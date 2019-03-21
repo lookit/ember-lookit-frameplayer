@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import WarnOnExitRouteMixin from 'exp-player/mixins/warn-on-exit-route';
+import WarnOnExitRouteMixin from '../mixins/warn-on-exit-route';
 import FramePlayerRoute from '../mixins/frame-player-route';
 
 // Adapted from Experimenter preview route https://github.com/CenterForOpenScience/experimenter/blob/develop/app/routes/experiments/info/preview.js
@@ -26,7 +26,7 @@ export default Ember.Route.extend(WarnOnExitRouteMixin, FramePlayerRoute, {
     },
     _getChild() {
         let child = this.store.createRecord('child', {
-            id: "TEST_CHILD_DISREGARD"
+            id: 'TEST_CHILD_DISREGARD'
         });
         return child;
     }

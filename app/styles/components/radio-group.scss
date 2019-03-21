@@ -1,0 +1,18 @@
+.radio-group {
+    label {
+	margin-left: 20px;
+	margin-right: 10px;
+	font-weight: inherit;
+    }
+    .label-left {
+	min-width: 100px;
+    }
+    .label-right {
+	margin-left: 40px;
+    }
+    input {
+	padding: 12px;
+	height: 1em;
+	margin: 15px;
+    }
+}

@@ -1,0 +1,100 @@
+<div class="exp-video-config-quality">
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <div class="vertical-pad"></div>
+
+            <h2> {{title}} </h2>
+
+            <p id="not-recording-note">
+                No recording during this section
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-8">
+
+            <p>
+                {{exp-format introText}}
+            </p>
+
+        </div>
+
+        <div class="col-md-4">
+            <button id="reloadButton" class="btn btn-default" {{action 'reloadRecorder'}}>
+                Reload webcam
+                <i class="fa fa-refresh"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-8">
+
+            <div class="list-container">
+                <ol>
+
+                    {{#each instructionBlocks as |instruction idx|}}
+                        <li id="instructions-{{idx}}">
+                            {{exp-text-block block=instruction}}
+
+                            {{#if requireItemConfirmation}}
+                                <div class="form-check form-check-inline">
+                                    <div class="checkbox-container">
+                                        <input class="form-check-input" type="checkbox" id="checkbox-{{idx}}" value="didit-{{idx}}" onChange={{action 'checkboxChanged' idx}}>
+                                        <label class="form-check-label" for="checkbox-{{idx}}">{{completedItemText}}</label>
+                                    </div>
+                                </div>
+                            {{/if}}
+
+                        </li>
+
+                    {{/each}}
+
+                </ol>
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="row recorder-container">
+                <div id="recorder" class="col-xs-12"></div>
+            </div>
+
+            <div class="recording-instructions">
+
+
+                <p>{{exp-format recordingInstructionText}}</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row footer">
+
+        <div class="col-md-12">
+            {{#if showCheckboxWarning}}
+                <p class="warning">
+                    Please check off the "{{completedItemText}}" box under each instruction before continuing.
+                </p>
+            {{/if}}
+
+            {{#if showRecorderWarning}}
+                <p class="warning">
+                    Please try recording and viewing a video before continuing.
+                </p>
+            {{/if}}
+            <button id="nextbutton" class="btn btn-success pull-right nextButton {{if readyToProceed "" "disabled"}}" {{ action 'finish' }} > Next</button>
+        </div>
+
+    </div>
+
+</div>

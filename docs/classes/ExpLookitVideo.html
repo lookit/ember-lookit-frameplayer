@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ExpLookitVideo - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
+                            <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
+                            <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
+                            <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
+                            <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
+                            <li><a href="../classes/ExpLookitInstructions.html">ExpLookitInstructions</a></li>
+                            <li><a href="../classes/ExpLookitMoodQuestionnaire.html">ExpLookitMoodQuestionnaire</a></li>
+                            <li><a href="../classes/ExpLookitObservation.html">ExpLookitObservation</a></li>
+                            <li><a href="../classes/ExpLookitPreferentialLooking.html">ExpLookitPreferentialLooking</a></li>
+                            <li><a href="../classes/ExpLookitPreviewExplanation.html">ExpLookitPreviewExplanation</a></li>
+                            <li><a href="../classes/ExpLookitStoryPage.html">ExpLookitStoryPage</a></li>
+                            <li><a href="../classes/ExpLookitSurvey.html">ExpLookitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
+                            <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
+                            <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
+                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
+                            <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
+                            <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
+                            <li><a href="../classes/ExpVideoPreview.html">ExpVideoPreview</a></li>
+                            <li><a href="../classes/FullScreen.html">FullScreen</a></li>
+                            <li><a href="../classes/MediaReload.html">MediaReload</a></li>
+                            <li><a href="../classes/permute.html">permute</a></li>
+                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
+                            <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
+                            <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
+                            <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1>ExpLookitVideo Class</h1>
+<div class="box meta">
+        <div class="uses">
+            Uses
+            <ul class="inline commas">
+                    <li><a href="FullScreen.html">FullScreen</a></li>
+                    <li><a href="MediaReload.html">MediaReload</a></li>
+                    <li><a href="VideoRecord.html">VideoRecord</a></li>
+                    <li><a href="ExpandAssets.html">ExpandAssets</a></li>
+            </ul>
+        </div>
+
+        <div class="extends">
+            Extends <a href="../classes/ExpFrameBase.html" class="crosslink">ExpFrameBase</a>
+        </div>
+
+        <div class="foundat">
+            Defined in: <a href="../files/app_components_exp-lookit-video_component.js.html#l19"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:19</code></a>
+        </div>
+
+            Collection: <a href="../modules/frames.html">frames</a><br>
+
+</div>
+
+
+<div>
+
+    <img src="../assets/screenshots/ExpLookitVideo.png" class="class-screenshot">
+
+</div>
+
+<div class="box intro">
+    <p>Basic video display for looking measures (e.g. preferential looking, looking time).
+Trial consists of four phases, each of which is optional.</p>
+<ol>
+<li>
+<p>Announcement: The audio in audioSources is played while the attnSources video is played centrally, looping as needed. This lasts for announceLength seconds or the duration of the audio, whichever is longer. To skip this phase, set announceLength to 0 and do not provide audioSources.</p>
+</li>
+<li>
+<p>Intro: The introSources video is played centrally until it ends. To skip this phase, do not provide introSources.</p>
+</li>
+<li>
+<p>Calibration: The video in calibrationVideoSources is played (looping as needed) in each of the locations specified in calibrationPositions in turn, remaining in each position for calibrationLength ms. At the start of each position the audio in calibrationAudioSources is played once. (Audio will be paused and restarted if it is longer than calibrationLength.) Set calibrationLength to 0 to skip calibration.</p>
+</li>
+<li>
+<p>Test: The video in sources and audio in musicSources (optional) are played until either: testLength seconds have elapsed (with video looping if needed), or the video has been played testCount times. If testLength is set, it overrides testCount - for example if testCount is 1 and testLength is 30, a 10-second video will be played 3 times. If the participant pauses the study during the test phase, then after restarting the trial, the video in altSources will be used again (defaulting to the same video if altSources is not provided). To skip this phase, do not provide sources.</p>
+</li>
+</ol>
+<p>Specifying media locations:
+For any parameters that expect a list of audio/video sources, you can EITHER provide
+a list of src/type pairs with full paths like this:</p>
+<pre class="code prettyprint"><code class="language-json">   [
+       {
+           'src': 'http://.../video1.mp4',
+           'type': 'video/mp4'
+       },
+       {
+           'src': 'http://.../video1.webm',
+           'type': 'video/webm'
+       }
+   ]
+</code></pre>
+<p>OR you can provide a single string 'stub', which will be expanded
+based on the parameter baseDir and the media types expected - either audioTypes or
+videoTypes as appropriate. For example, if you provide the audio source <code>intro</code>
+and baseDir is <a href="https://mystimuli.org/mystudy/">https://mystimuli.org/mystudy/</a>, with audioTypes ['mp3', 'ogg'], then this
+will be expanded to:</p>
+<pre class="code prettyprint"><code class="language-json">                [
+                       {
+                           src: 'https://mystimuli.org/mystudy/mp3/intro.mp3',
+                           type: 'audio/mp3'
+                       },
+                       {
+                           src: 'https://mystimuli.org/mystudy/ogg/intro.ogg',
+                           type: 'audio/ogg'
+                       }
+               ]
+</code></pre>
+<p>This allows you to simplify your JSON document a bit and also easily switch to a
+new version of your stimuli without changing every URL. You can mix source objects with
+full URLs and those using stubs within the same directory. However, any stimuli
+specified using stubs MUST be
+organized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.</p>
+<p>This frame is displayed fullscreen; if the frame before it is not, that frame
+needs to include a manual &quot;next&quot; button so that there's a user interaction
+event to trigger fullscreen mode. (Browsers don't allow us to switch to FS
+without a user event.)</p>
+<p>Example usage:</p>
+<pre class="code prettyprint"><code class="language-json">       &quot;sample-intermodal-trial-2&quot;: {
+           &quot;kind&quot;: &quot;exp-lookit-video&quot;,
+           &quot;isLast&quot;: false,
+           &quot;baseDir&quot;: &quot;https://s3.amazonaws.com/lookitcontents/intermodal/&quot;,
+           &quot;sources&quot;: &quot;sbs_ramp_down_up_apple_c1_b1_NN&quot;,
+           &quot;testCount&quot;: 2,
+           &quot;altSources&quot;: &quot;sbs_ramp_up_down_apple_c1_b1_NN&quot;,
+           &quot;audioTypes&quot;: [
+               &quot;ogg&quot;,
+               &quot;mp3&quot;
+           ],
+           &quot;pauseAudio&quot;: &quot;pause&quot;,
+           &quot;videoTypes&quot;: [
+               &quot;webm&quot;,
+               &quot;mp4&quot;
+           ],
+           &quot;attnSources&quot;: &quot;attentiongrabber&quot;,
+           &quot;audioSources&quot;: &quot;video_02&quot;,
+           &quot;introSources&quot;: &quot;cropped_book&quot;,
+           &quot;musicSources&quot;: &quot;music_02&quot;,
+           &quot;unpauseAudio&quot;: &quot;return_after_pause&quot;,
+           &quot;calibrationLength&quot;: 3000,
+           &quot;calibrationAudioSources&quot;: &quot;chimes&quot;,
+           &quot;calibrationVideoSources&quot;: &quot;attentiongrabber&quot;
+       }
+
+</code></pre>
+
+</div>
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+            <li class="api-class-tab events"><a href="#events">Events</a></li>
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods extends">
+                            <li class="index-item method inherited inherited">
+                                <a href="#method_exitFullscreen">exitFullscreen</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#method_makeTimeEvent">makeTimeEvent</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#method_serializeContent">serializeContent</a>
+
+                            </li>
+                            <li class="index-item method inherited inherited">
+                                <a href="#method_showFullscreen">showFullscreen</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_whenPossibleToRecord">whenPossibleToRecord</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties extends">
+                            <li class="index-item property">
+                                <a href="#property_altSources">altSources</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_announceLength">announceLength</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_assetsToExpand">assetsToExpand</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_attnSources">attnSources</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_audioSources">audioSources</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_audioTypes">audioTypes</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_baseDir">baseDir</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_calibrationAudioSources">calibrationAudioSources</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_calibrationLength">calibrationLength</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_calibrationPositions">calibrationPositions</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_calibrationVideoSources">calibrationVideoSources</a>
+
+                            </li>
+                            <li class="index-item property inherited inherited">
+                                <a href="#property_displayFullscreenOverride">displayFullscreenOverride</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_doRecording">doRecording</a>
+
+                            </li>
+                            <li class="index-item property inherited inherited">
+                                <a href="#property_fsButtonID">fsButtonID</a>
+
+                            </li>
+                            <li class="index-item property inherited inherited">
+                                <a href="#property_fullScreenElementId">fullScreenElementId</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_introSources">introSources</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_musicSources">musicSources</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_pauseAudio">pauseAudio</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_pauseText">pauseText</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_sources">sources</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_testCount">testCount</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_testLength">testLength</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_unpauseAudio">unpauseAudio</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_videoTypes">videoTypes</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+                <div class="index-section events">
+                    <h3>Events</h3>
+
+                    <ul class="index-list events extends">
+                            <li class="index-item event inherited inherited">
+                                <a href="#event_enteredFullscreen">enteredFullscreen</a>
+
+                            </li>
+                            <li class="index-item event inherited inherited">
+                                <a href="#event_leftFullscreen">leftFullscreen</a>
+
+                            </li>
+                            <li class="index-item event inherited">
+                                <a href="#event_nextFrame">nextFrame</a>
+
+                            </li>
+                            <li class="index-item event inherited">
+                                <a href="#event_previousFrame">previousFrame</a>
+
+                            </li>
+                            <li class="index-item event">
+                                <a href="#event_startCalibration">startCalibration</a>
+
+                            </li>
+                    </ul>
+                </div>
+        </div>
+
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method_exitFullscreen" class="method item inherited">
+    <h3 class="name"><code>exitFullscreen</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+            <p>Inherited from
+            <a href="../classes/FullScreen.html#method_exitFullscreen">
+                FullScreen
+            </a>
+            but overwritten in
+        <a href="../files/app_mixins_full-screen.js.html#l137"><code>app&#x2F;mixins&#x2F;full-screen.js:137</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        Exit fullscreen mode
+    </div>
+
+
+
+
+</div>
+<div id="method_makeTimeEvent" class="method item inherited">
+    <h3 class="name"><code>makeTimeEvent</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>eventName</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[extra]</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/ExpFrameBase.html#method_makeTimeEvent">ExpFrameBase</a>:
+        <a href="../files/app_components_exp-frame-base_component.js.html#l198"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:198</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Create the time event payload for a particular frame / event. This can be overridden to add fields to every
+event sent by a particular frame</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">eventName</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name optional">[extra]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>An object with additional properties to be sent to the server</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                    <p>Event type, time, and any additional metadata provided</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_serializeContent" class="method item">
+    <h3 class="name"><code>serializeContent</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>videosShown</code>
+                </li>
+                <li class="arg">
+                        <code>eventTimings</code>
+                </li>
+                <li class="arg">
+                        <code>videoID</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+            <p>Inherited from
+            <a href="../classes/ExpFrameBase.html#method_serializeContent">
+                ExpFrameBase
+            </a>
+            but overwritten in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l440"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:440</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Parameters captured and sent to the server</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">videosShown</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+
+
+                    <div class="param-description">
+                        <p>Sources of videos (potentially) shown during this trial: [source of test video, source of alternate test video].</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">eventTimings</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">videoID</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>The ID of any webcam video recorded during this frame</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                    <p>The payload sent to the server</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_showFullscreen" class="method item inherited">
+    <h3 class="name"><code>showFullscreen</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+            <p>Inherited from
+            <a href="../classes/FullScreen.html#method_showFullscreen">
+                FullScreen
+            </a>
+            but overwritten in
+        <a href="../files/app_mixins_full-screen.js.html#l104"><code>app&#x2F;mixins&#x2F;full-screen.js:104</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        Make a specified element fullscreen
+    </div>
+
+
+
+
+</div>
+<div id="method_whenPossibleToRecord" class="method item">
+    <h3 class="name"><code>whenPossibleToRecord</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l785"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:785</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Observer that starts recording once recorder is ready. Override to do additional
+stuff at this point!</p>
+
+    </div>
+
+
+
+
+</div>
+            </div>
+
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+<div id="property_altSources" class="property item">
+    <h3 class="name"><code>altSources</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l194"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:194</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Array of objects specifying video src and type for alternate test video, as for sources. Alternate test video will be shown if the first test is paused, after restarting the trial. If alternate test video is also paused, we just move on. If altSources is not provided, defaults to playing same test video again (but still only one pause of test video allowed per trial).</p>
+
+    </div>
+
+        <p><strong>Default:</strong> []</p>
+
+
+        <h4>Sub-properties:</h4>
+
+        <ul class="params-list">
+            <li class="param">
+                    <code class="param-name">src</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                     
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                     
+                </div>
+
+            </li>
+        </ul>
+</div>
+<div id="property_announceLength" class="property item">
+    <h3 class="name"><code>announceLength</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l233"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:233</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>minimum amount of time to show attention-getter in seconds. Announcement phase (attention-getter plus audio) will last the minimum of announceLength and the duration of any announcement audio.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> 2</p>
+
+
+</div>
+<div id="property_assetsToExpand" class="property item inherited">
+    <h3 class="name"><code>assetsToExpand</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/ExpandAssets.html#property_assetsToExpand">ExpandAssets</a>:
+        <a href="../files/app_mixins_expand-assets.js.html#l91"><code>app&#x2F;mixins&#x2F;expand-assets.js:91</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Object describing which properties may need expansion
+    </div>
+
+
+
+</div>
+<div id="property_attnSources" class="property item">
+    <h3 class="name"><code>attnSources</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l221"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:221</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Array of objects specifying attention-grabber video src and type, as for sources. The attention-grabber video is shown (looping) during the announcement phase and when the study is paused.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> []</p>
+
+
+        <h4>Sub-properties:</h4>
+
+        <ul class="params-list">
+            <li class="param">
+                    <code class="param-name">src</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                     
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                     
+                </div>
+
+            </li>
+        </ul>
+</div>
+<div id="property_audioSources" class="property item">
+    <h3 class="name"><code>audioSources</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l244"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:244</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>List of objects specifying intro announcement src and type. If empty and minimum announceLength is 0, announcement is skipped.
+Example: <code>[{'src': 'http://.../audio1.mp3', 'type': 'audio/mp3'}, {'src': 'http://.../audio1.ogg', 'type': 'audio/ogg'}]</code></p>
+
+    </div>
+
+        <p><strong>Default:</strong> []</p>
+
+
+        <h4>Sub-properties:</h4>
+
+        <ul class="params-list">
+            <li class="param">
+                    <code class="param-name">src</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                     
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                     
+                </div>
+
+            </li>
+        </ul>
+</div>
+<div id="property_audioTypes" class="property item inherited">
+    <h3 class="name"><code>audioTypes</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/ExpandAssets.html#property_audioTypes">ExpandAssets</a>:
+        <a href="../files/app_mixins_expand-assets.js.html#l121"><code>app&#x2F;mixins&#x2F;expand-assets.js:121</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        List of audio types to expect for any audio specified just
+with a string rather than with a list of src/type objects.
+If audioTypes is <code>[&#x27;typeA&#x27;, &#x27;typeB&#x27;]</code> and an audio source
+is given as <code>intro</code>, the audio source will be
+expanded out to
+
+
+    [
+        {
+            src: 'baseDir' + 'typeA/intro.typeA',
+            type: 'audio/typeA'
+        },
+        {
+            src: 'baseDir' + 'typeB/intro.typeB',
+            type: 'audio/typeB'
+        }
+    ]
+    </div>
+
+        <p><strong>Default:</strong> [&#x27;mp3&#x27;, &#x27;ogg&#x27;]</p>
+
+
+</div>
+<div id="property_baseDir" class="property item inherited">
+    <h3 class="name"><code>baseDir</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/ExpandAssets.html#property_baseDir">ExpandAssets</a>:
+        <a href="../files/app_mixins_expand-assets.js.html#l101"><code>app&#x2F;mixins&#x2F;expand-assets.js:101</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Base directory for where to find stimuli. Any image src
+values that are not full paths will be expanded by prefixing
+with <code>baseDir</code> + <code>img&#x2F;</code>. Any audio/video src values provided as
+strings rather than objects with <code>src</code> and <code>type</code> will be
+expanded out to <code>baseDir&#x2F;avtype&#x2F;[stub].avtype</code>, where the potential
+avtypes are given by <code>audioTypes</code> and <code>videoTypes</code>.
+
+baseDir should include a trailing slash
+(e.g., <code>http:&#x2F;&#x2F;stimuli.org&#x2F;myexperiment&#x2F;</code>); if a value is provided that
+does not end in a slash, one will be added.
+    </div>
+
+        <p><strong>Default:</strong> &#x27;&#x27;</p>
+
+
+</div>
+<div id="property_calibrationAudioSources" class="property item">
+    <h3 class="name"><code>calibrationAudioSources</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l329"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:329</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+calibration audio (played at each calibration position).
+Ignored if calibrationLength is 0.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> []</p>
+
+
+</div>
+<div id="property_calibrationLength" class="property item">
+    <h3 class="name"><code>calibrationLength</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l306"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:306</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>length of single calibration segment in ms. 0 to skip calibration.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> 3000</p>
+
+
+</div>
+<div id="property_calibrationPositions" class="property item">
+    <h3 class="name"><code>calibrationPositions</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l317"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:317</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Ordered list of positions to show calibration segment in. Options are
+&quot;center&quot;, &quot;left&quot;, &quot;right&quot;. Ignored if calibrationLength is 0.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> [&quot;center&quot;, &quot;left&quot;, &quot;right&quot;, &quot;center&quot;]</p>
+
+
+</div>
+<div id="property_calibrationVideoSources" class="property item">
+    <h3 class="name"><code>calibrationVideoSources</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l353"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:353</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+calibration video (played from start at each calibration position).
+Ignored if calibrationLength is 0.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> []</p>
+
+
+</div>
+<div id="property_displayFullscreenOverride" class="property item inherited">
+    <h3 class="name"><code>displayFullscreenOverride</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+            <p>Inherited from
+            <a href="../classes/FullScreen.html#property_displayFullscreenOverride">
+                FullScreen
+            </a>
+            but overwritten in
+        <a href="../files/app_mixins_full-screen.js.html#l167"><code>app&#x2F;mixins&#x2F;full-screen.js:167</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Whether to display this frame as fullscreen, even though it is not
+generally used that way.
+    </div>
+
+
+
+</div>
+<div id="property_doRecording" class="property item">
+    <h3 class="name"><code>doRecording</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l296"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:296</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Whether to do any video recording during this frame. Default true. Set to false for e.g. last frame where just doing an announcement.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> true</p>
+
+
+</div>
+<div id="property_fsButtonID" class="property item inherited">
+    <h3 class="name"><code>fsButtonID</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+            <p>Inherited from
+            <a href="../classes/FullScreen.html#property_fsButtonID">
+                FullScreen
+            </a>
+            but overwritten in
+        <a href="../files/app_mixins_full-screen.js.html#l24"><code>app&#x2F;mixins&#x2F;full-screen.js:24</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        The element ID of a button to show if the user leaves fullscreen mode
+    </div>
+
+
+
+</div>
+<div id="property_fullScreenElementId" class="property item inherited">
+    <h3 class="name"><code>fullScreenElementId</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+            <p>Inherited from
+            <a href="../classes/FullScreen.html#property_fullScreenElementId">
+                FullScreen
+            </a>
+            but overwritten in
+        <a href="../files/app_mixins_full-screen.js.html#l17"><code>app&#x2F;mixins&#x2F;full-screen.js:17</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        The element ID of the thing to make full screen (video element, div, etc)
+    </div>
+
+
+
+</div>
+<div id="property_introSources" class="property item">
+    <h3 class="name"><code>introSources</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l207"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:207</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Array of objects specifying intro video src and type, as for sources.
+If empty, intro segment will be skipped.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> []</p>
+
+
+        <h4>Sub-properties:</h4>
+
+        <ul class="params-list">
+            <li class="param">
+                    <code class="param-name">src</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                     
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                     
+                </div>
+
+            </li>
+        </ul>
+</div>
+<div id="property_musicSources" class="property item">
+    <h3 class="name"><code>musicSources</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l258"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:258</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>List of objects specifying music audio src and type, as for audioSources.
+If empty, no music is played.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> []</p>
+
+
+        <h4>Sub-properties:</h4>
+
+        <ul class="params-list">
+            <li class="param">
+                    <code class="param-name">musicSources</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+                <div class="param-description">
+                     
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">src</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                     
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                     
+                </div>
+
+            </li>
+        </ul>
+</div>
+<div id="property_pauseAudio" class="property item">
+    <h3 class="name"><code>pauseAudio</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l377"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:377</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+audio played upon pausing study</p>
+
+    </div>
+
+        <p><strong>Default:</strong> []</p>
+
+
+</div>
+<div id="property_pauseText" class="property item">
+    <h3 class="name"><code>pauseText</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l423"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:423</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Text to show under &quot;Study paused / Press space to resume&quot; when study is paused.
+Default: (You'll have a moment to turn around again.)</p>
+
+    </div>
+
+        <p><strong>Default:</strong> []</p>
+
+
+</div>
+<div id="property_sources" class="property item">
+    <h3 class="name"><code>sources</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l177"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:177</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Array of objects specifying video src and type for test video (these should be the same video, but multiple sources--e.g. mp4 and webm--are generally needed for cross-browser support). If none provided, skip test phase.</p>
+<p>Example value:</p>
+<p><code>[{'src': 'http://.../video1.mp4', 'type': 'video/mp4'}, {'src': 'http://.../video1.webm', 'type': 'video/webm'}]</code></p>
+
+    </div>
+
+        <p><strong>Default:</strong> []</p>
+
+
+        <h4>Sub-properties:</h4>
+
+        <ul class="params-list">
+            <li class="param">
+                    <code class="param-name">src</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                     
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                     
+                </div>
+
+            </li>
+        </ul>
+</div>
+<div id="property_testCount" class="property item">
+    <h3 class="name"><code>testCount</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l284"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:284</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Number of times to play test video before moving on. This is ignored if
+testLength is set to a finite value.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> 1</p>
+
+
+</div>
+<div id="property_testLength" class="property item">
+    <h3 class="name"><code>testLength</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l273"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:273</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Length to loop test videos, in seconds. Set if you want a time-based limit. E.g., setting testLength to 20 means that the first 20 seconds of the video will be played, with shorter videos looping until they get to 20s. Leave out or set to Infinity  to play the video through to the end a set number of times instead. If a testLength is set, it overrides any value set in testCount.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> Infinity</p>
+
+
+</div>
+<div id="property_unpauseAudio" class="property item">
+    <h3 class="name"><code>unpauseAudio</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video_component.js.html#l400"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:400</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+audio played upon unpausing study</p>
+
+    </div>
+
+        <p><strong>Default:</strong> []</p>
+
+
+</div>
+<div id="property_videoTypes" class="property item inherited">
+    <h3 class="name"><code>videoTypes</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/ExpandAssets.html#property_videoTypes">ExpandAssets</a>:
+        <a href="../files/app_mixins_expand-assets.js.html#l149"><code>app&#x2F;mixins&#x2F;expand-assets.js:149</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        List of video types to expect for any audio specified just
+with a string rather than with a list of src/type objects.
+If vidioTypes is <code>[&#x27;typeA&#x27;, &#x27;typeB&#x27;]</code> and a video source
+is given as <code>intro</code>, the video source will be
+expanded out to
+
+
+    [
+        {
+            src: 'baseDir' + 'typeA/intro.typeA',
+            type: 'video/typeA'
+        },
+        {
+            src: 'baseDir' + 'typeB/intro.typeB',
+            type: 'video/typeB'
+        }
+    ]
+    </div>
+
+        <p><strong>Default:</strong> [&#x27;mp4&#x27;, &#x27;webm&#x27;]</p>
+
+
+</div>
+            </div>
+
+
+            <div id="events" class="api-class-tabpanel">
+                <h2 class="off-left">Events</h2>
+
+                    <div id="event_enteredFullscreen" class="events item inherited">
+                        <h3 class="name"><code>enteredFullscreen</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/FullScreen.html#event_enteredFullscreen">
+                                    FullScreen
+                                </a>
+                                but overwritten in
+                            <a href="../files/app_mixins_full-screen.js.html#l76"><code>app&#x2F;mixins&#x2F;full-screen.js:76</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Upon detecting change to fullscreen mode
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_leftFullscreen" class="events item inherited">
+                        <h3 class="name"><code>leftFullscreen</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/FullScreen.html#event_leftFullscreen">
+                                    FullScreen
+                                </a>
+                                but overwritten in
+                            <a href="../files/app_mixins_full-screen.js.html#l88"><code>app&#x2F;mixins&#x2F;full-screen.js:88</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Upon detecting change out of fullscreen mode
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_nextFrame" class="events item inherited">
+                        <h3 class="name"><code>nextFrame</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ExpFrameBase.html#event_nextFrame">ExpFrameBase</a>:
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l236"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:236</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Move to next frame</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_previousFrame" class="events item inherited">
+                        <h3 class="name"><code>previousFrame</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ExpFrameBase.html#event_previousFrame">ExpFrameBase</a>:
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l259"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:259</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Move to previous frame</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_startCalibration" class="events item">
+                        <h3 class="name"><code>startCalibration</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-video_component.js.html#l655"><code>app&#x2F;components&#x2F;exp-lookit-video&#x2F;component.js:655</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Start of EACH calibration segment</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Event Payload:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">location</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>location of calibration ball, relative to child: 'left', 'right', or 'center'</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+            </div>
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

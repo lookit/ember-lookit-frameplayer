@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>app/components/exp-lookit-video/component.js - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
+                            <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
+                            <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
+                            <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
+                            <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
+                            <li><a href="../classes/ExpLookitInstructions.html">ExpLookitInstructions</a></li>
+                            <li><a href="../classes/ExpLookitMoodQuestionnaire.html">ExpLookitMoodQuestionnaire</a></li>
+                            <li><a href="../classes/ExpLookitObservation.html">ExpLookitObservation</a></li>
+                            <li><a href="../classes/ExpLookitPreferentialLooking.html">ExpLookitPreferentialLooking</a></li>
+                            <li><a href="../classes/ExpLookitPreviewExplanation.html">ExpLookitPreviewExplanation</a></li>
+                            <li><a href="../classes/ExpLookitStoryPage.html">ExpLookitStoryPage</a></li>
+                            <li><a href="../classes/ExpLookitSurvey.html">ExpLookitSurvey</a></li>
+                            <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
+                            <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
+                            <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
+                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
+                            <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
+                            <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
+                            <li><a href="../classes/ExpVideoPreview.html">ExpVideoPreview</a></li>
+                            <li><a href="../classes/FullScreen.html">FullScreen</a></li>
+                            <li><a href="../classes/MediaReload.html">MediaReload</a></li>
+                            <li><a href="../classes/permute.html">permute</a></li>
+                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
+                            <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
+                            <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
+                            <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: app/components/exp-lookit-video/component.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import Ember from &#x27;ember&#x27;;
+import layout from &#x27;./template&#x27;;
+import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
+import FullScreen from &#x27;../../mixins/full-screen&#x27;;
+import MediaReload from &#x27;../../mixins/media-reload&#x27;;
+import VideoRecord from &#x27;../../mixins/video-record&#x27;;
+import ExpandAssets from &#x27;../../mixins/expand-assets&#x27;;
+import { observer } from &#x27;@ember/object&#x27;;
+
+let {
+    $
+} = Ember;
+
+/**
+ * @module exp-player
+ * @submodule frames
+ */
+
+/**
+* Basic video display for looking measures (e.g. preferential looking, looking time).
+* Trial consists of four phases, each of which is optional.
+*
+* 1. Announcement: The audio in audioSources is played while the attnSources video is played centrally, looping as needed. This lasts for announceLength seconds or the duration of the audio, whichever is longer. To skip this phase, set announceLength to 0 and do not provide audioSources.
+*
+* 2. Intro: The introSources video is played centrally until it ends. To skip this phase, do not provide introSources.
+*
+* 3. Calibration: The video in calibrationVideoSources is played (looping as needed) in each of the locations specified in calibrationPositions in turn, remaining in each position for calibrationLength ms. At the start of each position the audio in calibrationAudioSources is played once. (Audio will be paused and restarted if it is longer than calibrationLength.) Set calibrationLength to 0 to skip calibration.
+*
+* 4. Test: The video in sources and audio in musicSources (optional) are played until either: testLength seconds have elapsed (with video looping if needed), or the video has been played testCount times. If testLength is set, it overrides testCount - for example if testCount is 1 and testLength is 30, a 10-second video will be played 3 times. If the participant pauses the study during the test phase, then after restarting the trial, the video in altSources will be used again (defaulting to the same video if altSources is not provided). To skip this phase, do not provide sources.
+*
+* Specifying media locations:
+* For any parameters that expect a list of audio/video sources, you can EITHER provide
+* a list of src/type pairs with full paths like this:
+&#x60;&#x60;&#x60;json
+    [
+        {
+            &#x27;src&#x27;: &#x27;http://.../video1.mp4&#x27;,
+            &#x27;type&#x27;: &#x27;video/mp4&#x27;
+        },
+        {
+            &#x27;src&#x27;: &#x27;http://.../video1.webm&#x27;,
+            &#x27;type&#x27;: &#x27;video/webm&#x27;
+        }
+    ]
+&#x60;&#x60;&#x60;
+* OR you can provide a single string &#x27;stub&#x27;, which will be expanded
+* based on the parameter baseDir and the media types expected - either audioTypes or
+* videoTypes as appropriate. For example, if you provide the audio source &#x60;intro&#x60;
+* and baseDir is https://mystimuli.org/mystudy/, with audioTypes [&#x27;mp3&#x27;, &#x27;ogg&#x27;], then this
+* will be expanded to:
+&#x60;&#x60;&#x60;json
+                 [
+                        {
+                            src: &#x27;https://mystimuli.org/mystudy/mp3/intro.mp3&#x27;,
+                            type: &#x27;audio/mp3&#x27;
+                        },
+                        {
+                            src: &#x27;https://mystimuli.org/mystudy/ogg/intro.ogg&#x27;,
+                            type: &#x27;audio/ogg&#x27;
+                        }
+                ]
+&#x60;&#x60;&#x60;
+* This allows you to simplify your JSON document a bit and also easily switch to a
+* new version of your stimuli without changing every URL. You can mix source objects with
+* full URLs and those using stubs within the same directory. However, any stimuli
+* specified using stubs MUST be
+* organized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.
+*
+* This frame is displayed fullscreen; if the frame before it is not, that frame
+* needs to include a manual &quot;next&quot; button so that there&#x27;s a user interaction
+* event to trigger fullscreen mode. (Browsers don&#x27;t allow us to switch to FS
+* without a user event.)
+*
+* Example usage:
+
+&#x60;&#x60;&#x60;json
+        &quot;sample-intermodal-trial-2&quot;: {
+            &quot;kind&quot;: &quot;exp-lookit-video&quot;,
+            &quot;isLast&quot;: false,
+            &quot;baseDir&quot;: &quot;https://s3.amazonaws.com/lookitcontents/intermodal/&quot;,
+            &quot;sources&quot;: &quot;sbs_ramp_down_up_apple_c1_b1_NN&quot;,
+            &quot;testCount&quot;: 2,
+            &quot;altSources&quot;: &quot;sbs_ramp_up_down_apple_c1_b1_NN&quot;,
+            &quot;audioTypes&quot;: [
+                &quot;ogg&quot;,
+                &quot;mp3&quot;
+            ],
+            &quot;pauseAudio&quot;: &quot;pause&quot;,
+            &quot;videoTypes&quot;: [
+                &quot;webm&quot;,
+                &quot;mp4&quot;
+            ],
+            &quot;attnSources&quot;: &quot;attentiongrabber&quot;,
+            &quot;audioSources&quot;: &quot;video_02&quot;,
+            &quot;introSources&quot;: &quot;cropped_book&quot;,
+            &quot;musicSources&quot;: &quot;music_02&quot;,
+            &quot;unpauseAudio&quot;: &quot;return_after_pause&quot;,
+            &quot;calibrationLength&quot;: 3000,
+            &quot;calibrationAudioSources&quot;: &quot;chimes&quot;,
+            &quot;calibrationVideoSources&quot;: &quot;attentiongrabber&quot;
+        }
+
+* &#x60;&#x60;&#x60;
+* @class ExpLookitVideo
+* @extends ExpFrameBase
+* @uses FullScreen
+* @uses MediaReload
+* @uses VideoRecord
+* @uses ExpandAssets
+*/
+
+// TODO: refactor into cleaner structure with segments announcement, intro, calibration, test, with more general logic for transitions. Construct list at start since some elements optional. Then proceed through - instead of setting task manually, use utility to move to next task within list.
+
+export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord, ExpandAssets, {
+    layout: layout,
+    type: &#x27;exp-lookit-video&#x27;,
+
+    displayFullscreen: true, // force fullscreen for all uses of this component
+    fullScreenElementId: &#x27;experiment-player&#x27;,
+    fsButtonID: &#x27;fsButton&#x27;,
+
+    assetsToExpand: {
+        &#x27;audio&#x27;: [
+            &#x27;audioSources&#x27;,
+            &#x27;musicSources&#x27;,
+            &#x27;calibrationAudioSources&#x27;,
+            &#x27;pauseAudio&#x27;,
+            &#x27;unpauseAudio&#x27;
+        ],
+        &#x27;video&#x27;: [
+            &#x27;sources&#x27;,
+            &#x27;altSources&#x27;,
+            &#x27;introSources&#x27;,
+            &#x27;attnSources&#x27;,
+            &#x27;calibrationVideoSources&#x27;
+        ],
+        &#x27;image&#x27;: [
+        ]
+    },
+
+    // Override setting in VideoRecord mixin - only use camera if doing recording
+    doUseCamera: Ember.computed.alias(&#x27;doRecording&#x27;),
+
+    completedAnnouncementAudio: false,
+    completedAnnouncementTime: false,
+
+    doingAnnouncement: Ember.computed(&#x27;videoSources&#x27;, function() {
+        return (this.get(&#x27;currentTask&#x27;) === &#x27;announce&#x27;);
+    }),
+
+    doingIntro: Ember.computed(&#x27;videoSources&#x27;, function() {
+        return (this.get(&#x27;currentTask&#x27;) === &#x27;intro&#x27;);
+    }),
+
+    doingTest: Ember.computed(&#x27;videoSources&#x27;, function() {
+        return (this.get(&#x27;currentTask&#x27;) === &#x27;test&#x27;);
+    }),
+    testTimer: null, // reference to timer counting how long video has been playing, if time-based limit
+    calTimer: null, // reference to timer counting how long calibration segment has played
+    announceTimer: null, // reference to timer counting announcement segment
+
+    testTime: 0,
+    testVideosTimesPlayed: 0, // how many times the test video has been played, if count-based limit
+
+    skip: false,
+    hasBeenPaused: false,
+    useAlternate: false,
+    currentTask: null, // announce, intro, calibration, or test.
+    isPaused: false,
+
+    meta: {
+        name: &#x27;Video player&#x27;,
+        description: &#x27;Component that plays a video&#x27;,
+        parameters: {
+            type: &#x27;object&#x27;,
+            properties: {
+                /**
+                Array of objects specifying video src and type for test video (these should be the same video, but multiple sources--e.g. mp4 and webm--are generally needed for cross-browser support). If none provided, skip test phase.
+
+                Example value:
+
+                &#x60;&#x60;&#x60;[{&#x27;src&#x27;: &#x27;http://.../video1.mp4&#x27;, &#x27;type&#x27;: &#x27;video/mp4&#x27;}, {&#x27;src&#x27;: &#x27;http://.../video1.webm&#x27;, &#x27;type&#x27;: &#x27;video/webm&#x27;}]&#x60;&#x60;&#x60;
+                @property {Array} sources
+                    @param {String} src
+                    @param {String} type
+                @default []
+                */
+                sources: {
+                    type: &#x27;string&#x27;,
+                    description: &#x27;List of objects specifying video src and type for test videos&#x27;,
+                    default: []
+                },
+
+                /**
+                Array of objects specifying video src and type for alternate test video, as for sources. Alternate test video will be shown if the first test is paused, after restarting the trial. If alternate test video is also paused, we just move on. If altSources is not provided, defaults to playing same test video again (but still only one pause of test video allowed per trial).
+                @property {Array} altSources
+                    @param {String} src
+                    @param {String} type
+                @default []
+                */
+                altSources: {
+                    type: &#x27;string&#x27;,
+                    description: &#x27;List of objects specifying video src and type for alternate test videos&#x27;,
+                    default: []
+                },
+
+                /**
+                Array of objects specifying intro video src and type, as for sources.
+                If empty, intro segment will be skipped.
+                @property {Array} introSources
+                    @param {String} src
+                    @param {String} type
+                @default []
+                */
+                introSources: {
+                    type: &#x27;string&#x27;,
+                    description: &#x27;List of objects specifying intro video src and type&#x27;,
+                    default: []
+                },
+
+                /**
+                Array of objects specifying attention-grabber video src and type, as for sources. The attention-grabber video is shown (looping) during the announcement phase and when the study is paused.
+                @property {Array} attnSources
+                    @param {String} src
+                    @param {String} type
+                @default []
+                */
+                attnSources: {
+                    type: &#x27;string&#x27;,
+                    description: &#x27;List of objects specifying attention-grabber video src and type&#x27;,
+                    default: []
+                },
+                /**
+                 * minimum amount of time to show attention-getter in seconds. Announcement phase (attention-getter plus audio) will last the minimum of announceLength and the duration of any announcement audio.
+                 *
+                 * @property {Number} announceLength
+                 * @default 2
+                 */
+                announceLength: {
+                    type: &#x27;number&#x27;,
+                    description: &#x27;minimum duration of announcement phase in seconds&#x27;,
+                    default: 2
+                },
+                /**
+                List of objects specifying intro announcement src and type. If empty and minimum announceLength is 0, announcement is skipped.
+                Example: &#x60;[{&#x27;src&#x27;: &#x27;http://.../audio1.mp3&#x27;, &#x27;type&#x27;: &#x27;audio/mp3&#x27;}, {&#x27;src&#x27;: &#x27;http://.../audio1.ogg&#x27;, &#x27;type&#x27;: &#x27;audio/ogg&#x27;}]&#x60;
+                @property {Array} audioSources
+                    @param {String} src
+                    @param {String} type
+                @default []
+                */
+                audioSources: {
+                    type: &#x27;string&#x27;,
+                    description: &#x27;List of objects specifying intro announcement audio src and type&#x27;,
+                    default: []
+                },
+
+                /**
+                List of objects specifying music audio src and type, as for audioSources.
+                If empty, no music is played.
+                @param musicSources
+                @property {Array} musicSources
+                    @param {String} src
+                    @param {String} type
+                @default []
+                */
+                musicSources: {
+                    type: &#x27;string&#x27;,
+                    description: &#x27;List of objects specifying music audio src and type&#x27;,
+                    default: []
+                },
+
+                /**
+                Length to loop test videos, in seconds. Set if you want a time-based limit. E.g., setting testLength to 20 means that the first 20 seconds of the video will be played, with shorter videos looping until they get to 20s. Leave out or set to Infinity  to play the video through to the end a set number of times instead. If a testLength is set, it overrides any value set in testCount.
+                @property {Number} testLength
+                @default Infinity
+                */
+                testLength: {
+                    type: &#x27;number&#x27;,
+                    description: &#x27;Length of test videos in seconds&#x27;,
+                    default: Infinity
+                },
+
+                /**
+                Number of times to play test video before moving on. This is ignored if
+                testLength is set to a finite value.
+                @property {Number} testCount
+                @default 1
+                */
+                testCount: {
+                    type: &#x27;number&#x27;,
+                    description: &#x27;Number of times to play test video&#x27;,
+                    default: 1
+                },
+
+                /**
+                Whether to do any video recording during this frame. Default true. Set to false for e.g. last frame where just doing an announcement.
+                @property {Boolean} doRecording
+                @default true
+                */
+                doRecording: {
+                    type: &#x27;boolean&#x27;,
+                    description: &#x27;Whether to do video recording&#x27;,
+                    default: true
+                },
+                /**
+                 * length of single calibration segment in ms. 0 to skip calibration.
+                 *
+                 * @property {Number} calibrationLength
+                 * @default 3000
+                 */
+                calibrationLength: {
+                    type: &#x27;number&#x27;,
+                    description: &#x27;length of single calibration segment in ms&#x27;,
+                    default: 3000
+                },
+                /**
+                 * Ordered list of positions to show calibration segment in. Options are
+                 * &quot;center&quot;, &quot;left&quot;, &quot;right&quot;. Ignored if calibrationLength is 0.
+                 *
+                 * @property {Array} calibrationPositions
+                 * @default [&quot;center&quot;, &quot;left&quot;, &quot;right&quot;, &quot;center&quot;]
+                 */
+                calibrationPositions: {
+                    type: &#x27;Array&#x27;,
+                    description: &#x27;Ordered list of positions to show calibration&#x27;,
+                    default: [&#x27;center&#x27;, &#x27;left&#x27;, &#x27;right&#x27;, &#x27;center&#x27;]
+                },
+                /**
+                 * Sources Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects for
+                 * calibration audio (played at each calibration position).
+                 * Ignored if calibrationLength is 0.
+                 *
+                 * @property {Object[]} calibrationAudioSources
+                 * @default []
+                 */
+                calibrationAudioSources: {
+                    type: &#x27;array&#x27;,
+                    description: &#x27;list of objects specifying audio src and type for calibration audio&#x27;,
+                    default: [],
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            &#x27;src&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;type&#x27;: {
+                                type: &#x27;string&#x27;
+                            }
+                        }
+                    }
+                },
+                /**
+                 * Sources Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects for
+                 * calibration video (played from start at each calibration position).
+                 * Ignored if calibrationLength is 0.
+                 *
+                 * @property {Object[]} calibrationVideoSources
+                 * @default []
+                 */
+                calibrationVideoSources: {
+                    type: &#x27;array&#x27;,
+                    description: &#x27;list of objects specifying video src and type for calibration audio&#x27;,
+                    default: [],
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            &#x27;src&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;type&#x27;: {
+                                type: &#x27;string&#x27;
+                            }
+                        }
+                    }
+                },
+                /**
+                 * Sources Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects for
+                 * audio played upon pausing study
+                 *
+                 * @property {Object[]} pauseAudio
+                 * @default []
+                 */
+                pauseAudio: {
+                    type: &#x27;array&#x27;,
+                    description: &#x27;List of objects specifying audio src and type for audio played when pausing study&#x27;,
+                    default: [],
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            &#x27;src&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;type&#x27;: {
+                                type: &#x27;string&#x27;
+                            }
+                        }
+                    }
+                },
+                /**
+                 * Sources Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects for
+                 * audio played upon unpausing study
+                 *
+                 * @property {Object[]} unpauseAudio
+                 * @default []
+                 */
+                unpauseAudio: {
+                    type: &#x27;array&#x27;,
+                    description: &#x27;List of objects specifying audio src and type for audio played when unpausing study&#x27;,
+                    default: [],
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            &#x27;src&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;type&#x27;: {
+                                type: &#x27;string&#x27;
+                            }
+                        }
+                    }
+                },
+                /**
+                 * Text to show under &quot;Study paused / Press space to resume&quot; when study is paused.
+                 * Default: (You&#x27;ll have a moment to turn around again.)
+                 *
+                 * @property {String} pauseText
+                 * @default []
+
+                 */
+                pauseText: {
+                    type: &#x27;string&#x27;,
+                    description: &#x27;Text to show under Study paused when study is paused.&#x27;,
+                    default: &quot;(You&#x27;ll have a moment to turn around again.)&quot;
+                }
+            }
+        },
+        data: {
+            type: &#x27;object&#x27;,
+            /**
+             * Parameters captured and sent to the server
+             *
+             * @method serializeContent
+             * @param {Array} videosShown Sources of videos (potentially) shown during this trial: [source of test video, source of alternate test video].
+             * @param {Object} eventTimings
+             * @param {String} videoID The ID of any webcam video recorded during this frame
+             * @return {Object} The payload sent to the server
+             */
+            properties: {
+                videosShown: {
+                    type: &#x27;string&#x27;,
+                    default: []
+                },
+                videoId: {
+                    type: &#x27;string&#x27;
+                }
+            },
+            // No fields are required
+        }
+    },
+
+    videoSources: Ember.computed(&#x27;isPaused&#x27;, &#x27;currentTask&#x27;, &#x27;useAlternate&#x27;, function() {
+        if (this.get(&#x27;isPaused&#x27;)) {
+            return this.get(&#x27;attnSources_parsed&#x27;);
+        } else {
+            switch (this.get(&#x27;currentTask&#x27;)) {
+                case &#x27;announce&#x27;:
+                    return this.get(&#x27;attnSources_parsed&#x27;);
+                case &#x27;intro&#x27;:
+                    return this.get(&#x27;introSources_parsed&#x27;);
+                case &#x27;test&#x27;:
+                    if (this.get(&#x27;useAlternate&#x27;)) {
+                        if (this.get(&#x27;altSources&#x27;).length) {
+                            return this.get(&#x27;altSources_parsed&#x27;);
+                        } else { // default to playing same test video again
+                            return this.get(&#x27;sources_parsed&#x27;);
+                        }
+                    } else {
+                        return this.get(&#x27;sources_parsed&#x27;);
+                    }
+            }
+        }
+        return [];
+    }),
+
+    shouldLoop: Ember.computed(&#x27;videoSources&#x27;, function() {
+        return (this.get(&#x27;isPaused&#x27;) || (this.get(&#x27;currentTask&#x27;) === &#x27;announce&#x27; || this.get(&#x27;currentTask&#x27;) === &#x27;test&#x27;));
+    }),
+
+    onFullscreen() {
+        if (this.get(&#x27;isDestroyed&#x27;)) {
+            return;
+        }
+        this._super(...arguments);
+        if (!this.checkFullscreen()) {
+            if (!this.get(&#x27;isPaused&#x27;)) {
+                this.pauseStudy();
+            }
+        }
+    },
+
+    actions: {
+
+        announcementEnded() {
+            this.set(&#x27;completedAnnouncementAudio&#x27;, true);
+            if (this.get(&#x27;completedAnnouncementTime&#x27;)) {
+                this.set(&#x27;currentTask&#x27;, &#x27;intro&#x27;);
+            }
+        },
+
+        videoStarted() {
+            if (this.get(&#x27;currentTask&#x27;) === &#x27;test&#x27; &amp;&amp; !this.get(&#x27;isPaused&#x27;)) {
+                // Check that we haven&#x27;t played it enough times already
+                this.set(&#x27;testVideosTimesPlayed&#x27;, this.get(&#x27;testVideosTimesPlayed&#x27;) + 1);
+                if ((this.get(&#x27;testVideosTimesPlayed&#x27;) &gt; this.get(&#x27;testCount&#x27;)) &amp;&amp; (this.get(&#x27;testLength&#x27;) === Infinity)) {
+                    this.send(&#x27;finish&#x27;);
+                } else {
+                    if (this.get(&#x27;testTime&#x27;) === 0) {
+                        this.setTestTimer();
+                    }
+                    if ($(&#x27;audio#exp-music&#x27;).length) {
+                        $(&#x27;audio#exp-music&#x27;)[0].play();
+                    }
+                    if (this.get(&#x27;useAlternate&#x27;)) {
+                        this.send(&#x27;setTimeEvent&#x27;, &#x27;startAlternateVideo&#x27;);
+                    } else {
+                        this.send(&#x27;setTimeEvent&#x27;, &#x27;startTestVideo&#x27;);
+                    }
+                }
+            }
+        },
+
+        videoStopped() {
+            var currentTask = this.get(&#x27;currentTask&#x27;);
+            if (this.get(&#x27;testTime&#x27;) &gt;= this.get(&#x27;testLength&#x27;)) {
+                this.send(&#x27;finish&#x27;);
+            } else if (this.get(&#x27;shouldLoop&#x27;)) {
+                this.set(&#x27;_lastTime&#x27;, 0);
+                this.$(&#x27;#player-video&#x27;)[0].play();
+            } else {
+                this.send(&#x27;setTimeEvent&#x27;, &#x27;videoStopped&#x27;, {
+                    currentTask
+                });
+                if (this.get(&#x27;currentTask&#x27;) === &#x27;intro&#x27;) {
+                    this.set(&#x27;currentTask&#x27;, &#x27;calibration&#x27;);
+                }
+            }
+        },
+
+        finish() { // Move to next frame altogether
+            // Call this something separate from test because stopRecorder promise needs
+            // to call next AFTER recording is stopped and we don&#x27;t want this to have
+            // already been destroyed at that point.
+            window.clearInterval(this.get(&#x27;testTimer&#x27;));
+            window.clearInterval(this.get(&#x27;announceTimer&#x27;));
+            window.clearInterval(this.get(&#x27;calTimer&#x27;));
+            this.set(&#x27;testTime&#x27;, 0);
+            this.set(&#x27;testVideosTimesPlayed&#x27;, 0);
+            this.set(&#x27;completedAnnouncementAudio&#x27;, false);
+            this.set(&#x27;completedAnnouncementTime&#x27;, false);
+            if ($(&#x27;video#player-video&#x27;).length) {
+                $(&#x27;video#player-video&#x27;)[0].pause();
+            }
+            if ($(&#x27;audio#exp-music&#x27;).length) {
+                $(&#x27;audio#exp-music&#x27;)[0].pause();
+            }
+            var _this = this;
+            if (this.get(&#x27;doRecording&#x27;)) {
+                this.stopRecorder().then(() =&gt; {
+                    _this.set(&#x27;stoppedRecording&#x27;, true);
+                    _this.send(&#x27;next&#x27;);
+                    return;
+                }, () =&gt; {
+                    _this.send(&#x27;next&#x27;);
+                    return;
+                });
+            } else {
+                _this.send(&#x27;next&#x27;);
+            }
+        }
+    },
+
+    segmentObserver: Ember.observer(&#x27;currentTask&#x27;, function(frame) {
+        if (frame.get(&#x27;currentTask&#x27;) === &#x27;announce&#x27;) {
+            frame.startAnnouncement();
+        } else if (frame.get(&#x27;currentTask&#x27;) === &#x27;intro&#x27;) {
+            frame.startIntro();
+        } else if (frame.get(&#x27;currentTask&#x27;) === &#x27;calibration&#x27;) {
+            frame.startCalibration();
+        } else if (frame.get(&#x27;currentTask&#x27;) === &#x27;test&#x27;) {
+            // Skip test phase if no videos provided
+            if (!frame.get(&#x27;sources&#x27;).length) {
+                frame.send(&#x27;finish&#x27;);
+            }
+        }
+    }),
+
+    startAnnouncement() {
+        window.clearInterval(this.get(&#x27;announceTimer&#x27;));
+
+        // Skip if no announcement audio provided
+        if (!this.get(&#x27;isPaused&#x27;) &amp;&amp; !this.get(&#x27;audioSources&#x27;).length &amp;&amp; this.get(&#x27;announceLength&#x27;) === 0) {
+            this.startIntro();
+            return;
+        }
+        if (!this.get(&#x27;audioSources&#x27;).length) { // Audio counts as complete if none provided
+            this.set(&#x27;completedAnnouncementAudio&#x27;, true);
+        }
+        this.send(&#x27;setTimeEvent&#x27;, &#x27;startAnnouncement&#x27;);
+        // Actual starting audio is handled by autoplay on the template.
+        var _this = this; // Require at least attnLength duration of announcement phase
+        this.set(&#x27;announceTimer&#x27;, window.setTimeout(function() {
+                _this.set(&#x27;completedAnnouncementTime&#x27;, true);
+                if (_this.get(&#x27;completedAnnouncementAudio&#x27;)) {
+                    _this.set(&#x27;currentTask&#x27;, &#x27;intro&#x27;);
+                }
+            }, _this.get(&#x27;announceLength&#x27;) * 1000));
+    },
+
+    startIntro() {
+        if (this.get(&#x27;skip&#x27;)) { // If we need to skip because both test &amp; alternate have been used
+            this.send(&#x27;finish&#x27;);
+            return;
+        }
+        if (!this.get(&#x27;isPaused&#x27;)) {
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;startIntro&#x27;);
+            // If no intro video provided, skip intro.
+            if (!this.get(&#x27;introSources&#x27;).length) {
+                this.set(&#x27;currentTask&#x27;, &#x27;calibration&#x27;);
+            }
+        }
+    },
+
+    startCalibration() {
+        var _this = this;
+
+        // First check whether any calibration video provided. If not, skip.
+        if (!this.get(&#x27;calibrationLength&#x27;)) {
+            this.set(&#x27;currentTask&#x27;, &#x27;test&#x27;);
+            return;
+        }
+
+        var calAudio = $(&#x27;#player-calibration-audio&#x27;)[0];
+        var calVideo = $(&#x27;#player-calibration-video&#x27;)[0];
+        $(&#x27;#player-calibration-video&#x27;).show();
+
+        // Show the calibration segment at center, left, right, center, each
+        // time recording an event and playing the calibration audio.
+        var doCalibrationSegments = function(calList, lastLoc) {
+            if (calList.length === 0) {
+                $(&#x27;#player-calibration-video&#x27;).hide();
+                _this.set(&#x27;currentTask&#x27;, &#x27;test&#x27;);
+            } else {
+                var thisLoc = calList.shift();
+                /**
+                 * Start of EACH calibration segment
+                 *
+                 * @event startCalibration
+                 * @param {String} location location of calibration ball, relative to child: &#x27;left&#x27;, &#x27;right&#x27;, or &#x27;center&#x27;
+                 */
+                _this.send(&#x27;setTimeEvent&#x27;, &#x27;startCalibration&#x27;,
+                    {location: thisLoc});
+                calAudio.pause();
+                calAudio.currentTime = 0;
+                calAudio.play().then(
+                    _ =&gt; {  // eslint-disable-line no-unused-vars
+                    })
+                    .catch(error =&gt; {  // eslint-disable-line no-unused-vars
+                        calAudio.play();
+                    }
+                );
+
+                $(&#x27;#player-calibration-video&#x27;).removeClass(lastLoc);
+                $(&#x27;#player-calibration-video&#x27;).addClass(thisLoc);
+                calVideo.pause();
+                calVideo.currentTime = 0;
+                calVideo.play();
+                _this.set(&#x27;calTimer&#x27;, window.setTimeout(function() {
+                    doCalibrationSegments(calList, thisLoc);
+                }, _this.get(&#x27;calibrationLength&#x27;)));
+            }
+        };
+
+        doCalibrationSegments(this.get(&#x27;calibrationPositions&#x27;).slice(), &#x27;&#x27;);
+
+    },
+
+    setTestTimer() {
+        window.clearInterval(this.get(&#x27;testTimer&#x27;));
+        this.set(&#x27;testTime&#x27;, 0);
+        this.set(&#x27;_lastTime&#x27;, 0);
+
+        var testLength = this.get(&#x27;testLength&#x27;);
+
+        this.set(&#x27;testTimer&#x27;, window.setInterval(() =&gt; {
+            var videoTime = this.$(&#x27;#player-video&#x27;)[0].currentTime;
+            var lastTime = this.get(&#x27;_lastTime&#x27;);
+            var diff = videoTime - lastTime;
+            this.set(&#x27;_lastTime&#x27;, videoTime);
+
+            var testTime = this.get(&#x27;testTime&#x27;);
+            if ((testTime + diff) &gt;= (testLength - 0.02)) {
+                this.send(&#x27;finish&#x27;);
+            } else {
+                this.set(&#x27;testTime&#x27;, testTime + diff);
+            }
+        }, 100));
+    },
+
+    pauseStudy(pause) { // only called in FS mode
+        Ember.run.once(this, () =&gt; {
+            try {
+                this.set(&#x27;hasBeenPaused&#x27;, true);
+            } catch (_) {
+                return;
+            }
+            var wasPaused = this.get(&#x27;isPaused&#x27;);
+            var currentState = this.get(&#x27;currentTask&#x27;);
+
+            // Currently paused: restart
+            if (!pause &amp;&amp; wasPaused) {
+                //this.hideRecorder();
+                this.set(&#x27;isPaused&#x27;, false);
+                // reset announcement to start
+
+                if (currentState === &#x27;test&#x27;) {
+                    if (this.get(&#x27;useAlternate&#x27;)) {
+                        this.set(&#x27;skip&#x27;, true);
+                    }
+                    this.set(&#x27;useAlternate&#x27;, true);
+
+                }
+                if (this.get(&#x27;currentTask&#x27;) === &#x27;announce&#x27;) {
+                    // if task isn&#x27;t changing, won&#x27;t trigger announcement start naturally
+                    this.segmentObserver(this);
+                }
+                this.set(&#x27;currentTask&#x27;, &#x27;announce&#x27;);
+
+                try {
+                    this.resumeRecorder();
+                } catch (_) {
+                    return;
+                }
+            } else if (pause || !wasPaused) { // Not currently paused: pause
+                //this.showRecorder();
+                window.clearInterval(this.get(&#x27;testTimer&#x27;));
+                window.clearInterval(this.get(&#x27;announceTimer&#x27;));
+                window.clearInterval(this.get(&#x27;calTimer&#x27;));
+                this.set(&#x27;completedAnnouncementAudio&#x27;, false);
+                this.set(&#x27;completedAnnouncementTime&#x27;, false);
+                this.set(&#x27;testTime&#x27;, 0);
+                this.set(&#x27;testVideosTimesPlayed&#x27;, 0);
+                this.send(&#x27;setTimeEvent&#x27;, &#x27;pauseVideo&#x27;, {
+                    currentTask: this.get(&#x27;currentTask&#x27;)
+                });
+                this.pauseRecorder(true);
+                $(&#x27;#player-calibration-video&#x27;).removeClass(this.get(&#x27;calibrationPositions&#x27;).join(&#x27; &#x27;));
+                $(&#x27;#player-calibration-video&#x27;).hide();
+                this.set(&#x27;isPaused&#x27;, true);
+            }
+        });
+    },
+
+    didInsertElement() {
+        this._super(...arguments);
+
+        $(document).on(&#x27;keyup.pauser&#x27;, (e) =&gt; {
+            if (this.checkFullscreen()) {
+                if (e.which === 32) { // space: pause/unpause study
+                    this.pauseStudy();
+                }
+            }
+        });
+
+        this.send(&#x27;showFullscreen&#x27;);
+        if (this.get(&#x27;sources_parsed&#x27;).length) {
+            this.set(&#x27;videosShown&#x27;, [this.get(&#x27;sources_parsed&#x27;)[0].src, this.get(&#x27;altSources_parsed&#x27;)[0].src]);
+        } else {
+            this.set(&#x27;videosShown&#x27;, []);
+        }
+        this.set(&#x27;currentTask&#x27;, &#x27;announce&#x27;);
+        this.segmentObserver(this);
+    },
+
+    /**
+     * Observer that starts recording once recorder is ready. Override to do additional
+     * stuff at this point!
+     * @method whenPossibleToRecord
+     */
+    whenPossibleToRecord: observer(&#x27;recorder.hasCamAccess&#x27;, &#x27;recorderReady&#x27;, function() {
+        if (this.get(&#x27;doRecording&#x27;)) {
+            var _this = this;
+            if (this.get(&#x27;recorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;recorderReady&#x27;)) {
+                this.startRecorder().then(() =&gt; {
+                    _this.set(&#x27;recorderReady&#x27;, false);
+                });
+            }
+        }
+    }),
+
+    willDestroyElement() { // remove event handler
+        $(document).off(&#x27;keyup.pauser&#x27;);
+        window.clearInterval(this.get(&#x27;testTimer&#x27;));
+        window.clearInterval(this.get(&#x27;announceTimer&#x27;));
+        window.clearInterval(this.get(&#x27;calTimer&#x27;));
+        this._super(...arguments);
+    }
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

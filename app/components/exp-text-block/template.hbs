@@ -1,0 +1,31 @@
+{{#if block.title}}
+    <p class={{if (eq size 'large') 'exp-text-large' 'exp-text-medium'}}>{{block.title}}</p>
+{{/if}}
+
+{{#if block.text}}
+    <p>
+        {{#if block.emph}}
+            <strong>
+                {{exp-format block.text}}
+            </strong>
+        {{else}}
+            {{exp-format block.text}}
+        {{/if}}
+    </p>
+{{/if}}
+
+{{#if block.image}}
+    <img class="text-block-img"
+        src={{block.image.src}}
+        alt={{block.image.alt}} >
+{{/if}}
+
+{{#if block.listblocks}}
+    <ul>
+        {{#each block.listblocks as |listitem|}}
+            <li>
+                {{exp-text-block block=listitem}}
+            </li>
+        {{/each}}
+    </ul>
+{{/if}}

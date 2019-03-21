@@ -1,6 +1,6 @@
 <div id="expContainer">
     {{#if response.study.id}}
-      {{exp-player
+        {{exp-player
             experiment=study
             session=response
             pastSessions=pastResponses
@@ -8,15 +8,15 @@
     {{/if}}
 </div>
 
-{{#bs-modal open=showData title="Data collected during this preview session" closeAction=(action 'toggleData')}}
-    {{#bs-modal-body}}
-        <pre class="preview-data">
-            {{previewData}}
-        </pre>
-        <hr>
+{{#bs-modal open=showData title="Data collected during this preview session" closeAction=(action 'toggleData') as |modal|}}
+    {{#modal.body}}
         <p>
             <strong> Note: </strong>
             This dialog will not appear to participants when they complete a study.
         </p>
-    {{/bs-modal-body}}
+        <hr>
+        <pre class="preview-data">
+            {{previewData}}
+        </pre>
+    {{/modal.body}}
 {{/bs-modal}}
