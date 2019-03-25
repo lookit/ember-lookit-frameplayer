@@ -195,7 +195,7 @@ export default Ember.Mixin.create({
 
     /**
      * The recorder object, accessible to the consuming frame. Includes properties
-     * recorder.hasWebCam, recorder.hasCamAccess, recorder.micChecked, recorder.connected.
+     * recorder.nWebcams, recorder.hasCamAccess, recorder.micChecked, recorder.connected.
      * @property {VideoRecorder} recorder
      */
     recorder: null,
@@ -236,6 +236,20 @@ export default Ember.Mixin.create({
      * @default 100000000
      */
     maxRecordingLength: 100000000,
+
+    /**
+     * Whether to autosave recordings. Can be overridden by consuming frame.
+     * @property {Number} autosave
+     * @default 1
+     */
+    autosave: 1,
+
+    /**
+     * Whether to do audio-only (vs also video) recording. Can be overridden by consuming frame.
+     * @property {Number} audioOnly
+     * @default 0
+     */
+    audioOnly: 0,
 
     /**
      * Whether to use the camera in this frame. Consuming frame should set this property
@@ -294,29 +308,32 @@ export default Ember.Mixin.create({
      * Set up a video recorder instance
      * @method setupRecorder
      * @param {Node} element A DOM node representing where to mount the recorder
-     * @param {Boolean} record Whether to start the recording immediately
-     * @param {Object} settings Config to pass to the newly created VideoRecorder
      * @return {Promise} A promise representing the result of installing the recorder
      */
-    setupRecorder(element, record, settings = {}) {
+    setupRecorder(element) {
         const videoId = this._generateVideoId();
         this.set(&#x27;videoId&#x27;, videoId);
-        const recorder = this.get(&#x27;videoRecorder&#x27;).start(videoId, element, settings);
+        const recorder = this.get(&#x27;videoRecorder&#x27;).start(videoId, element);
         const pipeLoc = Ember.getOwner(this).resolveRegistration(&#x27;config:environment&#x27;).pipeLoc;
         const pipeEnv = Ember.getOwner(this).resolveRegistration(&#x27;config:environment&#x27;).pipeEnv;
-        const installPromise = recorder.install({record}, this.get(&#x27;videoId&#x27;), pipeLoc, pipeEnv, this.get(&#x27;maxRecordingLength&#x27;));
+        const installPromise = recorder.install(this.get(&#x27;videoId&#x27;), pipeLoc, pipeEnv,
+          this.get(&#x27;maxRecordingLength&#x27;), this.get(&#x27;autosave&#x27;), this.get(&#x27;audioOnly&#x27;));
 
         // Track specific events for all frames that use  VideoRecorder
         var _this = this;
-        recorder.on(&#x27;onCamAccess&#x27;, (hasAccess) =&gt; {
-            _this.send(&#x27;setTimeEvent&#x27;, &#x27;recorder.hasCamAccess&#x27;, {
-                hasCamAccess: hasAccess
-            });
+        recorder.on(&#x27;onCamAccess&#x27;, (recId, hasAccess) =&gt; {   // eslint-disable-line no-unused-vars
+            if (!(_this.get(&#x27;isDestroyed&#x27;) || _this.get(&#x27;isDestroying&#x27;))) {
+                _this.send(&#x27;setTimeEvent&#x27;, &#x27;recorder.hasCamAccess&#x27;, {
+                    hasCamAccess: hasAccess
+                });
+            }
         });
-        recorder.on(&#x27;onConnectionStatus&#x27;, (status) =&gt; {
-            _this.send(&#x27;setTimeEvent&#x27;, &#x27;videoStreamConnection&#x27;, {
-                status: status
-            });
+        recorder.on(&#x27;onConnectionStatus&#x27;, (recId, status) =&gt; {   // eslint-disable-line no-unused-vars
+            if (!(_this.get(&#x27;isDestroyed&#x27;) || _this.get(&#x27;isDestroying&#x27;))) {
+                _this.send(&#x27;setTimeEvent&#x27;, &#x27;videoStreamConnection&#x27;, {
+                    status: status
+                });
+            }
         });
         this.set(&#x27;recorder&#x27;, recorder);
         return installPromise;
@@ -431,7 +448,7 @@ export default Ember.Mixin.create({
     didInsertElement() {
         if (this.get(&#x27;doUseCamera&#x27;)) {
             var _this = this;
-            this.setupRecorder(this.$(this.get(&#x27;recorderElement&#x27;)), false).then(() =&gt; {
+            this.setupRecorder(this.$(this.get(&#x27;recorderElement&#x27;))).then(() =&gt; {
                 /**
                  * When video recorder has been installed
                  *

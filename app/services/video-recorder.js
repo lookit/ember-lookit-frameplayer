@@ -31,7 +31,6 @@ const VideoRecorder = Ember.Object.extend({
     nMics: Ember.computed.alias('_nMics').readOnly(), // number of microphones available for recording
     recording: Ember.computed.alias('_recording').readOnly(),
     hasCreatedRecording: Ember.computed.alias('_hasCreatedRecording').readOnly(),
-    hasPlayedBack: Ember.computed.alias('_hasPlayedBack').readOnly(),
     connected: false,
     uploadTimeout: null, // timer counting from attempt to stop until we should just
     //resolve the stopPromise
@@ -41,7 +40,6 @@ const VideoRecorder = Ember.Object.extend({
     _recording: false,
     _recorderReady: false,
     _hasCreatedRecording: false,
-    _hasPlayedBack: false,
     _nWebcams: 0,
     _nMics: 0,
 
@@ -75,11 +73,16 @@ const VideoRecorder = Ember.Object.extend({
      * Install a recorder onto the page and optionally begin recording immediately.
      *
      * @method install
-     * @param record
-     * @return {Promise} Indicate whether widget was successfully installed and started
+     * @param videoFilename desired filename for video (will be set after saving with Pipe name) ['']
+     * @param pipeKey Pipe account hash ['']
+     * @param pipeEnv which Pipe environment [1]
+     * @param maxRecordingTime recording length limit in s [100000000]
+     * @param autosave whether to autosave - 1 or 0 [1]
+     * @param audioOnly whether to do audio only recording - 1 or 0 [0]
+     * @return {Promise} Resolves when widget successfully installed and started
      */
 
-    install({record: record} = {record: false}, videoFilename = '', pipeKey = '', pipeEnv = 1, maxRecordingTime = 100000000) {
+    install(videoFilename = '', pipeKey = '', pipeEnv = 1, maxRecordingTime = 100000000, autosave = 1, audioOnly = 0) {
 
         let origDivId = this.get('divId');
         console.log(origDivId);
@@ -114,11 +117,11 @@ const VideoRecorder = Ember.Object.extend({
                 qualityurl: 'avq/480p.xml',
                 showMenu: 0, // hide recording button menu
                 sis: 1, // skip initial screen
-                asv: 1, // autosave recordings
+                asv: autosave, // autosave recordings
                 st: 0, // don't show timer
                 mv: 0, // don't mirror video for display
                 dpv: 1, // disable pre-recorded video on mobile
-                ao: 0, // not audio-only
+                ao: audioOnly, // not audio-only
                 dup: 0, // don't allow file uploads
                 payload: videoFilename, // data used by webhook to rename video
                 accountHash:  pipeKey,
@@ -148,11 +151,7 @@ const VideoRecorder = Ember.Object.extend({
                 });
             });
 
-            if (record) {
-                return this.record();
-            } else {
-                return resolve();
-            }
+            return resolve();
 
         });
     },
@@ -330,11 +329,6 @@ const VideoRecorder = Ember.Object.extend({
         this.set('connected', status === 'connected');
     },
 
-    _btPlayPressed(recorderId) {  // eslint-disable-line no-unused-vars
-        // could also use onPlaybackComplete
-        this.set('_hasPlayedBack', true);
-    },
-
     _onMicActivityLevel(recorderId, currentActivityLevel) { // eslint-disable-line no-unused-vars
         if (currentActivityLevel > this.get('minVolume')) {
             this.set('micChecked', true);
@@ -348,6 +342,7 @@ const VideoRecorder = Ember.Object.extend({
 
     // Additional hooks available:
     //  btRecordPressed = function (recorderId) {};
+    //  btPlayPressed(recorderId)
     //  btStopRecordingPressed = function (recorderId) {};
     //  btPausePressed = function (recorderId) {};
     //  onPlaybackComplete = function (recorderId) {};

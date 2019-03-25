@@ -129,6 +129,20 @@ export default Ember.Mixin.create({
     maxRecordingLength: 100000000,
 
     /**
+     * Whether to autosave recordings. Can be overridden by consuming frame.
+     * @property {Number} autosave
+     * @default 1
+     */
+    autosave: 1,
+
+    /**
+     * Whether to do audio-only (vs also video) recording. Can be overridden by consuming frame.
+     * @property {Number} audioOnly
+     * @default 0
+     */
+    audioOnly: 0,
+
+    /**
      * Whether to use the camera in this frame. Consuming frame should set this property
      * to override if needed.
      * @property {Boolean} [doUseCamera=true]
@@ -185,27 +199,27 @@ export default Ember.Mixin.create({
      * Set up a video recorder instance
      * @method setupRecorder
      * @param {Node} element A DOM node representing where to mount the recorder
-     * @param {Boolean} record Whether to start the recording immediately
      * @return {Promise} A promise representing the result of installing the recorder
      */
-    setupRecorder(element, record) {
+    setupRecorder(element) {
         const videoId = this._generateVideoId();
         this.set('videoId', videoId);
         const recorder = this.get('videoRecorder').start(videoId, element);
         const pipeLoc = Ember.getOwner(this).resolveRegistration('config:environment').pipeLoc;
         const pipeEnv = Ember.getOwner(this).resolveRegistration('config:environment').pipeEnv;
-        const installPromise = recorder.install({record}, this.get('videoId'), pipeLoc, pipeEnv, this.get('maxRecordingLength'));
+        const installPromise = recorder.install(this.get('videoId'), pipeLoc, pipeEnv,
+          this.get('maxRecordingLength'), this.get('autosave'), this.get('audioOnly'));
 
         // Track specific events for all frames that use  VideoRecorder
         var _this = this;
-        recorder.on('onCamAccess', (hasAccess) => {
+        recorder.on('onCamAccess', (recId, hasAccess) => {   // eslint-disable-line no-unused-vars
             if (!(_this.get('isDestroyed') || _this.get('isDestroying'))) {
                 _this.send('setTimeEvent', 'recorder.hasCamAccess', {
                     hasCamAccess: hasAccess
                 });
             }
         });
-        recorder.on('onConnectionStatus', (status) => {
+        recorder.on('onConnectionStatus', (recId, status) => {   // eslint-disable-line no-unused-vars
             if (!(_this.get('isDestroyed') || _this.get('isDestroying'))) {
                 _this.send('setTimeEvent', 'videoStreamConnection', {
                     status: status
@@ -325,7 +339,7 @@ export default Ember.Mixin.create({
     didInsertElement() {
         if (this.get('doUseCamera')) {
             var _this = this;
-            this.setupRecorder(this.$(this.get('recorderElement')), false).then(() => {
+            this.setupRecorder(this.$(this.get('recorderElement'))).then(() => {
                 /**
                  * When video recorder has been installed
                  *
