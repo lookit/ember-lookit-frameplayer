@@ -881,7 +881,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord,  {
 
         if (this.get('experiment') && this.get('id') && this.get('session')) {
 
-            const installPromise = this.setupRecorder(this.$('#videoRecorder'), true, {
+            const installPromise = this.setupRecorder(this.$('#videoRecorder'), {
                 hidden: true
             });
             installPromise.then(() => {

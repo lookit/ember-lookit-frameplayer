@@ -158,7 +158,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         reloadRecorder() {
             this.set(&#x27;showWarning&#x27;, false);
             this.destroyRecorder();
-            this.setupRecorder(this.$(this.get(&#x27;recorderElement&#x27;)), false);
+            this.setupRecorder(this.$(this.get(&#x27;recorderElement&#x27;)));
         },
     },
 

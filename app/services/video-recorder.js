@@ -10,41 +10,6 @@ let {
     RSVP
 } = Ember;
 
-// List of hooks and internal flash widget recorder methods:
-//    https://addpipe.com/docs#javascript-events-api
-//    New events available in HTML5: onRecorderInit, onRecorderReady, onConnectionClosed,
-//     onMicActivityLevel, onSaveOk
-const HOOKS = ['onRecordingStarted',
-                'onCamAccess',
-                'onRecorderReady',
-                'onUploadDone',
-                'userHasCamMic',
-                'onConnectionStatus',
-                'onMicActivityLevel',
-                'btPlayPressed'];
-
-const ATTRIBUTES = {
-    align: 'middle',
-    id: 'hdfvr-content',
-    name: 'VideoRecorder'
-};
-
-const MIN_VOLUME = 1;
-
-const FLASHVARS = {
-    recorderId: '123',
-    qualityurl: 'avq/480p.xml',
-    showMenu: 'false', // show recording button menu. Yes, STRING "true"/"false" sigh.
-    mrt: 100000000, // max recording time in seconds (don't use)
-    sis: 1, // skip initial screen
-    asv: 1, // autosave recordings
-    st: 0, // don't show timer
-    mv: 0,
-    dpv: 0,
-    ao: 0, // audio-only
-    dup: 0 // allow file uploads
-};
-
 /**
  * An instance of a video recorder tied to or used by one specific page. A given experiment may use more than one
  *   video recorder depending on the number of video capture frames.
@@ -53,65 +18,84 @@ const FLASHVARS = {
 const VideoRecorder = Ember.Object.extend({
     manager: null,
 
-    height: 'auto',
-    width: '100%',
     element: null,
 
-    attributes: {},
-    flashVars: {},
-
-    divId: Ember.computed.alias('attributes.id'),
-    videoId: Ember.computed.alias('flashVars.userId'),
-    recorderId: Ember.computed.alias('flashVars.recorderId'),
+    divId: 'lookit-video-recorder',
+    recorderId: '',
     pipeVideoName: '',
+    videoId: '',
 
     started: Ember.computed.alias('_started').readOnly(),
     hasCamAccess: false,
-    hasWebCam: false,
+    nWebcams: Ember.computed.alias('_nWebcams').readOnly(), // number of webcams available for recording
+    nMics: Ember.computed.alias('_nMics').readOnly(), // number of microphones available for recording
     recording: Ember.computed.alias('_recording').readOnly(),
-    flashReady: Ember.computed.alias('_recorderReady').readOnly(),
     hasCreatedRecording: Ember.computed.alias('_hasCreatedRecording').readOnly(),
-    hasPlayedBack: Ember.computed.alias('_hasPlayedBack').readOnly(),
     connected: false,
     uploadTimeout: null, // timer counting from attempt to stop until we should just
     //resolve the stopPromise
 
-    debug: false,
     _started: false,
     _camAccess: false,
     _recording: false,
     _recorderReady: false,
     _hasCreatedRecording: false,
-    _hasPlayedBack: false,
+    _nWebcams: 0,
+    _nMics: 0,
 
     _recordPromise: null,
     _stopPromise: null,
 
-    micChecked: false,
+    recorder: null, // The actual recorder object, also stored in PipeSDK.recorders obj
 
-    recorder: Ember.computed(function () {
-        return document.VideoRecorder;
-    }).volatile(),
+    // List of webcam hooks that should be added to recorder
+    // See https://addpipe.com/docs#javascript-events-api
+    hooks: ['onRecordingStarted',
+            'onCamAccess',
+            'onReadyToRecord',
+            'onUploadDone',
+            'userHasCamMic',
+            'onConnectionStatus',
+            'onMicActivityLevel',
+            'btPlayPressed',
+            'btRecordPressed',
+            'btStopRecordingPressed',
+            'btPausePressed',
+            'onPlaybackComplete',
+            'onConnectionClosed',
+            'onSaveOk'
+    ],
+
+    minVolume: 1, // Volume required to pass mic check
+    micChecked: false, // Has the microphone ever exceeded minVolume?
 
     /**
      * Install a recorder onto the page and optionally begin recording immediately.
      *
      * @method install
-     * @param record
-     * @return {Promise} Indicate whether widget was successfully installed and started
+     * @param videoFilename desired filename for video (will be set after saving with Pipe name) ['']
+     * @param pipeKey Pipe account hash ['']
+     * @param pipeEnv which Pipe environment [1]
+     * @param maxRecordingTime recording length limit in s [100000000]
+     * @param autosave whether to autosave - 1 or 0 [1]
+     * @param audioOnly whether to do audio only recording - 1 or 0 [0]
+     * @return {Promise} Resolves when widget successfully installed and started
      */
 
-    install({record: record} = {record: false}, videoFilename = '', pipeKey = '', pipeEnv = 1, maxRecordingTime = 100000000) {
+    install(videoFilename = '', pipeKey = '', pipeEnv = 1, maxRecordingTime = 100000000, autosave = 1, audioOnly = 0) {
 
         let origDivId = this.get('divId');
+        console.log(origDivId);
 
         this.set('divId', `${this.get('divId')}-${this.get('recorderId')}`);
+        console.log(this.get('divId'));
 
         var $element = $(this.get('element'));
         let hidden = this.get('hidden');
         if (hidden) {
             $element = $('body');
         }
+        console.log($element);
 
         let divId = this.get('divId');
         let videoId = this.get('videoId');
@@ -124,33 +108,51 @@ const VideoRecorder = Ember.Object.extend({
             }
         });
         this.set('$container', $container);
-        $container.append($('<div>', {id: origDivId}));
+        $container.append($('<div>', {id: divId, class: origDivId}));
         $element.append($container);
 
         return new RSVP.Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
-            window.size = { // just display size when showing to user. We override css.
-                width: 320,
-                height: 240
+
+            var pipeConfig = {
+                qualityurl: 'avq/480p.xml',
+                showMenu: 0, // hide recording button menu
+                sis: 1, // skip initial screen
+                asv: autosave, // autosave recordings
+                st: 0, // don't show timer
+                mv: 0, // don't mirror video for display
+                dpv: 1, // disable pre-recorded video on mobile
+                ao: audioOnly, // not audio-only
+                dup: 0, // don't allow file uploads
+                payload: videoFilename, // data used by webhook to rename video
+                accountHash:  pipeKey,
+                eid:  pipeEnv, // environment ID for pipe account
+                mrt:  maxRecordingTime,
+                size:  { // just display size when showing to user. We override css.
+                    width: 320,
+                    height: 240
+                }
             };
 
-            // Include videoId as payload and make flashvars available globally for Pipe.
-            var fv = Ember.copy(FLASHVARS, true);
-            fv.payload = videoFilename;
-            fv.accountHash = pipeKey;
-            fv.eid = pipeEnv;
-            fv.mrt = maxRecordingTime;
-            window.flashvars = fv;
-
-            // TODO: can we put this elsewhere instead of loading here?
-            $.getScript('https://cdn.addpipe.com/1.3/pipe.js');
-
             this.set('_started', true);
+            var _this = this;
+            PipeSDK.insert(divId, pipeConfig, function(myRecorderObject) {
+                _this.set('recorder', PipeSDK.getRecorderById(divId));
+                _this.get('hooks').forEach(hookName => {
+                    // At the time the hook is actually called, look up the appropriate
+                    // functions both from here and that might be added later.
+                    myRecorderObject[hookName] = function(...args) {
+                        if (_this.get('_' + hookName)) { // 'Native' hook defined here
+                            _this['_' + hookName].apply(_this, args);
+                        }
+                        if (_this.hasOwnProperty(hookName)) { // Some hook added later via 'on'
+                            _this[hookName].apply(_this, args);
+                        }
+                    };
+                });
+            });
 
-            if (record) {
-                return this.record();
-            } else {
-                return resolve();
-            }
+            return resolve();
+
         });
     },
 
@@ -252,7 +254,7 @@ const VideoRecorder = Ember.Object.extend({
 
     /**
      * Destroy video recorder and remove from list of recorders. Use this to remove
-     * the video recorder when destroying a frame, if not triggered via upload.
+     * the video recorder when destroying a frame.
      *
      * @method destroy
      */
@@ -267,8 +269,10 @@ const VideoRecorder = Ember.Object.extend({
      */
     uninstall() {
         console.log(`Destroying the videoRecorder: ${this.get('divId')}`);
-        //removePipeRecorder(); // TODO: this may affect ALL recorders, not just this one.
         $(`#${this.get('divId')}-container`).remove();
+        if (this.get('recorder') && this.get('recorder').remove) {
+            this.get('recorder').remove();
+        }
         this.set('_recording', false);
     },
 
@@ -279,14 +283,14 @@ const VideoRecorder = Ember.Object.extend({
         });
     },
 
-    on(eName, func) {
-        if (HOOKS.indexOf(eName) === -1 && eName !== 'onCamAccessConfirm') {
-            throw `Invalid event ${eName}`;
+    on(hookName, func) {
+        if (this.get('hooks').indexOf(hookName) === -1) {
+            throw `Invalid event ${hookName}`;
         }
-        this.set(eName, func);
+        this.set(hookName, func);
     },
 
-    // Begin Flash hooks
+    // Begin webcam hooks
     _onRecordingStarted(recorderId) { // eslint-disable-line no-unused-vars
         this.set('_recording', true);
         this.set('_hasCreatedRecording', true);
@@ -296,7 +300,7 @@ const VideoRecorder = Ember.Object.extend({
         }
     },
 
-    _onUploadDone(streamName, streamDuration, userId, recorderId) { // eslint-disable-line no-unused-vars
+    _onUploadDone(recorderId, streamName, streamDuration, audioCodec, videoCodec, fileType, audioOnly, location) { // eslint-disable-line no-unused-vars
         //this.destroy();
         window.clearTimeout(this.get('uploadTimeout'));
         if (this.get('_stopPromise')) {
@@ -306,38 +310,46 @@ const VideoRecorder = Ember.Object.extend({
         }
     },
 
-    _onCamAccess(allowed, recorderId) { // eslint-disable-line no-unused-vars
+    _onCamAccess(recorderId, allowed) { // eslint-disable-line no-unused-vars
         console.log('onCamAccess: ' + recorderId);
         this.set('hasCamAccess', allowed);
     },
 
-    _onRecorderReady(recorderId, recorderType) { // eslint-disable-line no-unused-vars
+    _onReadyToRecord(recorderId, recorderType) { // eslint-disable-line no-unused-vars
         this.set('_recorderReady', true);
     },
 
-    _userHasCamMic(camNumber, micNumber, recorderId) { // eslint-disable-line no-unused-vars
-        this.set('hasWebCam', Boolean(camNumber));
+    _userHasCamMic(recorderId, camNumber, micNumber) { // eslint-disable-line no-unused-vars
+        this.set('_nWebcams', camNumber);
+        this.set('_nMics', micNumber);
     },
 
-    _onConnectionStatus(status, recorderId) { // eslint-disable-line no-unused-vars
-        if (status === 'connected') {
-            this.set('connected', true);
-        } else {
-            this.set('connected', false);
-        }
-    },
-
-    _btPlayPressed(recorderId) {  // eslint-disable-line no-unused-vars
-        // could also use onPlaybackComplete
-        this.set('_hasPlayedBack', true);
+    _onConnectionStatus(recorderId, status) { // eslint-disable-line no-unused-vars
+        console.log('onConnectionStatus');
+        this.set('connected', status === 'connected');
     },
 
     _onMicActivityLevel(recorderId, currentActivityLevel) { // eslint-disable-line no-unused-vars
-        if (currentActivityLevel > MIN_VOLUME) {
+        if (currentActivityLevel > this.get('minVolume')) {
             this.set('micChecked', true);
+            // Remove the handler so we're not running this every single mic sample from now on
+            this.set('_onMicActivityLevel', null);
+            // This would remove the handler from the actual recorder, but we might have
+            // something added by a consuming frame via the 'on' fn
+            //this.get('recorder').onMicActivityLevel = function (recorderId, currentActivityLevel) {};
         }
     }
-    // End Flash hooks
+
+    // Additional hooks available:
+    //  btRecordPressed = function (recorderId) {};
+    //  btPlayPressed(recorderId)
+    //  btStopRecordingPressed = function (recorderId) {};
+    //  btPausePressed = function (recorderId) {};
+    //  onPlaybackComplete = function (recorderId) {};
+    //  onConnectionClosed = function (recorderId) {};
+    //  onSaveOk = function (recorderId, streamName, streamDuration, cameraName, micName, audioCodec, videoCodec, filetype, videoId, audioOnly, location) {};
+
+    // End webcam hooks
 });
 
 /**
@@ -350,80 +362,36 @@ const VideoRecorder = Ember.Object.extend({
 export default Ember.Service.extend({
     _recorders: {},
 
-    //Initial setup, installs webcam hooks into the page
-    init() {
-        var runHandler = function (recorder, hookName, args) {
-            if (recorder.get('debug')) {
-                console.log(hookName, args);
-            }
-            if (recorder.get('_' + hookName)) {
-                recorder.get('_' + hookName).apply(recorder, args);
-            }
-            if (recorder.get(hookName)) {
-                recorder.get(hookName).apply(recorder, args);
-            }
-        };
-
-        HOOKS.forEach(hookName => {
-            var _this = this;
-            window[hookName] = function () {
-                var args = Array.prototype.slice.call(arguments);
-                var recorder;
-                var recorderIdPositions = {
-                    'onUploadDone': 3,
-                    'userHasCamMic': 2,
-                    'onCamAccess': 1,
-                    'onConnectionStatus': 1,
-                    'onSaveOk': 5
-                };
-                var recorderIdPos = recorderIdPositions[hookName] || 0;
-                var recorderId = args[recorderIdPos];
-
-                // Make sure this recorder ID is actually in _recorders;
-                // otherwise fails by returning all of _recorders in this case.
-                if (_this._recorders.hasOwnProperty(recorderId)) {
-                    recorder = _this.get(`_recorders.${recorderId}`);
-                }
-                if (!recorder) {
-                    Object.keys(_this.get('_recorders')).forEach((id) => {
-                        recorder = _this.get(`_recorders.${id}`);
-                        runHandler(recorder, hookName, args);
-                    });
-                } else {
-                    runHandler(recorder, hookName, args);
-                }
-            };
-        });
-    },
+    //Initial setup of the service
+    //init() {
+    //    Might ideally load pipe.js only here, if using this service, but wait for load
+    //    see https://api.jquery.com/jquery.getscript/
+    //    $.cachedScript( 'https://cdn.addpipe.com/2.0/pipe.js' );
+    //},
 
     //Insert the recorder
-    start(videoId, element, settings = {}) {
+    start(videoId, element) {
         if (typeof (videoId) !== 'string') {
             throw new Error('videoId must be a string');
         }
-        var defaults = {
-            config: false,
-            hidden: false
-        };
-        Ember.assign(defaults, settings);
-
-        var props = {
-            flashVars: Ember.copy(FLASHVARS, true),
-            attributes: Ember.copy(ATTRIBUTES, true),
-            manager: this
-        };
-        props.flashVars.recorderId = (new Date().getTime() + '');
-        props.element = element;
-        props.hidden = defaults.hidden;
+        var props = {recorderId: (new Date().getTime() + ''), element: element, manager: this};
         let handle = new VideoRecorder(props);
-        this.set(`_recorders.${props.flashVars.recorderId}`, handle);
-        console.log('created new video recorder ' + props.flashVars.recorderId);
+        this.set(`_recorders.${props.recorderId}`, handle);
+        console.log('created new video recorder ' + props.recorderId);
         return handle;
     },
+
     destroy(recorder) {
         var recorders = this.get('_recorders');
         delete recorders[recorder.get('recorderId')];
         this.set('_recorders', recorders);
         recorder.uninstall();
+    },
+
+    destroyAll() {
+        for (let rec in PipeSDK.recorders) {
+            rec.remove();
+        }
     }
+
 });
