@@ -2,8 +2,8 @@ import ExpFrameBaseComponent from '../../components/exp-frame-base/component';
 import layout from './template';
 
 // The YUIdoc comments, using /** ... */ syntax, will be automatically compiled into
-// nice user-facing documentation as shown here (https://lookit.github.io/exp-addons/modules/frames.html)
-// once your changes are merged into the lookit/exp-addons repo. You can see how they look
+// nice user-facing documentation as shown here (https://lookit.github.io/ember-lookit-frameplayer/modules/frames.html)
+// once your changes are merged into the lookit/ember-lookit-frameplayer repo. You can see how they look
 // locally as described here: https://lookit.readthedocs.io/en/develop/ember-app-installation.html#writing-documentation-of-frames
 
 

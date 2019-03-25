@@ -72,14 +72,14 @@ p#pipeClickPowered {
 
 // Size the Pipe video ourselves, don't rely on fixed size that needs to be
 // handed to it
-#hdfvr-content, #hdfvr-content #pipeVrec, #hdfvr-content #pipeVideoInput {
+.lookit-video-recorder, .lookit-video-recorder > div, .lookit-video-recorder video.pipeNormal, .lookit-video-recorder video.pipeSmallNormal {
     height: 100% !important;
     width: 100% !important;
 }
 
 // Make sure the microphone symbol and meter show up even if aspect ratio is such that
 // bottom border of area is black
-#hdfvr-content #pipeVrec #pipeMicContainer {
+.lookit-video-recorder .pipeMicIconNoMenu {
     background-color: gray;
     padding: 2px;
 }

@@ -791,6 +791,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         videoStarted() {
             if (this.get(&#x27;currentTask&#x27;) === &#x27;test&#x27; &amp;&amp; !this.get(&#x27;isPaused&#x27;)) {
                 if (this.get(&#x27;useStaticTestStimuli&#x27;)) {
+                    this.send(&#x27;setTimeEvent&#x27;, &#x27;startTestImages&#x27;);
                     this.setTestTimer();
                     if ($(&#x27;audio#exp-music&#x27;).length) {
                         this.playAudio($(&#x27;audio#exp-music&#x27;)[0]);

@@ -112,6 +112,7 @@ import layout from &#x27;./template&#x27;;
 import Ember from &#x27;ember&#x27;;
 import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
 import VideoRecord from &#x27;../../mixins/video-record&#x27;;
+import { observer } from &#x27;@ember/object&#x27;;
 
 let {
     $
@@ -158,17 +159,17 @@ You can also customize any or all text and images as in the following example.
         &quot;completedItemText&quot;: &quot;Did it!&quot;,
         &quot;instructionBlocks&quot;: [
             {
-                text: &#x27;&lt;strong&gt;Make sure the webcam you\&#x27;re using is roughly centered&lt;/strong&gt; relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!&#x27;,
-                image: {
-                    src: &#x27;assets/centering.png&#x27;,
-                    alt: &#x27;Example images of using centered external webcam on monitor or built-in webcam on laptop.&#x27;
+                &quot;text&quot;: &quot;&lt;strong&gt;Make sure the webcam you&#x27;re using is roughly centered&lt;/strong&gt; relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!&quot;,
+                &quot;image&quot;: {
+                    &quot;src&quot;: &quot;assets/centering.png&quot;,
+                    &quot;alt&quot;: &quot;Example images of using centered external webcam on monitor or built-in webcam on laptop.&quot;
                 }
             },
             {
-                text: &#x27;&lt;strong&gt;Turn off any other monitors&lt;/strong&gt; connected to your computer, besides the one with the centered webcam. (If there\&#x27;s just one monitor, you\&#x27;re all set!)&#x27;,
-                image: {
-                    src: &#x27;assets/monitors.png&#x27;,
-                    alt: &#x27;Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.&#x27;
+                &quot;text&quot;: &quot;&lt;strong&gt;Turn off any other monitors&lt;/strong&gt; connected to your computer, besides the one with the centered webcam. (If there&#x27;s just one monitor, you&#x27;re all set!)&quot;,
+                &quot;image&quot;: {
+                    &quot;src&quot;: &quot;assets/monitors.png&quot;,
+                    &quot;alt&quot;: &quot;Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.&quot;
                 }
             }
         ],
@@ -282,7 +283,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 @property {Object} instructionBlocks
                   @param {String} text instructions text (can include html)
                   @param {Object} image image to display, with &#x27;src&#x27; &amp; &#x27;alt&#x27; attributes
-                @default &quot;&quot;
+                @default [set of standard instructions]
                 */
                 instructionBlocks: {
                     type: &#x27;array&#x27;,
@@ -367,6 +368,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     showCheckboxWarning: false,
     showRecorderWarning: false,
+    hasPlayedBack: false,
 
     completedBoxes: false,
     readyToProceed: false,
@@ -383,25 +385,10 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         }
 
         // See if recording has been made and viewed (if required)
-        let recordCheck = !this.get(&#x27;requireTestVideo&#x27;) || (this.get(&#x27;recorder.hasCreatedRecording&#x27;) &amp;&amp; this.get(&#x27;recorder.hasPlayedBack&#x27;));
+        let recordCheck = !this.get(&#x27;requireTestVideo&#x27;) || (this.get(&#x27;recorder.hasCreatedRecording&#x27;) &amp;&amp; this.get(&#x27;hasPlayedBack&#x27;));
         if (recordCheck) {
             this.set(&#x27;showRecorderWarning&#x27;, false);
         }
-
-        // The Pipe menu takes a little while to get set up, so if we try to bind an
-        // event to it e.g. upon didRender, it doesn&#x27;t end up bound. Additionally, the
-        // #pipeRec and #pipePlay buttons have their behavior OVERWRITTEN by Pipe,
-        // e.g. pipePlay&#x27;s handler changes after there&#x27;s a recording available, so
-        // we don&#x27;t want to bind to those. But adding the handler here means that at
-        // least once someone tries to proceed by clicking &#x27;next&#x27;, they&#x27;ll now get an
-        // update on when the condition is met - and other actions like clicking checkboxes
-        // will also trigger this so we can ensure that the &#x27;next&#x27; button doesn&#x27;t look
-        // disabled once the user can proceed.
-        var _this = this;
-        $(&#x27;#pipeMenu&#x27;).off(&#x27;click&#x27;);
-        $(&#x27;#pipeMenu&#x27;).click(function() {
-            _this.checkIfDone();
-        });
 
         this.set(&#x27;readyToProceed&#x27;, boxCheck &amp;&amp; recordCheck);
     },
@@ -422,6 +409,25 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         return -1;
     },
 
+    /**
+     * Observer that adds listener for play button once recorder is ready.
+     * @method whenPossibleToRecord
+     */
+    whenPossibleToRecord: observer(&#x27;recorder.hasCamAccess&#x27;, &#x27;recorderReady&#x27;, function() {
+        // The Pipe menu takes a little while to get set up, so if we try to bind an
+        // event to it e.g. upon didRender, it doesn&#x27;t end up bound. Additionally, the
+        // #pipeRec and #pipePlay buttons have their behavior OVERWRITTEN by Pipe,
+        // e.g. pipePlay&#x27;s handler changes after there&#x27;s a recording available, so
+        // we don&#x27;t want to bind to those.
+        var _this = this;
+        if (this.get(&#x27;recorder&#x27;) &amp;&amp; this.get(&#x27;recorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;recorderReady&#x27;)) {
+            this.get(&#x27;recorder&#x27;).on(&#x27;btPlayPressed&#x27;, (recId) =&gt; {   // eslint-disable-line no-unused-vars
+                _this.set(&#x27;hasPlayedBack&#x27;, true);
+                _this.checkIfDone();
+            });
+        }
+    }),
+
     actions: {
         checkboxChanged(idx) {
             if ($(&#x27;#checkbox-&#x27; + idx).prop(&#x27;checked&#x27;)) {
@@ -430,13 +436,8 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                     $nextInstruction[0].scrollIntoView({behavior: &#x27;smooth&#x27;, block: &#x27;start&#x27;});
                 }
             }
-            if (this.uncheckedBoxes() == -1) {
-                this.set(&#x27;completedBoxes&#x27;, true);
-                this.checkIfDone();
-            } else {
-                this.set(&#x27;completedBoxes&#x27;, false);
-                this.checkIfDone();
-            }
+            this.set(&#x27;completedBoxes&#x27;, this.uncheckedBoxes() == -1);
+            this.checkIfDone();
         },
 
         finish() {
@@ -454,7 +455,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             }
 
             // If needed, display warning about making a recording
-            if (this.get(&#x27;requireTestVideo&#x27;) &amp;&amp; (!this.get(&#x27;recorder.hasCreatedRecording&#x27;) || !this.get(&#x27;recorder.hasPlayedBack&#x27;))) {
+            if (this.get(&#x27;requireTestVideo&#x27;) &amp;&amp; (!this.get(&#x27;recorder.hasCreatedRecording&#x27;) || !this.get(&#x27;hasPlayedBack&#x27;))) {
                 this.set(&#x27;showRecorderWarning&#x27;, true);
             }
 
@@ -466,8 +467,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
         reloadRecorder() {
             this.set(&#x27;showWarning&#x27;, false);
+            this.set(&#x27;hasPlayedBack&#x27;, false);
             this.destroyRecorder();
-            this.setupRecorder(this.$(this.get(&#x27;recorderElement&#x27;)), false);
+            this.setupRecorder(this.$(this.get(&#x27;recorderElement&#x27;)));
         },
     }
 });

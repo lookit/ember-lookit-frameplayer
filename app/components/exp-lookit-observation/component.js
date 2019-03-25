@@ -324,7 +324,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 $('#recordButton').show();
                 $('#recordingText').text('Paused');
                 _this.destroyRecorder();
-                _this.setupRecorder(_this.$(_this.get('recorderElement')), false);
+                _this.setupRecorder(_this.$(_this.get('recorderElement')));
             });
         },
         toggleWebcamButton() {

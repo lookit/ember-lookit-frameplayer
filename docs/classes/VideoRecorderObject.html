@@ -108,7 +108,7 @@
 
 
         <div class="foundat">
-            Defined in: <a href="../files/app_services_video-recorder.js.html#l48"><code>app&#x2F;services&#x2F;video-recorder.js:48</code></a>
+            Defined in: <a href="../files/app_services_video-recorder.js.html#l13"><code>app&#x2F;services&#x2F;video-recorder.js:13</code></a>
         </div>
 
             Collection: <a href="../modules/services.html">services</a><br>
@@ -193,7 +193,7 @@ video recorder depending on the number of video capture frames.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_services_video-recorder.js.html#l253"><code>app&#x2F;services&#x2F;video-recorder.js:253</code></a>
+        <a href="../files/app_services_video-recorder.js.html#l255"><code>app&#x2F;services&#x2F;video-recorder.js:255</code></a>
         </p>
 
 
@@ -202,7 +202,7 @@ video recorder depending on the number of video capture frames.</p>
 
     <div class="description">
         <p>Destroy video recorder and remove from list of recorders. Use this to remove
-the video recorder when destroying a frame, if not triggered via upload.</p>
+the video recorder when destroying a frame.</p>
 
     </div>
 
@@ -228,7 +228,7 @@ the video recorder when destroying a frame, if not triggered via upload.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_services_video-recorder.js.html#l192"><code>app&#x2F;services&#x2F;video-recorder.js:192</code></a>
+        <a href="../files/app_services_video-recorder.js.html#l194"><code>app&#x2F;services&#x2F;video-recorder.js:194</code></a>
         </p>
 
 
@@ -258,7 +258,22 @@ line up with the video.</p>
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
-                        <code>record</code>
+                        <code>videoFilename</code>
+                </li>
+                <li class="arg">
+                        <code>pipeKey</code>
+                </li>
+                <li class="arg">
+                        <code>pipeEnv</code>
+                </li>
+                <li class="arg">
+                        <code>maxRecordingTime</code>
+                </li>
+                <li class="arg">
+                        <code>autosave</code>
+                </li>
+                <li class="arg">
+                        <code>audioOnly</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
@@ -276,7 +291,7 @@ line up with the video.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_services_video-recorder.js.html#l96"><code>app&#x2F;services&#x2F;video-recorder.js:96</code></a>
+        <a href="../files/app_services_video-recorder.js.html#l72"><code>app&#x2F;services&#x2F;video-recorder.js:72</code></a>
         </p>
 
 
@@ -293,12 +308,68 @@ line up with the video.</p>
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">record</code>
+                        <code class="param-name">videoFilename</code>
                         <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
 
 
                     <div class="param-description">
-                         
+                        <p>desired filename for video (will be set after saving with Pipe name) ['']</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">pipeKey</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                        <p>Pipe account hash ['']</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">pipeEnv</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                        <p>which Pipe environment [1]</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">maxRecordingTime</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                        <p>recording length limit in s [100000000]</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">autosave</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                        <p>whether to autosave - 1 or 0 [1]</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">audioOnly</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                        <p>whether to do audio only recording - 1 or 0 [0]</p>
+
                     </div>
 
                 </li>
@@ -310,7 +381,7 @@ line up with the video.</p>
 
             <div class="returns-description">
                         <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>:
-                    <p>Indicate whether widget was successfully installed and started</p>
+                    <p>Resolves when widget successfully installed and started</p>
 
             </div>
         </div>
@@ -335,7 +406,7 @@ line up with the video.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_services_video-recorder.js.html#l157"><code>app&#x2F;services&#x2F;video-recorder.js:157</code></a>
+        <a href="../files/app_services_video-recorder.js.html#l159"><code>app&#x2F;services&#x2F;video-recorder.js:159</code></a>
         </p>
 
 
@@ -373,7 +444,7 @@ line up with the video.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_services_video-recorder.js.html#l206"><code>app&#x2F;services&#x2F;video-recorder.js:206</code></a>
+        <a href="../files/app_services_video-recorder.js.html#l208"><code>app&#x2F;services&#x2F;video-recorder.js:208</code></a>
         </p>
 
 
@@ -404,7 +475,7 @@ line up with the video.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_services_video-recorder.js.html#l263"><code>app&#x2F;services&#x2F;video-recorder.js:263</code></a>
+        <a href="../files/app_services_video-recorder.js.html#l265"><code>app&#x2F;services&#x2F;video-recorder.js:265</code></a>
         </p>
 
 
