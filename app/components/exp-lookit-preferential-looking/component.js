@@ -964,6 +964,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
     },
 
     didInsertElement() {
+
         this._super(...arguments);
 
         // Replace leftImage, rightImage, centerImage if appropriate
@@ -978,6 +979,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 this.set('centerImage', this.get('possibleImages')[this.get('centerImageIndex')]);
             }
         }
+        this.expandAssets(); // manually re-trigger because we've added new things to parse
 
         $(document).on('keyup.pauser', (e) => {
             if (this.checkFullscreen()) {
