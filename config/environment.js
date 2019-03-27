@@ -34,7 +34,7 @@ module.exports = function(environment) {
 
   if (environment === 'development') {
       // Host for API endpoint, e.g. http://localhost:8000 (you could also have https set up).
-      ENV.APP.host = process.env.LOOKIT_API_HOST;
+      ENV.APP.host = process.env.LOOKIT_API_HOST || 'http://localhost:8000';
       ENV.APP.apiKey = process.env.LOOKIT_API_KEY;
       // ENV.APP.LOG_RESOLVER = true;
       // ENV.APP.LOG_ACTIVE_GENERATION = true;

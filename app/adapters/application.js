@@ -18,7 +18,7 @@ export default DS.JSONAPIAdapter.extend(HasManyQuery.RESTAdapterMixin, {
         };
 
         if (config.APP.apiKey) {
-            headers['Authorization'] = config.APP.apiKey;
+            headers.Authorization = config.APP.apiKey;
         }
 
         return headers;
