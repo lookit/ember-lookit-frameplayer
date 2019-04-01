@@ -33,7 +33,7 @@ module.exports = function(environment) {
 
 
   if (environment === 'development') {
-      ENV.host = 'http://localhost:8000';
+      ENV.host = process.env.LOOKIT_API_HOST;
       ENV.APP.apiKey = process.env.LOOKIT_API_KEY;
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
