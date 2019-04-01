@@ -1,0 +1,25 @@
+<div class="row exp-test">
+  <!-- Content goes here. Make sure you give all content in your frame a unique class
+  and target your CSS to that class
+  (see https://lookit.readthedocs.io/en/develop/frames.html#adding-css-styling)-->
+  <h1> {{title}} </h1>
+  <hr>
+  <p> {{ body }}</p>
+  <hr >
+  <div class="input-group">
+    <span>
+      {{ consentLabel }}
+    </span>
+    {{input type="checkbox" checked=consentGranted}}
+  </div>
+</div>
+
+</div>
+<div class="row exp-controls exp-test">
+  <!-- Example: next/previous controls. Modify as appropriate -->
+  <div class="btn-group">
+    <button class="btn btn-default" {{ action 'previous' }} > Previous </button>
+    <button class="btn btn-default pull-right" disabled={{ consentNotGranted }}  {{ action 'next' }} > Next </button>
+  </div>
+</div>
+
