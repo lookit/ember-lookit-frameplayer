@@ -1,22 +1,50 @@
 <div class="row exp-test">
-  <!-- Content goes here. Make sure you give all content in your frame a unique class
-  and target your CSS to that class
-  (see https://lookit.readthedocs.io/en/develop/frames.html#adding-css-styling)-->
-  <h1> {{title}} </h1>
-  <hr>
-  <p> {{ body }}</p>
-  <hr >
-  <div class="input-group">
-    <span>
-      {{ consentLabel }}
-    </span>
-    {{input type="checkbox" checked=consentGranted}}
+    <h1> {{title}} </h1>
+    <hr>
+    <p> {{ body }}</p>
+    <hr >
+
+  <div class="row">
+    <div class="col-md-8">
+      <canvas id="myCanvas" width="600" height="450"></canvas>
+    </div>
+    <div class="col-md-3" >
+      Game rounds : {{game_rounds}}
+      <input type="range" min="1" max="10" steps="1" oninput={{action (mut game_rounds) value="target.value"}}  value={{game_rounds}} >
+      Paddle speed : {{paddle_speed}}
+      <input type="range" min="1" max="10" steps="1" oninput={{action (mut paddle_speed) value="target.value"}}  value={{paddle_speed}} >
+      Gravity factor : {{gravity_factor}}
+      <input type="range" min="1" max="3" steps="1" oninput={{action (mut gravity_factor) value="target.value"}}  value={{gravity_factor}} >
+      Ball mass : {{ball_mass}}
+      <input type="range" min="1" max="10" steps="1" oninput={{action (mut ball_mass) value="target.value"}}  value={{ball_mass}} >
+      Restitution coefficient : {{restitution}}
+      <input type="range" min="1" max="10" steps="1" oninput={{action (mut restitution) value="target.value"}}  value={{restitution}} >
+      X velocity : {{x_velocity}}
+      <input type="range" min="1" max="100" steps="1" oninput={{action (mut x_velocity) value="target.value"}}  value={{x_velocity}} >
+      Y velocity : {{y_velocity}}
+      <input type="range" min="1" max="100" steps="1" oninput={{action (mut y_velocity) value="target.value"}}  value={{y_velocity}} >
+      Paddle velocity restitution factor : {{paddle_restitution}}
+      <input type="range" min="1" max="10" steps="1" oninput={{action (mut paddle_restitution) value="target.value"}}  value={{paddle_restitution}} >
+
+    </div>
   </div>
-</div>
+    <div class="input-group">
+
+      {{bs-button class="pull-right" defaultText="Play" type="success" onClick=(action "play")}}
+      {{bs-button class="pull-right" defaultText="Show data" type="success" onClick=(action "export")}}
+
+    </div>
+
+
+  {{#each export_arr as |item|}}
+    {{exp-text-block block=item}}
+  {{/each}}
+
+
 
 </div>
+
 <div class="row exp-controls exp-test">
-  <!-- Example: next/previous controls. Modify as appropriate -->
   <div class="btn-group">
     <button class="btn btn-default" {{ action 'previous' }} > Previous </button>
     <button class="btn btn-default pull-right" disabled={{ consentNotGranted }}  {{ action 'next' }} > Next </button>
