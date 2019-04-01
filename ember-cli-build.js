@@ -11,7 +11,7 @@ require('dotenv').config();
 module.exports = function(defaults) {
     var app = new EmberApp(defaults, {
           babel: {
-            sourceMaps: EmberApp.env() === 'production' ? null: 'inline'
+            sourceMaps: EmberApp.env() === 'production' ? undefined: 'inline'
           },
           sourcemaps: {
               enabled: EmberApp.env() !== 'production'
