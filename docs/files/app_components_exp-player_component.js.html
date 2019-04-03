@@ -322,7 +322,11 @@ export default Ember.Component.extend(FullScreen, {
             // Save the data from a completed frame to the session data item
             this.get(&#x27;session.sequence&#x27;).push(frameId);
             this.get(&#x27;session.expData&#x27;)[frameId] = frameData;
-            return this.get(&#x27;session&#x27;).save();
+            if (this.get(&#x27;session&#x27;).child.content.id === &#x27;TEST_CHILD_DISREGARD&#x27;) {
+                return Ember.RSVP.Promise.resolve();
+            } else {
+                return this.get(&#x27;session&#x27;).save();
+            }
         },
 
         next() {

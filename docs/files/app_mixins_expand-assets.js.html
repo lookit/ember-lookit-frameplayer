@@ -324,10 +324,7 @@ export default Ember.Mixin.create({
         }
     },
 
-    didReceiveAttrs() {
-
-        this._super(...arguments);
-
+    expandAssets() {
         // Add a trailing slash to baseDir if needed
         var baseDir = this.get(&#x27;baseDir&#x27;);
         if (baseDir &amp;&amp; baseDir.slice(-1) != &#x27;/&#x27;) {
@@ -375,6 +372,13 @@ export default Ember.Mixin.create({
                 });
             }
         });
+    },
+
+    didReceiveAttrs() {
+
+        this._super(...arguments);
+        this.expandAssets();
+
     }
 
 });
