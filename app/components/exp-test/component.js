@@ -176,8 +176,7 @@ export default ExpFrameBaseComponent.extend({
                        default: 2
                      },
 
-                consentLabel: {
-
+                    consentLabel: {
                     type: 'string',
                     default: 'I agree'
                 }

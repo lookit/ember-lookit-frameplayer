@@ -101,7 +101,7 @@ export  default  class catchMouse extends Base{
      * Mice appears after delay ,  paddle movements are  here
      */
     startClock(){
-        super.drawImage(mice)
+        super.drawImage(mice);
         super.paddleMove(basket);
 
 
@@ -141,7 +141,7 @@ export  default  class catchMouse extends Base{
     loop(){
         super.loop();
         this.createPaddleBox();
-        super.drawImage(cheeseClock)
+        super.drawImage(cheeseClock);
 
         if(new Date().getTime() -  mice.lastTime > mice.delay ){
 

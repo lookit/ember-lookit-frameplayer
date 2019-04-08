@@ -14,6 +14,7 @@ let paddleWidth = 0;
 let paddleHeight = 0;
 let basket = {};
 let ball = {};
+let obstructionNumber = 2;
 let obstructions = [];
 
 export default class catchCheese extends Base{
@@ -23,7 +24,7 @@ export default class catchCheese extends Base{
         super(context,document);
         paddleWidth = this.canvas.width/9;
         paddleHeight = this.canvas.width/9;
-
+        obstructionNumber = this.context.obstructionNumber;
 
     }
 
@@ -71,7 +72,7 @@ export default class catchCheese extends Base{
         };
 
 
-        obstructions =  Array(this.context.obstructionNumber).fill({}).map((value,index) =>
+        obstructions =  Array(obstructionNumber).fill({}).map((value,index) =>
 
             ({  dimensions: {width:paddleWidth*1.5, height: this.canvas.height / 1.5 },
             position: {x: this.canvas.width/2 + (paddleWidth - 30) -index*paddleWidth/1.5,y: (this.canvas.height-paddleHeight)/2 - paddleHeight },
@@ -110,8 +111,8 @@ export default class catchCheese extends Base{
 
         this.collisionDetection();
 
-        this.createBallBox()
-        super.drawImage(basket)
+        this.createBallBox();
+        super.drawImage(basket);
         super.ballTrajectory(ball);
         obstructions.forEach( obstruction=> super.drawImage(obstruction) );
         super.paddleMove(basket);
