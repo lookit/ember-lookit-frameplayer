@@ -135,7 +135,7 @@ export default  class Base {
      */
     storeData(exportData){
 
-        this.context.get('export_arr').addObject(exportData);
+     //   this.context.get('export_arr').addObject(exportData);
        // this.context.export_arr.push(exportData);
     }
 

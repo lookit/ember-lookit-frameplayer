@@ -238,7 +238,7 @@ export default ExpFrameBaseComponent.extend({
     actions: {
 
       play() {
-        this.set('export_arr', Ember.A());
+        //this.set('export_arr', Ember.A());
 
         if(this.title === 'Feed the croc') {
 

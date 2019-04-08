@@ -10,8 +10,6 @@ let cheeseClock = {};
 let basket = {};
 let paddleWidth = 0;
 let paddleHeight = 0;
-let upPressed = false;
-let downPressed = false;
 
 export  default  class catchMouse extends Base{
 

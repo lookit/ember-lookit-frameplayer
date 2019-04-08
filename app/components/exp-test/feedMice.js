@@ -12,7 +12,6 @@
 import Base from "./base";
 
 let paddleWidth = 0;
-let paddleHeight = 0;
 let target = {};
 let ball = {};
 let targets = [];
@@ -25,7 +24,7 @@ export default class feedMice extends Base{
     constructor(context,document) {
         super(context,document);
         paddleWidth = this.canvas.width/15;
-        paddleHeight = this.canvas.width/15;
+
 
     }
 
@@ -188,7 +187,7 @@ export default class feedMice extends Base{
         if(didHitWindow){
             super.ballTrajectory(ball);
         }
-p
+
 
     }
 

@@ -11,7 +11,6 @@
 import Base from "./base";
 
 let paddleWidth = 0;
-let paddleHeight = 0;
 let target = {};
 let ball = {};
 let keyPressed = false;
@@ -22,9 +21,6 @@ export default class feedMouse extends Base{
 
         super(context,document);
         paddleWidth = this.canvas.width/13;
-        paddleHeight = paddleWidth/3;
-
-
 
     }
 
