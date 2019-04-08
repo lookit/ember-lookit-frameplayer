@@ -6,8 +6,11 @@
 
 import ExpFrameBaseComponent from '../../components/exp-frame-base/component';
 import layout from './template';
-import Game from './game';
-
+import FeedCroc from './feedCroc';
+import catchMouse from './catchMouse';
+import feedMouse from "./feedMouse";
+import feedMice from "./feedMice";
+import catchCheese from "./catchCheese";
 
 /**
  * @module exp-player
@@ -235,13 +238,42 @@ export default ExpFrameBaseComponent.extend({
     actions: {
 
       play() {
-          this.set('export_arr', Ember.A());
-          new Game(this,document).init();
+        this.set('export_arr', Ember.A());
+
+        if(this.title === 'Feed the croc') {
+
+          new FeedCroc(this, document).init();
+        }
+
+        if(this.title === 'Feed the mouse in the house') {
+
+          new feedMouse(this,document).init();
+        }
+
+        if(this.title === 'Feed mice in the house') {
+
+          new feedMice(this, document).init();
+        }
+
+
+        if(this.title === 'Catch the cheese') {
+
+          new catchCheese(this, document).init();
+        }
+
+        if(this.title === 'Catch the mouse') {
+
+          new catchMouse(this, document).init();
+        }
+
+
+
 
       },
       export(){
 
-          this.jsonToCSVConvertor(this.export_arr,"Data",true);
+        //  this.jsonToCSVConvertor(this.export_arr,"Data",true);
+      //  this.send('next');
 
       }
         // Define any actions that you need to be able to trigger from within the template here
