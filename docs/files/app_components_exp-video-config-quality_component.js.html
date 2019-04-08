@@ -158,24 +158,45 @@ You can also customize any or all text and images as in the following example.
         &quot;requireItemConfirmation&quot;: true,
         &quot;completedItemText&quot;: &quot;Did it!&quot;,
         &quot;instructionBlocks&quot;: [
-            {
-                &quot;text&quot;: &quot;&lt;strong&gt;Make sure the webcam you&#x27;re using is roughly centered&lt;/strong&gt; relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!&quot;,
-                &quot;image&quot;: {
-                    &quot;src&quot;: &quot;assets/centering.png&quot;,
-                    &quot;alt&quot;: &quot;Example images of using centered external webcam on monitor or built-in webcam on laptop.&quot;
-                }
-            },
-            {
-                &quot;text&quot;: &quot;&lt;strong&gt;Turn off any other monitors&lt;/strong&gt; connected to your computer, besides the one with the centered webcam. (If there&#x27;s just one monitor, you&#x27;re all set!)&quot;,
-                &quot;image&quot;: {
-                    &quot;src&quot;: &quot;assets/monitors.png&quot;,
-                    &quot;alt&quot;: &quot;Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.&quot;
-                }
-            }
-        ],
-        &quot;requireTestVideo&quot;: true,
-        &quot;showRecordMenu&quot;: true,
-        &quot;recordingInstructionText&quot;: &quot;You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.&quot;
+                    {
+                        &quot;text&quot;: &quot;&lt;strong&gt;Make sure the webcam you&#x27;re using is roughly centered&lt;/strong&gt; relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!&quot;,
+                        &quot;image&quot;: {
+                            &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/website/centering.png&quot;,
+                            &quot;alt&quot;: &quot;Example images of using centered external webcam on monitor or built-in webcam on laptop.&quot;
+                        }
+                    },
+                    {
+                        &quot;text&quot;: &quot;&lt;strong&gt;Turn off any other monitors&lt;/strong&gt; connected to your computer, besides the one with the centered webcam. (If there&#x27;s just one monitor, you&#x27;re all set!)&quot;,
+                        &quot;image&quot;: {
+                            &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/website/monitors.png&quot;,
+                            &quot;alt&quot;: &quot;Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.&quot;
+                        }
+                    },
+                    {
+                        &quot;text&quot;: &quot;Check the lighting by making sure you can &lt;strong&gt;clearly see your own eyes&lt;/strong&gt; on the webcam view to the right. You may need to either turn on a light or reduce light coming from behind you.&quot;,
+                        &quot;image&quot;: {
+                            &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/website/lighting.png&quot;,
+                            &quot;alt&quot;: &quot;Example images showing good lighting, room too dark, and backlit scene where eyes are not visible.&quot;
+                        }
+                    },
+                    {
+                        &quot;text&quot;: &quot;If it&#x27;s practical, &lt;strong&gt;minimize exciting things&lt;/strong&gt; that are visible behind or to the side of the screen--for instance, by facing a wall instead of the kitchen. (If this isn&#x27;t practical for you, don&#x27;t worry about it--just check the box!)&quot;,
+                        &quot;image&quot;: {
+                            &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/website/distractions.png&quot;,
+                            &quot;alt&quot;: &quot;Example images showing a child and puppy next to the computer, versus a computer just on its own.&quot;
+                        }
+                    },
+                    {
+                        &quot;text&quot;: &quot;During the study, we&#x27;ll ask that you sit facing away from the monitor, holding your child over your shoulder, like this. (More on that in a moment!) &lt;strong&gt;Make sure the webcam is angled up or down enough that your child&#x27;s eyes are visible in this position&lt;/strong&gt;. If you&#x27;re not sure if your child&#x27;s eyes will be visible, you can make a short recording to check!&quot;,
+                        &quot;image&quot;: {
+                            &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/website/over_shoulder.jpg&quot;,
+                            &quot;alt&quot;: &quot;Example image showing a dad holding his child looking over his shoulder.&quot;
+                        }
+                    }
+                ],
+            &quot;requireTestVideo&quot;: true,
+            &quot;showRecordMenu&quot;: true,
+            &quot;recordingInstructionText&quot;: &quot;You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.&quot;
     }
 }
 &#x60;&#x60;&#x60;

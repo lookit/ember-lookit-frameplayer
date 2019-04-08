@@ -43,6 +43,7 @@ const Validations = buildValidations({
 export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
     layout: layout,
     type: 'exp-exit-survey',
+    frameType: 'EXIT',
     fullScreenElementId: 'experiment-player',
     meta: {
         name: 'ExpExitSurvey',

@@ -198,10 +198,14 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
         finish() {
             if (!this.get(&#x27;recordingStopped&#x27;)) {
                 this.set(&#x27;recordingStopped&#x27;, true);
+                var _this = this;
                 this.stopRecorder().then(() =&gt; {
-                    this.set(&#x27;stoppedRecording&#x27;, true);
-                    this.send(&#x27;next&#x27;);
+                    _this.send(&#x27;next&#x27;);
+                }, () =&gt; {
+                    _this.send(&#x27;next&#x27;);
                 });
+            } else {
+                this.send(&#x27;next&#x27;);
             }
         }
     },

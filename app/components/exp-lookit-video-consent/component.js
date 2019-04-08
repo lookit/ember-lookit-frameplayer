@@ -40,6 +40,7 @@ document is displayed, with additional study-specific information provided by th
 
 export default ExpFrameBaseComponent.extend(VideoRecord, {
     layout,
+    frameType: 'CONSENT',
     disableRecord: Em.computed('recorder.recording', 'recorder.hasCamAccess', function () {
         return !this.get('recorder.hasCamAccess') || this.get('recorder.recording');
     }),

@@ -57,6 +57,7 @@ Standard exit survey for Lookit studies: confirm participant birthdate, ask user
 export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
     layout: layout,
     type: 'exp-lookit-exit-survey',
+    frameType: 'EXIT',
     fullScreenElementId: 'experiment-player',
     meta: {
         name: 'ExpLookitExitSurvey',
