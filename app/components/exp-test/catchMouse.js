@@ -149,7 +149,7 @@ export  default  class catchMouse extends Base{
 
         }
 
-        super.drawImage(basket)
+        super.drawImage(basket);
     
     }
 
