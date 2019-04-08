@@ -166,8 +166,15 @@ export default ExpFrameBaseComponent.extend({
                       default: 2
 
                     },
+                    obstructionNumber:{
+                      type: 'number',
+                      default: 2
 
-
+                    },
+                     clockSpeed : {
+                       type: 'number',
+                       default: 2
+                     },
 
                 consentLabel: {
 

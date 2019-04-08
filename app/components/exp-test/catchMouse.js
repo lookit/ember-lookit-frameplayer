@@ -10,6 +10,7 @@ let cheeseClock = {};
 let basket = {};
 let paddleWidth = 0;
 let paddleHeight = 0;
+let clockSpeed = 0;
 
 export  default  class catchMouse extends Base{
 
@@ -18,7 +19,7 @@ export  default  class catchMouse extends Base{
         super(context,document);
         paddleWidth = this.canvas.width/9;
         paddleHeight = this.canvas.width/9;
-        
+        clockSpeed = this.context.clockSpeed/10;
     }
 
 
@@ -70,7 +71,7 @@ export  default  class catchMouse extends Base{
             dimensions: {width: paddleWidth/1.5,height: paddleWidth/1.5},
             position: {x: this.canvas.width/2 + paddleWidth/2,y: (this.canvas.height-paddleHeight)/2 - 100 },
             angle:0,
-            velocity: 1.2,
+            velocity: 1 + clockSpeed,
             imageURL: 'https://i.ibb.co/QrJ5Y8Y/Screen-Shot-2019-04-05-at-5-10-17-PM.png'
         };
 
