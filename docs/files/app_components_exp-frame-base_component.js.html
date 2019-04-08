@@ -183,6 +183,7 @@ export default Ember.Component.extend(FullScreen, {
     framePage: null,
     frameConfig: null,
     frameContext: null,
+    frameType: &#x27;DEFAULT&#x27;,
     eventTimings: null,
     _oldFrameIndex: null,
 
@@ -301,6 +302,7 @@ export default Ember.Component.extend(FullScreen, {
         // Serialize selected parameters for this frame, plus eventTiming data
         var serialized = this.getProperties(Object.keys(this.get(&#x27;meta.data.properties&#x27;) || {}));
         serialized.eventTimings = this.get(&#x27;eventTimings&#x27;);
+        serialized.frameType = this.get(&#x27;frameType&#x27;);
         return serialized;
     },
 

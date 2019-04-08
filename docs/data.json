@@ -743,7 +743,7 @@
             "namespace": "",
             "file": "app/components/exp-video-config-quality/component.js",
             "line": 17,
-            "description": "Video configuration frame showing webcam view at right and instructions for checking\nvideo quality for preferential looking setup at left. Default content is hard-coded to\nprovide a reasonable set of instructions for preferential looking setups, so the frame can\nbe used as follows with no parameters besides `kind`:\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\"\n    }\n}\n```\n\nOptionally,\nparticipants can be required to check off each item before they can proceed to the next\nframe. If `requireItemConfirmation` is true (default), then the 'next' button will\nappear disabled until the participant has checked off all buttons, although if they click\nit anyway they will get an informative warning and the instructions section will scroll\nto the first unchecked item.\n\nParticipants can also be optionally required to create and view a short recording, e.g. to\ncheck their child will be audible or their child's eyes will be visible in a particular position.\n\nYou can also customize any or all text and images as in the following example.\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\",\n        \"title\": \"Webcam setup for preferential looking\",\n        \"introText\": \"We'll be analyzing where your child chooses to look during the videos--but only if we can tell where that is! Please check each of the following to ensure we're able to use your video:\",\n        \"requireItemConfirmation\": true,\n        \"completedItemText\": \"Did it!\",\n        \"instructionBlocks\": [\n            {\n                \"text\": \"<strong>Make sure the webcam you're using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!\",\n                \"image\": {\n                    \"src\": \"assets/centering.png\",\n                    \"alt\": \"Example images of using centered external webcam on monitor or built-in webcam on laptop.\"\n                }\n            },\n            {\n                \"text\": \"<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there's just one monitor, you're all set!)\",\n                \"image\": {\n                    \"src\": \"assets/monitors.png\",\n                    \"alt\": \"Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.\"\n                }\n            }\n        ],\n        \"requireTestVideo\": true,\n        \"showRecordMenu\": true,\n        \"recordingInstructionText\": \"You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.\"\n    }\n}\n```",
+            "description": "Video configuration frame showing webcam view at right and instructions for checking\nvideo quality for preferential looking setup at left. Default content is hard-coded to\nprovide a reasonable set of instructions for preferential looking setups, so the frame can\nbe used as follows with no parameters besides `kind`:\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\"\n    }\n}\n```\n\nOptionally,\nparticipants can be required to check off each item before they can proceed to the next\nframe. If `requireItemConfirmation` is true (default), then the 'next' button will\nappear disabled until the participant has checked off all buttons, although if they click\nit anyway they will get an informative warning and the instructions section will scroll\nto the first unchecked item.\n\nParticipants can also be optionally required to create and view a short recording, e.g. to\ncheck their child will be audible or their child's eyes will be visible in a particular position.\n\nYou can also customize any or all text and images as in the following example.\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\",\n        \"title\": \"Webcam setup for preferential looking\",\n        \"introText\": \"We'll be analyzing where your child chooses to look during the videos--but only if we can tell where that is! Please check each of the following to ensure we're able to use your video:\",\n        \"requireItemConfirmation\": true,\n        \"completedItemText\": \"Did it!\",\n        \"instructionBlocks\": [\n                    {\n                        \"text\": \"<strong>Make sure the webcam you're using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/centering.png\",\n                            \"alt\": \"Example images of using centered external webcam on monitor or built-in webcam on laptop.\"\n                        }\n                    },\n                    {\n                        \"text\": \"<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there's just one monitor, you're all set!)\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/monitors.png\",\n                            \"alt\": \"Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.\"\n                        }\n                    },\n                    {\n                        \"text\": \"Check the lighting by making sure you can <strong>clearly see your own eyes</strong> on the webcam view to the right. You may need to either turn on a light or reduce light coming from behind you.\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/lighting.png\",\n                            \"alt\": \"Example images showing good lighting, room too dark, and backlit scene where eyes are not visible.\"\n                        }\n                    },\n                    {\n                        \"text\": \"If it's practical, <strong>minimize exciting things</strong> that are visible behind or to the side of the screen--for instance, by facing a wall instead of the kitchen. (If this isn't practical for you, don't worry about it--just check the box!)\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/distractions.png\",\n                            \"alt\": \"Example images showing a child and puppy next to the computer, versus a computer just on its own.\"\n                        }\n                    },\n                    {\n                        \"text\": \"During the study, we'll ask that you sit facing away from the monitor, holding your child over your shoulder, like this. (More on that in a moment!) <strong>Make sure the webcam is angled up or down enough that your child's eyes are visible in this position</strong>. If you're not sure if your child's eyes will be visible, you can make a short recording to check!\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/over_shoulder.jpg\",\n                            \"alt\": \"Example image showing a dad holding his child looking over his shoulder.\"\n                        }\n                    }\n                ],\n            \"requireTestVideo\": true,\n            \"showRecordMenu\": true,\n            \"recordingInstructionText\": \"You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.\"\n    }\n}\n```",
             "extends": "VideoRecord"
         },
         "ExpVideoConsent": {
@@ -930,7 +930,7 @@
     "classitems": [
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 173,
+            "line": 174,
             "description": "The base class does not define any data to save to the server. It does, however, capture some basic event\n  timing data. (such as when the user clicks the \"next\" button)\n\nThis section slightly breaks YUIDoc conventions- rather than being a literal guide to using the code, the\n  \"parameters\" here are abstract descriptions of what data is captured.\n\nEach frame that extends ExpFrameBase will send an array `eventTimings`\nback to the server upon completion. This array is an ordered list (oldest\nto newest) of every EVENT that happened during the frame. Each event is\nrepresented as an object with at least the properties\n`{'eventType': EVENTNAME, 'timestamp': TIMESTAMP}`. Frame-specific events\nmay define additional properties that are sent.",
             "params": [
                 {
@@ -951,7 +951,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 198,
+            "line": 200,
             "description": "Create the time event payload for a particular frame / event. This can be overridden to add fields to every\n event sent by a particular frame",
             "itemtype": "method",
             "name": "makeTimeEvent",
@@ -978,7 +978,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 236,
+            "line": 238,
             "description": "Move to next frame",
             "itemtype": "event",
             "name": "nextFrame",
@@ -988,7 +988,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 259,
+            "line": 261,
             "description": "Move to previous frame",
             "itemtype": "event",
             "name": "previousFrame",
@@ -1283,7 +1283,7 @@
         },
         {
             "file": "app/components/exp-lookit-exit-survey/component.js",
-            "line": 67,
+            "line": 68,
             "description": "Object specifying information to show on second page of exit survey, before returning to main Lookit site.",
             "itemtype": "property",
             "name": "debriefing",
@@ -1311,7 +1311,7 @@
         },
         {
             "file": "app/components/exp-lookit-exit-survey/component.js",
-            "line": 104,
+            "line": 105,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "serializeContent",
@@ -2568,7 +2568,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 1000,
+            "line": 1002,
             "description": "Observer that starts recording once recorder is ready. Override to do additional\nstuff at this point!",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -3301,7 +3301,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 116,
+            "line": 117,
             "description": "When participant downloads consent form",
             "itemtype": "event",
             "name": "downloadConsentForm",
@@ -3311,7 +3311,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 131,
+            "line": 132,
             "description": "Name of PI running this study",
             "itemtype": "property",
             "name": "PIName",
@@ -3322,7 +3322,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 140,
+            "line": 141,
             "description": "Name of institution running this study (if ambiguous, list institution whose IRB approved the study)",
             "itemtype": "property",
             "name": "institution",
@@ -3333,7 +3333,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 149,
+            "line": 150,
             "description": "Contact information for PI or lab in case of participant questions or concerns. This will directly follow the phrase \"please contact\", so format accordingly: e.g., \"the XYZ lab at xyz@science.edu\" or \"Mary Smith at 123 456 7890\".",
             "itemtype": "property",
             "name": "PIContact",
@@ -3344,7 +3344,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 158,
+            "line": 159,
             "description": "Brief description of purpose of study - 1-2 sentences that describe what you are trying to find out. Language should be as straightforward and accessible as possible! E.g., \"Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.\"",
             "itemtype": "property",
             "name": "purpose",
@@ -3355,7 +3355,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 167,
+            "line": 168,
             "description": "Brief description of study procedures, including any risks or a statement that there are no anticipated risks. We add a statement about the duration (from your study definition) to the start (e.g., \"This study takes about 10 minutes to complete\"), so you don't need to include that. It can be in third person or addressed to the parent. E.g., \"Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.\"",
             "itemtype": "property",
             "name": "procedures",
@@ -3366,7 +3366,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 176,
+            "line": 177,
             "description": "Statement about payment/compensation for participation, including a statement that there are no additional benefits anticipated to the participant. E.g., \"After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.\"",
             "itemtype": "property",
             "name": "payment",
@@ -3377,7 +3377,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 185,
+            "line": 186,
             "description": "Study-specific data use statement (optional). This will follow the following more general text: \"The research group led by [PIName] at [institution] will have access to video and other data collected during this session. We will also have access to your account profile, demographic survey, and the child profile for the child who is participating, including changes you make in the future to any of this information. We may study your child’s responses in connection with his or her previous responses to this or other studies run by our group, siblings’ responses to this or other studies run by our group, or demographic survey responses.\"\nYou may want to note what measures you will actually be coding for (looking time, facial expressions, parent-child interaction, etc.) and other more specific information about your use of data from this study here. For instance, you would note if you were building a corpus of naturalistic data that may be used to answer a variety of questions (rather than just collecting data for a single planned study).",
             "itemtype": "property",
             "name": "datause",
@@ -3388,7 +3388,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 198,
+            "line": 199,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "serializeContent",
@@ -3468,7 +3468,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 91,
+            "line": 112,
             "description": "Text to show as the introduction to the list of things to check. Can include\nHTML.",
             "itemtype": "property",
             "name": "introText",
@@ -3480,7 +3480,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 102,
+            "line": 123,
             "description": "Title to display to participant",
             "itemtype": "property",
             "name": "title",
@@ -3492,7 +3492,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 112,
+            "line": 133,
             "description": "Whether to show checkboxes under each instruction item and require\nparticipant to check them off to proceed.",
             "itemtype": "property",
             "name": "requireItemConfirmation",
@@ -3504,7 +3504,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 123,
+            "line": 144,
             "description": "Whether to require participant to make and view a test video. Ignored if\nshowRecordMenu is false.",
             "itemtype": "property",
             "name": "requireTestVideo",
@@ -3516,7 +3516,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 134,
+            "line": 155,
             "description": "Whether to display record/replay menu to participant. If false,\nrequireTestVideo value is ignored.",
             "itemtype": "property",
             "name": "showRecordMenu",
@@ -3528,7 +3528,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 145,
+            "line": 166,
             "description": "Text to show below the webcam view. For instance, you might instruct\nfamilies to make a short recording in the position they will be in for the\nexperiment, and make sure that the infant's eyes are visible or that the\nchild is audible. HTML is allowed.",
             "itemtype": "property",
             "name": "recordingInstructionText",
@@ -3540,7 +3540,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 158,
+            "line": 179,
             "description": "Text to show next to instructions checkboxes, if participant is required\nto check off each instruction (see requireItemConfirmation). Ignored if\nrequireItemConfirmation is false.",
             "itemtype": "property",
             "name": "completedItemText",
@@ -3552,7 +3552,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 170,
+            "line": 191,
             "description": "List of instruction segments to display to participant. Rendered using\n{{#crossLink \"ExpTextBlock\"}}{{/crossLink}}, so all parameters\nof ExpTextBlock can be used.",
             "itemtype": "property",
             "name": "instructionBlocks",
@@ -3576,7 +3576,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 303,
+            "line": 324,
             "description": "Observer that adds listener for play button once recorder is ready.",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -3670,7 +3670,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 110,
+            "line": 114,
             "description": "A series of preview videos to display within a single frame, defined as an array of objects.",
             "itemtype": "property",
             "name": "videos",
@@ -3698,7 +3698,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 152,
+            "line": 156,
             "description": "Text on the button prompt asking the user to continue to the videos",
             "itemtype": "property",
             "name": "prompt",
@@ -3709,7 +3709,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 170,
+            "line": 174,
             "description": "Informational text to display to the user before videos are shown, along with button to continue",
             "itemtype": "property",
             "name": "text",
@@ -3720,7 +3720,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 180,
+            "line": 184,
             "description": "Text on the button to proceed to the next example video/image",
             "itemtype": "property",
             "name": "nextStimulusText",
@@ -3731,7 +3731,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 190,
+            "line": 194,
             "description": "Text on the button to proceed to the previous example video/image",
             "itemtype": "property",
             "name": "previousStimulusText",
@@ -3742,7 +3742,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 205,
+            "line": 209,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "serializeContent",

@@ -149,6 +149,7 @@ document is displayed, with additional study-specific information provided by th
 
 export default ExpFrameBaseComponent.extend(VideoRecord, {
     layout,
+    frameType: &#x27;CONSENT&#x27;,
     disableRecord: Em.computed(&#x27;recorder.recording&#x27;, &#x27;recorder.hasCamAccess&#x27;, function () {
         return !this.get(&#x27;recorder.hasCamAccess&#x27;) || this.get(&#x27;recorder.recording&#x27;);
     }),
