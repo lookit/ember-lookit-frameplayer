@@ -25,10 +25,10 @@
         <input type="range" min="1" max="100" steps="1" oninput={{action (mut y_velocity) value="target.value"}}  value={{y_velocity}} >
         Paddle velocity restitution factor : {{paddle_restitution}}
         <input type="range" min="1" max="10" steps="1" oninput={{action (mut paddle_restitution) value="target.value"}}  value={{paddle_restitution}} >
-        Number of obstruction objects : {{obstructionNumber}}
-        <input type="range" min="1" max="10" steps="1" oninput={{action (mut obstructionNumber) value="target.value"}}  value={{obstructionNumber}} >
-        Clock speed : {{clockSpeed}}
-        <input type="range" min="1" max="10" steps="1" oninput={{action (mut clockSpeed) value="target.value"}}  value={{clockSpeed}} >
+        Number of obstruction objects : {{obstruction_number}}
+        <input type="range" min="1" max="10" steps="1" oninput={{action (mut obstruction_number) value="target.value"}}  value={{obstruction_number}} >
+        Clock speed : {{clock_speed}}
+        <input type="range" min="1" max="10" steps="1" oninput={{action (mut clock_speed) value="target.value"}}  value={{clock_speed}} >
 
     </div>
   </div>

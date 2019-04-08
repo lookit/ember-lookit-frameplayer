@@ -19,7 +19,7 @@ export  default  class catchMouse extends Base{
         super(context,document);
         paddleWidth = this.canvas.width/9;
         paddleHeight = this.canvas.width/9;
-        clockSpeed = this.context.clockSpeed/10;
+        clockSpeed = this.context.clock_speed/10;
     }
 
 

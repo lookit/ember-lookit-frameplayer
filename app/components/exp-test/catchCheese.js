@@ -24,7 +24,7 @@ export default class catchCheese extends Base{
         super(context,document);
         paddleWidth = this.canvas.width/9;
         paddleHeight = this.canvas.width/9;
-        obstructionNumber = this.context.obstructionNumber;
+        obstructionNumber = this.context.obstruction_number;
 
     }
 

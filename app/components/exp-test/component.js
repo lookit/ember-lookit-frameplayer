@@ -166,12 +166,12 @@ export default ExpFrameBaseComponent.extend({
                       default: 2
 
                     },
-                    obstructionNumber:{
+                    obstruction_number:{
                       type: 'number',
                       default: 2
 
                     },
-                     clockSpeed : {
+                    clock_speed : {
                        type: 'number',
                        default: 2
                      },
