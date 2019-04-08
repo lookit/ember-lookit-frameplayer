@@ -9,10 +9,9 @@
 /**
  * Main implementation for feed the mice game
  */
-import Base from "./base.js";
+import Base from "./base";
 
 let paddleWidth = 0;
-let paddleHeight = 0;
 let target = {};
 let ball = {};
 let targets = [];
@@ -25,7 +24,6 @@ export default class feedMice extends Base{
   constructor(context,document) {
     super(context,document);
     paddleWidth = this.canvas.width/15;
-    paddleHeight = this.canvas.width/15;
 
   }
 
@@ -76,7 +74,7 @@ export default class feedMice extends Base{
 
     // Add mouse to window
 
-    super.drawImage(target)
+    super.drawImage(target);
 
   }
 
@@ -174,7 +172,7 @@ export default class feedMice extends Base{
 
   loop() {
     super.loop();
-    let didHitWindow  = Array(3).fill(false).map((_,index) => this.collisionDetection(index)).some(item => item != false);
+    let didHitWindow  = Array(3).fill(false).map((_,index) => this.collisionDetection(index)).some(item => item !== false);
     super.wallCollision(ball);
     if(!didHitWindow) {
       super.ballTrajectory(ball);
