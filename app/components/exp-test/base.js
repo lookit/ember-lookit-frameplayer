@@ -31,6 +31,7 @@ export default  class Base {
     this.ctx = this.canvas.getContext('2d');
     this.currentRounds=0;
     this.currentScore = 0;
+    mouseY =  (this.canvas.height)/2 + (this.canvas.width/9)*1.5;
     document.addEventListener("mousemove", this.onMouseMove);
     document.addEventListener("keydown", this.keyDownHandler, false);
     document.addEventListener("keyup", this.keyUpHandler, false);
@@ -195,11 +196,8 @@ export default  class Base {
    */
   paddleMove(paddle) {
 
-    if (paddle.position.y < this.canvas.height - paddle.dimensions.height) {
+        paddle.position.y = mouseY;
 
-      paddle.position.y = mouseY;
-
-    }
   }
 
   /**
@@ -208,7 +206,6 @@ export default  class Base {
   wallCollision(ball){
 
     if(ball.position.y > this.canvas.height - ball.radius || ball.position.x > this.canvas.width - ball.radius || ball.position.x < ball.radius){
-
 
       this.finishGame();
     }
@@ -222,7 +219,7 @@ export default  class Base {
    */
   keyDownHandler(e) {
 
-
+    console.log(e);
 
   }
 
@@ -232,7 +229,7 @@ export default  class Base {
    */
   keyUpHandler(e) {
 
-
+    console.log(e);
 
   }
 
