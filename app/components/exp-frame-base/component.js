@@ -117,7 +117,6 @@ export default Ember.Component.extend(FullScreen, {
             this.set('id', `${kind}-${frameIndex}`);
         }
 
-
         if (clean) {
             var session = this.get('session');
             var expData = session ? session.get('expData') : null;
@@ -134,18 +133,18 @@ export default Ember.Component.extend(FullScreen, {
             if (this.get('generateProperties')) { // Only if generateProperties is non-empty
                 try {
                     this.set('_generatePropertiesFn', Function('return ' + this.get('generateProperties'))());
-                } catch(error) {
+                } catch (error) {
                     console.error(error);
                     throw new Error('generateProperties provided for this frame, but cannot be evaluated.');
                 }
-                if (typeof(this.get('_generatePropertiesFn')) === 'function') {
+                if (typeof (this.get('_generatePropertiesFn')) === 'function') {
                     var sequence = session ? session.get('sequence', null) : null;
                     var child = session ? session.get('child', null) : null;
                     var frameContext = this.get('frameContext');
                     var pastSessions = frameContext ? frameContext.pastSessions : null;
 
                     var generatedParams = this._generatePropertiesFn(expData, sequence, child, pastSessions);
-                    if (typeof(generatedParams) === 'object') {
+                    if (typeof (generatedParams) === 'object') {
                         Object.keys(generatedParams).forEach((key) => {
                             this.set(key, generatedParams[key]);
                         });
@@ -181,8 +180,6 @@ export default Ember.Component.extend(FullScreen, {
     setupParams(clean) {
         // Add config properties and data to be serialized as instance parameters (overriding with values explicitly passed in)
         var params = this.get('frameConfig');
-
-
 
         var defaultParams = {};
         Object.keys(this.get('meta.parameters').properties || {}).forEach((key) => {
