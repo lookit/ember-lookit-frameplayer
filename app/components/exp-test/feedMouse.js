@@ -14,6 +14,7 @@ let paddleWidth = 0;
 let target = {};
 let ball = {};
 let keyPressed = false;
+let keyLetter = "o";
 
 export default class feedMouse extends Base{
 
@@ -163,7 +164,7 @@ export default class feedMouse extends Base{
 
     keyDownHandler(e) {
 
-        if(e.key === "l" || e.key === "L" ) {
+        if(e.key === keyLetter|| e.key === keyLetter.toUpperCase() ) {
 
             keyPressed = true;
         }
@@ -172,7 +173,7 @@ export default class feedMouse extends Base{
 
     keyUpHandler(e) {
 
-        if(e.key === "l" || e.key === "L" ) {
+      if(e.key === keyLetter|| e.key === keyLetter.toUpperCase() ) {
 
             keyPressed = false;
         }
