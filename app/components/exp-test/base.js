@@ -32,6 +32,8 @@ export default  class Base {
     this.currentRounds=0;
     this.currentScore = 0;
     document.addEventListener("mousemove", this.onMouseMove);
+    document.addEventListener("keydown", this.keyDownHandler, false);
+    document.addEventListener("keyup", this.keyUpHandler, false);
 
 
   }
@@ -214,6 +216,31 @@ export default  class Base {
   }
 
 
+  /**
+   * Triggered when participant pressed some key on keyboard
+   * @param e event
+   */
+  keyDownHandler(e) {
+
+
+
+  }
+
+  /**
+   * Triggered when participant released some key on keyboard
+   * @param e event
+   */
+  keyUpHandler(e) {
+
+
+
+  }
+
+
+  /**
+   * Triggered when participant move mouse
+   * @param e
+   */
   onMouseMove(e) {
 
     mouseY = e.clientY;
