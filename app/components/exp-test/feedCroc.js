@@ -171,7 +171,7 @@ export default class FeedCroc extends Base{
     paddle = {
 
       dimensions: {width: paddleWidth, height: paddleHeight},
-      position: {x: this.canvas.width/2 - paddleWidth, y : (this.canvas.height-paddleHeight)/2 },
+      position: {x: this.canvas.width/2 - paddleWidth, y : (this.canvas.height)/2 + paddleWidth*1.5 },
       paddleRestitution: -1 - this.context.paddle_restitution/10,
       paddleLastMovedMillis: 100,
       velocity:this.context.paddle_speed
