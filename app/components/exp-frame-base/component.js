@@ -117,44 +117,44 @@ export default Ember.Component.extend(FullScreen, {
             this.set('id', `${kind}-${frameIndex}`);
         }
 
-        // Load any existing data for this particular frame - e.g. for a survey that
-        // the participant is returning to via a previous button.
+
         if (clean) {
             var session = this.get('session');
             var expData = session ? session.get('expData') : null;
+
+            // Load any existing data for this particular frame - e.g. for a survey that
+            // the participant is returning to via a previous button.
             if (session && session.get('expData')) {
                 var key = this.get('frameIndex') + '-' + this.get('id');
                 if (expData[key]) {
                     this.loadData(expData[key]);
                 }
             }
-        }
 
-        if (clean && this.get('generateProperties')) { // Only if generateProperties is non-empty
-            try {
-                this.set('_generatePropertiesFn', Function('return ' + this.get('generateProperties'))());
-            } catch(error) {
-                console.error(error);
-                throw new Error('generateProperties provided for this frame, but cannot be evaluated.');
-            }
-            if (typeof(this.get('_generatePropertiesFn')) === 'function') {
-                var session = this.get('session');
-                var expData = session ? session.get('expData', null) : null;
-                var sequence = session ? session.get('sequence', null) : null;
-                var child = session ? session.get('child', null) : null;
-                var frameContext = this.get('frameContext');
-                var pastSessions = frameContext ? frameContext.pastSessions : null;
-
-                var generatedParams = this._generatePropertiesFn(expData, sequence, child, pastSessions);
-                if (typeof(generatedParams) === 'object') {
-                    Object.keys(generatedParams).forEach((key) => {
-                        this.set(key, generatedParams[key]);
-                    });
-                } else {
-                    throw new Error('generateProperties function provided for this frame, but did not return an object');
+            if (this.get('generateProperties')) { // Only if generateProperties is non-empty
+                try {
+                    this.set('_generatePropertiesFn', Function('return ' + this.get('generateProperties'))());
+                } catch(error) {
+                    console.error(error);
+                    throw new Error('generateProperties provided for this frame, but cannot be evaluated.');
                 }
-            } else {
-                throw new Error('generateProperties provided for this frame, but does not evaluate to a function');
+                if (typeof(this.get('_generatePropertiesFn')) === 'function') {
+                    var sequence = session ? session.get('sequence', null) : null;
+                    var child = session ? session.get('child', null) : null;
+                    var frameContext = this.get('frameContext');
+                    var pastSessions = frameContext ? frameContext.pastSessions : null;
+
+                    var generatedParams = this._generatePropertiesFn(expData, sequence, child, pastSessions);
+                    if (typeof(generatedParams) === 'object') {
+                        Object.keys(generatedParams).forEach((key) => {
+                            this.set(key, generatedParams[key]);
+                        });
+                    } else {
+                        throw new Error('generateProperties function provided for this frame, but did not return an object');
+                    }
+                } else {
+                    throw new Error('generateProperties provided for this frame, but does not evaluate to a function');
+                }
             }
         }
 
