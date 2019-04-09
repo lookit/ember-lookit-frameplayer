@@ -16,7 +16,7 @@ let target = {};
 let ball = {};
 let targets = [];
 let pressed = {};
-let keys = ['i','o','p'];
+let keys = ['o','k','m'];
 let imageURLS = ['https://i.ibb.co/GPRndqc/mouse.png','https://i.ibb.co/3pRr7VW/mouse-green.png','https://i.ibb.co/sy0NrjX/mouse-red.png'];
 
 export default class feedMice extends Base{
