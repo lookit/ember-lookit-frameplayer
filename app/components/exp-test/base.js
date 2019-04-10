@@ -39,12 +39,32 @@ export default  class Base {
 
   }
 
-
+  /**
+   * Initialize on new instance of game
+   */
   init(){
     this.currentScore=0;
     this.currentRounds = 0 ;
     clearInterval(dataLoop);
     clearInterval(gameLoop);
+  }
+
+  /**
+   * Set initial mouse(trackpad)  cursor value
+   * @param val
+   */
+  set mouseY(val){
+
+    mouseY = val;
+  }
+
+  /**
+   * Get mouse(trackpad)  cursor value
+   * @returns {number}
+   */
+  get mouseY(){
+
+    return mouseY;
   }
 
 
@@ -62,7 +82,9 @@ export default  class Base {
     this.currentScore++;
   }
 
-
+  /**
+   * Display score in the corner
+   */
   drawScore() {
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "#09b4dd";
@@ -97,6 +119,10 @@ export default  class Base {
 
   }
 
+  /**
+   * Set image per object parameters
+   * @param object {position:{x,y} , dimensions{width,height} , imageURL }
+   */
   drawImage(object){
     let image = new Image();
     image.src = object.imageURL;
@@ -115,7 +141,9 @@ export default  class Base {
   }
 
 
-
+  /**
+   * Initialize state on each game round
+   */
   initGame(){
 
     this.loopTimer = function () {
@@ -159,7 +187,7 @@ export default  class Base {
 
   /**
    * Create ball movement up to some trajectory
-   * @param ball
+   * @param ball{position:{x,y} , dimensions{width,height}  , velocity{x,y} }
    */
   ballTrajectory(ball) {
     let gravity = this.context.gravity_factor * 9.81;  // m / s^2
@@ -196,12 +224,13 @@ export default  class Base {
    */
   paddleMove(paddle) {
 
-        paddle.position.y = mouseY;
+        paddle.position.y = this.mouseY();
 
   }
 
   /**
    * Walls and target collisions detection
+   * @param ball {position:{x,y} , dimensions{width,height} , radius }
    */
   wallCollision(ball){
 

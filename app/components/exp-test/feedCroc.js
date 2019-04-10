@@ -198,7 +198,7 @@ export default class FeedCroc extends Base{
 
     };
 
-
+    super.mouseY = paddle.position.y;
 
 
   }

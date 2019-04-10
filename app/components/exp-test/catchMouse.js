@@ -52,10 +52,10 @@ export  default  class catchMouse extends Base{
 
         super.initGame();
         basket = {
-            dimensions: {width: paddleWidth,height: paddleHeight},
+            dimensions: {width: paddleWidth/1.3,height: paddleHeight/1.3},
             position: {x: this.canvas.width/2 - paddleWidth,y: (this.canvas.height-paddleHeight)/2 },
             velocity: this.context.paddle_speed,
-            imageURL: 'https://i.ibb.co/3vtD1T1/Screen-Shot-2019-04-05-at-5-10-26-PM.png'
+            imageURL: 'https://i.ibb.co/4RBWcsf/netball-clipart-icon-213577-7948745.png'
         };
         
         mice = {
@@ -74,6 +74,9 @@ export  default  class catchMouse extends Base{
             velocity: 1 + clockSpeed,
             imageURL: 'https://i.ibb.co/QrJ5Y8Y/Screen-Shot-2019-04-05-at-5-10-17-PM.png'
         };
+
+
+        super.mouseY = basket.position.y;
 
 
   }
