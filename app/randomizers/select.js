@@ -4,20 +4,21 @@
 */
 
 /**
-* Randomizer to allow random ordering of a list of frames. Intended to be
-* useful for e.g. randomly permuting the order of particular stimuli used during
-* a set of trials (although frames need not be of the same kind to permute).
+* Randomizer to allow selection of one (or arbitrary sequence) of defined frames.
+* Intended to be useful for e.g. selecting which of several paths to take upon completion
+* of an eligibility survey, in conjunction with a custom generateProperties function.
 *
-* To use, define a frame with "kind": "choice" and "sampler": "permute",
+* To use, define a frame with "kind": "choice" and "sampler": "select",
 * as shown below, in addition to the parameters described under 'properties'.
 *
 ```json
 "frames": {
-    "test-trials": {
-        "sampler": "permute",
+    "select-randomizer-test": {
+        "sampler": "select",
         "kind": "choice",
+        "frameIndex": 0,
         "commonFrameProperties": {
-            "showPreviousButton": false
+            "kind": "exp-lookit-text"
         },
         "frameOptions": [
             {
@@ -25,23 +26,21 @@
                     {
                         "emph": true,
                         "text": "Let's think about hippos!",
-                        "title": "hippos!"
+                        "title": "FRAME 1"
                     },
                     {
                         "text": "Some more about hippos..."
                     }
-                ],
-                "kind": "exp-lookit-text"
+                ]
             },
             {
                 "blocks": [
                     {
                         "emph": false,
                         "text": "Let's think about dolphins!",
-                        "title": "dolphins!"
+                        "title": "FRAME 2"
                     }
-                ],
-                "kind": "exp-lookit-text"
+                ]
             }
         ]
     }
@@ -79,24 +78,28 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
      */
 
     /**
-     * Index or indices within frameOptions to actually use. This can be either a number
+     * Index or indices (0-indexed) within frameOptions to actually use. This can be either a number
      * (e.g., 0 or 1 to use the first or second option respectively) or an array providing
      * an ordered list of indices to use (e.g., [0, 1] or [1, 0] to use the first then
-     * second or second then first options, respectively).
+     * second or second then first options, respectively). All indices must be integers
+     * in [0, frameOptions.length).
      *
      * @property {Number} frameIndex
      */
 
-    // TODO: input checking
-    // TODO: allow providing a list of frame indices
-
     var thisFrame = {};
     var frames = [];
+
+    // If a single frame index is provided, convert to a single-element list
     if ((typeof frameConfig.frameIndex) === 'number') {
         frameConfig.frameIndex = [frameConfig.frameIndex];
     }
 
     for (var iFrame = 0; iFrame < frameConfig.frameIndex.length; iFrame++) {
+        if (frameConfig.frameIndex[iFrame] < 0 || frameConfig.frameIndex[iFrame] >= frameConfig.frameOptions.length) {
+            throw `Frame index out of range in select randomizer. All frame indices must be between 0 and frameOptions.length - 1.`;
+        }
+
         // Assign parameters common to all frames made by this randomizer
         thisFrame = {};
         Object.assign(thisFrame, frameConfig.commonFrameProperties);
@@ -105,7 +108,7 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
         // common parameters assigned above)
         Object.assign(thisFrame, frameConfig.frameOptions[frameConfig.frameIndex[iFrame]]);
 
-        thisFrame = resolveFrame(frameId, thisFrame)[0];
+        thisFrame = resolveFrame(frameId + '-' + iFrame + '-' + thisFrame.kind, thisFrame)[0];
         frames.push(...thisFrame);
     }
 
