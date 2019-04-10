@@ -84,6 +84,10 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
      * second or second then first options, respectively). All indices must be integers
      * in [0, frameOptions.length).
      *
+     * If not provided or False, the entire frameOptions list is used in order. (If empty
+     * list is provided, however, that is respected and no frames are inserted by this
+     * randomizer.)
+     *
      * @property {Number} frameIndex
      */
 
@@ -93,6 +97,9 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
     // If a single frame index is provided, convert to a single-element list
     if ((typeof frameConfig.frameIndex) === 'number') {
         frameConfig.frameIndex = [frameConfig.frameIndex];
+    }
+    else if (!frameConfig.hasOwnProperty('frameIndex') || !frameConfig.frameIndex) {
+        frameConfig.frameIndex = [...frameConfig.frameOptions.keys()];
     }
 
     for (var iFrame = 0; iFrame < frameConfig.frameIndex.length; iFrame++) {
