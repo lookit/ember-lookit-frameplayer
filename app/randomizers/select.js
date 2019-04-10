@@ -97,8 +97,7 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
     // If a single frame index is provided, convert to a single-element list
     if ((typeof frameConfig.frameIndex) === 'number') {
         frameConfig.frameIndex = [frameConfig.frameIndex];
-    }
-    else if (!frameConfig.hasOwnProperty('frameIndex') || !frameConfig.frameIndex) {
+    } else if (!frameConfig.hasOwnProperty('frameIndex') || !frameConfig.frameIndex) {
         frameConfig.frameIndex = [...frameConfig.frameOptions.keys()];
     }
 
