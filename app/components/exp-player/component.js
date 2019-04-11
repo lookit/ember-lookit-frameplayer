@@ -220,11 +220,16 @@ export default Ember.Component.extend(FullScreen, {
             }
         },
 
-        next() {
+        next(nextFrameIndex = -1) {
             var frameIndex = this.get('frameIndex');
+            if (nextFrameIndex == -1) {
+                nextFrameIndex = frameIndex + 1;
+            } else if (nextFrameIndex < 0 || nextFrameIndex >= this.get('frames').length) {
+                throw new Error('selectNextFrame function provided for this frame returns a frame index out of bounds');
+            }
             if (frameIndex < (this.get('frames').length - 1)) {
                 this._transition();
-                this.set('frameIndex', frameIndex + 1);
+                this.set('frameIndex', nextFrameIndex);
                 this.set('framePage', 0);
                 return;
             }

@@ -78,8 +78,56 @@ export default Ember.Component.extend(FullScreen, {
     eventTimings: null,
     _oldFrameIndex: null,
 
+  /**
+   * Function to generate additional properties for this frame (like {"kind": "exp-lookit-text"})
+   * at the time the frame is initialized. Allows behavior of study to depend on what has
+   * happened so far (e.g., answers on a form or to previous test trials).
+   * Must be a valid Javascript function, returning an object, provided as
+   * a string. Arguments that will be provided are: expData, sequence, child, pastSessions.
+   *
+   * Example: "function(expData, sequence, child, pastSessions) {
+   *     return {
+   *        'blocks':
+   *             [
+   *                 {
+   *                     'text': 'Name: ' + child.get('givenName')
+   *                 },
+   *                 {
+   *                     'text': 'Frame number: ' + sequence.length
+   *                 },
+   *                 {
+   *                     'text': 'N past sessions: ' + pastSessions.length
+   *                 }
+   *             ]
+   *       };
+   *   }"
+   *
+   *  (This example is split across lines for readability; when added to JSON it would need
+   *  to be on one line.)
+   *
+   * @property {String} generateProperties
+   * @default null
+   */
     generateProperties: null,
     _generatePropertiesFn: null,
+
+  /**
+   * Function to select which frame index to go to when using the 'next' action on this
+   * frame. Allows flexible looping / short-circuiting based on what has happened so far
+   * in the study (e.g., once the child answers N questions correctly, move on to next
+   * segment). Must be a valid Javascript function, returning a number from 0 through
+   * frames.length - 1, provided as a string.
+   * Arguments that will be provided are:
+   * frames, frameIndex, expData, sequence, child, pastSessions
+   *
+   * Example that just sends us to the last frame of the study no matter what:
+   * "function(frames, frameIndex, expData, sequence, child, pastSessions) {return frames.length - 1;}"
+   *
+   * @property {String} selectNextFrame
+   * @default null
+   */
+    selectNextFrame: null,
+    _selectNextFrameFn: null,
 
     session: null,
 
@@ -130,6 +178,8 @@ export default Ember.Component.extend(FullScreen, {
                 }
             }
 
+            // Use the provided generateProperties fn, if any, to generate properties for this
+            // frame on-the-fly based on expData, sequence, child, & pastSessions.
             if (this.get('generateProperties')) { // Only if generateProperties is non-empty
                 try {
                     this.set('_generatePropertiesFn', Function('return ' + this.get('generateProperties'))());
@@ -142,7 +192,6 @@ export default Ember.Component.extend(FullScreen, {
                     var child = session ? session.get('child', null) : null;
                     var frameContext = this.get('frameContext');
                     var pastSessions = frameContext ? frameContext.pastSessions : null;
-
                     var generatedParams = this._generatePropertiesFn(expData, sequence, child, pastSessions);
                     if (typeof (generatedParams) === 'object') {
                         Object.keys(generatedParams).forEach((key) => {
@@ -155,6 +204,21 @@ export default Ember.Component.extend(FullScreen, {
                     throw new Error('generateProperties provided for this frame, but does not evaluate to a function');
                 }
             }
+
+            // Use the provided selectNextFrame fn, if any, to determine which frame should come
+            // next.
+            if (this.get('selectNextFrame')) { // Only if selectNextFrame is non-empty
+                try {
+                    this.set('_selectNextFrameFn', Function('return ' + this.get('selectNextFrame'))());
+                } catch (error) {
+                    console.error(error);
+                    throw new Error('selectNextFrame provided for this frame, but cannot be evaluated.');
+                }
+                if (!(typeof (this.get('_selectNextFrameFn')) === 'function')) {
+                    throw new Error('selectNextFrame provided for this frame, but does not evaluate to a function');
+                }
+            }
+
         }
 
         this.set('_oldFrameIndex', currentFrameIndex);
@@ -281,7 +345,26 @@ export default Ember.Component.extend(FullScreen, {
             // only thing they'll really be able to do is try again anyway, preventing
             // them from continuing is unnecessarily disruptive.
             this.send('save');
-            this.sendAction('next');
+
+            if (this._selectNextFrameFn) {
+                var session = this.get('session');
+                var expData = session ? session.get('expData') : null;
+                var sequence = session ? session.get('sequence', null) : null;
+                var child = session ? session.get('child', null) : null;
+                var frameContext = this.get('frameContext');
+                var pastSessions = frameContext ? frameContext.pastSessions : null;
+                var frames = this.get('parentView').get('frames');
+                var frameIndex = this.get('frameIndex');
+                var frameData = this.serializeContent(); // note - may not have saved to expData yet at time of call
+
+                var iNextFrame = this._selectNextFrameFn(frames, frameIndex, frameData, expData, sequence, child, pastSessions);
+                if (!(typeof (iNextFrame) === 'number')) {
+                    throw new Error('selectNextFrame function provided for this frame, but did not return a number');
+                }
+                this.sendAction('next', iNextFrame);
+            } else {
+                this.sendAction('next');
+            }
             window.scrollTo(0, 0);
         },
 
