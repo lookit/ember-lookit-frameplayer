@@ -78,54 +78,54 @@ export default Ember.Component.extend(FullScreen, {
     eventTimings: null,
     _oldFrameIndex: null,
 
-  /**
-   * Function to generate additional properties for this frame (like {"kind": "exp-lookit-text"})
-   * at the time the frame is initialized. Allows behavior of study to depend on what has
-   * happened so far (e.g., answers on a form or to previous test trials).
-   * Must be a valid Javascript function, returning an object, provided as
-   * a string. Arguments that will be provided are: expData, sequence, child, pastSessions.
-   *
-   * Example: "function(expData, sequence, child, pastSessions) {
-   *     return {
-   *        'blocks':
-   *             [
-   *                 {
-   *                     'text': 'Name: ' + child.get('givenName')
-   *                 },
-   *                 {
-   *                     'text': 'Frame number: ' + sequence.length
-   *                 },
-   *                 {
-   *                     'text': 'N past sessions: ' + pastSessions.length
-   *                 }
-   *             ]
-   *       };
-   *   }"
-   *
-   *  (This example is split across lines for readability; when added to JSON it would need
-   *  to be on one line.)
-   *
-   * @property {String} generateProperties
-   * @default null
-   */
+    /**
+     * Function to generate additional properties for this frame (like {"kind": "exp-lookit-text"})
+     * at the time the frame is initialized. Allows behavior of study to depend on what has
+     * happened so far (e.g., answers on a form or to previous test trials).
+     * Must be a valid Javascript function, returning an object, provided as
+     * a string. Arguments that will be provided are: expData, sequence, child, pastSessions.
+     *
+     * Example: "function(expData, sequence, child, pastSessions) {
+     *     return {
+     *        'blocks':
+     *             [
+     *                 {
+     *                     'text': 'Name: ' + child.get('givenName')
+     *                 },
+     *                 {
+     *                     'text': 'Frame number: ' + sequence.length
+     *                 },
+     *                 {
+     *                     'text': 'N past sessions: ' + pastSessions.length
+     *                 }
+     *             ]
+     *       };
+     *   }"
+     *
+     *  (This example is split across lines for readability; when added to JSON it would need
+     *  to be on one line.)
+     *
+     * @property {String} generateProperties
+     * @default null
+     */
     generateProperties: null,
     _generatePropertiesFn: null,
 
-  /**
-   * Function to select which frame index to go to when using the 'next' action on this
-   * frame. Allows flexible looping / short-circuiting based on what has happened so far
-   * in the study (e.g., once the child answers N questions correctly, move on to next
-   * segment). Must be a valid Javascript function, returning a number from 0 through
-   * frames.length - 1, provided as a string.
-   * Arguments that will be provided are:
-   * frames, frameIndex, expData, sequence, child, pastSessions
-   *
-   * Example that just sends us to the last frame of the study no matter what:
-   * "function(frames, frameIndex, expData, sequence, child, pastSessions) {return frames.length - 1;}"
-   *
-   * @property {String} selectNextFrame
-   * @default null
-   */
+    /**
+     * Function to select which frame index to go to when using the 'next' action on this
+     * frame. Allows flexible looping / short-circuiting based on what has happened so far
+     * in the study (e.g., once the child answers N questions correctly, move on to next
+     * segment). Must be a valid Javascript function, returning a number from 0 through
+     * frames.length - 1, provided as a string.
+     * Arguments that will be provided are:
+     * frames, frameIndex, expData, sequence, child, pastSessions
+     *
+     * Example that just sends us to the last frame of the study no matter what:
+     * "function(frames, frameIndex, expData, sequence, child, pastSessions) {return frames.length - 1;}"
+     *
+     * @property {String} selectNextFrame
+     * @default null
+     */
     selectNextFrame: null,
     _selectNextFrameFn: null,
 

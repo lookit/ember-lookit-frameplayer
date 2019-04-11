@@ -256,6 +256,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "app/randomizers/select.js": {
+            "name": "app/randomizers/select.js",
+            "modules": {},
+            "classes": {
+                "select": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "app/services/video-recorder.js": {
             "name": "app/services/video-recorder.js",
             "modules": {
@@ -307,6 +316,7 @@
                 "VideoRecordMixin": 1,
                 "permute": 1,
                 "randomParameterSet": 1,
+                "select": 1,
                 "VideoRecorderObject": 1,
                 "videoRecorder": 1
             },
@@ -390,15 +400,16 @@
             "elements": {},
             "classes": {
                 "permute": 1,
-                "randomParameterSet": 1
+                "randomParameterSet": 1,
+                "select": 1
             },
             "fors": {},
             "is_submodule": 1,
             "namespaces": {},
             "module": "exp-player",
             "namespace": "",
-            "file": "app/randomizers/random-parameter-set.js",
-            "line": 8,
+            "file": "app/randomizers/select.js",
+            "line": 6,
             "description": "Randomizer to allow random ordering of a list of frames. Intended to be\nuseful for e.g. randomly permuting the order of particular stimuli used during\na set of trials (although frames need not be of the same kind to permute).\n\nTo use, define a frame with \"kind\": \"choice\" and \"sampler\": \"permute\",\nas shown below, in addition to the parameters described under 'properties'.\n\n```json\n\"frames\": {\n   \"test-trials\": {\n       \"sampler\": \"permute\",\n       \"kind\": \"choice\",\n       \"commonFrameProperties\": {\n           \"showPreviousButton\": false\n       },\n       \"frameOptions\": [\n           {\n               \"blocks\": [\n                   {\n                       \"emph\": true,\n                       \"text\": \"Let's think about hippos!\",\n                       \"title\": \"hippos!\"\n                   },\n                   {\n                       \"text\": \"Some more about hippos...\"\n                   }\n               ],\n               \"kind\": \"exp-lookit-text\"\n           },\n           {\n               \"blocks\": [\n                   {\n                       \"emph\": false,\n                       \"text\": \"Let's think about dolphins!\",\n                       \"title\": \"dolphins!\"\n                   }\n               ],\n               \"kind\": \"exp-lookit-text\"\n           }\n       ]\n   }\n}\n\n```"
         },
         "services": {
@@ -895,6 +906,21 @@
             "line": 8,
             "description": "Randomizer to implement flexible condition assignment and counterbalancing by\nallowing the user to specify an arbitrary sequence of frames to create. A\nset of parameters is randomly selected from a list of available parameterSets,\nand these parameters are substituted in to the parameters specified in the\nlist of frames.\n\nFor a more detailed walkthrough, please see\nhttps://lookit.readthedocs.io/en/develop/experiments.html#randomizer-frames\n\nTo use, define a frame with \"kind\": \"choice\" and \"sampler\": \"random-parameter-set\",\nas shown below, in addition to the parameters described under 'properties'.\n\nThis\n\n```json\n\"frames\": {\n   \"test-trials\": {\n       \"sampler\": \"random-parameter-set\",\n       \"kind\": \"choice\",\n       \"commonFrameProperties\": {\n           \"kind\": \"exp-lookit-story-page\",\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/ingroupobligations/\",\n           \"audioTypes\": [\"mp3\", \"ogg\"],\n           \"doRecording\": true,\n           \"autoProceed\": false,\n           \"parentTextBlock\": {\n               \"title\": \"Parents!\",\n               \"text\": \"Common instructions across test trials here\",\n               \"emph\": true\n           }\n       },\n       \"frameList\": [\n           {\n               \"images\": [\n                   {\n                       \"id\": \"agent\",\n                       \"src\": \"AGENTIMG1\",\n                       \"left\": \"40\",\n                       \"width\": \"20\",\n                       \"top\": \"10\"\n                   },\n                   {\n                       \"id\": \"left\",\n                       \"src\": \"LEFTIMG1\",\n                       \"left\": \"10\",\n                       \"width\": \"20\",\n                       \"top\": \"50\"\n                   },\n                   {\n                       \"id\": \"right\",\n                       \"src\": \"RIGHTIMG1\",\n                       \"left\": \"70\",\n                       \"width\": \"20\",\n                       \"top\": \"50\"\n                   }\n               ],\n               \"audioSources\": [\n                   {\n                       \"audioId\": \"questionaudio\",\n                       \"sources\": [{\"stub\": \"QUESTION1AUDIO\"}],\n                       \"highlights\": \"QUESTION1HIGHLIGHTS\"\n                   }\n               ]\n           },\n           {\n               \"images\": [\n                   {\n                       \"id\": \"agent\",\n                       \"src\": \"AGENTIMG2\",\n                       \"left\": \"40\",\n                       \"width\": \"20\",\n                       \"top\": \"10\"\n                   },\n                   {\n                       \"id\": \"left\",\n                       \"src\": \"LEFTIMG2\",\n                       \"left\": \"10\",\n                       \"width\": \"20\",\n                       \"top\": \"50\"\n                   },\n                   {\n                       \"id\": \"right\",\n                       \"src\": \"RIGHTIMG2\",\n                       \"left\": \"70\",\n                       \"width\": \"20\",\n                       \"top\": \"50\"\n                   }\n               ],\n               \"audioSources\": [\n                   {\n                       \"audioId\": \"questionaudio\",\n                       \"sources\": [{\"stub\": \"QUESTION2AUDIO\"}],\n                       \"highlights\": \"QUESTION2HIGHLIGHTS\"\n                   }\n               ]\n           }\n       ],\n       \"parameterSets\": [\n           {\n               \"AGENTIMG1\": \"flurpagent1.jpg\",\n               \"LEFTIMG1\": \"flurpvictim1.jpg\",\n               \"RIGHTIMG1\": \"zazzvictim1.jpg\",\n               \"QUESTION1AUDIO\": \"flurpleftmean1\",\n               \"QUESTION1HIGHLIGHTS\": [\n                   {\"range\": [0.399293,\t3.617124], \"image\": \"agent\"},\n                   {\"range\": [5.085112,\t6.811467], \"image\": \"left\"},\n                   {\"range\": [6.905418,\t8.702236], \"image\": \"right\"}\n               ],\n               \"AGENTIMG2\": \"flurpagent2.jpg\",\n               \"LEFTIMG2\": \"flurpvictim2.jpg\",\n               \"RIGHTIMG2\": \"zazzvictim2.jpg\",\n               \"QUESTION2AUDIO\": \"flurpleftinduct1\",\n               \"QUESTION2HIGHLIGHTS\": [\n                   {\"range\": [0.372569,\t5.309110], \"image\": \"agent\"},\n                   {\"range\": [5.495395,\t7.209213], \"image\": \"left\"},\n                   {\"range\": [5.495395,\t7.209213], \"image\": \"right\"},\n                   {\"range\": [9.966225,\t11.922212], \"image\": \"left\"},\n                   {\"range\": [12.052612,\t14.008600], \"image\": \"right\"}\n               ]\n           },\n           {\n               \"AGENTIMG1\": \"zazzagent1.jpg\",\n               \"LEFTIMG1\": \"flurpvictim1.jpg\",\n               \"RIGHTIMG1\": \"zazzvictim1.jpg\",\n               \"QUESTION1AUDIO\": \"zazzrightnice1\",\n               \"QUESTION1HIGHLIGHTS\": [\n                   {\"range\": [0.348454,\t3.736871], \"image\": \"agent\"},\n                   {\"range\": [5.395033,\t6.884975], \"image\": \"left\"},\n                   {\"range\": [6.969085,\t8.975701], \"image\": \"right\"}\n               ],\n               \"AGENTIMG2\": \"zazzagent2.jpg\",\n               \"LEFTIMG2\": \"flurpvictim2.jpg\",\n               \"RIGHTIMG2\": \"zazzvictim2.jpg\",\n               \"QUESTION2AUDIO\": \"zazzrightinduct1\",\n               \"QUESTION2HIGHLIGHTS\": [\n                   {\"range\": [0.572920,\t5.138376], \"image\": \"agent\"},\n                   {\"range\": [5.335317,\t7.089884], \"image\": \"left\"},\n                   {\"range\": [5.335317,\t7.089884], \"image\": \"right\"},\n                   {\"range\": [9.721735,\t11.565821], \"image\": \"left\"},\n                   {\"range\": [11.655340,\t13.535233], \"image\": \"right\"}\n               ]\n           }\n       ],\n       \"parameterSetWeights\": [1, 1]\n   }\n}\n\n```"
         },
+        "select": {
+            "name": "select",
+            "shortname": "select",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "submodule": "randomizers",
+            "namespace": "",
+            "file": "app/randomizers/select.js",
+            "line": 6,
+            "description": "Randomizer to allow selection of one (or arbitrary sequence) of defined frames.\nIntended to be useful for e.g. selecting which of several paths to take upon completion\nof an eligibility survey, in conjunction with a custom generateProperties function.\n\nTo use, define a frame with \"kind\": \"choice\" and \"sampler\": \"select\",\nas shown below, in addition to the parameters described under 'properties'.\n\n```json\n\"frames\": {\n   \"select-randomizer-test\": {\n       \"sampler\": \"select\",\n       \"kind\": \"choice\",\n       \"frameIndex\": 0,\n       \"commonFrameProperties\": {\n           \"kind\": \"exp-lookit-text\"\n       },\n       \"frameOptions\": [\n           {\n               \"blocks\": [\n                   {\n                       \"emph\": true,\n                       \"text\": \"Let's think about hippos!\",\n                       \"title\": \"FRAME 1\"\n                   },\n                   {\n                       \"text\": \"Some more about hippos...\"\n                   }\n               ]\n           },\n           {\n               \"blocks\": [\n                   {\n                       \"emph\": false,\n                       \"text\": \"Let's think about dolphins!\",\n                       \"title\": \"FRAME 2\"\n                   }\n               ]\n           }\n       ]\n   }\n}\n\n```"
+        },
         "VideoRecorderObject": {
             "name": "VideoRecorderObject",
             "shortname": "VideoRecorderObject",
@@ -930,7 +956,31 @@
     "classitems": [
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 174,
+            "line": 81,
+            "description": "Function to generate additional properties for this frame (like {\"kind\": \"exp-lookit-text\"})\nat the time the frame is initialized. Allows behavior of study to depend on what has\nhappened so far (e.g., answers on a form or to previous test trials).\nMust be a valid Javascript function, returning an object, provided as\na string. Arguments that will be provided are: expData, sequence, child, pastSessions.\n\nExample: \"function(expData, sequence, child, pastSessions) {\n    return {\n       'blocks':\n            [\n                {\n                    'text': 'Name: ' + child.get('givenName')\n                },\n                {\n                    'text': 'Frame number: ' + sequence.length\n                },\n                {\n                    'text': 'N past sessions: ' + pastSessions.length\n                }\n            ]\n      };\n  }\"\n\n (This example is split across lines for readability; when added to JSON it would need\n to be on one line.)",
+            "itemtype": "property",
+            "name": "generateProperties",
+            "type": "String",
+            "default": "null",
+            "class": "ExpFrameBase",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-frame-base/component.js",
+            "line": 114,
+            "description": "Function to select which frame index to go to when using the 'next' action on this\nframe. Allows flexible looping / short-circuiting based on what has happened so far\nin the study (e.g., once the child answers N questions correctly, move on to next\nsegment). Must be a valid Javascript function, returning a number from 0 through\nframes.length - 1, provided as a string.\nArguments that will be provided are:\nframes, frameIndex, expData, sequence, child, pastSessions\n\nExample that just sends us to the last frame of the study no matter what:\n\"function(frames, frameIndex, expData, sequence, child, pastSessions) {return frames.length - 1;}\"",
+            "itemtype": "property",
+            "name": "selectNextFrame",
+            "type": "String",
+            "default": "null",
+            "class": "ExpFrameBase",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-frame-base/component.js",
+            "line": 270,
             "description": "The base class does not define any data to save to the server. It does, however, capture some basic event\n  timing data. (such as when the user clicks the \"next\" button)\n\nThis section slightly breaks YUIDoc conventions- rather than being a literal guide to using the code, the\n  \"parameters\" here are abstract descriptions of what data is captured.\n\nEach frame that extends ExpFrameBase will send an array `eventTimings`\nback to the server upon completion. This array is an ordered list (oldest\nto newest) of every EVENT that happened during the frame. Each event is\nrepresented as an object with at least the properties\n`{'eventType': EVENTNAME, 'timestamp': TIMESTAMP}`. Frame-specific events\nmay define additional properties that are sent.",
             "params": [
                 {
@@ -951,7 +1001,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 200,
+            "line": 296,
             "description": "Create the time event payload for a particular frame / event. This can be overridden to add fields to every\n event sent by a particular frame",
             "itemtype": "method",
             "name": "makeTimeEvent",
@@ -978,7 +1028,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 238,
+            "line": 334,
             "description": "Move to next frame",
             "itemtype": "event",
             "name": "nextFrame",
@@ -988,7 +1038,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 261,
+            "line": 376,
             "description": "Move to previous frame",
             "itemtype": "event",
             "name": "previousFrame",
@@ -4361,6 +4411,56 @@
                 }
             ],
             "class": "randomParameterSet",
+            "module": "exp-player",
+            "submodule": "randomizers"
+        },
+        {
+            "file": "app/randomizers/select.js",
+            "line": 57,
+            "description": "List of frames that can be created by this randomizer. Each frame is an\nobject with any necessary frame-specific properties specified. The\n'kind' of frame can be specified either here (per frame) or in\ncommonFrameProperties. If a property is defined for a given frame both\nin this frame list and in commonFrameProperties, the value in the frame\nlist will take precedence.\n\n(E.g., you could include 'kind': 'normal-frame' in\ncommmonFrameProperties, but for a single frame in frameOptions, include\n'kind': 'special-frame'.)",
+            "itemtype": "property",
+            "name": "frameOptions",
+            "type": "Object[]",
+            "class": "select",
+            "module": "exp-player",
+            "submodule": "randomizers"
+        },
+        {
+            "file": "app/randomizers/select.js",
+            "line": 72,
+            "description": "Object describing common parameters to use in EVERY frame created\nby this randomizer. Parameter names and values are as described in\nthe documentation for the frameType used.",
+            "itemtype": "property",
+            "name": "commonFrameProperties",
+            "type": "Object",
+            "class": "select",
+            "module": "exp-player",
+            "submodule": "randomizers"
+        },
+        {
+            "file": "app/randomizers/select.js",
+            "line": 80,
+            "description": "Index or indices (0-indexed) within frameOptions to actually use. This can be either a number\n(e.g., 0 or 1 to use the first or second option respectively) or an array providing\nan ordered list of indices to use (e.g., [0, 1] or [1, 0] to use the first then\nsecond or second then first options, respectively). All indices must be integers\nin [0, frameOptions.length).\n\nIf not provided or False, the entire frameOptions list is used in order. (If empty\nlist is provided, however, that is respected and no frames are inserted by this\nrandomizer.)",
+            "itemtype": "property",
+            "name": "frameIndex",
+            "type": "Number",
+            "class": "select",
+            "module": "exp-player",
+            "submodule": "randomizers"
+        },
+        {
+            "file": "app/randomizers/select.js",
+            "line": 121,
+            "description": "Parameters captured and sent to the server",
+            "itemtype": "method",
+            "name": "conditions",
+            "params": [
+                {
+                    "name": "frameIndex",
+                    "description": "the index of the frame used",
+                    "type": "Object[]"
+                }
+            ],
+            "class": "select",
             "module": "exp-player",
             "submodule": "randomizers"
         },

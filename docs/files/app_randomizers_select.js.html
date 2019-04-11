@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>components - ember-lookit-frameplayer</title>
+    <title>app/randomizers/select.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -104,43 +104,142 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
+<h1 class="file-heading">File: app/randomizers/select.js</h1>
 
-  <div class="box clearfix meta">
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+* @module exp-player
+* @submodule randomizers
+*/
 
+/**
+* Randomizer to allow selection of one (or arbitrary sequence) of defined frames.
+* Intended to be useful for e.g. selecting which of several paths to take upon completion
+* of an eligibility survey, in conjunction with a custom generateProperties function.
+*
+* To use, define a frame with &quot;kind&quot;: &quot;choice&quot; and &quot;sampler&quot;: &quot;select&quot;,
+* as shown below, in addition to the parameters described under &#x27;properties&#x27;.
+*
+&#x60;&#x60;&#x60;json
+&quot;frames&quot;: {
+    &quot;select-randomizer-test&quot;: {
+        &quot;sampler&quot;: &quot;select&quot;,
+        &quot;kind&quot;: &quot;choice&quot;,
+        &quot;frameIndex&quot;: 0,
+        &quot;commonFrameProperties&quot;: {
+            &quot;kind&quot;: &quot;exp-lookit-text&quot;
+        },
+        &quot;frameOptions&quot;: [
+            {
+                &quot;blocks&quot;: [
+                    {
+                        &quot;emph&quot;: true,
+                        &quot;text&quot;: &quot;Let&#x27;s think about hippos!&quot;,
+                        &quot;title&quot;: &quot;FRAME 1&quot;
+                    },
+                    {
+                        &quot;text&quot;: &quot;Some more about hippos...&quot;
+                    }
+                ]
+            },
+            {
+                &quot;blocks&quot;: [
+                    {
+                        &quot;emph&quot;: false,
+                        &quot;text&quot;: &quot;Let&#x27;s think about dolphins!&quot;,
+                        &quot;title&quot;: &quot;FRAME 2&quot;
+                    }
+                ]
+            }
+        ]
+    }
+}
+*
+* &#x60;&#x60;&#x60;
+* @class select
+*/
 
-          <div class="foundat">
-              Defined in: <a href="../files/app_components_exp-player_component.js.html#l16"><code>app&#x2F;components&#x2F;exp-player&#x2F;component.js:16</code></a>
-          </div>
+var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
 
-  </div>
+    // Data provided to randomizer (properties of frameConfig):
 
+    /**
+     * List of frames that can be created by this randomizer. Each frame is an
+     * object with any necessary frame-specific properties specified. The
+     * &#x27;kind&#x27; of frame can be specified either here (per frame) or in
+     * commonFrameProperties. If a property is defined for a given frame both
+     * in this frame list and in commonFrameProperties, the value in the frame
+     * list will take precedence.
+     *
+     * (E.g., you could include &#x27;kind&#x27;: &#x27;normal-frame&#x27; in
+     * commmonFrameProperties, but for a single frame in frameOptions, include
+     * &#x27;kind&#x27;: &#x27;special-frame&#x27;.)
+     *
+     * @property {Object[]} frameOptions
+     */
 
-  <div class="box intro">
-      <p>Experiment player: a component that renders a series of frames that define an experiment</p>
-<p>Sample usage:</p>
-<pre class="code prettyprint"><code class="language-handlebars">{{exp-player
-  experiment=experiment
-  session=session
-  pastSessions=pastSessions
-  saveHandler=(action 'saveSession')
-  frameIndex=0
-  fullScreenElementId='expContainer'}}
-</code></pre>
+    /**
+     * Object describing common parameters to use in EVERY frame created
+     * by this randomizer. Parameter names and values are as described in
+     * the documentation for the frameType used.
+     *
+     * @property {Object} commonFrameProperties
+     */
 
-  </div>
+    /**
+     * Index or indices (0-indexed) within frameOptions to actually use. This can be either a number
+     * (e.g., 0 or 1 to use the first or second option respectively) or an array providing
+     * an ordered list of indices to use (e.g., [0, 1] or [1, 0] to use the first then
+     * second or second then first options, respectively). All indices must be integers
+     * in [0, frameOptions.length).
+     *
+     * If not provided or False, the entire frameOptions list is used in order. (If empty
+     * list is provided, however, that is respected and no frames are inserted by this
+     * randomizer.)
+     *
+     * @property {Number} frameIndex
+     */
 
+    var thisFrame = {};
+    var frames = [];
 
-    <div >
-    <p> This collection contains:</p>
-        <ul >
-            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
-        </ul>
-    </div>
+    // If a single frame index is provided, convert to a single-element list
+    if ((typeof frameConfig.frameIndex) === &#x27;number&#x27;) {
+        frameConfig.frameIndex = [frameConfig.frameIndex];
+    } else if (!frameConfig.hasOwnProperty(&#x27;frameIndex&#x27;) || !frameConfig.frameIndex) {
+        frameConfig.frameIndex = [...frameConfig.frameOptions.keys()];
+    }
 
-  <div class="yui3-g">
-     <div class="yui3-u-1-2">
-      </div>
-  </div>
+    for (var iFrame = 0; iFrame &lt; frameConfig.frameIndex.length; iFrame++) {
+        if (frameConfig.frameIndex[iFrame] &lt; 0 || frameConfig.frameIndex[iFrame] &gt;= frameConfig.frameOptions.length) {
+            throw &#x60;Frame index out of range in select randomizer. All frame indices must be between 0 and frameOptions.length - 1.&#x60;;
+        }
+
+        // Assign parameters common to all frames made by this randomizer
+        thisFrame = {};
+        Object.assign(thisFrame, frameConfig.commonFrameProperties);
+
+        // Assign parameters specific to this frame (allow to override
+        // common parameters assigned above)
+        Object.assign(thisFrame, frameConfig.frameOptions[frameConfig.frameIndex[iFrame]]);
+
+        thisFrame = resolveFrame(frameId + &#x27;-&#x27; + iFrame + &#x27;-&#x27; + thisFrame.kind, thisFrame)[0];
+        frames.push(...thisFrame);
+    }
+
+    /**
+     * Parameters captured and sent to the server
+     *
+     * @method conditions
+     * @param {Object[]} frameIndex the index of the frame used
+     */
+    return [frames, {&#x27;frameIndex&#x27;: frameConfig.frameIndex}];
+};
+export default randomizer;
+
+    </pre>
+</div>
                     </div>
                 </div>
             </div>

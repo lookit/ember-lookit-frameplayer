@@ -28,6 +28,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "VideoRecorderObject",
         "permute",
         "randomParameterSet",
+        "select",
         "videoRecorder"
     ],
     "modules": [

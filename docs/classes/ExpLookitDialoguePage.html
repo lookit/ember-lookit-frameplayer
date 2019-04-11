@@ -66,6 +66,7 @@
                             <li><a href="../classes/MediaReload.html">MediaReload</a></li>
                             <li><a href="../classes/permute.html">permute</a></li>
                             <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
+                            <li><a href="../classes/select.html">select</a></li>
                             <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
                             <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
                             <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
@@ -328,6 +329,10 @@ images before proceeding.</p>
                                 <a href="#property_fullScreenElementId">fullScreenElementId</a>
 
                             </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_generateProperties">generateProperties</a>
+
+                            </li>
                             <li class="index-item property">
                                 <a href="#property_images">images</a>
 
@@ -346,6 +351,10 @@ images before proceeding.</p>
                             </li>
                             <li class="index-item property">
                                 <a href="#property_parentTextBlock">parentTextBlock</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_selectNextFrame">selectNextFrame</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -459,7 +468,7 @@ images before proceeding.</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/ExpFrameBase.html#method_makeTimeEvent">ExpFrameBase</a>:
-        <a href="../files/app_components_exp-frame-base_component.js.html#l200"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:200</code></a>
+        <a href="../files/app_components_exp-frame-base_component.js.html#l296"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:296</code></a>
         </p>
 
 
@@ -988,6 +997,54 @@ connection before starting audio if so)</p>
 
 
 </div>
+<div id="property_generateProperties" class="property item inherited">
+    <h3 class="name"><code>generateProperties</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/ExpFrameBase.html#property_generateProperties">ExpFrameBase</a>:
+        <a href="../files/app_components_exp-frame-base_component.js.html#l81"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:81</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Function to generate additional properties for this frame (like {&quot;kind&quot;: &quot;exp-lookit-text&quot;})
+at the time the frame is initialized. Allows behavior of study to depend on what has
+happened so far (e.g., answers on a form or to previous test trials).
+Must be a valid Javascript function, returning an object, provided as
+a string. Arguments that will be provided are: expData, sequence, child, pastSessions.</p>
+<p>Example: &quot;function(expData, sequence, child, pastSessions) {
+return {
+'blocks':
+[
+{
+'text': 'Name: ' + child.get('givenName')
+},
+{
+'text': 'Frame number: ' + sequence.length
+},
+{
+'text': 'N past sessions: ' + pastSessions.length
+}
+]
+};
+}&quot;</p>
+<p>(This example is split across lines for readability; when added to JSON it would need
+to be on one line.)</p>
+
+    </div>
+
+        <p><strong>Default:</strong> null</p>
+
+
+</div>
 <div id="property_images" class="property item">
     <h3 class="name"><code>images</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
@@ -1261,6 +1318,40 @@ to apply to this section, and their values - e.g.
             </li>
         </ul>
 </div>
+<div id="property_selectNextFrame" class="property item inherited">
+    <h3 class="name"><code>selectNextFrame</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/ExpFrameBase.html#property_selectNextFrame">ExpFrameBase</a>:
+        <a href="../files/app_components_exp-frame-base_component.js.html#l114"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:114</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Function to select which frame index to go to when using the 'next' action on this
+frame. Allows flexible looping / short-circuiting based on what has happened so far
+in the study (e.g., once the child answers N questions correctly, move on to next
+segment). Must be a valid Javascript function, returning a number from 0 through
+frames.length - 1, provided as a string.
+Arguments that will be provided are:
+frames, frameIndex, expData, sequence, child, pastSessions</p>
+<p>Example that just sends us to the last frame of the study no matter what:
+&quot;function(frames, frameIndex, expData, sequence, child, pastSessions) {return frames.length - 1;}&quot;</p>
+
+    </div>
+
+        <p><strong>Default:</strong> null</p>
+
+
+</div>
 <div id="property_videoTypes" class="property item inherited">
     <h3 class="name"><code>videoTypes</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String[]</a></span>
@@ -1439,7 +1530,7 @@ expanded out to
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/ExpFrameBase.html#event_nextFrame">ExpFrameBase</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l238"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:238</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l334"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:334</code></a>
                             </p>
                     
                     
@@ -1505,7 +1596,7 @@ expanded out to
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/ExpFrameBase.html#event_previousFrame">ExpFrameBase</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l261"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:261</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l376"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:376</code></a>
                             </p>
                     
                     
