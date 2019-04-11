@@ -29,6 +29,7 @@ export  default  class catchMouse extends Base{
   init(){
       super.init();
       this.initGame();
+      super.mouseY = basket.position.y;
   }
 
 
@@ -76,7 +77,7 @@ export  default  class catchMouse extends Base{
         };
 
 
-        super.mouseY = basket.position.y;
+
 
 
   }
