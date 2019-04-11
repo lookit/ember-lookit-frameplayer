@@ -10,7 +10,7 @@
  */
 export default class Utils{
 
-    static get  frameRate(){  return  1/200; } // Seconds
-    static get  frameDelay() { return  this.frameRate * 1000; } // ms
+    static get  frameRate() {  return 1 / 100; } // Seconds
+    static get  frameDelay() { return this.frameRate * 1000; } // ms
 
 }
