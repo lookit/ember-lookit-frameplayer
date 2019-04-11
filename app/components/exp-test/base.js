@@ -14,7 +14,7 @@ import Utils from "./utils";
 let dataLoop ={};
 let gameLoop = {};
 let mouseY = 0;
-
+let roundDelay = 20;
 
 export default  class Base {
 
@@ -31,7 +31,7 @@ export default  class Base {
     this.ctx = this.canvas.getContext('2d');
     this.currentRounds=0;
     this.currentScore = 0;
-    mouseY =  (this.canvas.height)/2 + (this.canvas.width/9)*1.5;
+    this.canvas.style.cursor = 'none';
     document.addEventListener("mousemove", this.onMouseMove);
     document.addEventListener("keydown", this.keyDownHandler, false);
     document.addEventListener("keyup", this.keyUpHandler, false);
@@ -175,6 +175,7 @@ export default  class Base {
     clearInterval(dataLoop);
     clearInterval(gameLoop);
 
+    this.waitSeconds(roundDelay);
     if(this.currentRounds < this.context.game_rounds){
 
       this.initGame();
@@ -224,7 +225,7 @@ export default  class Base {
    */
   paddleMove(paddle) {
 
-        paddle.position.y = this.mouseY();
+        paddle.position.y = mouseY;
 
   }
 
@@ -261,6 +262,21 @@ export default  class Base {
     console.log(e);
 
   }
+
+  /**
+   * Set delay before each round
+   * @param iMilliSeconds int
+   */
+  waitSeconds(iMilliSeconds) {
+    let counter= 0;
+    let start = new Date().getTime();
+    let  end = 0;
+    while (counter < iMilliSeconds) {
+      end = new Date().getTime();
+      counter = end - start;
+    }
+  }
+
 
 
   /**
