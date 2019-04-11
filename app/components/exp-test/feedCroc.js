@@ -40,6 +40,7 @@ export default class FeedCroc extends Base{
   init(){
     super.init();
     this.initGame();
+    super.mouseY = paddle.position.y;
   }
 
 
@@ -198,7 +199,7 @@ export default class FeedCroc extends Base{
 
     };
 
-    super.mouseY = paddle.position.y;
+
 
 
   }
