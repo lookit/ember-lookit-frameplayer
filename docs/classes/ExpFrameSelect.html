@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ExpLookitStoryPage - ember-lookit-frameplayer</title>
+    <title>ExpFrameSelect - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -131,23 +131,15 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>ExpLookitStoryPage Class</h1>
+<h1>ExpFrameSelect Class</h1>
 <div class="box meta">
-        <div class="uses">
-            Uses
-            <ul class="inline commas">
-                    <li><a href="FullScreen.html">FullScreen</a></li>
-                    <li><a href="VideoRecord.html">VideoRecord</a></li>
-                    <li><a href="ExpandAssets.html">ExpandAssets</a></li>
-            </ul>
-        </div>
 
         <div class="extends">
             Extends <a href="../classes/ExpFrameBase.html" class="crosslink">ExpFrameBase</a>
         </div>
 
         <div class="foundat">
-            Defined in: <a href="../files/app_components_exp-lookit-story-page_component.js.html#l18"><code>app&#x2F;components&#x2F;exp-lookit-story-page&#x2F;component.js:18</code></a>
+            Defined in: <a href="../files/app_components_exp-frame-select_component.js.html#l9"><code>app&#x2F;components&#x2F;exp-frame-select&#x2F;component.js:9</code></a>
         </div>
 
             Collection: <a href="../modules/frames.html">frames</a><br>
@@ -157,74 +149,63 @@
 
 <div>
 
-    <img src="../assets/screenshots/ExpLookitStoryPage.png" class="class-screenshot">
+    <img src="../assets/screenshots/ExpFrameSelect.png" class="class-screenshot">
 
 </div>
 
 <div class="box intro">
-    <p>Frame to implement a basic &quot;storybook page&quot; trial, with images placed on the
-screen within a display area and a sequence of audio files played.
-Optionally, images may be highlighted at specified times during the audio
-files.</p>
-<p>Webcam recording may be turned on or off; if on, the page is not displayed
-or audio started until recording begins.</p>
-<p>Frame is displayed fullscreen, but is not paused or otherwise disabled if the
-user leaves fullscreen. A button appears prompting the user to return to
-fullscreen mode.</p>
-<p>The parent may press 'next' to proceed, or the study may proceed
-automatically when audio finishes (autoProceed).</p>
-<p>Any number of images may be placed on the screen, and their position
-specified. (Aspect ratio will be the same as the original image.)</p>
-<p>This frame is displayed fullscreen; if the frame before it is not, that frame
-needs to include a manual &quot;next&quot; button so that there's a user interaction
-event to trigger fullscreen mode. (Browsers don't allow us to switch to FS
-without a user event.)</p>
-<pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
-   &quot;story-intro-1&quot;: {
-           &quot;doRecording&quot;: false,
-           &quot;autoProceed&quot;: true,
-           &quot;baseDir&quot;: &quot;https://s3.amazonaws.com/lookitcontents/ingroupobligations/&quot;,
-           &quot;audioTypes&quot;: [&quot;mp3&quot;, &quot;ogg&quot;],
-           &quot;parentTextBlock&quot;: {
-               &quot;title&quot;: &quot;Parents!&quot;,
-               &quot;text&quot;: &quot;some instructions&quot;,
-               &quot;emph&quot;: true,
-               &quot;css&quot;: {
-                   &quot;color&quot;: &quot;red&quot;,
-                   &quot;font-size&quot;: &quot;12px&quot;
-               }
-           },
-           &quot;images&quot;: [
+    <p>Frame that allows you to specify a list of possible frames to show, plus an index or
+list of indices of which ones to actually show. The frame(s) will be inserted into the
+sequence of frames for this study on the fly, so that you can use a custom
+<a href="../classes/ExpFrameBase.html#property_generateProperties" class="crosslink">generateProperties</a>
+function to select which frame(s) to show.</p>
+<p>This frame serves as a wrapper for the randomizer <a href="../classes/Select.html" class="crosslink">Select</a>,
+which is evaluated during experiment parsing and cannot be modified on the fly.</p>
+<p>For more information about making study behavior conditional on data collected,
+see <a href="https://lookit.readthedocs.io/en/develop/researchers-create-experiment.html#conditional-logic">the Lookit docs</a>.</p>
+<p>Example usage:</p>
+<pre class="code prettyprint"><code class="language-json">       "study-procedure": {
+           "kind": "exp-frame-select",
+           "frameOptions": [
                {
-                   &quot;id&quot;: &quot;leftA&quot;,
-                   &quot;src&quot;: &quot;flurps1.jpg&quot;,
-                   &quot;left&quot;: &quot;10&quot;,
-                   &quot;width&quot;: &quot;30&quot;,
-                   &quot;top&quot;: &quot;34.47&quot;
+                   "kind": "exp-lookit-text",
+                   "blocks": [
+                       {
+                           "emph": true,
+                           "text": "Cats are great"
+                       },
+                       {
+                           "text": "We are measuring how much your child loves cats now. Beep boop!"
+                       }
+                   ]
                },
                {
-                   &quot;id&quot;: &quot;rightA&quot;,
-                   &quot;src&quot;: &quot;zazzes1.jpg&quot;,
-                   &quot;left&quot;: &quot;60&quot;,
-                   &quot;width&quot;: &quot;30&quot;,
-                   &quot;top&quot;: &quot;34.47&quot;
-               }
-           ],
-           &quot;kind&quot;: &quot;exp-lookit-story-page&quot;,
-           &quot;audioSources&quot;: [
-               {
-                   &quot;audioId&quot;: &quot;firstAudio&quot;,
-                   &quot;sources&quot;: &quot;intro1&quot;,
-                   &quot;highlights&quot;: [
-                       {&quot;range&quot;: [3.017343, 5.600283], &quot;image&quot;:     &quot;leftA&quot;},
-                       {&quot;range&quot;: [5.752911, 8.899402], &quot;image&quot;:     &quot;rightA&quot;}
+                   "kind": "exp-lookit-text",
+                   "blocks": [{
+                           "emph": true,
+                           "text": "Your child is not eligible for this study"
+                       },
+                       {
+                           "text": "Either you do not have any cats or your child does not love cats."
+                       }
                    ]
                }
-           ]
+           ],
+           "generateProperties": "function(expData, sequence, child, pastSessions) {var formData = expData['0-eligibility-survey'].formData; if (formData.nCats &gt;= 1 &amp;&amp; formData.loveCats == 'yes') { console.log('eligible'); return { 'whichFrames': 0, 'ELIGIBLE': true } } else { console.log('ineligible'); return { 'whichFrames': 1,  'ELIGIBLE': false } } }"
        }
-}
-
 </code></pre>
+<p><strong>Warning:</strong> to avoid unpredictable behavior, this frame does not itself use any
+<a href="../classes/ExpFrameBase.html#property_selectNextFrame" class="crosslink">selectNextFrame</a> passed to it.
+(Frames within the <code>frameOptions</code> list are welcome to make use of <code>selectNextFrame</code>, though!)</p>
+<p>Data will be stored for this frame so that any <code>generatedProperties</code> are available
+for future use; however, it will proceed immediately upon loading to the first frame
+that is specified (or the next frame in the original sequence, if it turns out that <code>whichFrames</code> is an empty
+list).</p>
+<p>In <code>expData</code>, the frame keys for all frames generated by this frame will be prefixed
+by this frame's ID, with an index within <code>whichFrames</code> appended to the end of the ID.
+For instance, if this frame's ID is <code>1-study-procedure</code>, and it generates three frames,
+we would have keys <code>1-study-procedure</code>, <code>1-study-procedure-0</code>, <code>1-study-procedure-1</code>, and
+<code>1-study-procedure-2</code>.</p>
 
 </div>
 
@@ -246,7 +227,7 @@ without a user event.)</p>
                     <h3>Methods</h3>
 
                     <ul class="index-list methods extends">
-                            <li class="index-item method inherited inherited">
+                            <li class="index-item method inherited">
                                 <a href="#method_exitFullscreen">exitFullscreen</a>
 
                             </li>
@@ -258,7 +239,7 @@ without a user event.)</p>
                                 <a href="#method_serializeContent">serializeContent</a>
 
                             </li>
-                            <li class="index-item method inherited inherited">
+                            <li class="index-item method inherited">
                                 <a href="#method_showFullscreen">showFullscreen</a>
 
                             </li>
@@ -269,39 +250,23 @@ without a user event.)</p>
                     <h3>Properties</h3>
 
                     <ul class="index-list properties extends">
-                            <li class="index-item property inherited">
-                                <a href="#property_assetsToExpand">assetsToExpand</a>
-
-                            </li>
                             <li class="index-item property">
-                                <a href="#property_audioSources">audioSources</a>
+                                <a href="#property_commonFrameProperties">commonFrameProperties</a>
 
                             </li>
                             <li class="index-item property inherited">
-                                <a href="#property_audioTypes">audioTypes</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_autoProceed">autoProceed</a>
-
-                            </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_baseDir">baseDir</a>
-
-                            </li>
-                            <li class="index-item property inherited inherited">
                                 <a href="#property_displayFullscreenOverride">displayFullscreenOverride</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_doRecording">doRecording</a>
+                                <a href="#property_frameOptions">frameOptions</a>
 
                             </li>
-                            <li class="index-item property inherited inherited">
+                            <li class="index-item property inherited">
                                 <a href="#property_fsButtonID">fsButtonID</a>
 
                             </li>
-                            <li class="index-item property inherited inherited">
+                            <li class="index-item property inherited">
                                 <a href="#property_fullScreenElementId">fullScreenElementId</a>
 
                             </li>
@@ -309,20 +274,12 @@ without a user event.)</p>
                                 <a href="#property_generateProperties">generateProperties</a>
 
                             </li>
-                            <li class="index-item property">
-                                <a href="#property_images">images</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_parentTextBlock">parentTextBlock</a>
-
-                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_selectNextFrame">selectNextFrame</a>
 
                             </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_videoTypes">videoTypes</a>
+                            <li class="index-item property">
+                                <a href="#property_whichFrames">whichFrames</a>
 
                             </li>
                     </ul>
@@ -333,11 +290,11 @@ without a user event.)</p>
                     <h3>Events</h3>
 
                     <ul class="index-list events extends">
-                            <li class="index-item event inherited inherited">
+                            <li class="index-item event inherited">
                                 <a href="#event_enteredFullscreen">enteredFullscreen</a>
 
                             </li>
-                            <li class="index-item event inherited inherited">
+                            <li class="index-item event inherited">
                                 <a href="#event_leftFullscreen">leftFullscreen</a>
 
                             </li>
@@ -369,11 +326,8 @@ without a user event.)</p>
 
 
     <div class="meta">
-            <p>Inherited from
-            <a href="../classes/FullScreen.html#method_exitFullscreen">
-                FullScreen
-            </a>
-            but overwritten in
+                <p>Inherited from
+                <a href="../classes/FullScreen.html#method_exitFullscreen">FullScreen</a>:
         <a href="../files/app_mixins_full-screen.js.html#l137"><code>app&#x2F;mixins&#x2F;full-screen.js:137</code></a>
         </p>
 
@@ -470,19 +424,13 @@ event sent by a particular frame</p>
 
 
 </div>
-<div id="method_serializeContent" class="method item">
+<div id="method_serializeContent" class="method item inherited">
     <h3 class="name"><code>serializeContent</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
                         <code>eventTimings</code>
-                </li>
-                <li class="arg">
-                        <code>videoID</code>
-                </li>
-                <li class="arg">
-                        <code>videoList</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
@@ -498,12 +446,9 @@ event sent by a particular frame</p>
 
 
     <div class="meta">
-            <p>Inherited from
-            <a href="../classes/ExpFrameBase.html#method_serializeContent">
-                ExpFrameBase
-            </a>
-            but overwritten in
-        <a href="../files/app_components_exp-lookit-story-page_component.js.html#l279"><code>app&#x2F;components&#x2F;exp-lookit-story-page&#x2F;component.js:279</code></a>
+                <p>Inherited from
+                <a href="../classes/ExpFrameBase.html#method_serializeContent">ExpFrameBase</a>:
+        <a href="../files/app_components_exp-frame-base_component.js.html#l372"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:372</code></a>
         </p>
 
 
@@ -511,7 +456,16 @@ event sent by a particular frame</p>
     </div>
 
     <div class="description">
-        <p>Parameters captured and sent to the server</p>
+        <p>The base class does not define any data to save to the server. It does, however, capture some basic event
+timing data. (such as when the user clicks the &quot;next&quot; button)</p>
+<p>This section slightly breaks YUIDoc conventions- rather than being a literal guide to using the code, the
+&quot;parameters&quot; here are abstract descriptions of what data is captured.</p>
+<p>Each frame that extends ExpFrameBase will send an array <code>eventTimings</code>
+back to the server upon completion. This array is an ordered list (oldest
+to newest) of every EVENT that happened during the frame. Each event is
+represented as an object with at least the properties
+<code>{'eventType': EVENTNAME, 'timestamp': TIMESTAMP}</code>. Frame-specific events
+may define additional properties that are sent.</p>
 
     </div>
 
@@ -521,33 +475,11 @@ event sent by a particular frame</p>
             <ul class="params-list">
                 <li class="param">
                         <code class="param-name">eventTimings</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
 
 
                     <div class="param-description">
                          
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">videoID</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                        <p>The ID of any webcam video recorded during this frame</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">videoList</code>
-                        <span class="type">List</span>
-
-
-                    <div class="param-description">
-                        <p>a list of webcam video IDs in case there are &gt;1</p>
-
                     </div>
 
                 </li>
@@ -559,8 +491,6 @@ event sent by a particular frame</p>
 
             <div class="returns-description">
                         <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
-                    <p>The payload sent to the server</p>
-
             </div>
         </div>
 
@@ -579,11 +509,8 @@ event sent by a particular frame</p>
 
 
     <div class="meta">
-            <p>Inherited from
-            <a href="../classes/FullScreen.html#method_showFullscreen">
-                FullScreen
-            </a>
-            but overwritten in
+                <p>Inherited from
+                <a href="../classes/FullScreen.html#method_showFullscreen">FullScreen</a>:
         <a href="../files/app_mixins_full-screen.js.html#l104"><code>app&#x2F;mixins&#x2F;full-screen.js:104</code></a>
         </p>
 
@@ -604,33 +531,9 @@ event sent by a particular frame</p>
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
 
-<div id="property_assetsToExpand" class="property item inherited">
-    <h3 class="name"><code>assetsToExpand</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/ExpandAssets.html#property_assetsToExpand">ExpandAssets</a>:
-        <a href="../files/app_mixins_expand-assets.js.html#l91"><code>app&#x2F;mixins&#x2F;expand-assets.js:91</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        Object describing which properties may need expansion
-    </div>
-
-
-
-</div>
-<div id="property_audioSources" class="property item">
-    <h3 class="name"><code>audioSources</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+<div id="property_commonFrameProperties" class="property item">
+    <h3 class="name"><code>commonFrameProperties</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
 
 
 
@@ -639,160 +542,19 @@ event sent by a particular frame</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-lookit-story-page_component.js.html#l148"><code>app&#x2F;components&#x2F;exp-lookit-story-page&#x2F;component.js:148</code></a>
+        <a href="../files/app_components_exp-frame-select_component.js.html#l116"><code>app&#x2F;components&#x2F;exp-frame-select&#x2F;component.js:116</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Array of objects describing audio to play at the start of
-this frame. Each element describes a separate audio segment.</p>
+        <p>Object describing common parameters to use in EVERY frame created
+by this randomizer. Parameter names and values are as described in
+the documentation for the frameType used.</p>
 
     </div>
 
-
-
-        <h4>Sub-properties:</h4>
-
-        <ul class="params-list">
-            <li class="param">
-                    <code class="param-name">audioId</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>unique string identifying this
-audio segment</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">sources</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
-
-                <div class="param-description">
-                    <p>Array of {src: 'url', type:
-'MIMEtype'} objects with audio sources for this segment</p>
-<p>Can also give a single string <code>filename</code>, which will
-be expanded out to the appropriate array based on <code>baseDir</code>
-and <code>audioTypes</code> values; see <code>audioTypes</code>.</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">highlights</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
-
-                <div class="param-description">
-                    <p>Array of {'range': [startT,
-endT], 'image': 'imageId'} objects, where the imageId
-values correspond to the ids given in images</p>
-
-                </div>
-
-            </li>
-        </ul>
-</div>
-<div id="property_audioTypes" class="property item inherited">
-    <h3 class="name"><code>audioTypes</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String[]</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/ExpandAssets.html#property_audioTypes">ExpandAssets</a>:
-        <a href="../files/app_mixins_expand-assets.js.html#l121"><code>app&#x2F;mixins&#x2F;expand-assets.js:121</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        List of audio types to expect for any audio specified just
-with a string rather than with a list of src/type objects.
-If audioTypes is <code>[&#x27;typeA&#x27;, &#x27;typeB&#x27;]</code> and an audio source
-is given as <code>intro</code>, the audio source will be
-expanded out to
-
-
-    [
-        {
-            src: 'baseDir' + 'typeA/intro.typeA',
-            type: 'audio/typeA'
-        },
-        {
-            src: 'baseDir' + 'typeB/intro.typeB',
-            type: 'audio/typeB'
-        }
-    ]
-    </div>
-
-        <p><strong>Default:</strong> [&#x27;mp3&#x27;, &#x27;ogg&#x27;]</p>
-
-
-</div>
-<div id="property_autoProceed" class="property item">
-    <h3 class="name"><code>autoProceed</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/app_components_exp-lookit-story-page_component.js.html#l138"><code>app&#x2F;components&#x2F;exp-lookit-story-page&#x2F;component.js:138</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Whether to proceed automatically after audio (and hide
-replay/next buttons)</p>
-
-    </div>
-
-
-
-</div>
-<div id="property_baseDir" class="property item inherited">
-    <h3 class="name"><code>baseDir</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/ExpandAssets.html#property_baseDir">ExpandAssets</a>:
-        <a href="../files/app_mixins_expand-assets.js.html#l101"><code>app&#x2F;mixins&#x2F;expand-assets.js:101</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        Base directory for where to find stimuli. Any image src
-values that are not full paths will be expanded by prefixing
-with <code>baseDir</code> + <code>img&#x2F;</code>. Any audio/video src values provided as
-strings rather than objects with <code>src</code> and <code>type</code> will be
-expanded out to <code>baseDir&#x2F;avtype&#x2F;[stub].avtype</code>, where the potential
-avtypes are given by <code>audioTypes</code> and <code>videoTypes</code>.
-
-baseDir should include a trailing slash
-(e.g., <code>http:&#x2F;&#x2F;stimuli.org&#x2F;myexperiment&#x2F;</code>); if a value is provided that
-does not end in a slash, one will be added.
-    </div>
-
-        <p><strong>Default:</strong> &#x27;&#x27;</p>
 
 
 </div>
@@ -805,11 +567,8 @@ does not end in a slash, one will be added.
 
 
     <div class="meta">
-            <p>Inherited from
-            <a href="../classes/FullScreen.html#property_displayFullscreenOverride">
-                FullScreen
-            </a>
-            but overwritten in
+                <p>Inherited from
+                <a href="../classes/FullScreen.html#property_displayFullscreenOverride">FullScreen</a>:
         <a href="../files/app_mixins_full-screen.js.html#l166"><code>app&#x2F;mixins&#x2F;full-screen.js:166</code></a>
         </p>
 
@@ -824,9 +583,9 @@ generally used that way.
 
 
 </div>
-<div id="property_doRecording" class="property item">
-    <h3 class="name"><code>doRecording</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+<div id="property_frameOptions" class="property item">
+    <h3 class="name"><code>frameOptions</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
 
 
 
@@ -835,15 +594,22 @@ generally used that way.
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-lookit-story-page_component.js.html#l128"><code>app&#x2F;components&#x2F;exp-lookit-story-page&#x2F;component.js:128</code></a>
+        <a href="../files/app_components_exp-frame-select_component.js.html#l94"><code>app&#x2F;components&#x2F;exp-frame-select&#x2F;component.js:94</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Whether to do webcam recording (will wait for webcam
-connection before starting audio if so)</p>
+        <p>List of frames that can be created by this randomizer. Each frame is an
+object with any necessary frame-specific properties specified. The
+'kind' of frame can be specified either here (per frame) or in
+commonFrameProperties. If a property is defined for a given frame both
+in this frame list and in commonFrameProperties, the value in the frame
+list will take precedence.</p>
+<p>(E.g., you could include 'kind': 'normal-frame' in
+commmonFrameProperties, but for a single frame in frameOptions, include
+'kind': 'special-frame'.)</p>
 
     </div>
 
@@ -859,11 +625,8 @@ connection before starting audio if so)</p>
 
 
     <div class="meta">
-            <p>Inherited from
-            <a href="../classes/FullScreen.html#property_fsButtonID">
-                FullScreen
-            </a>
-            but overwritten in
+                <p>Inherited from
+                <a href="../classes/FullScreen.html#property_fsButtonID">FullScreen</a>:
         <a href="../files/app_mixins_full-screen.js.html#l24"><code>app&#x2F;mixins&#x2F;full-screen.js:24</code></a>
         </p>
 
@@ -886,11 +649,8 @@ connection before starting audio if so)</p>
 
 
     <div class="meta">
-            <p>Inherited from
-            <a href="../classes/FullScreen.html#property_fullScreenElementId">
-                FullScreen
-            </a>
-            but overwritten in
+                <p>Inherited from
+                <a href="../classes/FullScreen.html#property_fullScreenElementId">FullScreen</a>:
         <a href="../files/app_mixins_full-screen.js.html#l17"><code>app&#x2F;mixins&#x2F;full-screen.js:17</code></a>
         </p>
 
@@ -989,157 +749,6 @@ to be on one line.)</p>
 
 
 </div>
-<div id="property_images" class="property item">
-    <h3 class="name"><code>images</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/app_components_exp-lookit-story-page_component.js.html#l240"><code>app&#x2F;components&#x2F;exp-lookit-story-page&#x2F;component.js:240</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Array of images to display and information about their placement</p>
-
-    </div>
-
-
-
-        <h4>Sub-properties:</h4>
-
-        <ul class="params-list">
-            <li class="param">
-                    <code class="param-name">id</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>unique ID for this image</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">src</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>URL of image source. This can be a full
-URL, or relative to baseDir (see baseDir).</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">left</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>left margin, as percentage of story area width</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">width</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>image width, as percentage of story area width</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">top</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>top margin, as percentage of story area height</p>
-
-                </div>
-
-            </li>
-        </ul>
-</div>
-<div id="property_parentTextBlock" class="property item">
-    <h3 class="name"><code>parentTextBlock</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/app_components_exp-lookit-story-page_component.js.html#l210"><code>app&#x2F;components&#x2F;exp-lookit-story-page&#x2F;component.js:210</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Text block to display to parent.  (Each field is optional)</p>
-
-    </div>
-
-
-
-        <h4>Sub-properties:</h4>
-
-        <ul class="params-list">
-            <li class="param">
-                    <code class="param-name">title</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>title to display</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">text</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>paragraph of text</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">emph</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-                <div class="param-description">
-                    <p>whether to bold this paragraph</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">css</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-                <div class="param-description">
-                    <p>object specifying any css properties
-to apply to this section, and their values - e.g.
-{'color': 'red', 'font-size': '12px'}</p>
-
-                </div>
-
-            </li>
-        </ul>
-</div>
 <div id="property_selectNextFrame" class="property item inherited">
     <h3 class="name"><code>selectNextFrame</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
@@ -1207,44 +816,35 @@ just used for attempts to leave the study early</li>
 
 
 </div>
-<div id="property_videoTypes" class="property item inherited">
-    <h3 class="name"><code>videoTypes</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String[]</a></span>
+<div id="property_whichFrames" class="property item">
+    <h3 class="name"><code>whichFrames</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
 
 
 
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/ExpandAssets.html#property_videoTypes">ExpandAssets</a>:
-        <a href="../files/app_mixins_expand-assets.js.html#l149"><code>app&#x2F;mixins&#x2F;expand-assets.js:149</code></a>
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-frame-select_component.js.html#l129"><code>app&#x2F;components&#x2F;exp-frame-select&#x2F;component.js:129</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        List of video types to expect for any audio specified just
-with a string rather than with a list of src/type objects.
-If vidioTypes is <code>[&#x27;typeA&#x27;, &#x27;typeB&#x27;]</code> and a video source
-is given as <code>intro</code>, the video source will be
-expanded out to
+        <p>Index or indices (0-indexed) within frameOptions to actually use. This can be either a number
+(e.g., 0 or 1 to use the first or second option respectively) or an array providing
+an ordered list of indices to use (e.g., [0, 1] or [1, 0] to use the first then
+second or second then first options, respectively). All indices must be integers
+in [0, frameOptions.length).</p>
+<p>If not provided or -1, the entire frameOptions list is used in order. (If empty
+list is provided, however, that is respected and no frames are inserted by this
+randomizer.)</p>
 
-
-    [
-        {
-            src: 'baseDir' + 'typeA/intro.typeA',
-            type: 'video/typeA'
-        },
-        {
-            src: 'baseDir' + 'typeB/intro.typeB',
-            type: 'video/typeB'
-        }
-    ]
     </div>
 
-        <p><strong>Default:</strong> [&#x27;mp4&#x27;, &#x27;webm&#x27;]</p>
 
 
 </div>
@@ -1263,11 +863,8 @@ expanded out to
                     
                     
                         <div class="meta">
-                                <p>Inherited from
-                                <a href="../classes/FullScreen.html#event_enteredFullscreen">
-                                    FullScreen
-                                </a>
-                                but overwritten in
+                                    <p>Inherited from
+                                    <a href="../classes/FullScreen.html#event_enteredFullscreen">FullScreen</a>:
                             <a href="../files/app_mixins_full-screen.js.html#l76"><code>app&#x2F;mixins&#x2F;full-screen.js:76</code></a>
                             </p>
                     
@@ -1290,11 +887,8 @@ expanded out to
                     
                     
                         <div class="meta">
-                                <p>Inherited from
-                                <a href="../classes/FullScreen.html#event_leftFullscreen">
-                                    FullScreen
-                                </a>
-                                but overwritten in
+                                    <p>Inherited from
+                                    <a href="../classes/FullScreen.html#event_leftFullscreen">FullScreen</a>:
                             <a href="../files/app_mixins_full-screen.js.html#l88"><code>app&#x2F;mixins&#x2F;full-screen.js:88</code></a>
                             </p>
                     

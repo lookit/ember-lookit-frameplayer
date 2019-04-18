@@ -11,9 +11,8 @@ let {
 /**
  * @module exp-player
  * @submodule components
- */
-
-/**
+ * @class ExpPlayer
+ *
  * Experiment player: a component that renders a series of frames that define an experiment
  *
  * Sample usage:
@@ -26,7 +25,6 @@ let {
  *   frameIndex=0
  *   fullScreenElementId='expContainer'}}
  * ```
- * @class ExpPlayer
  */
 export default Ember.Component.extend(FullScreen, {
     layout: layout,
@@ -38,7 +36,6 @@ export default Ember.Component.extend(FullScreen, {
     conditions: null,
 
     frameIndex: 0, // Index of the currently active frame
-    framePage: 0, // Index of the currently visible page within a frame
 
     displayFullscreen: false,
     fullScreenElementId: 'experiment-player',
@@ -150,7 +147,6 @@ export default Ember.Component.extend(FullScreen, {
         });
         var [frameConfigs, conditions] = parser.parse();
         this.set('frames', frameConfigs); // When player loads, convert structure to list of frames
-        this.set('displayFullscreen', this.get('experiment.displayFullscreen') || false); // Choose whether to display this experiment fullscreen (default false)
 
         var session = this.get('session');
         session.set('conditions', conditions);
@@ -188,6 +184,7 @@ export default Ember.Component.extend(FullScreen, {
     _transition() {
         Ember.run(() => {
             this.set('_currentFrameTemplate', 'exp-blank');
+            // should also set all frame properties back to defaults.
         });
         this.set('_currentFrameTemplate', null);
     },
@@ -220,12 +217,16 @@ export default Ember.Component.extend(FullScreen, {
             }
         },
 
-        next() {
+        next(nextFrameIndex = -1) {
             var frameIndex = this.get('frameIndex');
+            if (nextFrameIndex == -1) {
+                nextFrameIndex = frameIndex + 1;
+            } else if (nextFrameIndex < 0 || nextFrameIndex >= this.get('frames').length) {
+                throw new Error('selectNextFrame function provided for this frame returns a frame index out of bounds');
+            }
             if (frameIndex < (this.get('frames').length - 1)) {
                 this._transition();
-                this.set('frameIndex', frameIndex + 1);
-                this.set('framePage', 0);
+                this.set('frameIndex', nextFrameIndex);
                 return;
             }
             this._exit();
@@ -251,10 +252,6 @@ export default Ember.Component.extend(FullScreen, {
 
         closeExitWarning() {
             this.set('hasAttemptedExit', false);
-        },
-
-        updateFramePage(framePage) {
-            this.set('framePage', framePage);
         },
 
         exitEarly() {

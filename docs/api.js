@@ -3,6 +3,7 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "ExpExitSurvey",
         "ExpFrameBase",
+        "ExpFrameSelect",
         "ExpLookitDialoguePage",
         "ExpLookitExitSurvey",
         "ExpLookitGeometryAlternation",
@@ -16,7 +17,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "ExpLookitText",
         "ExpLookitVideo",
         "ExpLookitVideoConsent",
-        "ExpPlayer",
+        "ExpPlayer\n\nExperiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```",
         "ExpVideoConfig",
         "ExpVideoConfigQuality",
         "ExpVideoConsent",
@@ -24,10 +25,11 @@ YUI.add("yuidoc-meta", function(Y) {
         "ExpandAssets",
         "FullScreen",
         "MediaReload",
+        "RandomParameterSet",
+        "Select",
         "VideoRecordMixin",
         "VideoRecorderObject",
         "permute",
-        "randomParameterSet",
         "videoRecorder"
     ],
     "modules": [
@@ -41,8 +43,7 @@ YUI.add("yuidoc-meta", function(Y) {
     "allModules": [
         {
             "displayName": "components",
-            "name": "components",
-            "description": "Experiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```"
+            "name": "components"
         },
         {
             "displayName": "exp-player",

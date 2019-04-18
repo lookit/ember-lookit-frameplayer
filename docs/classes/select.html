@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ExpPlayer - ember-lookit-frameplayer</title>
+    <title>Select - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -44,6 +44,7 @@
                             <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
                             <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
                             <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
+                            <li><a href="../classes/ExpFrameSelect.html">ExpFrameSelect</a></li>
                             <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
                             <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
                             <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
@@ -57,7 +58,33 @@
                             <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
                             <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
                             <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
-                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpPlayer
+              
+              Experiment player: a component that renders a series of frames that define an experiment
+              
+              Sample usage:
+              &#x60;&#x60;&#x60;handlebars
+              {{exp-player
+                experiment=experiment
+                session=session
+                pastSessions=pastSessions
+                saveHandler=(action &#x27;saveSession&#x27;)
+                frameIndex=0
+                fullScreenElementId=&#x27;expContainer&#x27;}}
+              &#x60;&#x60;&#x60;.html">ExpPlayer
+              
+              Experiment player: a component that renders a series of frames that define an experiment
+              
+              Sample usage:
+              &#x60;&#x60;&#x60;handlebars
+              {{exp-player
+                experiment=experiment
+                session=session
+                pastSessions=pastSessions
+                saveHandler=(action &#x27;saveSession&#x27;)
+                frameIndex=0
+                fullScreenElementId=&#x27;expContainer&#x27;}}
+              &#x60;&#x60;&#x60;</a></li>
                             <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
                             <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
                             <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
@@ -65,7 +92,8 @@
                             <li><a href="../classes/FullScreen.html">FullScreen</a></li>
                             <li><a href="../classes/MediaReload.html">MediaReload</a></li>
                             <li><a href="../classes/permute.html">permute</a></li>
-                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
+                            <li><a href="../classes/RandomParameterSet.html">RandomParameterSet</a></li>
+                            <li><a href="../classes/Select.html">Select</a></li>
                             <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
                             <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
                             <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
@@ -103,35 +131,68 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>ExpPlayer Class</h1>
+<h1>Select Class</h1>
 <div class="box meta">
 
 
         <div class="foundat">
-            Defined in: <a href="../files/app_components_exp-player_component.js.html#l16"><code>app&#x2F;components&#x2F;exp-player&#x2F;component.js:16</code></a>
+            Defined in: <a href="../files/app_randomizers_select.js.html#l6"><code>app&#x2F;randomizers&#x2F;select.js:6</code></a>
         </div>
 
-            Collection: <a href="../modules/components.html">components</a><br>
+            Collection: <a href="../modules/randomizers.html">randomizers</a><br>
 
 </div>
 
 
 <div>
 
-    <img src="../assets/screenshots/ExpPlayer.png" class="class-screenshot">
+    <img src="../assets/screenshots/Select.png" class="class-screenshot">
 
 </div>
 
 <div class="box intro">
-    <p>Experiment player: a component that renders a series of frames that define an experiment</p>
-<p>Sample usage:</p>
-<pre class="code prettyprint"><code class="language-handlebars">{{exp-player
-  experiment=experiment
-  session=session
-  pastSessions=pastSessions
-  saveHandler=(action 'saveSession')
-  frameIndex=0
-  fullScreenElementId='expContainer'}}
+    <p>Randomizer to allow selection of one (or arbitrary sequence) of defined frames.
+This is intended to be used either within a <a href="../classes/RandomParameterSet.html" class="crosslink">RandomParameterSet</a> randomizer with
+different <code>parameterSets</code> picking out different values for <code>whichFrames</code>) or indirectly
+via the <a href="../classes/ExpFrameSelect.html" class="crosslink">ExpFrameSelect</a> frame (which allows setting <code>whichFrames</code> using a custom
+<code>generateProperties</code> function). Note that you cannot add a <code>generateProperties</code> function
+directly to a randomizer!</p>
+<p>To use, define a frame with "kind": "choice" and "sampler": "select",
+as shown below, in addition to the parameters described under 'properties'.</p>
+<pre class="code prettyprint"><code class="language-json">"frames": {
+   "select-randomizer-test": {
+       "sampler": "select",
+       "kind": "choice",
+       "whichFrames": 0,
+       "commonFrameProperties": {
+           "kind": "exp-lookit-text"
+       },
+       "frameOptions": [
+           {
+               "blocks": [
+                   {
+                       "emph": true,
+                       "text": "Let's think about hippos!",
+                       "title": "FRAME 1"
+                   },
+                   {
+                       "text": "Some more about hippos..."
+                   }
+               ]
+           },
+           {
+               "blocks": [
+                   {
+                       "emph": false,
+                       "text": "Let's think about dolphins!",
+                       "title": "FRAME 2"
+                   }
+               ]
+           }
+       ]
+   }
+}
+
 </code></pre>
 
 </div>
@@ -154,7 +215,7 @@
 
                     <ul class="index-list methods">
                             <li class="index-item method">
-                                <a href="#method_beforeUnload">beforeUnload</a>
+                                <a href="#method_conditions">conditions</a>
 
                             </li>
                     </ul>
@@ -165,7 +226,15 @@
 
                     <ul class="index-list properties">
                             <li class="index-item property">
-                                <a href="#property_messageEarlyExitModal">messageEarlyExitModal</a>
+                                <a href="#property_commonFrameProperties">commonFrameProperties</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_frameOptions">frameOptions</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_whichFrames">whichFrames</a>
 
                             </li>
                     </ul>
@@ -177,20 +246,17 @@
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
-<div id="method_beforeUnload" class="method item">
-    <h3 class="name"><code>beforeUnload</code></h3>
+<div id="method_conditions" class="method item">
+    <h3 class="name"><code>conditions</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
-                        <code>event</code>
+                        <code>whichFrames</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
 
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a> | Null</span>
-        </span>
 
 
 
@@ -201,7 +267,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-player_component.js.html#l61"><code>app&#x2F;components&#x2F;exp-player&#x2F;component.js:61</code></a>
+        <a href="../files/app_randomizers_select.js.html#l124"><code>app&#x2F;randomizers&#x2F;select.js:124</code></a>
         </p>
 
 
@@ -209,7 +275,7 @@
     </div>
 
     <div class="description">
-        <p>Customize what happens when the user exits the page</p>
+        <p>Parameters captured and sent to the server</p>
 
     </div>
 
@@ -218,12 +284,12 @@
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">event</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" class="crosslink external" target="_blank">Event</a></span>
+                        <code class="param-name">whichFrames</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
 
 
                     <div class="param-description">
-                        <p>The event to be handled</p>
+                        <p>the index/indices of the frame(s) used</p>
 
                     </div>
 
@@ -231,15 +297,6 @@
             </ul>
         </div>
 
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a> | Null</span>:
-                    <p>If string is provided, triggers a modal to confirm user wants to leave page</p>
-
-            </div>
-        </div>
 
 
 </div>
@@ -248,9 +305,9 @@
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
 
-<div id="property_messageEarlyExitModal" class="property item">
-    <h3 class="name"><code>messageEarlyExitModal</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a> | Null</span>
+<div id="property_commonFrameProperties" class="property item">
+    <h3 class="name"><code>commonFrameProperties</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
 
 
 
@@ -259,14 +316,81 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-player_component.js.html#l55"><code>app&#x2F;components&#x2F;exp-player&#x2F;component.js:55</code></a>
+        <a href="../files/app_randomizers_select.js.html#l75"><code>app&#x2F;randomizers&#x2F;select.js:75</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>The message to display in the early exit modal. Newer browsers may not respect this message.</p>
+        <p>Object describing common parameters to use in EVERY frame created
+by this randomizer. Parameter names and values are as described in
+the documentation for the frameType used.</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_frameOptions" class="property item">
+    <h3 class="name"><code>frameOptions</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_randomizers_select.js.html#l60"><code>app&#x2F;randomizers&#x2F;select.js:60</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>List of frames that can be created by this randomizer. Each frame is an
+object with any necessary frame-specific properties specified. The
+'kind' of frame can be specified either here (per frame) or in
+commonFrameProperties. If a property is defined for a given frame both
+in this frame list and in commonFrameProperties, the value in the frame
+list will take precedence.</p>
+<p>(E.g., you could include 'kind': 'normal-frame' in
+commmonFrameProperties, but for a single frame in frameOptions, include
+'kind': 'special-frame'.)</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_whichFrames" class="property item">
+    <h3 class="name"><code>whichFrames</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_randomizers_select.js.html#l83"><code>app&#x2F;randomizers&#x2F;select.js:83</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Index or indices (0-indexed) within frameOptions to actually use. This can be either a number
+(e.g., 0 or 1 to use the first or second option respectively) or an array providing
+an ordered list of indices to use (e.g., [0, 1] or [1, 0] to use the first then
+second or second then first options, respectively). All indices must be integers
+in [0, frameOptions.length).</p>
+<p>If not provided or -1, the entire frameOptions list is used in order. (If empty
+list is provided, however, that is respected and no frames are inserted by this
+randomizer.)</p>
 
     </div>
 
