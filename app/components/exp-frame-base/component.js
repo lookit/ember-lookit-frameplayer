@@ -23,15 +23,13 @@ import FullScreen from '../../mixins/full-screen';
  * ```
  *
  * As a user you will almost never need to insert a component into a template directly- the platform should handle that
- *   by automatically inserting `exp-player` when your experiment starts.
+ *  by automatically inserting an <a href="../classes/ExpPlayer.html" class="crosslink">ExpPlayer</a> component when your experiment starts.
  * However, a sample template usage is provided below for completeness.
  *
  * ```handlebars
  *  {{
       component currentFrameTemplate
         frameIndex=frameIndex
-        framePage=framePage
-        updateFramePage=(action 'updateFramePage')
         frameConfig=currentFrameConfig
         frameContext=currentFrameContext
 
@@ -71,7 +69,6 @@ export default Ember.Component.extend(FullScreen, {
     },
     // {Number} the current exp-player frameIndex
     frameIndex: null,
-    framePage: null,
     frameConfig: null,
     frameContext: null,
     frameType: 'DEFAULT',
@@ -83,9 +80,9 @@ export default Ember.Component.extend(FullScreen, {
      * at the time the frame is initialized. Allows behavior of study to depend on what has
      * happened so far (e.g., answers on a form or to previous test trials).
      * Must be a valid Javascript function, returning an object, provided as
-     * a string. Arguments that will be provided are: expData, sequence, child, pastSessions.
+     * a string. Arguments that will be provided are: expData, sequence, child, pastSessions, conditions.
      *
-     * Example: "function(expData, sequence, child, pastSessions) {
+     * Example: "function(expData, sequence, child, pastSessions, conditions) {
      *     return {
      *        'blocks':
      *             [
@@ -109,6 +106,7 @@ export default Ember.Component.extend(FullScreen, {
      * @default null
      */
     generateProperties: null,
+    generatedProperties: null,
     _generatePropertiesFn: null,
 
     /**
@@ -121,7 +119,7 @@ export default Ember.Component.extend(FullScreen, {
      * frames, frameIndex, expData, sequence, child, pastSessions
      *
      * Example that just sends us to the last frame of the study no matter what:
-     * "function(frames, frameIndex, expData, sequence, child, pastSessions) {return frames.length - 1;}"
+     * "function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}"
      *
      * @property {String} selectNextFrame
      * @default null
@@ -152,6 +150,7 @@ export default Ember.Component.extend(FullScreen, {
         let currentFrameIndex = this.get('frameIndex', null);
 
         let clean = currentFrameIndex !== this.get('_oldFrameIndex');
+
         var defaultParams = this.setupParams(clean);
         if (clean) {
             Object.keys(defaultParams).forEach((key) => {
@@ -190,10 +189,12 @@ export default Ember.Component.extend(FullScreen, {
                 if (typeof (this.get('_generatePropertiesFn')) === 'function') {
                     var sequence = session ? session.get('sequence', null) : null;
                     var child = session ? session.get('child', null) : null;
+                    var conditions = session ? session.get('conditions', {}) : {};
                     var frameContext = this.get('frameContext');
                     var pastSessions = frameContext ? frameContext.pastSessions : null;
-                    var generatedParams = this._generatePropertiesFn(expData, sequence, child, pastSessions);
+                    var generatedParams = this._generatePropertiesFn(expData, sequence, child, pastSessions, conditions);
                     if (typeof (generatedParams) === 'object') {
+                        this.set('generatedProperties', generatedParams);
                         Object.keys(generatedParams).forEach((key) => {
                             this.set(key, generatedParams[key]);
                         });
@@ -263,6 +264,12 @@ export default Ember.Component.extend(FullScreen, {
             }
         });
 
+        // Need to explicitly set defaults for non-meta properties here, otherwise defaults
+        // do not overwrite previous properties when no value is provided on the next
+        // frame.
+        defaultParams.generateProperties = null;
+        defaultParams.generatedProperties = null;
+        defaultParams.selectNextFrame = null;
         Ember.assign(defaultParams, params);
         return defaultParams;
     },
@@ -288,6 +295,7 @@ export default Ember.Component.extend(FullScreen, {
     serializeContent() {
         // Serialize selected parameters for this frame, plus eventTiming data
         var serialized = this.getProperties(Object.keys(this.get('meta.data.properties') || {}));
+        serialized.generatedProperties = this.get('generatedProperties');
         serialized.eventTimings = this.get('eventTimings');
         serialized.frameType = this.get('frameType');
         return serialized;

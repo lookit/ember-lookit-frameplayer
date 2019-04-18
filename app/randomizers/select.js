@@ -5,8 +5,11 @@
 
 /**
 * Randomizer to allow selection of one (or arbitrary sequence) of defined frames.
-* Intended to be useful for e.g. selecting which of several paths to take upon completion
-* of an eligibility survey, in conjunction with a custom generateProperties function.
+* This is intended to be used either within a {{#crossLink "RandomParameterSet"}}{{/crossLink}} randomizer with
+* different `parameterSets` picking out different values for `whichFrames`) or indirectly
+* via the {{#crossLink "ExpFrameSelect"}}{{/crossLink}} frame (which allows setting `whichFrames` using a custom
+* `generateProperties` function). Note that you cannot add a `generateProperties` function
+* directly to a randomizer!
 *
 * To use, define a frame with "kind": "choice" and "sampler": "select",
 * as shown below, in addition to the parameters described under 'properties'.
@@ -16,7 +19,7 @@
     "select-randomizer-test": {
         "sampler": "select",
         "kind": "choice",
-        "frameIndex": 0,
+        "whichFrames": 0,
         "commonFrameProperties": {
             "kind": "exp-lookit-text"
         },
@@ -47,7 +50,7 @@
 }
 *
 * ```
-* @class select
+* @class Select
 */
 
 var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
@@ -84,26 +87,26 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
      * second or second then first options, respectively). All indices must be integers
      * in [0, frameOptions.length).
      *
-     * If not provided or False, the entire frameOptions list is used in order. (If empty
+     * If not provided or -1, the entire frameOptions list is used in order. (If empty
      * list is provided, however, that is respected and no frames are inserted by this
      * randomizer.)
      *
-     * @property {Number} frameIndex
+     * @property {Number} whichFrames
      */
 
     var thisFrame = {};
     var frames = [];
 
     // If a single frame index is provided, convert to a single-element list
-    if ((typeof frameConfig.frameIndex) === 'number') {
-        frameConfig.frameIndex = [frameConfig.frameIndex];
-    } else if (!frameConfig.hasOwnProperty('frameIndex') || !frameConfig.frameIndex) {
-        frameConfig.frameIndex = [...frameConfig.frameOptions.keys()];
+    if ((typeof frameConfig.whichFrames) === 'number' && frameConfig.whichFrames != -1) {
+        frameConfig.whichFrames = [frameConfig.whichFrames];
+    } else if (!frameConfig.hasOwnProperty('whichFrames') || frameConfig.whichFrames == -1 || !frameConfig.whichFrames) {
+        frameConfig.whichFrames = [...frameConfig.frameOptions.keys()];
     }
 
-    for (var iFrame = 0; iFrame < frameConfig.frameIndex.length; iFrame++) {
-        if (frameConfig.frameIndex[iFrame] < 0 || frameConfig.frameIndex[iFrame] >= frameConfig.frameOptions.length) {
-            throw `Frame index out of range in select randomizer. All frame indices must be between 0 and frameOptions.length - 1.`;
+    for (var iFrame = 0; iFrame < frameConfig.whichFrames.length; iFrame++) {
+        if (frameConfig.whichFrames[iFrame] < 0 || frameConfig.whichFrames[iFrame] >= frameConfig.frameOptions.length) {
+            throw `Frame index in whichFrames out of range in select randomizer. All frame indices must be between 0 and frameOptions.length - 1.`;
         }
 
         // Assign parameters common to all frames made by this randomizer
@@ -112,9 +115,10 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
 
         // Assign parameters specific to this frame (allow to override
         // common parameters assigned above)
-        Object.assign(thisFrame, frameConfig.frameOptions[frameConfig.frameIndex[iFrame]]);
+        Object.assign(thisFrame, frameConfig.frameOptions[frameConfig.whichFrames[iFrame]]);
 
-        thisFrame = resolveFrame(frameId + '-' + iFrame + '-' + thisFrame.kind, thisFrame)[0];
+
+        thisFrame = resolveFrame(frameId + '-' + iFrame, thisFrame)[0];
         frames.push(...thisFrame);
     }
 
@@ -122,8 +126,8 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
      * Parameters captured and sent to the server
      *
      * @method conditions
-     * @param {Object[]} frameIndex the index of the frame used
+     * @param {Object[]} whichFrames the index/indices of the frame(s) used
      */
-    return [frames, {'frameIndex': frameConfig.frameIndex}];
+    return [frames, {'whichFrames': frameConfig.whichFrames}];
 };
 export default randomizer;
