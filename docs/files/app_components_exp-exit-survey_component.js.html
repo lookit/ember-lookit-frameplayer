@@ -167,13 +167,12 @@ const Validations = buildValidations({
     useOfMedia: validator(&#x27;presence&#x27;, {
         presence: true,
         message: &#x27;This field is required&#x27;,
-        disabled(model) {
-            return model.get(&#x27;withdrawal&#x27;);
-        }
+        disabled: Ember.computed.readOnly(&#x27;model.withdrawal&#x27;)
     }),
     databraryShare: validator(&#x27;presence&#x27;, {
         presence: true,
-        message: &#x27;This field is required&#x27;
+        message: &#x27;This field is required&#x27;,
+        disabled: Ember.computed.readOnly(&#x27;model.withdrawal&#x27;)
     })
 });
 
