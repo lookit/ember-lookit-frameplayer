@@ -50,7 +50,7 @@ let {
  * images before proceeding.
 
 ```json
- "frames":
+ "frames": {
         "phase-2": {
             "kind": "exp-lookit-dialogue-page",
             "baseDir": "https://s3.amazonaws.com/lookitcontents/politeness/",

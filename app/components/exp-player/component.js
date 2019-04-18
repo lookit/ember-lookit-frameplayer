@@ -11,6 +11,7 @@ let {
 /**
  * @module exp-player
  * @submodule components
+ * @class ExpPlayer
  */
 
 /**
@@ -26,7 +27,6 @@ let {
  *   frameIndex=0
  *   fullScreenElementId='expContainer'}}
  * ```
- * @class ExpPlayer
  */
 export default Ember.Component.extend(FullScreen, {
     layout: layout,

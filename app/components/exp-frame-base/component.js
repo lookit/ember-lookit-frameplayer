@@ -80,9 +80,57 @@ export default Ember.Component.extend(FullScreen, {
      * at the time the frame is initialized. Allows behavior of study to depend on what has
      * happened so far (e.g., answers on a form or to previous test trials).
      * Must be a valid Javascript function, returning an object, provided as
-     * a string. Arguments that will be provided are: expData, sequence, child, pastSessions, conditions.
+     * a string.
      *
-     * Example: "function(expData, sequence, child, pastSessions, conditions) {
+     *
+     * Arguments that will be provided are: `expData`, `sequence`, `child`, `pastSessions`, `conditions`.
+     *
+     *
+     * `expData`, `sequence`, and `conditions` are the same data as would be found in the session data shown
+     * on the Lookit experimenter interface under 'Individual Responses', except that
+     * they will only contain information up to this point in the study.
+     *
+     *
+     * `expData` is an object consisting of `frameId`: `frameData` pairs; the data associated
+     * with a particular frame depends on the frame kind.
+     *
+     *
+     * `sequence` is an ordered list of frameIds, corresponding to the keys in `expData`.
+     *
+     *
+     * `conditions` is an object representing the data stored by any randomizer frames;
+     * keys are `frameId`s for randomizer frames and data stored depends on the randomizer
+     * used.
+     *
+     *
+     * `child` is an object that has the following properties - use child.get(propertyName)
+     * to access:
+     * - `additionalInformation`: String; additional information field from child form
+     * - `ageAtBirth`: String; child's gestational age at birth in weeks. Possible values are
+     *   "24" through "39", "na" (not sure or prefer not to answer),
+     * "<24" (under 24 weeks), and "40>" (40 or more weeks).
+     * - `birthday`: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"
+     * - `gender`: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)
+     * - `givenName`: String, child's given name/nickname
+     * - `id`: String, child UUID
+     *
+     *
+     * `pastSessions` is a list of previous response objects for this child and this study,
+     * ordered starting from most recent (at index 0 is this session!). Each has properties
+     * (access as pastSessions[i].get(propertyName)):
+     * - `completed`: Boolean, whether they submitted an exit survey
+     * - `completedConsentFrame`: Boolean, whether they got through at least a consent frame
+     * - `conditions`: Object representing any conditions assigned by randomizer frames
+     * - `createdOn`: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"
+     * - `expData`: Object consisting of frameId: frameData pairs
+     * - `globalEventTimings`: list of any events stored outside of individual frames - currently
+     *   just used for attempts to leave the study early
+     * - `sequence`: ordered list of frameIds, corresponding to keys in expData
+     *
+     *
+     * Example:
+     * ```
+     * function(expData, sequence, child, pastSessions, conditions) {
      *     return {
      *        'blocks':
      *             [
@@ -97,7 +145,9 @@ export default Ember.Component.extend(FullScreen, {
      *                 }
      *             ]
      *       };
-     *   }"
+     *   }
+     * ```
+     *
      *
      *  (This example is split across lines for readability; when added to JSON it would need
      *  to be on one line.)
@@ -115,11 +165,56 @@ export default Ember.Component.extend(FullScreen, {
      * in the study (e.g., once the child answers N questions correctly, move on to next
      * segment). Must be a valid Javascript function, returning a number from 0 through
      * frames.length - 1, provided as a string.
+     *
+     *
      * Arguments that will be provided are:
-     * frames, frameIndex, expData, sequence, child, pastSessions
+     * `frames`, `frameIndex`, `expData`, `sequence`, `child`, `pastSessions`
+     *
+     *
+     * `frames` is an ordered list of frame configurations for this study; each element
+     * is an object corresponding directly to a frame you defined in the
+     * JSON document for this study (but with any randomizer frames resolved into the
+     * particular frames that will be used this time).
+     *
+     *
+     * `frameIndex` is the index in `frames` of the current frame
+     *
+     *
+     * `expData` is an object consisting of `frameId`: `frameData` pairs; the data associated
+     * with a particular frame depends on the frame kind.
+     *
+     *
+     * `sequence` is an ordered list of frameIds, corresponding to the keys in `expData`.
+     *
+     *
+     * `child` is an object that has the following properties - use child.get(propertyName)
+     * to access:
+     * - `additionalInformation`: String; additional information field from child form
+     * - `ageAtBirth`: String; child's gestational age at birth in weeks. Possible values are
+     *   "24" through "39", "na" (not sure or prefer not to answer),
+     * "<24" (under 24 weeks), and "40>" (40 or more weeks).
+     * - `birthday`: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"
+     * - `gender`: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)
+     * - `givenName`: String, child's given name/nickname
+     * - `id`: String, child UUID
+     *
+     *
+     * `pastSessions` is a list of previous response objects for this child and this study,
+     * ordered starting from most recent (at index 0 is this session!). Each has properties
+     * (access as pastSessions[i].get(propertyName)):
+     * - `completed`: Boolean, whether they submitted an exit survey
+     * - `completedConsentFrame`: Boolean, whether they got through at least a consent frame
+     * - `conditions`: Object representing any conditions assigned by randomizer frames
+     * - `createdOn`: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"
+     * - `expData`: Object consisting of frameId: frameData pairs
+     * - `globalEventTimings`: list of any events stored outside of individual frames - currently
+     *   just used for attempts to leave the study early
+     * - `sequence`: ordered list of frameIds, corresponding to keys in expData
+     *
      *
      * Example that just sends us to the last frame of the study no matter what:
-     * "function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}"
+     * ``"function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}"```
+     *
      *
      * @property {String} selectNextFrame
      * @default null
