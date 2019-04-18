@@ -12,9 +12,7 @@ let {
  * @module exp-player
  * @submodule components
  * @class ExpPlayer
- */
-
-/**
+ *
  * Experiment player: a component that renders a series of frames that define an experiment
  *
  * Sample usage:

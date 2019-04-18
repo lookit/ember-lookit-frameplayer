@@ -44,6 +44,7 @@
                             <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
                             <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
                             <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
+                            <li><a href="../classes/ExpFrameSelect.html">ExpFrameSelect</a></li>
                             <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
                             <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
                             <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
@@ -57,7 +58,33 @@
                             <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
                             <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
                             <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
-                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpPlayer
+              
+              Experiment player: a component that renders a series of frames that define an experiment
+              
+              Sample usage:
+              &#x60;&#x60;&#x60;handlebars
+              {{exp-player
+                experiment=experiment
+                session=session
+                pastSessions=pastSessions
+                saveHandler=(action &#x27;saveSession&#x27;)
+                frameIndex=0
+                fullScreenElementId=&#x27;expContainer&#x27;}}
+              &#x60;&#x60;&#x60;.html">ExpPlayer
+              
+              Experiment player: a component that renders a series of frames that define an experiment
+              
+              Sample usage:
+              &#x60;&#x60;&#x60;handlebars
+              {{exp-player
+                experiment=experiment
+                session=session
+                pastSessions=pastSessions
+                saveHandler=(action &#x27;saveSession&#x27;)
+                frameIndex=0
+                fullScreenElementId=&#x27;expContainer&#x27;}}
+              &#x60;&#x60;&#x60;</a></li>
                             <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
                             <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
                             <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
@@ -65,8 +92,8 @@
                             <li><a href="../classes/FullScreen.html">FullScreen</a></li>
                             <li><a href="../classes/MediaReload.html">MediaReload</a></li>
                             <li><a href="../classes/permute.html">permute</a></li>
-                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
-                            <li><a href="../classes/select.html">select</a></li>
+                            <li><a href="../classes/RandomParameterSet.html">RandomParameterSet</a></li>
+                            <li><a href="../classes/Select.html">Select</a></li>
                             <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
                             <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
                             <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
@@ -121,9 +148,8 @@ let {
 /**
  * @module exp-player
  * @submodule components
- */
-
-/**
+ * @class ExpPlayer
+ *
  * Experiment player: a component that renders a series of frames that define an experiment
  *
  * Sample usage:
@@ -136,7 +162,6 @@ let {
  *   frameIndex=0
  *   fullScreenElementId=&#x27;expContainer&#x27;}}
  * &#x60;&#x60;&#x60;
- * @class ExpPlayer
  */
 export default Ember.Component.extend(FullScreen, {
     layout: layout,
@@ -148,7 +173,6 @@ export default Ember.Component.extend(FullScreen, {
     conditions: null,
 
     frameIndex: 0, // Index of the currently active frame
-    framePage: 0, // Index of the currently visible page within a frame
 
     displayFullscreen: false,
     fullScreenElementId: &#x27;experiment-player&#x27;,
@@ -260,7 +284,6 @@ export default Ember.Component.extend(FullScreen, {
         });
         var [frameConfigs, conditions] = parser.parse();
         this.set(&#x27;frames&#x27;, frameConfigs); // When player loads, convert structure to list of frames
-        this.set(&#x27;displayFullscreen&#x27;, this.get(&#x27;experiment.displayFullscreen&#x27;) || false); // Choose whether to display this experiment fullscreen (default false)
 
         var session = this.get(&#x27;session&#x27;);
         session.set(&#x27;conditions&#x27;, conditions);
@@ -298,6 +321,7 @@ export default Ember.Component.extend(FullScreen, {
     _transition() {
         Ember.run(() =&gt; {
             this.set(&#x27;_currentFrameTemplate&#x27;, &#x27;exp-blank&#x27;);
+            // should also set all frame properties back to defaults.
         });
         this.set(&#x27;_currentFrameTemplate&#x27;, null);
     },
@@ -324,7 +348,6 @@ export default Ember.Component.extend(FullScreen, {
             this.get(&#x27;session.sequence&#x27;).push(frameId);
             this.get(&#x27;session.expData&#x27;)[frameId] = frameData;
             if (this.get(&#x27;session&#x27;).child.content.id === &#x27;TEST_CHILD_DISREGARD&#x27;) {
-                console.log(&#x27;Skipping actual frame save, preview mode&#x27;);
                 return Ember.RSVP.Promise.resolve();
             } else {
                 return this.get(&#x27;session&#x27;).save();
@@ -341,7 +364,6 @@ export default Ember.Component.extend(FullScreen, {
             if (frameIndex &lt; (this.get(&#x27;frames&#x27;).length - 1)) {
                 this._transition();
                 this.set(&#x27;frameIndex&#x27;, nextFrameIndex);
-                this.set(&#x27;framePage&#x27;, 0);
                 return;
             }
             this._exit();
@@ -367,10 +389,6 @@ export default Ember.Component.extend(FullScreen, {
 
         closeExitWarning() {
             this.set(&#x27;hasAttemptedExit&#x27;, false);
-        },
-
-        updateFramePage(framePage) {
-            this.set(&#x27;framePage&#x27;, framePage);
         },
 
         exitEarly() {

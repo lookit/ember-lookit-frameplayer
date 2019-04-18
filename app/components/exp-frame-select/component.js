@@ -1,5 +1,3 @@
-import Ember from 'ember';
-
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 import ExperimentParser from '../../utils/parse-experiment';
 
@@ -108,11 +106,11 @@ export default ExpFrameBaseComponent.extend({
                  * @property {Object[]} frameOptions
                  */
                 frameOptions: {
-                  type: 'array',
-                  items: {
-                      type: 'object'
-                  },
-                  default: []
+                    type: 'array',
+                    items: {
+                        type: 'object'
+                    },
+                    default: []
                 },
 
                 /**
@@ -123,7 +121,7 @@ export default ExpFrameBaseComponent.extend({
                  * @property {Object} commonFrameProperties
                  */
 
-                 commonFrameProperties: {
+                commonFrameProperties: {
                     type: 'object',
                     default: {}
                 },
@@ -141,8 +139,7 @@ export default ExpFrameBaseComponent.extend({
                  *
                  * @property {Number} whichFrames
                  */
-
-                 whichFrames: {
+                whichFrames: {
                     type: 'number',
                     default: -1
                 }
@@ -171,16 +168,15 @@ export default ExpFrameBaseComponent.extend({
         };
         this.set('whichFrames', -1);
 
-        var _this = this;
         var id = this.get('id');
         var parser = new ExperimentParser({
             structure: {
-              'frames': {
-                  [id]: equivalentRandomizer
-              },
-              'sequence': [
-                  id
-              ]
+                'frames': {
+                    [id]: equivalentRandomizer
+                },
+                'sequence': [
+                    id
+                ]
             },
             pastSessions: this.parentView.get('pastSessions').toArray()
         });
@@ -189,7 +185,12 @@ export default ExpFrameBaseComponent.extend({
 
         var frames = this.parentView.get('frames');
         frames.splice(this.get('frameIndex') + 1, 0, ...frameConfigs);
+
         this.parentView.set('frames', frames);
+
+        var existingConditions = this.parentView.get('conditions');
+        Object.assign(existingConditions, conditions);
+        this.parentView.set('conditions', existingConditions);
     },
 
     didRender() {

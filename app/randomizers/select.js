@@ -117,7 +117,6 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
         // common parameters assigned above)
         Object.assign(thisFrame, frameConfig.frameOptions[frameConfig.whichFrames[iFrame]]);
 
-
         thisFrame = resolveFrame(frameId + '-' + iFrame, thisFrame)[0];
         frames.push(...thisFrame);
     }
