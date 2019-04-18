@@ -154,7 +154,7 @@ import Ember from 'ember';
 }
 
 * ```
-* @class randomParameterSet
+* @class RandomParameterSet
 */
 
 function getRandomElement(arr, weights) {

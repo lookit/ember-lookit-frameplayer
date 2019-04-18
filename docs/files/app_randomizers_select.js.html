@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>app/components/exp-lookit-preview-explanation/component.js - ember-lookit-frameplayer</title>
+    <title>app/randomizers/select.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -131,173 +131,142 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: app/components/exp-lookit-preview-explanation/component.js</h1>
+<h1 class="file-heading">File: app/randomizers/select.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-import layout from &#x27;./template&#x27;;
-import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
+/**
+* @module exp-player
+* @submodule randomizers
+*/
 
 /**
- * @module exp-player
- * @submodule frames
- */
-
-/**
- * A frame that to explain any blinding procedures to parents, and offer them the option to preview stimuli before the study. Two buttons allow the user to move forward: one goes to the next frame (if the parent wants to preview stimuli), and one skips the next frame and goes to the one after that (if the parent declins). Therefore, this frame should be followed by an {{#crossLink &quot;ExpVideoPreview&quot;}}{{/crossLink}} frame.
-
+* Randomizer to allow selection of one (or arbitrary sequence) of defined frames.
+* This is intended to be used either within a {{#crossLink &quot;RandomParameterSet&quot;}}{{/crossLink}} randomizer with
+* different &#x60;parameterSets&#x60; picking out different values for &#x60;whichFrames&#x60;) or indirectly
+* via the {{#crossLink &quot;ExpFrameSelect&quot;}}{{/crossLink}} frame (which allows setting &#x60;whichFrames&#x60; using a custom
+* &#x60;generateProperties&#x60; function). Note that you cannot add a &#x60;generateProperties&#x60; function
+* directly to a randomizer!
+*
+* To use, define a frame with &quot;kind&quot;: &quot;choice&quot; and &quot;sampler&quot;: &quot;select&quot;,
+* as shown below, in addition to the parameters described under &#x27;properties&#x27;.
+*
 &#x60;&#x60;&#x60;json
- &quot;frames&quot;: {
-    &quot;my-video-preview-explanation&quot;: {
-        &quot;introBlock&quot;: {
-            &quot;text&quot;: &quot;During the videos, we&#x27;ll ask that you hold your child over your shoulder like this, so that you&#x27;re facing face away from the screen.&quot;
+&quot;frames&quot;: {
+    &quot;select-randomizer-test&quot;: {
+        &quot;sampler&quot;: &quot;select&quot;,
+        &quot;kind&quot;: &quot;choice&quot;,
+        &quot;whichFrames&quot;: 0,
+        &quot;commonFrameProperties&quot;: {
+            &quot;kind&quot;: &quot;exp-lookit-text&quot;
         },
-        &quot;image&quot;: {
-            &quot;alt&quot;: &quot;Father holding child looking over his shoulder&quot;,
-            &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/exp-physics/OverShoulder.jpg&quot;
-        },
-        &quot;kind&quot;: &quot;exp-lookit-preview-explanation&quot;,
-        &quot;skipButtonText&quot;: &quot;Skip preview&quot;,
-        &quot;previewButtonText&quot;: &quot;I&#x27;d like to preview the videos&quot;,
-        &quot;blocks&quot;: [
+        &quot;frameOptions&quot;: [
             {
-                &quot;text&quot;: &quot;The reason we ask this is that your child is learning from you all the time. Even if he or she can&#x27;t see where you&#x27;re looking, you may unconsciously shift towards one side or the other and influence your child&#x27;s attention. We want to make sure we&#x27;re measuring your child&#x27;s preferences, not yours!&quot;
+                &quot;blocks&quot;: [
+                    {
+                        &quot;emph&quot;: true,
+                        &quot;text&quot;: &quot;Let&#x27;s think about hippos!&quot;,
+                        &quot;title&quot;: &quot;FRAME 1&quot;
+                    },
+                    {
+                        &quot;text&quot;: &quot;Some more about hippos...&quot;
+                    }
+                ]
             },
             {
-                &quot;text&quot;: &quot;If you&#x27;d like to see the videos your child will be shown, you can take a look ahead of time now. It&#x27;s important that you preview the videos without your child, so that the videos will still be new to them.&quot;
-            }
-        ],
-        &quot;showPreviousButton&quot;: true
-    }
- }
-
- * &#x60;&#x60;&#x60;
- * @class ExpLookitPreviewExplanation
- * @extends ExpFrameBase
- */
-
-export default ExpFrameBaseComponent.extend({
-    type: &#x27;exp-lookit-preview-explanation&#x27;,
-    layout: layout,
-    meta: {
-        name: &#x27;ExpLookitPreviewExplanation&#x27;,
-        description: &#x27;Let parents know about blinding, give option to preview videos.&#x27;,
-        parameters: {
-            type: &#x27;object&#x27;,
-            properties: {
-                /**
-                 * Whether to show a &#x27;previous&#x27; button
-                 *
-                 * @property {Boolean} showPreviousButton
-                 * @default true
-                 */
-                showPreviousButton: {
-                    type: &#x27;boolean&#x27;,
-                    default: true
-                },
-                /**
-                 * Array of text blocks (paragraphs) to display after the image.
-                 *
-                 * @property {Object} blocks
-                 *   @param {String} title title to display
-                 *   @param {String} text paragraph of text
-                 *   @param {Boolean} emph whether to bold this paragraph
-                 */
-                blocks: {
-                    type: &#x27;array&#x27;,
-                    items: {
-                        type: &#x27;object&#x27;,
-                        properties: {
-                            title: {
-                                type: &#x27;string&#x27;
-                            },
-                            text: {
-                                type: &#x27;string&#x27;
-                            },
-                            emph: {
-                                type: &#x27;boolean&#x27;
-                            }
-                        }
-                    },
-                    default: []
-                },
-                /**
-                 * Object specifying first block of text (pre-image) to display.
-                 *
-                 * @property {Object} introBlock
-                 *   @param {String} title title to display
-                 *   @param {String} text paragraph of text
-                 *   @param {Boolean} emph whether to bold this paragraph
-                 */
-                introBlock: {
-                    type: &#x27;object&#x27;,
-                    properties: {
-                        title: {
-                            type: &#x27;string&#x27;
-                        },
-                        text: {
-                            type: &#x27;string&#x27;
-                        },
-                        emph: {
-                            type: &#x27;boolean&#x27;
-                        }
+                &quot;blocks&quot;: [
+                    {
+                        &quot;emph&quot;: false,
+                        &quot;text&quot;: &quot;Let&#x27;s think about dolphins!&quot;,
+                        &quot;title&quot;: &quot;FRAME 2&quot;
                     }
-                },
-                /**
-                 * Image to display after the intro block. (Displayed centered,
-                 * with border, max height 220px.) E.g., a picture of a parent
-                 * holding a child looking over their shoulder.
-                 *
-                 * @property {Object} image
-                 *   @param {String} src URL of image
-                 *   @param {String} alt alt-text
-                 */
-                image: {
-                    type: &#x27;object&#x27;,
-                    properties: {
-                        src: {
-                            type: &#x27;string&#x27;
-                        },
-                        alt: {
-                            type: &#x27;string&#x27;
-                        }
-                    }
-                },
-                /**
-                 * Text to display on the button to go to the next frame
-                 *
-                 * @property {String} previewButtonText
-                 * @default &#x27;I\&#x27;d like to preview the videos&#x27;
-                 */
-                previewButtonText: {
-                    type: &#x27;string&#x27;,
-                    default: &#x27;I\&#x27;d like to preview the videos&#x27;
-                },
-                /**
-                 * Text to display on the button to skip the next frame
-                 *
-                 * @property {String} skipButtonText
-                 * @default &#x27;Skip preview&#x27;
-                 */
-                skipButtonText: {
-                    type: &#x27;string&#x27;,
-                    default: &#x27;Skip preview&#x27;
-                }
+                ]
             }
-        },
-        data: {
-            type: &#x27;object&#x27;,
-            properties: {
-                // define data structure here
-            }
-        }
-    },
-    actions: {
-        skipone: function() {
-            this.get(&#x27;skipone&#x27;)();
-        }
+        ]
     }
-});
+}
+*
+* &#x60;&#x60;&#x60;
+* @class Select
+*/
+
+var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
+
+    // Data provided to randomizer (properties of frameConfig):
+
+    /**
+     * List of frames that can be created by this randomizer. Each frame is an
+     * object with any necessary frame-specific properties specified. The
+     * &#x27;kind&#x27; of frame can be specified either here (per frame) or in
+     * commonFrameProperties. If a property is defined for a given frame both
+     * in this frame list and in commonFrameProperties, the value in the frame
+     * list will take precedence.
+     *
+     * (E.g., you could include &#x27;kind&#x27;: &#x27;normal-frame&#x27; in
+     * commmonFrameProperties, but for a single frame in frameOptions, include
+     * &#x27;kind&#x27;: &#x27;special-frame&#x27;.)
+     *
+     * @property {Object[]} frameOptions
+     */
+
+    /**
+     * Object describing common parameters to use in EVERY frame created
+     * by this randomizer. Parameter names and values are as described in
+     * the documentation for the frameType used.
+     *
+     * @property {Object} commonFrameProperties
+     */
+
+    /**
+     * Index or indices (0-indexed) within frameOptions to actually use. This can be either a number
+     * (e.g., 0 or 1 to use the first or second option respectively) or an array providing
+     * an ordered list of indices to use (e.g., [0, 1] or [1, 0] to use the first then
+     * second or second then first options, respectively). All indices must be integers
+     * in [0, frameOptions.length).
+     *
+     * If not provided or -1, the entire frameOptions list is used in order. (If empty
+     * list is provided, however, that is respected and no frames are inserted by this
+     * randomizer.)
+     *
+     * @property {Number} whichFrames
+     */
+
+    var thisFrame = {};
+    var frames = [];
+
+    // If a single frame index is provided, convert to a single-element list
+    if ((typeof frameConfig.whichFrames) === &#x27;number&#x27; &amp;&amp; frameConfig.whichFrames != -1) {
+        frameConfig.whichFrames = [frameConfig.whichFrames];
+    } else if (!frameConfig.hasOwnProperty(&#x27;whichFrames&#x27;) || frameConfig.whichFrames == -1 || !frameConfig.whichFrames) {
+        frameConfig.whichFrames = [...frameConfig.frameOptions.keys()];
+    }
+
+    for (var iFrame = 0; iFrame &lt; frameConfig.whichFrames.length; iFrame++) {
+        if (frameConfig.whichFrames[iFrame] &lt; 0 || frameConfig.whichFrames[iFrame] &gt;= frameConfig.frameOptions.length) {
+            throw &#x60;Frame index in whichFrames out of range in select randomizer. All frame indices must be between 0 and frameOptions.length - 1.&#x60;;
+        }
+
+        // Assign parameters common to all frames made by this randomizer
+        thisFrame = {};
+        Object.assign(thisFrame, frameConfig.commonFrameProperties);
+
+        // Assign parameters specific to this frame (allow to override
+        // common parameters assigned above)
+        Object.assign(thisFrame, frameConfig.frameOptions[frameConfig.whichFrames[iFrame]]);
+
+        thisFrame = resolveFrame(frameId + &#x27;-&#x27; + iFrame, thisFrame)[0];
+        frames.push(...thisFrame);
+    }
+
+    /**
+     * Parameters captured and sent to the server
+     *
+     * @method conditions
+     * @param {Object[]} whichFrames the index/indices of the frame(s) used
+     */
+    return [frames, {&#x27;whichFrames&#x27;: frameConfig.whichFrames}];
+};
+export default randomizer;
 
     </pre>
 </div>
