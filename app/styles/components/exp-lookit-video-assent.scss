@@ -1,0 +1,92 @@
+$exp-lookit-video-assent-text-color: #04631c;
+$exp-lookit-video-assent-highlight-color: #d4efdf;
+
+.exp-lookit-video-assent
+{
+    &.row {
+        width: 90vw;
+        left: 5vw;
+        position: fixed;
+    }
+
+    .well.video-assent-prompt  {
+        div {
+            &.question {
+                padding-bottom: 20px;
+            }
+            clear: both;
+        }
+        display: block;
+        font-size: 1.4em;
+        font-weight: bold;
+        background-color: $exp-lookit-video-assent-highlight-color;
+    }
+
+    .exp-consent-title {
+        font-weight: bold;
+    }
+
+    .video-consent-doc p:not(.exp-text-medium) {
+            font-size: 0.8em;
+    }
+
+    .video-consent-doc .exp-text-medium {
+            font-size: 1.1em;
+    }
+
+    .video-consent-body * {
+        text-align:left;
+    }
+
+    .video-consent-numbered-direction {
+        font-weight: bold;
+        padding-bottom: 15px;
+        padding-top: 15px;
+    }
+
+    .video-consent-number {
+        color: $exp-lookit-video-assent-text-color;
+        font-size: 1.5em;
+        font-weight: bold;
+        background-color: $exp-lookit-video-assent-highlight-color;
+        border-radius:15px;
+        padding:2px 6px;
+        margin:2px;
+        border: thin solid $exp-lookit-video-assent-text-color;
+    }
+
+    .video-consent-direction {
+        color: $exp-lookit-video-assent-text-color;
+        font-size: 1.5em;
+        vertical-align: center;
+    }
+
+    .video-assent-title {
+        color: $exp-lookit-video-assent-text-color;
+        font-size: 2em;
+        font-weight: bold;
+        vertical-align: center;
+    }
+
+    button.right {
+        right: 1vw;
+        position: absolute;
+        display: inline;
+        float: none !important;
+    }
+
+    #downloadbutton {
+        border: thin solid #cccccc;
+    }
+
+    #yesbutton, #nobutton {
+        font-size: 1.2em;
+    }
+
+    #submitbutton {
+        bottom: 5%;
+        right: 5vw;
+        position: fixed;
+        font-size: 1.6em;
+    }
+}
