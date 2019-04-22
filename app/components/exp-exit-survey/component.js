@@ -30,13 +30,12 @@ const Validations = buildValidations({
     useOfMedia: validator('presence', {
         presence: true,
         message: 'This field is required',
-        disabled(model) {
-            return model.get('withdrawal');
-        }
+        disabled: Ember.computed.readOnly('model.withdrawal')
     }),
     databraryShare: validator('presence', {
         presence: true,
-        message: 'This field is required'
+        message: 'This field is required',
+        disabled: Ember.computed.readOnly('model.withdrawal')
     })
 });
 

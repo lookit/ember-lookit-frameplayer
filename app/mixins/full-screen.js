@@ -139,7 +139,6 @@ export default Ember.Mixin.create({
          * @method exitFullscreen
          */
         exitFullscreen: function () {
-            console.log('exiting FS mode');
             if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement) {
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
