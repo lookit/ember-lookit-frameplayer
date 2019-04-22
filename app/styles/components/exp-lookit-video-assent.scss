@@ -17,7 +17,7 @@ $exp-lookit-video-assent-highlight-color: #d4efdf;
             clear: both;
         }
         display: block;
-        font-size: 1.4em;
+        font-size: 1.5em;
         font-weight: bold;
         background-color: $exp-lookit-video-assent-highlight-color;
     }
@@ -26,12 +26,18 @@ $exp-lookit-video-assent-highlight-color: #d4efdf;
         font-weight: bold;
     }
 
-    .video-consent-doc p:not(.exp-text-medium) {
-            font-size: 0.8em;
+    .video-consent-doc p{
+        font-size: 1.5em;
+        max-width: 35em;
+        margin: auto;
+        text-align: justify;
     }
 
-    .video-consent-doc .exp-text-medium {
-            font-size: 1.1em;
+    .assent-info {
+        min-height: 60vh;
+    }
+
+    .assent-instruction-text {
     }
 
     .video-consent-body * {
@@ -80,13 +86,13 @@ $exp-lookit-video-assent-highlight-color: #d4efdf;
     }
 
     #yesbutton, #nobutton {
-        font-size: 1.2em;
+        font-size: 1.5em;
     }
 
     #submitbutton {
         bottom: 5%;
         right: 5vw;
         position: fixed;
-        font-size: 1.6em;
+        font-size: 1.5em;
     }
 }

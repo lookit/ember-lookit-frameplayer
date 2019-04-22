@@ -2,7 +2,10 @@ import Em from 'ember';
 import layout from './template';
 
 import ExpFrameBaseComponent from '../exp-frame-base/component';
+import MediaReload from '../../mixins/media-reload';
 import VideoRecord from '../../mixins/video-record';
+import ExpandAssets from '../../mixins/expand-assets';
+import { computed } from '@ember/object';
 
 let {
     $
@@ -32,7 +35,7 @@ separately from parental consent.
 @uses VideoRecord
 */
 
-export default ExpFrameBaseComponent.extend(VideoRecord, {
+export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAssets, {
     layout,
     frameType: 'CONSENT',
     disableRecord: Em.computed('recorder.recording', 'recorder.hasCamAccess', function () {
@@ -40,7 +43,36 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     }),
     startedRecording: false,
 
+    videoIndex: 0,
+
+    noNext: computed('videoIndex', function() {
+        return this.get('videoIndex') >= this.get('videos.length') - 1;
+    }),
+
+    noPrev: computed('videoIndex', function() {
+        return this.get('videoIndex') <= 0;
+    }),
+
+    currentVideo: computed('videoIndex', function() {
+        return this.get('videos')[this.get('videoIndex')];
+    }),
+
+
+    assetsToExpand: {
+        'audio': [],
+        'video': ['videos/sources'],
+        'image': ['videos/imgSrc']
+    },
+
     actions: {
+
+        nextVideo() {
+            this.set('videoIndex', this.get('videoIndex') + 1);
+        },
+        previousVideo() {
+            this.set('videoIndex', this.get('videoIndex') - 1);
+        },
+
         record() {
             this.startRecorder().then(() => {
                 this.set('startedRecording', true);
@@ -185,6 +217,68 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 datause: {
                     type: 'string',
                     description: 'Study-specific data use statement'
+                },
+                                /**
+                 * A series of preview videos to display within a single frame, defined as an array of objects.
+                 *
+                 * @property {Array} videos
+                 *   @param {String} caption Some text to appear under this video
+                 *   @param {Object[]} sources String indicating video path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects.
+                 *   @param {String} imgSrc URL of image to display (optional; each preview video should designate either sources or imgSrc)
+                 */
+                videos: {
+                    type: 'array',
+                    description: 'A list of videos to preview',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            imgSrc: {
+                                type: 'string',
+                                default: ''
+                            },
+                            sources: {
+                                type: 'array',
+                                default: [],
+                                items: {
+                                    type: 'object',
+                                    properties: {
+                                        src: {
+                                            type: 'string'
+                                        },
+                                        type: {
+                                            type: 'string'
+                                        }
+                                    },
+                                    required: ['src', 'type']
+                                }
+                            },
+                            caption: {
+                                type: 'string'
+                            }
+                        },
+                        required: ['caption']
+                    },
+                    default: []
+                },
+                /**
+                 * Text on the button to proceed to the next example video/image
+                 *
+                 * @property {String} nextStimulusText
+                 */
+                nextStimulusText: {
+                    type: 'string',
+                    description: 'Text on the button to proceed to the next example video/image',
+                    default: 'Next'
+                },
+                /**
+                 * Text on the button to proceed to the previous example video/image
+                 *
+                 * @property {String} previousStimulusText
+                 */
+                previousStimulusText: {
+                    type: 'string',
+                    description: 'Text on the button to proceed to the previous example video/image',
+                    default: 'Previous'
                 }
             },
             required: ['PIName', 'institution', 'PIContact', 'purpose', 'procedures', 'payment']
