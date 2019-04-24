@@ -34,7 +34,7 @@ module.exports = function(defaults) {
               importBootstrapCSS: false
           },
           fingerprint: {
-              prepend: '',
+              prepend: process.env.PREPEND_FINGERPRINT,
               exclude: ['apple-touch-icon', 'favicon', 'mstile'],
           },
           'ember-cli-dynamic-forms': {
