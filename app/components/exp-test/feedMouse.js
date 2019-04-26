@@ -11,39 +11,35 @@
 import Base from "./base";
 
 let paddleWidth = 0;
+let paddleHeight = 0;
 let target = {};
 let ball = {};
 let keyPressed = false;
-let keyLetter = "o";
+
+let initSoundPlaying = false;
+let startSound = {};
+let ballCatchFail = {};
+let goodJob = {};
 
 export default class feedMouse extends Base{
 
     constructor(context,document){
 
         super(context,document);
-        paddleWidth = this.canvas.width/13;
+        paddleWidth = this.canvas.width/20;
+        paddleHeight = this.canvas.width/15;
 
-    }
 
 
-    createBallBox() {
-
-        this.ctx.beginPath();
-        this.ctx.fillStyle= "#020102";
-        this.ctx.lineWidth = "4";
-        this.ctx.strokeStyle = "#1931dd";
-        this.ctx.strokeRect(paddleWidth*3,(this.canvas.height-paddleWidth*2),paddleWidth/2,paddleWidth);
-        this.ctx.fill();
-        this.ctx.closePath();
     }
 
 
 
     createHouse(){
 
-        let houseX = this.canvas.width - paddleWidth*2 - this.canvas.width/3.2;
-        let houseY = this.canvas.height/3;
-        let houseWidth = this.canvas.width/3.2;
+        let houseX = this.canvas.width/2 + paddleWidth;
+        let houseY = this.canvas.height/2.5;
+        let houseWidth = this.canvas.width/3.5;
         let houseHeight = this.canvas.height/2;
         let roofSpace = 20;
 
@@ -96,16 +92,27 @@ export default class feedMouse extends Base{
 
     init() {
         super.init();
-        this.initGame();
+
+        goodJob  = new Audio(super.Utils.doorbellSound);
+        goodJob.load();
+
+        ballCatchFail = new Audio(super.Utils.ballcatchFailSound);
+        ballCatchFail.load();
+
+        startSound  = new Audio(super.Utils.rattleSound);
+        startSound.load();
+        startSound.addEventListener('onloadeddata', this.initGame(),false);
+
+
     }
 
     initGame() {
-        super.initGame();
+
 
         target = {
 
           dimensions: {width : paddleWidth, height: paddleWidth},
-          position: {x: (this.canvas.width - paddleWidth*2 - this.canvas.width/3.2) + this.canvas.width/6.4 - paddleWidth/2 , y:this.canvas.height/3 +  this.canvas.height/6},
+          position: {x: (this.canvas.width - paddleWidth*3 - this.canvas.width/3.2) + this.canvas.width/6.4 - paddleWidth/2 , y:this.canvas.height/3 +  this.canvas.height/4},
           radius : 4,
           color:  "#8f909c",
           roofcolor: "#ff2d23",
@@ -115,22 +122,33 @@ export default class feedMouse extends Base{
 
 
         ball = {
-            position : {x: paddleWidth*3, y:(this.canvas.height-paddleWidth*2)},
-            velocity : {x: this.context.x_velocity/10, y:-1*this.context.y_velocity/10},
-            mass: this.context.ball_mass/10,
-            radius: 6,
-            restitution: -1 - this.context.restitution/10,
+            position : {x: paddleWidth*5 + 20, y:(this.canvas.height-paddleWidth*2)},
+            velocity : {x: 5.8, y:-7.6},
+            mass: super.Utils.ballMass,
+            radius: 10,
+            restitution: super.Utils.restitution,
             color:"#dadd0f"
 
         };
 
+
+        initSoundPlaying = true;
+        goodJob.src = super.Utils.doorbellSound;
+        ballCatchFail.src = super.Utils.ballcatchFailSound;
+        startSound.src = super.Utils.rattleSound;
+
+        startSound.play();
+        startSound.addEventListener("ended", function () {
+
+            initSoundPlaying = false;
+        });
+
+        super.initGame();
+
+
     }
 
     dataCollection() {
-
-
-
-
 
 
     }
@@ -139,17 +157,14 @@ export default class feedMouse extends Base{
     collisionDetection(){
 
         // Window collision detection
-        if(ball.position.x > target.position.x && ball.position.x - ball.radius < target.position.x + target.dimensions.width){
+        if(ball.position.x > target.position.x && ball.position.x + ball.radius < target.position.x + target.dimensions.width/2){
 
-            if(ball.position.y > target.position.y && ball.position.y - ball.radius < target.position.y + target.dimensions.height ){
+            if(ball.position.y  - ball.radius > target.position.y  && ball.position.y + ball.radius < target.position.y + target.dimensions.height/2 ){
 
 
-                if(keyPressed){
+                ball.position.x = target.position.x + target.dimensions.width/2 - ball.radius/2;
+                ball.position.y = target.position.y + target.dimensions.height/2 - ball.radius/2;
 
-                    super.increaseScore();
-                    super.finishGame();
-
-                }
 
                 return true;
 
@@ -164,7 +179,7 @@ export default class feedMouse extends Base{
 
     keyDownHandler(e) {
 
-        if(e.key === keyLetter|| e.key === keyLetter.toUpperCase() ) {
+        if(e.key === "l" || e.key === "L" ) {
 
             keyPressed = true;
         }
@@ -173,7 +188,7 @@ export default class feedMouse extends Base{
 
     keyUpHandler(e) {
 
-      if(e.key === keyLetter|| e.key === keyLetter.toUpperCase() ) {
+        if(e.key === "l" || e.key === "L" ) {
 
             keyPressed = false;
         }
@@ -183,16 +198,43 @@ export default class feedMouse extends Base{
 
     loop() {
         super.loop();
+
         let didHitWindow = this.collisionDetection();
-        super.wallCollision(ball);
-        if(!didHitWindow) {
-            super.ballTrajectory(ball);
-        }
-        this.createBallBox();
-        this.createHouse();
-        this.createWindow();
-        if(didHitWindow){
-            super.ballTrajectory(ball);
+
+
+        if(super.gameOver){
+            super.waitSeconds(2000);
+            super.finishGame(false);
+
+        }else{
+
+            super.wallCollision(ball);
+            if (!didHitWindow) {
+                if(!initSoundPlaying) {
+                    super.ballTrajectory(ball);
+                }else{
+
+                    super.moveBallToStart(ball,false);
+                }
+            }
+            super.createBallBox(paddleWidth);
+            this.createHouse();
+            this.createWindow();
+            if (didHitWindow) {
+
+                if (keyPressed) {
+                    target.windowbackground = "#dde5d7";
+                    this.createWindow(target);
+                    goodJob.play();
+
+                }else{
+                    ballCatchFail.play();
+
+                }
+                super.ballTrajectory(ball);
+                super.moveBallToStart(ball,true);
+
+            }
         }
 
     }

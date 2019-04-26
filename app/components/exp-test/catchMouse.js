@@ -10,16 +10,20 @@ let cheeseClock = {};
 let basket = {};
 let paddleWidth = 0;
 let paddleHeight = 0;
-let clockSpeed = 0;
+
+let initSoundPlaying = false;
+let audio = {};
+let ballCatchFail = {};
+let goodJob = {};
 
 export  default  class catchMouse extends Base{
 
     constructor(context,document){
 
         super(context,document);
-        paddleWidth = this.canvas.width/9;
-        paddleHeight = this.canvas.width/9;
-        clockSpeed = this.context.clock_speed/10;
+        paddleWidth = this.canvas.width/20;
+        paddleHeight = this.canvas.width/15;
+        
     }
 
 
@@ -28,21 +32,34 @@ export  default  class catchMouse extends Base{
    */
   init(){
       super.init();
+
+      audio  = new Audio(super.Utils.rattleSound);
+      audio.load();
+      audio.addEventListener('onloadeddata', this.initGame(),false);
+
+      goodJob  = new Audio(super.Utils.goodCatchSound);
+      goodJob.load();
+
+      ballCatchFail = new Audio(super.Utils.ballcatchFailSound);
+      ballCatchFail.load();
+
       this.initGame();
   }
 
 
-
+  drawImage(object){
+        let image = new Image();
+        image.src = object.imageURL;
+        this.ctx.drawImage(image,object.position.x,object.position.y,object.dimensions.width,object.dimensions.height);
+  }
 
 
   createPaddleBox() {
         this.ctx.beginPath();
-        this.ctx.rect(this.canvas.width/2 - paddleWidth,(this.canvas.height-paddleHeight)/2+basket.dimensions.height/3,basket.dimensions.width,basket.dimensions.width);
-        this.ctx.fillStyle= "#020102";
-        this.ctx.stroke();
-        this.ctx.lineWidth = "4";
+        this.ctx.rect(this.canvas.width/2 - paddleWidth,this.canvas.height/2.5 + this.canvas.height/2 - 1.5*paddleWidth,paddleWidth*2,paddleWidth*2);
+        this.ctx.lineWidth = "8";
         this.ctx.strokeStyle = "#1931dd";
-        this.ctx.fill();
+        this.ctx.stroke();
         this.ctx.closePath();
   }
 
@@ -50,32 +67,45 @@ export  default  class catchMouse extends Base{
 
   initGame(){
 
-        super.initGame();
+
         basket = {
-            dimensions: {width: paddleWidth,height: paddleHeight},
-            position: {x: this.canvas.width/2 - paddleWidth,y: (this.canvas.height-paddleHeight)/2 },
-            velocity: this.context.paddle_speed,
-            imageURL: 'https://i.ibb.co/3vtD1T1/Screen-Shot-2019-04-05-at-5-10-26-PM.png'
+            dimensions: {width: paddleWidth*1.5     ,height: paddleWidth*1.5},
+            position: {x: 15 + this.canvas.width/2 - paddleWidth,y: this.canvas.height/2.5 + this.canvas.height/2 - 1.5*paddleWidth },
+            velocity: super.Utils.paddleSpeed,
+            imageURL: super.Utils.basketImage
         };
         
         mice = {
-            dimensions: {width: paddleWidth/1.2,height: paddleWidth/1.2},
-            position : {x: this.canvas.width/2 - paddleWidth, y:(this.canvas.height-paddleHeight)/2 - 60*1.5},
-            radius: 10,
-            delay:1600,
+            dimensions: {width: paddleWidth,height: paddleWidth},
+            position : {x: this.canvas.width/2 - paddleWidth/2, y:(this.canvas.height-paddleHeight)/2 - paddleHeight },
+            radius: 20,
+            delay:2000,
             lastTime: new Date().getTime(),
-            imageURL: 'https://i.ibb.co/xhChFFL/Screen-Shot-2019-04-05-at-5-10-09-PM.png'
+            imageURL: super.Utils.miceImage
         }; 
 
         cheeseClock = {
-            dimensions: {width: paddleWidth/1.5,height: paddleWidth/1.5},
-            position: {x: this.canvas.width/2 + paddleWidth/2,y: (this.canvas.height-paddleHeight)/2 - 100 },
+            dimensions: {width: paddleWidth,height: paddleWidth},
+            position: {x: this.canvas.width/2 + paddleWidth,y: mice.position.y},
             angle:0,
-            velocity: 1 + clockSpeed,
-            imageURL: 'https://i.ibb.co/QrJ5Y8Y/Screen-Shot-2019-04-05-at-5-10-17-PM.png'
+            velocity: 1.4,
+            imageURL: super.Utils.cheeseImage
         };
 
 
+
+      initSoundPlaying = true;
+      goodJob.src = super.Utils.goodCatchSound;
+      ballCatchFail.src = super.Utils.ballcatchFailSound;
+      audio.src = super.Utils.rattleSound;
+      audio.play();
+      audio.addEventListener("ended", function () {
+
+          initSoundPlaying = false;
+      });
+
+
+      super.initGame();
   }
 
   dataCollection(){
@@ -94,63 +124,85 @@ export  default  class catchMouse extends Base{
 
         super.storeData(exportData);
 
-    }
+  }
 
 
     /**
-     * Mice appears after delay ,  paddle movements are  here
+     * Mice appears after delay
      */
     startClock(){
-        super.drawImage(mice);
-        super.paddleMove(basket);
 
+        this.drawImage(mice);
 
         //Collision detection basket with mice
+        if(mice.position.y > basket.position.y - mice.dimensions.height/3  && mice.position.y < basket.position.y + basket.dimensions.height ){
+            goodJob.play();
+            super.gameOver = true ;
 
-        if(mice.position.y > basket.position.y && mice.position.y < basket.position.y + basket.dimensions.height ){
-            super.increaseScore();
-            super.finishGame();
+        }else{
+
+            // fill the cheeseClock
+            cheeseClock.angle = cheeseClock.angle + cheeseClock.velocity/50;
+
         }
 
-
-        // fill the cheeseClock
-        cheeseClock.angle = cheeseClock.angle + cheeseClock.velocity/50;
-        let angle = Math.PI * (1.5 - cheeseClock.angle);
-
-        if(cheeseClock.angle >= 1.6){
-
-            super.finishGame();
+        // Ran out of time
+        if(cheeseClock.angle >= 2){
+            ballCatchFail.play();
+            super.gameOver = true;
+            cheeseClock.angle = 0.1;
+            cheeseClock.imageURL = super.Utils.cheeseMissedImage;
         }
-
-        this.ctx.beginPath();
-        this.ctx.moveTo(cheeseClock.position.x+ cheeseClock.dimensions.width/2, cheeseClock.position.y+ cheeseClock.dimensions.height/2);
-        this.ctx.fillStyle = "#020102";
-        this.ctx.arc(cheeseClock.position.x+ cheeseClock.dimensions.width/2, cheeseClock.position.y+ cheeseClock.dimensions.height/2, cheeseClock.dimensions.height/2, angle, Math.PI*1.65);
-        this.ctx.lineTo(cheeseClock.position.x+ cheeseClock.dimensions.width/2, cheeseClock.position.y+ cheeseClock.dimensions.height/2);
-        this.ctx.fill();
-        this.ctx.closePath();
-        this.ctx.restore();
-
 
 
     }
 
+    /**
+     *  Show cheese portion according to angle
+     */
+    showCheese() {
+
+        if(super.gameOver){
+
+            cheeseClock.dimensions.width = paddleWidth*1.5;
+            cheeseClock.dimensions.height = paddleWidth*1.5;
+        }
+
+        let angle = Math.PI * (1.65 - cheeseClock.angle);
+        this.ctx.beginPath();
+        this.ctx.moveTo(cheeseClock.position.x + cheeseClock.dimensions.width / 2, cheeseClock.position.y + cheeseClock.dimensions.height / 2);
+        this.ctx.fillStyle = "#020102";
+        this.ctx.arc(cheeseClock.position.x + cheeseClock.dimensions.width / 2, cheeseClock.position.y + cheeseClock.dimensions.height / 2, cheeseClock.dimensions.height / 2, angle, Math.PI * 1.65);
+        this.ctx.lineTo(cheeseClock.position.x + cheeseClock.dimensions.width / 2, cheeseClock.position.y + cheeseClock.dimensions.height / 2);
+        this.ctx.fill();
+        this.ctx.closePath();
+        this.ctx.restore();
+    }
 
 
 
     loop(){
         super.loop();
         this.createPaddleBox();
-        super.drawImage(cheeseClock);
+        this.drawImage(cheeseClock);
 
-        if(new Date().getTime() -  mice.lastTime > mice.delay ){
+        if(super.gameOver){
 
-            this.startClock();
+            super.paddleAtZero(basket,true);
 
+        }else{
+
+            // Start the clock and check if we ran out of time
+            if(!initSoundPlaying &&  new Date().getTime() -  mice.lastTime > mice.delay ){
+
+                this.startClock();
+
+            }
         }
+        this.showCheese();
+        this.drawImage(basket)
+        super.paddleMove(basket);
 
-        super.drawImage(basket);
-    
     }
 
 

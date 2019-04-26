@@ -11,6 +11,7 @@ import catchMouse from './catchMouse';
 import feedMouse from "./feedMouse";
 import feedMice from "./feedMice";
 import catchCheese from "./catchCheese";
+import FullScreen from "../../mixins/full-screen";
 
 /**
  * @module exp-player
@@ -39,9 +40,11 @@ import catchCheese from "./catchCheese";
 
 
 
-export default ExpFrameBaseComponent.extend({
+export default ExpFrameBaseComponent.extend(FullScreen,{
 
     type: 'exp-test',
+    displayFullscreen: false,
+    fullScreenElementId: 'experiment-player',
     layout: layout,
     meta: {
         name: 'ExpTest',
@@ -120,63 +123,8 @@ export default ExpFrameBaseComponent.extend({
                     },
 
 
-                    paddle_speed: {
-                      type: 'number',
-                      default: 4
+                consentLabel: {
 
-                    },
-                    ball_mass: {
-                      type: 'number',
-                      default: 1
-
-                    },
-                    gravity_factor: {
-                      type: 'number',
-                      default: 1
-
-                    },
-
-                    restitution: {
-                      type: 'number',
-                      default: 2
-
-                    },
-
-                    x_velocity: {
-                      type: 'number',
-                      default: 27
-
-                    },
-
-                    y_velocity: {
-                      type: 'number',
-                      default: 38
-
-                    },
-
-                    game_rounds: {
-
-                      type: 'number',
-                      default: 2
-
-                    },
-
-                    paddle_restitution: {
-                      type: 'number',
-                      default: 2
-
-                    },
-                    obstruction_number:{
-                      type: 'number',
-                      default: 2
-
-                    },
-                    clock_speed : {
-                       type: 'number',
-                       default: 2
-                     },
-
-                    consentLabel: {
                     type: 'string',
                     default: 'I agree'
                 }
@@ -243,43 +191,41 @@ export default ExpFrameBaseComponent.extend({
     },
     actions: {
 
-      play() {
-        this.set('export_arr', Ember.A());
+        play() {
+            this.set('export_arr', Ember.A());
 
-        if(this.title === 'Feed the croc') {
+            if(this.title === 'Feed the croc') {
 
-          new FeedCroc(this, document).init();
-        }
+                new FeedCroc(this, document).init();
+            }
 
-        if(this.title === 'Feed the mouse in the house') {
+            if(this.title === 'Feed the mouse in the house') {
 
-          new feedMouse(this,document).init();
-        }
+                new feedMouse(this,document).init();
+            }
 
-        if(this.title === 'Feed mice in the house') {
+            if(this.title === 'Feed mice in the house') {
 
-          new feedMice(this, document).init();
-        }
-
-
-        if(this.title === 'Catch the cheese') {
-
-          new catchCheese(this, document).init();
-        }
-
-        if(this.title === 'Catch the mouse') {
-
-          new catchMouse(this, document).init();
-        }
+                new feedMice(this, document).init();
+            }
 
 
+            if(this.title === 'Catch the cheese') {
+
+                new catchCheese(this, document).init();
+            }
+
+            if(this.title === 'Catch the mouse') {
+
+                new catchMouse(this, document).init();
+            }
 
 
-      },
+
+        },
       export(){
 
-        //  this.jsonToCSVConvertor(this.export_arr,"Data",true);
-      //  this.send('next');
+       //   this.jsonToCSVConvertor(this.export_arr,"Data",true);
 
       }
         // Define any actions that you need to be able to trigger from within the template here
@@ -334,11 +280,11 @@ export default ExpFrameBaseComponent.extend({
         }
 
         //1st loop is to extract each row
-        for (let i = 0; i < arrData.length; i++) {
-          let row = "";
+        for (var i = 0; i < arrData.length; i++) {
+          var row = "";
 
           //2nd loop will extract each column and convert it in string comma-seprated
-          for (let index in arrData[i]) {
+          for (var index in arrData[i]) {
             row += '"' + arrData[i][index] + '",';
           }
 
@@ -348,18 +294,18 @@ export default ExpFrameBaseComponent.extend({
           CSV += row + '\r\n';
         }
 
-        if (CSV === '') {
+        if (CSV == '') {
           alert("Invalid data");
           return;
         }
 
         //Generate a file name
-        let fileName = "Report_";
+        var fileName = "Report_";
         //this will remove the blank-spaces from the title and replace it with an underscore
         fileName += ReportTitle.replace(/ /g,"_");
 
         //Initialize file format you want csv or xls
-        let uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
+        var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
 
         // Now the little tricky part.
         // you can use either>> window.open(uri);
@@ -367,7 +313,7 @@ export default ExpFrameBaseComponent.extend({
         // or you will not get the correct file extension
 
         //this trick will generate a temp <a /> tag
-        let link = document.createElement("a");
+        var link = document.createElement("a");
         link.href = uri;
 
         //set the visibility hidden so it will not effect on your web-layout
