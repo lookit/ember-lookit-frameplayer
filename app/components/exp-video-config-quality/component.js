@@ -49,24 +49,45 @@ You can also customize any or all text and images as in the following example.
         "requireItemConfirmation": true,
         "completedItemText": "Did it!",
         "instructionBlocks": [
-            {
-                "text": "<strong>Make sure the webcam you're using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!",
-                "image": {
-                    "src": "assets/centering.png",
-                    "alt": "Example images of using centered external webcam on monitor or built-in webcam on laptop."
-                }
-            },
-            {
-                "text": "<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there's just one monitor, you're all set!)",
-                "image": {
-                    "src": "assets/monitors.png",
-                    "alt": "Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen."
-                }
-            }
-        ],
-        "requireTestVideo": true,
-        "showRecordMenu": true,
-        "recordingInstructionText": "You should be able to see your camera view above. You can create and view a short recording to see how your setup looks."
+                    {
+                        "text": "<strong>Make sure the webcam you're using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!",
+                        "image": {
+                            "src": "https://s3.amazonaws.com/lookitcontents/website/centering.png",
+                            "alt": "Example images of using centered external webcam on monitor or built-in webcam on laptop."
+                        }
+                    },
+                    {
+                        "text": "<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there's just one monitor, you're all set!)",
+                        "image": {
+                            "src": "https://s3.amazonaws.com/lookitcontents/website/monitors.png",
+                            "alt": "Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen."
+                        }
+                    },
+                    {
+                        "text": "Check the lighting by making sure you can <strong>clearly see your own eyes</strong> on the webcam view to the right. You may need to either turn on a light or reduce light coming from behind you.",
+                        "image": {
+                            "src": "https://s3.amazonaws.com/lookitcontents/website/lighting.png",
+                            "alt": "Example images showing good lighting, room too dark, and backlit scene where eyes are not visible."
+                        }
+                    },
+                    {
+                        "text": "If it's practical, <strong>minimize exciting things</strong> that are visible behind or to the side of the screen--for instance, by facing a wall instead of the kitchen. (If this isn't practical for you, don't worry about it--just check the box!)",
+                        "image": {
+                            "src": "https://s3.amazonaws.com/lookitcontents/website/distractions.png",
+                            "alt": "Example images showing a child and puppy next to the computer, versus a computer just on its own."
+                        }
+                    },
+                    {
+                        "text": "During the study, we'll ask that you sit facing away from the monitor, holding your child over your shoulder, like this. (More on that in a moment!) <strong>Make sure the webcam is angled up or down enough that your child's eyes are visible in this position</strong>. If you're not sure if your child's eyes will be visible, you can make a short recording to check!",
+                        "image": {
+                            "src": "https://s3.amazonaws.com/lookitcontents/website/over_shoulder.jpg",
+                            "alt": "Example image showing a dad holding his child looking over his shoulder."
+                        }
+                    }
+                ],
+            "requireTestVideo": true,
+            "showRecordMenu": true,
+            "recordingInstructionText": "You should be able to see your camera view above. You can create and view a short recording to see how your setup looks."
     }
 }
 ```

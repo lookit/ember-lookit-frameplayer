@@ -10,8 +10,11 @@ var nodeSass = require('node-sass'); // yarn install sometimes fails to create t
 require('dotenv').config();
 module.exports = function(defaults) {
     var app = new EmberApp(defaults, {
+          babel: {
+            sourceMaps: EmberApp.env() === 'production' ? undefined: 'inline'
+          },
           sourcemaps: {
-              enabled: true
+              enabled: EmberApp.env() !== 'production'
           },
           sassOptions: {
             implementation: nodeSass
