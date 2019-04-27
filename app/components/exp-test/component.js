@@ -8,8 +8,6 @@ import layout from './template';
 import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import Game from './Game';
-
-
 /**
  * @module exp-lookit-games
  * @submodule frames
@@ -129,26 +127,26 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                             ball_object: {
                                 type: 'object',
                                 properties: {
-                                  x: {
-                                    type: 'string'
-                                  },
-                                  y: {
+                                    x: {
+                                        type: 'string'
+                                    },
+                                    y: {
 
-                                    type: 'string'
-                                  }
+                                        type: 'string'
+                                    }
                                 }
 
                             },
                             paddle_object: {
                                 type: 'object',
                                 properties: {
-                                  x: {
-                                    type: 'string'
-                                  },
-                                  y: {
+                                    x: {
+                                        type: 'string'
+                                    },
+                                    y: {
 
-                                    type: 'string'
-                                  }
+                                        type: 'string'
+                                    }
                                 }
 
                             },

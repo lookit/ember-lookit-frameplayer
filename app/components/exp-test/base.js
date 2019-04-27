@@ -34,6 +34,8 @@ export default class Base {
         this.context = context;
         this.document = document;
         this.canvas = this.document.getElementById('gamesCanvas');
+        // this.canvas.style.width = window.innerWidth + 'px';
+        // this.canvas.style.height = window.innerHeight + 'px';
         this.ctx = this.canvas.getContext('2d');
         this.currentRounds = 0;
         this.currentScore = 0;
