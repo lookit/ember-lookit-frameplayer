@@ -10,7 +10,7 @@
 
 import Utils from "./utils";
 
-let dataLoop ={};
+let dataLoop = {};
 let gameLoop = {};
 let upPressed = false;
 let downPressed = false;
@@ -19,7 +19,7 @@ let gameOver = false;
 let paddleWidth = 0;
 let paddleHeight = 0;
 
-export default  class Base {
+export default class Base {
 
 
   /**
@@ -30,13 +30,13 @@ export default  class Base {
   constructor(context, document) {
     this.context = context;
     this.document = document;
-    this.canvas = this.document.getElementById('myCanvas');
+    this.canvas = this.document.getElementById('gamesCanvas');
     this.ctx = this.canvas.getContext('2d');
-    this.currentRounds=0;
+    this.currentRounds = 0;
     this.currentScore = 0;
     this.canvas.style.cursor = 'none';
-    paddleWidth = this.canvas.width/20;
-    paddleHeight = this.canvas.width/15;
+    paddleWidth = this.canvas.width / 20;
+    paddleHeight = this.canvas.width / 15;
     // Event listener for mouse and keyboard here
     document.addEventListener("keydown", this.keyDownHandler, false);
     document.addEventListener("keyup", this.keyUpHandler, false);
@@ -48,9 +48,9 @@ export default  class Base {
   /**
    * Initialize or start the game loop here
    */
-  init(){
-    this.currentScore=0;
-    this.currentRounds = 0 ;
+  init() {
+    this.currentScore = 0;
+    this.currentRounds = 0;
     clearInterval(dataLoop);
     clearInterval(gameLoop);
 
@@ -62,10 +62,9 @@ export default  class Base {
    */
   keyDownHandler(e) {
 
-    if(e.key === "Up" || e.key === "ArrowUp") {
+    if (e.key === "Up" || e.key === "ArrowUp") {
       upPressed = true;
-    }
-    else if(e.key === "Down" || e.key === "ArrowDown") {
+    } else if (e.key === "Down" || e.key === "ArrowDown") {
       downPressed = true;
     }
 
@@ -77,26 +76,24 @@ export default  class Base {
    */
   keyUpHandler(e) {
 
-    if(e.key === "Up" || e.key ==="ArrowUp") {
+    if (e.key === "Up" || e.key === "ArrowUp") {
       upPressed = false;
-    }
-    else if(e.key === "Down" || e.key === "ArrowDown") {
+    } else if (e.key === "Down" || e.key === "ArrowDown") {
       downPressed = false;
     }
 
   }
 
 
-
   /**
    * Data collection abstract method
    */
-  dataCollection(){
+  dataCollection() {
 
   }
 
 
-  increaseScore(){
+  increaseScore() {
     this.currentScore++;
   }
 
@@ -107,14 +104,14 @@ export default  class Base {
   drawScore() {
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = Utils.scoreColor;
-    this. ctx.fillText("Score: "+this.currentScore, 8, 20);
+    this.ctx.fillText("Score: " + this.currentScore, 8, 20);
   }
 
 
   /**
    * Main game loop
    */
-  loop(){
+  loop() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.fillStyle = Utils.blackColor;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -134,36 +131,36 @@ export default  class Base {
     this.ctx.lineWidth = "8";
     this.ctx.strokeStyle = Utils.blueColor;
 
-    this.ctx.moveTo(paddleWidth*5,this.canvas.height/2.5 + this.canvas.height/2 - paddleWidth*1.5);
-    this.ctx.lineTo(paddleWidth*5, this.canvas.height/2.5 + this.canvas.height/2 );
-    this.ctx.lineTo(paddleWidth*5+paddleWidth, this.canvas.height/2.5 + this.canvas.height/2);
-    this.ctx.lineTo(paddleWidth*5+paddleWidth, this.canvas.height/2.5 + this.canvas.height/2 - paddleWidth*0.8);
-    this.ctx.moveTo(paddleWidth*5  ,this.canvas.height/2.5 + this.canvas.height/2 - paddleWidth*1.5 + 4);
-    this.ctx.lineTo(paddleWidth*5 + paddleWidth/3,this.canvas.height/2.5 + this.canvas.height/2 - paddleWidth*1.5 + 4);
+    this.ctx.moveTo(paddleWidth * 5, this.canvas.height / 2.5 + this.canvas.height / 2 - paddleWidth * 1.5);
+    this.ctx.lineTo(paddleWidth * 5, this.canvas.height / 2.5 + this.canvas.height / 2);
+    this.ctx.lineTo(paddleWidth * 5 + paddleWidth, this.canvas.height / 2.5 + this.canvas.height / 2);
+    this.ctx.lineTo(paddleWidth * 5 + paddleWidth, this.canvas.height / 2.5 + this.canvas.height / 2 - paddleWidth * 0.8);
+    this.ctx.moveTo(paddleWidth * 5, this.canvas.height / 2.5 + this.canvas.height / 2 - paddleWidth * 1.5 + 4);
+    this.ctx.lineTo(paddleWidth * 5 + paddleWidth / 3, this.canvas.height / 2.5 + this.canvas.height / 2 - paddleWidth * 1.5 + 4);
     this.ctx.stroke();
     this.ctx.closePath();
 
   }
 
 
-  set mouseY(val){
+  set mouseY(val) {
 
     mouseY = val;
   }
 
 
-  get mouseY(){
+  get mouseY() {
 
     return mouseY;
   }
 
 
-  set gameOver(val){
+  set gameOver(val) {
 
     gameOver = val;
   }
 
-  get gameOver(){
+  get gameOver() {
 
     return gameOver;
   }
@@ -173,19 +170,18 @@ export default  class Base {
    * @returns {Utils}
    * @constructor
    */
-  get Utils(){
+  get Utils() {
 
     return Utils;
   }
 
 
-
-  drawImage(object,URL){
+  drawImage(object, URL) {
     this.ctx.fillStyle = Utils.blackColor;
-    this.ctx.fillRect(object.position.x,object.position.y,object.dimensions.width,object.dimensions.height);
+    this.ctx.fillRect(object.position.x, object.position.y, object.dimensions.width, object.dimensions.height);
     let image = new Image();
     image.src = URL;
-    this.ctx.drawImage(image,object.position.x,object.position.y,object.dimensions.width,object.dimensions.height);
+    this.ctx.drawImage(image, object.position.x, object.position.y, object.dimensions.width, object.dimensions.height);
   }
 
   /**
@@ -193,7 +189,7 @@ export default  class Base {
    * Disabled for now
    * @param {array} exportData
    */
-  storeData(exportData){
+  storeData(exportData) {
 
     // this.context.get('export_arr').addObject(exportData);
     // this.context.export_arr.push(exportData);
@@ -203,16 +199,16 @@ export default  class Base {
   /**
    * Initialize current round of the game
    */
-  initGame(){
+  initGame() {
 
     this.loopTimer = function () {
       let inst = this;
-      gameLoop = setInterval( function (){
+      gameLoop = setInterval(function () {
         inst.loop();
       }, Utils.frameDelay);
 
 
-      dataLoop = setInterval( function (){
+      dataLoop = setInterval(function () {
         inst.dataCollection();
       }, 10);
 
@@ -228,22 +224,25 @@ export default  class Base {
    * Finish current round and check for rounds left
    * @param {boolean} should increase score
    */
-  finishGame(score){
+  finishGame(score) {
 
 
     this.currentRounds++;
     clearInterval(dataLoop);
     clearInterval(gameLoop);
-    if(score) { this.increaseScore();}
+    if (score) {
+      this.increaseScore();
+    }
     this.gameOver = false;
     if (this.currentRounds < Utils.gameRounds) {
       this.initGame();
 
+    } else {
+
+      this.context.next();
     }
 
   }
-
-
 
 
   /**
@@ -286,16 +285,16 @@ export default  class Base {
    * @param {object} ball object parameters
    * @param {boolean} gameOver set game to be over
    */
-  moveBallToStart(ball,gameOver){
+  moveBallToStart(ball, gameOver) {
 
 
     this.ctx.beginPath();
-    this.ctx.arc(paddleWidth*5 + 20, this.canvas.height-paddleWidth*2, ball.radius, 0, Math.PI * 2, true);
+    this.ctx.arc(paddleWidth * 5 + 20, this.canvas.height - paddleWidth * 2, ball.radius, 0, Math.PI * 2, true);
     this.ctx.fillStyle = ball.color;
     this.ctx.fill();
     this.ctx.closePath();
     this.ctx.restore();
-    if(gameOver) {
+    if (gameOver) {
       this.gameOver = true;
     }
   }
@@ -306,9 +305,9 @@ export default  class Base {
    * @param {object} paddle
    * @param {boolean} score should increase score
    */
-  paddleAtZero(paddle,score){
+  paddleAtZero(paddle, score) {
 
-    if(paddle.position.y >= this.canvas.height/2.5 + this.canvas.height/2 - 1.5*paddleWidth){
+    if (paddle.position.y >= this.canvas.height / 2.5 + this.canvas.height / 2 - 1.5 * paddleWidth) {
 
       this.finishGame(score);
     }
@@ -322,7 +321,7 @@ export default  class Base {
    * @param {int} iMilliSeconds
    */
   waitSeconds(iMilliSeconds) {
-    let counter= 0
+    let counter = 0
       , start = new Date().getTime()
       , end = 0;
 
@@ -350,9 +349,9 @@ export default  class Base {
    * @param {object} ball
    * @returns {boolean} if hit any edge of the screen
    */
-  wallCollision(ball){
+  wallCollision(ball) {
 
-    if(ball.position.y > this.canvas.height + ball.radius || ball.position.x > this.canvas.width + ball.radius || ball.position.x < ball.radius){
+    if (ball.position.y > this.canvas.height + ball.radius || ball.position.x > this.canvas.width + ball.radius || ball.position.x < ball.radius) {
 
 
       return true;
@@ -368,7 +367,6 @@ export default  class Base {
 
     mouseY = e.clientY;
   }
-
 
 
 }

@@ -1,24 +1,17 @@
-<div class="row exp-test">
+<div class="col-lg-8" id="experiment-player">
 
-  <div class="row" id="experiment-player">
+  <canvas id="gamesCanvas"></canvas>
 
-    <div class="col-xs-12">
-
-      <canvas id="myCanvas" width="1200" height="640"></canvas>
-
-    {{#unless hideControls}}
-      <div class="row exp-controls exp-test">
-        <div class="btn-group">
-      {{#if showPreviousButton}}
+  {{#unless hideControls}}
+    <div class="row exp-controls exp-test">
+      <div class="btn-group">
+        {{#if showPreviousButton}}
           <button class="btn btn-default pull-left" {{ action 'previous' }} > Previous</button>
-      {{/if}}
-          <button class="btn btn-default pull-left"  {{ action 'next' }} > {{exp-format nextButtonText}} </button>
-        </div>
+        {{/if}}
+        <button class="btn btn-default pull-left"  {{ action 'next' }} > {{exp-format nextButtonText}} </button>
       </div>
-    {{/unless}}
-
     </div>
-  </div>
+  {{/unless}}
 
 </div>
 

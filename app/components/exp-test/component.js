@@ -56,13 +56,13 @@ export default ExpFrameBaseComponent.extend(FullScreen,VideoRecord,{
 
 
                 /**
-                 * Show title of  current game
+                 * Set current game type
                  *
-                 * @property {String}
-                 * @default 'Game name'
+                 * @property {integer} type
+                 * @default 0
                  */
                 gameType: {
-                    type: 'int',
+                    type: 'integer',
                     default: 0,
                     description: 'Game type  to display {0,1}'
                 },
@@ -102,7 +102,7 @@ export default ExpFrameBaseComponent.extend(FullScreen,VideoRecord,{
         },
         data: {
           /**
-           * Parameters captured game data and send to the server
+           * Parameters captured game data and sent to the server
            * This might be changed in near future for some game type
            * @method serializeContent
            * @param {Array} export_arr Game data array with objects positions locations
@@ -181,7 +181,7 @@ export default ExpFrameBaseComponent.extend(FullScreen,VideoRecord,{
     // anything additional.
     didInsertElement() {
         this._super(...arguments);
-        new Game(this.gameType,this,document);
+        new Game(this,document,this.gameType);
     },
 
     // Anything that should happen before destroying your frame, e.g. removing a keypress

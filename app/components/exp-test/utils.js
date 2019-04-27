@@ -51,9 +51,9 @@ export default class Utils{
     //Colors
     static  get redColor() {return "#ff2d23";}
     static  get grayColor() {return "#8f909c";}
-    static  get blackColor() {return super.Utils.blackColor;}
+    static  get blackColor() {return "#020102";}
     static  get yellowColor() {return "#dadd0f";}
     static  get whiteColor() {return "#dde5d7";}
-    static  get blueColor() {return super.Utils.blueColor;}
+    static  get blueColor() {return "#1931dd";}
     static  get scoreColor() {return "#09b4dd";}
 }
