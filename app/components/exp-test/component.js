@@ -3,12 +3,17 @@
  * Last modified 3/31/19 7:58 PM.
  * Copyright (c) 2019 . All rights reserved.
  */
-
 import ExpFrameBaseComponent from '../../components/exp-frame-base/component';
 import layout from './template';
 import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import Game from './Game';
+
+
+/**
+ * @module exp-lookit-games
+ * @submodule frames
+ */
 
 /**
  * Frame to implement various games interventions.
@@ -18,11 +23,11 @@ import Game from './Game';
  * the appropriate game object array) and proceed to the next game/step.
  *
  * Current implementation has 5 game types :
- * 0: Feed the crocodile
- * 1: Catch the cheese
- * 2. Catch the mouse
- * 3: Feed the mice
- * 4: Feed the mouse in the house
+ * - 0: Feed the crocodile
+ * - 1: Catch the cheese
+ * - 2: Catch the mouse
+ * - 3: Feed the mice
+ * - 4: Feed the mouse in the house
  *
  *
  ```
@@ -36,7 +41,7 @@ import Game from './Game';
         }
     }
  ```
- * @class ExpFrameBaseComponent
+ * @class ExpFrameGamesComponent
  * @extends FullScreen
  * @extends VideoRecord
  */

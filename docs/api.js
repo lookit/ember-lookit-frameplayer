@@ -6,7 +6,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "CatchMouse",
         "ExpExitSurvey",
         "ExpFrameBase",
-        "ExpFrameBaseComponent",
+        "ExpFrameGamesComponent",
         "ExpLookitDialoguePage",
         "ExpLookitExitSurvey",
         "ExpLookitGeometryAlternation",
@@ -41,6 +41,7 @@ YUI.add("yuidoc-meta", function(Y) {
     ],
     "modules": [
         "components",
+        "exp-lookit-games",
         "exp-player",
         "frames",
         "games",
@@ -53,6 +54,10 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "components",
             "name": "components",
             "description": "Experiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```"
+        },
+        {
+            "displayName": "exp-lookit-games",
+            "name": "exp-lookit-games"
         },
         {
             "displayName": "exp-player",

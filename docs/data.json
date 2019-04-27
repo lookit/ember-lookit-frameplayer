@@ -197,7 +197,7 @@
             "name": "app/components/exp-test/component.js",
             "modules": {},
             "classes": {
-                "ExpFrameBaseComponent": 1
+                "ExpFrameGamesComponent": 1
             },
             "fors": {},
             "namespaces": {}
@@ -358,7 +358,6 @@
             "submodules": {
                 "frames": 1,
                 "components": 1,
-                "games": 1,
                 "mixins": 1,
                 "randomizers": 1,
                 "services": 1
@@ -385,11 +384,6 @@
                 "Base": 1,
                 "CatchCheese": 1,
                 "CatchMouse": 1,
-                "ExpFrameBaseComponent": 1,
-                "FeedCroc": 1,
-                "FeedMice": 1,
-                "FeedMouse": 1,
-                "Utils\nShared Utility class for project static methods and constants": 1,
                 "ExpVideoConfig": 1,
                 "ExpVideoConfigQuality": 1,
                 "ExpVideoConsent": 1,
@@ -428,6 +422,7 @@
                 "ExpLookitText": 1,
                 "ExpLookitVideo": 1,
                 "ExpLookitVideoConsent": 1,
+                "ExpFrameGamesComponent": 1,
                 "ExpVideoConfig": 1,
                 "ExpVideoConfigQuality": 1,
                 "ExpVideoConsent": 1,
@@ -474,11 +469,29 @@
             "fors": {},
             "is_submodule": 1,
             "namespaces": {},
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "namespace": "",
             "file": "app/components/exp-test/feedMouse.js",
             "line": 23,
             "description": "Game orchestrator to set initial parameters and\nexecute requested game\nMight have randomization of the games here"
+        },
+        "exp-lookit-games": {
+            "name": "exp-lookit-games",
+            "submodules": {
+                "games": 1
+            },
+            "elements": {},
+            "classes": {
+                "ExpFrameGamesComponent": 1,
+                "FeedCroc": 1,
+                "FeedMice": 1,
+                "FeedMouse": 1,
+                "Utils\nShared Utility class for project static methods and constants": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "file": "app/components/exp-test/utils.js",
+            "line": 8
         },
         "mixins": {
             "name": "mixins",
@@ -890,19 +903,20 @@
             "line": 19,
             "extends": "Base\nMain implementation of Catch the mouse game.\nThe user will with paddle (basket) to catch the mice.\nThe mice will appear with some unpredictable  delay.\nThe user should catch the mice until cheese(symbolizing the clock) is gone."
         },
-        "ExpFrameBaseComponent": {
-            "name": "ExpFrameBaseComponent",
-            "shortname": "ExpFrameBaseComponent",
+        "ExpFrameGamesComponent": {
+            "name": "ExpFrameGamesComponent",
+            "shortname": "ExpFrameGamesComponent",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "exp-player",
+            "module": "exp-lookit-games",
+            "submodule": "frames",
             "namespace": "",
             "file": "app/components/exp-test/component.js",
-            "line": 13,
-            "description": "Frame to implement various games interventions.\nThe games are developed as a separate HTML5 canvas modules.\n\nAfter each game, get the response that game is finished, save the data (pass the data to\nthe appropriate game object array) and proceed to the next game/step.\n\nCurrent implementation has 5 game types :\n0: Feed the crocodile\n1: Catch the cheese\n2. Catch the mouse\n3: Feed the mice\n4: Feed the mouse in the house\n\n\n```\n\"frames\": {\n       \"game\": {\n           \"kind\": \"exp-lookit-games\",\n           \"gameType\": 0,\n           \"hideControls\": false,\n           \"nextButtonText\": \"move on\",\n           \"showPreviousButton\": false\n       }\n   }\n```",
+            "line": 19,
+            "description": "Frame to implement various games interventions.\nThe games are developed as a separate HTML5 canvas modules.\n\nAfter each game, get the response that game is finished, save the data (pass the data to\nthe appropriate game object array) and proceed to the next game/step.\n\nCurrent implementation has 5 game types :\n- 0: Feed the crocodile\n- 1: Catch the cheese\n- 2: Catch the mouse\n- 3: Feed the mice\n- 4: Feed the mouse in the house\n\n\n```\n\"frames\": {\n       \"game\": {\n           \"kind\": \"exp-lookit-games\",\n           \"gameType\": 0,\n           \"hideControls\": false,\n           \"nextButtonText\": \"move on\",\n           \"showPreviousButton\": false\n       }\n   }\n```",
             "extends": "VideoRecord"
         },
         "FeedCroc": {
@@ -913,7 +927,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games",
             "namespace": "",
             "file": "app/components/exp-test/feedCroc.js",
@@ -928,7 +942,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games",
             "namespace": "",
             "file": "app/components/exp-test/feedMice.js",
@@ -944,7 +958,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games",
             "namespace": "",
             "file": "app/components/exp-test/feedMouse.js",
@@ -959,7 +973,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "namespace": "",
             "file": "app/components/exp-test/utils.js",
             "line": 8
@@ -4296,51 +4310,55 @@
         },
         {
             "file": "app/components/exp-test/component.js",
-            "line": 58,
+            "line": 64,
             "description": "Set current game type",
             "itemtype": "property",
             "name": "type",
             "type": "Integer",
             "default": "0",
-            "class": "ExpFrameBaseComponent",
-            "module": "exp-player"
+            "class": "ExpFrameGamesComponent",
+            "module": "exp-lookit-games",
+            "submodule": "frames"
         },
         {
             "file": "app/components/exp-test/component.js",
-            "line": 70,
+            "line": 76,
             "description": "Whether to hide next/previous buttons for game",
             "itemtype": "property",
             "name": "hideControls",
             "type": "Boolean",
             "default": "false",
-            "class": "ExpFrameBaseComponent",
-            "module": "exp-player"
+            "class": "ExpFrameGamesComponent",
+            "module": "exp-lookit-games",
+            "submodule": "frames"
         },
         {
             "file": "app/components/exp-test/component.js",
-            "line": 81,
+            "line": 87,
             "description": "Text to display on the 'next frame' button",
             "itemtype": "property",
             "name": "nextButtonText",
             "type": "String",
             "default": "'Next'",
-            "class": "ExpFrameBaseComponent",
-            "module": "exp-player"
+            "class": "ExpFrameGamesComponent",
+            "module": "exp-lookit-games",
+            "submodule": "frames"
         },
         {
             "file": "app/components/exp-test/component.js",
-            "line": 91,
+            "line": 97,
             "description": "Whether to show a 'previous' button",
             "itemtype": "property",
             "name": "showPreviousButton",
             "type": "Boolean",
             "default": "true",
-            "class": "ExpFrameBaseComponent",
-            "module": "exp-player"
+            "class": "ExpFrameGamesComponent",
+            "module": "exp-lookit-games",
+            "submodule": "frames"
         },
         {
             "file": "app/components/exp-test/component.js",
-            "line": 104,
+            "line": 110,
             "description": "Parameters captured game data and sent to the server\nThis might be changed in near future for some game type",
             "itemtype": "method",
             "name": "serializeContent",
@@ -4370,8 +4388,9 @@
                 "description": "The payload sent to the server",
                 "type": "Object"
             },
-            "class": "ExpFrameBaseComponent",
-            "module": "exp-player"
+            "class": "ExpFrameGamesComponent",
+            "module": "exp-lookit-games",
+            "submodule": "frames"
         },
         {
             "file": "app/components/exp-test/feedCroc.js",
@@ -4391,7 +4410,7 @@
                 }
             ],
             "class": "FeedCroc",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4401,7 +4420,7 @@
             "itemtype": "method",
             "name": "init",
             "class": "FeedCroc",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4411,7 +4430,7 @@
             "itemtype": "method",
             "name": "drawPaddle",
             "class": "FeedCroc",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4421,7 +4440,7 @@
             "itemtype": "method",
             "name": "createPaddleBox",
             "class": "FeedCroc",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4431,7 +4450,7 @@
             "itemtype": "method",
             "name": "loop",
             "class": "FeedCroc",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4441,7 +4460,7 @@
             "itemtype": "method",
             "name": "paddleBallCollision",
             "class": "FeedCroc",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4455,7 +4474,7 @@
                 "type": "Boolean"
             },
             "class": "FeedCroc",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4465,7 +4484,7 @@
             "itemtype": "method",
             "name": "initGame",
             "class": "FeedCroc",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4475,7 +4494,7 @@
             "itemtype": "method",
             "name": "dataCollection",
             "class": "FeedCroc",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4495,7 +4514,7 @@
                 }
             ],
             "class": "FeedMice",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4511,7 +4530,7 @@
                 }
             ],
             "class": "FeedMice",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4521,7 +4540,7 @@
             "itemtype": "method",
             "name": "createHouse",
             "class": "FeedMice",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4537,7 +4556,7 @@
                 }
             ],
             "class": "FeedMice",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4547,7 +4566,7 @@
             "itemtype": "method",
             "name": "init",
             "class": "FeedMice",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4557,7 +4576,7 @@
             "itemtype": "method",
             "name": "initGame",
             "class": "FeedMice",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4577,7 +4596,7 @@
                 "type": "Int"
             },
             "class": "FeedMice",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4594,7 +4613,7 @@
                 }
             ],
             "class": "FeedMice",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4604,7 +4623,7 @@
             "itemtype": "method",
             "name": "keyDownHandler",
             "class": "FeedMice",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4613,7 +4632,7 @@
             "itemtype": "method",
             "name": "dataCollection Data collection",
             "class": "FeedMice",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4633,7 +4652,7 @@
                 }
             ],
             "class": "FeedMouse",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4643,7 +4662,7 @@
             "itemtype": "method",
             "name": "createHouse",
             "class": "FeedMouse",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4659,7 +4678,7 @@
                 }
             ],
             "class": "FeedMouse",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4669,7 +4688,7 @@
             "itemtype": "method",
             "name": "init",
             "class": "FeedMouse",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4679,7 +4698,7 @@
             "itemtype": "method",
             "name": "initGame",
             "class": "FeedMouse",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4688,7 +4707,7 @@
             "itemtype": "method",
             "name": "dataCollection",
             "class": "FeedMouse",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4702,7 +4721,7 @@
                 "type": "Boolean"
             },
             "class": "FeedMouse",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4718,7 +4737,7 @@
                 }
             ],
             "class": "FeedMouse",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4734,7 +4753,7 @@
                 }
             ],
             "class": "FeedMouse",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
@@ -4744,7 +4763,7 @@
             "itemtype": "method",
             "name": "loop",
             "class": "FeedMouse",
-            "module": "exp-player",
+            "module": "exp-lookit-games",
             "submodule": "games"
         },
         {
