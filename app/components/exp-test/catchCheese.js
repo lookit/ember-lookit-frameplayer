@@ -5,9 +5,6 @@
  * All rights reserved
  */
 
-/**
- * Main implementation for catch cheese with obstruction game
- */
 import Base from "./base";
 
 let paddleWidth = 0;
@@ -29,8 +26,13 @@ let trajectories = [
 ];
 
 
-
-export default class catchCheese extends Base{
+/**
+ * Main implementation of catch the cheese game.
+ * The user will operate with paddle to catch the ball started
+ * from ball box. The trajectory is randomized with various values in trajectories array
+ * Number of obstructions currently randomized from 0 to 3 trees shown
+ */
+export default class CatchCheese extends Base{
 
 
     constructor(context,document) {
@@ -73,9 +75,9 @@ export default class catchCheese extends Base{
     createPaddleBox() {
         this.ctx.beginPath();
         this.ctx.rect(this.canvas.width/2 + paddleWidth*3,this.canvas.height/2.5 + this.canvas.height/2 - paddleWidth,basket.dimensions.width,basket.dimensions.width);
-        this.ctx.fillStyle= "#020102";
+        this.ctx.fillStyle= super.Utils.blackColor;
         this.ctx.lineWidth = "8";
-        this.ctx.strokeStyle = "#1931dd";
+        this.ctx.strokeStyle = super.Utils.blueColor;
         this.ctx.stroke();
     }
 

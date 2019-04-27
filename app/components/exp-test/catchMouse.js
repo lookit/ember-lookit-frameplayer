@@ -16,7 +16,7 @@ let audio = {};
 let ballCatchFail = {};
 let goodJob = {};
 
-export  default  class catchMouse extends Base{
+export  default  class CatchMouse extends Base{
 
     constructor(context,document){
 
@@ -58,7 +58,7 @@ export  default  class catchMouse extends Base{
         this.ctx.beginPath();
         this.ctx.rect(this.canvas.width/2 - paddleWidth,this.canvas.height/2.5 + this.canvas.height/2 - 1.5*paddleWidth,paddleWidth*2,paddleWidth*2);
         this.ctx.lineWidth = "8";
-        this.ctx.strokeStyle = "#1931dd";
+        this.ctx.strokeStyle = super.Utils.blueColor;
         this.ctx.stroke();
         this.ctx.closePath();
   }
@@ -171,7 +171,7 @@ export  default  class catchMouse extends Base{
         let angle = Math.PI * (1.65 - cheeseClock.angle);
         this.ctx.beginPath();
         this.ctx.moveTo(cheeseClock.position.x + cheeseClock.dimensions.width / 2, cheeseClock.position.y + cheeseClock.dimensions.height / 2);
-        this.ctx.fillStyle = "#020102";
+        this.ctx.fillStyle = super.Utils.blackColor;
         this.ctx.arc(cheeseClock.position.x + cheeseClock.dimensions.width / 2, cheeseClock.position.y + cheeseClock.dimensions.height / 2, cheeseClock.dimensions.height / 2, angle, Math.PI * 1.65);
         this.ctx.lineTo(cheeseClock.position.x + cheeseClock.dimensions.width / 2, cheeseClock.position.y + cheeseClock.dimensions.height / 2);
         this.ctx.fill();

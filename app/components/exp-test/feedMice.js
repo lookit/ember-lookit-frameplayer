@@ -17,8 +17,6 @@ let target = {};
 let ball = {};
 let targets = [];
 let pressed = {};
-let roofcolor= "#ff2d23";
-let housecolor = "#8f909c";
 let keys = ['o','k','m'];
 let imageURLS = [];
 let audio = {};
@@ -26,20 +24,13 @@ let ballCatchFail = {};
 let goodJob = {};
 let initSoundPlaying = false;
 
-export default class feedMice extends Base{
+export default class FeedMice extends Base{
 
     constructor(context,document) {
         super(context,document);
         paddleWidth = this.canvas.width/20;
         paddleHeight = this.canvas.width/15;
         imageURLS = [super.Utils.blueMouseImage,super.Utils.greenMouseImage,super.Utils.redMouseImage];
-        /**
-         * middle : velocity:{x:6.8  ,y:5.3 }
-         * high : velocity:{x:6.8  ,y:7.0 }
-         * low : velocity:{x:7.8  ,y:4.0 }
-         *
-         * @type {{velocity: {x: number, y: number}}[]}
-         */
 
         this.trajectories= [
 
@@ -47,7 +38,7 @@ export default class feedMice extends Base{
             {velocity:{x:6.5  ,y:6.8 }},
             {velocity:{x:7.5  ,y:4.8 }}
 
-        ]
+        ];
 
 
 
@@ -72,14 +63,14 @@ export default class feedMice extends Base{
         let roofSpace = 20;
 
         this.ctx.beginPath();
-        this.ctx.fillStyle= housecolor;
+        this.ctx.fillStyle= super.Utils.grayColor;
         this.ctx.rect(houseX,houseY,houseWidth,houseHeight);
         this.ctx.fill();
         this.ctx.closePath();
-        //Draw roof
 
+        //Draw roof
         this.ctx.beginPath();
-        this.ctx.fillStyle= roofcolor;
+        this.ctx.fillStyle= super.Utils.redColor;
         this.ctx.moveTo(houseX - roofSpace  ,houseY);
         this.ctx.lineTo(houseX + houseWidth/2 ,houseY - houseHeight + 100);
         this.ctx.lineTo(houseX+houseWidth +roofSpace ,houseY);
@@ -128,9 +119,9 @@ export default class feedMice extends Base{
             dimensions: {width : paddleWidth/2, height: paddleWidth/2},
             position: {x: (this.canvas.width - paddleWidth*2 - this.canvas.width/3.2) + this.canvas.width/6.4 - paddleWidth/2 , y:this.canvas.height/3 +  this.canvas.height/4},
             radius : 4,
-            color:  "#8f909c",
-            roofcolor: "#ff2d23",
-            windowbackground: "#020102"
+            color:  super.Utils.grayColor,
+            roofcolor: super.Utils.redColor,
+            windowbackground: super.Utils.blackColor
 
         };
 
@@ -141,7 +132,7 @@ export default class feedMice extends Base{
             mass: super.Utils.ballMass,
             radius: paddleWidth/6.5,
             restitution: super.Utils.restitution,
-            color:"#dadd0f"
+            color:super.Utils.yellowColor
 
         };
 
@@ -152,9 +143,9 @@ export default class feedMice extends Base{
                 dimensions: {width : paddleWidth/1.5, height: paddleWidth/1.5},
                 position: {x: (this.canvas.width/2 - paddleWidth*0.3) + this.canvas.width/5.0  , y:this.canvas.height/2.6 +  this.canvas.height/4 + index*paddleWidth*0.8 },
                 radius : 4,
-                color:  "#8f909c",
-                roofcolor: "#ff2d23",
-                windowbackground: "#020102",
+                color:  super.Utils.grayColor,
+                roofcolor: super.Utils.redColor,
+                windowbackground: super.Utils.blackColor,
                 imageURL: imageURLS[index]
 
 
@@ -228,9 +219,11 @@ export default class feedMice extends Base{
     }
 
 
-
-
-    loop() {
+  /**
+   * Main loop of the game
+   * Start the
+   */
+  loop() {
         super.loop();
 
 
@@ -262,7 +255,7 @@ export default class feedMice extends Base{
                 let index = pressed.findIndex(item => item !=false)
                 let target = targets[index];
                 if(target){
-                    target.windowbackground = "#dde5d7";
+                    target.windowbackground = super.Utils.whiteColor;
                     this.createWindow(target);
 
                 }

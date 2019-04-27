@@ -6,7 +6,6 @@
 import Base from './base';
 /**
  * Main class for catch the crocodile game
- * This is only initial code. A lot will be redone here.
  */
 
 let paddleWidth = 0;
@@ -100,7 +99,7 @@ export default class FeedCroc extends Base{
   drawPaddle () {
     this.ctx.beginPath();
     this.ctx.rect(paddle.position.x + 5, paddle.position.y, paddle.dimensions.width-10, paddle.dimensions.height);
-    this.ctx.fillStyle = "#ffffff";
+    this.ctx.fillStyle = super.Utils.whiteColor;
     this.ctx.fill();
     this.ctx.closePath();
   }
@@ -109,9 +108,9 @@ export default class FeedCroc extends Base{
   createPaddleBox() {
     this.ctx.beginPath();
     this.ctx.rect(paddleWidth*10 ,this.canvas.height/2.5 + this.canvas.height/2  - paddle.dimensions.height*5 ,paddle.dimensions.width,paddle.dimensions.height*5);
-    this.ctx.fillStyle= "#020102";
+    this.ctx.fillStyle= super.Utils.blackColor;
     this.ctx.lineWidth = "8";
-    this.ctx.strokeStyle = "#1931dd";
+    this.ctx.strokeStyle = super.Utils.blueColor;
     this.ctx.stroke();
   }
 

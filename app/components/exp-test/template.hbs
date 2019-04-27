@@ -1,33 +1,24 @@
 <div class="row exp-test">
 
- <div class="row" id="experiment-player">
-
-      <p>
-        <button style="width: 100%" class="btn btn-warning" {{ action 'showFullscreen' }}>
-          Return to fullscreen
-        </button>
-      </p>
-
+  <div class="row" id="experiment-player">
 
     <div class="col-xs-12">
+
       <canvas id="myCanvas" width="1200" height="640"></canvas>
 
-      {{bs-button class="pull-right" defaultText="Play" type="success" onClick=(action "play")}}
+    {{#unless hideControls}}
       <div class="row exp-controls exp-test">
         <div class="btn-group">
-          <button class="btn btn-default pull-left" {{ action 'previous' }} > Previous </button>
-          <button class="btn btn-default pull-left"  {{ action 'next' }} > Next </button>
+      {{#if showPreviousButton}}
+          <button class="btn btn-default pull-left" {{ action 'previous' }} > Previous</button>
+      {{/if}}
+          <button class="btn btn-default pull-left"  {{ action 'next' }} > {{exp-format nextButtonText}} </button>
         </div>
       </div>
+    {{/unless}}
+
     </div>
   </div>
-
-
-{{#each export_arr as |item|}}
-  {{exp-text-block block=item}}
-{{/each}}
-
-
 
 </div>
 

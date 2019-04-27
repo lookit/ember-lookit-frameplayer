@@ -21,15 +21,13 @@ let startSound = {};
 let ballCatchFail = {};
 let goodJob = {};
 
-export default class feedMouse extends Base{
+export default class FeedMouse extends Base{
 
     constructor(context,document){
 
         super(context,document);
         paddleWidth = this.canvas.width/20;
         paddleHeight = this.canvas.width/15;
-
-
 
     }
 
@@ -114,9 +112,9 @@ export default class feedMouse extends Base{
           dimensions: {width : paddleWidth, height: paddleWidth},
           position: {x: (this.canvas.width - paddleWidth*3 - this.canvas.width/3.2) + this.canvas.width/6.4 - paddleWidth/2 , y:this.canvas.height/3 +  this.canvas.height/4},
           radius : 4,
-          color:  "#8f909c",
-          roofcolor: "#ff2d23",
-          windowbackground: "#020102"
+          color:  super.Utils.grayColor,
+          roofcolor: super.Utils.redColor,
+          windowbackground: super.Utils.blackColor
 
         };
 
@@ -127,7 +125,7 @@ export default class feedMouse extends Base{
             mass: super.Utils.ballMass,
             radius: 10,
             restitution: super.Utils.restitution,
-            color:"#dadd0f"
+            color:super.Utils.yellowColor
 
         };
 
@@ -223,7 +221,7 @@ export default class feedMouse extends Base{
             if (didHitWindow) {
 
                 if (keyPressed) {
-                    target.windowbackground = "#dde5d7";
+                    target.windowbackground = super.Utils.whiteColor;
                     this.createWindow(target);
                     goodJob.play();
 
