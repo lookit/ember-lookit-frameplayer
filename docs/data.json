@@ -155,6 +155,89 @@
             "fors": {},
             "namespaces": {}
         },
+        "app/components/exp-test/Game.js": {
+            "name": "app/components/exp-test/Game.js",
+            "modules": {
+                "games": 1
+            },
+            "classes": {
+                "Game": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "app/components/exp-test/base.js": {
+            "name": "app/components/exp-test/base.js",
+            "modules": {},
+            "classes": {
+                "Base": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "app/components/exp-test/catchCheese.js": {
+            "name": "app/components/exp-test/catchCheese.js",
+            "modules": {},
+            "classes": {
+                "CatchCheese": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "app/components/exp-test/catchMouse.js": {
+            "name": "app/components/exp-test/catchMouse.js",
+            "modules": {},
+            "classes": {
+                "CatchMouse": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "app/components/exp-test/component.js": {
+            "name": "app/components/exp-test/component.js",
+            "modules": {},
+            "classes": {
+                "ExpFrameBaseComponent": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "app/components/exp-test/feedCroc.js": {
+            "name": "app/components/exp-test/feedCroc.js",
+            "modules": {},
+            "classes": {
+                "FeedCroc": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "app/components/exp-test/feedMice.js": {
+            "name": "app/components/exp-test/feedMice.js",
+            "modules": {},
+            "classes": {
+                "FeedMice": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "app/components/exp-test/feedMouse.js": {
+            "name": "app/components/exp-test/feedMouse.js",
+            "modules": {},
+            "classes": {
+                "FeedMouse": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "app/components/exp-test/utils.js": {
+            "name": "app/components/exp-test/utils.js",
+            "modules": {},
+            "classes": {
+                "Utils\nShared Utility class for project static methods and constants": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "app/components/exp-video-config/component.js": {
             "name": "app/components/exp-video-config/component.js",
             "modules": {},
@@ -275,6 +358,7 @@
             "submodules": {
                 "frames": 1,
                 "components": 1,
+                "games": 1,
                 "mixins": 1,
                 "randomizers": 1,
                 "services": 1
@@ -297,6 +381,15 @@
                 "ExpLookitVideo": 1,
                 "ExpLookitVideoConsent": 1,
                 "ExpPlayer": 1,
+                "Game": 1,
+                "Base": 1,
+                "CatchCheese": 1,
+                "CatchMouse": 1,
+                "ExpFrameBaseComponent": 1,
+                "FeedCroc": 1,
+                "FeedMice": 1,
+                "FeedMouse": 1,
+                "Utils\nShared Utility class for project static methods and constants": 1,
                 "ExpVideoConfig": 1,
                 "ExpVideoConfigQuality": 1,
                 "ExpVideoConsent": 1,
@@ -364,6 +457,28 @@
             "file": "app/components/exp-player/component.js",
             "line": 16,
             "description": "Experiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```"
+        },
+        "games": {
+            "name": "games",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "Game": 1,
+                "Base": 1,
+                "CatchCheese": 1,
+                "CatchMouse": 1,
+                "FeedCroc": 1,
+                "FeedMice": 1,
+                "FeedMouse": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "exp-player",
+            "namespace": "",
+            "file": "app/components/exp-test/feedMouse.js",
+            "line": 23,
+            "description": "Game orchestrator to set initial parameters and\nexecute requested game\nMight have randomization of the games here"
         },
         "mixins": {
             "name": "mixins",
@@ -713,6 +828,141 @@
             "file": "app/components/exp-player/component.js",
             "line": 16,
             "description": "Experiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```"
+        },
+        "Game": {
+            "name": "Game",
+            "shortname": "Game",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "submodule": "games",
+            "namespace": "",
+            "file": "app/components/exp-test/Game.js",
+            "line": 19,
+            "description": "Game orchestrator to set initial parameters and\nexecute requested game\nMight have randomization of the games here"
+        },
+        "Base": {
+            "name": "Base",
+            "shortname": "Base",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "submodule": "games",
+            "namespace": "",
+            "file": "app/components/exp-test/base.js",
+            "line": 20,
+            "description": "Base class for common game functions"
+        },
+        "CatchCheese": {
+            "name": "CatchCheese",
+            "shortname": "CatchCheese",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "submodule": "games",
+            "namespace": "",
+            "file": "app/components/exp-test/catchCheese.js",
+            "line": 33,
+            "description": "Main implementation of catch the cheese game.\nThe user will operate with paddle to catch the ball started\nfrom ball box. The trajectory is randomized with various values in trajectories array\nNumber of obstructions currently randomized from 0 to 3 trees shown",
+            "extends": "Base"
+        },
+        "CatchMouse": {
+            "name": "CatchMouse",
+            "shortname": "CatchMouse",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "submodule": "games",
+            "namespace": "",
+            "file": "app/components/exp-test/catchMouse.js",
+            "line": 19,
+            "extends": "Base\nMain implementation of Catch the mouse game.\nThe user will with paddle (basket) to catch the mice.\nThe mice will appear with some unpredictable  delay.\nThe user should catch the mice until cheese(symbolizing the clock) is gone."
+        },
+        "ExpFrameBaseComponent": {
+            "name": "ExpFrameBaseComponent",
+            "shortname": "ExpFrameBaseComponent",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "namespace": "",
+            "file": "app/components/exp-test/component.js",
+            "line": 13,
+            "description": "Frame to implement various games interventions.\nThe games are developed as a separate HTML5 canvas modules.\n\nAfter each game, get the response that game is finished, save the data (pass the data to\nthe appropriate game object array) and proceed to the next game/step.\n\nCurrent implementation has 5 game types :\n0: Feed the crocodile\n1: Catch the cheese\n2. Catch the mouse\n3: Feed the mice\n4: Feed the mouse in the house\n\n\n```\n\"frames\": {\n       \"game\": {\n           \"kind\": \"exp-lookit-games\",\n           \"gameType\": 0,\n           \"hideControls\": false,\n           \"nextButtonText\": \"move on\",\n           \"showPreviousButton\": false\n       }\n   }\n```",
+            "extends": "VideoRecord"
+        },
+        "FeedCroc": {
+            "name": "FeedCroc",
+            "shortname": "FeedCroc",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "submodule": "games",
+            "namespace": "",
+            "file": "app/components/exp-test/feedCroc.js",
+            "line": 33,
+            "extends": "Base\nMain implementation of Feed the crocodile game.\nThe user will operate with paddle to bounce the ball into the crocodile mouth.\nThe trajectory is randomized with various values in trajectories array"
+        },
+        "FeedMice": {
+            "name": "FeedMice",
+            "shortname": "FeedMice",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "submodule": "games",
+            "namespace": "",
+            "file": "app/components/exp-test/feedMice.js",
+            "line": 25,
+            "description": "Main implementation of feed  the mice in the house game.\nThe user will operate with keyboard keys to predict which ball trajectory will hit which window\nin the house.\nThe trajectory is randomized with various values in trajectories array\nInitialize the mice image for each muse as an array",
+            "extends": "Base"
+        },
+        "FeedMouse": {
+            "name": "FeedMouse",
+            "shortname": "FeedMouse",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "submodule": "games",
+            "namespace": "",
+            "file": "app/components/exp-test/feedMouse.js",
+            "line": 23,
+            "extends": "Base\nMain implementation of feed  the mouse in the house game.\nThe user will operate with keyboard keys to predict when ball trajectory will hit the window.\nThe trajectory is randomized with various values in trajectories array"
+        },
+        "Utils\nShared Utility class for project static methods and constants": {
+            "name": "Utils\nShared Utility class for project static methods and constants",
+            "shortname": "Utils\nShared Utility class for project static methods and constants",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "namespace": "",
+            "file": "app/components/exp-test/utils.js",
+            "line": 8
         },
         "ExpVideoConfig": {
             "name": "ExpVideoConfig",
@@ -2568,7 +2818,7 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 1000,
+            "line": 1002,
             "description": "Observer that starts recording once recorder is ready. Override to do additional\nstuff at this point!",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -3453,6 +3703,1049 @@
             "class": "ExpPlayer",
             "module": "exp-player",
             "submodule": "components"
+        },
+        {
+            "file": "app/components/exp-test/Game.js",
+            "line": 26,
+            "itemtype": "method",
+            "name": "constructor",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "context",
+                    "description": ""
+                },
+                {
+                    "name": "document",
+                    "description": ""
+                },
+                {
+                    "name": "gameNumber",
+                    "description": "current game id"
+                }
+            ],
+            "class": "Game",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 27,
+            "itemtype": "method",
+            "name": "Constructor to get parameters from caller",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "context",
+                    "description": "from component"
+                },
+                {
+                    "name": "document",
+                    "description": "object from component"
+                }
+            ],
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 49,
+            "description": "Initialize or start the game loop here",
+            "itemtype": "method",
+            "name": "init",
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 61,
+            "description": "Abstract method\nTriggered when participant pressed some key on keyboard",
+            "itemtype": "method",
+            "name": "keyDownHandler",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "event"
+                }
+            ],
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 72,
+            "description": "Abstract method\nTriggered when participant released some key on keyboard",
+            "itemtype": "method",
+            "name": "keyUpHandler",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "event"
+                }
+            ],
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 84,
+            "description": "Data collection abstract method",
+            "itemtype": "method",
+            "name": "dataCollection",
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 97,
+            "description": "Draw the game score",
+            "itemtype": "method",
+            "name": "drawScore",
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 108,
+            "description": "Abstract Main game loop method",
+            "itemtype": "method",
+            "name": "loop",
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 122,
+            "description": "Create initial ball box object to start from",
+            "itemtype": "method",
+            "name": "createBallBox",
+            "params": [
+                {
+                    "name": "paddleWidth",
+                    "description": "",
+                    "type": "Int"
+                }
+            ],
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 144,
+            "itemtype": "method",
+            "name": "mouseY Set current cursor position",
+            "params": [
+                {
+                    "name": "mouse",
+                    "description": "cursor Y coordinate",
+                    "type": "Number"
+                }
+            ],
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 153,
+            "itemtype": "method",
+            "name": "mouseY Get current cursor position",
+            "return": {
+                "description": "mouse cursor Y coordinate",
+                "type": "Number"
+            },
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 162,
+            "itemtype": "method",
+            "name": "gameOver Set method if game is over",
+            "params": [
+                {
+                    "name": "game",
+                    "description": "is over",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 172,
+            "itemtype": "method",
+            "name": "gameOver Get method if game is over",
+            "return": {
+                "description": "game is over",
+                "type": "Boolean"
+            },
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 181,
+            "itemtype": "method",
+            "name": "Utils Get shared Utils objects\nGet Utilities game constants",
+            "return": {
+                "description": "",
+                "type": "Utils"
+            },
+            "is_constructor": 1,
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 192,
+            "itemtype": "method",
+            "name": "drawImage Show current image",
+            "params": [
+                {
+                    "name": "Current",
+                    "description": "object with x,y position, width , height and URL of the image to show",
+                    "type": "Object"
+                },
+                {
+                    "name": "URL",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 205,
+            "description": "Disabled for now",
+            "itemtype": "method",
+            "name": "storeData Store data in proposed array",
+            "params": [
+                {
+                    "name": "exportData",
+                    "description": "",
+                    "type": "Array"
+                }
+            ],
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 217,
+            "description": "Initialize current round of the game",
+            "itemtype": "method",
+            "name": "initGame",
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 240,
+            "description": "Finish current round and check for rounds left",
+            "itemtype": "method",
+            "name": "finishGame",
+            "params": [
+                {
+                    "name": "should",
+                    "description": "increase score",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 265,
+            "description": "Create ball movement up to some trajectory",
+            "itemtype": "method",
+            "name": "ballTrajectory",
+            "params": [
+                {
+                    "name": "ball",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 299,
+            "description": "Set position of the ball to initial coordinates to symbolize the start of the game",
+            "itemtype": "method",
+            "name": "moveBallToStart",
+            "params": [
+                {
+                    "name": "ball",
+                    "description": "object parameters",
+                    "type": "Object"
+                },
+                {
+                    "name": "gameOver",
+                    "description": "set game to be over",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 318,
+            "description": "Check if user returned paddle to initial coordinates and call finish of the game to restart\ncurrent round",
+            "itemtype": "method",
+            "name": "paddleAtZero",
+            "params": [
+                {
+                    "name": "paddle",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "score",
+                    "description": "should increase score",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 335,
+            "description": "Minimal implementation of interruption between rounds",
+            "itemtype": "method",
+            "name": "waitSeconds",
+            "params": [
+                {
+                    "name": "iMilliSeconds",
+                    "description": "",
+                    "type": "Int"
+                }
+            ],
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 352,
+            "description": "Set paddle coordinates up to velocity",
+            "itemtype": "method",
+            "name": "paddleMove",
+            "params": [
+                {
+                    "name": "paddle",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/base.js",
+            "line": 364,
+            "description": "Walls and target collisions detection",
+            "itemtype": "method",
+            "name": "wallCollision",
+            "params": [
+                {
+                    "name": "ball",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "if hit any edge of the screen",
+                "type": "Boolean"
+            },
+            "class": "Base",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/catchCheese.js",
+            "line": 42,
+            "itemtype": "method",
+            "name": "constructor",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "context",
+                    "description": ""
+                },
+                {
+                    "name": "document",
+                    "description": ""
+                }
+            ],
+            "class": "CatchCheese",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/catchCheese.js",
+            "line": 56,
+            "description": "Main point to start the game.\nInitialize static parameters and preload sounds here",
+            "itemtype": "method",
+            "name": "init",
+            "class": "CatchCheese",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/catchCheese.js",
+            "line": 81,
+            "description": "The box symbolizes initial paddle location",
+            "itemtype": "method",
+            "name": "createPaddleBox",
+            "class": "CatchCheese",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/catchCheese.js",
+            "line": 94,
+            "description": "Initialize each game round with initial object parameters\nRandomize number of obstructions\nReset the sounds sources for older browser versions\nWait for start sound and start the main game loop",
+            "itemtype": "method",
+            "name": "initGame",
+            "class": "CatchCheese",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/catchCheese.js",
+            "line": 149,
+            "description": "Check if ball reaches the target",
+            "itemtype": "method",
+            "name": "collisionDetection",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "CatchCheese",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/catchCheese.js",
+            "line": 169,
+            "description": "Update location of the basket stars(symbolize that user reached the target) with the basket location",
+            "itemtype": "method",
+            "name": "starsLocationUpdate",
+            "class": "CatchCheese",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/catchCheese.js",
+            "line": 186,
+            "description": "Main loop of the game.\nSet initial position of the ball in a box and starting rattling sound (initSoundPlaying).\nAfter that  start ball trajectory.\nIf ball hits the target or missed the target wait util user places the paddle to starting position.\nIncrease the score if ball hits the target.",
+            "itemtype": "method",
+            "name": "loop",
+            "class": "CatchCheese",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/catchCheese.js",
+            "line": 249,
+            "itemtype": "method",
+            "name": "Draw image object according to object locations",
+            "params": [
+                {
+                    "name": "object",
+                    "description": ""
+                }
+            ],
+            "class": "CatchCheese",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/catchMouse.js",
+            "line": 28,
+            "itemtype": "method",
+            "name": "constructor",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "context",
+                    "description": "Context of the game"
+                },
+                {
+                    "name": "document",
+                    "description": ""
+                }
+            ],
+            "class": "CatchMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/catchMouse.js",
+            "line": 43,
+            "description": "Main point to start the game.\n Initialize static parameters and preload sounds here",
+            "itemtype": "method",
+            "name": "init",
+            "class": "CatchMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/catchMouse.js",
+            "line": 65,
+            "description": "Draw image object according to object locations",
+            "itemtype": "method",
+            "name": "drawImage",
+            "params": [
+                {
+                    "name": "object",
+                    "description": ""
+                }
+            ],
+            "class": "CatchMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/catchMouse.js",
+            "line": 77,
+            "description": "The box symbolizes initial paddle location",
+            "itemtype": "method",
+            "name": "createPaddleBox",
+            "class": "CatchMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/catchMouse.js",
+            "line": 92,
+            "description": "Initialize each game round with initial object parameters\n Randomize number of obstructions\n Reset the sounds sources for older browser versions",
+            "itemtype": "method",
+            "name": "initGame",
+            "class": "CatchMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/catchMouse.js",
+            "line": 141,
+            "itemtype": "method",
+            "name": "dataCollection Collect data",
+            "class": "CatchMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/catchMouse.js",
+            "line": 161,
+            "description": "Start showing the mouse and the cheese.\n Update the radians angle  of the cheese with each iteration.\n Detect collision with paddle(basket) here and set gameOver object to true\n if the basket reached or not the target (mouse)",
+            "itemtype": "method",
+            "name": "startClock",
+            "class": "CatchMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/catchMouse.js",
+            "line": 195,
+            "description": "Show cheese portion according to angle",
+            "itemtype": "method",
+            "name": "showCheese",
+            "class": "CatchMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/catchMouse.js",
+            "line": 220,
+            "description": "Main loop of the game.\n Set initial position of the ball in a box and starting rattling sound (initSoundPlaying).\n After that  start showing the mouse.\n Increase the score if ball hits the target.",
+            "itemtype": "method",
+            "name": "loop",
+            "class": "CatchMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/component.js",
+            "line": 58,
+            "description": "Set current game type",
+            "itemtype": "property",
+            "name": "type",
+            "type": "Integer",
+            "default": "0",
+            "class": "ExpFrameBaseComponent",
+            "module": "exp-player"
+        },
+        {
+            "file": "app/components/exp-test/component.js",
+            "line": 70,
+            "description": "Whether to hide next/previous buttons for game",
+            "itemtype": "property",
+            "name": "hideControls",
+            "type": "Boolean",
+            "default": "false",
+            "class": "ExpFrameBaseComponent",
+            "module": "exp-player"
+        },
+        {
+            "file": "app/components/exp-test/component.js",
+            "line": 81,
+            "description": "Text to display on the 'next frame' button",
+            "itemtype": "property",
+            "name": "nextButtonText",
+            "type": "String",
+            "default": "'Next'",
+            "class": "ExpFrameBaseComponent",
+            "module": "exp-player"
+        },
+        {
+            "file": "app/components/exp-test/component.js",
+            "line": 91,
+            "description": "Whether to show a 'previous' button",
+            "itemtype": "property",
+            "name": "showPreviousButton",
+            "type": "Boolean",
+            "default": "true",
+            "class": "ExpFrameBaseComponent",
+            "module": "exp-player"
+        },
+        {
+            "file": "app/components/exp-test/component.js",
+            "line": 104,
+            "description": "Parameters captured game data and sent to the server\nThis might be changed in near future for some game type",
+            "itemtype": "method",
+            "name": "serializeContent",
+            "params": [
+                {
+                    "name": "export_arr",
+                    "description": "Game data array with objects positions locations",
+                    "type": "Array"
+                },
+                {
+                    "name": "items",
+                    "description": "The name of the current game object : ball_object {x,y }, paddle_object{x,y}",
+                    "type": "Object"
+                },
+                {
+                    "name": "ball_object",
+                    "description": "items The name of the current game object",
+                    "type": "Object"
+                },
+                {
+                    "name": "timestamp",
+                    "description": "current timestamp in milliseconds for each x,y point of object",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The payload sent to the server",
+                "type": "Object"
+            },
+            "class": "ExpFrameBaseComponent",
+            "module": "exp-player"
+        },
+        {
+            "file": "app/components/exp-test/feedCroc.js",
+            "line": 44,
+            "description": "Constructor to get parameters from caller",
+            "itemtype": "method",
+            "name": "constructor",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "context",
+                    "description": "from component"
+                },
+                {
+                    "name": "document",
+                    "description": "object from component"
+                }
+            ],
+            "class": "FeedCroc",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedCroc.js",
+            "line": 59,
+            "description": "Main point to start the game.\nInitialize static parameters and preload sounds here",
+            "itemtype": "method",
+            "name": "init",
+            "class": "FeedCroc",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedCroc.js",
+            "line": 101,
+            "description": "Draw paddle according to the location parameters",
+            "itemtype": "method",
+            "name": "drawPaddle",
+            "class": "FeedCroc",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedCroc.js",
+            "line": 114,
+            "description": "The box symbolizes initial paddle location",
+            "itemtype": "method",
+            "name": "createPaddleBox",
+            "class": "FeedCroc",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedCroc.js",
+            "line": 128,
+            "description": "Main loop of the game.\n Set initial position of the ball in a box and starting rattling sound (initSoundPlaying).\n After that  start ball trajectory.\n If ball hits the target or missed the target (hits any screen edge) wait util user places the paddle to starting position and move\n the ball to initial position.\n Increase the score if ball hits the target.",
+            "itemtype": "method",
+            "name": "loop",
+            "class": "FeedCroc",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedCroc.js",
+            "line": 188,
+            "description": "Handle paddle collision here\n Adjust velocity to the ball by restitution factor",
+            "itemtype": "method",
+            "name": "paddleBallCollision",
+            "class": "FeedCroc",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedCroc.js",
+            "line": 210,
+            "description": "Check if ball reached the target",
+            "itemtype": "method",
+            "name": "collisionDetection",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "FeedCroc",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedCroc.js",
+            "line": 226,
+            "description": "Initialize each game round with initial object parameters\n Randomize number of obstructions\n Reset the sounds sources for older browser versions",
+            "itemtype": "method",
+            "name": "initGame",
+            "class": "FeedCroc",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedCroc.js",
+            "line": 263,
+            "description": "Export data",
+            "itemtype": "method",
+            "name": "dataCollection",
+            "class": "FeedCroc",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMice.js",
+            "line": 36,
+            "itemtype": "method",
+            "name": "constructor",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "context",
+                    "description": ""
+                },
+                {
+                    "name": "document",
+                    "description": ""
+                }
+            ],
+            "class": "FeedMice",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMice.js",
+            "line": 57,
+            "description": "Draw image object according to object locations",
+            "itemtype": "method",
+            "name": "drawImage",
+            "params": [
+                {
+                    "name": "object",
+                    "description": ""
+                }
+            ],
+            "class": "FeedMice",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMice.js",
+            "line": 70,
+            "description": "Draw house with roof according to coordinates",
+            "itemtype": "method",
+            "name": "createHouse",
+            "class": "FeedMice",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMice.js",
+            "line": 98,
+            "description": "Create the window in the house",
+            "itemtype": "method",
+            "name": "createWindow",
+            "params": [
+                {
+                    "name": "target",
+                    "description": ""
+                }
+            ],
+            "class": "FeedMice",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMice.js",
+            "line": 116,
+            "description": "Main point to start the game.\nInitialize static parameters and preload sounds here",
+            "itemtype": "method",
+            "name": "init",
+            "class": "FeedMice",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMice.js",
+            "line": 137,
+            "description": "Initialize each game round with initial object parameters\nRandomize number of obstructions\nReset the sounds sources for older browser versions\nWait for start sound and start the main game loop",
+            "itemtype": "method",
+            "name": "initGame",
+            "class": "FeedMice",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMice.js",
+            "line": 192,
+            "description": "Check collision of appropriate key and window\nWhen ball hits the window set coordinates of the ball to the center of the reached window",
+            "itemtype": "method",
+            "name": "collisionDetection",
+            "params": [
+                {
+                    "name": "index",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "2: key pressed matches the window target, 1: key pressed doesn't match the window,\n0: no window reached (might be redundant)",
+                "type": "Int"
+            },
+            "class": "FeedMice",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMice.js",
+            "line": 228,
+            "description": "Set appropriate index value in pressed array, according to index of the key pressed",
+            "itemtype": "method",
+            "name": "keyDownHandler",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "event",
+                    "type": "Object"
+                }
+            ],
+            "class": "FeedMice",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMice.js",
+            "line": 240,
+            "description": "Main loop of the game\nSet initial position of the ball in a box and starting rattling sound (initSoundPlaying).\nAfter that  start ball trajectory.\nIf ball hits the target or missed the target(window) show the ball in the window and selected window\nclicked by user (indicate the window background with color).\nIncrease the score if ball hits the target.\nMove the ball to initial position.\nWait for some time until rattle sound played.",
+            "itemtype": "method",
+            "name": "keyDownHandler",
+            "class": "FeedMice",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMice.js",
+            "line": 305,
+            "itemtype": "method",
+            "name": "dataCollection Data collection",
+            "class": "FeedMice",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMouse.js",
+            "line": 31,
+            "itemtype": "method",
+            "name": "constructor",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "context",
+                    "description": ""
+                },
+                {
+                    "name": "document",
+                    "description": ""
+                }
+            ],
+            "class": "FeedMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMouse.js",
+            "line": 45,
+            "description": "Draw house with roof according to coordinates",
+            "itemtype": "method",
+            "name": "createHouse",
+            "class": "FeedMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMouse.js",
+            "line": 73,
+            "description": "Create the window in the house",
+            "itemtype": "method",
+            "name": "createWindow",
+            "params": [
+                {
+                    "name": "target",
+                    "description": ""
+                }
+            ],
+            "class": "FeedMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMouse.js",
+            "line": 106,
+            "description": "Main point to start the game.\nInitialize static parameters and preload sounds here",
+            "itemtype": "method",
+            "name": "init",
+            "class": "FeedMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMouse.js",
+            "line": 127,
+            "description": "Initialize each game round with initial object parameters\nRandomize number of obstructions\nReset the sounds sources for older browser versions\nWait for start sound and start the main game loop",
+            "itemtype": "method",
+            "name": "initGame",
+            "class": "FeedMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMouse.js",
+            "line": 175,
+            "itemtype": "method",
+            "name": "dataCollection",
+            "class": "FeedMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMouse.js",
+            "line": 182,
+            "description": "Check collision of appropriate key and window\n When ball hits the window set coordinates of the ball to the center of the window",
+            "itemtype": "method",
+            "name": "collisionDetection",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "FeedMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMouse.js",
+            "line": 210,
+            "itemtype": "method",
+            "name": "keyDownHandler Get current keyboard event on press button",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "FeedMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMouse.js",
+            "line": 223,
+            "itemtype": "method",
+            "name": "keyUpHandler Get current keyboard event on release button",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "FeedMouse",
+            "module": "exp-player",
+            "submodule": "games"
+        },
+        {
+            "file": "app/components/exp-test/feedMouse.js",
+            "line": 236,
+            "description": "Main loop of the game\n Set initial position of the ball in a box and starting rattling sound (initSoundPlaying).\n After that  start ball trajectory.\n If ball hits the target or missed the target(window) show the ball in the window\n Check if user hits the keyboard key when ball trajectory reached the window bounds.\n Increase the score if ball hits the target.\n Move the ball to initial position.\n Wait for some time until rattle sound played.",
+            "itemtype": "method",
+            "name": "loop",
+            "class": "FeedMouse",
+            "module": "exp-player",
+            "submodule": "games"
         },
         {
             "file": "app/components/exp-video-config/component.js",

@@ -6,9 +6,9 @@
 
 import ExpFrameBaseComponent from '../../components/exp-frame-base/component';
 import layout from './template';
-import FullScreen from "../../mixins/full-screen";
-import VideoRecord from "../../mixins/video-record";
-import Game from "./Game";
+import FullScreen from '../../mixins/full-screen';
+import VideoRecord from '../../mixins/video-record';
+import Game from './Game';
 
 /**
  * Frame to implement various games interventions.
@@ -41,7 +41,7 @@ import Game from "./Game";
  * @extends VideoRecord
  */
 
-export default ExpFrameBaseComponent.extend(FullScreen,VideoRecord,{
+export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
 
     type: 'exp-test',
     displayFullscreen: true,
@@ -64,7 +64,7 @@ export default ExpFrameBaseComponent.extend(FullScreen,VideoRecord,{
                 gameType: {
                     type: 'integer',
                     default: 0,
-                    description: 'Game type  to display {0,1}'
+                    description: 'Game type  to display '
                 },
 
                 /**
@@ -74,8 +74,8 @@ export default ExpFrameBaseComponent.extend(FullScreen,VideoRecord,{
                  * @default false
                  */
                 hideControls: {
-                  type: 'boolean',
-                  default: false
+                    type: 'boolean',
+                    default: false
                 },
 
                 /**
@@ -85,8 +85,8 @@ export default ExpFrameBaseComponent.extend(FullScreen,VideoRecord,{
                  * @default 'Next'
                  */
                 nextButtonText: {
-                  type: 'string',
-                  default: 'Next'
+                    type: 'string',
+                    default: 'Next'
                 },
                 /**
                  * Whether to show a 'previous' button
@@ -95,79 +95,73 @@ export default ExpFrameBaseComponent.extend(FullScreen,VideoRecord,{
                  * @default true
                  */
                 showPreviousButton: {
-                  type: 'boolean',
-                  default: true
+                    type: 'boolean',
+                    default: true
                 }
             }
         },
         data: {
-          /**
-           * Parameters captured game data and sent to the server
-           * This might be changed in near future for some game type
-           * @method serializeContent
-           * @param {Array} export_arr Game data array with objects positions locations
-           * @param {Object} items The name of the current game object : ball_object {x,y }, paddle_object{x,y}
-           * @param {Object}  ball_object items The name of the current game object
-           * @param {String} timestamp current timestamp in milliseconds for each x,y point of object
-           * @return {Object} The payload sent to the server
-           */
+            /**
+             * Parameters captured game data and sent to the server
+             * This might be changed in near future for some game type
+             * @method serializeContent
+             * @param {Array} export_arr Game data array with objects positions locations
+             * @param {Object} items The name of the current game object : ball_object {x,y }, paddle_object{x,y}
+             * @param {Object}  ball_object items The name of the current game object
+             * @param {String} timestamp current timestamp in milliseconds for each x,y point of object
+             * @return {Object} The payload sent to the server
+             */
             type: 'object',
             properties: {
                 // define data to be sent to the server here
-              export_arr:{
-                type:'array',
-                default:[],
-                items:{
-                  type: 'object',
-                  properties: {
+                export_arr: {
+                    type: 'array',
+                    default: [],
+                    items: {
+                        type: 'object',
+                        properties: {
 
-                    ball_object: {
-                      type: 'object',
-                      properties: {
-                        x:{
-                          type: 'string'
-                        },
-                        y:{
+                            ball_object: {
+                                type: 'object',
+                                properties: {
+                                  x: {
+                                    type: 'string'
+                                  },
+                                  y: {
 
-                          type: 'string'
+                                    type: 'string'
+                                  }
+                                }
+
+                            },
+                            paddle_object: {
+                                type: 'object',
+                                properties: {
+                                  x: {
+                                    type: 'string'
+                                  },
+                                  y: {
+
+                                    type: 'string'
+                                  }
+                                }
+
+                            },
+                            timestamp: {
+                                type: 'string'
+
+                            }
+
                         }
-                      }
-
-                    },
-                    paddle_object:{
-                      type: 'object',
-                      properties:{
-                        x:{
-                          type: 'string'
-                        },
-                        y:{
-
-                          type: 'string'
-                        }
-                      }
-
-
-                    },
-                    timestamp:{
-                      type: 'string'
 
                     }
 
-                  }
-
                 }
-
-
-
-              }
             }
         }
     },
     actions: {
-      // Define any actions that you need to be able to trigger from within the template here
-
-
-
+        // Define any actions that you need to be able to trigger from within the template here
 
     },
 
@@ -181,7 +175,7 @@ export default ExpFrameBaseComponent.extend(FullScreen,VideoRecord,{
     // anything additional.
     didInsertElement() {
         this._super(...arguments);
-        new Game(this,document,this.gameType);
+        new Game(this, document, this.gameType);
     },
 
     // Anything that should happen before destroying your frame, e.g. removing a keypress
@@ -189,7 +183,5 @@ export default ExpFrameBaseComponent.extend(FullScreen,VideoRecord,{
     willDestroyElement() {
         this._super(...arguments);
     }
-
-
 
 });

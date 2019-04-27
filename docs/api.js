@@ -1,8 +1,12 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
+        "Base",
+        "CatchCheese",
+        "CatchMouse",
         "ExpExitSurvey",
         "ExpFrameBase",
+        "ExpFrameBaseComponent",
         "ExpLookitDialoguePage",
         "ExpLookitExitSurvey",
         "ExpLookitGeometryAlternation",
@@ -22,8 +26,13 @@ YUI.add("yuidoc-meta", function(Y) {
         "ExpVideoConsent",
         "ExpVideoPreview",
         "ExpandAssets",
+        "FeedCroc",
+        "FeedMice",
+        "FeedMouse",
         "FullScreen",
+        "Game",
         "MediaReload",
+        "Utils\nShared Utility class for project static methods and constants",
         "VideoRecordMixin",
         "VideoRecorderObject",
         "permute",
@@ -34,6 +43,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "components",
         "exp-player",
         "frames",
+        "games",
         "mixins",
         "randomizers",
         "services"
@@ -52,6 +62,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "frames",
             "name": "frames",
             "description": "This is the exit survey used by \"Your baby the physicist\". Use the updated frame {{#crossLink \"ExpLookitExitSurvey\"}}{{/crossLink}} instead."
+        },
+        {
+            "displayName": "games",
+            "name": "games",
+            "description": "Game orchestrator to set initial parameters and\nexecute requested game\nMight have randomization of the games here"
         },
         {
             "displayName": "mixins",
