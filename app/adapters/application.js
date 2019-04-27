@@ -4,7 +4,7 @@ import HasManyQuery from 'ember-data-has-many-query';
 import Ember from 'ember';
 
 export default DS.JSONAPIAdapter.extend(HasManyQuery.RESTAdapterMixin, {
-    host: config.host,
+    host: config.APP.host,
     namespace: 'api/v1',
     buildURL: function(type, id, record) {
         // Add trailing slash to Lookit API requests
