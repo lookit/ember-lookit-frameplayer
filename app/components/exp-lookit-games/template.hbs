@@ -1,0 +1,19 @@
+<div >
+
+  <canvas  id="gamesCanvas" width="1100" height="620"></canvas>
+
+  {{#unless hideControls}}
+    <div class="row exp-controls exp-test">
+      <div class="btn-group">
+        {{#if showPreviousButton}}
+          <button class="btn btn-default pull-left" {{ action 'previous' }} > Previous</button>
+        {{/if}}
+        <button class="btn btn-default pull-left"  {{ action 'next' }} > {{exp-format nextButtonText}} </button>
+      </div>
+    </div>
+  {{/unless}}
+
+</div>
+
+
+
