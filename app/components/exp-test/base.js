@@ -34,8 +34,10 @@ export default class Base {
         this.context = context;
         this.document = document;
         this.canvas = this.document.getElementById('gamesCanvas');
-        // this.canvas.style.width = window.innerWidth + 'px';
-        // this.canvas.style.height = window.innerHeight + 'px';
+        if (this.context.displayFullscreen) {
+            this.canvas.style.width = window.innerWidth + 'px';
+            this.canvas.style.height = window.innerHeight + 'px';
+        }
         this.ctx = this.canvas.getContext('2d');
         this.currentRounds = 0;
         this.currentScore = 0;
@@ -147,35 +149,35 @@ export default class Base {
      * @method mouseY Set current cursor position
      * @param {number} mouse cursor Y coordinate
      */
-     set mouseY(val) {
+    set mouseY(val) {
 
         mouseY = val;
-     }
+    }
 
-  /**
-   * @method  mouseY Get current cursor position
-   * @return {number} mouse cursor Y coordinate
-   */
+    /**
+     * @method  mouseY Get current cursor position
+     * @return {number} mouse cursor Y coordinate
+     */
     get mouseY() {
 
         return mouseY;
     }
 
-  /**
-   * @method gameOver Set method if game is over
-   * @param {boolean} game is over
-   */
-  set gameOver(val) {
+    /**
+     * @method gameOver Set method if game is over
+     * @param {boolean} game is over
+     */
+    set gameOver(val) {
 
         gameOver = val;
     }
 
 
-  /**
-   * @method gameOver Get method if game is over
-   * @return {boolean} game is over
-   */
-  get gameOver() {
+    /**
+     * @method gameOver Get method if game is over
+     * @return {boolean} game is over
+     */
+    get gameOver() {
 
         return gameOver;
     }
@@ -191,11 +193,11 @@ export default class Base {
         return Utils;
     }
 
-  /**
-   * @method drawImage Show current image
-   * @param {object} Current object with x,y position, width , height and URL of the image to show
-   * @param {String} URL
-   */
+    /**
+     * @method drawImage Show current image
+     * @param {object} Current object with x,y position, width , height and URL of the image to show
+     * @param {String} URL
+     */
     drawImage(object, URL) {
         this.ctx.fillStyle = Utils.blackColor;
         this.ctx.fillRect(object.position.x, object.position.y, object.dimensions.width, object.dimensions.height);

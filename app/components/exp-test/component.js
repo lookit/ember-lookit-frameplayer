@@ -48,11 +48,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
 
     type: 'exp-test',
     displayFullscreen: true,
-    fullScreenElementId: 'experiment-player',
     layout: layout,
     meta: {
         name: 'ExpTest',
-        description: 'This frame allows the participant to play a game intended for  studies.',
+        description: 'This frame allows the participant to play a game intended for studies.',
         parameters: {
             type: 'object',
             properties: {
