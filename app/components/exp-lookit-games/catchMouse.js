@@ -174,6 +174,7 @@ export default class CatchMouse extends Base {
         if (mice.position.y > basket.position.y - mice.dimensions.height / 3 && mice.position.y < basket.position.y + basket.dimensions.height) {
             goodJob.play();
             super.gameOver = true;
+            super.increaseScore();
 
         } else {
 
@@ -232,7 +233,7 @@ export default class CatchMouse extends Base {
 
         if (super.gameOver) {
 
-            super.paddleAtZero(basket, true);
+            super.paddleAtZero(basket, false);
 
         } else {
 
