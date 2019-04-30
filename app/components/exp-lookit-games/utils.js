@@ -16,7 +16,7 @@ export default class Utils{
     static get  paddleSpeed() {return 4;}
     static get  ballMass() {return 0.1;}
     static get  restitution() {return -1.2;}
-    static get  gameRounds() {return 30;}
+    static get  gameRounds() {return 10;}
     static get  gravityFactor() {return 1;}
 
     //Sound Resources
