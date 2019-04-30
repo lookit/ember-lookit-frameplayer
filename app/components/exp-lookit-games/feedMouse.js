@@ -28,12 +28,12 @@ let goodJob = {};
  * The trajectory is randomized with various values in trajectories array
  */
 export default class FeedMouse extends Base {
-  /**
-   * @method constructor
-   * @constructor constructor
-   * @param context
-   * @param document
-   */
+    /**
+     * @method constructor
+     * @constructor constructor
+     * @param context
+     * @param document
+     */
     constructor(context, document) {
 
         super(context, document);
@@ -133,6 +133,13 @@ export default class FeedMouse extends Base {
      */
     initGame() {
 
+        const  trajectories = [
+          {velocity: {x: 5.6, y: -7.3}},
+          {velocity: {x: 5.4, y: -7.7}},
+          {velocity: {x: 5.0, y: -8.3}}
+        ];
+        let trajectory = trajectories[Math.floor(Math.random() * 3)];
+        trajectory.velocity  = super.velocityToScale(trajectory.velocity);
         target = {
 
             dimensions: {width: paddleWidth, height: paddleWidth},
@@ -149,7 +156,7 @@ export default class FeedMouse extends Base {
 
         ball = {
             position: {x: paddleWidth * 5 + 20, y: (this.canvas.height - paddleWidth * 2)},
-            velocity: {x: 5.8, y: -7.6},
+            velocity: trajectory.velocity,
             mass: super.Utils.ballMass,
             radius: 10,
             restitution: super.Utils.restitution,
@@ -172,10 +179,10 @@ export default class FeedMouse extends Base {
 
     }
 
-  /**
-   * @method dataCollection
-   */
-  dataCollection() {
+    /**
+     * @method dataCollection
+     */
+    dataCollection() {
 
     }
 
@@ -207,11 +214,11 @@ export default class FeedMouse extends Base {
 
 
     //Might need to set the key as a super parameter
-  /**
-   * @method keyDownHandler Get current keyboard event on press button
-   * @param {object} e
-   */
-  keyDownHandler(e) {
+    /**
+     * @method keyDownHandler Get current keyboard event on press button
+     * @param {object} e
+     */
+    keyDownHandler(e) {
 
         if (e.key === 'l' || e.key === 'L') {
 
@@ -220,11 +227,11 @@ export default class FeedMouse extends Base {
 
     }
 
-  /**
-   * @method keyUpHandler Get current keyboard event on release button
-   * @param {object} e
-   */
-  keyUpHandler(e) {
+    /**
+     * @method keyUpHandler Get current keyboard event on release button
+     * @param {object} e
+     */
+    keyUpHandler(e) {
 
         if (e.key === 'l' || e.key === 'L') {
 
@@ -258,11 +265,11 @@ export default class FeedMouse extends Base {
 
             super.wallCollision(ball);
             if (!didHitWindow) {
-                if (!initSoundPlaying) {
-                    super.ballTrajectory(ball);
+                if (initSoundPlaying) {
+                    super.moveBallToStart(ball, false);
                 } else {
 
-                    super.moveBallToStart(ball, false);
+                    super.ballTrajectory(ball);
                 }
             }
             super.createBallBox(paddleWidth);

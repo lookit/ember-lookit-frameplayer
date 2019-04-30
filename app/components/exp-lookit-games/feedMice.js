@@ -33,24 +33,16 @@ let initSoundPlaying = false;
  */
 export default class FeedMice extends Base {
 
-  /**
-   * @method constructor
-   * @constructor
-   * @param context
-   * @param document
-   */
+    /**
+     * @method constructor
+     * @constructor
+     * @param context
+     * @param document
+     */
     constructor(context, document) {
         super(context, document);
         paddleWidth = this.canvas.width / 20;
         imageURLS = [super.Utils.blueMouseImage, super.Utils.greenMouseImage, super.Utils.redMouseImage];
-
-        this.trajectories = [
-
-          {velocity: {x: 5.8, y: 7.0}},
-          {velocity: {x: 6.5, y: 6.8}},
-          {velocity: {x: 7.5, y: 4.8}}
-
-        ];
 
     }
 
@@ -63,7 +55,6 @@ export default class FeedMice extends Base {
         let image = new Image();
         image.src = object.imageURL;
         this.ctx.drawImage(image, object.position.x, object.position.y, object.dimensions.width, object.dimensions.height);
-
     }
 
 
@@ -130,7 +121,6 @@ export default class FeedMice extends Base {
         audio = new Audio(super.Utils.rattleSound);
         audio.load();
         audio.addEventListener('onloadeddata', this.initGame(), false);
-
     }
 
 
@@ -145,11 +135,19 @@ export default class FeedMice extends Base {
         super.initGame();
         pressed = Array(3).fill(false);
 
-        let trajectory = this.trajectories[Math.floor(Math.random() * 3)];
+        const  trajectories = [
+
+          {velocity: {x: 5.8, y: -7.0 }},
+          {velocity: {x: 5.8, y: -6.5 }},
+          {velocity: {x: 5.8, y: -5.8 }}
+
+        ];
+        let trajectory = trajectories[Math.floor(Math.random() * 3)];
+        trajectory.velocity  = super.velocityToScale(trajectory.velocity);
 
         ball = {
             position: {x: paddleWidth * 5 + 20, y: (this.canvas.height - paddleWidth * 2)},
-            velocity: {x: trajectory.velocity.x, y: -trajectory.velocity.y},
+            velocity: trajectory.velocity,
             mass: super.Utils.ballMass,
             radius: paddleWidth / 6.5,
             restitution: super.Utils.restitution,
@@ -201,9 +199,9 @@ export default class FeedMice extends Base {
 
         // Window collision detection
         let target = targets[index];
-        if (ball.position.x > target.position.x && ball.position.x - ball.radius < target.position.x + target.dimensions.width / 2) {
+        if (ball.position.x > target.position.x && ball.position.x - ball.radius < target.position.x + target.dimensions.width ) {
 
-            if (ball.position.y > target.position.y && ball.position.y - ball.radius < target.position.y + target.dimensions.height / 2) {
+            if (ball.position.y > target.position.y && ball.position.y - ball.radius < target.position.y + target.dimensions.height ) {
 
                 //Put the ball in the center of target once it hits window constraints
                 ball.position.x = target.position.x + target.dimensions.width / 2 - ball.radius / 2;
@@ -233,7 +231,6 @@ export default class FeedMice extends Base {
     keyDownHandler(e) {
 
         pressed = pressed.map((val, index) => keys[index] === e.key ? true : false);
-
     }
 
 
@@ -263,11 +260,11 @@ export default class FeedMice extends Base {
         } else {
 
             if (!didHitWindow) {
-                if (!initSoundPlaying) {
-                    super.ballTrajectory(ball);
+                if (initSoundPlaying) {
+                    super.moveBallToStart(ball, false);
                 } else {
 
-                    super.moveBallToStart(ball, false);
+                    super.ballTrajectory(ball);
                 }
             }
 
@@ -302,11 +299,11 @@ export default class FeedMice extends Base {
 
     }
 
-  /**
-   * @method dataCollection Data collection
-   */
-  dataCollection() {
+    /**
+     * @method dataCollection Data collection
+     */
+    dataCollection() {
 
-  }
+    }
 
 }

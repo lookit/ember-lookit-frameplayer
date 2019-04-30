@@ -21,13 +21,7 @@ let goodJob = {};
 let initSoundPlaying = true;
 let ballCatchFail = {};
 let targetStars = {};
-let trajectories = [
 
-  {velocity: {x: 5.8, y: -7.4}},
-  {velocity: {x: 4.8, y: -8.2}},
-  {velocity: {x: 5.0, y: -7.8}},
-  {velocity: {x: 5.2, y: -7.6}}
-];
 
 
 /**
@@ -39,12 +33,12 @@ let trajectories = [
  * @extends Base
  */
 export default class CatchCheese extends Base {
-  /**
-   * @method constructor
-   * @constructor constructor
-   * @param context
-   * @param document
-   */
+    /**
+     * @method constructor
+     * @constructor constructor
+     * @param context
+     * @param document
+     */
     constructor(context, document) {
         super(context, document);
         paddleWidth = this.canvas.width / 20;
@@ -102,13 +96,20 @@ export default class CatchCheese extends Base {
 
         super.gameOver = false;
         super.initGame();
+        let trajectories = [
+
+          {velocity: {x: 5.8, y: -7.4}},
+          {velocity: {x: 4.8, y: -8.2}},
+          {velocity: {x: 5.0, y: -7.8}},
+          {velocity: {x: 5.2, y: -7.6}}
+        ];
 
         let trajectory = trajectories[Math.floor(Math.random() * trajectories.length)];
-
+        trajectory.velocity  = super.velocityToScale(trajectory.velocity);
         ball = {
 
             position: {x: paddleWidth * 5 + 20, y: (this.canvas.height - paddleWidth * 2)},
-            velocity: {x: trajectory.velocity.x, y: trajectory.velocity.y},
+            velocity: trajectory.velocity,
             mass: super.Utils.ballMass,
             radius: 10,
             restitution: super.Utils.restitution,
@@ -155,7 +156,7 @@ export default class CatchCheese extends Base {
 
         if (ball.position.y > basket.position.y && ball.position.y - ball.radius < basket.position.y + basket.dimensions.height) {
 
-            if (ball.position.x > basket.position.x && ball.position.x + ball.radius < ball.position.x + basket.dimensions.width) {
+            if (ball.position.x > basket.position.x && ball.position.x - ball.radius < ball.position.x + basket.dimensions.width) {
 
                 return true;
             }
@@ -242,7 +243,6 @@ export default class CatchCheese extends Base {
         this.drawImage(basket);
 
         obstructions.forEach(obstruction => this.drawImage(obstruction));
-
     }
 
 

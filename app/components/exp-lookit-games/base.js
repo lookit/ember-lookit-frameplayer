@@ -34,10 +34,9 @@ export default class Base {
         this.context = context;
         this.document = document;
         this.canvas = this.document.getElementById('gamesCanvas');
-        if (this.context.displayFullscreen) {
-            this.canvas.style.width = window.innerWidth + 'px';
-            this.canvas.style.height = window.innerHeight + 'px';
-        }
+        let height  =  580;
+        this.canvas.height = height;
+        this.canvas.width = height * 2;
         this.ctx = this.canvas.getContext('2d');
         this.currentRounds = 0;
         this.currentScore = 0;
@@ -57,6 +56,17 @@ export default class Base {
     init() {
         this.currentScore = 0;
         this.currentRounds = 0;
+        clearInterval(dataLoop);
+        clearInterval(gameLoop);
+
+    }
+
+    /**
+     * Stop all the game functions
+     * @method stop
+     */
+    stop() {
+
         clearInterval(dataLoop);
         clearInterval(gameLoop);
 
@@ -249,8 +259,7 @@ export default class Base {
     finishGame(score) {
 
         this.currentRounds++;
-        clearInterval(dataLoop);
-        clearInterval(gameLoop);
+        this.clearInterval();
         if (score) {
             this.increaseScore();
         }
@@ -258,13 +267,39 @@ export default class Base {
         if (this.currentRounds < Utils.gameRounds) {
             this.initGame();
 
-        } else {
-
+        }else {
+            this.context.set('showInstructions', true);
             this.context.next();
         }
 
     }
 
+    /**
+     * Clear all current running game loops
+     * @method clearInterval
+     */
+    clearInterval() {
+        for (let i = 1; i < 99999; i++) {
+            window.clearInterval(i);
+        }
+    }
+
+    /**
+       * Set velocity of moving object to scaling factor of the screen
+       * @method velocityToScale
+       * @param object
+       * @return {{x: number, y: number}}
+       */
+    velocityToScale(object) {
+        let trajectory  = {x: 0, y: 0 };
+        let height  =  this.canvas.offsetHeight;
+        let width  =  this.canvas.offsetWidth;
+        let heightSF =  height / 600;
+        let widthSF =  width / 1200;
+        trajectory.x =  object.x * widthSF;
+        trajectory.y =  object.y * heightSF;
+        return trajectory;
+    }
 
     /**
      * Create ball movement up to some trajectory

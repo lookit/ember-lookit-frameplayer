@@ -32,43 +32,47 @@ export default class Game {
      */
     constructor(context, document, gameNumber) {
 
+        let game = {};
+
         switch (gameNumber) {
 
         case 0:
 
-            new FeedCroc(context, document).init();
+            game =   new FeedCroc(context, document);
 
         break;
 
         case 1:
 
-            new CatchCheese(context, document).init();
+            game = new CatchCheese(context, document);
 
         break;
 
         case 2:
 
-            new CatchMouse(context, document).init();
+            game = new CatchMouse(context, document);
 
         break;
 
         case 3:
 
-            new FeedMice(context, document).init();
+            game =   new FeedMice(context, document);
 
         break;
 
         case 4:
 
-            new FeedMouse(context, document).init();
+            game =  new FeedMouse(context, document);
 
         break;
 
         default:
-            new FeedCroc(context, document).init();
+            game =  new FeedCroc(context, document);
         break;
 
     }
+
+        game.init();
 
     }
 
