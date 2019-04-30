@@ -33,9 +33,9 @@ import Game from './Game';
         "game": {
             "kind": "exp-lookit-games",
             "gameType": 0,
-            "hideControls": false,
-            "nextButtonText": "move on",
-            "showPreviousButton": false
+            "gameDescription": "Feed the Crocodile Game",
+            "instructions" : "Use mouse to move paddle up and down",
+            "showInstructions": true
         }
     }
  ```
@@ -48,6 +48,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
 
     type: 'exp-lookit-games',
     displayFullscreen: false,
+    currentGame: null,
     layout: layout,
     meta: {
         name: 'ExpLookitGames',
@@ -70,33 +71,33 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                 },
 
                 /**
-                 * Whether to hide next/previous buttons for game
-                 *
-                 * @property {Boolean} hideControls
-                 * @default false
-                 */
-                hideControls: {
-                    type: 'boolean',
-                    default: false
-                },
-
-                /**
-                 * Text to display on the 'next frame' button
+                 * Text to display for game instructions
                  *
                  * @property {String} nextButtonText
                  * @default 'Next'
                  */
-                nextButtonText: {
+                instructions: {
                     type: 'string',
-                    default: 'Next'
+                    default: ''
+                },
+
+                /**
+                 * Text to display for game description
+                 *
+                 * @property {String} nextButtonText
+                 * @default 'Next'
+                 */
+                gameDescription: {
+                    type: 'string',
+                    default: ''
                 },
                 /**
-                 * Whether to show a 'previous' button
+                 * Whether to show the instructions for the Game
                  *
-                 * @property {Boolean} showPreviousButton
+                 * @property {Boolean} showInstructions
                  * @default true
                  */
-                showPreviousButton: {
+                showInstructions: {
                     type: 'boolean',
                     default: true
                 }
@@ -165,6 +166,11 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     actions: {
         // Define any actions that you need to be able to trigger from within the template here
 
+        play() {
+            this.set('showInstructions', false);
+            new Game(this, document, this.gameType);
+        }
+
     },
 
     // Other functions that are just called from within your frame can be defined here, on
@@ -176,8 +182,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     // hooks you can use and when they're all called). You can delete this if not doing
     // anything additional.
     didInsertElement() {
+
         this._super(...arguments);
-        new Game(this, document, this.gameType);
+
     },
 
     // Anything that should happen before destroying your frame, e.g. removing a keypress
