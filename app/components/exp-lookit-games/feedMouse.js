@@ -280,6 +280,7 @@ export default class FeedMouse extends Base {
                 if (keyPressed) {
                     target.windowbackground = super.Utils.whiteColor;
                     this.createWindow(target);
+                    super.increaseScore();
                     goodJob.play();
 
                 } else {
