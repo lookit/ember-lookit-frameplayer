@@ -196,9 +196,9 @@ export default class FeedMouse extends Base {
     collisionDetection() {
 
         // Window collision detection
-        if (ball.position.x > target.position.x && ball.position.x + ball.radius < target.position.x + target.dimensions.width / 2) {
+        if (ball.position.x > target.position.x && ball.position.x + ball.radius < target.position.x + target.dimensions.width) {
 
-            if (ball.position.y - ball.radius > target.position.y && ball.position.y + ball.radius < target.position.y + target.dimensions.height / 2) {
+            if (ball.position.y - ball.radius > target.position.y && ball.position.y + ball.radius < target.position.y + target.dimensions.height) {
 
                 ball.position.x = target.position.x + target.dimensions.width / 2 - ball.radius / 2;
                 ball.position.y = target.position.y + target.dimensions.height / 2 - ball.radius / 2;
