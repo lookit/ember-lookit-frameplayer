@@ -1,6 +1,6 @@
 /*
- * Developed by Gleb Iakovlev on 4/7/19 12:19 AM.
- * Last modified 4/7/19 12:19 AM.
+ * Developed by Gleb Iakovlev on 5/3/19 9:09 PM.
+ * Last modified 4/29/19 8:18 PM.
  * Copyright (c) Cognoteq Software Solutions 2019.
  * All rights reserved
  */
@@ -11,7 +11,7 @@ import Base from './base';
  * @submodule games
  *
  */
-let paddleWidth = 0;
+
 let ball = {};
 let targets = [];
 let pressed = {};
@@ -21,13 +21,15 @@ let audio = {};
 let ballCatchFail = {};
 let goodJob = {};
 let initSoundPlaying = false;
+let currentTargetIndex = 0;
+const TIME_ALLOWED = 5000;
 
 /**
  * Main implementation of feed  the mice in the house game.
  * The user will operate with keyboard keys to predict which ball trajectory will hit which window
  * in the house.
  * The trajectory is randomized with various values in trajectories array
- * Initialize the mice image for each muse as an array
+ * Initialize the mice image for each mouse as an array
  * @class FeedMice
  * @extends Base
  */
@@ -41,7 +43,6 @@ export default class FeedMice extends Base {
      */
     constructor(context, document) {
         super(context, document);
-        paddleWidth = this.canvas.width / 20;
         imageURLS = [super.Utils.blueMouseImage, super.Utils.greenMouseImage, super.Utils.redMouseImage];
 
     }
@@ -64,7 +65,7 @@ export default class FeedMice extends Base {
      */
     createHouse() {
 
-        let houseX = this.canvas.width / 2 - paddleWidth;
+        let houseX = this.canvas.width / 2 - super.paddleWidth;
         let houseY = this.canvas.height / 2.5;
         let houseWidth = this.canvas.width / 3.5;
         let houseHeight = this.canvas.height / 2;
@@ -137,21 +138,24 @@ export default class FeedMice extends Base {
 
         const  trajectories = [
 
-          {velocity: {x: 5.8, y: -7.0 }},
-          {velocity: {x: 5.8, y: -6.5 }},
-          {velocity: {x: 5.8, y: -5.8 }}
+            {velocity: {x: 6.3, y: -9.6 }},
+            {velocity: {x: 6.2, y: -7.3 }},
+            {velocity: {x: 6.2, y: -5.8 }}
 
         ];
-        let trajectory = trajectories[Math.floor(Math.random() * 3)];
+
+        currentTargetIndex = Math.floor(Math.random() * 3);
+        let trajectory = trajectories[currentTargetIndex];
         trajectory.velocity  = super.velocityToScale(trajectory.velocity);
 
         ball = {
-            position: {x: paddleWidth * 5 + 20, y: (this.canvas.height - paddleWidth * 2)},
+            position: {x: super.paddleWidth * 5 + 20, y: (this.canvas.height - super.paddleWidth * 2)},
             velocity: trajectory.velocity,
             mass: super.Utils.ballMass,
-            radius: paddleWidth / 6.5,
+            radius: 10,
             restitution: super.Utils.restitution,
-            color: super.Utils.yellowColor
+            color: super.Utils.yellowColor,
+            timeReached:new Date().getTime()
 
         };
 
@@ -159,10 +163,10 @@ export default class FeedMice extends Base {
 
           ({
 
-            dimensions: {width: paddleWidth / 1.5, height: paddleWidth / 1.5},
+            dimensions: {width: super.paddleWidth /1.1 , height: super.paddleWidth /1.1},
             position: {
-                x: (this.canvas.width / 2 - paddleWidth * 0.3) + this.canvas.width / 5.0,
-                y: this.canvas.height / 2.6 + this.canvas.height / 4 + index * paddleWidth * 0.8
+                x: (this.canvas.width / 2 - super.paddleWidth * 0.5) + this.canvas.width / 5.0,
+                y: this.canvas.height / 2.6 + this.canvas.height / 5.5 + index * super.paddleWidth * 1.1
             },
             radius: 4,
             color: super.Utils.grayColor,
@@ -179,7 +183,6 @@ export default class FeedMice extends Base {
         audio.src = super.Utils.rattleSound;
         audio.play();
         audio.addEventListener('ended', function () {
-
             initSoundPlaying = false;
         });
 
@@ -187,8 +190,31 @@ export default class FeedMice extends Base {
 
     }
 
+
     /**
-     * Check collision of appropriate key and window
+     * Show the ball location in window.
+     * Center the ball location.
+     * @method showBallLocation
+     * @param target
+     */
+    showBallLocation(index){
+
+        //Put the ball in the center of target once it hits window constraints
+        let target = targets[index];
+        ball.position.x = target.position.x + target.dimensions.width / 2 - ball.radius / 2;
+        ball.position.y = target.position.y + target.dimensions.height / 2 - ball.radius / 2;
+        this.ctx.beginPath();
+        this.ctx.arc(ball.position.x, ball.position.y, ball.radius, 0, Math.PI * 2, true);
+        this.ctx.fillStyle = ball.color;
+        this.ctx.fill();
+        this.ctx.closePath();
+
+
+
+    }
+
+    /**
+     * Check collision of appropriate key and windowkkok
      * When ball hits the window set coordinates of the ball to the center of the reached window
      * @method  collisionDetection
      * @param index
@@ -201,21 +227,7 @@ export default class FeedMice extends Base {
         let target = targets[index];
         if (ball.position.x > target.position.x && ball.position.x - ball.radius < target.position.x + target.dimensions.width ) {
 
-            if (ball.position.y > target.position.y && ball.position.y - ball.radius < target.position.y + target.dimensions.height ) {
-
-                //Put the ball in the center of target once it hits window constraints
-                ball.position.x = target.position.x + target.dimensions.width / 2 - ball.radius / 2;
-                ball.position.y = target.position.y + target.dimensions.height / 2 - ball.radius / 2;
-
-                if (pressed[index]) {
-
-                    return 2;
-
-                }
-
-                return 1;
-
-            }
+            return 1;
 
         }
 
@@ -248,11 +260,10 @@ export default class FeedMice extends Base {
     loop() {
         super.loop();
 
-        super.createBallBox(paddleWidth);
+        super.createBallBox();
 
         let collisionArray = Array(3).fill(0).map((_, index) => this.collisionDetection(index));
         let didHitWindow = collisionArray.some(item => item > 0);
-        let didHitCorrectWindow = collisionArray.some(item => item === 2);
         if (super.gameOver) {
             super.waitSeconds(1500);
             super.finishGame(false);
@@ -264,38 +275,53 @@ export default class FeedMice extends Base {
                     super.moveBallToStart(ball, false);
                 } else {
 
-                    super.ballTrajectory(ball);
+                    super.ballTrajectory(ball,0.6,0.3);
+
                 }
             }
 
             this.createHouse();
             targets.forEach(target => this.createWindow(target));
 
-            if (didHitWindow) {
+
+            // Wait TIME_ALLOWED seconds to get the response
+            if (new Date().getTime() - ball.timeReached > TIME_ALLOWED) {
 
                 let index = pressed.findIndex(item => item != false);
-                let target = targets[index];
-                if (target) {
-                    target.windowbackground = super.Utils.whiteColor;
-                    this.createWindow(target);
+                let pressed_target = targets[index];
+                if (pressed_target) {
+                    pressed_target.windowbackground = super.Utils.whiteColor;
+                    this.createWindow(pressed_target);
 
                 }
 
-                if (didHitCorrectWindow) {
+
+                this.createHouse();
+                targets.forEach(target => this.createWindow(target));
+                this.showBallLocation(currentTargetIndex);
+                super.waitSeconds(600);
+                super.moveBallToStart(ball, true);
+
+                // Check if current index of the pressed item corresponds to the actual target index
+                if (index === currentTargetIndex) {
+
                     goodJob.play();
 
                 } else {
-                    ballCatchFail.play();
 
+                    ballCatchFail.play();
                 }
 
-                super.ballTrajectory(ball);
-                super.moveBallToStart(ball, true);
-                super.waitSeconds(600);
 
             }
 
+
+
+
+
         }
+
+
 
     }
 

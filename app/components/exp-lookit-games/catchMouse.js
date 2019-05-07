@@ -1,3 +1,10 @@
+/*
+ * Developed by Gleb Iakovlev on 5/3/19 9:09 PM.
+ * Last modified 4/29/19 11:02 PM.
+ * Copyright (c) Cognoteq Software Solutions 2019.
+ * All rights reserved
+ */
+
 import Base from './base';
 
 /**
@@ -8,7 +15,6 @@ import Base from './base';
 let mice = {};
 let cheeseClock = {};
 let basket = {};
-let paddleWidth = 0;
 let paddleHeight = 0;
 let initSoundPlaying = false;
 let audio = {};
@@ -34,8 +40,6 @@ export default class CatchMouse extends Base {
     constructor(context, document) {
 
         super(context, document);
-        paddleWidth = this.canvas.width / 20;
-        paddleHeight = this.canvas.width / 15;
 
     }
 
@@ -49,7 +53,7 @@ export default class CatchMouse extends Base {
     init() {
         super.init();
 
-        audio = new Audio(super.Utils.rattleSound);
+        audio = new Audio(super.Utils.drumRollSound);
         audio.load();
         audio.addEventListener('onloadeddata', this.initGame(), false);
 
@@ -74,19 +78,7 @@ export default class CatchMouse extends Base {
         this.ctx.drawImage(image, object.position.x, object.position.y, object.dimensions.width, object.dimensions.height);
     }
 
-    /**
-     *
-     * The box symbolizes initial paddle location
-     * @method createPaddleBox
-     */
-    createPaddleBox() {
-        this.ctx.beginPath();
-        this.ctx.rect(this.canvas.width / 2 - paddleWidth, this.canvas.height / 2.5 + this.canvas.height / 2 - 1.5 * paddleWidth, paddleWidth * 2, paddleWidth * 2);
-        this.ctx.lineWidth = '8';
-        this.ctx.strokeStyle = super.Utils.blueColor;
-        this.ctx.stroke();
-        this.ctx.closePath();
-    }
+
 
 
     /**
@@ -99,27 +91,28 @@ export default class CatchMouse extends Base {
     initGame() {
 
         basket = {
-            dimensions: {width: paddleWidth * 1.5, height: paddleWidth * 1.5},
+            dimensions: {width: super.paddleWidth * 1.3, height: super.paddleWidth * 1.3},
             position: {
-                x: 15 + this.canvas.width / 2 - paddleWidth,
-                y: this.canvas.height / 2.5 + this.canvas.height / 2 - 1.5 * paddleWidth
+                x: 15 + this.canvas.width / 2 - super.paddleWidth*1.5+15,
+                y: this.canvas.height / 2.5 + this.canvas.height / 2 - 1.5 * super.paddleWidth
             },
+            paddleLastMovedMillis: 0,
             velocity: super.Utils.paddleSpeed,
             imageURL: super.Utils.basketImage
         };
 
         mice = {
-            dimensions: {width: paddleWidth, height: paddleWidth},
-            position: {x: this.canvas.width / 2 - paddleWidth / 2, y: (this.canvas.height - paddleHeight) / 2 - paddleHeight},
-            radius: 20,
+            dimensions: {width: super.paddleWidth, height: super.paddleWidth},
+            position: {x: this.canvas.width / 2 - basket.dimensions.width / 2, y: (this.canvas.height - basket.dimensions.height) / 2 - basket.dimensions.height},
+            radius: 40,
             delay: 2000,
             lastTime: new Date().getTime(),
             imageURL: super.Utils.miceImage
         };
 
         cheeseClock = {
-            dimensions: {width: paddleWidth, height: paddleWidth},
-            position: {x: this.canvas.width / 2 + paddleWidth, y: mice.position.y},
+            dimensions: {width: super.paddleWidth*2, height: super.paddleWidth*1.6},
+            position: {x: this.canvas.width / 2 + super.paddleWidth, y: mice.position.y - mice.dimensions.height/2.2},
             angle: 0,
             velocity: 1.4,
             imageURL: super.Utils.cheeseImage
@@ -128,7 +121,7 @@ export default class CatchMouse extends Base {
         initSoundPlaying = true;
         goodJob.src = super.Utils.goodCatchSound;
         ballCatchFail.src = super.Utils.ballcatchFailSound;
-        audio.src = super.Utils.rattleSound;
+        audio.src = super.Utils.drumRollSound;
         audio.play();
         audio.addEventListener('ended', function () {
 
@@ -202,8 +195,8 @@ export default class CatchMouse extends Base {
 
         if (super.gameOver) {
 
-            cheeseClock.dimensions.width = paddleWidth * 1.5;
-            cheeseClock.dimensions.height = paddleWidth * 1.5;
+            cheeseClock.dimensions.width = super.paddleWidth * 1.5;
+            cheeseClock.dimensions.height = super.paddleWidth * 1.5;
         }
 
         let angle = Math.PI * (1.65 - cheeseClock.angle);
@@ -228,7 +221,7 @@ export default class CatchMouse extends Base {
      */
     loop() {
         super.loop();
-        this.createPaddleBox();
+        super.createPaddleBox(this.canvas.width / 2 - super.paddleWidth, this.canvas.height / 2.5 + this.canvas.height / 2 - 1.5 * super.paddleWidth);
         this.drawImage(cheeseClock);
 
         if (super.gameOver) {

@@ -1,7 +1,8 @@
 /*
- * Developed by Gleb Iakovlev on 3/31/19 8:15 PM.
- * Last modified 3/31/19 8:11 PM.
- * Copyright (c) 2019 . All rights reserved.
+ * Developed by Gleb Iakovlev on 5/3/19 9:09 PM.
+ * Last modified 4/29/19 10:46 PM.
+ * Copyright (c) Cognoteq Software Solutions 2019.
+ * All rights reserved
  */
 import Utils from './utils';
 
@@ -16,6 +17,9 @@ let gameLoop = {};
 let mouseY = 0;
 let gameOver = false;
 let paddleWidth = 0;
+let paddleHeight = 0;
+let paddleBox = {x:0,y:0};
+const PADDLE_REST_TIME_MS = 500;
 
 /**
  * Base class for common game functions
@@ -42,10 +46,12 @@ export default class Base {
         this.currentScore = 0;
         this.canvas.style.cursor = 'none';
         paddleWidth = this.canvas.width / 20;
+        paddleHeight = this.canvas.width / 15;
         // Event listener for mouse and keyboard here
         document.addEventListener('keydown', this.keyDownHandler, false);
         document.addEventListener('keyup', this.keyUpHandler, false);
         document.addEventListener('mousemove', this.onMouseMove);
+
     }
 
 
@@ -59,6 +65,54 @@ export default class Base {
         clearInterval(dataLoop);
         clearInterval(gameLoop);
 
+    }
+
+    /**
+     * Get standard paddle width
+     * @method paddleWidth
+     * @return {number}
+     */
+    get paddleWidth(){
+
+        return paddleWidth;
+    }
+
+    /**
+     * Get standard paddle height
+     * @method paddleHeight
+     * @return {number}
+     */
+    get paddleHeight(){
+
+        return paddleHeight;
+    }
+
+    /**
+     * Draw paddle according to the location parameters
+     * @method drawPaddle
+     *
+     */
+    drawPaddle(x,y) {
+        this.ctx.beginPath();
+        this.ctx.rect(x, y, paddleWidth*1.3, paddleWidth/4);
+        this.ctx.fillStyle = Utils.whiteColor;
+        this.ctx.fill();
+        this.ctx.closePath();
+    }
+
+
+    /**
+     * The box symbolizes initial paddle location
+     * @method createPaddleBox
+     */
+    createPaddleBox(x,y) {
+        this.ctx.beginPath();
+        paddleBox = {x:x,y:y};
+        this.ctx.rect(x,y, paddleWidth*1.3 ,paddleWidth*1.3);
+        this.ctx.fillStyle = Utils.blackColor;
+        this.ctx.lineWidth = '8';
+        this.ctx.strokeStyle = Utils.blueColor;
+        this.ctx.stroke();
     }
 
     /**
@@ -138,7 +192,7 @@ export default class Base {
      * @method createBallBox
      * @param {int} paddleWidth
      */
-    createBallBox(paddleWidth) {
+    createBallBox() {
 
         this.ctx.beginPath();
         this.ctx.lineWidth = '8';
@@ -303,14 +357,21 @@ export default class Base {
 
     /**
      * Create ball movement up to some trajectory
+     * Set time coefficients scaleX,scaleY  as time parameters to control
+     * speed in time
      * @method ballTrajectory
      * @param {object} ball
+     * @param {number} scaleX
+     * @param {number} scaleY
      */
-    ballTrajectory(ball) {
+    ballTrajectory(ball,scaleX=1,scaleY=1) {
         let gravity = Utils.gravityFactor * 9.81;  // m / s^2
+        //density of the environment
         let rho = 1.22; // kg/ m^3
-        let Cd = 0.47;  // Dimensionless
+        let Cd = 0.47;  // Dimensionless/
+        // frontal area or frontal projection of the object (ball)
         let A = Math.PI * ball.radius * ball.radius / (10000); // m^2
+        //Aerodynamics drag
         let Fx = -0.5 * Cd * A * rho * ball.velocity.x * ball.velocity.x * ball.velocity.x / Math.abs(ball.velocity.x);
         let Fy = -0.5 * Cd * A * rho * ball.velocity.y * ball.velocity.y * ball.velocity.y / Math.abs(ball.velocity.y);
 
@@ -320,10 +381,10 @@ export default class Base {
         let ax = Fx / ball.mass;
         let ay = gravity + (Fy / ball.mass);
 
-        ball.velocity.x += ax * Utils.frameRate;
-        ball.velocity.y += ay * Utils.frameRate;
-        ball.position.x += ball.velocity.x * Utils.frameRate * 100;
-        ball.position.y += ball.velocity.y * Utils.frameRate * 100;
+        ball.velocity.x += ax * Utils.frameRate*scaleX;
+        ball.velocity.y += ay * Utils.frameRate*scaleY;
+        ball.position.x += ball.velocity.x * Utils.frameRate * 100 * scaleX;
+        ball.position.y += ball.velocity.y * Utils.frameRate * 100 * scaleY ;
 
         this.ctx.translate(ball.position.x, ball.position.y);
         this.ctx.beginPath();
@@ -334,6 +395,8 @@ export default class Base {
         this.ctx.restore();
 
     }
+
+
 
     /**
      * Set position of the ball to initial coordinates to symbolize the start of the game
@@ -357,15 +420,26 @@ export default class Base {
     /**
      * Check if user returned paddle to initial coordinates and call finish of the game to restart
      * current round
+     * Check if paddle is stationary for PADDLE_REST_TIME_MS, if yes proceed to the next trial
      * @method paddleAtZero
      * @param {object} paddle
      * @param {boolean} score should increase score
      */
     paddleAtZero(paddle, score) {
 
-        if (paddle.position.y >= this.canvas.height / 2.5 + this.canvas.height / 2 - 1.5 * paddleWidth) {
+        if (paddle.position.y >= paddleBox.y ) {
+            console.log(new Date().getTime() - paddle.paddleLastMovedMillis);
+            if(paddle.paddleLastMovedMillis === 0){
+                paddle.paddleLastMovedMillis = new Date().getTime();
 
-            this.finishGame(score);
+            }else if(new Date().getTime() - paddle.paddleLastMovedMillis  >= PADDLE_REST_TIME_MS){
+
+                this.finishGame(score);
+            }
+
+        }else{
+
+            paddle.paddleLastMovedMillis === 0;
         }
 
     }
@@ -395,7 +469,11 @@ export default class Base {
      */
     paddleMove(paddle) {
 
+
+
+
         paddle.position.y = this.mouseY;
+
 
     }
 
@@ -420,7 +498,12 @@ export default class Base {
 
     onMouseMove(e) {
 
-        mouseY = e.clientY;
+        if(e.clientY >  paddleBox.y ||e.clientY === 0  ) {
+            mouseY = paddleBox.y;
+
+        }else{
+            mouseY = e.clientY;
+        }
     }
 
 }

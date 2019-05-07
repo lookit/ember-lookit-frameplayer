@@ -1,6 +1,6 @@
 /*
- * Developed by Gleb Iakovlev on 4/6/19 3:11 PM.
- * Last modified 4/6/19 3:11 PM.
+ * Developed by Gleb Iakovlev on 5/3/19 9:09 PM.
+ * Last modified 4/29/19 11:01 PM.
  * Copyright (c) Cognoteq Software Solutions 2019.
  * All rights reserved
  */
@@ -11,14 +11,21 @@ import Base from './base';
  * @submodule games
  *
  */
-let paddleWidth = 0;
 let target = {};
 let ball = {};
-let keyPressed = false;
+let keyPressed = {};
 let initSoundPlaying = false;
 let startSound = {};
 let ballCatchFail = {};
 let goodJob = {};
+const scale = [
+
+    {scale_x:2.8,scale_y:1.7},
+    {scale_x:3.5,scale_y:2.3},
+    {scale_x:2.8,scale_y:1.8}
+];
+let current_index = 0;
+
 
 /**
  * @class FeedMouse
@@ -37,7 +44,6 @@ export default class FeedMouse extends Base {
     constructor(context, document) {
 
         super(context, document);
-        paddleWidth = this.canvas.width / 20;
 
     }
 
@@ -48,7 +54,7 @@ export default class FeedMouse extends Base {
      */
     createHouse() {
 
-        let houseX = this.canvas.width / 2 + paddleWidth;
+        let houseX = this.canvas.width / 2 + super.paddleWidth;
         let houseY = this.canvas.height / 2.5;
         let houseWidth = this.canvas.width / 3.5;
         let houseHeight = this.canvas.height / 2;
@@ -103,6 +109,35 @@ export default class FeedMouse extends Base {
 
     }
 
+
+    /**
+     * Show the current  ball location .
+     * Center the ball location.
+     * @method showBallLocation
+     * @param target
+     */
+    showBallLocation(center){
+
+        if(center){
+            ball.position.x = target.position.x + target.dimensions.width / 2 - ball.radius / 2;
+            ball.position.y = target.position.y + target.dimensions.height / 2 - ball.radius / 2;
+
+
+        }
+
+        //Put the ball in the center of target once it hits window constraint
+        this.ctx.beginPath();
+        this.ctx.arc(ball.position.x, ball.position.y, ball.radius, 0, Math.PI * 2, true);
+        this.ctx.fillStyle = ball.color;
+        this.ctx.fill();
+        this.ctx.closePath();
+
+
+
+
+    }
+
+
     /**
      * Main point to start the game.
      * Initialize static parameters and preload sounds here
@@ -133,18 +168,20 @@ export default class FeedMouse extends Base {
      */
     initGame() {
 
+        let Angle = (100*(Math.PI)/180);
         const  trajectories = [
-          {velocity: {x: 5.6, y: -7.3}},
-          {velocity: {x: 5.4, y: -7.7}},
-          {velocity: {x: 5.0, y: -8.3}}
+          {velocity: {x: 4.4* (60*(Math.PI)/180), y: -6.2*Math.sin(Angle)}},
+          {velocity: {x: 4.2* (60*(Math.PI)/180), y: -7.0*Math.sin(Angle)}},
+          {velocity: {x: 4.0* (60*(Math.PI)/180), y: -6.5*Math.sin(Angle)}}
         ];
-        let trajectory = trajectories[Math.floor(Math.random() * 3)];
+        current_index = Math.floor(Math.random() * 3);
+        let trajectory = trajectories[current_index];
         trajectory.velocity  = super.velocityToScale(trajectory.velocity);
         target = {
 
-            dimensions: {width: paddleWidth, height: paddleWidth},
+            dimensions: {width: super.paddleWidth, height: super.paddleWidth},
             position: {
-                x: (this.canvas.width - paddleWidth * 3 - this.canvas.width / 3.2) + this.canvas.width / 6.4 - paddleWidth / 2,
+                x: (this.canvas.width - super.paddleWidth * 3 - this.canvas.width / 3.2) + this.canvas.width / 6.4 - super.paddleWidth / 2,
                 y: this.canvas.height / 3 + this.canvas.height / 4
             },
             radius: 4,
@@ -154,13 +191,16 @@ export default class FeedMouse extends Base {
 
         };
 
+
+
         ball = {
-            position: {x: paddleWidth * 5 + 20, y: (this.canvas.height - paddleWidth * 2)},
+            position: {x: super.paddleWidth * 5 + 20, y: (this.canvas.height - super.paddleWidth * 2)},
             velocity: trajectory.velocity,
             mass: super.Utils.ballMass,
             radius: 10,
             restitution: super.Utils.restitution,
-            color: super.Utils.yellowColor
+            color: super.Utils.yellowColor,
+            timeReached:0
 
         };
 
@@ -171,7 +211,7 @@ export default class FeedMouse extends Base {
 
         startSound.play();
         startSound.addEventListener('ended', function () {
-
+            ball.timeReached = new Date().getTime();
             initSoundPlaying = false;
         });
 
@@ -196,16 +236,12 @@ export default class FeedMouse extends Base {
     collisionDetection() {
 
         // Window collision detection
-        if (ball.position.x > target.position.x && ball.position.x + ball.radius < target.position.x + target.dimensions.width) {
+        if (ball.position.x > target.position.x && ball.position.x - ball.radius < target.position.x + target.dimensions.width) {
 
-            if (ball.position.y - ball.radius > target.position.y && ball.position.y + ball.radius < target.position.y + target.dimensions.height) {
-
-                ball.position.x = target.position.x + target.dimensions.width / 2 - ball.radius / 2;
-                ball.position.y = target.position.y + target.dimensions.height / 2 - ball.radius / 2;
-
+         //   if (ball.position.y - ball.radius > target.position.y && ball.position.y - ball.radius < target.position.y + target.dimensions.height) {
                 return true;
 
-            }
+           // }
 
         }
 
@@ -222,7 +258,7 @@ export default class FeedMouse extends Base {
 
         if (e.key === 'l' || e.key === 'L') {
 
-            keyPressed = true;
+            keyPressed = {value:true,when:new Date().getTime()};
         }
 
     }
@@ -235,7 +271,7 @@ export default class FeedMouse extends Base {
 
         if (e.key === 'l' || e.key === 'L') {
 
-            keyPressed = false;
+            keyPressed = {value:false,when:new Date().getTime()};
         }
 
     }
@@ -269,28 +305,45 @@ export default class FeedMouse extends Base {
                     super.moveBallToStart(ball, false);
                 } else {
 
-                    super.ballTrajectory(ball);
+                    super.ballTrajectory(ball,scale[current_index].scale_x,scale[current_index].scale_y);
                 }
             }
-            super.createBallBox(paddleWidth);
+            super.createBallBox();
             this.createHouse();
             this.createWindow();
-            if (didHitWindow) {
 
-                if (keyPressed) {
+
+            if (keyPressed.value || new Date().getTime() -keyPressed.when < 150 ) {
+
+                this.showBallLocation(didHitWindow);
+                if(didHitWindow){
+
                     target.windowbackground = super.Utils.whiteColor;
                     this.createWindow(target);
                     super.increaseScore();
                     goodJob.play();
 
-                } else {
+                }else{
+
                     ballCatchFail.play();
 
                 }
-                super.ballTrajectory(ball);
-                super.moveBallToStart(ball, true);
 
+
+
+                super.moveBallToStart(ball, true);
+                didHitWindow = false;
             }
+
+
+            if(didHitWindow){
+
+                console.log(new Date().getTime() - ball.timeReached);
+                this.showBallLocation(didHitWindow);
+                ballCatchFail.play();
+                super.moveBallToStart(ball, true);
+            }
+
         }
 
     }
