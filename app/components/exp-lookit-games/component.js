@@ -100,6 +100,50 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                 showInstructions: {
                     type: 'boolean',
                     default: true
+                },
+
+                export_arr: {
+                    type: 'array',
+                    default: [],
+                    items: {
+                        type: 'object',
+                        properties: {
+
+                            ball_object: {
+                                type: 'object',
+                                properties: {
+                                    x: {
+                                        type: 'string'
+                                    },
+                                    y: {
+
+                                        type: 'string'
+                                    }
+                                }
+
+                            },
+                            paddle_object: {
+                                type: 'object',
+                                properties: {
+                                    x: {
+                                        type: 'string'
+                                    },
+                                    y: {
+
+                                        type: 'string'
+                                    }
+                                }
+
+                            },
+                            timestamp: {
+                                type: 'string'
+
+                            }
+
+                        }
+
+                    }
+
                 }
             }
         },
@@ -168,6 +212,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
 
         play() {
             this.set('showInstructions', false);
+            this.set('export_arr', Ember.A());
             new Game(this, document, this.gameType);
         }
 

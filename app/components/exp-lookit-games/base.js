@@ -18,7 +18,7 @@ let mouseY = 0;
 let gameOver = false;
 let paddleWidth = 0;
 let paddleHeight = 0;
-let paddleBox = {x:0,y:0};
+let paddleBox = {x: 0, y: 0};
 const PADDLE_REST_TIME_MS = 500;
 
 /**
@@ -72,7 +72,7 @@ export default class Base {
      * @method paddleWidth
      * @return {number}
      */
-    get paddleWidth(){
+    get paddleWidth() {
 
         return paddleWidth;
     }
@@ -82,7 +82,7 @@ export default class Base {
      * @method paddleHeight
      * @return {number}
      */
-    get paddleHeight(){
+    get paddleHeight() {
 
         return paddleHeight;
     }
@@ -92,9 +92,9 @@ export default class Base {
      * @method drawPaddle
      *
      */
-    drawPaddle(x,y) {
+    drawPaddle(x, y) {
         this.ctx.beginPath();
-        this.ctx.rect(x, y, paddleWidth*1.3, paddleWidth/4);
+        this.ctx.rect(x, y, paddleWidth * 1.3, paddleWidth / 4);
         this.ctx.fillStyle = Utils.whiteColor;
         this.ctx.fill();
         this.ctx.closePath();
@@ -105,10 +105,10 @@ export default class Base {
      * The box symbolizes initial paddle location
      * @method createPaddleBox
      */
-    createPaddleBox(x,y) {
+    createPaddleBox(x, y) {
         this.ctx.beginPath();
-        paddleBox = {x:x,y:y};
-        this.ctx.rect(x,y, paddleWidth*1.3 ,paddleWidth*1.3);
+        paddleBox = {x: x, y: y};
+        this.ctx.rect(x, y, paddleWidth * 1.3, paddleWidth * 1.3);
         this.ctx.fillStyle = Utils.blackColor;
         this.ctx.lineWidth = '8';
         this.ctx.strokeStyle = Utils.blueColor;
@@ -277,7 +277,7 @@ export default class Base {
      */
     storeData(exportData) {
 
-        // this.context.get('export_arr').addObject(exportData);
+        this.context.get('export_arr').addObject(exportData);
         // this.context.export_arr.push(exportData);
     }
 
@@ -364,7 +364,7 @@ export default class Base {
      * @param {number} scaleX
      * @param {number} scaleY
      */
-    ballTrajectory(ball,scaleX=1,scaleY=1) {
+    ballTrajectory(ball, scaleX=1, scaleY=1) {
         let gravity = Utils.gravityFactor * 9.81;  // m / s^2
         //density of the environment
         let rho = 1.22; // kg/ m^3
@@ -381,10 +381,10 @@ export default class Base {
         let ax = Fx / ball.mass;
         let ay = gravity + (Fy / ball.mass);
 
-        ball.velocity.x += ax * Utils.frameRate*scaleX;
-        ball.velocity.y += ay * Utils.frameRate*scaleY;
+        ball.velocity.x += ax * Utils.frameRate * scaleX;
+        ball.velocity.y += ay * Utils.frameRate * scaleY;
         ball.position.x += ball.velocity.x * Utils.frameRate * 100 * scaleX;
-        ball.position.y += ball.velocity.y * Utils.frameRate * 100 * scaleY ;
+        ball.position.y += ball.velocity.y * Utils.frameRate * 100 * scaleY;
 
         this.ctx.translate(ball.position.x, ball.position.y);
         this.ctx.beginPath();
@@ -427,17 +427,17 @@ export default class Base {
      */
     paddleAtZero(paddle, score) {
 
-        if (paddle.position.y >= paddleBox.y ) {
+        if (paddle.position.y >= paddleBox.y) {
             console.log(new Date().getTime() - paddle.paddleLastMovedMillis);
-            if(paddle.paddleLastMovedMillis === 0){
+            if (paddle.paddleLastMovedMillis === 0) {
                 paddle.paddleLastMovedMillis = new Date().getTime();
 
-            }else if(new Date().getTime() - paddle.paddleLastMovedMillis  >= PADDLE_REST_TIME_MS){
+            }else if (new Date().getTime() - paddle.paddleLastMovedMillis  >= PADDLE_REST_TIME_MS) {
 
                 this.finishGame(score);
             }
 
-        }else{
+        }else {
 
             paddle.paddleLastMovedMillis === 0;
         }
@@ -469,11 +469,7 @@ export default class Base {
      */
     paddleMove(paddle) {
 
-
-
-
         paddle.position.y = this.mouseY;
-
 
     }
 
@@ -498,10 +494,10 @@ export default class Base {
 
     onMouseMove(e) {
 
-        if(e.clientY >  paddleBox.y ||e.clientY === 0  ) {
+        if (e.clientY >  paddleBox.y || e.clientY === 0) {
             mouseY = paddleBox.y;
 
-        }else{
+        }else {
             mouseY = e.clientY;
         }
     }
