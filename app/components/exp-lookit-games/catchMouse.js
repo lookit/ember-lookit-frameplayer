@@ -15,7 +15,6 @@ import Base from './base';
 let mice = {};
 let cheeseClock = {};
 let basket = {};
-let paddleHeight = 0;
 let initSoundPlaying = false;
 let audio = {};
 let ballCatchFail = {};
@@ -31,12 +30,12 @@ let goodJob = {};
  * The user should catch the mice until cheese(symbolizing the clock) is gone.
  */
 export default class CatchMouse extends Base {
-  /**
-   * @method constructor
-   * @constructor constructor
-   * @param context Context of the game
-   * @param document
-   */
+    /**
+     * @method constructor
+     * @constructor constructor
+     * @param context Context of the game
+     * @param document
+     */
     constructor(context, document) {
 
         super(context, document);
@@ -93,7 +92,7 @@ export default class CatchMouse extends Base {
         basket = {
             dimensions: {width: super.paddleWidth * 1.3, height: super.paddleWidth * 1.3},
             position: {
-                x: 15 + this.canvas.width / 2 - super.paddleWidth*1.5+15,
+                x: 15 + this.canvas.width / 2 - super.paddleWidth * 1.5 + 15,
                 y: this.canvas.height / 2.5 + this.canvas.height / 2 - 1.5 * super.paddleWidth
             },
             paddleLastMovedMillis: 0,
@@ -111,8 +110,8 @@ export default class CatchMouse extends Base {
         };
 
         cheeseClock = {
-            dimensions: {width: super.paddleWidth*2, height: super.paddleWidth*1.6},
-            position: {x: this.canvas.width / 2 + super.paddleWidth, y: mice.position.y - mice.dimensions.height/2.2},
+            dimensions: {width: super.paddleWidth * 2, height: super.paddleWidth * 1.6},
+            position: {x: this.canvas.width / 2 + super.paddleWidth, y: mice.position.y - mice.dimensions.height / 2.2},
             angle: 0,
             velocity: 1.4,
             imageURL: super.Utils.cheeseImage
@@ -131,10 +130,10 @@ export default class CatchMouse extends Base {
         super.initGame();
     }
 
-  /**
-   * @method  dataCollection Collect data
-   */
-  dataCollection() {
+    /**
+     * @method  dataCollection Collect data
+     */
+    dataCollection() {
 
         let exportData = {
 

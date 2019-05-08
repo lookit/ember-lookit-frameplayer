@@ -22,7 +22,7 @@ let ballCatchFail = {};
 let targetStars = {};
 const numberOfObstructions = 3;
 //Object for obstructions regularization. Check current index of obstructions array and set the iteration
-let currentTrial = {currentIndex:0,iteration:0 };
+let currentTrial = {currentIndex: 0, iteration: 0 };
 
 
 /**
@@ -42,7 +42,6 @@ export default class CatchCheese extends Base {
      */
     constructor(context, document) {
         super(context, document);
-
 
     }
 
@@ -78,9 +77,8 @@ export default class CatchCheese extends Base {
         super.initGame();
         let obstructionsNum = this.getCurrentIndex();
 
-
         basket = {
-            dimensions: {width: super.paddleWidth*1.3, height: super.paddleWidth*1.3},
+            dimensions: {width: super.paddleWidth * 1.3, height: super.paddleWidth * 1.3},
             position: {x: this.canvas.width / 2 + super.paddleWidth * 3, y: (this.canvas.height / 2 + super.paddleHeight * 2)},
             velocity: super.Utils.paddleSpeed,
             paddleLastMovedMillis: 0,
@@ -239,7 +237,7 @@ export default class CatchCheese extends Base {
             }
         }
 
-        super.createPaddleBox(this.canvas.width / 2 + super.paddleWidth * 3, this.canvas.height / 2.5 + this.canvas.height / 2 - super.paddleWidth*1.3);
+        super.createPaddleBox(this.canvas.width / 2 + super.paddleWidth * 3, this.canvas.height / 2.5 + this.canvas.height / 2 - super.paddleWidth * 1.3);
         super.paddleMove(basket);
         this.drawImage(basket);
 

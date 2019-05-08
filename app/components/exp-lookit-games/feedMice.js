@@ -155,7 +155,7 @@ export default class FeedMice extends Base {
             radius: 10,
             restitution: super.Utils.restitution,
             color: super.Utils.yellowColor,
-            timeReached:new Date().getTime()
+            timeReached: new Date().getTime()
 
         };
 
@@ -163,7 +163,7 @@ export default class FeedMice extends Base {
 
           ({
 
-            dimensions: {width: super.paddleWidth /1.1 , height: super.paddleWidth /1.1},
+            dimensions: {width: super.paddleWidth / 1.1, height: super.paddleWidth / 1.1},
             position: {
                 x: (this.canvas.width / 2 - super.paddleWidth * 0.5) + this.canvas.width / 5.0,
                 y: this.canvas.height / 2.6 + this.canvas.height / 5.5 + index * super.paddleWidth * 1.1
@@ -197,7 +197,7 @@ export default class FeedMice extends Base {
      * @method showBallLocation
      * @param target
      */
-    showBallLocation(index){
+    showBallLocation(index) {
 
         //Put the ball in the center of target once it hits window constraints
         let target = targets[index];
@@ -208,8 +208,6 @@ export default class FeedMice extends Base {
         this.ctx.fillStyle = ball.color;
         this.ctx.fill();
         this.ctx.closePath();
-
-
 
     }
 
@@ -225,7 +223,7 @@ export default class FeedMice extends Base {
 
         // Window collision detection
         let target = targets[index];
-        if (ball.position.x > target.position.x && ball.position.x - ball.radius < target.position.x + target.dimensions.width ) {
+        if (ball.position.x > target.position.x && ball.position.x - ball.radius < target.position.x + target.dimensions.width) {
 
             return 1;
 
@@ -275,7 +273,7 @@ export default class FeedMice extends Base {
                     super.moveBallToStart(ball, false);
                 } else {
 
-                    super.ballTrajectory(ball,0.6,0.3);
+                    super.ballTrajectory(ball, 0.6, 0.3);
 
                 }
             }
@@ -295,7 +293,6 @@ export default class FeedMice extends Base {
 
                 }
 
-
                 this.createHouse();
                 targets.forEach(target => this.createWindow(target));
                 this.showBallLocation(currentTargetIndex);
@@ -312,16 +309,9 @@ export default class FeedMice extends Base {
                     ballCatchFail.play();
                 }
 
-
             }
 
-
-
-
-
         }
-
-
 
     }
 

@@ -20,9 +20,9 @@ let ballCatchFail = {};
 let goodJob = {};
 const scale = [
 
-    {scale_x:2.8,scale_y:1.7},
-    {scale_x:3.5,scale_y:2.3},
-    {scale_x:2.8,scale_y:1.8}
+    {scale_x: 2.8, scale_y: 1.7},
+    {scale_x: 3.5, scale_y: 2.3},
+    {scale_x: 2.8, scale_y: 1.8}
 ];
 let current_index = 0;
 
@@ -116,12 +116,11 @@ export default class FeedMouse extends Base {
      * @method showBallLocation
      * @param target
      */
-    showBallLocation(center){
+    showBallLocation(center) {
 
-        if(center){
+        if (center) {
             ball.position.x = target.position.x + target.dimensions.width / 2 - ball.radius / 2;
             ball.position.y = target.position.y + target.dimensions.height / 2 - ball.radius / 2;
-
 
         }
 
@@ -131,9 +130,6 @@ export default class FeedMouse extends Base {
         this.ctx.fillStyle = ball.color;
         this.ctx.fill();
         this.ctx.closePath();
-
-
-
 
     }
 
@@ -168,11 +164,11 @@ export default class FeedMouse extends Base {
      */
     initGame() {
 
-        let Angle = (100*(Math.PI)/180);
+        let Angle = (100 * (Math.PI) / 180);
         const  trajectories = [
-          {velocity: {x: 4.4* (60*(Math.PI)/180), y: -6.2*Math.sin(Angle)}},
-          {velocity: {x: 4.2* (60*(Math.PI)/180), y: -7.0*Math.sin(Angle)}},
-          {velocity: {x: 4.0* (60*(Math.PI)/180), y: -6.5*Math.sin(Angle)}}
+          {velocity: {x: 4.4 * (60 * (Math.PI) / 180), y: -6.2 * Math.sin(Angle)}},
+          {velocity: {x: 4.2 * (60 * (Math.PI) / 180), y: -7.0 * Math.sin(Angle)}},
+          {velocity: {x: 4.0 * (60 * (Math.PI) / 180), y: -6.5 * Math.sin(Angle)}}
         ];
         current_index = Math.floor(Math.random() * 3);
         let trajectory = trajectories[current_index];
@@ -191,8 +187,6 @@ export default class FeedMouse extends Base {
 
         };
 
-
-
         ball = {
             position: {x: super.paddleWidth * 5 + 20, y: (this.canvas.height - super.paddleWidth * 2)},
             velocity: trajectory.velocity,
@@ -200,7 +194,7 @@ export default class FeedMouse extends Base {
             radius: 10,
             restitution: super.Utils.restitution,
             color: super.Utils.yellowColor,
-            timeReached:0
+            timeReached: 0
 
         };
 
@@ -238,10 +232,10 @@ export default class FeedMouse extends Base {
         // Window collision detection
         if (ball.position.x > target.position.x && ball.position.x - ball.radius < target.position.x + target.dimensions.width) {
 
-         //   if (ball.position.y - ball.radius > target.position.y && ball.position.y - ball.radius < target.position.y + target.dimensions.height) {
-                return true;
+            //   if (ball.position.y - ball.radius > target.position.y && ball.position.y - ball.radius < target.position.y + target.dimensions.height) {
+            return true;
 
-           // }
+            // }
 
         }
 
@@ -258,7 +252,7 @@ export default class FeedMouse extends Base {
 
         if (e.key === 'l' || e.key === 'L') {
 
-            keyPressed = {value:true,when:new Date().getTime()};
+            keyPressed = {value: true, when: new Date().getTime()};
         }
 
     }
@@ -271,7 +265,7 @@ export default class FeedMouse extends Base {
 
         if (e.key === 'l' || e.key === 'L') {
 
-            keyPressed = {value:false,when:new Date().getTime()};
+            keyPressed = {value: false, when: new Date().getTime()};
         }
 
     }
@@ -305,38 +299,34 @@ export default class FeedMouse extends Base {
                     super.moveBallToStart(ball, false);
                 } else {
 
-                    super.ballTrajectory(ball,scale[current_index].scale_x,scale[current_index].scale_y);
+                    super.ballTrajectory(ball, scale[current_index].scale_x, scale[current_index].scale_y);
                 }
             }
             super.createBallBox();
             this.createHouse();
             this.createWindow();
 
-
-            if (keyPressed.value || new Date().getTime() -keyPressed.when < 150 ) {
+            if (keyPressed.value || new Date().getTime() - keyPressed.when < 150) {
 
                 this.showBallLocation(didHitWindow);
-                if(didHitWindow){
+                if (didHitWindow) {
 
                     target.windowbackground = super.Utils.whiteColor;
                     this.createWindow(target);
                     super.increaseScore();
                     goodJob.play();
 
-                }else{
+                }else {
 
                     ballCatchFail.play();
 
                 }
 
-
-
                 super.moveBallToStart(ball, true);
                 didHitWindow = false;
             }
 
-
-            if(didHitWindow){
+            if (didHitWindow) {
 
                 console.log(new Date().getTime() - ball.timeReached);
                 this.showBallLocation(didHitWindow);

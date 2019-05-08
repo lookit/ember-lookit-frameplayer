@@ -56,7 +56,7 @@ export default class FeedCroc extends Base {
 
         paddle = {
 
-            position: {x: super.paddleWidth * 10-5, y: this.canvas.height / 2.5 + this.canvas.height / 2 - super.paddleHeight},
+            position: {x: super.paddleWidth * 10 - 5, y: this.canvas.height / 2.5 + this.canvas.height / 2 - super.paddleHeight},
             paddleLastMovedMillis: 100,
             velocity: super.Utils.paddleSpeed
 
@@ -104,7 +104,7 @@ export default class FeedCroc extends Base {
         super.loop();
 
         super.createBallBox();
-        super.createPaddleBox(super.paddleWidth * 10, this.canvas.height / 2.5 + this.canvas.height / 2 - super.paddleWidth*1.3);
+        super.createPaddleBox(super.paddleWidth * 10, this.canvas.height / 2.5 + this.canvas.height / 2 - super.paddleWidth * 1.3);
         super.drawPaddle(paddle.position.x + 5, paddle.position.y);
         this.drawImage(target, target.imageURL);
         super.paddleMove(paddle);
@@ -156,8 +156,8 @@ export default class FeedCroc extends Base {
      * @method paddleBallCollision
      */
     paddleBallCollision() {
-        if (ball.position.y >= (paddle.position.y - super.paddleHeight/4) && ball.position.y < (paddle.position.y + super.paddleHeight/4)) {
-            if ((ball.position.x > paddle.position.x - super.paddleWidth*1.3 && ball.position.x < paddle.position.x + super.paddleWidth*1.3)) {
+        if (ball.position.y >= (paddle.position.y - super.paddleHeight / 4) && ball.position.y < (paddle.position.y + super.paddleHeight / 4)) {
+            if ((ball.position.x > paddle.position.x - super.paddleWidth * 1.3 && ball.position.x < paddle.position.x + super.paddleWidth * 1.3)) {
                 if (new Date().getTime() - paddle.paddleLastMovedMillis > 130) {
                     bounceSound.play();
 
@@ -247,7 +247,6 @@ export default class FeedCroc extends Base {
 
         };
 
-        // this.context.get('export_arr').addObject(exportData);
         super.storeData(exportData);
 
     }
