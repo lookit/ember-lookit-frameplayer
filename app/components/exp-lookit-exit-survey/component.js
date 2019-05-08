@@ -1,6 +1,7 @@
 import layout from './template';
 
 import {validator, buildValidations} from 'ember-cp-validations';
+import Ember from 'ember';
 
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 import FullScreen from '../../mixins/full-screen';
@@ -18,13 +19,12 @@ const Validations = buildValidations({
     useOfMedia: validator('presence', {
         presence: true,
         message: 'This field is required',
-        disabled(model) {
-            return model.get('withdrawal');
-        }
+        disabled: Ember.computed.readOnly('model.withdrawal')
     }),
     databraryShare: validator('presence', {
         presence: true,
-        message: 'This field is required'
+        message: 'This field is required',
+        disabled: Ember.computed.readOnly('model.withdrawal')
     })
 });
 
@@ -57,6 +57,7 @@ Standard exit survey for Lookit studies: confirm participant birthdate, ask user
 export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
     layout: layout,
     type: 'exp-lookit-exit-survey',
+    frameType: 'EXIT',
     fullScreenElementId: 'experiment-player',
     meta: {
         name: 'ExpLookitExitSurvey',

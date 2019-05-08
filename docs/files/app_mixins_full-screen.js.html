@@ -30,10 +30,8 @@
                         <h2 class="off-left">Collections</h2>
                         <ul id="api-modules" class="apis modules">
                             <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
-                            <li class="module-sidebar-exp-lookit-games"><a href="../modules/exp-lookit-games.html">exp-lookit-games</a></li>
                             <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
                             <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
-                            <li class="module-sidebar-games"><a href="../modules/games.html">games</a></li>
                             <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
                             <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
                             <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
@@ -43,13 +41,10 @@
                       <input type="search" id="api-filter" placeholder="Type to filter">
                     </div>
                         <ul id="api-classes" class="apis classes">
-                            <li><a href="../classes/Base.html">Base</a></li>
-                            <li><a href="../classes/CatchCheese.html">CatchCheese</a></li>
-                            <li><a href="../classes/CatchMouse.html">CatchMouse</a></li>
                             <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
                             <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
                             <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
-                            <li><a href="../classes/ExpFrameGamesComponent.html">ExpFrameGamesComponent</a></li>
+                            <li><a href="../classes/ExpFrameSelect.html">ExpFrameSelect</a></li>
                             <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
                             <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
                             <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
@@ -63,22 +58,42 @@
                             <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
                             <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
                             <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
-                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpPlayer
+              
+              Experiment player: a component that renders a series of frames that define an experiment
+              
+              Sample usage:
+              &#x60;&#x60;&#x60;handlebars
+              {{exp-player
+                experiment=experiment
+                session=session
+                pastSessions=pastSessions
+                saveHandler=(action &#x27;saveSession&#x27;)
+                frameIndex=0
+                fullScreenElementId=&#x27;expContainer&#x27;}}
+              &#x60;&#x60;&#x60;.html">ExpPlayer
+              
+              Experiment player: a component that renders a series of frames that define an experiment
+              
+              Sample usage:
+              &#x60;&#x60;&#x60;handlebars
+              {{exp-player
+                experiment=experiment
+                session=session
+                pastSessions=pastSessions
+                saveHandler=(action &#x27;saveSession&#x27;)
+                frameIndex=0
+                fullScreenElementId=&#x27;expContainer&#x27;}}
+              &#x60;&#x60;&#x60;</a></li>
                             <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
                             <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
                             <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
                             <li><a href="../classes/ExpVideoPreview.html">ExpVideoPreview</a></li>
-                            <li><a href="../classes/FeedCroc.html">FeedCroc</a></li>
-                            <li><a href="../classes/FeedMice.html">FeedMice</a></li>
-                            <li><a href="../classes/FeedMouse.html">FeedMouse</a></li>
                             <li><a href="../classes/FullScreen.html">FullScreen</a></li>
-                            <li><a href="../classes/Game.html">Game</a></li>
                             <li><a href="../classes/MediaReload.html">MediaReload</a></li>
                             <li><a href="../classes/permute.html">permute</a></li>
-                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
-                            <li><a href="../classes/Utils
-              Shared Utility class for project static methods and constants.html">Utils
-              Shared Utility class for project static methods and constants</a></li>
+                            <li><a href="../classes/RandomParameterSet.html">RandomParameterSet</a></li>
+                            <li><a href="../classes/Select.html">Select</a></li>
                             <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
                             <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
                             <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
@@ -261,7 +276,6 @@ export default Ember.Mixin.create({
          * @method exitFullscreen
          */
         exitFullscreen: function () {
-            console.log(&#x27;exiting FS mode&#x27;);
             if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement) {
                 if (document.exitFullscreen) {
                     document.exitFullscreen();

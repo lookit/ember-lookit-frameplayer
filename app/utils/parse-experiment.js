@@ -20,9 +20,13 @@ var ExperimentParser = function (context = {
 /* Modifies the data in the experiment schema definition to match
  * the format expected by exp-player
  */
-ExperimentParser.prototype._reformatFrame = function (frame, index) {
+ExperimentParser.prototype._reformatFrame = function (frame, index, prependFrameInds = true) {
     var newConfig = Ember.copy(frame, true);
-    newConfig.id = `${index}-${frame.id}`;
+    if (prependFrameInds) {
+        newConfig.id = `${index}-${frame.id}`;
+    } else {
+        newConfig.id = `${frame.id}`;
+    }
     return newConfig;
 };
 /* Convert a random frame to a list of constituent
@@ -86,7 +90,7 @@ ExperimentParser.prototype._resolveFrame = function (frameId, frame) {
         console.error(error);
     }
 };
-ExperimentParser.prototype.parse = function () {
+ExperimentParser.prototype.parse = function (prependFrameInds = true) {
     var expFrames = [];
     var choices = {};
     this.sequence.forEach((frameId, index) => {
@@ -97,7 +101,7 @@ ExperimentParser.prototype.parse = function () {
         }
     });
     return [
-        expFrames.map((frame, index) => this._reformatFrame(frame, index)),
+        expFrames.map((frame, index) => this._reformatFrame(frame, index, prependFrameInds)),
         choices
     ];
 };

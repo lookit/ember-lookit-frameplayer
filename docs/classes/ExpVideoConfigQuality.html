@@ -30,10 +30,8 @@
                         <h2 class="off-left">Collections</h2>
                         <ul id="api-modules" class="apis modules">
                             <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
-                            <li class="module-sidebar-exp-lookit-games"><a href="../modules/exp-lookit-games.html">exp-lookit-games</a></li>
                             <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
                             <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
-                            <li class="module-sidebar-games"><a href="../modules/games.html">games</a></li>
                             <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
                             <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
                             <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
@@ -43,13 +41,10 @@
                       <input type="search" id="api-filter" placeholder="Type to filter">
                     </div>
                         <ul id="api-classes" class="apis classes">
-                            <li><a href="../classes/Base.html">Base</a></li>
-                            <li><a href="../classes/CatchCheese.html">CatchCheese</a></li>
-                            <li><a href="../classes/CatchMouse.html">CatchMouse</a></li>
                             <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
                             <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
                             <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
-                            <li><a href="../classes/ExpFrameGamesComponent.html">ExpFrameGamesComponent</a></li>
+                            <li><a href="../classes/ExpFrameSelect.html">ExpFrameSelect</a></li>
                             <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
                             <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
                             <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
@@ -63,22 +58,42 @@
                             <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
                             <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
                             <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
-                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpPlayer
+              
+              Experiment player: a component that renders a series of frames that define an experiment
+              
+              Sample usage:
+              &#x60;&#x60;&#x60;handlebars
+              {{exp-player
+                experiment=experiment
+                session=session
+                pastSessions=pastSessions
+                saveHandler=(action &#x27;saveSession&#x27;)
+                frameIndex=0
+                fullScreenElementId=&#x27;expContainer&#x27;}}
+              &#x60;&#x60;&#x60;.html">ExpPlayer
+              
+              Experiment player: a component that renders a series of frames that define an experiment
+              
+              Sample usage:
+              &#x60;&#x60;&#x60;handlebars
+              {{exp-player
+                experiment=experiment
+                session=session
+                pastSessions=pastSessions
+                saveHandler=(action &#x27;saveSession&#x27;)
+                frameIndex=0
+                fullScreenElementId=&#x27;expContainer&#x27;}}
+              &#x60;&#x60;&#x60;</a></li>
                             <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
                             <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
                             <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
                             <li><a href="../classes/ExpVideoPreview.html">ExpVideoPreview</a></li>
-                            <li><a href="../classes/FeedCroc.html">FeedCroc</a></li>
-                            <li><a href="../classes/FeedMice.html">FeedMice</a></li>
-                            <li><a href="../classes/FeedMouse.html">FeedMouse</a></li>
                             <li><a href="../classes/FullScreen.html">FullScreen</a></li>
-                            <li><a href="../classes/Game.html">Game</a></li>
                             <li><a href="../classes/MediaReload.html">MediaReload</a></li>
                             <li><a href="../classes/permute.html">permute</a></li>
-                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
-                            <li><a href="../classes/Utils
-              Shared Utility class for project static methods and constants.html">Utils
-              Shared Utility class for project static methods and constants</a></li>
+                            <li><a href="../classes/RandomParameterSet.html">RandomParameterSet</a></li>
+                            <li><a href="../classes/Select.html">Select</a></li>
                             <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
                             <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
                             <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
@@ -166,24 +181,45 @@ check their child will be audible or their child's eyes will be visible in a par
         &quot;requireItemConfirmation&quot;: true,
         &quot;completedItemText&quot;: &quot;Did it!&quot;,
         &quot;instructionBlocks&quot;: [
-            {
-                &quot;text&quot;: &quot;&lt;strong&gt;Make sure the webcam you're using is roughly centered&lt;/strong&gt; relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!&quot;,
-                &quot;image&quot;: {
-                    &quot;src&quot;: &quot;assets/centering.png&quot;,
-                    &quot;alt&quot;: &quot;Example images of using centered external webcam on monitor or built-in webcam on laptop.&quot;
-                }
-            },
-            {
-                &quot;text&quot;: &quot;&lt;strong&gt;Turn off any other monitors&lt;/strong&gt; connected to your computer, besides the one with the centered webcam. (If there's just one monitor, you're all set!)&quot;,
-                &quot;image&quot;: {
-                    &quot;src&quot;: &quot;assets/monitors.png&quot;,
-                    &quot;alt&quot;: &quot;Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.&quot;
-                }
-            }
-        ],
-        &quot;requireTestVideo&quot;: true,
-        &quot;showRecordMenu&quot;: true,
-        &quot;recordingInstructionText&quot;: &quot;You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.&quot;
+                    {
+                        &quot;text&quot;: &quot;&lt;strong&gt;Make sure the webcam you're using is roughly centered&lt;/strong&gt; relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!&quot;,
+                        &quot;image&quot;: {
+                            &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/website/centering.png&quot;,
+                            &quot;alt&quot;: &quot;Example images of using centered external webcam on monitor or built-in webcam on laptop.&quot;
+                        }
+                    },
+                    {
+                        &quot;text&quot;: &quot;&lt;strong&gt;Turn off any other monitors&lt;/strong&gt; connected to your computer, besides the one with the centered webcam. (If there's just one monitor, you're all set!)&quot;,
+                        &quot;image&quot;: {
+                            &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/website/monitors.png&quot;,
+                            &quot;alt&quot;: &quot;Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.&quot;
+                        }
+                    },
+                    {
+                        &quot;text&quot;: &quot;Check the lighting by making sure you can &lt;strong&gt;clearly see your own eyes&lt;/strong&gt; on the webcam view to the right. You may need to either turn on a light or reduce light coming from behind you.&quot;,
+                        &quot;image&quot;: {
+                            &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/website/lighting.png&quot;,
+                            &quot;alt&quot;: &quot;Example images showing good lighting, room too dark, and backlit scene where eyes are not visible.&quot;
+                        }
+                    },
+                    {
+                        &quot;text&quot;: &quot;If it's practical, &lt;strong&gt;minimize exciting things&lt;/strong&gt; that are visible behind or to the side of the screen--for instance, by facing a wall instead of the kitchen. (If this isn't practical for you, don't worry about it--just check the box!)&quot;,
+                        &quot;image&quot;: {
+                            &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/website/distractions.png&quot;,
+                            &quot;alt&quot;: &quot;Example images showing a child and puppy next to the computer, versus a computer just on its own.&quot;
+                        }
+                    },
+                    {
+                        &quot;text&quot;: &quot;During the study, we'll ask that you sit facing away from the monitor, holding your child over your shoulder, like this. (More on that in a moment!) &lt;strong&gt;Make sure the webcam is angled up or down enough that your child's eyes are visible in this position&lt;/strong&gt;. If you're not sure if your child's eyes will be visible, you can make a short recording to check!&quot;,
+                        &quot;image&quot;: {
+                            &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/website/over_shoulder.jpg&quot;,
+                            &quot;alt&quot;: &quot;Example image showing a dad holding his child looking over his shoulder.&quot;
+                        }
+                    }
+                ],
+            &quot;requireTestVideo&quot;: true,
+            &quot;showRecordMenu&quot;: true,
+            &quot;recordingInstructionText&quot;: &quot;You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.&quot;
     }
 }
 </code></pre>
@@ -274,7 +310,7 @@ check their child will be audible or their child's eyes will be visible in a par
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-config-quality_component.js.html#l303"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:303</code></a>
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l324"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:324</code></a>
         </p>
 
 
@@ -306,7 +342,7 @@ check their child will be audible or their child's eyes will be visible in a par
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-config-quality_component.js.html#l158"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:158</code></a>
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l179"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:179</code></a>
         </p>
 
 
@@ -334,7 +370,7 @@ requireItemConfirmation is false.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-config-quality_component.js.html#l170"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:170</code></a>
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l191"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:191</code></a>
         </p>
 
 
@@ -386,7 +422,7 @@ of ExpTextBlock can be used.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-config-quality_component.js.html#l91"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:91</code></a>
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l112"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:112</code></a>
         </p>
 
 
@@ -413,7 +449,7 @@ HTML.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-config-quality_component.js.html#l145"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:145</code></a>
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l166"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:166</code></a>
         </p>
 
 
@@ -442,7 +478,7 @@ child is audible. HTML is allowed.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-config-quality_component.js.html#l112"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:112</code></a>
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l133"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:133</code></a>
         </p>
 
 
@@ -469,7 +505,7 @@ participant to check them off to proceed.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-config-quality_component.js.html#l123"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:123</code></a>
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l144"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:144</code></a>
         </p>
 
 
@@ -496,7 +532,7 @@ showRecordMenu is false.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-config-quality_component.js.html#l134"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:134</code></a>
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l155"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:155</code></a>
         </p>
 
 
@@ -523,7 +559,7 @@ requireTestVideo value is ignored.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-config-quality_component.js.html#l102"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:102</code></a>
+        <a href="../files/app_components_exp-video-config-quality_component.js.html#l123"><code>app&#x2F;components&#x2F;exp-video-config-quality&#x2F;component.js:123</code></a>
         </p>
 
 

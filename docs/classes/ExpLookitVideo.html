@@ -30,10 +30,8 @@
                         <h2 class="off-left">Collections</h2>
                         <ul id="api-modules" class="apis modules">
                             <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
-                            <li class="module-sidebar-exp-lookit-games"><a href="../modules/exp-lookit-games.html">exp-lookit-games</a></li>
                             <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
                             <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
-                            <li class="module-sidebar-games"><a href="../modules/games.html">games</a></li>
                             <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
                             <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
                             <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
@@ -43,13 +41,10 @@
                       <input type="search" id="api-filter" placeholder="Type to filter">
                     </div>
                         <ul id="api-classes" class="apis classes">
-                            <li><a href="../classes/Base.html">Base</a></li>
-                            <li><a href="../classes/CatchCheese.html">CatchCheese</a></li>
-                            <li><a href="../classes/CatchMouse.html">CatchMouse</a></li>
                             <li><a href="../classes/ExpandAssets.html">ExpandAssets</a></li>
                             <li><a href="../classes/ExpExitSurvey.html">ExpExitSurvey</a></li>
                             <li><a href="../classes/ExpFrameBase.html">ExpFrameBase</a></li>
-                            <li><a href="../classes/ExpFrameGamesComponent.html">ExpFrameGamesComponent</a></li>
+                            <li><a href="../classes/ExpFrameSelect.html">ExpFrameSelect</a></li>
                             <li><a href="../classes/ExpLookitDialoguePage.html">ExpLookitDialoguePage</a></li>
                             <li><a href="../classes/ExpLookitExitSurvey.html">ExpLookitExitSurvey</a></li>
                             <li><a href="../classes/ExpLookitGeometryAlternation.html">ExpLookitGeometryAlternation</a></li>
@@ -63,22 +58,42 @@
                             <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
                             <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
                             <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
-                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
+                            <li><a href="../classes/ExpPlayer
+              
+              Experiment player: a component that renders a series of frames that define an experiment
+              
+              Sample usage:
+              &#x60;&#x60;&#x60;handlebars
+              {{exp-player
+                experiment=experiment
+                session=session
+                pastSessions=pastSessions
+                saveHandler=(action &#x27;saveSession&#x27;)
+                frameIndex=0
+                fullScreenElementId=&#x27;expContainer&#x27;}}
+              &#x60;&#x60;&#x60;.html">ExpPlayer
+              
+              Experiment player: a component that renders a series of frames that define an experiment
+              
+              Sample usage:
+              &#x60;&#x60;&#x60;handlebars
+              {{exp-player
+                experiment=experiment
+                session=session
+                pastSessions=pastSessions
+                saveHandler=(action &#x27;saveSession&#x27;)
+                frameIndex=0
+                fullScreenElementId=&#x27;expContainer&#x27;}}
+              &#x60;&#x60;&#x60;</a></li>
                             <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
                             <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
                             <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
                             <li><a href="../classes/ExpVideoPreview.html">ExpVideoPreview</a></li>
-                            <li><a href="../classes/FeedCroc.html">FeedCroc</a></li>
-                            <li><a href="../classes/FeedMice.html">FeedMice</a></li>
-                            <li><a href="../classes/FeedMouse.html">FeedMouse</a></li>
                             <li><a href="../classes/FullScreen.html">FullScreen</a></li>
-                            <li><a href="../classes/Game.html">Game</a></li>
                             <li><a href="../classes/MediaReload.html">MediaReload</a></li>
                             <li><a href="../classes/permute.html">permute</a></li>
-                            <li><a href="../classes/randomParameterSet.html">randomParameterSet</a></li>
-                            <li><a href="../classes/Utils
-              Shared Utility class for project static methods and constants.html">Utils
-              Shared Utility class for project static methods and constants</a></li>
+                            <li><a href="../classes/RandomParameterSet.html">RandomParameterSet</a></li>
+                            <li><a href="../classes/Select.html">Select</a></li>
                             <li><a href="../classes/videoRecorder.html">videoRecorder</a></li>
                             <li><a href="../classes/VideoRecorderObject.html">VideoRecorderObject</a></li>
                             <li><a href="../classes/VideoRecordMixin.html">VideoRecordMixin</a></li>
@@ -339,6 +354,10 @@ without a user event.)</p>
                                 <a href="#property_fullScreenElementId">fullScreenElementId</a>
 
                             </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_generateProperties">generateProperties</a>
+
+                            </li>
                             <li class="index-item property">
                                 <a href="#property_introSources">introSources</a>
 
@@ -353,6 +372,10 @@ without a user event.)</p>
                             </li>
                             <li class="index-item property">
                                 <a href="#property_pauseText">pauseText</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_selectNextFrame">selectNextFrame</a>
 
                             </li>
                             <li class="index-item property">
@@ -470,7 +493,7 @@ without a user event.)</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/ExpFrameBase.html#method_makeTimeEvent">ExpFrameBase</a>:
-        <a href="../files/app_components_exp-frame-base_component.js.html#l198"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:198</code></a>
+        <a href="../files/app_components_exp-frame-base_component.js.html#l399"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:399</code></a>
         </p>
 
 
@@ -1083,7 +1106,7 @@ Ignored if calibrationLength is 0.</p>
                 FullScreen
             </a>
             but overwritten in
-        <a href="../files/app_mixins_full-screen.js.html#l167"><code>app&#x2F;mixins&#x2F;full-screen.js:167</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l166"><code>app&#x2F;mixins&#x2F;full-screen.js:166</code></a>
         </p>
 
 
@@ -1174,6 +1197,91 @@ generally used that way.
         The element ID of the thing to make full screen (video element, div, etc)
     </div>
 
+
+
+</div>
+<div id="property_generateProperties" class="property item inherited">
+    <h3 class="name"><code>generateProperties</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/ExpFrameBase.html#property_generateProperties">ExpFrameBase</a>:
+        <a href="../files/app_components_exp-frame-base_component.js.html#l78"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:78</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Function to generate additional properties for this frame (like {&quot;kind&quot;: &quot;exp-lookit-text&quot;})
+at the time the frame is initialized. Allows behavior of study to depend on what has
+happened so far (e.g., answers on a form or to previous test trials).
+Must be a valid Javascript function, returning an object, provided as
+a string.</p>
+<p>Arguments that will be provided are: <code>expData</code>, <code>sequence</code>, <code>child</code>, <code>pastSessions</code>, <code>conditions</code>.</p>
+<p><code>expData</code>, <code>sequence</code>, and <code>conditions</code> are the same data as would be found in the session data shown
+on the Lookit experimenter interface under 'Individual Responses', except that
+they will only contain information up to this point in the study.</p>
+<p><code>expData</code> is an object consisting of <code>frameId</code>: <code>frameData</code> pairs; the data associated
+with a particular frame depends on the frame kind.</p>
+<p><code>sequence</code> is an ordered list of frameIds, corresponding to the keys in <code>expData</code>.</p>
+<p><code>conditions</code> is an object representing the data stored by any randomizer frames;
+keys are <code>frameId</code>s for randomizer frames and data stored depends on the randomizer
+used.</p>
+<p><code>child</code> is an object that has the following properties - use child.get(propertyName)
+to access:</p>
+<ul>
+<li><code>additionalInformation</code>: String; additional information field from child form</li>
+<li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
+&quot;24&quot; through &quot;39&quot;, &quot;na&quot; (not sure or prefer not to answer),
+&quot;&lt;24&quot; (under 24 weeks), and &quot;40&gt;&quot; (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format &quot;Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>gender</code>: &quot;f&quot; (female), &quot;m&quot; (male), &quot;o&quot; (other), or &quot;na&quot; (prefer not to answer)</li>
+<li><code>givenName</code>: String, child's given name/nickname</li>
+<li><code>id</code>: String, child UUID</li>
+</ul>
+<p><code>pastSessions</code> is a list of previous response objects for this child and this study,
+ordered starting from most recent (at index 0 is this session!). Each has properties
+(access as pastSessions[i].get(propertyName)):</p>
+<ul>
+<li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
+<li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
+<li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
+<li><code>createdOn</code>: timestamp in format &quot;Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
+<li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
+just used for attempts to leave the study early</li>
+<li><code>sequence</code>: ordered list of frameIds, corresponding to keys in expData</li>
+</ul>
+<p>Example:</p>
+<pre class="code prettyprint"><code>function(expData, sequence, child, pastSessions, conditions) {
+    return {
+       'blocks':
+            [
+                {
+                    'text': 'Name: ' + child.get('givenName')
+                },
+                {
+                    'text': 'Frame number: ' + sequence.length
+                },
+                {
+                    'text': 'N past sessions: ' + pastSessions.length
+                }
+            ]
+      };
+  }
+</code></pre>
+<p>(This example is split across lines for readability; when added to JSON it would need
+to be on one line.)</p>
+
+    </div>
+
+        <p><strong>Default:</strong> null</p>
 
 
 </div>
@@ -1335,6 +1443,73 @@ Default: (You'll have a moment to turn around again.)</p>
     </div>
 
         <p><strong>Default:</strong> []</p>
+
+
+</div>
+<div id="property_selectNextFrame" class="property item inherited">
+    <h3 class="name"><code>selectNextFrame</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/ExpFrameBase.html#property_selectNextFrame">ExpFrameBase</a>:
+        <a href="../files/app_components_exp-frame-base_component.js.html#l162"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:162</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Function to select which frame index to go to when using the 'next' action on this
+frame. Allows flexible looping / short-circuiting based on what has happened so far
+in the study (e.g., once the child answers N questions correctly, move on to next
+segment). Must be a valid Javascript function, returning a number from 0 through
+frames.length - 1, provided as a string.</p>
+<p>Arguments that will be provided are:
+<code>frames</code>, <code>frameIndex</code>, <code>expData</code>, <code>sequence</code>, <code>child</code>, <code>pastSessions</code></p>
+<p><code>frames</code> is an ordered list of frame configurations for this study; each element
+is an object corresponding directly to a frame you defined in the
+JSON document for this study (but with any randomizer frames resolved into the
+particular frames that will be used this time).</p>
+<p><code>frameIndex</code> is the index in <code>frames</code> of the current frame</p>
+<p><code>expData</code> is an object consisting of <code>frameId</code>: <code>frameData</code> pairs; the data associated
+with a particular frame depends on the frame kind.</p>
+<p><code>sequence</code> is an ordered list of frameIds, corresponding to the keys in <code>expData</code>.</p>
+<p><code>child</code> is an object that has the following properties - use child.get(propertyName)
+to access:</p>
+<ul>
+<li><code>additionalInformation</code>: String; additional information field from child form</li>
+<li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
+&quot;24&quot; through &quot;39&quot;, &quot;na&quot; (not sure or prefer not to answer),
+&quot;&lt;24&quot; (under 24 weeks), and &quot;40&gt;&quot; (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format &quot;Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>gender</code>: &quot;f&quot; (female), &quot;m&quot; (male), &quot;o&quot; (other), or &quot;na&quot; (prefer not to answer)</li>
+<li><code>givenName</code>: String, child's given name/nickname</li>
+<li><code>id</code>: String, child UUID</li>
+</ul>
+<p><code>pastSessions</code> is a list of previous response objects for this child and this study,
+ordered starting from most recent (at index 0 is this session!). Each has properties
+(access as pastSessions[i].get(propertyName)):</p>
+<ul>
+<li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
+<li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
+<li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
+<li><code>createdOn</code>: timestamp in format &quot;Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
+<li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
+just used for attempts to leave the study early</li>
+<li><code>sequence</code>: ordered list of frameIds, corresponding to keys in expData</li>
+</ul>
+<p>Example that just sends us to the last frame of the study no matter what:
+<code>&#x60;&amp;quot;function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}&amp;quot;</code>``</p>
+
+    </div>
+
+        <p><strong>Default:</strong> null</p>
 
 
 </div>
@@ -1580,7 +1755,7 @@ expanded out to
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/ExpFrameBase.html#event_nextFrame">ExpFrameBase</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l236"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:236</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l437"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:437</code></a>
                             </p>
                     
                     
@@ -1605,7 +1780,7 @@ expanded out to
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/ExpFrameBase.html#event_previousFrame">ExpFrameBase</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l259"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:259</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l479"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:479</code></a>
                             </p>
                     
                     

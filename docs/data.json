@@ -27,6 +27,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "app/components/exp-frame-select/component.js": {
+            "name": "app/components/exp-frame-select/component.js",
+            "modules": {},
+            "classes": {
+                "ExpFrameSelect": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "app/components/exp-lookit-dialogue-page/component.js": {
             "name": "app/components/exp-lookit-dialogue-page/component.js",
             "modules": {},
@@ -150,90 +159,7 @@
                 "components": 1
             },
             "classes": {
-                "ExpPlayer": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "app/components/exp-test/Game.js": {
-            "name": "app/components/exp-test/Game.js",
-            "modules": {
-                "games": 1
-            },
-            "classes": {
-                "Game": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "app/components/exp-test/base.js": {
-            "name": "app/components/exp-test/base.js",
-            "modules": {},
-            "classes": {
-                "Base": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "app/components/exp-test/catchCheese.js": {
-            "name": "app/components/exp-test/catchCheese.js",
-            "modules": {},
-            "classes": {
-                "CatchCheese": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "app/components/exp-test/catchMouse.js": {
-            "name": "app/components/exp-test/catchMouse.js",
-            "modules": {},
-            "classes": {
-                "CatchMouse": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "app/components/exp-test/component.js": {
-            "name": "app/components/exp-test/component.js",
-            "modules": {},
-            "classes": {
-                "ExpFrameGamesComponent": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "app/components/exp-test/feedCroc.js": {
-            "name": "app/components/exp-test/feedCroc.js",
-            "modules": {},
-            "classes": {
-                "FeedCroc": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "app/components/exp-test/feedMice.js": {
-            "name": "app/components/exp-test/feedMice.js",
-            "modules": {},
-            "classes": {
-                "FeedMice": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "app/components/exp-test/feedMouse.js": {
-            "name": "app/components/exp-test/feedMouse.js",
-            "modules": {},
-            "classes": {
-                "FeedMouse": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "app/components/exp-test/utils.js": {
-            "name": "app/components/exp-test/utils.js",
-            "modules": {},
-            "classes": {
-                "Utils\nShared Utility class for project static methods and constants": 1
+                "ExpPlayer\n\nExperiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```": 1
             },
             "fors": {},
             "namespaces": {}
@@ -334,7 +260,16 @@
             "name": "app/randomizers/random-parameter-set.js",
             "modules": {},
             "classes": {
-                "randomParameterSet": 1
+                "RandomParameterSet": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "app/randomizers/select.js": {
+            "name": "app/randomizers/select.js",
+            "modules": {},
+            "classes": {
+                "Select": 1
             },
             "fors": {},
             "namespaces": {}
@@ -366,6 +301,7 @@
             "classes": {
                 "ExpExitSurvey": 1,
                 "ExpFrameBase": 1,
+                "ExpFrameSelect": 1,
                 "ExpLookitDialoguePage": 1,
                 "ExpLookitExitSurvey": 1,
                 "ExpLookitGeometryAlternation": 1,
@@ -379,11 +315,7 @@
                 "ExpLookitText": 1,
                 "ExpLookitVideo": 1,
                 "ExpLookitVideoConsent": 1,
-                "ExpPlayer": 1,
-                "Game": 1,
-                "Base": 1,
-                "CatchCheese": 1,
-                "CatchMouse": 1,
+                "ExpPlayer\n\nExperiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```": 1,
                 "ExpVideoConfig": 1,
                 "ExpVideoConfigQuality": 1,
                 "ExpVideoConsent": 1,
@@ -393,7 +325,8 @@
                 "MediaReload": 1,
                 "VideoRecordMixin": 1,
                 "permute": 1,
-                "randomParameterSet": 1,
+                "RandomParameterSet": 1,
+                "Select": 1,
                 "VideoRecorderObject": 1,
                 "videoRecorder": 1
             },
@@ -409,6 +342,7 @@
             "classes": {
                 "ExpExitSurvey": 1,
                 "ExpFrameBase": 1,
+                "ExpFrameSelect": 1,
                 "ExpLookitDialoguePage": 1,
                 "ExpLookitExitSurvey": 1,
                 "ExpLookitGeometryAlternation": 1,
@@ -422,7 +356,6 @@
                 "ExpLookitText": 1,
                 "ExpLookitVideo": 1,
                 "ExpLookitVideoConsent": 1,
-                "ExpFrameGamesComponent": 1,
                 "ExpVideoConfig": 1,
                 "ExpVideoConfigQuality": 1,
                 "ExpVideoConsent": 1,
@@ -442,7 +375,7 @@
             "submodules": {},
             "elements": {},
             "classes": {
-                "ExpPlayer": 1
+                "ExpPlayer\n\nExperiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```": 1
             },
             "fors": {},
             "is_submodule": 1,
@@ -450,48 +383,7 @@
             "module": "exp-player",
             "namespace": "",
             "file": "app/components/exp-player/component.js",
-            "line": 16,
-            "description": "Experiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```"
-        },
-        "games": {
-            "name": "games",
-            "submodules": {},
-            "elements": {},
-            "classes": {
-                "Game": 1,
-                "Base": 1,
-                "CatchCheese": 1,
-                "CatchMouse": 1,
-                "FeedCroc": 1,
-                "FeedMice": 1,
-                "FeedMouse": 1
-            },
-            "fors": {},
-            "is_submodule": 1,
-            "namespaces": {},
-            "module": "exp-lookit-games",
-            "namespace": "",
-            "file": "app/components/exp-test/feedMouse.js",
-            "line": 23,
-            "description": "Game orchestrator to set initial parameters and\nexecute requested game\nMight have randomization of the games here"
-        },
-        "exp-lookit-games": {
-            "name": "exp-lookit-games",
-            "submodules": {
-                "games": 1
-            },
-            "elements": {},
-            "classes": {
-                "ExpFrameGamesComponent": 1,
-                "FeedCroc": 1,
-                "FeedMice": 1,
-                "FeedMouse": 1,
-                "Utils\nShared Utility class for project static methods and constants": 1
-            },
-            "fors": {},
-            "namespaces": {},
-            "file": "app/components/exp-test/utils.js",
-            "line": 8
+            "line": 11
         },
         "mixins": {
             "name": "mixins",
@@ -518,15 +410,16 @@
             "elements": {},
             "classes": {
                 "permute": 1,
-                "randomParameterSet": 1
+                "RandomParameterSet": 1,
+                "Select": 1
             },
             "fors": {},
             "is_submodule": 1,
             "namespaces": {},
             "module": "exp-player",
             "namespace": "",
-            "file": "app/randomizers/random-parameter-set.js",
-            "line": 8,
+            "file": "app/randomizers/select.js",
+            "line": 6,
             "description": "Randomizer to allow random ordering of a list of frames. Intended to be\nuseful for e.g. randomly permuting the order of particular stimuli used during\na set of trials (although frames need not be of the same kind to permute).\n\nTo use, define a frame with \"kind\": \"choice\" and \"sampler\": \"permute\",\nas shown below, in addition to the parameters described under 'properties'.\n\n```json\n\"frames\": {\n   \"test-trials\": {\n       \"sampler\": \"permute\",\n       \"kind\": \"choice\",\n       \"commonFrameProperties\": {\n           \"showPreviousButton\": false\n       },\n       \"frameOptions\": [\n           {\n               \"blocks\": [\n                   {\n                       \"emph\": true,\n                       \"text\": \"Let's think about hippos!\",\n                       \"title\": \"hippos!\"\n                   },\n                   {\n                       \"text\": \"Some more about hippos...\"\n                   }\n               ],\n               \"kind\": \"exp-lookit-text\"\n           },\n           {\n               \"blocks\": [\n                   {\n                       \"emph\": false,\n                       \"text\": \"Let's think about dolphins!\",\n                       \"title\": \"dolphins!\"\n                   }\n               ],\n               \"kind\": \"exp-lookit-text\"\n           }\n       ]\n   }\n}\n\n```"
         },
         "services": {
@@ -581,10 +474,26 @@
             "namespace": "",
             "file": "app/components/exp-frame-base/component.js",
             "line": 11,
-            "description": "This provides common base behavior required for any experiment frame. All experiment frames must extend this one.\nThis frame has no configuration options because all of its logic is internal, and is almost never directly used\n   in an experiment. It exports no data. Sample experiment definition usage (provided for completeness):\n  ```json\n    \"frames\": {\n       \"my-sample-frame\": {\n         \"kind\": \"exp-base-frame\"\n       }\n    }\n ```\nAs a user you will almost never need to insert a component into a template directly- the platform should handle that\n   by automatically inserting `exp-player` when your experiment starts.\n However, a sample template usage is provided below for completeness.\n```handlebars\n  {{\n      component currentFrameTemplate\n        frameIndex=frameIndex\n        framePage=framePage\n        updateFramePage=(action 'updateFramePage')\n        frameConfig=currentFrameConfig\n        frameContext=currentFrameContext\n       session=session\n        experiment=experiment\n       next=(action 'next')\n        previous=(action 'previous')\n        saveHandler=(action 'saveFrame')\n        skipone=(action 'skipone')\n        extra=extra\n    }}\n ```",
+            "description": "This provides common base behavior required for any experiment frame. All experiment frames must extend this one.\nThis frame has no configuration options because all of its logic is internal, and is almost never directly used\n   in an experiment. It exports no data. Sample experiment definition usage (provided for completeness):\n  ```json\n    \"frames\": {\n       \"my-sample-frame\": {\n         \"kind\": \"exp-base-frame\"\n       }\n    }\n ```\nAs a user you will almost never need to insert a component into a template directly- the platform should handle that\n  by automatically inserting an <a href=\"../classes/ExpPlayer.html\" class=\"crosslink\">ExpPlayer</a> component when your experiment starts.\n However, a sample template usage is provided below for completeness.\n```handlebars\n  {{\n      component currentFrameTemplate\n        frameIndex=frameIndex\n        frameConfig=currentFrameConfig\n        frameContext=currentFrameContext\n       session=session\n        experiment=experiment\n       next=(action 'next')\n        previous=(action 'previous')\n        saveHandler=(action 'saveFrame')\n        skipone=(action 'skipone')\n        extra=extra\n    }}\n ```",
             "uses": [
                 "FullScreen"
             ]
+        },
+        "ExpFrameSelect": {
+            "name": "ExpFrameSelect",
+            "shortname": "ExpFrameSelect",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "submodule": "frames",
+            "namespace": "",
+            "file": "app/components/exp-frame-select/component.js",
+            "line": 9,
+            "description": "Frame that allows you to specify a list of possible frames to show, plus an index or\n list of indices of which ones to actually show. The frame(s) will be inserted into the\n sequence of frames for this study on the fly, so that you can use a custom\n {{#crossLink \"ExpFrameBase/generateProperties:property\"}}{{/crossLink}}\n function to select which frame(s) to show.\n\nThis frame serves as a wrapper for the randomizer <a href=\"../classes/Select.html\" class=\"crosslink\">Select</a>,\n which is evaluated during experiment parsing and cannot be modified on the fly.\n\nFor more information about making study behavior conditional on data collected,\n see <a href=\"https://lookit.readthedocs.io/en/develop/researchers-create-experiment.html#conditional-logic\">the Lookit docs</a>.\n\nExample usage:\n ```json\n        \"study-procedure\": {\n            \"kind\": \"exp-frame-select\",\n            \"frameOptions\": [\n                {\n                    \"kind\": \"exp-lookit-text\",\n                    \"blocks\": [\n                        {\n                            \"emph\": true,\n                            \"text\": \"Cats are great\"\n                        },\n                        {\n                            \"text\": \"We are measuring how much your child loves cats now. Beep boop!\"\n                        }\n                    ]\n                },\n                {\n                    \"kind\": \"exp-lookit-text\",\n                    \"blocks\": [{\n                            \"emph\": true,\n                            \"text\": \"Your child is not eligible for this study\"\n                        },\n                        {\n                            \"text\": \"Either you do not have any cats or your child does not love cats.\"\n                        }\n                    ]\n                }\n            ],\n            \"generateProperties\": \"function(expData, sequence, child, pastSessions) {var formData = expData['0-eligibility-survey'].formData; if (formData.nCats >= 1 && formData.loveCats == 'yes') { console.log('eligible'); return { 'whichFrames': 0, 'ELIGIBLE': true } } else { console.log('ineligible'); return { 'whichFrames': 1,  'ELIGIBLE': false } } }\"\n        }\n```\n\n**Warning:** to avoid unpredictable behavior, this frame does not itself use any\n {{#crossLink \"ExpFrameBase/selectNextFrame:property\"}}{{/crossLink}} passed to it.\n (Frames within the `frameOptions` list are welcome to make use of `selectNextFrame`, though!)\n\nData will be stored for this frame so that any ``generatedProperties`` are available\n for future use; however, it will proceed immediately upon loading to the first frame\n that is specified (or the next frame in the original sequence, if it turns out that `whichFrames` is an empty\n list).\n\nIn `expData`, the frame keys for all frames generated by this frame will be prefixed\n by this frame's ID, with an index within `whichFrames` appended to the end of the ID.\n For instance, if this frame's ID is `1-study-procedure`, and it generates three frames,\n we would have keys `1-study-procedure`, `1-study-procedure-0`, `1-study-procedure-1`, and\n `1-study-procedure-2`.",
+            "extends": "ExpFrameBase"
         },
         "ExpLookitDialoguePage": {
             "name": "ExpLookitDialoguePage",
@@ -599,7 +508,7 @@
             "namespace": "",
             "file": "app/components/exp-lookit-dialogue-page/component.js",
             "line": 18,
-            "description": "Frame to implement a storybook page with dialogue spoken by characters.\nFirst, characters appear and any main narration audio is played.\nNext, the user can click on the characters to play additional audio\nassociated with each character image, or (for a choice trial) the user clicks\none of the images to select it as an answer. Once main narration audio has\nbeen played and either a selection has been made (for a choice trial,\nisChoiceFrame: true) or all\nrequired character audio has been played (for a non-choice trial), the user\ncan proceed by pressing 'next'. (A trial with only main narration audio can\nalso simply auto-proceed when audio is finished.)\n\nRecording is optional. If webcam recording is conducted (doRecording: true)\nthen audio does not start until recording does, to ensure the entire trial\nis recorded.\n\nThe character images are specified in 'images', including an image source,\npositioning on the screen, any animation at the start of the trial, any\nassociated audio, and whether that audio is required.\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\nneeds to include a manual \"next\" button so that there's a user interaction\nevent to trigger fullscreen mode. (Browsers don't allow us to switch to FS\nwithout a user event.)\n\nThe examples below show a few expected uses of this frame. In phase-2,\ntwo characters are shown; the protagonist is already present, and speaker1\nflies in from the left. Speaker1 has associated audio (dialogue). After\nthe narrative audio, the user can click on speaker1 to play the audio, and\nwill then be able to proceed.\n\nphase-5 is a choice trial, where the user has to click on one of the two\nimages before proceeding.\n\n```json\n\"frames\":\n       \"phase-2\": {\n           \"kind\": \"exp-lookit-dialogue-page\",\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/politeness/\",\n           \"audioTypes\": [\"mp3\", \"ogg\"],\n           \"backgroundImage\": \"order1_test1_background.png\",\n           \"doRecording\": false,\n           \"autoProceed\": false,\n           \"parentTextBlock\": {\n               \"title\": \"Parents!\",\n               \"text\": \"some instructions\",\n               \"emph\": true,\n               \"css\": {\n                   \"color\": \"red\",\n                   \"font-size\": \"12px\"\n               }\n           },\n           \"images\": [\n               {\n                   \"id\": \"protagonist\",\n                   \"src\": \"order1_test1_listener1.png\",\n                   \"left\": \"40\",\n                   \"bottom\": \"2\",\n                   \"height\": \"60\"\n               },\n               {\n                   \"id\": \"speaker1\",\n                   \"text\": \"Click to hear what he said!\",\n                   \"src\": \"order1_test1_speaker1.png\",\n                   \"left\": \"20\",\n                   \"bottom\": \"2\",\n                   \"height\": \"60\",\n                   \"animate\": \"flyleft\",\n                   \"requireAudio\": true,\n                   \"imageAudio\": \"polcon_example_2_2speaker1polite\"\n               }\n           ],\n           \"audioSources\": [\n               {\n                   \"audioId\": \"firstAudio\",\n                   \"sources\": \"polcon_example_2_1intro\"\n               }\n           ]\n       },\n       \"phase-5\": {\n           \"kind\": \"exp-lookit-dialogue-page\",\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/politeness/\",\n           \"audioTypes\": [\"mp3\", \"ogg\"],\n           \"backgroundImage\": \"order1_test1_background.png\",\n           \"doRecording\": false,\n           \"autoProceed\": false,\n           \"isChoiceFrame\": true,\n           \"parentTextBlock\": {\n               \"title\": \"Parents:\",\n               \"text\": \"click on the character your child selects.\",\n               \"emph\": true\n           },\n           \"images\": [\n               {\n                   \"id\": \"speaker1\",\n                   \"src\": \"order1_test1_speaker1.png\",\n                   \"left\": \"20\",\n                   \"bottom\": \"2\",\n                   \"height\": \"60\"\n               },\n               {\n                   \"id\": \"speaker2\",\n                   \"src\": \"order1_test1_speaker2.png\",\n                   \"left\": \"60\",\n                   \"bottom\": \"2\",\n                   \"height\": \"60\"\n               }\n           ],\n           \"audioSources\": [\n               {\n                   \"audioId\": \"firstAudio\",\n                   \"sources\": \"polcon_example_5q1\"\n               }\n           ]\n       }\n}\n\n```",
+            "description": "Frame to implement a storybook page with dialogue spoken by characters.\nFirst, characters appear and any main narration audio is played.\nNext, the user can click on the characters to play additional audio\nassociated with each character image, or (for a choice trial) the user clicks\none of the images to select it as an answer. Once main narration audio has\nbeen played and either a selection has been made (for a choice trial,\nisChoiceFrame: true) or all\nrequired character audio has been played (for a non-choice trial), the user\ncan proceed by pressing 'next'. (A trial with only main narration audio can\nalso simply auto-proceed when audio is finished.)\n\nRecording is optional. If webcam recording is conducted (doRecording: true)\nthen audio does not start until recording does, to ensure the entire trial\nis recorded.\n\nThe character images are specified in 'images', including an image source,\npositioning on the screen, any animation at the start of the trial, any\nassociated audio, and whether that audio is required.\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\nneeds to include a manual \"next\" button so that there's a user interaction\nevent to trigger fullscreen mode. (Browsers don't allow us to switch to FS\nwithout a user event.)\n\nThe examples below show a few expected uses of this frame. In phase-2,\ntwo characters are shown; the protagonist is already present, and speaker1\nflies in from the left. Speaker1 has associated audio (dialogue). After\nthe narrative audio, the user can click on speaker1 to play the audio, and\nwill then be able to proceed.\n\nphase-5 is a choice trial, where the user has to click on one of the two\nimages before proceeding.\n\n```json\n\"frames\": {\n       \"phase-2\": {\n           \"kind\": \"exp-lookit-dialogue-page\",\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/politeness/\",\n           \"audioTypes\": [\"mp3\", \"ogg\"],\n           \"backgroundImage\": \"order1_test1_background.png\",\n           \"doRecording\": false,\n           \"autoProceed\": false,\n           \"parentTextBlock\": {\n               \"title\": \"Parents!\",\n               \"text\": \"some instructions\",\n               \"emph\": true,\n               \"css\": {\n                   \"color\": \"red\",\n                   \"font-size\": \"12px\"\n               }\n           },\n           \"images\": [\n               {\n                   \"id\": \"protagonist\",\n                   \"src\": \"order1_test1_listener1.png\",\n                   \"left\": \"40\",\n                   \"bottom\": \"2\",\n                   \"height\": \"60\"\n               },\n               {\n                   \"id\": \"speaker1\",\n                   \"text\": \"Click to hear what he said!\",\n                   \"src\": \"order1_test1_speaker1.png\",\n                   \"left\": \"20\",\n                   \"bottom\": \"2\",\n                   \"height\": \"60\",\n                   \"animate\": \"flyleft\",\n                   \"requireAudio\": true,\n                   \"imageAudio\": \"polcon_example_2_2speaker1polite\"\n               }\n           ],\n           \"audioSources\": [\n               {\n                   \"audioId\": \"firstAudio\",\n                   \"sources\": \"polcon_example_2_1intro\"\n               }\n           ]\n       },\n       \"phase-5\": {\n           \"kind\": \"exp-lookit-dialogue-page\",\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/politeness/\",\n           \"audioTypes\": [\"mp3\", \"ogg\"],\n           \"backgroundImage\": \"order1_test1_background.png\",\n           \"doRecording\": false,\n           \"autoProceed\": false,\n           \"isChoiceFrame\": true,\n           \"parentTextBlock\": {\n               \"title\": \"Parents:\",\n               \"text\": \"click on the character your child selects.\",\n               \"emph\": true\n           },\n           \"images\": [\n               {\n                   \"id\": \"speaker1\",\n                   \"src\": \"order1_test1_speaker1.png\",\n                   \"left\": \"20\",\n                   \"bottom\": \"2\",\n                   \"height\": \"60\"\n               },\n               {\n                   \"id\": \"speaker2\",\n                   \"src\": \"order1_test1_speaker2.png\",\n                   \"left\": \"60\",\n                   \"bottom\": \"2\",\n                   \"height\": \"60\"\n               }\n           ],\n           \"audioSources\": [\n               {\n                   \"audioId\": \"firstAudio\",\n                   \"sources\": \"polcon_example_5q1\"\n               }\n           ]\n       }\n}\n\n```",
             "extends": "ExpFrameBase",
             "uses": [
                 "FullScreen",
@@ -827,9 +736,9 @@
                 "VideoRecord"
             ]
         },
-        "ExpPlayer": {
-            "name": "ExpPlayer",
-            "shortname": "ExpPlayer",
+        "ExpPlayer\n\nExperiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```": {
+            "name": "ExpPlayer\n\nExperiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```",
+            "shortname": "ExpPlayer\n\nExperiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -839,144 +748,7 @@
             "submodule": "components",
             "namespace": "",
             "file": "app/components/exp-player/component.js",
-            "line": 16,
-            "description": "Experiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```"
-        },
-        "Game": {
-            "name": "Game",
-            "shortname": "Game",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "exp-player",
-            "submodule": "games",
-            "namespace": "",
-            "file": "app/components/exp-test/Game.js",
-            "line": 19,
-            "description": "Game orchestrator to set initial parameters and\nexecute requested game\nMight have randomization of the games here"
-        },
-        "Base": {
-            "name": "Base",
-            "shortname": "Base",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "exp-player",
-            "submodule": "games",
-            "namespace": "",
-            "file": "app/components/exp-test/base.js",
-            "line": 20,
-            "description": "Base class for common game functions"
-        },
-        "CatchCheese": {
-            "name": "CatchCheese",
-            "shortname": "CatchCheese",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "exp-player",
-            "submodule": "games",
-            "namespace": "",
-            "file": "app/components/exp-test/catchCheese.js",
-            "line": 33,
-            "description": "Main implementation of catch the cheese game.\nThe user will operate with paddle to catch the ball started\nfrom ball box. The trajectory is randomized with various values in trajectories array\nNumber of obstructions currently randomized from 0 to 3 trees shown",
-            "extends": "Base"
-        },
-        "CatchMouse": {
-            "name": "CatchMouse",
-            "shortname": "CatchMouse",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "exp-player",
-            "submodule": "games",
-            "namespace": "",
-            "file": "app/components/exp-test/catchMouse.js",
-            "line": 19,
-            "extends": "Base\nMain implementation of Catch the mouse game.\nThe user will with paddle (basket) to catch the mice.\nThe mice will appear with some unpredictable  delay.\nThe user should catch the mice until cheese(symbolizing the clock) is gone."
-        },
-        "ExpFrameGamesComponent": {
-            "name": "ExpFrameGamesComponent",
-            "shortname": "ExpFrameGamesComponent",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "exp-lookit-games",
-            "submodule": "frames",
-            "namespace": "",
-            "file": "app/components/exp-test/component.js",
-            "line": 19,
-            "description": "Frame to implement various games interventions.\nThe games are developed as a separate HTML5 canvas modules.\n\nAfter each game, get the response that game is finished, save the data (pass the data to\nthe appropriate game object array) and proceed to the next game/step.\n\nCurrent implementation has 5 game types :\n- 0: Feed the crocodile\n- 1: Catch the cheese\n- 2: Catch the mouse\n- 3: Feed the mice\n- 4: Feed the mouse in the house\n\n\n```\n\"frames\": {\n       \"game\": {\n           \"kind\": \"exp-lookit-games\",\n           \"gameType\": 0,\n           \"hideControls\": false,\n           \"nextButtonText\": \"move on\",\n           \"showPreviousButton\": false\n       }\n   }\n```",
-            "extends": "VideoRecord"
-        },
-        "FeedCroc": {
-            "name": "FeedCroc",
-            "shortname": "FeedCroc",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "exp-lookit-games",
-            "submodule": "games",
-            "namespace": "",
-            "file": "app/components/exp-test/feedCroc.js",
-            "line": 33,
-            "extends": "Base\nMain implementation of Feed the crocodile game.\nThe user will operate with paddle to bounce the ball into the crocodile mouth.\nThe trajectory is randomized with various values in trajectories array"
-        },
-        "FeedMice": {
-            "name": "FeedMice",
-            "shortname": "FeedMice",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "exp-lookit-games",
-            "submodule": "games",
-            "namespace": "",
-            "file": "app/components/exp-test/feedMice.js",
-            "line": 25,
-            "description": "Main implementation of feed  the mice in the house game.\nThe user will operate with keyboard keys to predict which ball trajectory will hit which window\nin the house.\nThe trajectory is randomized with various values in trajectories array\nInitialize the mice image for each muse as an array",
-            "extends": "Base"
-        },
-        "FeedMouse": {
-            "name": "FeedMouse",
-            "shortname": "FeedMouse",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "exp-lookit-games",
-            "submodule": "games",
-            "namespace": "",
-            "file": "app/components/exp-test/feedMouse.js",
-            "line": 23,
-            "extends": "Base\nMain implementation of feed  the mouse in the house game.\nThe user will operate with keyboard keys to predict when ball trajectory will hit the window.\nThe trajectory is randomized with various values in trajectories array"
-        },
-        "Utils\nShared Utility class for project static methods and constants": {
-            "name": "Utils\nShared Utility class for project static methods and constants",
-            "shortname": "Utils\nShared Utility class for project static methods and constants",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "exp-lookit-games",
-            "namespace": "",
-            "file": "app/components/exp-test/utils.js",
-            "line": 8
+            "line": 11
         },
         "ExpVideoConfig": {
             "name": "ExpVideoConfig",
@@ -1007,7 +779,7 @@
             "namespace": "",
             "file": "app/components/exp-video-config-quality/component.js",
             "line": 17,
-            "description": "Video configuration frame showing webcam view at right and instructions for checking\nvideo quality for preferential looking setup at left. Default content is hard-coded to\nprovide a reasonable set of instructions for preferential looking setups, so the frame can\nbe used as follows with no parameters besides `kind`:\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\"\n    }\n}\n```\n\nOptionally,\nparticipants can be required to check off each item before they can proceed to the next\nframe. If `requireItemConfirmation` is true (default), then the 'next' button will\nappear disabled until the participant has checked off all buttons, although if they click\nit anyway they will get an informative warning and the instructions section will scroll\nto the first unchecked item.\n\nParticipants can also be optionally required to create and view a short recording, e.g. to\ncheck their child will be audible or their child's eyes will be visible in a particular position.\n\nYou can also customize any or all text and images as in the following example.\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\",\n        \"title\": \"Webcam setup for preferential looking\",\n        \"introText\": \"We'll be analyzing where your child chooses to look during the videos--but only if we can tell where that is! Please check each of the following to ensure we're able to use your video:\",\n        \"requireItemConfirmation\": true,\n        \"completedItemText\": \"Did it!\",\n        \"instructionBlocks\": [\n            {\n                \"text\": \"<strong>Make sure the webcam you're using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!\",\n                \"image\": {\n                    \"src\": \"assets/centering.png\",\n                    \"alt\": \"Example images of using centered external webcam on monitor or built-in webcam on laptop.\"\n                }\n            },\n            {\n                \"text\": \"<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there's just one monitor, you're all set!)\",\n                \"image\": {\n                    \"src\": \"assets/monitors.png\",\n                    \"alt\": \"Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.\"\n                }\n            }\n        ],\n        \"requireTestVideo\": true,\n        \"showRecordMenu\": true,\n        \"recordingInstructionText\": \"You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.\"\n    }\n}\n```",
+            "description": "Video configuration frame showing webcam view at right and instructions for checking\nvideo quality for preferential looking setup at left. Default content is hard-coded to\nprovide a reasonable set of instructions for preferential looking setups, so the frame can\nbe used as follows with no parameters besides `kind`:\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\"\n    }\n}\n```\n\nOptionally,\nparticipants can be required to check off each item before they can proceed to the next\nframe. If `requireItemConfirmation` is true (default), then the 'next' button will\nappear disabled until the participant has checked off all buttons, although if they click\nit anyway they will get an informative warning and the instructions section will scroll\nto the first unchecked item.\n\nParticipants can also be optionally required to create and view a short recording, e.g. to\ncheck their child will be audible or their child's eyes will be visible in a particular position.\n\nYou can also customize any or all text and images as in the following example.\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\",\n        \"title\": \"Webcam setup for preferential looking\",\n        \"introText\": \"We'll be analyzing where your child chooses to look during the videos--but only if we can tell where that is! Please check each of the following to ensure we're able to use your video:\",\n        \"requireItemConfirmation\": true,\n        \"completedItemText\": \"Did it!\",\n        \"instructionBlocks\": [\n                    {\n                        \"text\": \"<strong>Make sure the webcam you're using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/centering.png\",\n                            \"alt\": \"Example images of using centered external webcam on monitor or built-in webcam on laptop.\"\n                        }\n                    },\n                    {\n                        \"text\": \"<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there's just one monitor, you're all set!)\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/monitors.png\",\n                            \"alt\": \"Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.\"\n                        }\n                    },\n                    {\n                        \"text\": \"Check the lighting by making sure you can <strong>clearly see your own eyes</strong> on the webcam view to the right. You may need to either turn on a light or reduce light coming from behind you.\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/lighting.png\",\n                            \"alt\": \"Example images showing good lighting, room too dark, and backlit scene where eyes are not visible.\"\n                        }\n                    },\n                    {\n                        \"text\": \"If it's practical, <strong>minimize exciting things</strong> that are visible behind or to the side of the screen--for instance, by facing a wall instead of the kitchen. (If this isn't practical for you, don't worry about it--just check the box!)\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/distractions.png\",\n                            \"alt\": \"Example images showing a child and puppy next to the computer, versus a computer just on its own.\"\n                        }\n                    },\n                    {\n                        \"text\": \"During the study, we'll ask that you sit facing away from the monitor, holding your child over your shoulder, like this. (More on that in a moment!) <strong>Make sure the webcam is angled up or down enough that your child's eyes are visible in this position</strong>. If you're not sure if your child's eyes will be visible, you can make a short recording to check!\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/over_shoulder.jpg\",\n                            \"alt\": \"Example image showing a dad holding his child looking over his shoulder.\"\n                        }\n                    }\n                ],\n            \"requireTestVideo\": true,\n            \"showRecordMenu\": true,\n            \"recordingInstructionText\": \"You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.\"\n    }\n}\n```",
             "extends": "VideoRecord"
         },
         "ExpVideoConsent": {
@@ -1023,7 +795,7 @@
             "namespace": "",
             "file": "app/components/exp-video-consent/component.js",
             "line": 11,
-            "description": "Video consent frame for Lookit studies UNDER INITIAL MIT PROTOCOL ONLY, with consent document displayed at left and instructions to start recording, read a statement out loud, and send.\nThis version allows custom specification of consent form text.\nFor studies by researchers who have signed the Lookit Usage Agreement and have approval from their own IRB, please use exp-lookit-video-consent frame.\nConsent document can be downloaded as PDF document by participant.\n\n```json\n\"frames\": {\n    \"video-consent\": {\n        \"blocks\": [\n            {\n                 \"text\": \"Observing your child's behavior during this experimental session will help us to understand how infants and children use evidence to learn and make predictions about the world.\",\n                \"title\": \"About the study\"\n            },\n            {\n                \"text\": \"Your and your child's participation in this session are completely voluntary. If you and your child choose to participate, you may stop the session at any point with no penalty. Please pause or stop the session if your child becomes very fussy or does not want to participate. If this is a study with multiple sessions, there are no penalties for not completing all sessions.\",\n                \"title\": \"Participation\"\n            },\n            {\n                \"text\": \"During the session, you and your child will be recorded via your computer's webcam and microphone while watching a video or completing an activity. Video recordings and other data you enter are sent securely to our lab. At the end of the session, or when you end it early, you will be prompted to choose a privacy level for your webcam recordings. \",\n                \"title\": \"Webcam recording\"\n            },\n            {\n                \"text\": \"Recordings and survey responses will be stored on a password-protected server and accessed only by the Lookit researchers working on this study and any other groups you allow when selecting a privacy level. A researcher may transcribe responses or record information such as where you or your child is looking. Data will not be used to identify you or your child. The results of the research may be presented at scientific meetings or published in scientific journals, but no video clips will be shared unless you allow this when selecting a privacy level.\\n\\nRaw data may also be published when it can not identify children; for instance, we may publish children’s looking times to the left versus right of the screen, or parent comments with children’s names removed. We may also study your child’s responses in connection with his or her previous responses to this or other studies, siblings’ responses, or demographic survey responses. We never publish children’s birthdates or names, and we never publish your demographic data in conjunction with your child’s video.\",\n                \"title\": \"Use of data\"\n            },\n            {\n                \"text\": \"If you or your child have any questions or concerns about this research, you may contact Professor Laura Schulz: {contact}\",\n                \"title\": \"Contact information\"\n            }\n        ],\n        \"prompt\": \"\\\"I have read and understand the consent document. I am this child's parent or legal guardian and we both agree to participate in this study.\\\"\",\n        \"kind\": \"exp-video-consent\"\n    }\n}\n```",
+            "description": "Video consent frame for Lookit studies UNDER INITIAL MIT PROTOCOL ONLY, with consent document displayed at left and instructions to start recording, read a statement out loud, and send.\nThis version allows custom specification of consent form text.\nFor studies by researchers who have signed the Lookit Usage Agreement and have approval from their own IRB,\nplease use an {{#crossLink \"ExpLookitVideoConsent\"}}{{/crossLink}}  frame instead.\nConsent document can be downloaded as PDF document by participant.\n\n```json\n\"frames\": {\n    \"video-consent\": {\n        \"blocks\": [\n            {\n                 \"text\": \"Observing your child's behavior during this experimental session will help us to understand how infants and children use evidence to learn and make predictions about the world.\",\n                \"title\": \"About the study\"\n            },\n            {\n                \"text\": \"Your and your child's participation in this session are completely voluntary. If you and your child choose to participate, you may stop the session at any point with no penalty. Please pause or stop the session if your child becomes very fussy or does not want to participate. If this is a study with multiple sessions, there are no penalties for not completing all sessions.\",\n                \"title\": \"Participation\"\n            },\n            {\n                \"text\": \"During the session, you and your child will be recorded via your computer's webcam and microphone while watching a video or completing an activity. Video recordings and other data you enter are sent securely to our lab. At the end of the session, or when you end it early, you will be prompted to choose a privacy level for your webcam recordings. \",\n                \"title\": \"Webcam recording\"\n            },\n            {\n                \"text\": \"Recordings and survey responses will be stored on a password-protected server and accessed only by the Lookit researchers working on this study and any other groups you allow when selecting a privacy level. A researcher may transcribe responses or record information such as where you or your child is looking. Data will not be used to identify you or your child. The results of the research may be presented at scientific meetings or published in scientific journals, but no video clips will be shared unless you allow this when selecting a privacy level.\\n\\nRaw data may also be published when it can not identify children; for instance, we may publish children’s looking times to the left versus right of the screen, or parent comments with children’s names removed. We may also study your child’s responses in connection with his or her previous responses to this or other studies, siblings’ responses, or demographic survey responses. We never publish children’s birthdates or names, and we never publish your demographic data in conjunction with your child’s video.\",\n                \"title\": \"Use of data\"\n            },\n            {\n                \"text\": \"If you or your child have any questions or concerns about this research, you may contact Professor Laura Schulz: {contact}\",\n                \"title\": \"Contact information\"\n            }\n        ],\n        \"prompt\": \"\\\"I have read and understand the consent document. I am this child's parent or legal guardian and we both agree to participate in this study.\\\"\",\n        \"kind\": \"exp-video-consent\"\n    }\n}\n```",
             "extends": "ExpLookitVideoConsent",
             "uses": [
                 "VideoRecord"
@@ -1144,9 +916,9 @@
             "line": 6,
             "description": "Randomizer to allow random ordering of a list of frames. Intended to be\nuseful for e.g. randomly permuting the order of particular stimuli used during\na set of trials (although frames need not be of the same kind to permute).\n\nTo use, define a frame with \"kind\": \"choice\" and \"sampler\": \"permute\",\nas shown below, in addition to the parameters described under 'properties'.\n\n```json\n\"frames\": {\n   \"test-trials\": {\n       \"sampler\": \"permute\",\n       \"kind\": \"choice\",\n       \"commonFrameProperties\": {\n           \"showPreviousButton\": false\n       },\n       \"frameOptions\": [\n           {\n               \"blocks\": [\n                   {\n                       \"emph\": true,\n                       \"text\": \"Let's think about hippos!\",\n                       \"title\": \"hippos!\"\n                   },\n                   {\n                       \"text\": \"Some more about hippos...\"\n                   }\n               ],\n               \"kind\": \"exp-lookit-text\"\n           },\n           {\n               \"blocks\": [\n                   {\n                       \"emph\": false,\n                       \"text\": \"Let's think about dolphins!\",\n                       \"title\": \"dolphins!\"\n                   }\n               ],\n               \"kind\": \"exp-lookit-text\"\n           }\n       ]\n   }\n}\n\n```"
         },
-        "randomParameterSet": {
-            "name": "randomParameterSet",
-            "shortname": "randomParameterSet",
+        "RandomParameterSet": {
+            "name": "RandomParameterSet",
+            "shortname": "RandomParameterSet",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -1158,6 +930,21 @@
             "file": "app/randomizers/random-parameter-set.js",
             "line": 8,
             "description": "Randomizer to implement flexible condition assignment and counterbalancing by\nallowing the user to specify an arbitrary sequence of frames to create. A\nset of parameters is randomly selected from a list of available parameterSets,\nand these parameters are substituted in to the parameters specified in the\nlist of frames.\n\nFor a more detailed walkthrough, please see\nhttps://lookit.readthedocs.io/en/develop/experiments.html#randomizer-frames\n\nTo use, define a frame with \"kind\": \"choice\" and \"sampler\": \"random-parameter-set\",\nas shown below, in addition to the parameters described under 'properties'.\n\nThis\n\n```json\n\"frames\": {\n   \"test-trials\": {\n       \"sampler\": \"random-parameter-set\",\n       \"kind\": \"choice\",\n       \"commonFrameProperties\": {\n           \"kind\": \"exp-lookit-story-page\",\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/ingroupobligations/\",\n           \"audioTypes\": [\"mp3\", \"ogg\"],\n           \"doRecording\": true,\n           \"autoProceed\": false,\n           \"parentTextBlock\": {\n               \"title\": \"Parents!\",\n               \"text\": \"Common instructions across test trials here\",\n               \"emph\": true\n           }\n       },\n       \"frameList\": [\n           {\n               \"images\": [\n                   {\n                       \"id\": \"agent\",\n                       \"src\": \"AGENTIMG1\",\n                       \"left\": \"40\",\n                       \"width\": \"20\",\n                       \"top\": \"10\"\n                   },\n                   {\n                       \"id\": \"left\",\n                       \"src\": \"LEFTIMG1\",\n                       \"left\": \"10\",\n                       \"width\": \"20\",\n                       \"top\": \"50\"\n                   },\n                   {\n                       \"id\": \"right\",\n                       \"src\": \"RIGHTIMG1\",\n                       \"left\": \"70\",\n                       \"width\": \"20\",\n                       \"top\": \"50\"\n                   }\n               ],\n               \"audioSources\": [\n                   {\n                       \"audioId\": \"questionaudio\",\n                       \"sources\": [{\"stub\": \"QUESTION1AUDIO\"}],\n                       \"highlights\": \"QUESTION1HIGHLIGHTS\"\n                   }\n               ]\n           },\n           {\n               \"images\": [\n                   {\n                       \"id\": \"agent\",\n                       \"src\": \"AGENTIMG2\",\n                       \"left\": \"40\",\n                       \"width\": \"20\",\n                       \"top\": \"10\"\n                   },\n                   {\n                       \"id\": \"left\",\n                       \"src\": \"LEFTIMG2\",\n                       \"left\": \"10\",\n                       \"width\": \"20\",\n                       \"top\": \"50\"\n                   },\n                   {\n                       \"id\": \"right\",\n                       \"src\": \"RIGHTIMG2\",\n                       \"left\": \"70\",\n                       \"width\": \"20\",\n                       \"top\": \"50\"\n                   }\n               ],\n               \"audioSources\": [\n                   {\n                       \"audioId\": \"questionaudio\",\n                       \"sources\": [{\"stub\": \"QUESTION2AUDIO\"}],\n                       \"highlights\": \"QUESTION2HIGHLIGHTS\"\n                   }\n               ]\n           }\n       ],\n       \"parameterSets\": [\n           {\n               \"AGENTIMG1\": \"flurpagent1.jpg\",\n               \"LEFTIMG1\": \"flurpvictim1.jpg\",\n               \"RIGHTIMG1\": \"zazzvictim1.jpg\",\n               \"QUESTION1AUDIO\": \"flurpleftmean1\",\n               \"QUESTION1HIGHLIGHTS\": [\n                   {\"range\": [0.399293,\t3.617124], \"image\": \"agent\"},\n                   {\"range\": [5.085112,\t6.811467], \"image\": \"left\"},\n                   {\"range\": [6.905418,\t8.702236], \"image\": \"right\"}\n               ],\n               \"AGENTIMG2\": \"flurpagent2.jpg\",\n               \"LEFTIMG2\": \"flurpvictim2.jpg\",\n               \"RIGHTIMG2\": \"zazzvictim2.jpg\",\n               \"QUESTION2AUDIO\": \"flurpleftinduct1\",\n               \"QUESTION2HIGHLIGHTS\": [\n                   {\"range\": [0.372569,\t5.309110], \"image\": \"agent\"},\n                   {\"range\": [5.495395,\t7.209213], \"image\": \"left\"},\n                   {\"range\": [5.495395,\t7.209213], \"image\": \"right\"},\n                   {\"range\": [9.966225,\t11.922212], \"image\": \"left\"},\n                   {\"range\": [12.052612,\t14.008600], \"image\": \"right\"}\n               ]\n           },\n           {\n               \"AGENTIMG1\": \"zazzagent1.jpg\",\n               \"LEFTIMG1\": \"flurpvictim1.jpg\",\n               \"RIGHTIMG1\": \"zazzvictim1.jpg\",\n               \"QUESTION1AUDIO\": \"zazzrightnice1\",\n               \"QUESTION1HIGHLIGHTS\": [\n                   {\"range\": [0.348454,\t3.736871], \"image\": \"agent\"},\n                   {\"range\": [5.395033,\t6.884975], \"image\": \"left\"},\n                   {\"range\": [6.969085,\t8.975701], \"image\": \"right\"}\n               ],\n               \"AGENTIMG2\": \"zazzagent2.jpg\",\n               \"LEFTIMG2\": \"flurpvictim2.jpg\",\n               \"RIGHTIMG2\": \"zazzvictim2.jpg\",\n               \"QUESTION2AUDIO\": \"zazzrightinduct1\",\n               \"QUESTION2HIGHLIGHTS\": [\n                   {\"range\": [0.572920,\t5.138376], \"image\": \"agent\"},\n                   {\"range\": [5.335317,\t7.089884], \"image\": \"left\"},\n                   {\"range\": [5.335317,\t7.089884], \"image\": \"right\"},\n                   {\"range\": [9.721735,\t11.565821], \"image\": \"left\"},\n                   {\"range\": [11.655340,\t13.535233], \"image\": \"right\"}\n               ]\n           }\n       ],\n       \"parameterSetWeights\": [1, 1]\n   }\n}\n\n```"
+        },
+        "Select": {
+            "name": "Select",
+            "shortname": "Select",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "submodule": "randomizers",
+            "namespace": "",
+            "file": "app/randomizers/select.js",
+            "line": 6,
+            "description": "Randomizer to allow selection of one (or arbitrary sequence) of defined frames.\nThis is intended to be used either within a {{#crossLink \"RandomParameterSet\"}}{{/crossLink}} randomizer with\ndifferent `parameterSets` picking out different values for `whichFrames`) or indirectly\nvia the {{#crossLink \"ExpFrameSelect\"}}{{/crossLink}} frame (which allows setting `whichFrames` using a custom\n`generateProperties` function). Note that you cannot add a `generateProperties` function\ndirectly to a randomizer!\n\nTo use, define a frame with \"kind\": \"choice\" and \"sampler\": \"select\",\nas shown below, in addition to the parameters described under 'properties'.\n\n```json\n\"frames\": {\n   \"select-randomizer-test\": {\n       \"sampler\": \"select\",\n       \"kind\": \"choice\",\n       \"whichFrames\": 0,\n       \"commonFrameProperties\": {\n           \"kind\": \"exp-lookit-text\"\n       },\n       \"frameOptions\": [\n           {\n               \"blocks\": [\n                   {\n                       \"emph\": true,\n                       \"text\": \"Let's think about hippos!\",\n                       \"title\": \"FRAME 1\"\n                   },\n                   {\n                       \"text\": \"Some more about hippos...\"\n                   }\n               ]\n           },\n           {\n               \"blocks\": [\n                   {\n                       \"emph\": false,\n                       \"text\": \"Let's think about dolphins!\",\n                       \"title\": \"FRAME 2\"\n                   }\n               ]\n           }\n       ]\n   }\n}\n\n```"
         },
         "VideoRecorderObject": {
             "name": "VideoRecorderObject",
@@ -1194,7 +981,31 @@
     "classitems": [
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 173,
+            "line": 78,
+            "description": "Function to generate additional properties for this frame (like {\"kind\": \"exp-lookit-text\"})\nat the time the frame is initialized. Allows behavior of study to depend on what has\nhappened so far (e.g., answers on a form or to previous test trials).\nMust be a valid Javascript function, returning an object, provided as\na string.\n\n\nArguments that will be provided are: `expData`, `sequence`, `child`, `pastSessions`, `conditions`.\n\n\n`expData`, `sequence`, and `conditions` are the same data as would be found in the session data shown\non the Lookit experimenter interface under 'Individual Responses', except that\nthey will only contain information up to this point in the study.\n\n\n`expData` is an object consisting of `frameId`: `frameData` pairs; the data associated\nwith a particular frame depends on the frame kind.\n\n\n`sequence` is an ordered list of frameIds, corresponding to the keys in `expData`.\n\n\n`conditions` is an object representing the data stored by any randomizer frames;\nkeys are `frameId`s for randomizer frames and data stored depends on the randomizer\nused.\n\n\n`child` is an object that has the following properties - use child.get(propertyName)\nto access:\n- `additionalInformation`: String; additional information field from child form\n- `ageAtBirth`: String; child's gestational age at birth in weeks. Possible values are\n  \"24\" through \"39\", \"na\" (not sure or prefer not to answer),\n\"<24\" (under 24 weeks), and \"40>\" (40 or more weeks).\n- `birthday`: timestamp in format \"Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)\"\n- `gender`: \"f\" (female), \"m\" (male), \"o\" (other), or \"na\" (prefer not to answer)\n- `givenName`: String, child's given name/nickname\n- `id`: String, child UUID\n\n\n`pastSessions` is a list of previous response objects for this child and this study,\nordered starting from most recent (at index 0 is this session!). Each has properties\n(access as pastSessions[i].get(propertyName)):\n- `completed`: Boolean, whether they submitted an exit survey\n- `completedConsentFrame`: Boolean, whether they got through at least a consent frame\n- `conditions`: Object representing any conditions assigned by randomizer frames\n- `createdOn`: timestamp in format \"Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)\"\n- `expData`: Object consisting of frameId: frameData pairs\n- `globalEventTimings`: list of any events stored outside of individual frames - currently\n  just used for attempts to leave the study early\n- `sequence`: ordered list of frameIds, corresponding to keys in expData\n\n\nExample:\n```\nfunction(expData, sequence, child, pastSessions, conditions) {\n    return {\n       'blocks':\n            [\n                {\n                    'text': 'Name: ' + child.get('givenName')\n                },\n                {\n                    'text': 'Frame number: ' + sequence.length\n                },\n                {\n                    'text': 'N past sessions: ' + pastSessions.length\n                }\n            ]\n      };\n  }\n```\n\n\n (This example is split across lines for readability; when added to JSON it would need\n to be on one line.)",
+            "itemtype": "property",
+            "name": "generateProperties",
+            "type": "String",
+            "default": "null",
+            "class": "ExpFrameBase",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-frame-base/component.js",
+            "line": 162,
+            "description": "Function to select which frame index to go to when using the 'next' action on this\nframe. Allows flexible looping / short-circuiting based on what has happened so far\nin the study (e.g., once the child answers N questions correctly, move on to next\nsegment). Must be a valid Javascript function, returning a number from 0 through\nframes.length - 1, provided as a string.\n\n\nArguments that will be provided are:\n`frames`, `frameIndex`, `expData`, `sequence`, `child`, `pastSessions`\n\n\n`frames` is an ordered list of frame configurations for this study; each element\nis an object corresponding directly to a frame you defined in the\nJSON document for this study (but with any randomizer frames resolved into the\nparticular frames that will be used this time).\n\n\n`frameIndex` is the index in `frames` of the current frame\n\n\n`expData` is an object consisting of `frameId`: `frameData` pairs; the data associated\nwith a particular frame depends on the frame kind.\n\n\n`sequence` is an ordered list of frameIds, corresponding to the keys in `expData`.\n\n\n`child` is an object that has the following properties - use child.get(propertyName)\nto access:\n- `additionalInformation`: String; additional information field from child form\n- `ageAtBirth`: String; child's gestational age at birth in weeks. Possible values are\n  \"24\" through \"39\", \"na\" (not sure or prefer not to answer),\n\"<24\" (under 24 weeks), and \"40>\" (40 or more weeks).\n- `birthday`: timestamp in format \"Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)\"\n- `gender`: \"f\" (female), \"m\" (male), \"o\" (other), or \"na\" (prefer not to answer)\n- `givenName`: String, child's given name/nickname\n- `id`: String, child UUID\n\n\n`pastSessions` is a list of previous response objects for this child and this study,\nordered starting from most recent (at index 0 is this session!). Each has properties\n(access as pastSessions[i].get(propertyName)):\n- `completed`: Boolean, whether they submitted an exit survey\n- `completedConsentFrame`: Boolean, whether they got through at least a consent frame\n- `conditions`: Object representing any conditions assigned by randomizer frames\n- `createdOn`: timestamp in format \"Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)\"\n- `expData`: Object consisting of frameId: frameData pairs\n- `globalEventTimings`: list of any events stored outside of individual frames - currently\n  just used for attempts to leave the study early\n- `sequence`: ordered list of frameIds, corresponding to keys in expData\n\n\nExample that just sends us to the last frame of the study no matter what:\n``\"function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}\"```",
+            "itemtype": "property",
+            "name": "selectNextFrame",
+            "type": "String",
+            "default": "null",
+            "class": "ExpFrameBase",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-frame-base/component.js",
+            "line": 372,
             "description": "The base class does not define any data to save to the server. It does, however, capture some basic event\n  timing data. (such as when the user clicks the \"next\" button)\n\nThis section slightly breaks YUIDoc conventions- rather than being a literal guide to using the code, the\n  \"parameters\" here are abstract descriptions of what data is captured.\n\nEach frame that extends ExpFrameBase will send an array `eventTimings`\nback to the server upon completion. This array is an ordered list (oldest\nto newest) of every EVENT that happened during the frame. Each event is\nrepresented as an object with at least the properties\n`{'eventType': EVENTNAME, 'timestamp': TIMESTAMP}`. Frame-specific events\nmay define additional properties that are sent.",
             "params": [
                 {
@@ -1215,7 +1026,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 198,
+            "line": 399,
             "description": "Create the time event payload for a particular frame / event. This can be overridden to add fields to every\n event sent by a particular frame",
             "itemtype": "method",
             "name": "makeTimeEvent",
@@ -1242,7 +1053,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 236,
+            "line": 437,
             "description": "Move to next frame",
             "itemtype": "event",
             "name": "nextFrame",
@@ -1252,11 +1063,44 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 259,
+            "line": 479,
             "description": "Move to previous frame",
             "itemtype": "event",
             "name": "previousFrame",
             "class": "ExpFrameBase",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-frame-select/component.js",
+            "line": 94,
+            "description": "List of frames that can be created by this randomizer. Each frame is an\nobject with any necessary frame-specific properties specified. The\n'kind' of frame can be specified either here (per frame) or in\ncommonFrameProperties. If a property is defined for a given frame both\nin this frame list and in commonFrameProperties, the value in the frame\nlist will take precedence.\n\n(E.g., you could include 'kind': 'normal-frame' in\ncommmonFrameProperties, but for a single frame in frameOptions, include\n'kind': 'special-frame'.)",
+            "itemtype": "property",
+            "name": "frameOptions",
+            "type": "Object[]",
+            "class": "ExpFrameSelect",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-frame-select/component.js",
+            "line": 116,
+            "description": "Object describing common parameters to use in EVERY frame created\nby this randomizer. Parameter names and values are as described in\nthe documentation for the frameType used.",
+            "itemtype": "property",
+            "name": "commonFrameProperties",
+            "type": "Object",
+            "class": "ExpFrameSelect",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-frame-select/component.js",
+            "line": 129,
+            "description": "Index or indices (0-indexed) within frameOptions to actually use. This can be either a number\n(e.g., 0 or 1 to use the first or second option respectively) or an array providing\nan ordered list of indices to use (e.g., [0, 1] or [1, 0] to use the first then\nsecond or second then first options, respectively). All indices must be integers\nin [0, frameOptions.length).\n\nIf not provided or -1, the entire frameOptions list is used in order. (If empty\nlist is provided, however, that is respected and no frames are inserted by this\nrandomizer.)",
+            "itemtype": "property",
+            "name": "whichFrames",
+            "type": "Number",
+            "class": "ExpFrameSelect",
             "module": "exp-player",
             "submodule": "frames"
         },
@@ -1547,7 +1391,7 @@
         },
         {
             "file": "app/components/exp-lookit-exit-survey/component.js",
-            "line": 67,
+            "line": 68,
             "description": "Object specifying information to show on second page of exit survey, before returning to main Lookit site.",
             "itemtype": "property",
             "name": "debriefing",
@@ -1575,7 +1419,7 @@
         },
         {
             "file": "app/components/exp-lookit-exit-survey/component.js",
-            "line": 104,
+            "line": 105,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "serializeContent",
@@ -3565,7 +3409,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 116,
+            "line": 117,
             "description": "When participant downloads consent form",
             "itemtype": "event",
             "name": "downloadConsentForm",
@@ -3575,7 +3419,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 131,
+            "line": 132,
             "description": "Name of PI running this study",
             "itemtype": "property",
             "name": "PIName",
@@ -3586,7 +3430,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 140,
+            "line": 141,
             "description": "Name of institution running this study (if ambiguous, list institution whose IRB approved the study)",
             "itemtype": "property",
             "name": "institution",
@@ -3597,7 +3441,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 149,
+            "line": 150,
             "description": "Contact information for PI or lab in case of participant questions or concerns. This will directly follow the phrase \"please contact\", so format accordingly: e.g., \"the XYZ lab at xyz@science.edu\" or \"Mary Smith at 123 456 7890\".",
             "itemtype": "property",
             "name": "PIContact",
@@ -3608,7 +3452,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 158,
+            "line": 159,
             "description": "Brief description of purpose of study - 1-2 sentences that describe what you are trying to find out. Language should be as straightforward and accessible as possible! E.g., \"Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.\"",
             "itemtype": "property",
             "name": "purpose",
@@ -3619,7 +3463,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 167,
+            "line": 168,
             "description": "Brief description of study procedures, including any risks or a statement that there are no anticipated risks. We add a statement about the duration (from your study definition) to the start (e.g., \"This study takes about 10 minutes to complete\"), so you don't need to include that. It can be in third person or addressed to the parent. E.g., \"Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.\"",
             "itemtype": "property",
             "name": "procedures",
@@ -3630,7 +3474,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 176,
+            "line": 177,
             "description": "Statement about payment/compensation for participation, including a statement that there are no additional benefits anticipated to the participant. E.g., \"After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.\"",
             "itemtype": "property",
             "name": "payment",
@@ -3641,7 +3485,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 185,
+            "line": 186,
             "description": "Study-specific data use statement (optional). This will follow the following more general text: \"The research group led by [PIName] at [institution] will have access to video and other data collected during this session. We will also have access to your account profile, demographic survey, and the child profile for the child who is participating, including changes you make in the future to any of this information. We may study your child’s responses in connection with his or her previous responses to this or other studies run by our group, siblings’ responses to this or other studies run by our group, or demographic survey responses.\"\nYou may want to note what measures you will actually be coding for (looking time, facial expressions, parent-child interaction, etc.) and other more specific information about your use of data from this study here. For instance, you would note if you were building a corpus of naturalistic data that may be used to answer a variety of questions (rather than just collecting data for a single planned study).",
             "itemtype": "property",
             "name": "datause",
@@ -3652,7 +3496,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 198,
+            "line": 199,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "serializeContent",
@@ -3688,18 +3532,18 @@
         },
         {
             "file": "app/components/exp-player/component.js",
-            "line": 55,
+            "line": 52,
             "description": "The message to display in the early exit modal. Newer browsers may not respect this message.",
             "itemtype": "property",
             "name": "messageEarlyExitModal",
             "type": "String|null",
-            "class": "ExpPlayer",
+            "class": "ExpPlayer\n\nExperiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```",
             "module": "exp-player",
             "submodule": "components"
         },
         {
             "file": "app/components/exp-player/component.js",
-            "line": 61,
+            "line": 58,
             "description": "Customize what happens when the user exits the page",
             "itemtype": "method",
             "name": "beforeUnload",
@@ -3714,1057 +3558,9 @@
                 "description": "If string is provided, triggers a modal to confirm user wants to leave page",
                 "type": "String|null"
             },
-            "class": "ExpPlayer",
+            "class": "ExpPlayer\n\nExperiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```",
             "module": "exp-player",
             "submodule": "components"
-        },
-        {
-            "file": "app/components/exp-test/Game.js",
-            "line": 26,
-            "itemtype": "method",
-            "name": "constructor",
-            "is_constructor": 1,
-            "params": [
-                {
-                    "name": "context",
-                    "description": ""
-                },
-                {
-                    "name": "document",
-                    "description": ""
-                },
-                {
-                    "name": "gameNumber",
-                    "description": "current game id"
-                }
-            ],
-            "class": "Game",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 27,
-            "itemtype": "method",
-            "name": "Constructor to get parameters from caller",
-            "is_constructor": 1,
-            "params": [
-                {
-                    "name": "context",
-                    "description": "from component"
-                },
-                {
-                    "name": "document",
-                    "description": "object from component"
-                }
-            ],
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 49,
-            "description": "Initialize or start the game loop here",
-            "itemtype": "method",
-            "name": "init",
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 61,
-            "description": "Abstract method\nTriggered when participant pressed some key on keyboard",
-            "itemtype": "method",
-            "name": "keyDownHandler",
-            "params": [
-                {
-                    "name": "e",
-                    "description": "event"
-                }
-            ],
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 72,
-            "description": "Abstract method\nTriggered when participant released some key on keyboard",
-            "itemtype": "method",
-            "name": "keyUpHandler",
-            "params": [
-                {
-                    "name": "e",
-                    "description": "event"
-                }
-            ],
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 84,
-            "description": "Data collection abstract method",
-            "itemtype": "method",
-            "name": "dataCollection",
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 97,
-            "description": "Draw the game score",
-            "itemtype": "method",
-            "name": "drawScore",
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 108,
-            "description": "Abstract Main game loop method",
-            "itemtype": "method",
-            "name": "loop",
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 122,
-            "description": "Create initial ball box object to start from",
-            "itemtype": "method",
-            "name": "createBallBox",
-            "params": [
-                {
-                    "name": "paddleWidth",
-                    "description": "",
-                    "type": "Int"
-                }
-            ],
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 144,
-            "itemtype": "method",
-            "name": "mouseY Set current cursor position",
-            "params": [
-                {
-                    "name": "mouse",
-                    "description": "cursor Y coordinate",
-                    "type": "Number"
-                }
-            ],
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 153,
-            "itemtype": "method",
-            "name": "mouseY Get current cursor position",
-            "return": {
-                "description": "mouse cursor Y coordinate",
-                "type": "Number"
-            },
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 162,
-            "itemtype": "method",
-            "name": "gameOver Set method if game is over",
-            "params": [
-                {
-                    "name": "game",
-                    "description": "is over",
-                    "type": "Boolean"
-                }
-            ],
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 172,
-            "itemtype": "method",
-            "name": "gameOver Get method if game is over",
-            "return": {
-                "description": "game is over",
-                "type": "Boolean"
-            },
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 181,
-            "itemtype": "method",
-            "name": "Utils Get shared Utils objects\nGet Utilities game constants",
-            "return": {
-                "description": "",
-                "type": "Utils"
-            },
-            "is_constructor": 1,
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 192,
-            "itemtype": "method",
-            "name": "drawImage Show current image",
-            "params": [
-                {
-                    "name": "Current",
-                    "description": "object with x,y position, width , height and URL of the image to show",
-                    "type": "Object"
-                },
-                {
-                    "name": "URL",
-                    "description": "",
-                    "type": "String"
-                }
-            ],
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 205,
-            "description": "Disabled for now",
-            "itemtype": "method",
-            "name": "storeData Store data in proposed array",
-            "params": [
-                {
-                    "name": "exportData",
-                    "description": "",
-                    "type": "Array"
-                }
-            ],
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 217,
-            "description": "Initialize current round of the game",
-            "itemtype": "method",
-            "name": "initGame",
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 240,
-            "description": "Finish current round and check for rounds left",
-            "itemtype": "method",
-            "name": "finishGame",
-            "params": [
-                {
-                    "name": "should",
-                    "description": "increase score",
-                    "type": "Boolean"
-                }
-            ],
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 265,
-            "description": "Create ball movement up to some trajectory",
-            "itemtype": "method",
-            "name": "ballTrajectory",
-            "params": [
-                {
-                    "name": "ball",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 299,
-            "description": "Set position of the ball to initial coordinates to symbolize the start of the game",
-            "itemtype": "method",
-            "name": "moveBallToStart",
-            "params": [
-                {
-                    "name": "ball",
-                    "description": "object parameters",
-                    "type": "Object"
-                },
-                {
-                    "name": "gameOver",
-                    "description": "set game to be over",
-                    "type": "Boolean"
-                }
-            ],
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 318,
-            "description": "Check if user returned paddle to initial coordinates and call finish of the game to restart\ncurrent round",
-            "itemtype": "method",
-            "name": "paddleAtZero",
-            "params": [
-                {
-                    "name": "paddle",
-                    "description": "",
-                    "type": "Object"
-                },
-                {
-                    "name": "score",
-                    "description": "should increase score",
-                    "type": "Boolean"
-                }
-            ],
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 335,
-            "description": "Minimal implementation of interruption between rounds",
-            "itemtype": "method",
-            "name": "waitSeconds",
-            "params": [
-                {
-                    "name": "iMilliSeconds",
-                    "description": "",
-                    "type": "Int"
-                }
-            ],
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 352,
-            "description": "Set paddle coordinates up to velocity",
-            "itemtype": "method",
-            "name": "paddleMove",
-            "params": [
-                {
-                    "name": "paddle",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/base.js",
-            "line": 364,
-            "description": "Walls and target collisions detection",
-            "itemtype": "method",
-            "name": "wallCollision",
-            "params": [
-                {
-                    "name": "ball",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "if hit any edge of the screen",
-                "type": "Boolean"
-            },
-            "class": "Base",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/catchCheese.js",
-            "line": 42,
-            "itemtype": "method",
-            "name": "constructor",
-            "is_constructor": 1,
-            "params": [
-                {
-                    "name": "context",
-                    "description": ""
-                },
-                {
-                    "name": "document",
-                    "description": ""
-                }
-            ],
-            "class": "CatchCheese",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/catchCheese.js",
-            "line": 56,
-            "description": "Main point to start the game.\nInitialize static parameters and preload sounds here",
-            "itemtype": "method",
-            "name": "init",
-            "class": "CatchCheese",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/catchCheese.js",
-            "line": 81,
-            "description": "The box symbolizes initial paddle location",
-            "itemtype": "method",
-            "name": "createPaddleBox",
-            "class": "CatchCheese",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/catchCheese.js",
-            "line": 94,
-            "description": "Initialize each game round with initial object parameters\nRandomize number of obstructions\nReset the sounds sources for older browser versions\nWait for start sound and start the main game loop",
-            "itemtype": "method",
-            "name": "initGame",
-            "class": "CatchCheese",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/catchCheese.js",
-            "line": 149,
-            "description": "Check if ball reaches the target",
-            "itemtype": "method",
-            "name": "collisionDetection",
-            "return": {
-                "description": "",
-                "type": "Boolean"
-            },
-            "class": "CatchCheese",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/catchCheese.js",
-            "line": 169,
-            "description": "Update location of the basket stars(symbolize that user reached the target) with the basket location",
-            "itemtype": "method",
-            "name": "starsLocationUpdate",
-            "class": "CatchCheese",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/catchCheese.js",
-            "line": 186,
-            "description": "Main loop of the game.\nSet initial position of the ball in a box and starting rattling sound (initSoundPlaying).\nAfter that  start ball trajectory.\nIf ball hits the target or missed the target wait util user places the paddle to starting position.\nIncrease the score if ball hits the target.",
-            "itemtype": "method",
-            "name": "loop",
-            "class": "CatchCheese",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/catchCheese.js",
-            "line": 249,
-            "itemtype": "method",
-            "name": "Draw image object according to object locations",
-            "params": [
-                {
-                    "name": "object",
-                    "description": ""
-                }
-            ],
-            "class": "CatchCheese",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/catchMouse.js",
-            "line": 28,
-            "itemtype": "method",
-            "name": "constructor",
-            "is_constructor": 1,
-            "params": [
-                {
-                    "name": "context",
-                    "description": "Context of the game"
-                },
-                {
-                    "name": "document",
-                    "description": ""
-                }
-            ],
-            "class": "CatchMouse",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/catchMouse.js",
-            "line": 43,
-            "description": "Main point to start the game.\n Initialize static parameters and preload sounds here",
-            "itemtype": "method",
-            "name": "init",
-            "class": "CatchMouse",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/catchMouse.js",
-            "line": 65,
-            "description": "Draw image object according to object locations",
-            "itemtype": "method",
-            "name": "drawImage",
-            "params": [
-                {
-                    "name": "object",
-                    "description": ""
-                }
-            ],
-            "class": "CatchMouse",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/catchMouse.js",
-            "line": 77,
-            "description": "The box symbolizes initial paddle location",
-            "itemtype": "method",
-            "name": "createPaddleBox",
-            "class": "CatchMouse",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/catchMouse.js",
-            "line": 92,
-            "description": "Initialize each game round with initial object parameters\n Randomize number of obstructions\n Reset the sounds sources for older browser versions",
-            "itemtype": "method",
-            "name": "initGame",
-            "class": "CatchMouse",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/catchMouse.js",
-            "line": 141,
-            "itemtype": "method",
-            "name": "dataCollection Collect data",
-            "class": "CatchMouse",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/catchMouse.js",
-            "line": 161,
-            "description": "Start showing the mouse and the cheese.\n Update the radians angle  of the cheese with each iteration.\n Detect collision with paddle(basket) here and set gameOver object to true\n if the basket reached or not the target (mouse)",
-            "itemtype": "method",
-            "name": "startClock",
-            "class": "CatchMouse",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/catchMouse.js",
-            "line": 195,
-            "description": "Show cheese portion according to angle",
-            "itemtype": "method",
-            "name": "showCheese",
-            "class": "CatchMouse",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/catchMouse.js",
-            "line": 220,
-            "description": "Main loop of the game.\n Set initial position of the ball in a box and starting rattling sound (initSoundPlaying).\n After that  start showing the mouse.\n Increase the score if ball hits the target.",
-            "itemtype": "method",
-            "name": "loop",
-            "class": "CatchMouse",
-            "module": "exp-player",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/component.js",
-            "line": 64,
-            "description": "Set current game type",
-            "itemtype": "property",
-            "name": "type",
-            "type": "Integer",
-            "default": "0",
-            "class": "ExpFrameGamesComponent",
-            "module": "exp-lookit-games",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-test/component.js",
-            "line": 76,
-            "description": "Whether to hide next/previous buttons for game",
-            "itemtype": "property",
-            "name": "hideControls",
-            "type": "Boolean",
-            "default": "false",
-            "class": "ExpFrameGamesComponent",
-            "module": "exp-lookit-games",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-test/component.js",
-            "line": 87,
-            "description": "Text to display on the 'next frame' button",
-            "itemtype": "property",
-            "name": "nextButtonText",
-            "type": "String",
-            "default": "'Next'",
-            "class": "ExpFrameGamesComponent",
-            "module": "exp-lookit-games",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-test/component.js",
-            "line": 97,
-            "description": "Whether to show a 'previous' button",
-            "itemtype": "property",
-            "name": "showPreviousButton",
-            "type": "Boolean",
-            "default": "true",
-            "class": "ExpFrameGamesComponent",
-            "module": "exp-lookit-games",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-test/component.js",
-            "line": 110,
-            "description": "Parameters captured game data and sent to the server\nThis might be changed in near future for some game type",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "export_arr",
-                    "description": "Game data array with objects positions locations",
-                    "type": "Array"
-                },
-                {
-                    "name": "items",
-                    "description": "The name of the current game object : ball_object {x,y }, paddle_object{x,y}",
-                    "type": "Object"
-                },
-                {
-                    "name": "ball_object",
-                    "description": "items The name of the current game object",
-                    "type": "Object"
-                },
-                {
-                    "name": "timestamp",
-                    "description": "current timestamp in milliseconds for each x,y point of object",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
-            "class": "ExpFrameGamesComponent",
-            "module": "exp-lookit-games",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-test/feedCroc.js",
-            "line": 44,
-            "description": "Constructor to get parameters from caller",
-            "itemtype": "method",
-            "name": "constructor",
-            "is_constructor": 1,
-            "params": [
-                {
-                    "name": "context",
-                    "description": "from component"
-                },
-                {
-                    "name": "document",
-                    "description": "object from component"
-                }
-            ],
-            "class": "FeedCroc",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedCroc.js",
-            "line": 59,
-            "description": "Main point to start the game.\nInitialize static parameters and preload sounds here",
-            "itemtype": "method",
-            "name": "init",
-            "class": "FeedCroc",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedCroc.js",
-            "line": 101,
-            "description": "Draw paddle according to the location parameters",
-            "itemtype": "method",
-            "name": "drawPaddle",
-            "class": "FeedCroc",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedCroc.js",
-            "line": 114,
-            "description": "The box symbolizes initial paddle location",
-            "itemtype": "method",
-            "name": "createPaddleBox",
-            "class": "FeedCroc",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedCroc.js",
-            "line": 128,
-            "description": "Main loop of the game.\n Set initial position of the ball in a box and starting rattling sound (initSoundPlaying).\n After that  start ball trajectory.\n If ball hits the target or missed the target (hits any screen edge) wait util user places the paddle to starting position and move\n the ball to initial position.\n Increase the score if ball hits the target.",
-            "itemtype": "method",
-            "name": "loop",
-            "class": "FeedCroc",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedCroc.js",
-            "line": 188,
-            "description": "Handle paddle collision here\n Adjust velocity to the ball by restitution factor",
-            "itemtype": "method",
-            "name": "paddleBallCollision",
-            "class": "FeedCroc",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedCroc.js",
-            "line": 210,
-            "description": "Check if ball reached the target",
-            "itemtype": "method",
-            "name": "collisionDetection",
-            "return": {
-                "description": "",
-                "type": "Boolean"
-            },
-            "class": "FeedCroc",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedCroc.js",
-            "line": 226,
-            "description": "Initialize each game round with initial object parameters\n Randomize number of obstructions\n Reset the sounds sources for older browser versions",
-            "itemtype": "method",
-            "name": "initGame",
-            "class": "FeedCroc",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedCroc.js",
-            "line": 263,
-            "description": "Export data",
-            "itemtype": "method",
-            "name": "dataCollection",
-            "class": "FeedCroc",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMice.js",
-            "line": 36,
-            "itemtype": "method",
-            "name": "constructor",
-            "is_constructor": 1,
-            "params": [
-                {
-                    "name": "context",
-                    "description": ""
-                },
-                {
-                    "name": "document",
-                    "description": ""
-                }
-            ],
-            "class": "FeedMice",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMice.js",
-            "line": 57,
-            "description": "Draw image object according to object locations",
-            "itemtype": "method",
-            "name": "drawImage",
-            "params": [
-                {
-                    "name": "object",
-                    "description": ""
-                }
-            ],
-            "class": "FeedMice",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMice.js",
-            "line": 70,
-            "description": "Draw house with roof according to coordinates",
-            "itemtype": "method",
-            "name": "createHouse",
-            "class": "FeedMice",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMice.js",
-            "line": 98,
-            "description": "Create the window in the house",
-            "itemtype": "method",
-            "name": "createWindow",
-            "params": [
-                {
-                    "name": "target",
-                    "description": ""
-                }
-            ],
-            "class": "FeedMice",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMice.js",
-            "line": 116,
-            "description": "Main point to start the game.\nInitialize static parameters and preload sounds here",
-            "itemtype": "method",
-            "name": "init",
-            "class": "FeedMice",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMice.js",
-            "line": 137,
-            "description": "Initialize each game round with initial object parameters\nRandomize number of obstructions\nReset the sounds sources for older browser versions\nWait for start sound and start the main game loop",
-            "itemtype": "method",
-            "name": "initGame",
-            "class": "FeedMice",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMice.js",
-            "line": 192,
-            "description": "Check collision of appropriate key and window\nWhen ball hits the window set coordinates of the ball to the center of the reached window",
-            "itemtype": "method",
-            "name": "collisionDetection",
-            "params": [
-                {
-                    "name": "index",
-                    "description": ""
-                }
-            ],
-            "return": {
-                "description": "2: key pressed matches the window target, 1: key pressed doesn't match the window,\n0: no window reached (might be redundant)",
-                "type": "Int"
-            },
-            "class": "FeedMice",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMice.js",
-            "line": 228,
-            "description": "Set appropriate index value in pressed array, according to index of the key pressed",
-            "itemtype": "method",
-            "name": "keyDownHandler",
-            "params": [
-                {
-                    "name": "e",
-                    "description": "event",
-                    "type": "Object"
-                }
-            ],
-            "class": "FeedMice",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMice.js",
-            "line": 240,
-            "description": "Main loop of the game\nSet initial position of the ball in a box and starting rattling sound (initSoundPlaying).\nAfter that  start ball trajectory.\nIf ball hits the target or missed the target(window) show the ball in the window and selected window\nclicked by user (indicate the window background with color).\nIncrease the score if ball hits the target.\nMove the ball to initial position.\nWait for some time until rattle sound played.",
-            "itemtype": "method",
-            "name": "keyDownHandler",
-            "class": "FeedMice",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMice.js",
-            "line": 305,
-            "itemtype": "method",
-            "name": "dataCollection Data collection",
-            "class": "FeedMice",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMouse.js",
-            "line": 31,
-            "itemtype": "method",
-            "name": "constructor",
-            "is_constructor": 1,
-            "params": [
-                {
-                    "name": "context",
-                    "description": ""
-                },
-                {
-                    "name": "document",
-                    "description": ""
-                }
-            ],
-            "class": "FeedMouse",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMouse.js",
-            "line": 45,
-            "description": "Draw house with roof according to coordinates",
-            "itemtype": "method",
-            "name": "createHouse",
-            "class": "FeedMouse",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMouse.js",
-            "line": 73,
-            "description": "Create the window in the house",
-            "itemtype": "method",
-            "name": "createWindow",
-            "params": [
-                {
-                    "name": "target",
-                    "description": ""
-                }
-            ],
-            "class": "FeedMouse",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMouse.js",
-            "line": 106,
-            "description": "Main point to start the game.\nInitialize static parameters and preload sounds here",
-            "itemtype": "method",
-            "name": "init",
-            "class": "FeedMouse",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMouse.js",
-            "line": 127,
-            "description": "Initialize each game round with initial object parameters\nRandomize number of obstructions\nReset the sounds sources for older browser versions\nWait for start sound and start the main game loop",
-            "itemtype": "method",
-            "name": "initGame",
-            "class": "FeedMouse",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMouse.js",
-            "line": 175,
-            "itemtype": "method",
-            "name": "dataCollection",
-            "class": "FeedMouse",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMouse.js",
-            "line": 182,
-            "description": "Check collision of appropriate key and window\n When ball hits the window set coordinates of the ball to the center of the window",
-            "itemtype": "method",
-            "name": "collisionDetection",
-            "return": {
-                "description": "",
-                "type": "Boolean"
-            },
-            "class": "FeedMouse",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMouse.js",
-            "line": 210,
-            "itemtype": "method",
-            "name": "keyDownHandler Get current keyboard event on press button",
-            "params": [
-                {
-                    "name": "e",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "class": "FeedMouse",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMouse.js",
-            "line": 223,
-            "itemtype": "method",
-            "name": "keyUpHandler Get current keyboard event on release button",
-            "params": [
-                {
-                    "name": "e",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "class": "FeedMouse",
-            "module": "exp-lookit-games",
-            "submodule": "games"
-        },
-        {
-            "file": "app/components/exp-test/feedMouse.js",
-            "line": 236,
-            "description": "Main loop of the game\n Set initial position of the ball in a box and starting rattling sound (initSoundPlaying).\n After that  start ball trajectory.\n If ball hits the target or missed the target(window) show the ball in the window\n Check if user hits the keyboard key when ball trajectory reached the window bounds.\n Increase the score if ball hits the target.\n Move the ball to initial position.\n Wait for some time until rattle sound played.",
-            "itemtype": "method",
-            "name": "loop",
-            "class": "FeedMouse",
-            "module": "exp-lookit-games",
-            "submodule": "games"
         },
         {
             "file": "app/components/exp-video-config/component.js",
@@ -4780,7 +3576,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 91,
+            "line": 112,
             "description": "Text to show as the introduction to the list of things to check. Can include\nHTML.",
             "itemtype": "property",
             "name": "introText",
@@ -4792,7 +3588,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 102,
+            "line": 123,
             "description": "Title to display to participant",
             "itemtype": "property",
             "name": "title",
@@ -4804,7 +3600,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 112,
+            "line": 133,
             "description": "Whether to show checkboxes under each instruction item and require\nparticipant to check them off to proceed.",
             "itemtype": "property",
             "name": "requireItemConfirmation",
@@ -4816,7 +3612,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 123,
+            "line": 144,
             "description": "Whether to require participant to make and view a test video. Ignored if\nshowRecordMenu is false.",
             "itemtype": "property",
             "name": "requireTestVideo",
@@ -4828,7 +3624,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 134,
+            "line": 155,
             "description": "Whether to display record/replay menu to participant. If false,\nrequireTestVideo value is ignored.",
             "itemtype": "property",
             "name": "showRecordMenu",
@@ -4840,7 +3636,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 145,
+            "line": 166,
             "description": "Text to show below the webcam view. For instance, you might instruct\nfamilies to make a short recording in the position they will be in for the\nexperiment, and make sure that the infant's eyes are visible or that the\nchild is audible. HTML is allowed.",
             "itemtype": "property",
             "name": "recordingInstructionText",
@@ -4852,7 +3648,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 158,
+            "line": 179,
             "description": "Text to show next to instructions checkboxes, if participant is required\nto check off each instruction (see requireItemConfirmation). Ignored if\nrequireItemConfirmation is false.",
             "itemtype": "property",
             "name": "completedItemText",
@@ -4864,7 +3660,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 170,
+            "line": 191,
             "description": "List of instruction segments to display to participant. Rendered using\n{{#crossLink \"ExpTextBlock\"}}{{/crossLink}}, so all parameters\nof ExpTextBlock can be used.",
             "itemtype": "property",
             "name": "instructionBlocks",
@@ -4888,7 +3684,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 303,
+            "line": 324,
             "description": "Observer that adds listener for play button once recorder is ready.",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -4898,7 +3694,7 @@
         },
         {
             "file": "app/components/exp-video-consent/component.js",
-            "line": 63,
+            "line": 64,
             "description": "Title of the consent document",
             "itemtype": "property",
             "name": "title",
@@ -4910,7 +3706,7 @@
         },
         {
             "file": "app/components/exp-video-consent/component.js",
-            "line": 73,
+            "line": 74,
             "description": "Array of paragraphs of the consent document, each with title and text.",
             "itemtype": "property",
             "name": "blocks",
@@ -4934,7 +3730,7 @@
         },
         {
             "file": "app/components/exp-video-consent/component.js",
-            "line": 96,
+            "line": 97,
             "description": "Text the user is asked to read aloud to consent",
             "itemtype": "property",
             "name": "prompt",
@@ -4946,7 +3742,7 @@
         },
         {
             "file": "app/components/exp-video-consent/component.js",
-            "line": 108,
+            "line": 109,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "serializeContent",
@@ -4982,7 +3778,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 110,
+            "line": 114,
             "description": "A series of preview videos to display within a single frame, defined as an array of objects.",
             "itemtype": "property",
             "name": "videos",
@@ -5010,7 +3806,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 152,
+            "line": 156,
             "description": "Text on the button prompt asking the user to continue to the videos",
             "itemtype": "property",
             "name": "prompt",
@@ -5021,7 +3817,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 170,
+            "line": 174,
             "description": "Informational text to display to the user before videos are shown, along with button to continue",
             "itemtype": "property",
             "name": "text",
@@ -5032,7 +3828,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 180,
+            "line": 184,
             "description": "Text on the button to proceed to the next example video/image",
             "itemtype": "property",
             "name": "nextStimulusText",
@@ -5043,7 +3839,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 190,
+            "line": 194,
             "description": "Text on the button to proceed to the previous example video/image",
             "itemtype": "property",
             "name": "previousStimulusText",
@@ -5054,7 +3850,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 205,
+            "line": 209,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "serializeContent",
@@ -5194,7 +3990,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 167,
+            "line": 166,
             "description": "Whether to display this frame as fullscreen, even though it is not\ngenerally used that way.",
             "itemtype": "property",
             "name": "displayFullscreenOverride",
@@ -5607,7 +4403,7 @@
                 "description": "The model representing the last session in which the user participated",
                 "type": "Session"
             },
-            "class": "randomParameterSet",
+            "class": "RandomParameterSet",
             "module": "exp-player"
         },
         {
@@ -5617,7 +4413,7 @@
             "itemtype": "property",
             "name": "commonFrameProperties",
             "type": "Object",
-            "class": "randomParameterSet",
+            "class": "RandomParameterSet",
             "module": "exp-player",
             "submodule": "randomizers"
         },
@@ -5628,7 +4424,7 @@
             "itemtype": "property",
             "name": "frameList",
             "type": "Object[]",
-            "class": "randomParameterSet",
+            "class": "RandomParameterSet",
             "module": "exp-player",
             "submodule": "randomizers"
         },
@@ -5639,7 +4435,7 @@
             "itemtype": "property",
             "name": "parameterSets",
             "type": "Object[]",
-            "class": "randomParameterSet",
+            "class": "RandomParameterSet",
             "module": "exp-player",
             "submodule": "randomizers"
         },
@@ -5650,7 +4446,7 @@
             "itemtype": "property",
             "name": "parameterSetWeights",
             "type": "Number[]",
-            "class": "randomParameterSet",
+            "class": "RandomParameterSet",
             "module": "exp-player",
             "submodule": "randomizers"
         },
@@ -5672,7 +4468,57 @@
                     "type": "Object"
                 }
             ],
-            "class": "randomParameterSet",
+            "class": "RandomParameterSet",
+            "module": "exp-player",
+            "submodule": "randomizers"
+        },
+        {
+            "file": "app/randomizers/select.js",
+            "line": 60,
+            "description": "List of frames that can be created by this randomizer. Each frame is an\nobject with any necessary frame-specific properties specified. The\n'kind' of frame can be specified either here (per frame) or in\ncommonFrameProperties. If a property is defined for a given frame both\nin this frame list and in commonFrameProperties, the value in the frame\nlist will take precedence.\n\n(E.g., you could include 'kind': 'normal-frame' in\ncommmonFrameProperties, but for a single frame in frameOptions, include\n'kind': 'special-frame'.)",
+            "itemtype": "property",
+            "name": "frameOptions",
+            "type": "Object[]",
+            "class": "Select",
+            "module": "exp-player",
+            "submodule": "randomizers"
+        },
+        {
+            "file": "app/randomizers/select.js",
+            "line": 75,
+            "description": "Object describing common parameters to use in EVERY frame created\nby this randomizer. Parameter names and values are as described in\nthe documentation for the frameType used.",
+            "itemtype": "property",
+            "name": "commonFrameProperties",
+            "type": "Object",
+            "class": "Select",
+            "module": "exp-player",
+            "submodule": "randomizers"
+        },
+        {
+            "file": "app/randomizers/select.js",
+            "line": 83,
+            "description": "Index or indices (0-indexed) within frameOptions to actually use. This can be either a number\n(e.g., 0 or 1 to use the first or second option respectively) or an array providing\nan ordered list of indices to use (e.g., [0, 1] or [1, 0] to use the first then\nsecond or second then first options, respectively). All indices must be integers\nin [0, frameOptions.length).\n\nIf not provided or -1, the entire frameOptions list is used in order. (If empty\nlist is provided, however, that is respected and no frames are inserted by this\nrandomizer.)",
+            "itemtype": "property",
+            "name": "whichFrames",
+            "type": "Number",
+            "class": "Select",
+            "module": "exp-player",
+            "submodule": "randomizers"
+        },
+        {
+            "file": "app/randomizers/select.js",
+            "line": 124,
+            "description": "Parameters captured and sent to the server",
+            "itemtype": "method",
+            "name": "conditions",
+            "params": [
+                {
+                    "name": "whichFrames",
+                    "description": "the index/indices of the frame(s) used",
+                    "type": "Object[]"
+                }
+            ],
+            "class": "Select",
             "module": "exp-player",
             "submodule": "randomizers"
         },

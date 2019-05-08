@@ -4,6 +4,9 @@
             experiment=study
             session=response
             pastSessions=pastResponses
+            saveHandler=(action 'saveResponse')
+            frameIndex=0
+            fullScreenElementId='expContainer'
         }}
     {{/if}}
 </div>
@@ -12,7 +15,7 @@
     {{#modal.body}}
         <p>
             <strong> Note: </strong>
-            This dialog will not appear to participants when they complete a study.
+            This dialog will not appear to participants when they complete a study. Instead, the "Finish" button will redirect them to the exit URL you specify.
         </p>
         <hr>
         <pre class="preview-data">

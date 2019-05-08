@@ -1,12 +1,9 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
-        "Base",
-        "CatchCheese",
-        "CatchMouse",
         "ExpExitSurvey",
         "ExpFrameBase",
-        "ExpFrameGamesComponent",
+        "ExpFrameSelect",
         "ExpLookitDialoguePage",
         "ExpLookitExitSurvey",
         "ExpLookitGeometryAlternation",
@@ -20,31 +17,25 @@ YUI.add("yuidoc-meta", function(Y) {
         "ExpLookitText",
         "ExpLookitVideo",
         "ExpLookitVideoConsent",
-        "ExpPlayer",
+        "ExpPlayer\n\nExperiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```",
         "ExpVideoConfig",
         "ExpVideoConfigQuality",
         "ExpVideoConsent",
         "ExpVideoPreview",
         "ExpandAssets",
-        "FeedCroc",
-        "FeedMice",
-        "FeedMouse",
         "FullScreen",
-        "Game",
         "MediaReload",
-        "Utils\nShared Utility class for project static methods and constants",
+        "RandomParameterSet",
+        "Select",
         "VideoRecordMixin",
         "VideoRecorderObject",
         "permute",
-        "randomParameterSet",
         "videoRecorder"
     ],
     "modules": [
         "components",
-        "exp-lookit-games",
         "exp-player",
         "frames",
-        "games",
         "mixins",
         "randomizers",
         "services"
@@ -52,12 +43,7 @@ YUI.add("yuidoc-meta", function(Y) {
     "allModules": [
         {
             "displayName": "components",
-            "name": "components",
-            "description": "Experiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```"
-        },
-        {
-            "displayName": "exp-lookit-games",
-            "name": "exp-lookit-games"
+            "name": "components"
         },
         {
             "displayName": "exp-player",
@@ -67,11 +53,6 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "frames",
             "name": "frames",
             "description": "This is the exit survey used by \"Your baby the physicist\". Use the updated frame {{#crossLink \"ExpLookitExitSurvey\"}}{{/crossLink}} instead."
-        },
-        {
-            "displayName": "games",
-            "name": "games",
-            "description": "Game orchestrator to set initial parameters and\nexecute requested game\nMight have randomization of the games here"
         },
         {
             "displayName": "mixins",

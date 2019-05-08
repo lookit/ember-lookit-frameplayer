@@ -23,15 +23,13 @@ import FullScreen from '../../mixins/full-screen';
  * ```
  *
  * As a user you will almost never need to insert a component into a template directly- the platform should handle that
- *   by automatically inserting `exp-player` when your experiment starts.
+ *  by automatically inserting an <a href="../classes/ExpPlayer.html" class="crosslink">ExpPlayer</a> component when your experiment starts.
  * However, a sample template usage is provided below for completeness.
  *
  * ```handlebars
  *  {{
       component currentFrameTemplate
         frameIndex=frameIndex
-        framePage=framePage
-        updateFramePage=(action 'updateFramePage')
         frameConfig=currentFrameConfig
         frameContext=currentFrameContext
 
@@ -71,11 +69,158 @@ export default Ember.Component.extend(FullScreen, {
     },
     // {Number} the current exp-player frameIndex
     frameIndex: null,
-    framePage: null,
     frameConfig: null,
     frameContext: null,
+    frameType: 'DEFAULT',
     eventTimings: null,
     _oldFrameIndex: null,
+
+    /**
+     * Function to generate additional properties for this frame (like {"kind": "exp-lookit-text"})
+     * at the time the frame is initialized. Allows behavior of study to depend on what has
+     * happened so far (e.g., answers on a form or to previous test trials).
+     * Must be a valid Javascript function, returning an object, provided as
+     * a string.
+     *
+     *
+     * Arguments that will be provided are: `expData`, `sequence`, `child`, `pastSessions`, `conditions`.
+     *
+     *
+     * `expData`, `sequence`, and `conditions` are the same data as would be found in the session data shown
+     * on the Lookit experimenter interface under 'Individual Responses', except that
+     * they will only contain information up to this point in the study.
+     *
+     *
+     * `expData` is an object consisting of `frameId`: `frameData` pairs; the data associated
+     * with a particular frame depends on the frame kind.
+     *
+     *
+     * `sequence` is an ordered list of frameIds, corresponding to the keys in `expData`.
+     *
+     *
+     * `conditions` is an object representing the data stored by any randomizer frames;
+     * keys are `frameId`s for randomizer frames and data stored depends on the randomizer
+     * used.
+     *
+     *
+     * `child` is an object that has the following properties - use child.get(propertyName)
+     * to access:
+     * - `additionalInformation`: String; additional information field from child form
+     * - `ageAtBirth`: String; child's gestational age at birth in weeks. Possible values are
+     *   "24" through "39", "na" (not sure or prefer not to answer),
+     * "<24" (under 24 weeks), and "40>" (40 or more weeks).
+     * - `birthday`: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"
+     * - `gender`: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)
+     * - `givenName`: String, child's given name/nickname
+     * - `id`: String, child UUID
+     *
+     *
+     * `pastSessions` is a list of previous response objects for this child and this study,
+     * ordered starting from most recent (at index 0 is this session!). Each has properties
+     * (access as pastSessions[i].get(propertyName)):
+     * - `completed`: Boolean, whether they submitted an exit survey
+     * - `completedConsentFrame`: Boolean, whether they got through at least a consent frame
+     * - `conditions`: Object representing any conditions assigned by randomizer frames
+     * - `createdOn`: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"
+     * - `expData`: Object consisting of frameId: frameData pairs
+     * - `globalEventTimings`: list of any events stored outside of individual frames - currently
+     *   just used for attempts to leave the study early
+     * - `sequence`: ordered list of frameIds, corresponding to keys in expData
+     *
+     *
+     * Example:
+     * ```
+     * function(expData, sequence, child, pastSessions, conditions) {
+     *     return {
+     *        'blocks':
+     *             [
+     *                 {
+     *                     'text': 'Name: ' + child.get('givenName')
+     *                 },
+     *                 {
+     *                     'text': 'Frame number: ' + sequence.length
+     *                 },
+     *                 {
+     *                     'text': 'N past sessions: ' + pastSessions.length
+     *                 }
+     *             ]
+     *       };
+     *   }
+     * ```
+     *
+     *
+     *  (This example is split across lines for readability; when added to JSON it would need
+     *  to be on one line.)
+     *
+     * @property {String} generateProperties
+     * @default null
+     */
+    generateProperties: null,
+    generatedProperties: null,
+    _generatePropertiesFn: null,
+
+    /**
+     * Function to select which frame index to go to when using the 'next' action on this
+     * frame. Allows flexible looping / short-circuiting based on what has happened so far
+     * in the study (e.g., once the child answers N questions correctly, move on to next
+     * segment). Must be a valid Javascript function, returning a number from 0 through
+     * frames.length - 1, provided as a string.
+     *
+     *
+     * Arguments that will be provided are:
+     * `frames`, `frameIndex`, `expData`, `sequence`, `child`, `pastSessions`
+     *
+     *
+     * `frames` is an ordered list of frame configurations for this study; each element
+     * is an object corresponding directly to a frame you defined in the
+     * JSON document for this study (but with any randomizer frames resolved into the
+     * particular frames that will be used this time).
+     *
+     *
+     * `frameIndex` is the index in `frames` of the current frame
+     *
+     *
+     * `expData` is an object consisting of `frameId`: `frameData` pairs; the data associated
+     * with a particular frame depends on the frame kind.
+     *
+     *
+     * `sequence` is an ordered list of frameIds, corresponding to the keys in `expData`.
+     *
+     *
+     * `child` is an object that has the following properties - use child.get(propertyName)
+     * to access:
+     * - `additionalInformation`: String; additional information field from child form
+     * - `ageAtBirth`: String; child's gestational age at birth in weeks. Possible values are
+     *   "24" through "39", "na" (not sure or prefer not to answer),
+     * "<24" (under 24 weeks), and "40>" (40 or more weeks).
+     * - `birthday`: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"
+     * - `gender`: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)
+     * - `givenName`: String, child's given name/nickname
+     * - `id`: String, child UUID
+     *
+     *
+     * `pastSessions` is a list of previous response objects for this child and this study,
+     * ordered starting from most recent (at index 0 is this session!). Each has properties
+     * (access as pastSessions[i].get(propertyName)):
+     * - `completed`: Boolean, whether they submitted an exit survey
+     * - `completedConsentFrame`: Boolean, whether they got through at least a consent frame
+     * - `conditions`: Object representing any conditions assigned by randomizer frames
+     * - `createdOn`: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"
+     * - `expData`: Object consisting of frameId: frameData pairs
+     * - `globalEventTimings`: list of any events stored outside of individual frames - currently
+     *   just used for attempts to leave the study early
+     * - `sequence`: ordered list of frameIds, corresponding to keys in expData
+     *
+     *
+     * Example that just sends us to the last frame of the study no matter what:
+     * ``"function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}"```
+     *
+     *
+     * @property {String} selectNextFrame
+     * @default null
+     */
+    selectNextFrame: null,
+    _selectNextFrameFn: null,
 
     session: null,
 
@@ -100,6 +245,7 @@ export default Ember.Component.extend(FullScreen, {
         let currentFrameIndex = this.get('frameIndex', null);
 
         let clean = currentFrameIndex !== this.get('_oldFrameIndex');
+
         var defaultParams = this.setupParams(clean);
         if (clean) {
             Object.keys(defaultParams).forEach((key) => {
@@ -116,12 +262,59 @@ export default Ember.Component.extend(FullScreen, {
         if (clean) {
             var session = this.get('session');
             var expData = session ? session.get('expData') : null;
+
+            // Load any existing data for this particular frame - e.g. for a survey that
+            // the participant is returning to via a previous button.
             if (session && session.get('expData')) {
                 var key = this.get('frameIndex') + '-' + this.get('id');
                 if (expData[key]) {
                     this.loadData(expData[key]);
                 }
             }
+
+            // Use the provided generateProperties fn, if any, to generate properties for this
+            // frame on-the-fly based on expData, sequence, child, & pastSessions.
+            if (this.get('generateProperties')) { // Only if generateProperties is non-empty
+                try {
+                    this.set('_generatePropertiesFn', Function('return ' + this.get('generateProperties'))());
+                } catch (error) {
+                    console.error(error);
+                    throw new Error('generateProperties provided for this frame, but cannot be evaluated.');
+                }
+                if (typeof (this.get('_generatePropertiesFn')) === 'function') {
+                    var sequence = session ? session.get('sequence', null) : null;
+                    var child = session ? session.get('child', null) : null;
+                    var conditions = session ? session.get('conditions', {}) : {};
+                    var frameContext = this.get('frameContext');
+                    var pastSessions = frameContext ? frameContext.pastSessions : null;
+                    var generatedParams = this._generatePropertiesFn(expData, sequence, child, pastSessions, conditions);
+                    if (typeof (generatedParams) === 'object') {
+                        this.set('generatedProperties', generatedParams);
+                        Object.keys(generatedParams).forEach((key) => {
+                            this.set(key, generatedParams[key]);
+                        });
+                    } else {
+                        throw new Error('generateProperties function provided for this frame, but did not return an object');
+                    }
+                } else {
+                    throw new Error('generateProperties provided for this frame, but does not evaluate to a function');
+                }
+            }
+
+            // Use the provided selectNextFrame fn, if any, to determine which frame should come
+            // next.
+            if (this.get('selectNextFrame')) { // Only if selectNextFrame is non-empty
+                try {
+                    this.set('_selectNextFrameFn', Function('return ' + this.get('selectNextFrame'))());
+                } catch (error) {
+                    console.error(error);
+                    throw new Error('selectNextFrame provided for this frame, but cannot be evaluated.');
+                }
+                if (!(typeof (this.get('_selectNextFrameFn')) === 'function')) {
+                    throw new Error('selectNextFrame provided for this frame, but does not evaluate to a function');
+                }
+            }
+
         }
 
         this.set('_oldFrameIndex', currentFrameIndex);
@@ -166,6 +359,12 @@ export default Ember.Component.extend(FullScreen, {
             }
         });
 
+        // Need to explicitly set defaults for non-meta properties here, otherwise defaults
+        // do not overwrite previous properties when no value is provided on the next
+        // frame.
+        defaultParams.generateProperties = null;
+        defaultParams.generatedProperties = null;
+        defaultParams.selectNextFrame = null;
         Ember.assign(defaultParams, params);
         return defaultParams;
     },
@@ -191,7 +390,9 @@ export default Ember.Component.extend(FullScreen, {
     serializeContent() {
         // Serialize selected parameters for this frame, plus eventTiming data
         var serialized = this.getProperties(Object.keys(this.get('meta.data.properties') || {}));
+        serialized.generatedProperties = this.get('generatedProperties');
         serialized.eventTimings = this.get('eventTimings');
+        serialized.frameType = this.get('frameType');
         return serialized;
     },
 
@@ -247,7 +448,26 @@ export default Ember.Component.extend(FullScreen, {
             // only thing they'll really be able to do is try again anyway, preventing
             // them from continuing is unnecessarily disruptive.
             this.send('save');
-            this.sendAction('next');
+
+            if (this._selectNextFrameFn) {
+                var session = this.get('session');
+                var expData = session ? session.get('expData') : null;
+                var sequence = session ? session.get('sequence', null) : null;
+                var child = session ? session.get('child', null) : null;
+                var frameContext = this.get('frameContext');
+                var pastSessions = frameContext ? frameContext.pastSessions : null;
+                var frames = this.get('parentView').get('frames');
+                var frameIndex = this.get('frameIndex');
+                var frameData = this.serializeContent(); // note - may not have saved to expData yet at time of call
+
+                var iNextFrame = this._selectNextFrameFn(frames, frameIndex, frameData, expData, sequence, child, pastSessions);
+                if (!(typeof (iNextFrame) === 'number')) {
+                    throw new Error('selectNextFrame function provided for this frame, but did not return a number');
+                }
+                this.sendAction('next', iNextFrame);
+            } else {
+                this.sendAction('next');
+            }
             window.scrollTo(0, 0);
         },
 
