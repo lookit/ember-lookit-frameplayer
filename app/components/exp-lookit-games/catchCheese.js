@@ -20,9 +20,7 @@ let goodJob = {};
 let initSoundPlaying = true;
 let ballCatchFail = {};
 let targetStars = {};
-const numberOfObstructions = 3;
-//Object for obstructions regularization. Check current index of obstructions array and set the iteration
-let currentTrial = {currentIndex: 0, iteration: 0 };
+
 
 
 /**
@@ -75,7 +73,6 @@ export default class CatchCheese extends Base {
 
         super.gameOver = false;
         super.initGame();
-        let obstructionsNum = this.getCurrentIndex();
 
         basket = {
             dimensions: {width: super.paddleWidth * 1.3, height: super.paddleWidth * 1.3},
@@ -93,6 +90,7 @@ export default class CatchCheese extends Base {
           {velocity: {x: 5.2, y: -7.6}}
         ];
 
+        let obstructionsNum = Math.floor(Math.random() * trajectories.length);
         let trajectory = trajectories[obstructionsNum];
         trajectory.velocity  = super.velocityToScale(trajectory.velocity);
         ball = {
@@ -130,15 +128,7 @@ export default class CatchCheese extends Base {
 
     }
 
-    getCurrentIndex() {
-        currentTrial.iteration += 1;
-        if (currentTrial.iteration >= super.Utils.gameRounds / numberOfObstructions) {
-            currentTrial.iteration = 0;
-            currentTrial.currentIndex += 1;
-        }
 
-        return currentTrial.currentIndex;
-    }
 
     dataCollection() {
 
