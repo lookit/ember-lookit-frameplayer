@@ -7,6 +7,5 @@
   */
   "disableAnalytics": false,
   // Use SSL for development server by default
-  "ssl": false,
-  "port":4200
+  "ssl": true
 }
