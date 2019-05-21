@@ -324,7 +324,7 @@ export default class Base {
     }else {
       this.context.set('showInstructions', true);
       this.context.stopRecorder();
-      this.context.next();
+      this.context.send('next');
     }
 
   }
