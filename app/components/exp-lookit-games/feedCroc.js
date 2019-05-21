@@ -252,10 +252,11 @@ export default class FeedCroc extends Base {
       ball_position_y: ball.position.y,
       paddle_position_x: paddle.position.x,
       paddle_position_y: paddle.position.y,
+      trial: super.currentRounds,
+      timestamp: new Date().getTime()
 
     };
 
-    // this.context.get('export_arr').addObject(exportData);
     super.storeData(exportData);
 
   }

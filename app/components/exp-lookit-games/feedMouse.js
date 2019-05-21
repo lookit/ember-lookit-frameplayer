@@ -225,6 +225,18 @@ export default class FeedMouse extends Base {
    */
   dataCollection() {
 
+    let exportData = {
+
+      ball_position_x: ball.position.x,
+      ball_position_y: ball.position.y,
+      button_pressed: keyPressed.value,
+      trial: super.currentRounds,
+      timestamp: new Date().getTime()
+
+    };
+
+    super.storeData(exportData);
+
   }
 
   /**
@@ -329,8 +341,6 @@ export default class FeedMouse extends Base {
         }
 
         this.showBallLocation(didHitWindow);
-
-
         super.moveBallToStart(ball, true);
         didHitWindow = false;
       }
@@ -338,7 +348,6 @@ export default class FeedMouse extends Base {
 
       if(didHitWindow){
 
-        console.log(new Date().getTime() - ball.timeReached);
         this.showBallLocation(didHitWindow);
         ballCatchFail.play();
         super.moveBallToStart(ball, true);

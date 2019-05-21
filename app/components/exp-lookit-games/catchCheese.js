@@ -151,7 +151,18 @@ export default class CatchCheese extends Base {
 
   dataCollection() {
 
-    super.storeData();
+    let exportData = {
+
+      ball_position_x: ball.position.x,
+      ball_position_y: ball.position.y,
+      paddle_position_x: basket.position.x,
+      paddle_position_y: basket.position.y,
+      trial: super.currentRounds,
+      timestamp: new Date().getTime()
+
+    };
+
+    super.storeData(exportData);
   }
 
 

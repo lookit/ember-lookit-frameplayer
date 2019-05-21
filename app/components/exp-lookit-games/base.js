@@ -16,6 +16,7 @@ let dataLoop = {};
 let gameLoop = {};
 let mouseY = 0;
 let gameOver = false;
+let currentRounds = 0;
 let paddleWidth = 0;
 let paddleHeight = 0;
 let paddleBox = {x:0,y:0};
@@ -42,7 +43,6 @@ export default class Base {
     this.canvas.height = height;
     this.canvas.width = height * 2;
     this.ctx = this.canvas.getContext('2d');
-    this.currentRounds = 0;
     this.currentScore = 0;
     this.canvas.style.cursor = 'none';
     paddleWidth = this.canvas.width / 20;
@@ -234,6 +234,15 @@ export default class Base {
   set gameOver(val) {
 
     gameOver = val;
+  }
+
+  /**
+   * @method currentRound
+   * get currrent round (Trial) of game.
+   */
+  get currentRound(){
+
+    return currentRounds;
   }
 
 
