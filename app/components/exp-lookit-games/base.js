@@ -20,7 +20,7 @@ let currentRounds = 0;
 let paddleWidth = 0;
 let paddleHeight = 0;
 let paddleBox = {x:0,y:0};
-const PADDLE_REST_TIME_MS = 1000;
+const PADDLE_REST_TIME_MS = 1300;
 
 /**
  * Base class for common game functions
@@ -447,13 +447,13 @@ export default class Base {
         paddle.paddleLastMovedMillis = new Date().getTime();
 
       }else if(new Date().getTime() - paddle.paddleLastMovedMillis  >= PADDLE_REST_TIME_MS){
-        paddle.paddleLastMovedMillis == 0;
+        paddle.paddleLastMovedMillis = 0;
         this.finishGame(score);
       }
 
     }else{
 
-      paddle.paddleLastMovedMillis === 0;
+      paddle.paddleLastMovedMillis = 0;
     }
 
   }

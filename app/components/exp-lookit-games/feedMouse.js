@@ -330,7 +330,7 @@ export default class FeedMouse extends Base {
 
           target.color = super.Utils.whiteColor;
           this.createHouse();
-          this.createWindow()
+          this.createWindow();
           super.increaseScore();
           goodJob.play();
 

@@ -141,7 +141,7 @@ export default class CatchCheese extends Base {
       radius: 4,
       color:super.Utils.redColor
 
-    }
+    };
     this.ctx.beginPath();
     this.ctx.fillStyle = redDot.color;
     this.ctx.fillRect(redDot.position.x, redDot.position.y, ball.radius*2, ball.radius);
