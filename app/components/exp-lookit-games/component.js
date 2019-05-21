@@ -7,6 +7,7 @@ import ExpFrameBaseComponent from '../../components/exp-frame-base/component';
 import layout from './template';
 import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
+import Ember from 'ember';
 import Game from './Game';
 /**
  * @module exp-lookit-games
@@ -207,10 +208,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
             }
         }
     },
+
     actions: {
         // Define any actions that you need to be able to trigger from within the template here
 
         play() {
+            this.startRecorder();
             this.set('showInstructions', false);
             this.set('export_arr', Ember.A());
             new Game(this, document, this.gameType);
