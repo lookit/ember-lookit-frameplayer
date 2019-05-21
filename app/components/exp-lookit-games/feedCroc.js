@@ -57,6 +57,7 @@ export default class FeedCroc extends Base {
     paddle = {
 
       position: {x: super.paddleWidth * 10-5, y: this.canvas.height / 2.5 + this.canvas.height / 2 - super.paddleHeight},
+      prevposition:{x: this.canvas.width / 2 + super.paddleWidth * 3, y: (this.canvas.height / 2 + super.paddleHeight * 2)},
       paddleLastMovedMillis: 100,
       velocity: super.Utils.paddleSpeed
 
@@ -107,6 +108,7 @@ export default class FeedCroc extends Base {
     super.createPaddleBox(super.paddleWidth * 10, this.canvas.height / 2.5 + this.canvas.height / 2 - super.paddleWidth*1.3);
     super.drawPaddle(paddle.position.x + 5, paddle.position.y);
     this.drawImage(target, target.imageURL);
+    paddle.prevposition.y = paddle.position.y;
     super.paddleMove(paddle);
     this.paddleBallCollision();
 
@@ -157,15 +159,14 @@ export default class FeedCroc extends Base {
    */
   paddleBallCollision() {
     if (ball.position.y > paddle.position.y  - ball.radius && ball.position.y < paddle.position.y + ball.radius  ) {
-      if ((ball.position.x > paddle.position.x -super.paddleWidth/2 && ball.position.x < paddle.position.x + super.paddleWidth*1.3)) {
-        if (new Date().getTime() - paddle.paddleLastMovedMillis > 200) {
+      if ((ball.position.x > paddle.position.x && ball.position.x < paddle.position.x + super.paddleWidth*1.3 )) {
+        if (new Date().getTime() - paddle.paddleLastMovedMillis > 120) {
           bounceSound.play();
-          ball.velocity.y *= ball.restitution;
-          ball.velocity.x *= -ball.restitution;
+          ball.velocity.y =  -4.8;
           paddle.paddleLastMovedMillis = new Date().getTime();
-          //
           ball.position.x += ball.velocity.x * super.Utils.frameRate * 100;
-          ball.position.y -= ball.velocity.y * super.Utils.frameRate * 100;
+          ball.position.y += ball.velocity.y * super.Utils.frameRate * 100  ;
+
           this.ctx.translate(ball.position.x, ball.position.y);
           this.ctx.beginPath();
           this.ctx.arc(0, 0, ball.radius, 0, Math.PI * 2, true);
@@ -204,9 +205,9 @@ export default class FeedCroc extends Base {
   initGame() {
     let Angle = (65*(Math.PI)/180);
     const  trajectories = [
-      {velocity: {x: 4.0* (55*(Math.PI)/180), y: -8.8*Math.sin(Angle)}},
-      {velocity: {x: 4.3* (50*(Math.PI)/180), y: -7.7*Math.sin(Angle)}},
-      {velocity: {x: 5.6* (35*(Math.PI)/180), y: -7.5*Math.sin(Angle)}}
+      {velocity: {x: 5.7* (45*(Math.PI)/180), y: -6.1*Math.sin(Angle)}},
+      {velocity: {x: 5.5* (45*(Math.PI)/180), y: -6.3*Math.sin(Angle)}},
+      {velocity: {x: 5.4* (45*(Math.PI)/180), y: -6.2*Math.sin(Angle)}}
     ];
 
     let index = Math.floor(Math.random() * trajectories.length);
@@ -218,7 +219,7 @@ export default class FeedCroc extends Base {
       velocity: {x: trajectory.velocity.x, y: trajectory.velocity.y},
       mass: super.Utils.ballMass,
       radius: 10,
-      restitution: -1.55,
+      restitution: -1.15,
       color: '#dadd0f'
 
     };
