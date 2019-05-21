@@ -277,7 +277,7 @@ export default class Base {
    */
   storeData(exportData) {
 
-    // this.context.get('export_arr').addObject(exportData);
+    this.context.get('export_arr').addObject(exportData);
     // this.context.export_arr.push(exportData);
   }
 
@@ -323,6 +323,7 @@ export default class Base {
 
     }else {
       this.context.set('showInstructions', true);
+      this.context.stopRecorder();
       this.context.next();
     }
 
