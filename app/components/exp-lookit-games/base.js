@@ -19,7 +19,7 @@ let gameOver = false;
 let paddleWidth = 0;
 let paddleHeight = 0;
 let paddleBox = {x:0,y:0};
-const PADDLE_REST_TIME_MS = 800;
+const PADDLE_REST_TIME_MS = 1000;
 
 /**
  * Base class for common game functions
@@ -365,21 +365,21 @@ export default class Base {
    * @param {number} scaleY
    */
   ballTrajectory(ball,scaleX=1,scaleY=1) {
-    let gravity = Utils.gravityFactor * 9.81;  // m / s^2
+    let gravity =  9.81;  // m / s^2
     //density of the environment
-    let rho = 1.22; // kg/ m^3
-    let Cd = 0.47;  // Dimensionless/
+    let rho = 1; // kg/ m^3
+    let Cd = 1;  // Dimensionless/
     // frontal area or frontal projection of the object (ball)
     let A = Math.PI * ball.radius * ball.radius / (10000); // m^2
     //Aerodynamics drag
-    let Fx = -0.5 * Cd * A * rho * ball.velocity.x * ball.velocity.x * ball.velocity.x / Math.abs(ball.velocity.x);
-    let Fy = -0.5 * Cd * A * rho * ball.velocity.y * ball.velocity.y * ball.velocity.y / Math.abs(ball.velocity.y);
+    let Fx = -0.5 * Cd  * A  * rho * ball.velocity.x * ball.velocity.x * ball.velocity.x / Math.abs(ball.velocity.x);
+    let Fy = -0.5 * Cd  *A  * rho * ball.velocity.y * ball.velocity.y * ball.velocity.y / Math.abs(ball.velocity.y);
 
     Fx = (isNaN(Fx) ? 0 : Fx);
     Fy = (isNaN(Fy) ? 0 : Fy);
 
-    let ax = Fx / ball.mass;
-    let ay = gravity + (Fy / ball.mass);
+    let ax = Fx ;
+    let ay = gravity + (Fy );
 
     ball.velocity.x += ax * Utils.frameRate*scaleX;
     ball.velocity.y += ay * Utils.frameRate*scaleY;
@@ -432,11 +432,12 @@ export default class Base {
 
     if (paddle.position.y >= paddleBox.y &&  paddle.position.y < paddleBox.y + paddleWidth*1.3 ) {
       console.log(new Date().getTime() - paddle.paddleLastMovedMillis);
-      if(paddle.paddleLastMovedMillis === 0){
+      // Check if paddle is not moving inside the box
+      if(paddle.paddleLastMovedMillis === 0 || paddle.position.y !== paddle.prevposition.y){
         paddle.paddleLastMovedMillis = new Date().getTime();
 
       }else if(new Date().getTime() - paddle.paddleLastMovedMillis  >= PADDLE_REST_TIME_MS){
-
+        paddle.paddleLastMovedMillis == 0;
         this.finishGame(score);
       }
 
