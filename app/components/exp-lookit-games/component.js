@@ -50,6 +50,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
 
     type: 'exp-lookit-games',
     displayFullscreen: false,
+    doUseCamera: true,
     startedRecording: false,
     currentGame: null,
     layout: layout,
