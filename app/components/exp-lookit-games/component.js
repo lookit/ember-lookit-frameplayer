@@ -9,7 +9,7 @@ import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import Ember from 'ember';
 import Game from './Game';
-import Em from 'ember-source/dist/ember.debug';
+
 /**
  * @module exp-lookit-games
  * @submodule frames
@@ -52,7 +52,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     displayFullscreen: false,
     startedRecording: false,
     currentGame: null,
-    disableRecord: Em.computed('recorder.recording', 'recorder.hasCamAccess', function () {
+    disableRecord: Ember.computed('recorder.recording', 'recorder.hasCamAccess', function () {
         return !this.get('recorder.hasCamAccess') || this.get('recorder.recording');
     }),
     layout: layout,
