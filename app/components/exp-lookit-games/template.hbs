@@ -4,7 +4,7 @@
         <hr>
         <p> {{instructions}}</p>
         <hr >
-        <button class="btn btn-success" {{ action 'play' }} >Play</button>
+        <button id="playbutton" disabled="disabled" class="btn btn-success" {{ action 'play' }} >Play</button>
     {{/if}}
     <canvas  id="gamesCanvas"  height="0"></canvas>
 

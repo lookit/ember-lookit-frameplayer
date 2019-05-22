@@ -10,6 +10,9 @@ import VideoRecord from '../../mixins/video-record';
 import Ember from 'ember';
 import { observer } from '@ember/object';
 import Game from './Game';
+let {
+  $
+} = Ember;
 /**
  * @module exp-lookit-games
  * @submodule frames
@@ -50,7 +53,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
 
     type: 'exp-lookit-games',
     displayFullscreen: false,
+    startedRecording: false,
     currentGame: null,
+    doUseCamera: Ember.computed.alias('doRecording'),
     layout: layout,
     meta: {
         name: 'ExpLookitGames',
@@ -216,19 +221,17 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
         play() {
             this.set('showInstructions', false);
             this.set('export_arr', Ember.A());
+            this.startRecorder().then(() => {this.set('startedRecording', true);});
             new Game(this, document, this.gameType);
         }
     },
-
-    // Override to deal with whether or not recording is starting automatically
+    // Override to do a bit extra when recording
     whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('startRecordingAutomatically')) {
             if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                this.send('record');
-            }
-        }
 
-    }),
+                $('#playbutton').prop('disabled', false);
+            }
+        }),
     // Other functions that are just called from within your frame can be defined here, on
     // the same level as actions and meta. You'll be able to call them as this.functionName(arguments)
     // rather than using this.send('actionName')
