@@ -247,12 +247,12 @@ export default class FeedCroc extends Base {
   dataCollection() {
 
     let exportData = {
-
+      game_type: 'feedCroc',
       ball_position_x: ball.position.x,
       ball_position_y: ball.position.y,
       paddle_position_x: paddle.position.x,
       paddle_position_y: paddle.position.y,
-      trial: super.currentRounds,
+      trial: super.currentRound,
       timestamp: new Date().getTime()
 
     };

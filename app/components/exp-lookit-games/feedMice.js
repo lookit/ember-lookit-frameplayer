@@ -331,13 +331,13 @@ export default class FeedMice extends Base {
   dataCollection() {
 
     let exportData = {
-
+      game_type: 'feedMice',
       ball_position_x: ball.position.x,
       ball_position_y: ball.position.y,
       key_pressed_up: pressed[0],
       key_pressed_mid: pressed[1],
       key_pressed_down: pressed[2],
-      trial: super.currentRounds,
+      trial: super.currentRound,
       timestamp: new Date().getTime()
 
     };

@@ -140,12 +140,12 @@ export default class CatchMouse extends Base {
     dataCollection() {
 
         let exportData = {
-
+                game_type: 'catchMouse',
                 basket_x: basket.position.x,
                 basket_y: basket.position.y,
                 mice_x: mice.position.x,
                 mice_y: mice.position.y,
-                trial: super.currentRounds,
+                trial: super.currentRound,
                 timestamp: new Date().getTime()
 
             };

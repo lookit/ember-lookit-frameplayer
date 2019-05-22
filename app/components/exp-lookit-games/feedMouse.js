@@ -227,10 +227,11 @@ export default class FeedMouse extends Base {
 
     let exportData = {
 
+      game_type: 'feedMouse',
       ball_position_x: ball.position.x,
       ball_position_y: ball.position.y,
       button_pressed: keyPressed.value,
-      trial: super.currentRounds,
+      trial: super.currentRound,
       timestamp: new Date().getTime()
 
     };
