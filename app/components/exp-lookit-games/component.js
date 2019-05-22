@@ -164,6 +164,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
             type: 'object',
             properties: {
                 // define data to be sent to the server here
+
+                videoId: {
+                    type: 'string'
+                },
+                videoList: {
+                    type: 'list'
+                },
+
                 export_arr: {
                     type: 'array',
                     default: [],
