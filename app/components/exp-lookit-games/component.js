@@ -233,15 +233,13 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
 
     // Override to do a bit extra when recording
     whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('doRecording')) {
             var _this = this;
             if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
                 this.startRecorder().then(() => {
                     _this.set('recorderReady', false);
                 });
             }
-        }
-    }),
+        }),
 
     // Other functions that are just called from within your frame can be defined here, on
     // the same level as actions and meta. You'll be able to call them as this.functionName(arguments)
