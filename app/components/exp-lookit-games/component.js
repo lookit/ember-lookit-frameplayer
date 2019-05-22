@@ -10,7 +10,9 @@ import VideoRecord from '../../mixins/video-record';
 import Ember from 'ember';
 import Game from './Game';
 import { observer } from '@ember/object';
-
+let {
+  $
+} = Ember;
 /**
  * @module exp-lookit-games
  * @submodule frames
@@ -223,20 +225,26 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
         // Define any actions that you need to be able to trigger from within the template here
 
         play() {
+            var _this = this;
             this.send('showFullscreen');
             this.set('showInstructions', false);
             this.set('export_arr', Ember.A());
+            this.startRecorder().then(() => {
+                _this.set('recorderReady', false);
+
+            });
             new Game(this, document, this.gameType);
         }
     },
 
     // Override to do a bit extra when recording
     whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-            var _this = this;
             if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                this.startRecorder().then(() => {
-                    _this.set('recorderReady', false);
-                });
+                $('#playbutton').prop('disabled', false);
+                // this.startRecorder().then(() => {
+                //     _this.set('recorderReady', false);
+                //     $('#playbutton').prop('disabled', false);
+                // });
             }
         }),
 
