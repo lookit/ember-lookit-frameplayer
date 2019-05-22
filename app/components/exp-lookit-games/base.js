@@ -332,7 +332,7 @@ export default class Base {
 
     }else {
       this.context.set('showInstructions', true);
-      this.stopRecorder().finally(() => {
+      this.context.stopRecorder().finally(() => {
         this.destroyRecorder();
         this.send('next');
       });
@@ -443,7 +443,6 @@ export default class Base {
   paddleAtZero(paddle, score) {
 
     if (paddle.position.y >= paddleBox.y &&  paddle.position.y < paddleBox.y + paddleWidth*1.3 ) {
-      console.log(new Date().getTime() - paddle.paddleLastMovedMillis);
       // Check if paddle is not moving inside the box
       if(paddle.paddleLastMovedMillis === 0 || paddle.position.y !== paddle.prevposition.y){
         paddle.paddleLastMovedMillis = new Date().getTime();
