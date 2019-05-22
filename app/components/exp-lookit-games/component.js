@@ -52,9 +52,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     displayFullscreen: false,
     startedRecording: false,
     currentGame: null,
-    disableRecord: Ember.computed('recorder.recording', 'recorder.hasCamAccess', function () {
-        return !this.get('recorder.hasCamAccess') || this.get('recorder.recording');
-    }),
     layout: layout,
     meta: {
         name: 'ExpLookitGames',
