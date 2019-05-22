@@ -213,9 +213,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
         // Define any actions that you need to be able to trigger from within the template here
 
         play() {
-            this.startRecorder();
             this.set('showInstructions', false);
             this.set('export_arr', Ember.A());
+            this.context.send('record');
             new Game(this, document, this.gameType);
         }
 
