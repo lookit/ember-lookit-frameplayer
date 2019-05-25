@@ -120,6 +120,9 @@ export default class FeedMice extends Base {
     ballCatchFail.load();
 
     audio = new Audio(super.Utils.rattleSound);
+    goodJob.src = super.Utils.good3MouseSound;
+    ballCatchFail.src = super.Utils.bad3MouseSound;
+    audio.src = super.Utils.rattleSound;
     audio.load();
     audio.addEventListener('onloadeddata', this.initGame(), false);
   }
@@ -178,9 +181,6 @@ export default class FeedMice extends Base {
     );
 
     initSoundPlaying = true;
-    goodJob.src = super.Utils.good3MouseSound;
-    ballCatchFail.src = super.Utils.bad3MouseSound;
-    audio.src = super.Utils.rattleSound;
     audio.play();
     audio.addEventListener('ended', function () {
       initSoundPlaying = false;
@@ -329,7 +329,7 @@ export default class FeedMice extends Base {
    * @method dataCollection Data collection
    */
   dataCollection() {
-
+    super.dataCollection();
     let exportData = {
       game_type: 'feedMice',
       ball_position_x: ball.position.x,

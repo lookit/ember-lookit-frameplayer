@@ -58,6 +58,9 @@ export default class CatchCheese extends Base {
     ballCatchFail = new Audio(super.Utils.ballcatchFailSound);
     ballCatchFail.load();
     audio = new Audio(super.Utils.rattleSound);
+    ballCatchFail.src = super.Utils.ballcatchFailSound;
+    goodJob.src = super.Utils.goodCatchSound;
+    audio.src = super.Utils.rattleSound;
     audio.load();
     audio.addEventListener('onloadeddata', this.initGame(), false);
 
@@ -122,9 +125,6 @@ export default class CatchCheese extends Base {
     );
 
     initSoundPlaying = true;
-    ballCatchFail.src = super.Utils.ballcatchFailSound;
-    goodJob.src = super.Utils.goodCatchSound;
-    audio.src = super.Utils.rattleSound;
     audio.play();
     audio.addEventListener('ended', function () {
 
@@ -150,7 +150,7 @@ export default class CatchCheese extends Base {
   }
 
   dataCollection() {
-
+    super.dataCollection();
     let exportData = {
       game_type: 'catchCheese',
       ball_position_x: ball.position.x,

@@ -58,8 +58,10 @@ export default class CatchMouse extends Base {
 
         goodJob = new Audio(super.Utils.goodCatchSound);
         goodJob.load();
-
         ballCatchFail = new Audio(super.Utils.ballcatchFailSound);
+        goodJob.src = super.Utils.goodCatchSound;
+        ballCatchFail.src = super.Utils.ballcatchFailSound;
+        audio.src = super.Utils.drumRollSound;
         ballCatchFail.load();
 
         this.initGame();
@@ -122,9 +124,6 @@ export default class CatchMouse extends Base {
         };
 
         initSoundPlaying = true;
-        goodJob.src = super.Utils.goodCatchSound;
-        ballCatchFail.src = super.Utils.ballcatchFailSound;
-        audio.src = super.Utils.drumRollSound;
         audio.play();
         audio.addEventListener('ended', function () {
 
@@ -138,7 +137,7 @@ export default class CatchMouse extends Base {
      * @method  dataCollection Collect data
      */
     dataCollection() {
-
+        super.dataCollection();
         let exportData = {
                 game_type: 'catchMouse',
                 basket_x: basket.position.x,
