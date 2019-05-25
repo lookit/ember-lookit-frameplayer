@@ -348,8 +348,8 @@ export default class Base {
     }else {
       this.context.set('showInstructions', true);
       this.context.stopRecorder().finally(() => {
-        this.destroyRecorder();
-        this.send('next');
+        this.context.destroyRecorder();
+        this.context.send('next');
       });
     }
 
