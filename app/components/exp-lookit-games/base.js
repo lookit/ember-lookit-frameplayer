@@ -155,6 +155,16 @@ export default class Base {
    */
   dataCollection() {
 
+    this.loopTimer = function () {
+        let inst = this;
+        dataLoop = setTimeout(function () {
+            inst.dataCollection();
+        }, 10);
+
+    };
+
+    this.loopTimer();
+
   }
 
   increaseScore() {
@@ -240,11 +250,16 @@ export default class Base {
    * @method currentRound
    * get currrent round (Trial) of game.
    */
-  get currentRound(){
+  get currentRounds(){
 
     return currentRounds;
   }
 
+
+  set currentRounds(val){
+
+    currentRounds = val;
+  }
 
   /**
    * @method gameOver Get method if game is over
@@ -299,11 +314,11 @@ export default class Base {
 
     this.loopTimer = function () {
       let inst = this;
-      gameLoop = setInterval(function () {
+      gameLoop = setTimeout(function () {
         inst.loop();
       }, Utils.frameDelay);
 
-      dataLoop = setInterval(function () {
+      dataLoop = setTimeout(function () {
         inst.dataCollection();
       }, 10);
 
