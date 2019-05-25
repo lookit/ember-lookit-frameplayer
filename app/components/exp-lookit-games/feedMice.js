@@ -287,7 +287,7 @@ export default class FeedMice extends Base {
       // Wait TIME_ALLOWED seconds to get the response
       if (new Date().getTime() - ball.timeReached > TIME_ALLOWED) {
 
-        let index = pressed.findIndex(item => item != false);
+        let index = pressed.findIndex(item => item !== false);
         let pressed_target = targets[index];
         if (pressed_target) {
           pressed_target.windowbackground = super.Utils.whiteColor;

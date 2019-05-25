@@ -194,6 +194,14 @@ export default class Base {
     this.ctx.save();
 
     this.drawScore();
+    this.loopTimer = function () {
+      let inst = this;
+      gameLoop = setTimeout(function () {
+        inst.loop();
+      }, Utils.frameDelay);
+    };
+
+    this.loopTimer();
   }
 
 
