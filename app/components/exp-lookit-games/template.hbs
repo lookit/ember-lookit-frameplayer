@@ -1,10 +1,10 @@
-<div>
+<div id="recorder">
     {{#if showInstructions}}
         <h1> {{gameDescription}} </h1>
         <hr>
         <p> {{instructions}}</p>
         <hr >
-        <button id="playbutton" disabled="disabled" class="btn btn-success" {{ action 'play' }} >Play</button>
+        <button id="playbutton"  class="btn btn-success" {{ action 'play' }} >Play</button>
     {{/if}}
     <canvas  id="gamesCanvas"  height="0"></canvas>
 
