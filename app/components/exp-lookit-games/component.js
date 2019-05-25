@@ -223,7 +223,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
             this.send('showFullscreen');
             this.set('showInstructions', false);
             this.set('export_arr', Ember.A());
-            this.startRecorder().then();
+            this.startRecorder();
             new Game(this, document, this.gameType);
         }
     },
