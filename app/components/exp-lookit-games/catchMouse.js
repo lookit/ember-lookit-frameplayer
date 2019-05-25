@@ -144,7 +144,7 @@ export default class CatchMouse extends Base {
                 basket_y: basket.position.y,
                 mice_x: mice.position.x,
                 mice_y: mice.position.y,
-                trial: super.currentRound,
+                trial: super.currentRounds,
                 timestamp: new Date().getTime()
 
             };

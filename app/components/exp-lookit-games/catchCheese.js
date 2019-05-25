@@ -157,7 +157,7 @@ export default class CatchCheese extends Base {
       ball_position_y: ball.position.y,
       paddle_position_x: basket.position.x,
       paddle_position_y: basket.position.y,
-      trial: super.currentRound,
+      trial: super.currentRounds,
       timestamp: new Date().getTime()
 
     };

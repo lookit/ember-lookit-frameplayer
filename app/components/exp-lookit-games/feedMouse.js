@@ -230,7 +230,7 @@ export default class FeedMouse extends Base {
       ball_position_x: ball.position.x,
       ball_position_y: ball.position.y,
       button_pressed: keyPressed.value,
-      trial: super.currentRound,
+      trial: super.currentRounds,
       timestamp: new Date().getTime()
 
     };

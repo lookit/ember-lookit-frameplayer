@@ -337,7 +337,7 @@ export default class FeedMice extends Base {
       key_pressed_up: pressed[0],
       key_pressed_mid: pressed[1],
       key_pressed_down: pressed[2],
-      trial: super.currentRound,
+      trial: super.currentRounds,
       timestamp: new Date().getTime()
 
     };
