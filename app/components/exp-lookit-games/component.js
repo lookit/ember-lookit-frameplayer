@@ -9,10 +9,6 @@ import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import Ember from 'ember';
 import Game from './Game';
-import { observer } from '@ember/object';
-let {
-  $
-} = Ember;
 /**
  * @module exp-lookit-games
  * @submodule frames
@@ -54,7 +50,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     type: 'exp-lookit-games',
     displayFullscreen: false,
     doUseCamera: true,
-    startedRecording: false,
     currentGame: null,
     layout: layout,
     meta: {
@@ -225,29 +220,13 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
         // Define any actions that you need to be able to trigger from within the template here
 
         play() {
-            var _this = this;
             this.send('showFullscreen');
             this.set('showInstructions', false);
             this.set('export_arr', Ember.A());
-            this.startRecorder().then(() => {
-                _this.set('recorderReady', false);
-
-            });
+            this.startRecorder().then();
             new Game(this, document, this.gameType);
         }
     },
-
-    // Override to do a bit extra when recording
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                $('#playbutton').prop('disabled', false);
-                // this.startRecorder().then(() => {
-                //     _this.set('recorderReady', false);
-                //     $('#playbutton').prop('disabled', false);
-                // });
-            }
-        }),
-
     // Other functions that are just called from within your frame can be defined here, on
     // the same level as actions and meta. You'll be able to call them as this.functionName(arguments)
     // rather than using this.send('actionName')
