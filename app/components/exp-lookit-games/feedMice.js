@@ -22,7 +22,7 @@ let ballCatchFail = {};
 let goodJob = {};
 let initSoundPlaying = false;
 let currentTargetIndex = 0;
-const TIME_ALLOWED = 3500;
+const TIME_ALLOWED = 3200;
 
 /**
  * Main implementation of feed  the mice in the house game.
