@@ -323,7 +323,7 @@ export default class FeedMouse extends Base {
       this.createWindow();
 
 
-      if (keyPressed.value || new Date().getTime() -keyPressed.when < 150 ) {
+      if (keyPressed.value ) {
 
 
         if(didHitWindow){
@@ -343,6 +343,7 @@ export default class FeedMouse extends Base {
         this.showBallLocation(didHitWindow);
         super.moveBallToStart(ball, true);
         didHitWindow = false;
+        super.finishGame(false);
       }
 
 
@@ -352,6 +353,7 @@ export default class FeedMouse extends Base {
         ballCatchFail.play();
         super.moveBallToStart(ball, true);
       }
+
 
     }
 
