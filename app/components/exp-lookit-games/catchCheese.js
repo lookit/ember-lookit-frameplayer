@@ -60,6 +60,9 @@ export default class CatchCheese extends Base {
   init() {
     super.init();
     hArray = super.generateHeights();
+    Tf = this.context.flightTime;
+    Height = this.context.height;
+
     uniformArr  = super.uniformArr([1,2,3]);
     goodJob = new Audio(super.Utils.goodCatchSound);
     goodJob.load();

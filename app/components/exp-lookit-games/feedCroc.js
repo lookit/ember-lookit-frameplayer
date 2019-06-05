@@ -60,7 +60,9 @@ export default class FeedCroc extends Base {
    */
   init() {
     super.init();
-
+    Tf = this.context.flightTime;
+    Height = this.context.height;
+    alpha = this.context.alpha;
     paddle = {
 
       position: {x: 0, y: 0},

@@ -312,7 +312,7 @@ export default class CatchMouse extends Base {
 
 
 
-      if(basket.moved === 0 && mice.state === 'show' &&  basket.positions.length >5 && basket.position.y -  mice.position.y <=50 ){
+      if(basket.moved === 0 && mice.state === 'show' &&  basket.positions.length >5 && basket.position.y -  mice.position.y <=120 ){
 
         swooshSound.play();
         basket.moved = 1;

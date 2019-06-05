@@ -272,7 +272,7 @@ export default class FeedMice extends Base {
    */
   loop() {
     super.loop();
-    super.generateTrajectoryParamsDiscreteSpatial(initVmatrix);
+    super.generateTrajectoryParamsDiscreteSpatial(initVmatrix,this.context);
     super.discreteLauncer();
 
 

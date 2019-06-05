@@ -291,7 +291,7 @@ export default class FeedMouse extends Base {
    */
   loop() {
     super.loop();
-    super.generateTrajectoryParamsDiscrete(TfArr);
+    super.generateTrajectoryParamsDiscrete(TfArr,this.context);
     super.discreteLauncer();
 
 

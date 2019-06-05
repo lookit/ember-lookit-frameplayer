@@ -115,7 +115,7 @@ export default class Base {
 
   generateHeights(){
 
-    return this.uniformArr([1,5]);
+    return this.uniformArr([1,1]);
   }
 
 
@@ -135,9 +135,9 @@ export default class Base {
 
   }
 
-  generateTrajectoryParamsDiscrete(TfArr){
-    let Tf = TfArr[currentRounds];
-    let height = 0.8;
+  generateTrajectoryParamsDiscrete(TfArr,context){
+    let Tf = context.flightTime;
+    let height = context.height;
     initX =0.7510;
     gravity = 2*height/Math.pow(Tf,2);
     ballvx = (1.0310+0.02)/Tf;
@@ -145,11 +145,12 @@ export default class Base {
   }
 
 
-  generateTrajectoryParamsDiscreteSpatial(initVmatrix){
-    let Tf = 0.9;
-    gravity = 1.8;
+  generateTrajectoryParamsDiscreteSpatial(initVmatrix,context){
+    let Tf = context.flightTime;
+    gravity = context.gravity;
+    let height = context.height;
     ballvx = (1.0310+0.02)/Tf;
-    initV = 0.15*initVmatrix[currentRounds]+0.45;
+    initV = 0.15*height+0.45;
     initX = 0.7510;
     initBallY = -0.02;
   }
