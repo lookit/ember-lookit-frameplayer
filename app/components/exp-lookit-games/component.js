@@ -9,9 +9,7 @@ import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import Ember from 'ember';
 import Game from './Game';
-let {
-  $
-} = Ember;
+
 /**
  * @module exp-lookit-games
  * @submodule frames
@@ -73,6 +71,21 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                     description: 'Game type  to display '
                 },
 
+                height: {
+                    type: 'number'
+                },
+                flightTime: {
+                    type: 'number'
+                },
+                gravity: {
+                    type: 'number'
+                },
+                minTime: {
+                    type: 'number'
+                },
+                maxTime: {
+                    type: 'number'
+                },
                 /**
                  * Text to display for game instructions
                  *
