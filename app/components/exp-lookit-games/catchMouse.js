@@ -261,7 +261,7 @@ export default class CatchMouse extends Base {
 
       cheeseClock.state = 1;
     }
-
+    this.showCheese();
   }
 
 
@@ -283,7 +283,6 @@ export default class CatchMouse extends Base {
     //Randomize initial wait time here
     if(mice.state === 'fall' && initialTime >0 && super.getElapsedTime(initialTime) > jitterT){
       audio.pause();
-      this.showTime("mose appears");
       audio.currentTime = 0;
       mice.state = 'show';
       mice.showTime = new Date().getTime();

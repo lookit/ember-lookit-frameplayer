@@ -181,12 +181,12 @@ export default class Base {
   }
 
 
-  uniformArr(indexes){
+  uniformArr(vals){
     let arr = [];
-    indexes.forEach((v)=>
+    vals.forEach((v)=>
 
     {
-      arr = arr.concat(Array(Utils.gameRounds/indexes.length).fill(v));
+      arr = arr.concat(Array(Utils.gameRounds/vals.length).fill(v));
 
     });
 
@@ -681,12 +681,13 @@ export default class Base {
 
     let  ball = {
 
-      position: {x: (initX)*Utils.SCALE, y:( 1.3571+0.0175)*Utils.SCALE},
+      position: {x: (initX-0.0175)*Utils.SCALE, y:( 1.3671+0.17-initBallY)*Utils.SCALE},
       velocity: 0,
       mass: Utils.ballMass,
       radius: (0.04)*Utils.SCALE/2,
       state: 'start',
       impactTime: 0,
+      hitstate:'',
       impactPosition:0,
       positions:[{x:0,y:0}],
       color: Utils.yellowColor
@@ -867,9 +868,9 @@ export default class Base {
 
 
     paddle.position.y = this.mouseY;
-    if(paddle.position.y >= paddleBox.position.y + paddleBox.dimensions.height){
+    if(paddle.position.y > paddleBox.position.y + paddleBox.dimensions.height - paddle.dimensions.height){
 
-      paddle.position.y = paddleBox.position.y;
+      paddle.position.y = paddleBox.position.y + paddleBox.dimensions.height - paddle.dimensions.height-0.02*this.Utils.SCALE;
     }
 
 

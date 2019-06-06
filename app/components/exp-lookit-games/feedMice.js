@@ -163,7 +163,7 @@ export default class FeedMice extends Base {
    */
   init() {
     super.init();
-    initVmatrix = super.uniformArr([1,2,3]);
+    initVmatrix = super.uniformArr([1,2]);
     super.generateTrajectoryParamsDiscreteSpatial(initVmatrix);
     walls = super.uniformArr([1,2]);
     goodJob = new Audio(super.Utils.good3MouseSound);
@@ -257,6 +257,23 @@ export default class FeedMice extends Base {
   }
 
 
+  showWindow(index) {
+    let pressed_target = targets[index];
+
+    if (pressed_target) {
+      pressed_target.windowbackground = super.Utils.whiteColor;
+      this.createWindow(pressed_target);
+
+    }
+
+    let indexArr = [2, 1, 0];
+    currentTargetIndex = indexArr[initVmatrix[super.currentRounds] - 1];
+
+    //Show ball only on button press
+    if (index >= 0) {
+      this.showBallLocation(currentTargetIndex);
+    }
+  }
 
 
 

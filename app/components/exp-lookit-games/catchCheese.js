@@ -24,7 +24,7 @@ let initialTime = 0;
 let hArray = [];
 let Tf = 0.8;
 let Height = 0.8;
-let uniformArr = [];
+let obstrArr = [];
 let jitterT = 0;
 let radiusRim = 0.1;
 
@@ -63,7 +63,7 @@ export default class CatchCheese extends Base {
     Tf = this.context.flightTime;
     Height = this.context.height;
 
-    uniformArr  = super.uniformArr([1,2,3]);
+    obstrArr  = super.uniformArr([1,2]);
     goodJob = new Audio(super.Utils.goodCatchSound);
     goodJob.load();
     ballCatchFail = new Audio(super.Utils.ballcatchFailSound);
@@ -100,7 +100,7 @@ export default class CatchCheese extends Base {
     basket = super.basketObject(basket);
 
 
-    let obstructionsNum = uniformArr[super.currentRounds];
+    let obstructionsNum = obstrArr[super.currentRounds];
     if(this.context.no_trees){
       obstructionsNum =0;
     }
@@ -242,8 +242,6 @@ export default class CatchCheese extends Base {
           this.drawImage(targetStars);
         }
 
-        this.starsLocationUpdate();
-        this.drawImage(targetStars);
 
       } else {
         if (!super.gameOver) {

@@ -167,7 +167,7 @@ export default class FeedCroc extends Base {
     }
 
 
-    if(hitTheTarget || hitTheWall){
+    if((hitTheTarget || hitTheWall) && ball.state !== 'done' ){
 
       ball.state = 'hit';
     }
@@ -177,29 +177,44 @@ export default class FeedCroc extends Base {
       // Remove ball and show in the starting point,
       //User should set the paddle to initial position , call stop after that
 
-      if (hitTheTarget) {
+      if (ball.hitstate === 'very good') {
+        goodJob.play();
+        this.drawImageAngle(target, target.imageTargetReachedURL, 45);
 
-        if (ball.state === 'very good') {
-          goodJob.play();
-          this.drawImageAngle(target, target.imageTargetReachedURL, 45);
+      } else if(ball.hitstate === 'good'){
+        crocEatingSound.play();
+        this.drawImageAngle(target, super.Utils.crocclosednotongImage, 45);
+      }else{
 
-        } else {
-          crocEatingSound.play();
-          this.drawImageAngle(target, super.Utils.crocclosednotongImage, 45);
-        }
-
-
-      } else {
-        if (!super.gameOver) {
-
-          ballCatchFail.play();
-        }
+        ballCatchFail.play();
       }
+
+
+      ball.state = 'done';
+
+    }
+
+
+
+
+    if(ball.state === 'done'){
+
+      if(ball.hitstate === 'very good'){
+
+        this.drawImageAngle(target, target.imageTargetReachedURL, 45);
+      }
+
+      if(ball.hitstate === 'good'){
+
+        this.drawImageAngle(target, super.Utils.crocclosednotongImage, 45);
+      }
+
 
       super.moveBallToStart(ball, true);
       super.paddleAtZero(paddle, hitTheTarget);
 
     }
+
 
   }
 
@@ -300,17 +315,17 @@ export default class FeedCroc extends Base {
 
         if(currenImpactCoord < 0.025*super.Utils.SCALE){
 
-          ball.state = 'very good';
+          ball.hitstate = 'very good';
 
         }else{
 
-          ball.state = 'good';
+          ball.hitstate = 'good';
         }
 
 
       }else{
 
-        ball.state = 'hit';
+        ball.hitstate = 'hit';
 
       }
 
