@@ -680,7 +680,7 @@ export default class Base {
 
     let  ball = {
 
-      position: {x: (initX-0.0175)*Utils.SCALE, y:( 1.3671+0.17)*Utils.SCALE},
+      position: {x: (initX-0.0175)*Utils.SCALE, y:( 1.3671-0.17)*Utils.SCALE},
       velocity: 0,
       mass: Utils.ballMass,
       radius: (0.04)*Utils.SCALE/2,
