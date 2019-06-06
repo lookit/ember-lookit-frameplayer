@@ -74,6 +74,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                 height: {
                     type: 'number'
                 },
+                initV: {
+                    type: 'number'
+                },
                 flightTime: {
                     type: 'number'
                 },

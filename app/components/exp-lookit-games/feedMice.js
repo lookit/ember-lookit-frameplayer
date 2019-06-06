@@ -163,7 +163,7 @@ export default class FeedMice extends Base {
    */
   init() {
     super.init();
-    initVmatrix = super.uniformArr([1,2]);
+    initVmatrix = super.uniformArr([1,2,3]);
     super.generateTrajectoryParamsDiscreteSpatial(initVmatrix);
     walls = super.uniformArr([1,2]);
     goodJob = new Audio(super.Utils.good3MouseSound);
@@ -293,7 +293,7 @@ export default class FeedMice extends Base {
     super.generateTrajectoryParamsDiscreteSpatial(initVmatrix);
     super.discreteLauncer();
 
-    let index = pressed.findIndex(item => item != false);
+    let index = pressed.findIndex(item => item !== false);
 
 
     if(ball.state === 'start'){

@@ -178,8 +178,9 @@ export default class FeedMouse extends Base {
    */
   initGame() {
     initialTime = 0;
+    ball.startTime =0;
     jitterT = super.trialStartTime();
-
+    keyPressed.value = false;
     let topBorder = (1.13)*super.Utils.SCALE;
     let downBorder =  (1.21)*super.Utils.SCALE ;
     let leftBorder = (targetX-0.05)*super.Utils.SCALE ;
@@ -305,7 +306,7 @@ export default class FeedMouse extends Base {
     }
 
 
-    if(ball.state == 'fall'){
+    if(ball.state === 'fall'){
 
       super.trajectory(ball,initialTime);
       super.drawBall(ball);
@@ -322,7 +323,7 @@ export default class FeedMouse extends Base {
 
 
 
-      if (keyPressed.value == true ) {
+      if (keyPressed.value === true ) {
 
         if(ball.position.x < (targetX+0.42)*super.Utils.SCALE   ){
 
