@@ -25,7 +25,7 @@ let hArray = [];
 let Tf = 0.8;
 let Height = 0.8;
 let uniformArr = [];
-
+let jitterT = 0;
 let radiusRim = 0.1;
 
 
@@ -85,7 +85,8 @@ export default class CatchCheese extends Base {
    * @method initGame
    */
   initGame() {
-
+    jitterT = super.trialStartTime();
+    initialTime =0;
     super.gameOver = false;
     super.initGame();
     basket = {
@@ -113,7 +114,7 @@ export default class CatchCheese extends Base {
 
     initSoundPlaying = true;
     audio.play();
-    audio.addEventListener('ended', function () {
+    audio.addEventListener('playing', function () {
 
       initSoundPlaying = false;
       initialTime = new Date().getTime();
@@ -177,8 +178,8 @@ export default class CatchCheese extends Base {
 
     targetStars = {
 
-      position: {x: basket.position.x + super.paddleWidth, y: basket.position.y - super.paddleHeight / 2},
-      dimensions: {width: super.paddleWidth / 1.5, height: super.paddleWidth / 1.5},
+      position: {x: basket.position.x + 0.01* super.Utils.SCALE , y: basket.position.y - 0.2* super.Utils.SCALE},
+      dimensions: {width: 0.14*super.Utils.SCALE, height: 0.2*super.Utils.SCALE},
       imageURL: super.Utils.basketStarsImage
 
     };
@@ -201,7 +202,33 @@ export default class CatchCheese extends Base {
     let hitTheTarget = this.collisionDetection();
     let hitTheWall = super.wallCollision(ball);
 
-    if (hitTheTarget || hitTheWall || super.gameOver) {
+
+    if(ball.state === 'start'){
+
+      super.moveBallToStart(ball, false);
+      if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
+        audio.pause();
+        ball.state = 'fall';
+        initialTime = new Date().getTime();
+
+
+      }
+
+    }
+
+    if(hitTheTarget || hitTheWall){
+
+      ball.state = 'hit';
+    }
+
+    if(ball.state === 'fall'){
+
+      super.trajectory(ball,initialTime);
+      super.drawBall(ball);
+    }
+
+
+    if (ball.state === 'hit') {
 
       if (hitTheTarget) {
 
@@ -215,6 +242,8 @@ export default class CatchCheese extends Base {
           this.drawImage(targetStars);
         }
 
+        this.starsLocationUpdate();
+        this.drawImage(targetStars);
 
       } else {
         if (!super.gameOver) {
@@ -228,23 +257,10 @@ export default class CatchCheese extends Base {
       super.moveBallToStart(ball, true);
       super.paddleAtZero(basket, hitTheTarget);
 
-
-    } else {
-
-      if (initSoundPlaying) {
-
-        super.moveBallToStart(ball, false);
-
-      } else {
-
-        super.trajectory(ball,initialTime);
-        super.drawBall(ball);
-      }
-
-
     }
+
     obstructions.forEach(obstruction => this.drawImage(obstruction));
-    super.createPaddleBox();
+    super.createPaddleBox(this.canvas.width / 2 + super.paddleWidth * 3, this.canvas.height / 2.5 + this.canvas.height / 2 - super.paddleWidth * 1.3);
     super.paddleMove(basket,initialTime);
     this.drawImage(basket);
     this.drawRedDot();

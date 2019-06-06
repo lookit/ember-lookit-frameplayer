@@ -25,7 +25,7 @@ let alpha = 0.7;
 let hArray = [];
 let targetLocH = 1.66;
 let targetLocV = 0.77;
-
+let jitterT = 0;
 let Tf = 0.75;
 let Height = 0.65;
 
@@ -60,9 +60,6 @@ export default class FeedCroc extends Base {
    */
   init() {
     super.init();
-    Tf = this.context.flightTime;
-    Height = this.context.height;
-    alpha = this.context.alpha;
     paddle = {
 
       position: {x: 0, y: 0},
@@ -131,13 +128,12 @@ export default class FeedCroc extends Base {
    * @method loop
    */
   loop() {
-
     super.loop();
 
 
     super.generateTrajectoryParams(hArray,Height,Tf);
     super.createBallBox();
-    super.createPaddleBox();
+    super.createPaddleBox(0, 0);
     this.drawImageAngle(target, target.imageURL,45);
     super.paddleMove(paddle,initialTime);
     super.drawPaddle(paddle);
@@ -145,7 +141,39 @@ export default class FeedCroc extends Base {
     let hitTheTarget = this.collisionDetection();
     let hitTheWall = super.wallCollision(ball);
 
-    if (hitTheTarget || hitTheWall || super.gameOver) {
+    if(ball.state === 'start'){
+      super.moveBallToStart(ball, false);
+      if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
+
+        audio.pause();
+        ball.state = 'fall';
+        initialTime = new Date().getTime();
+      }
+
+    }
+
+
+    if(ball.state === 'fall' ){
+
+      super.trajectory(ball,initialTime);
+      super.drawBall(ball);
+
+    }
+
+    if(ball.state === 'bounce'){
+
+      super.bounceTrajectory(ball,paddle,initialTime);
+      super.drawBall(ball);
+    }
+
+
+    if(hitTheTarget || hitTheWall){
+
+      ball.state = 'hit';
+    }
+
+
+    if(ball.state === 'hit'){
       // Remove ball and show in the starting point,
       //User should set the paddle to initial position , call stop after that
 
@@ -171,32 +199,7 @@ export default class FeedCroc extends Base {
       super.moveBallToStart(ball, true);
       super.paddleAtZero(paddle, hitTheTarget);
 
-    } else {
-
-      if (initSoundPlaying) {
-
-        super.moveBallToStart(ball, false);
-
-      } else {
-
-
-        if(ball.state === 'bounce'){
-          super.bounceTrajectory(ball,paddle,initialTime);
-
-        }else{
-
-          super.trajectory(ball,initialTime);
-        }
-
-        super.drawBall(ball);
-      }
     }
-
-    // this.ctx.beginPath();
-    // this.ctx.arc(targetLocH*super.Utils.SCALE, targetLocV*super.Utils.SCALE, 6, 0, Math.PI * 2, false);
-    // this.ctx.fillStyle = super.Utils.redColor;
-    // this.ctx.fill();
-    // this.ctx.closePath();
 
   }
 
@@ -332,13 +335,13 @@ export default class FeedCroc extends Base {
   initGame() {
 
 
-
+    jitterT = super.trialStartTime();
     ball = super.ballObject();
-
+    initialTime =0;
     initSoundPlaying = true;
     audio.play();
     //super.generateTrajectoryParams(hArray,0.65,0.75);
-    audio.addEventListener('ended', function () {
+    audio.addEventListener('playing', function () {
 
       initSoundPlaying = false;
       initialTime = new Date().getTime();

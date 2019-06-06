@@ -27,7 +27,7 @@ let wallsize = 0.25;
 let targetX = 1.3310;
 let winsize = 0.1;
 let targetsize = 0.005;
-
+let jitterT = 0;
 
 /**
  * @class FeedMouse
@@ -178,7 +178,7 @@ export default class FeedMouse extends Base {
    */
   initGame() {
     initialTime = 0;
-
+    jitterT = super.trialStartTime();
 
     let topBorder = (1.13)*super.Utils.SCALE;
     let downBorder =  (1.21)*super.Utils.SCALE ;
@@ -218,7 +218,7 @@ export default class FeedMouse extends Base {
 
     initSoundPlaying = true;
     startSound.play();
-    startSound.addEventListener('ended', function () {
+    startSound.addEventListener('playing', function () {
       initSoundPlaying = false;
       initialTime = new Date().getTime();
     });
@@ -264,18 +264,6 @@ export default class FeedMouse extends Base {
 
   }
 
-  /**
-   * @method keyUpHandler Get current keyboard event on release button
-   * @param {object} e
-   */
-  keyUpHandler(e) {
-
-    if (e.key === 'l' || e.key === 'L') {
-
-      keyPressed = {value:false,when:new Date().getTime()};
-    }
-
-  }
 
   /**
    *
@@ -291,26 +279,40 @@ export default class FeedMouse extends Base {
    */
   loop() {
     super.loop();
-    super.generateTrajectoryParamsDiscrete(TfArr,this.context);
+    super.generateTrajectoryParamsDiscrete(TfArr);
     super.discreteLauncer();
+    this.createHouse();
+    this.createWindow();
+
+    if(ball.state === 'start'){
+
+      super.moveBallToStart(ball, false);
+      if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
+        startSound.pause();
+        ball.state = 'fall';
+        initialTime = new Date().getTime();
+
+
+      }
+
+    }
 
 
     if (ball.state === 'hit') {
       super.waitSeconds(2500);
       super.finishGame(false);
 
-    } else {
-
-      if (initSoundPlaying) {
-        super.moveBallToStart(ball, false);
-      } else {
-        super.trajectory(ball,initialTime);
-        super.drawBall(ball);
-      }
+    }
 
 
+    if(ball.state == 'fall'){
+
+      super.trajectory(ball,initialTime);
+      super.drawBall(ball);
       this.createHouse();
       this.createWindow();
+
+
 
       if(initialTime >0 &&  super.getElapsedTime(initialTime) >= 1.7 ){
 
@@ -320,7 +322,7 @@ export default class FeedMouse extends Base {
 
 
 
-      if (keyPressed.value === true ) {
+      if (keyPressed.value == true ) {
 
         if(ball.position.x < (targetX+0.42)*super.Utils.SCALE   ){
 

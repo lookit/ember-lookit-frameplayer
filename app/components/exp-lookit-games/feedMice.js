@@ -26,7 +26,7 @@ let currentTargetIndex = 0;
 let initialTime = 0;
 let initVmatrix = [];
 let walls = [];
-
+let jitterT = 0;
 
 /**
  * Main implementation of feed  the mice in the house game.
@@ -164,6 +164,7 @@ export default class FeedMice extends Base {
   init() {
     super.init();
     initVmatrix = super.uniformArr([1,2,3]);
+    super.generateTrajectoryParamsDiscreteSpatial(initVmatrix);
     walls = super.uniformArr([1,2]);
     goodJob = new Audio(super.Utils.good3MouseSound);
     goodJob.load();
@@ -190,7 +191,7 @@ export default class FeedMice extends Base {
   initGame() {
     initialTime =0;
     pressed = Array(3).fill(false);
-
+    jitterT = super.trialStartTime();
     ball = {
       position: {x: 0, y: 0},
       mass: super.Utils.ballMass,
@@ -210,7 +211,7 @@ export default class FeedMice extends Base {
 
     initSoundPlaying = true;
     audio.play();
-    audio.addEventListener('ended', function () {
+    audio.addEventListener('playing', function () {
       initSoundPlaying = false;
       initialTime = new Date().getTime();
     });
@@ -272,87 +273,96 @@ export default class FeedMice extends Base {
    */
   loop() {
     super.loop();
-    super.generateTrajectoryParamsDiscreteSpatial(initVmatrix,this.context);
+    super.generateTrajectoryParamsDiscreteSpatial(initVmatrix);
     super.discreteLauncer();
 
-
-    let index = pressed.findIndex(item => item !== false);
-
-    if (ball.state === 'hit target') {
-
-      super.waitSeconds(2500);
-      super.finishGame(false);
-
-    } else {
+    let index = pressed.findIndex(item => item != false);
 
 
-      if (ball.state === 'fall') {
-
-
-        if (initSoundPlaying) {
-          super.moveBallToStart(ball, false);
-
-        } else {
-
-          super.trajectory(ball, initialTime);
-          super.drawBall(ball);
-
-        }
-
-      }
-
+    if(ball.state === 'start'){
       this.createHouse();
-
       targets.forEach(target => this.createWindow(target));
-
-
-      if(initialTime >0 &&  super.getElapsedTime(initialTime) >= 0.4 ){
-
-        ball.state = 'hit house';
-      }
-
-
-
-      // Wait TIME_ALLOWED seconds to get the response
-      if (initialTime > 0 && (index >= 0 || super.getElapsedTime(initialTime) >= 5.2)) {
-
-        let pressed_target = targets[index];
-        if (pressed_target) {
-          pressed_target.windowbackground = super.Utils.whiteColor;
-          this.createWindow(pressed_target);
-
-        }
-
-        let indexArr = [2,1,0];
-        currentTargetIndex = indexArr[initVmatrix[super.currentRounds]-1];
-
-        //Show ball only on button press
-        if(index >=0) {
-          this.showBallLocation(currentTargetIndex);
-        }
-        super.waitSeconds(600);
-
-
-        // Check if current index of the pressed item corresponds to the actual target index
-        if (index === currentTargetIndex) {
-
-          goodJob.play();
-
-        } else {
-
-          ballCatchFail.play();
-        }
-
-        ball.state = 'hit target';
+      super.moveBallToStart(ball, false);
+      if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
+        audio.pause();
+        initialTime = new Date().getTime();
+        ball.state = 'fall';
 
       }
-
-
 
 
     }
 
 
+    if(ball.state === 'fall') {
+
+      super.trajectory(ball, initialTime);
+      super.drawBall(ball);
+      this.createHouse();
+      targets.forEach(target => this.createWindow(target));
+      if(super.getElapsedTime(initialTime) >= 0.5 ){
+
+        ball.state = 'hit house';
+      }
+
+
+    }
+
+    if((ball.state === 'fall' || ball.state === 'hit house') &&  index >=0){
+
+      ball.state = 'hit';
+
+    }
+
+
+
+    if(ball.state === 'hit house'){
+      this.createHouse();
+      targets.forEach(target => this.createWindow(target));
+      if( super.getElapsedTime(initialTime) >= 3.7){
+        initialTime = new Date().getTime();
+        ball.state = 'hit';
+      }
+
+    }
+
+
+
+    if(ball.state === 'hit') {
+      this.createHouse();
+      targets.forEach(target => this.createWindow(target));
+
+      this.showWindow(index);
+
+      // Check if current index of the pressed item corresponds to the actual target index
+      if (index === currentTargetIndex) {
+
+        goodJob.play();
+
+      } else {
+
+        ballCatchFail.play();
+      }
+
+
+      ball.state = 'hit target';
+
+    }
+
+
+
+
+
+    if (ball.state === 'hit target') {
+      this.createHouse();
+      targets.forEach(target => this.createWindow(target));
+      this.showWindow(index);
+      if(super.getElapsedTime(initialTime) >= 2.5){
+        super.finishGame(false);
+      }
+
+
+    }
 
 
 

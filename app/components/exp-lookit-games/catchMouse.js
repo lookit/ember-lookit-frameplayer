@@ -114,7 +114,7 @@ export default class CatchMouse extends Base {
    */
   initGame() {
     initialTime =0;
-    jitterT = Math.random();
+    jitterT = super.trialStartTime();
     basket = {
       dimensions: {width: super.paddleWidth * 1.3, height: super.paddleWidth * 1.3},
       position: {
@@ -277,12 +277,13 @@ export default class CatchMouse extends Base {
    */
   loop(){
     super.loop();
-    super.createPaddleBox();
+    super.createPaddleBox(0, 0);
     this.drawImage(cheeseClock);
 
     //Randomize initial wait time here
-    if(mice.state === 'fall' && initialTime >0 && super.getElapsedTime(initialTime) > jitterT/2 +2){
+    if(mice.state === 'fall' && initialTime >0 && super.getElapsedTime(initialTime) > jitterT){
       audio.pause();
+      this.showTime("mose appears");
       audio.currentTime = 0;
       mice.state = 'show';
       mice.showTime = new Date().getTime();
@@ -312,7 +313,7 @@ export default class CatchMouse extends Base {
 
 
 
-      if(basket.moved === 0 && mice.state === 'show' &&  basket.positions.length >5 && basket.position.y -  mice.position.y <=120 ){
+      if(basket.moved === 0 && mice.state === 'show' &&  basket.positions.length >5 && basket.position.y -  mice.position.y <=50 ){
 
         swooshSound.play();
         basket.moved = 1;
@@ -344,6 +345,7 @@ export default class CatchMouse extends Base {
 
 
       }
+
 
 
 

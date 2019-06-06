@@ -127,7 +127,8 @@ export default class Base {
    * @param Tf Flight time coefficient
    */
   generateTrajectoryParams(hArr,height,Tf){
-
+    Tf = this.context.flightTime/100;
+    height = this.context.height/100;
     let currentHeight = hArr[currentRounds]*0.05+height;
     gravity = 2*currentHeight/Math.pow(Tf,2);
     ballvx = (1.0310+0.02)/Tf;
@@ -135,9 +136,9 @@ export default class Base {
 
   }
 
-  generateTrajectoryParamsDiscrete(TfArr,context){
-    let Tf = context.flightTime;
-    let height = context.height;
+  generateTrajectoryParamsDiscrete(TfArr){
+    let Tf = this.context.flightTime/100;
+    let height = this.context.height/100;
     initX =0.7510;
     gravity = 2*height/Math.pow(Tf,2);
     ballvx = (1.0310+0.02)/Tf;
@@ -145,10 +146,10 @@ export default class Base {
   }
 
 
-  generateTrajectoryParamsDiscreteSpatial(initVmatrix,context){
-    let Tf = context.flightTime;
-    gravity = context.gravity;
-    let height = context.height;
+  generateTrajectoryParamsDiscreteSpatial(initVmatrix){
+    let Tf = this.context.flightTime/100;
+    gravity = this.context.gravity/10;
+    let height = this.context.height/100;
     ballvx = (1.0310+0.02)/Tf;
     initV = 0.15*height+0.45;
     initX = 0.7510;
@@ -680,11 +681,11 @@ export default class Base {
 
     let  ball = {
 
-      position: {x: (initX)*Utils.SCALE, y:( 1.3571-0.0175)*Utils.SCALE},
+      position: {x: (initX)*Utils.SCALE, y:( 1.3571+0.0175)*Utils.SCALE},
       velocity: 0,
       mass: Utils.ballMass,
       radius: (0.04)*Utils.SCALE/2,
-      state: 'fall',
+      state: 'start',
       impactTime: 0,
       impactPosition:0,
       positions:[{x:0,y:0}],
@@ -765,6 +766,12 @@ export default class Base {
 
   }
 
+  trialStartTime(){
+
+    return (Math.floor(Math.random() * (this.context.maxTime - this.context.minTime + 1) ) + this.context.minTime)/1000;
+
+  }
+
 
   /**
    * @method drawBall
@@ -773,7 +780,7 @@ export default class Base {
    */
   drawBall(ball){
 
-
+    this.ctx.save();
     this.ctx.beginPath();
     this.ctx.translate( ball.position.x,  ball.position.y);
     this.ctx.arc(0, 0, ball.radius, 0, Math.PI * 2, true);
@@ -860,7 +867,7 @@ export default class Base {
 
 
     paddle.position.y = this.mouseY;
-    if(paddle.position.y > paddleBox.position.y){
+    if(paddle.position.y >= paddleBox.position.y + paddleBox.dimensions.height){
 
       paddle.position.y = paddleBox.position.y;
     }
