@@ -615,7 +615,7 @@ export default class Base {
     let rightBorder = (1.3310+radiusRim/5)*Utils.SCALE;
 
 
-    return {  position : {x:leftBorder,y: topBorder }, dimensions: {width: rightBorder - leftBorder, height:  (radiusRim/5)*Utils.SCALE },color:Utils.redColor}
+    return {  position : {x:leftBorder,y: topBorder }, dimensions: {width: rightBorder - leftBorder, height:  (radiusRim/5)*Utils.SCALE },color:Utils.redColor};
   }
 
 
@@ -898,7 +898,7 @@ export default class Base {
 
     if(paddle.position.y > paddleBox.position.y + paddleBox.dimensions.height - paddle.dimensions.height){
 
-      paddle.position.y = paddleBox.position.y + paddleBox.dimensions.height - paddle.dimensions.height-0.02*this.Utils.SCALE;
+      paddle.position.y = paddleBox.position.y + paddleBox.dimensions.height - paddle.dimensions.height;
     }
 
 
