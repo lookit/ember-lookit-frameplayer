@@ -28,6 +28,7 @@ let targetLocV = 0.77;
 let jitterT = 0;
 let Tf = 0.75;
 let Height = 0.65;
+let wrongSound = {};
 
 /**
  * @class FeedCroc
@@ -101,8 +102,9 @@ export default class FeedCroc extends Base {
 
     crocEatingSound = new Audio(super.Utils.crocEatSound);
     crocEatingSound.load();
-
-
+    wrongSound = new Audio(super.Utils.wrongSound);
+    wrongSound.load();
+    wrongSound.src = super.Utils.wrongSound;
     audio = new Audio(super.Utils.rattleSound);
     audio.load();
     crocEatingSound.src =  super.Utils.crocEatSound;
@@ -130,21 +132,28 @@ export default class FeedCroc extends Base {
   loop() {
     super.loop();
 
-
+    let paddleBoxColor = super.Utils.blueColor;
+    super.createPaddleBox(paddleBoxColor);
     super.generateTrajectoryParams(hArray,Height,Tf);
     super.createBallBox();
-    super.createPaddleBox(0, 0);
     this.drawImageAngle(target, target.imageURL,45);
-    super.paddleMove(paddle,initialTime);
     super.drawPaddle(paddle);
+    super.paddleMove(paddle,initialTime);
     this.paddleBallCollision();
     let hitTheTarget = this.collisionDetection();
     let hitTheWall = super.wallCollision(ball);
 
     if(ball.state === 'start'){
       super.moveBallToStart(ball, false);
-      if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
 
+      if(super.paddleIsMoved(paddle)){
+        initialTime = new Date().getTime();
+        paddleBoxColor = super.Utils.redColor;
+        wrongSound.play();
+        super.createPaddleBox(paddleBoxColor);
+      }
+
+      if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         audio.pause();
         ball.state = 'fall';
         initialTime = new Date().getTime();
@@ -155,7 +164,13 @@ export default class FeedCroc extends Base {
 
     if(ball.state === 'fall' ){
 
-      super.trajectory(ball,initialTime);
+      if(initialTime > 0 && super.getElapsedTime(initialTime) < 0.95) {
+        super.trajectory(ball, initialTime);
+      }
+
+      if(initialTime > 0 && super.getElapsedTime(initialTime) > 1.5) {
+        ball.state = 'hit';
+      }
       super.drawBall(ball);
 
     }
