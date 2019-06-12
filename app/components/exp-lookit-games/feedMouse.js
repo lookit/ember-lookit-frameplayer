@@ -308,7 +308,16 @@ export default class FeedMouse extends Base {
 
     if(ball.state === 'fall'){
 
-      super.trajectory(ball,initialTime);
+      if(initialTime > 0 && super.getElapsedTime(initialTime) < TfArr[super.currentRounds]+0.15) {
+        super.trajectory(ball, initialTime);
+      }
+
+      if(initialTime > 0 && super.getElapsedTime(initialTime) > 1.5) {
+        ball.state = 'hit';
+        ballCatchFail.play();
+
+      }
+
       super.drawBall(ball);
       this.createHouse();
       this.createWindow();
