@@ -38,6 +38,7 @@ export default class Utils{
   static get  cheese_ser1Sound() {return this.bucketSoundResources + 'cheese_ser1.mp3';}
   static get  cheese_ser2Sound() {return this.bucketSoundResources + 'cheese_ser2.mp3';}
   static get  cheese_ser3Sound() {return this.bucketSoundResources + 'cheese_ser3.mp3';}
+  static get  wrongSound() {return this.bucketSoundResources + 'wrongSound.mp3';}
 
   //Image Resources
   static get  treeImage() {return this.bucketImageResource + 'tree_original.png';}
