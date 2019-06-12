@@ -319,14 +319,14 @@ export default class FeedCroc extends Base {
   collisionDetection() {
 
 
-    let YL = (targetLocV-0.25)*super.Utils.SCALE;
-    let YH = (targetLocV+0.1)*super.Utils.SCALE;
+    let YL = (targetLocV-0.3)*super.Utils.SCALE;
+    let YH = (targetLocV+0.12)*super.Utils.SCALE;
     let XH = targetLocH *super.Utils.SCALE;
 
     if (ball.position.y > YL && ball.position.y < YH  && ball.position.x > XH ) {
       let currenImpactCoord = Math.abs(ball.position.y - targetLocV*super.Utils.SCALE);
 
-      if (currenImpactCoord < 0.0825*super.Utils.SCALE){
+      if (currenImpactCoord < 0.087*super.Utils.SCALE){
 
         if(currenImpactCoord < 0.025*super.Utils.SCALE){
 
