@@ -63,7 +63,7 @@ export default class CatchCheese extends Base {
     Tf = this.context.flightTime;
     Height = this.context.height;
 
-    obstrArr  = super.uniformArr([1,2]);
+    obstrArr  = super.uniformArr([1,2,3]);
     goodJob = new Audio(super.Utils.goodCatchSound);
     goodJob.load();
     ballCatchFail = new Audio(super.Utils.ballcatchFailSound);
@@ -247,6 +247,12 @@ export default class CatchCheese extends Base {
       if(initialTime > 0 && super.getElapsedTime(initialTime) < 0.94) {
         ball.positions.push(ball.position.y);
         super.trajectory(ball, initialTime);
+      }
+
+      if(initialTime > 0 && super.getElapsedTime(initialTime) === 0.94){
+
+         ballCatchFail.play();
+
       }
 
       if(initialTime > 0 && super.getElapsedTime(initialTime) > 1.5) {
