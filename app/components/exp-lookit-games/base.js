@@ -160,7 +160,7 @@ export default class Base {
    * The box symbolizes initial paddle location
    * @method createPaddleBox
    */
-  createPaddleBox() {
+  createPaddleBox(color = Utils.blueColor) {
     this.ctx.beginPath();
     let leftBorder = (1.8560-0.6525)*Utils.SCALE ;
     let topBorder = (1.3671-0.05+0.05)*Utils.SCALE;
@@ -171,9 +171,9 @@ export default class Base {
     paddleBox.dimensions.width = rightBorder - leftBorder;
     paddleBox.dimensions.height = downBorder-topBorder;
     this.ctx.rect(paddleBox.position.x,  paddleBox.position.y, paddleBox.dimensions.width, paddleBox.dimensions.height );
-    this.ctx.fillStyle = Utils.blackColor;
+    this.ctx.fillStyle = color;
     this.ctx.lineWidth = '8';
-    this.ctx.strokeStyle = Utils.blueColor;
+    this.ctx.strokeStyle = color;
     this.ctx.stroke();
 
 
@@ -668,7 +668,7 @@ export default class Base {
     let downBorder =  (1.3671+0.02-paddle.position.y)*Utils.SCALE ;
 
     paddle.position = {x: leftBorder,y:downBorder};
-    paddle.dimensions = {width: rightBorder - leftBorder, height: topBorder - downBorder};
+    paddle.dimensions = {width: rightBorder - leftBorder, height: downBorder-topBorder};
 
     return paddle;
 
@@ -678,9 +678,15 @@ export default class Base {
 
   ballObject(){
 
+    let iterator = 0.01;
+    let positionY = initBallY+initV*(iterator)+0.5*-gravity*Math.pow(iterator,2);
+    let positionX  = initX + ballvx*(iterator);
+    let leftBorder =  (positionX-.0175) * Utils.SCALE;
+    let downBorder =  (1.3571-positionY+.0175) *Utils.SCALE ;
+
     let  ball = {
 
-      position: {x: (initX-0.0175)*Utils.SCALE, y:1.35*Utils.SCALE},
+      position: {x: leftBorder, y:downBorder},
       velocity: 0,
       mass: Utils.ballMass,
       radius: (0.04)*Utils.SCALE/2,
@@ -729,7 +735,6 @@ export default class Base {
     let topBorder = (1.3571-positionY-.0175)*Utils.SCALE;
     let rightBorder = (positionX+.0175)*Utils.SCALE;
     let downBorder =  (1.3571-positionY+.0175)*Utils.SCALE ;
-
     ball.positions.push(ball.position);
     ball.position.x = leftBorder;
     ball.position.y = downBorder;
@@ -840,6 +845,27 @@ export default class Base {
 
   }
 
+  /**
+   * Check if paddle is moved ahead of time
+   * @param paddle
+   * @returns {boolean}
+   */
+  paddleIsMoved(paddle){
+
+
+    if(paddle.positions.length > 2 && paddle.position.y !== (this.canvas.height - paddle.positions[paddle.positions.length-2]*this.canvas.height)){
+
+      return true;
+    }
+
+    // Check if paddle is moved outside the box limits s
+    if(paddle.position.y < paddleBox.position.y){
+
+      return true;
+    }
+
+    return false;
+  }
 
   /**
    * Minimal implementation of interruption between rounds
@@ -866,7 +892,10 @@ export default class Base {
   paddleMove(paddle,initialTime) {
 
 
-    paddle.position.y = this.mouseY;
+    if(mouseY){
+      paddle.position.y = this.mouseY;
+    }
+
     if(paddle.position.y > paddleBox.position.y + paddleBox.dimensions.height - paddle.dimensions.height){
 
       paddle.position.y = paddleBox.position.y + paddleBox.dimensions.height - paddle.dimensions.height-0.02*this.Utils.SCALE;
