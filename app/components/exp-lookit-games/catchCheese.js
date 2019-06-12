@@ -27,7 +27,7 @@ let Height = 0.8;
 let obstrArr = [];
 let jitterT = 0;
 let radiusRim = 0.1;
-
+let wrongSound = {};
 
 
 
@@ -70,6 +70,9 @@ export default class CatchCheese extends Base {
     ballCatchFail.load();
     audio = new Audio(super.Utils.rattleSound);
     audio.load();
+    wrongSound = new Audio(super.Utils.wrongSound);
+    wrongSound.load();
+    wrongSound.src = super.Utils.wrongSound;
     ballCatchFail.src = super.Utils.ballcatchFailSound;
     goodJob.src = super.Utils.goodCatchSound;
     audio.src = super.Utils.rattleSound;
@@ -149,16 +152,18 @@ export default class CatchCheese extends Base {
    */
   collisionDetection() {
 
+    let basketPrevPosition = 0;
+    if(basket.positions.length >2){
 
-    // if (ball.positions.length > 2 && basket.positions.length >2 && ball.positions[ball.positions.length - 1].y > basket.position.y  && ball.position.y >= basket.position.y ){
-    //     if (ball.position.x >= basket.position.x && ball.position.x <=  basket.position.x+  basket.dimensions.width ) {
-    if (ball.positions.length > 2 && basket.positions.length >2 && ball.positions[ball.positions.length - 1].y > basket.position.y && ball.position.y > basket.position.y && ball.position.y - ball.radius < basket.position.y + basket.dimensions.height) {
+      basketPrevPosition = this.canvas.height - (basket.positions[basket.positions.length-2])*this.canvas.height;
+    }
 
-      if (ball.position.x >= basket.position.x && ball.position.x <=  basket.position.x+  basket.dimensions.width ) {
+    if(ball.positions.length >2 && ball.positions[ball.positions.length-2] <= basketPrevPosition && ball.position.y > basket.position.y){
+      if (ball.position.x >= basket.position.x && ball.position.x <=  basket.position.x +  basket.dimensions.width ) {
 
         ball.state = 'good';
 
-        if (ball.position.x > (1.3301 - radiusRim / 5) * super.Utils.SCALE && ball.position.x < (1.3301 + radiusRim / 5) * super.Utils.SCALE) {
+        if (ball.position.x > (1.3301 - radiusRim / 3) * super.Utils.SCALE && ball.position.x < (1.3301 + radiusRim / 3) * super.Utils.SCALE) {
 
           ball.state = 'very good';
         }
@@ -201,11 +206,18 @@ export default class CatchCheese extends Base {
     super.generateTrajectoryParams(hArray,Height,Tf);
     let hitTheTarget = this.collisionDetection();
     let hitTheWall = super.wallCollision(ball);
-
+    let paddleBoxColor = super.Utils.blueColor;
 
     if(ball.state === 'start'){
 
       super.moveBallToStart(ball, false);
+
+      if(super.paddleIsMoved(basket)){
+        initialTime = new Date().getTime();
+        paddleBoxColor = super.Utils.redColor;
+        wrongSound.play();
+      }
+
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         audio.pause();
         ball.state = 'fall';
@@ -222,8 +234,16 @@ export default class CatchCheese extends Base {
     }
 
     if(ball.state === 'fall'){
+      if(initialTime > 0 && super.getElapsedTime(initialTime) < 0.94) {
+        ball.positions.push(ball.position.y);
+        super.trajectory(ball, initialTime);
+      }
 
-      super.trajectory(ball,initialTime);
+      if(initialTime > 0 && super.getElapsedTime(initialTime) > 1.5) {
+        super.paddleAtZero(basket, hitTheTarget);
+
+      }
+
       super.drawBall(ball);
     }
 
@@ -258,7 +278,7 @@ export default class CatchCheese extends Base {
     }
 
     obstructions.forEach(obstruction => this.drawImage(obstruction));
-    super.createPaddleBox(this.canvas.width / 2 + super.paddleWidth * 3, this.canvas.height / 2.5 + this.canvas.height / 2 - super.paddleWidth * 1.3);
+    super.createPaddleBox(paddleBoxColor);
     super.paddleMove(basket,initialTime);
     this.drawImage(basket);
     this.drawRedDot();
