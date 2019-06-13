@@ -256,8 +256,9 @@ export default class CatchCheese extends Base {
       }
 
 
-      if(initialTime > 0 && super.getElapsedTime(initialTime) > 1.5) {
-        super.paddleAtZero(basket, hitTheTarget);
+      if(initialTime > 0 && super.getElapsedTime(initialTime) >= 1.5) {
+        ballCatchFail.play();
+        ball.state = 'hit';
 
       }
 
@@ -279,12 +280,6 @@ export default class CatchCheese extends Base {
           this.drawImage(targetStars);
         }
 
-
-      } else {
-        if (!super.gameOver) {
-
-          ballCatchFail.play();
-        }
 
       }
       // Remove ball and show in the starting point,
