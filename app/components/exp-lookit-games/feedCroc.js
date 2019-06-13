@@ -225,7 +225,7 @@ export default class FeedCroc extends Base {
       }
 
 
-      super.moveBallToStart(ball, true);
+      super.moveBallToStart(ball, false);
       super.paddleAtZero(paddle, hitTheTarget);
 
     }
@@ -319,7 +319,7 @@ export default class FeedCroc extends Base {
   collisionDetection() {
 
 
-    let YL = (targetLocV-0.3)*super.Utils.SCALE;
+    let YL = (targetLocV-0.45)*super.Utils.SCALE;
     let YH = (targetLocV+0.12)*super.Utils.SCALE;
     let XH = targetLocH *super.Utils.SCALE;
 

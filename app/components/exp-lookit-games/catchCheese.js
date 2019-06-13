@@ -244,7 +244,7 @@ export default class CatchCheese extends Base {
     }
 
     if(ball.state === 'fall'){
-      if(initialTime > 0 && super.getElapsedTime(initialTime) < 0.94) {
+      if(initialTime > 0 && super.getElapsedTime(initialTime) <= 0.94) {
         ball.positions.push(ball.position.y);
         super.trajectory(ball, initialTime);
       }
@@ -288,7 +288,7 @@ export default class CatchCheese extends Base {
       }
       // Remove ball and show in the starting point,
       //User should set the paddle to initial position , call stop after that
-      super.moveBallToStart(ball, true);
+      super.moveBallToStart(ball, false);
       super.paddleAtZero(basket, hitTheTarget);
 
     }
