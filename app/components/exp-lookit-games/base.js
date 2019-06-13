@@ -551,6 +551,7 @@ export default class Base {
 
     };
 
+    this.loopTimer();
 
   }
 
