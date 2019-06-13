@@ -238,6 +238,12 @@ export default class CatchCheese extends Base {
 
     }
 
+    if(initialTime > 0 && super.getElapsedTime(initialTime) === 0.94){
+
+      ballCatchFail.play();
+
+    }
+
     if(hitTheTarget || hitTheWall){
 
       ball.state = 'hit';
@@ -249,11 +255,6 @@ export default class CatchCheese extends Base {
         super.trajectory(ball, initialTime);
       }
 
-      if(initialTime > 0 && super.getElapsedTime(initialTime) === 0.94){
-
-         ballCatchFail.play();
-
-      }
 
       if(initialTime > 0 && super.getElapsedTime(initialTime) > 1.5) {
         super.paddleAtZero(basket, hitTheTarget);
