@@ -173,7 +173,7 @@ export default class CatchCheese extends Base {
 
         ball.state = 'good';
 
-        if (ball.position.x > (1.3301 - radiusRim / 3) * super.Utils.SCALE && ball.position.x < (1.3301 + radiusRim / 3) * super.Utils.SCALE) {
+        if (ball.position.x > (1.3301 - radiusRim / 2) * super.Utils.SCALE && ball.position.x < (1.3301 + radiusRim / 2) * super.Utils.SCALE) {
 
           ball.state = 'very good';
         }
