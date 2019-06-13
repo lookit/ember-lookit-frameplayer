@@ -75,7 +75,6 @@ export default class Base {
     this.currentScore = 0;
     this.currentRounds = 0;
     clearInterval(dataLoop);
-    clearInterval(gameLoop);
 
   }
 
@@ -267,7 +266,6 @@ export default class Base {
   stop() {
 
     clearInterval(dataLoop);
-    clearInterval(gameLoop);
 
   }
 
@@ -331,11 +329,10 @@ export default class Base {
 
     this.loopTimer = function () {
       let inst = this;
-      gameLoop = setTimeout(function () {
+      gameLoop = window.requestAnimationFrame(function () {
         inst.loop();
-      }, Utils.frameDelay);
+      })
     };
-
     this.loopTimer();
   }
 
@@ -544,17 +541,15 @@ export default class Base {
     mouseY = 0;
     this.loopTimer = function () {
       let inst = this;
-      gameLoop = setTimeout(function () {
+      gameLoop = window.requestAnimationFrame(function () {
         inst.loop();
-      }, Utils.frameDelay);
+      })
 
       dataLoop = setTimeout(function () {
         inst.dataCollection();
       }, 50);
 
     };
-
-    this.loopTimer();
 
 
   }
@@ -570,6 +565,7 @@ export default class Base {
     this.currentRounds++;
     console.log('finishGame');
     this.clearInterval();
+    cancelAnimationFrame(gameLoop);
     if (score) {
       this.increaseScore();
     }
@@ -727,11 +723,7 @@ export default class Base {
 
     let positionY = initBallY + initV * (iterator) + 0.5 * -gravity * Math.pow(iterator, 2);
     let positionX = initX + ballvx * (iterator);
-
-
     let leftBorder = (positionX - .0175) * Utils.SCALE;
-    let topBorder = (1.3571 - positionY - .0175) * Utils.SCALE;
-    let rightBorder = (positionX + .0175) * Utils.SCALE;
     let downBorder = (1.3571 - positionY + .0175) * Utils.SCALE;
     ball.positions.push(ball.position);
     ball.position.x = leftBorder;
@@ -755,11 +747,7 @@ export default class Base {
     this.ctx.beginPath();
     let positionY = ball.impactPosition + paddle.releaseVelocity * (Yiterator) + 0.5 * -gravity * Math.pow(Yiterator, 2);
     let positionX = initX + ballvx * (Xiterator);
-
-
     let leftBorder = (positionX - .0175) * Utils.SCALE;
-    //let topBorder = (1.3571-positionY-.0175)*Utils.SCALE;
-    //let rightBorder = (positionX+.0175)*Utils.SCALE;
     let downBorder = (1.3571 - positionY + .0175) * Utils.SCALE;
 
     ball.positions.push(ball.position);
