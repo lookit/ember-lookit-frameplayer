@@ -760,7 +760,7 @@ export default class Base {
 
   trialStartTime() {
 
-    return (Math.floor(Math.random() * (this.context.maxTime - this.context.minTime + 1)) + this.context.minTime) / 1000;
+    return ((Math.floor(Math.random() * (this.context.maxTime - this.context.minTime + 1)) + this.context.minTime) / 1000 ) + 0.25;
 
   }
 
