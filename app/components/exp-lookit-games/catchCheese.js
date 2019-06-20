@@ -171,11 +171,11 @@ export default class CatchCheese extends Base {
     if(ball.positions.length >2 && ball.positions[ball.positions.length-2] <= basketPrevPosition && ball.position.y > basket.position.y){
       if (ball.position.x >= basket.position.x && ball.position.x <=  basket.position.x +  basket.dimensions.width ) {
 
-        ball.state = 'good';
+        ball.hitstate = 'good';
 
-        if (ball.position.x > (1.3301 - radiusRim / 2) * super.Utils.SCALE && ball.position.x < (1.3301 + radiusRim / 2) * super.Utils.SCALE) {
+        if (ball.position.x > (1.3301 - radiusRim / 4) * super.Utils.SCALE && ball.position.x < (1.3301 + radiusRim / 4) * super.Utils.SCALE) {
 
-          ball.state = 'very good';
+          ball.hitstate = 'very good';
         }
         return true;
       }
@@ -232,19 +232,13 @@ export default class CatchCheese extends Base {
         audio.pause();
         ball.state = 'fall';
         initialTime = new Date().getTime();
-
-
       }
 
     }
 
-    if(initialTime > 0 && super.getElapsedTime(initialTime) === 0.94){
 
-      ballCatchFail.play();
 
-    }
-
-    if(hitTheTarget || hitTheWall){
+    if((hitTheTarget || hitTheWall) && ball.state === 'fall'){
 
       ball.state = 'hit';
     }
@@ -255,12 +249,11 @@ export default class CatchCheese extends Base {
         super.trajectory(ball, initialTime);
       }
 
-
       if(initialTime > 0 && super.getElapsedTime(initialTime) >= 1.5) {
         ballCatchFail.play();
         ball.state = 'hit';
-
       }
+
 
       super.drawBall(ball);
     }
@@ -268,26 +261,35 @@ export default class CatchCheese extends Base {
 
     if (ball.state === 'hit') {
 
-      if (hitTheTarget) {
 
-        if (!super.gameOver && goodJob.readyState === 4) {
+      if (ball.hitstate === 'very good' || ball.hitstate === 'good') {
 
-          goodJob.play();
-        }
-
-        if (hitTheTarget && ball.state === 'very good') {
-          this.starsLocationUpdate();
-          this.drawImage(targetStars);
-        }
-
-
+        goodJob.play();
       }
+
+
+      ball.state = 'done';
+
+    }
+
+
+    if(ball.state === 'done'){
+
+
+      if (ball.hitstate === 'very good') {
+        this.starsLocationUpdate();
+        this.drawImage(targetStars);
+      }
+
+
       // Remove ball and show in the starting point,
       //User should set the paddle to initial position , call stop after that
       super.moveBallToStart(ball, false);
       super.paddleAtZero(basket, hitTheTarget);
 
+
     }
+
 
     obstructions.forEach(obstruction => this.drawImage(obstruction));
     super.createPaddleBox(paddleBoxColor);
