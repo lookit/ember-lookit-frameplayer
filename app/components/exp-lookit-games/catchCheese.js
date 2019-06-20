@@ -66,14 +66,14 @@ export default class CatchCheese extends Base {
     obstrArr  = super.uniformArr([1,2,3]);
     goodJob = new Audio(super.Utils.goodCatchSound);
     goodJob.load();
-    ballCatchFail = new Audio(super.Utils.ballcatchFailSound);
+    ballCatchFail = new Audio(super.Utils.failcatchSound);
     ballCatchFail.load();
     audio = new Audio(super.Utils.rattleSound);
     audio.load();
     wrongSound = new Audio(super.Utils.wrongSound);
     wrongSound.load();
     wrongSound.src = super.Utils.wrongSound;
-    ballCatchFail.src = super.Utils.ballcatchFailSound;
+    ballCatchFail.src = super.Utils.failcatchSound;
     goodJob.src = super.Utils.goodCatchSound;
     audio.src = super.Utils.rattleSound;
     audio.addEventListener('onloadeddata', this.initGame(), false);

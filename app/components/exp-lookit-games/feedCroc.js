@@ -97,7 +97,7 @@ export default class FeedCroc extends Base {
     goodJob = new Audio(super.Utils.crocSlurpSound);
     goodJob.load();
 
-    ballCatchFail = new Audio(super.Utils.ballcatchFailSound);
+    ballCatchFail = new Audio(super.Utils.failcatchSound);
     ballCatchFail.load();
 
     crocEatingSound = new Audio(super.Utils.crocEatSound);
@@ -109,7 +109,7 @@ export default class FeedCroc extends Base {
     audio.load();
     crocEatingSound.src =  super.Utils.crocEatSound;
     goodJob.src = super.Utils.crocSlurpSound;
-    ballCatchFail.src = super.Utils.ballcatchFailSound;
+    ballCatchFail.src = super.Utils.failcatchSound;
     bounceSound.src = super.Utils.bouncingSound;
     audio.src = super.Utils.rattleSound;
     audio.addEventListener('canplaythrough', this.initGame(), false);
