@@ -181,8 +181,8 @@ export default class FeedMouse extends Base {
     ball.startTime =0;
     jitterT = super.trialStartTime();
     keyPressed.value = false;
-    let topBorder = (1.13)*super.Utils.SCALE;
-    let downBorder =  (1.21)*super.Utils.SCALE ;
+    let topBorder = (1.14)*super.Utils.SCALE;
+    let downBorder =  (1.22)*super.Utils.SCALE ;
     let leftBorder = (targetX-0.05)*super.Utils.SCALE ;
     let rightBorder = (targetX+0.05)*super.Utils.SCALE;
 
