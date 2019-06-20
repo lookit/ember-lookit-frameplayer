@@ -112,7 +112,7 @@ export default class FeedCroc extends Base {
     ballCatchFail.src = super.Utils.ballcatchFailSound;
     bounceSound.src = super.Utils.bouncingSound;
     audio.src = super.Utils.rattleSound;
-    audio.addEventListener('onloadeddata', this.initGame(), false);
+    audio.addEventListener('canplaythrough', this.initGame(), false);
 
   }
 
@@ -154,6 +154,7 @@ export default class FeedCroc extends Base {
       }
 
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
+
         audio.pause();
         ball.state = 'fall';
         initialTime = new Date().getTime();
@@ -168,7 +169,7 @@ export default class FeedCroc extends Base {
         super.trajectory(ball, initialTime);
       }
 
-      if(initialTime > 0 && super.getElapsedTime(initialTime) > 1.5) {
+      if(initialTime > 0 && super.ballIsOnFloor(ball)) {
         ball.state = 'hit';
       }
       super.drawBall(ball);
@@ -224,11 +225,14 @@ export default class FeedCroc extends Base {
         this.drawImageAngle(target, super.Utils.crocclosednotongImage, 45);
       }
 
+      if(super.ballIsOnFloor(ball)){
+        super.drawBall(ball);
+      }
 
-      super.moveBallToStart(ball, false);
       super.paddleAtZero(paddle, hitTheTarget);
 
     }
+    super.paddleMove(paddle,initialTime);
 
 
   }
@@ -290,7 +294,7 @@ export default class FeedCroc extends Base {
    */
   paddleBallCollision() {
 
-    if((ball.position.y - paddle.position.y <= 0.05*super.Utils.SCALE && ball.position.y - paddle.position.y>=0 )&&(ball.position.x > (1.2810-0.025)*super.Utils.SCALE && ball.position.x < (1.3810+0.025)*super.Utils.SCALE )){
+    if((ball.position.y - paddle.position.y <= 0.08*super.Utils.SCALE && ball.position.y - paddle.position.y>=0 )&&(ball.position.x > (1.2810-0.025)*super.Utils.SCALE && ball.position.x < (1.3810+0.025)*super.Utils.SCALE )){
 
       bounceSound.play();
       paddle.paddleLastMovedMillis = new Date().getTime();
