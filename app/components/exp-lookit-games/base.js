@@ -764,6 +764,16 @@ export default class Base {
 
   }
 
+  /**
+   * @method ballIsOnFloor
+   * Check if ball is on the floor and missed target
+   * @param ball
+   * @returns {boolean}
+   */
+  ballIsOnFloor(ball){
+
+    return ball.position.y > paddleBox.position.y + paddleBox.dimensions.height;
+  }
 
   /**
    * @method drawBall
@@ -844,7 +854,7 @@ export default class Base {
       return true;
     }
 
-    // Check if paddle is moved outside the box limits s
+    // Check if paddle is moved outside the box limits
     if (paddle.position.y < paddleBox.position.y) {
 
       return true;

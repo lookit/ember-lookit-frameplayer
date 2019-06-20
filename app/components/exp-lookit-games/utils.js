@@ -12,13 +12,14 @@
 export default class Utils{
 
   static get  frameRate() {  return 1 / 200; } // Seconds
-  static get  frameDelay() { return 5; } // ms
+  static get  frameDelay() { return 10; } // ms
   static get  paddleSpeed() {return 1;}
   static get  ballMass() {return 0.1;}
   static get  restitution() {return -1.2;}
   static get  gameRounds() {return 12;}
   static get  gravityFactor() {return 1;}
   static get  SCALE(){return 420;}
+
 
   //Sound Resources
   static get  bucketImageResource() {return 'https://s3.us-east-2.amazonaws.com/piproject/Resources/images/';}
@@ -39,6 +40,7 @@ export default class Utils{
   static get  cheese_ser2Sound() {return this.bucketSoundResources + 'cheese_ser2.mp3';}
   static get  cheese_ser3Sound() {return this.bucketSoundResources + 'cheese_ser3.mp3';}
   static get  wrongSound() {return this.bucketSoundResources + 'wrongSound.mp3';}
+  static get  failcatchSound(){return this.bucketSoundResources + 'failcatch.mp3';}
 
   //Image Resources
   static get  treeImage() {return this.bucketImageResource + 'tree_original.png';}
