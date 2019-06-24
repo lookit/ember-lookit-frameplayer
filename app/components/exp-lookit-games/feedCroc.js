@@ -294,21 +294,25 @@ export default class FeedCroc extends Base {
    */
   paddleBallCollision() {
 
-    if((ball.position.y - paddle.position.y <= 0.08*super.Utils.SCALE && ball.position.y - paddle.position.y>=0 )&&(ball.position.x > (1.2810-0.025)*super.Utils.SCALE && ball.position.x < (1.3810+0.025)*super.Utils.SCALE )){
-
-      bounceSound.play();
-      paddle.paddleLastMovedMillis = new Date().getTime();
-      ball.impactTime = new Date().getTime();
-      ball.impactPosition = (this.canvas.height - paddle.position.y) / this.canvas.height;
+    super.paddleMove(paddle,initialTime);
+    //Detect the ball position on X axis , if the ball is between paddle edges
+    if (ball.position.x >= (1.2810 - 0.025) * super.Utils.SCALE - 0.04*super.Utils.SCALE && ball.position.x <= (1.3810 + 0.025) * super.Utils.SCALE) {
       let paddleVelocity = this.getPaddleVelocity(paddle.times, paddle.positions);
-      let iterator = super.getElapsedTime(initialTime);
-      ball.velocity =super.TrajectoryVars.initV - super.TrajectoryVars.gravity * iterator;
-      paddle.releaseVelocity = -alpha * (ball.velocity - paddleVelocity) + paddleVelocity;
-      if(isNaN(paddle.releaseVelocity) ) {
-        paddle.releaseVelocity = 1.56;
-      }
-      ball.state = 'bounce';
+      //Detect the ball position on Y axes, if the ball is within range  on Y axis
+      if(ball.position.y - paddle.position.y <= (paddleVelocity*super.Utils.SCALE)/15 && ball.position.y - paddle.position.y>=0 ){
+        bounceSound.play();
+        paddle.paddleLastMovedMillis = new Date().getTime();
+        ball.impactTime = new Date().getTime();
+        ball.impactPosition = (this.canvas.height - paddle.position.y) / this.canvas.height;
+        let iterator = super.getElapsedTime(initialTime);
+        ball.velocity = super.TrajectoryVars.initV - super.TrajectoryVars.gravity * iterator;
+        paddle.releaseVelocity = -alpha * (ball.velocity - paddleVelocity) + paddleVelocity;
+        if (isNaN(paddle.releaseVelocity)) {
+          paddle.releaseVelocity = 1.56;
+        }
+        ball.state = 'bounce';
 
+      }
     }
 
   }
