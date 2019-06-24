@@ -279,6 +279,7 @@ export default class FeedMouse extends Base {
    * @method loop
    */
   loop() {
+
     super.loop();
     super.generateTrajectoryParamsDiscrete(TfArr);
     super.discreteLauncer();
@@ -300,39 +301,31 @@ export default class FeedMouse extends Base {
 
 
     if (ball.state === 'hit') {
+      super.drawBall(ball);
       super.waitSeconds(2500);
       super.finishGame(false);
 
     }
 
 
-    if(ball.state === 'fall'){
+    if(ball.state == 'fall'){
 
-      if(initialTime > 0 && super.getElapsedTime(initialTime) < TfArr[super.currentRounds]+0.15) {
+      if(initialTime > 0 && super.getElapsedTime(initialTime) < 1.5) {
         super.trajectory(ball, initialTime);
       }
 
-      if(initialTime > 0 && super.getElapsedTime(initialTime) > 1.5) {
-        ball.state = 'hit';
+      if(initialTime > 0 && super.ballIsOnFloor(ball)) {
         ballCatchFail.play();
-
+        ball.state = 'hit';
       }
+
 
       super.drawBall(ball);
       this.createHouse();
       this.createWindow();
 
 
-
-      if(initialTime >0 &&  super.getElapsedTime(initialTime) >= 1.7 ){
-
-        ball.state = 'hit';
-        ballCatchFail.play();
-      }
-
-
-
-      if (keyPressed.value === true ) {
+      if (keyPressed.value == true ) {
 
         if(ball.position.x < (targetX+0.42)*super.Utils.SCALE   ){
 
@@ -380,7 +373,6 @@ export default class FeedMouse extends Base {
 
 
     }
-
   }
 
 }
