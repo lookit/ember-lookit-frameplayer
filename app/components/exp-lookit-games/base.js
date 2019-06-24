@@ -135,6 +135,11 @@ export default class Base {
 
   }
 
+  /**
+   * Generate Trajectory  parameters for discrete games (using Time Flight array)
+   * @method generateTrajectoryParamsDiscrete
+   * @param TfArr Time Flight array
+   */
   generateTrajectoryParamsDiscrete(TfArr) {
     let Tf = TfArr[currentRounds];
     let height = 0.8;
@@ -145,6 +150,11 @@ export default class Base {
   }
 
 
+  /**
+   * Generate Trajectory  parameters for spatial discrete games  (using init velocity matrix )
+   * @method generateTrajectoryParamsDiscreteSpatial
+   * @param initVmatrix  init velocity matrix
+   */
   generateTrajectoryParamsDiscreteSpatial(initVmatrix) {
     let Tf = 0.9;
     gravity = 1.8;
@@ -178,7 +188,12 @@ export default class Base {
 
   }
 
-
+  /**
+   * Create Uniform array of values
+   * @method uniformArr
+   * @param indexes
+   * @returns {Array}
+   */
   uniformArr(vals) {
     let arr = [];
     vals.forEach((v) => {
@@ -890,6 +905,14 @@ export default class Base {
 
     if (this.mouseY > 0) {
       paddle.position.y = this.mouseY;
+    }
+
+    // Place paddle inside padlde box for initial round
+    if(currentRounds === 0 && initialTime < 100){
+
+      paddle.position.y = paddleBox.position.y  + 0.08 * this.Utils.SCALE;
+
+
     }
 
     if (paddle.position.y > paddleBox.position.y + paddleBox.dimensions.height - paddle.dimensions.height) {
