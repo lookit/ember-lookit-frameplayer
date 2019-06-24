@@ -244,13 +244,12 @@ export default class CatchCheese extends Base {
     }
 
     if(ball.state === 'fall'){
-      if(initialTime > 0 && super.getElapsedTime(initialTime) <= 0.94) {
+      if(initialTime > 0 && super.getElapsedTime(initialTime) <= 1.5) {
         ball.positions.push(ball.position.y);
         super.trajectory(ball, initialTime);
       }
 
-      if(initialTime > 0 && super.getElapsedTime(initialTime) >= 1.5) {
-        ballCatchFail.play();
+      if(initialTime > 0 && super.ballIsOnFloor(ball)) {
         ball.state = 'hit';
       }
 
@@ -265,6 +264,9 @@ export default class CatchCheese extends Base {
       if (ball.hitstate === 'very good' || ball.hitstate === 'good') {
 
         goodJob.play();
+      }else{
+
+        ballCatchFail.play();
       }
 
 
@@ -281,11 +283,18 @@ export default class CatchCheese extends Base {
         this.drawImage(targetStars);
       }
 
+      if(ball.hitstate === ''){
+
+        super.drawBall(ball);
+      }
+
 
       // Remove ball and show in the starting point,
       //User should set the paddle to initial position , call stop after that
-      super.moveBallToStart(ball, false);
-      super.paddleAtZero(basket, hitTheTarget);
+      if(super.getElapsedTime(initialTime)  > 1.5) {
+        super.moveBallToStart(ball, false);
+        super.paddleAtZero(basket, hitTheTarget);
+      }
 
 
     }
@@ -296,7 +305,6 @@ export default class CatchCheese extends Base {
     super.paddleMove(basket,initialTime);
     this.drawImage(basket);
     this.drawRedDot();
-
 
   }
 
