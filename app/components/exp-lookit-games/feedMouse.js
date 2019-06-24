@@ -308,7 +308,7 @@ export default class FeedMouse extends Base {
     }
 
 
-    if(ball.state == 'fall'){
+    if(ball.state === 'fall'){
 
       if(initialTime > 0 && super.getElapsedTime(initialTime) < 1.5) {
         super.trajectory(ball, initialTime);

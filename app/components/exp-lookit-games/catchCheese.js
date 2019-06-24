@@ -126,7 +126,10 @@ export default class CatchCheese extends Base {
 
   }
 
-
+  /**
+   * Create red dot target location
+   * @method drawRedDot
+   */
   drawRedDot(){
 
     let redDot = super.basketCenter(basket);

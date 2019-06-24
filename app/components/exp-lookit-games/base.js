@@ -685,7 +685,11 @@ export default class Base {
 
   }
 
-
+  /**
+   * Create initial ball object with state parameters
+   * @method ballObject
+   * @returns {{color: string, mass: number, impactPosition: number, startTime: number, positions: {x: number, y: number}[], position: {x: number, y: number}, velocity: number, state: string, hitstate: string, radius: number, impactTime: number}}
+   */
   ballObject() {
 
     let iterator = 0.01;
@@ -773,9 +777,15 @@ export default class Base {
 
   }
 
+  /**
+   * Randomize trial start time
+   * @method trialStartTime
+   * @returns {number} seconds
+   */
   trialStartTime() {
 
-    return ((Math.floor(Math.random() * (this.context.maxTime - this.context.minTime + 1)) + this.context.minTime) / 1000 ) + 0.25;
+    let min = this.context.minTime + 350
+    return ((Math.floor(Math.random() * (this.context.maxTime - min + 1)) + min) / 1000 );
 
   }
 
