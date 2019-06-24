@@ -253,7 +253,11 @@ export default class FeedMice extends Base {
    */
   keyDownHandler(e) {
 
-    pressed = pressed.map((val, index) => keys[index] === e.key ? true : false);
+    if(ball.state !== 'hit' && ball.state !== 'hit target') {
+      pressed = pressed.fill(false);
+      pressed = pressed.map((val, index) => keys[index] === e.key ? true : false);
+    }
+
   }
 
 
