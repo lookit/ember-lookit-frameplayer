@@ -58,33 +58,7 @@
                             <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
                             <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
                             <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
-                            <li><a href="../classes/ExpPlayer
-              
-              Experiment player: a component that renders a series of frames that define an experiment
-              
-              Sample usage:
-              &#x60;&#x60;&#x60;handlebars
-              {{exp-player
-                experiment=experiment
-                session=session
-                pastSessions=pastSessions
-                saveHandler=(action &#x27;saveSession&#x27;)
-                frameIndex=0
-                fullScreenElementId=&#x27;expContainer&#x27;}}
-              &#x60;&#x60;&#x60;.html">ExpPlayer
-              
-              Experiment player: a component that renders a series of frames that define an experiment
-              
-              Sample usage:
-              &#x60;&#x60;&#x60;handlebars
-              {{exp-player
-                experiment=experiment
-                session=session
-                pastSessions=pastSessions
-                saveHandler=(action &#x27;saveSession&#x27;)
-                frameIndex=0
-                fullScreenElementId=&#x27;expContainer&#x27;}}
-              &#x60;&#x60;&#x60;</a></li>
+                            <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
                             <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
                             <li><a href="../classes/ExpVideoConfigQuality.html">ExpVideoConfigQuality</a></li>
                             <li><a href="../classes/ExpVideoConsent.html">ExpVideoConsent</a></li>
@@ -148,8 +122,9 @@ let {
 /**
  * @module exp-player
  * @submodule components
- * @class ExpPlayer
- *
+ */
+
+/**
  * Experiment player: a component that renders a series of frames that define an experiment
  *
  * Sample usage:
@@ -162,6 +137,8 @@ let {
  *   frameIndex=0
  *   fullScreenElementId=&#x27;expContainer&#x27;}}
  * &#x60;&#x60;&#x60;
+ *
+ * @class ExpPlayer
  */
 export default Ember.Component.extend(FullScreen, {
     layout: layout,

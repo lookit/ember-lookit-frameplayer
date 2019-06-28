@@ -1,4 +1,5 @@
 {{! template-lint-disable invalid-interactive}}
+{{! template-lint-disable html-comments}}
 
 <div class="row exp-lookit-geometry-alternation" id="alternation-container">
 
@@ -6,7 +7,7 @@
            class="calibration center"
            autoplay
            style="display:none;">
-        {{#each calibrationVideoSources as |stream|}}
+        {{#each calibrationVideoSources_parsed as |stream|}}
             <source src="{{stream.src}}" type="{{stream.type}}">
         {{/each}}
     </video>
@@ -19,7 +20,7 @@
                autoplay
                loop>
 
-            {{#each videoSources as |stream|}}
+            {{#each videoSources_parsed as |stream|}}
                 <source src="{{stream.src}}" type="{{stream.type}}">
             {{/each}}
         </video>
@@ -27,27 +28,27 @@
         {{#if hasBeenPaused}}
             <audio id="player-audio"
                    onended={{action 'endAudio'}}>
-                {{#each unpauseAudio as |stream|}}
+                {{#each unpauseAudio_parsed as |stream|}}
                     <source src="{{stream.src}}" type="{{stream.type}}">
                 {{/each}}
             </audio>
         {{else}}
             <audio id="player-audio"
                    onended={{action 'endAudio'}}>
-                {{#each audioSources as |stream|}}
+                {{#each audioSources_parsed as |stream|}}
                     <source src="{{stream.src}}" type="{{stream.type}}">
                 {{/each}}
             </audio>
         {{/if}}
 
         <audio id="player-pause-audio">
-            {{#each pauseAudio as |stream|}}
+            {{#each pauseAudio_parsed as |stream|}}
                 <source src="{{stream.src}}" type="{{stream.type}}">
             {{/each}}
         </audio>
 
         <audio id="player-pause-audio-leftfs">
-            {{#each fsAudio as |stream|}}
+            {{#each fsAudio_parsed as |stream|}}
                 <source src="{{stream.src}}" type="{{stream.type}}">
             {{/each}}
         </audio>
@@ -86,27 +87,31 @@
 
     <audio id="player-music"
            loop>
-        {{#each musicSources as |stream|}}
+        {{#each musicSources_parsed as |stream|}}
             <source src="{{stream.src}}" type="{{stream.type}}">
         {{/each}}
     </audio>
 
     <audio id="player-calibration-audio">
-        {{#each calibrationAudioSources as |stream|}}
+        {{#each calibrationAudioSources_parsed as |stream|}}
             <source src="{{stream.src}}" type="{{stream.type}}">
         {{/each}}
     </audio>
 
     {{#if endAudioSources}}
         <audio id="player-endaudio"
-               onended={{action 'next'}}>
-            {{#each endAudioSources as |stream|}}
+               onended={{action 'finish'}}>
+            {{#each endAudioSources_parsed as |stream|}}
                 <source src="{{stream.src}}" type="{{stream.type}}">
             {{/each}}
         </audio>
     {{/if}}
 
-
+    <!--RECORDER-->
+    <div class="row recorder-container video-recorder-hidden">
+        <div id="recorder" class="col-xs-12">
+        </div>
+    </div>
 
 
 
