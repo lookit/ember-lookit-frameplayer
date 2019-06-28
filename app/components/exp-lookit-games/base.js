@@ -917,8 +917,8 @@ export default class Base {
       paddle.position.y = this.mouseY;
     }
 
-    // Place paddle inside padlde box for initial round
-    if(currentRounds === 0 && initialTime < 100){
+    // Place paddle inside paddle box for initial round
+    if(this.currentRounds === 0 && initialTime < 100 && paddle.position.y < paddleBox.position.y ){
 
       paddle.position.y = paddleBox.position.y  + 0.08 * this.Utils.SCALE;
 
