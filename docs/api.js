@@ -17,7 +17,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "ExpLookitText",
         "ExpLookitVideo",
         "ExpLookitVideoConsent",
-        "ExpPlayer\n\nExperiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```",
+        "ExpPlayer",
         "ExpVideoConfig",
         "ExpVideoConfigQuality",
         "ExpVideoConsent",
@@ -43,7 +43,8 @@ YUI.add("yuidoc-meta", function(Y) {
     "allModules": [
         {
             "displayName": "components",
-            "name": "components"
+            "name": "components",
+            "description": "Experiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```"
         },
         {
             "displayName": "exp-player",
