@@ -11,8 +11,9 @@ let {
 /**
  * @module exp-player
  * @submodule components
- * @class ExpPlayer
- *
+ */
+
+/**
  * Experiment player: a component that renders a series of frames that define an experiment
  *
  * Sample usage:
@@ -25,6 +26,8 @@ let {
  *   frameIndex=0
  *   fullScreenElementId='expContainer'}}
  * ```
+ *
+ * @class ExpPlayer
  */
 export default Ember.Component.extend(FullScreen, {
     layout: layout,

@@ -548,7 +548,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         },
 
         finish() { // Move to next frame altogether
-            // Call this something separate from test because stopRecorder promise needs
+            // Call this something separate from next because stopRecorder promise needs
             // to call next AFTER recording is stopped and we don't want this to have
             // already been destroyed at that point.
             window.clearInterval(this.get('testTimer'));

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>app/components/exp-lookit-text/component.js - ember-lookit-frameplayer</title>
+    <title>ExpPlayer - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -105,106 +105,180 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: app/components/exp-lookit-text/component.js</h1>
+<h1>ExpPlayer Class</h1>
+<div class="box meta">
 
-<div class="file">
-    <pre class="code prettyprint linenums">
-import layout from &#x27;./template&#x27;;
-import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
 
-/**
- * @module exp-player
- * @submodule frames
- */
+        <div class="foundat">
+            Defined in: <a href="../files/app_components_exp-player_component.js.html#l16"><code>app&#x2F;components&#x2F;exp-player&#x2F;component.js:16</code></a>
+        </div>
 
-/**
- * A frame to display text-only instructions, etc. to the user.
+            Collection: <a href="../modules/components.html">components</a><br>
 
-&#x60;&#x60;&#x60;json
-&quot;frames&quot;: {
-    &quot;study-intro&quot;: {
-        &quot;blocks&quot;: [
-            {
-                &quot;emph&quot;: true,
-                &quot;text&quot;: &quot;Important: your child does not need to be with you until the videos begin. First, let&#x27;s go over what will happen!&quot;,
-                &quot;title&quot;: &quot;Your baby, the physicist&quot;
-            },
-            {
-                &quot;text&quot;: &quot;Some introductory text about this study.&quot;
-            },
-            {
-                &quot;text&quot;: &quot;Another paragraph about this study.&quot;
-            }
-        ],
-        &quot;showPreviousButton&quot;: false,
-        &quot;kind&quot;: &quot;exp-lookit-text&quot;
-    }
- }
+</div>
 
- * &#x60;&#x60;&#x60;
- * @class ExpLookitText
- * @extends ExpFrameBase
- */
 
-export default ExpFrameBaseComponent.extend({
-    type: &#x27;exp-lookit-text&#x27;,
-    layout: layout,
-    meta: {
-        name: &#x27;ExpLookitText&#x27;,
-        description: &#x27;Text-only frame for a Lookit study&#x27;,
-        parameters: {
-            type: &#x27;object&#x27;,
-            properties: {
-                /**
-                 * Whether to show a &#x27;previous&#x27; button
-                 *
-                 * @property {Boolean} showPreviousButton
-                 * @default true
-                 */
-                showPreviousButton: {
-                    type: &#x27;boolean&#x27;,
-                    default: true
-                },
-                /**
-                 * Array of text blocks (paragraphs) to display. Rendered using
-                 * {{#crossLink &quot;ExpTextBlock&quot;}}{{/crossLink}}, so all parameters
-                 * of ExpTextBlock can be used.
-                 *
-                 * @property {Object} blocks
-                 *   @param {String} title title to display
-                 *   @param {String} text paragraph of text
-                 *   @param {Boolean} emph whether to bold this paragraph
-                 */
-                blocks: {
-                    type: &#x27;array&#x27;,
-                    items: {
-                        type: &#x27;object&#x27;,
-                        properties: {
-                            title: {
-                                type: &#x27;string&#x27;
-                            },
-                            text: {
-                                type: &#x27;string&#x27;
-                            },
-                            emph: {
-                                type: &#x27;boolean&#x27;
-                            }
-                        }
-                    },
-                    default: []
-                }
-            }
-        },
-        data: {
-            type: &#x27;object&#x27;,
-            properties: {
+<div>
 
-            }
-        }
-    }
-});
+    <img src="../assets/screenshots/ExpPlayer.png" class="class-screenshot">
 
-    </pre>
+</div>
+
+<div class="box intro">
+    <p>Experiment player: a component that renders a series of frames that define an experiment</p>
+<p>Sample usage:</p>
+<pre class="code prettyprint"><code class="language-handlebars">{{exp-player
+  experiment=experiment
+  session=session
+  pastSessions=pastSessions
+  saveHandler=(action 'saveSession')
+  frameIndex=0
+  fullScreenElementId='expContainer'}}
+</code></pre>
+
+</div>
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                            <li class="index-item method">
+                                <a href="#method_beforeUnload">beforeUnload</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                            <li class="index-item property">
+                                <a href="#property_messageEarlyExitModal">messageEarlyExitModal</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+        </div>
+
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method_beforeUnload" class="method item">
+    <h3 class="name"><code>beforeUnload</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>event</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a> | Null</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-player_component.js.html#l61"><code>app&#x2F;components&#x2F;exp-player&#x2F;component.js:61</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Customize what happens when the user exits the page</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">event</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" class="crosslink external" target="_blank">Event</a></span>
+
+
+                    <div class="param-description">
+                        <p>The event to be handled</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a> | Null</span>:
+                    <p>If string is provided, triggers a modal to confirm user wants to leave page</p>
+
+            </div>
+        </div>
+
+
+</div>
+            </div>
+
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+<div id="property_messageEarlyExitModal" class="property item">
+    <h3 class="name"><code>messageEarlyExitModal</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a> | Null</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-player_component.js.html#l55"><code>app&#x2F;components&#x2F;exp-player&#x2F;component.js:55</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>The message to display in the early exit modal. Newer browsers may not respect this message.</p>
+
+    </div>
+
+
+
+</div>
+            </div>
+
+
+    </div>
 </div>
                     </div>
                 </div>
