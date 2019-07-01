@@ -24,6 +24,8 @@ let initX = 0.52;
 let initV = 0;
 let gravity = 0;
 let ballvx = 0;
+let waitIndex = 0;
+let waitIndexTIme = 0;
 let paddleBox = {
   position: {x: 0, y: 0},
   dimensions: {width: 0, height: 0}
@@ -63,7 +65,7 @@ export default class Base {
     document.addEventListener('keydown', this.keyDownHandler, false);
     document.addEventListener('keyup', this.keyUpHandler, false);
     document.addEventListener('mousemove', this.onMouseMove);
-
+    mouseY =  1.1*this.Utils.SCALE;
   }
 
 
@@ -331,6 +333,27 @@ export default class Base {
   }
 
 
+  downIndicator(paddle,index){
+
+    this.ctx.save();
+    let indicator = {
+      position : {x:paddle.position.x+paddle.dimensions.width/4, y: paddle.position.y + index*0.1*Utils.SCALE + 0.15*Utils.SCALE},
+      dimensions: {width: paddle.dimensions.width/2, height: 0.05*Utils.SCALE}
+    }
+    this.ctx.globalAlpha = index*0.3;
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = Utils.greenColor;
+    this.ctx.moveTo(indicator.position.x , indicator.position.y);
+    this.ctx.lineTo(indicator.position.x + indicator.dimensions.width / 2, indicator.position.y + indicator.dimensions.height);
+    this.ctx.lineTo(indicator.position.x + indicator.dimensions.width, indicator.position.y );
+    this.ctx.lineWidth = '6';
+    this.ctx.stroke();
+    this.ctx.closePath();
+
+    this.ctx.restore();
+
+  }
+
   /**
    * Abstract Main game loop method
    * @method loop
@@ -346,7 +369,7 @@ export default class Base {
       let inst = this;
       gameLoop = window.requestAnimationFrame(function () {
         inst.loop();
-      })
+      });
     };
     this.loopTimer();
   }
@@ -478,7 +501,6 @@ export default class Base {
   /**
    * Get shared Utils objects
    * @method Utils
-   * Get Utilities game constants
    * @return {Utils}
    * @constructor
    */
@@ -553,12 +575,12 @@ export default class Base {
    * @method initGame
    */
   initGame() {
-    mouseY = 0;
+
     this.loopTimer = function () {
       let inst = this;
       gameLoop = window.requestAnimationFrame(function () {
         inst.loop();
-      })
+      });
 
       dataLoop = setTimeout(function () {
         inst.dataCollection();
@@ -639,14 +661,16 @@ export default class Base {
    */
   basketObject(basket) {
 
+    let position = (this.canvas.height - mouseY)/this.canvas.height ;
     let radiusRim = 0.1;
     let leftBorder = (1.3310 - radiusRim) * Utils.SCALE;
-    let topBorder = 1.3671 * Utils.SCALE;
+    let topBorder = (1.3671 - position) * Utils.SCALE;
     let rightBorder = (1.3310 + radiusRim) * Utils.SCALE;
-    let downBorder = (1.3671 + 0.17) * Utils.SCALE;
+    let downBorder = (1.3671 + 0.17 - position) * Utils.SCALE;
 
-    basket.position = {x: leftBorder, y: topBorder};
+    basket.position = {x: leftBorder, y: mouseY};
     basket.dimensions = {width: rightBorder - leftBorder, height: downBorder - topBorder};
+
 
     return basket;
 
@@ -671,15 +695,15 @@ export default class Base {
    * @param basket
    * @returns {paddle}
    */
-  paddleObject(paddle) {
+  paddleObject(paddle){
+    let position = (this.canvas.height - mouseY)/this.canvas.height ;
+    let leftBorder = (1.3310-0.075)*Utils.SCALE ;
+    let topBorder = (1.3671-position)*Utils.SCALE;
+    let rightBorder = (1.3310+0.075)*Utils.SCALE;
+    let downBorder =  (1.3671+0.02-position)*Utils.SCALE ;
 
-    let leftBorder = (1.3310 - 0.075) * Utils.SCALE;
-    let topBorder = (1.3671 - 0 - paddle.position.y) * Utils.SCALE;
-    let rightBorder = (1.3310 + 0.075) * Utils.SCALE;
-    let downBorder = (1.3671 + 0.02 - paddle.position.y) * Utils.SCALE;
-
-    paddle.position = {x: leftBorder, y: downBorder};
-    paddle.dimensions = {width: rightBorder - leftBorder, height: downBorder - topBorder};
+    paddle.position = {x: leftBorder,y:mouseY};
+    paddle.dimensions = {width: rightBorder - leftBorder, height: downBorder-topBorder};
 
     return paddle;
 
@@ -690,25 +714,26 @@ export default class Base {
    * @method ballObject
    * @returns {{color: string, mass: number, impactPosition: number, startTime: number, positions: {x: number, y: number}[], position: {x: number, y: number}, velocity: number, state: string, hitstate: string, radius: number, impactTime: number}}
    */
-  ballObject() {
+  ballObject(){
 
-    let iterator = 0.01;
-    let positionY = initBallY + initV * (iterator) + 0.5 * -gravity * Math.pow(iterator, 2);
-    let positionX = initX + ballvx * (iterator);
-    let leftBorder = (positionX - .0175) * Utils.SCALE;
-    let downBorder = (1.3571 - positionY + .0175) * Utils.SCALE;
+    let iterator = 0.001;
+    let positionY = initBallY+initV*(iterator)+0.5*-gravity*Math.pow(iterator,2);
+    let positionX  = initX + ballvx*(iterator);
+    let leftBorder =  (positionX-.0175)* Utils.SCALE;
+    let downBorder =  (1.3571-positionY+.0175)*Utils.SCALE ;
 
-    let ball = {
+    let  ball = {
 
-      position: {x: leftBorder, y: downBorder},
+      position: {x: leftBorder, y:downBorder},
       velocity: 0,
       mass: Utils.ballMass,
-      radius: (0.04) * Utils.SCALE / 2,
+      radius: (0.037)*Utils.SCALE/2,
       state: 'start',
       impactTime: 0,
-      hitstate: '',
-      impactPosition: 0,
-      positions: [{x: 0, y: 0}],
+      hitstate:'',
+      startTime:0,
+      impactPosition:0,
+      positions:[{x:0,y:0}],
       color: Utils.yellowColor
 
     };
@@ -738,14 +763,13 @@ export default class Base {
    */
   trajectory(ball, initialTime) {
 
-    let iterator = this.getElapsedTime(initialTime);
+    let  iterator =  this.getElapsedTime(initialTime);
     this.ctx.beginPath();
 
-    let positionY = initBallY + initV * (iterator) + 0.5 * -gravity * Math.pow(iterator, 2);
-    let positionX = initX + ballvx * (iterator);
-    let leftBorder = (positionX - .0175) * Utils.SCALE;
-    let downBorder = (1.3571 - positionY + .0175) * Utils.SCALE;
-    ball.positions.push(ball.position);
+    let positionY = initBallY+initV*(iterator)+0.5*-gravity*Math.pow(iterator,2);
+    let positionX  = initX + ballvx*(iterator);
+    let leftBorder =  (positionX-.0175)* Utils.SCALE;
+    let downBorder =  (1.3571-positionY+.0175)*Utils.SCALE ;
     ball.position.x = leftBorder;
     ball.position.y = downBorder;
 
@@ -846,7 +870,7 @@ export default class Base {
   paddleAtZero(paddle, score) {
 
 
-    let topBorder = (1.3671 - 0.05 + 0.05) * Utils.SCALE;
+    let topBorder = 1.3671 * Utils.SCALE;
 
     if (paddle.position.y >= topBorder) {
       // Check if paddle is not moving inside the box
@@ -871,19 +895,20 @@ export default class Base {
    * @param paddle
    * @returns {boolean}
    */
-  paddleIsMoved(paddle) {
+  paddleIsMoved(paddle){
 
-
-    if (paddle.positions.length > 2 && paddle.position.y !== (this.canvas.height - paddle.positions[paddle.positions.length - 2] * this.canvas.height)) {
+    if( paddle.positions.length > 2 && paddle.position.y !== (this.canvas.height - paddle.positions[paddle.positions.length-2]*this.canvas.height)){
 
       return true;
     }
 
     // Check if paddle is moved outside the box limits
-    if (paddle.position.y < paddleBox.position.y) {
+    if (paddle.position.y  < paddleBox.position.y - paddle.dimensions.height) {
+
 
       return true;
     }
+
 
     return false;
   }
@@ -910,28 +935,36 @@ export default class Base {
    * @method paddleMove
    * @param {object} paddle
    */
-  paddleMove(paddle, initialTime) {
+  paddleMove(paddle,initialTime) {
 
 
-    if (this.mouseY > 0) {
-      paddle.position.y = this.mouseY;
-    }
-
-    // Place paddle inside paddle box for initial round
-    if(this.currentRounds === 0 && initialTime < 100 && paddle.position.y < paddleBox.position.y ){
-
-      paddle.position.y = paddleBox.position.y  + 0.08 * this.Utils.SCALE;
-
-
-    }
-
-    if (paddle.position.y > paddleBox.position.y + paddleBox.dimensions.height - paddle.dimensions.height) {
+    //Do not go over the bottom border
+    if(paddle.position.y > paddleBox.position.y + paddleBox.dimensions.height - paddle.dimensions.height){
 
       paddle.position.y = paddleBox.position.y + paddleBox.dimensions.height - paddle.dimensions.height;
     }
 
 
-    this.paddleHistory(paddle, initialTime);
+    if(currentRounds === 0 && paddle.position.y < paddleBox.position.y) {
+      if(waitIndexTIme === 0){
+        waitIndexTIme = new Date().getTime();
+      }
+
+
+      if (waitIndex > 3) {
+        waitIndex = 1;
+      }
+
+      if(this.getElapsedTime(waitIndexTIme) > 0.4){
+
+        waitIndex++;
+        waitIndexTIme = new Date().getTime();
+      }
+
+      this.downIndicator(paddle, waitIndex);
+    }
+
+    this.paddleHistory(paddle,initialTime);
 
 
   }

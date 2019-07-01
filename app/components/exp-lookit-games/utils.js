@@ -58,7 +58,7 @@ export default class Utils{
   static get  blueMouseImage() {return this.bucketImageResource + 'mouse-blue.png';}
   static get  redMouseImage() {return this.bucketImageResource + 'mouse-red.png';}
   static get  greenMouseImage() {return this.bucketImageResource + 'mouse-green.png';}
-
+  static get  arrowImage() {return this.bucketImageResource + 'arrow.png';}
   //Colors
   static  get redColor() {return '#ff2d23';}
   static  get grayColor() {return '#808080';}
@@ -66,5 +66,6 @@ export default class Utils{
   static  get yellowColor() {return '#dadd0f';}
   static  get whiteColor() {return '#dde5d7';}
   static  get blueColor() {return '#1931dd';}
+  static  get greenColor() {return '#3CB371';}
   static  get scoreColor() {return '#09b4dd';}
 }

@@ -83,6 +83,8 @@ export default class CatchMouse extends Base {
     ballCatchFail.src = super.Utils.ballcatchFailSound;
     swooshSound.src = super.Utils.swooshSound;
     audio.src = super.Utils.drumRollSound;
+    wrongSound = new Audio();
+    wrongSound.src = super.Utils.wrongSound;
 
     ballCatchFail.load();
 
@@ -170,10 +172,13 @@ export default class CatchMouse extends Base {
       imageURL: super.Utils.cheeseImage
     };
 
-    basket = super.basketObject(basket);
 
     initSoundPlaying = true;
-    audio.play();
+    super.createPaddleBox();
+    basket = super.basketObject(basket);
+    if(super.currentRounds >0 || (super.currentRounds === 0 && !super.paddleIsMoved(basket))) {
+      audio.play();
+    }
 
     audio.addEventListener('playing', function () {
       initialTime = new Date().getTime();
@@ -279,11 +284,19 @@ export default class CatchMouse extends Base {
    */
   loop() {
     super.loop();
-    this.drawImage(cheeseClock);
     let paddleBoxColor = super.Utils.blueColor;
     super.createPaddleBox(paddleBoxColor);
+    basket = super.basketObject(basket);
+    super.paddleMove(basket,initialTime);
+    this.drawImage(cheeseClock);
 
-    if (super.paddleIsMoved(basket) && mice.state === 'fall') {
+    if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMoved(basket)){
+
+      audio.play();
+    }
+
+
+    if(initialTime > 0 && super.paddleIsMoved(basket) && mice.state === 'fall'){
       initialTime = new Date().getTime();
       paddleBoxColor = super.Utils.redColor;
       super.createPaddleBox(paddleBoxColor);
@@ -291,14 +304,14 @@ export default class CatchMouse extends Base {
     }
 
     //Randomize initial wait time here
-    if (mice.state === 'fall' && initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
+    if(mice.state === 'fall' && initialTime >0 && super.getElapsedTime(initialTime) > jitterT){
       audio.pause();
       audio.currentTime = 0;
       mice.state = 'show';
       mice.showTime = new Date().getTime();
     }
 
-    if (mice.state === 'show') {
+    if(mice.state === 'show'){
       this.cheeseState();
       this.drawImage(mice);
 
@@ -311,10 +324,10 @@ export default class CatchMouse extends Base {
 
     }
 
-    if (mice.state === 'show') {
+    if(mice.state === 'show'){
 
 
-      if (mice.showTime > 0 && super.getElapsedTime(mice.showTime) > 1) {
+      if(mice.showTime >0 &&  super.getElapsedTime(mice.showTime) > 1 ){
 
         mice.state = 'done';
         ballCatchFail.play();
@@ -323,7 +336,8 @@ export default class CatchMouse extends Base {
       }
 
 
-      if (basket.moved === 0 && basket.positions.length > 5 && basket.position.y - mice.position.y <= 100) {
+
+      if(basket.moved === 0  &&  basket.positions.length >5 && basket.position.y -  mice.position.y <=100 ){
 
         swooshSound.play();
         basket.moved = 1;
@@ -331,19 +345,19 @@ export default class CatchMouse extends Base {
       }
 
 
-      if (mice.position.y - basket.position.y >= 0) {
+      if (mice.position.y - basket.position.y >=0 ) {
         mice.state = 'done';
-        if (cheeseClock.state > 1) {
-          cheeseClock.dimensions.width = cheeseClock.dimensions.width * 2;
-          cheeseClock.dimensions.height = cheeseClock.dimensions.height * 2;
+        if(cheeseClock.state >1){
+          cheeseClock.dimensions.width =  cheeseClock.dimensions.width*2;
+          cheeseClock.dimensions.height =  cheeseClock.dimensions.height*2;
 
-          if (cheeseClock.state < 4) {
+          if(cheeseClock.state < 4){
 
             cheese1Sound.play();
-          } else if (cheeseClock.state >= 4 && cheeseClock.state < 8) {
+          }else if(cheeseClock.state>=4 && cheeseClock.state <8 ){
             cheese2Sound.play();
 
-          } else {
+          }else{
 
             cheese3Sound.play();
           }
@@ -356,12 +370,13 @@ export default class CatchMouse extends Base {
       }
 
 
+
     }
+
 
 
     this.showCheese();
     this.drawImage(basket);
-    super.paddleMove(basket, initialTime);
   }
 
 }

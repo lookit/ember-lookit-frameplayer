@@ -30,7 +30,6 @@ let radiusRim = 0.1;
 let wrongSound = {};
 
 
-
 /**
  * Main implementation of catch the cheese game.
  * The user will operate with paddle to catch the ball started
@@ -70,13 +69,13 @@ export default class CatchCheese extends Base {
     ballCatchFail.load();
     audio = new Audio(super.Utils.rattleSound);
     audio.load();
-    wrongSound = new Audio(super.Utils.wrongSound);
-    wrongSound.load();
-    wrongSound.src = super.Utils.wrongSound;
     ballCatchFail.src = super.Utils.failcatchSound;
     goodJob.src = super.Utils.goodCatchSound;
     audio.src = super.Utils.rattleSound;
+    wrongSound = new Audio();
+    wrongSound.src = super.Utils.wrongSound;
     audio.addEventListener('onloadeddata', this.initGame(), false);
+
   }
 
 
@@ -100,9 +99,8 @@ export default class CatchCheese extends Base {
       imageURL: super.Utils.basketImage
     };
 
+    super.createPaddleBox();
     basket = super.basketObject(basket);
-
-
     let obstructionsNum = obstrArr[super.currentRounds];
     if(this.context.no_trees){
       obstructionsNum =0;
@@ -116,7 +114,9 @@ export default class CatchCheese extends Base {
 
 
     initSoundPlaying = true;
-    audio.play();
+    if(super.currentRounds >0 || (super.currentRounds === 0 && !super.paddleIsMoved(basket))) {
+      audio.play();
+    }
     audio.addEventListener('playing', function () {
 
       initSoundPlaying = false;
@@ -215,17 +215,26 @@ export default class CatchCheese extends Base {
    */
   loop() {
     super.loop();
+    basket = super.basketObject(basket);
     super.createBallBox();
     super.generateTrajectoryParams(hArray,Height,Tf);
     let hitTheTarget = this.collisionDetection();
     let hitTheWall = super.wallCollision(ball);
     let paddleBoxColor = super.Utils.blueColor;
+    super.paddleMove(basket,initialTime);
+
+
+    if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMoved(basket)){
+
+      audio.play();
+    }
+
 
     if(ball.state === 'start'){
 
       super.moveBallToStart(ball, false);
 
-      if(super.paddleIsMoved(basket)){
+      if(initialTime > 0 && super.paddleIsMoved(basket)){
         initialTime = new Date().getTime();
         paddleBoxColor = super.Utils.redColor;
         wrongSound.play();
@@ -305,7 +314,6 @@ export default class CatchCheese extends Base {
 
     obstructions.forEach(obstruction => this.drawImage(obstruction));
     super.createPaddleBox(paddleBoxColor);
-    super.paddleMove(basket,initialTime);
     this.drawImage(basket);
     this.drawRedDot();
 
