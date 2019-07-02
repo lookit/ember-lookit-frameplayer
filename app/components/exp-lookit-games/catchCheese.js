@@ -215,20 +215,17 @@ export default class CatchCheese extends Base {
    */
   loop() {
     super.loop();
-    basket = super.basketObject(basket);
     super.createBallBox();
     super.generateTrajectoryParams(hArray,Height,Tf);
     let hitTheTarget = this.collisionDetection();
     let hitTheWall = super.wallCollision(ball);
     let paddleBoxColor = super.Utils.blueColor;
-    super.paddleMove(basket,initialTime);
 
 
     if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMoved(basket)){
 
       audio.play();
     }
-
 
     if(ball.state === 'start'){
 
@@ -255,7 +252,7 @@ export default class CatchCheese extends Base {
       ball.state = 'hit';
     }
 
-    if(ball.state === 'fall'){
+    if(ball.state == 'fall'){
       if(initialTime > 0 && super.getElapsedTime(initialTime) <= 1.5) {
         ball.positions.push(ball.position.y);
         super.trajectory(ball, initialTime);
@@ -292,7 +289,7 @@ export default class CatchCheese extends Base {
 
       if (ball.hitstate === 'very good') {
         this.starsLocationUpdate();
-        this.drawImage(targetStars);
+        super.drawImage(targetStars,super.Utils.basketStarsImage);
       }
 
       if(ball.hitstate === ''){
@@ -311,24 +308,16 @@ export default class CatchCheese extends Base {
 
     }
 
+    obstructions.forEach(obstruction => super.drawImage(obstruction,obstruction.src));
 
-    obstructions.forEach(obstruction => this.drawImage(obstruction));
+    this.basketObject(basket);
+    super.paddleMove(basket,initialTime);
+    super.drawImage(basket,basket.imageURL);
     super.createPaddleBox(paddleBoxColor);
-    this.drawImage(basket);
     this.drawRedDot();
-
   }
 
 
-  /**
-   * @method
-   * Draw image object according to object positions
-   * @param object
-   */
-  drawImage(object) {
-    let image = new Image();
-    image.src = object.imageURL;
-    this.ctx.drawImage(image, object.position.x, object.position.y, object.dimensions.width, object.dimensions.height);
-  }
+
 
 }
