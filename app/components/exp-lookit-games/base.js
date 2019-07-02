@@ -626,7 +626,7 @@ export default class Base {
    * @method clearInterval
    */
   clearInterval() {
-    for (let i = 1; i < 99999; i++) {
+    for (let i = 1; i < 10; i++) {
       window.clearInterval(i);
     }
   }

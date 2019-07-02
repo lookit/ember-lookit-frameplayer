@@ -252,7 +252,7 @@ export default class CatchCheese extends Base {
       ball.state = 'hit';
     }
 
-    if(ball.state == 'fall'){
+    if(ball.state === 'fall'){
       if(initialTime > 0 && super.getElapsedTime(initialTime) <= 1.5) {
         ball.positions.push(ball.position.y);
         super.trajectory(ball, initialTime);
@@ -273,6 +273,7 @@ export default class CatchCheese extends Base {
       if (ball.hitstate === 'very good' || ball.hitstate === 'good') {
 
         goodJob.play();
+
       }else{
 
         ballCatchFail.play();
