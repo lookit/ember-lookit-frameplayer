@@ -43,34 +43,34 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
     }),
     startedRecording: false,
 
-    videoIndex: 0,
+    pageIndex: 0,
 
-    noNext: computed('videoIndex', function() {
-        return this.get('videoIndex') >= this.get('videos.length') - 1;
+    noNext: computed('pageIndex', function() {
+        return this.get('pageIndex') >= this.get('pages.length') - 1;
     }),
 
-    noPrev: computed('videoIndex', function() {
-        return this.get('videoIndex') <= 0;
+    noPrev: computed('pageIndex', function() {
+        return this.get('pageIndex') <= 0;
     }),
 
-    currentVideo: computed('videoIndex', function() {
-        return this.get('videos')[this.get('videoIndex')];
+    currentPage: computed('pageIndex', function() {
+        return this.get('pages_parsed')[this.get('pageIndex')];
     }),
 
 
     assetsToExpand: {
         'audio': [],
-        'video': ['videos/sources'],
-        'image': ['videos/imgSrc']
+        'video': ['pages/sources'],
+        'image': ['pages/imgSrc']
     },
 
     actions: {
 
         nextVideo() {
-            this.set('videoIndex', this.get('videoIndex') + 1);
+            this.set('pageIndex', this.get('pageIndex') + 1);
         },
         previousVideo() {
-            this.set('videoIndex', this.get('videoIndex') - 1);
+            this.set('pageIndex', this.get('pageIndex') - 1);
         },
 
         record() {
@@ -94,7 +94,10 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
         download() {
             // Get the text of the consent form to process. Split into lines, and remove
             // repeat empty lines. Start each new line with an indent.
-            var origText = $('#consent-form-text').text().split(/\r?\n/);
+
+            console.log(this);
+
+            var origText = $('#consent-form-full-text').text().split(/\r?\n/);
             var trimmedText = [];
             var emptyLineWasLast = false;
             $.each(origText, function(idx, val) {
@@ -128,17 +131,18 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
             for (var iPage = 0; iPage < nPages; iPage++) {
                 // Header on each page
                 consentPDF.setFontSize(10);
-                consentPDF.text(timeString + ' (page ' + (iPage + 1) + ' of ' + nPages + ')', 10, 10);
+                consentPDF.text('Child assent form: ' + this.get('experiment').get('name'), 10, 10)
+                consentPDF.text(timeString + ' (page ' + (iPage + 1) + ' of ' + nPages + ')', 10, 15);
                 // Actual text for the page
                 consentPDF.setFontSize(12);
-                consentPDF.text(splitText.slice(linesPerPage * iPage, linesPerPage * (iPage + 1)), 25, 20);
+                consentPDF.text(splitText.slice(linesPerPage * iPage, linesPerPage * (iPage + 1)), 25, 25);
 
                 // Go to the next page
                 if (iPage < (nPages - 1)) {
                     consentPDF.addPage();
                 }
             }
-            consentPDF.save('Lookit_study_consent_' + moment().format('YYYY_MM_DD') + '.pdf');
+            consentPDF.save('Lookit_study_child_assent_' + moment().format('YYYY_MM_DD') + '.pdf');
 
             /**
              * When participant downloads consent form
@@ -150,83 +154,21 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
     },
 
     meta: {
-        name: 'Video Consent Form',
-        description: 'A video consent form.',
+        name: 'Video assent form',
+        description: 'A video assent form.',
         parameters: {
             type: 'object',
             properties: {
                 /**
-                Name of PI running this study
-                @property {String} PIName
-                */
-                PIName: {
-                    type: 'string',
-                    description: 'Name of PI running this study'
-                },
-
-                /**
-                Name of institution running this study (if ambiguous, list institution whose IRB approved the study)
-                @property {String} institution
-                */
-                institution: {
-                    type: 'string',
-                    description: 'Name of institution running this study'
-                },
-
-                /**
-                Contact information for PI or lab in case of participant questions or concerns. This will directly follow the phrase "please contact", so format accordingly: e.g., "the XYZ lab at xyz@science.edu" or "Mary Smith at 123 456 7890".
-                @property {String} PIContact
-                */
-                PIContact: {
-                    type: 'string',
-                    description: 'Contact information for PI or lab'
-                },
-
-                /**
-                Brief description of purpose of study - 1-2 sentences that describe what you are trying to find out. Language should be as straightforward and accessible as possible! E.g., "Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails."
-                @property {String} purpose
-                */
-                purpose: {
-                    type: 'string',
-                    description: 'Brief description of purpose of study'
-                },
-
-                /**
-                Brief description of study procedures, including any risks or a statement that there are no anticipated risks. We add a statement about the duration (from your study definition) to the start (e.g., "This study takes about 10 minutes to complete"), so you don't need to include that. It can be in third person or addressed to the parent. E.g., "Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating."
-                @property {String} procedures
-                */
-                procedures: {
-                    type: 'string',
-                    description: 'Brief description of study procedures'
-                },
-
-                /**
-                Statement about payment/compensation for participation, including a statement that there are no additional benefits anticipated to the participant. E.g., "After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience."
-                @property {String} payment
-                */
-                payment: {
-                    type: 'string',
-                    description: 'Statement about payment/compensation for participation'
-                },
-
-                /**
-                Study-specific data use statement (optional). This will follow the following more general text: "The research group led by [PIName] at [institution] will have access to video and other data collected during this session. We will also have access to your account profile, demographic survey, and the child profile for the child who is participating, including changes you make in the future to any of this information. We may study your child’s responses in connection with his or her previous responses to this or other studies run by our group, siblings’ responses to this or other studies run by our group, or demographic survey responses."
-                You may want to note what measures you will actually be coding for (looking time, facial expressions, parent-child interaction, etc.) and other more specific information about your use of data from this study here. For instance, you would note if you were building a corpus of naturalistic data that may be used to answer a variety of questions (rather than just collecting data for a single planned study).
-                @property {String} datause
-                */
-                datause: {
-                    type: 'string',
-                    description: 'Study-specific data use statement'
-                },
-                                /**
-                 * A series of preview videos to display within a single frame, defined as an array of objects.
+                 * A list of pages of assent form text/pictures/video for the participant to read through
                  *
-                 * @property {Array} videos
-                 *   @param {String} caption Some text to appear under this video
-                 *   @param {Object[]} sources String indicating video path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects.
-                 *   @param {String} imgSrc URL of image to display (optional; each preview video should designate either sources or imgSrc)
+                 * @property {Array} pages
+                 *   @param {String} altText Alt-text used for the image displayed, if any
+                 *   @param {Object[]} sources (Optional) String indicating video path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects.
+                 *   @param {String} imgSrc (Optional) URL of image to display; can be full path or relative to baseDir
+                 *   @param {Object[]} textBlocks list of text blocks to show on this page, processed by exp-text-block. Can use HTML.
                  */
-                videos: {
+                pages: {
                     type: 'array',
                     description: 'A list of videos to preview',
                     items: {
@@ -235,6 +177,10 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
                             imgSrc: {
                                 type: 'string',
                                 default: ''
+                            },
+                            altText: {
+                                type: 'string',
+                                default: 'image'
                             },
                             sources: {
                                 type: 'array',
@@ -252,11 +198,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
                                     required: ['src', 'type']
                                 }
                             },
-                            caption: {
-                                type: 'string'
+                            textBlocks: {
+                                type: 'array',
+                                default: []
                             }
                         },
-                        required: ['caption']
+                        required: []
                     },
                     default: []
                 },
@@ -279,6 +226,16 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
                     type: 'string',
                     description: 'Text on the button to proceed to the previous example video/image',
                     default: 'Previous'
+                },
+                /**
+                 * Text of the question to ask about whether to participate. Answer options are Yes/No; No means study will stop, Yes means it will proceed.
+                 *
+                 * @property {String} participationQuestion
+                 */
+                participationQuestion: {
+                    type: 'string',
+                    description: 'Text on the button to proceed to the previous example video/image',
+                    default: 'Do you want to participate in this study?'
                 }
             },
             required: ['PIName', 'institution', 'PIContact', 'purpose', 'procedures', 'payment']
@@ -309,6 +266,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
             required: ['videoId']
         }
     },
+
 
     didInsertElement() {
         this._super(...arguments);
