@@ -37,6 +37,7 @@ import FullScreen from '../../mixins/full-screen';
         experiment=experiment
 
         next=(action 'next')
+        exit=(action 'exit')
         previous=(action 'previous')
         saveHandler=(action 'saveFrame')
         skipone=(action 'skipone')
@@ -471,8 +472,8 @@ export default Ember.Component.extend(FullScreen, {
             window.scrollTo(0, 0);
         },
 
-        last() {
-            this.sendAction('last');
+        exit() {
+            this.sendAction('exit');
         },
 
         previous() {

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ExpVideoConsent - ember-lookit-frameplayer</title>
+    <title>ExpLookitVideoAssent - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -106,7 +106,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>ExpVideoConsent Class</h1>
+<h1>ExpLookitVideoAssent Class</h1>
 <div class="box meta">
         <div class="uses">
             Uses
@@ -116,11 +116,11 @@
         </div>
 
         <div class="extends">
-            Extends <a href="../classes/ExpLookitVideoConsent.html" class="crosslink">ExpLookitVideoConsent</a>
+            Extends <a href="../classes/ExpFrameBase.html" class="crosslink">ExpFrameBase</a>
         </div>
 
         <div class="foundat">
-            Defined in: <a href="../files/app_components_exp-video-consent_component.js.html#l11"><code>app&#x2F;components&#x2F;exp-video-consent&#x2F;component.js:11</code></a>
+            Defined in: <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l19"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:19</code></a>
         </div>
 
             Collection: <a href="../modules/frames.html">frames</a><br>
@@ -130,42 +130,93 @@
 
 <div>
 
-    <img src="../assets/screenshots/ExpVideoConsent.png" class="class-screenshot">
+    <img src="../assets/screenshots/ExpLookitVideoAssent.png" class="class-screenshot">
 
 </div>
 
 <div class="box intro">
-    <p>Video consent frame for Lookit studies UNDER INITIAL MIT PROTOCOL ONLY, with consent document displayed at left and instructions to start recording, read a statement out loud, and send.
-This version allows custom specification of consent form text.
-For studies by researchers who have signed the Lookit Usage Agreement and have approval from their own IRB,
-please use an <a href="../classes/ExpLookitVideoConsent.html" class="crosslink">ExpLookitVideoConsent</a>  frame instead.
-Consent document can be downloaded as PDF document by participant.</p>
-<pre class="code prettyprint"><code class="language-json">"frames": {
-    "video-consent": {
-        "blocks": [
-            {
-                 "text": "Observing your child's behavior during this experimental session will help us to understand how infants and children use evidence to learn and make predictions about the world.",
-                "title": "About the study"
-            },
-            {
-                "text": "Your and your child's participation in this session are completely voluntary. If you and your child choose to participate, you may stop the session at any point with no penalty. Please pause or stop the session if your child becomes very fussy or does not want to participate. If this is a study with multiple sessions, there are no penalties for not completing all sessions.",
-                "title": "Participation"
-            },
-            {
-                "text": "During the session, you and your child will be recorded via your computer's webcam and microphone while watching a video or completing an activity. Video recordings and other data you enter are sent securely to our lab. At the end of the session, or when you end it early, you will be prompted to choose a privacy level for your webcam recordings. ",
-                "title": "Webcam recording"
-            },
-            {
-                "text": "Recordings and survey responses will be stored on a password-protected server and accessed only by the Lookit researchers working on this study and any other groups you allow when selecting a privacy level. A researcher may transcribe responses or record information such as where you or your child is looking. Data will not be used to identify you or your child. The results of the research may be presented at scientific meetings or published in scientific journals, but no video clips will be shared unless you allow this when selecting a privacy level.\n\nRaw data may also be published when it can not identify children; for instance, we may publish children’s looking times to the left versus right of the screen, or parent comments with children’s names removed. We may also study your child’s responses in connection with his or her previous responses to this or other studies, siblings’ responses, or demographic survey responses. We never publish children’s birthdates or names, and we never publish your demographic data in conjunction with your child’s video.",
-                "title": "Use of data"
-            },
-            {
-                "text": "If you or your child have any questions or concerns about this research, you may contact Professor Laura Schulz: {contact}",
-                "title": "Contact information"
-            }
-        ],
-        "prompt": "\"I have read and understand the consent document. I am this child's parent or legal guardian and we both agree to participate in this study.\"",
-        "kind": "exp-video-consent"
+    <p>Video assent frame for Lookit studies for older children to agree to participation,
+separately from parental consent.</p>
+<p>A series of assent form &quot;pages&quot; is displayed, each one displaying an image, video,
+the webcam view, and/or text. Once the family has viewed all pages, the child can
+answer a question about whether to participate. If they choose yes, they proceed; if
+they choose no, they are sent to the exit URL.</p>
+<p>Specifying media locations:
+For <code>imgSrc</code> parameters within <code>pages</code>, you can either specify complete URLs or partial URLs
+relative to a base directory <code>baseDir</code> for the frame. Images are expected to be in an
+<code>img</code> directory within the <code>baseDir</code>. For instance, in the example below,
+the first page's image is at <code>https://s3.amazonaws.com/lookitcontents/cats/img/jane_smith.jpg</code>.</p>
+<p>For any parameters that expect a list of audio/video sources, you can EITHER provide
+a list of src/type pairs with full paths like this:</p>
+<pre class="code prettyprint"><code class="language-json">    [
+        {
+            'src': 'http://.../video1.mp4',
+            'type': 'video/mp4'
+        },
+        {
+            'src': 'http://.../video1.webm',
+            'type': 'video/webm'
+        }
+    ]
+</code></pre>
+<p>OR you can provide a single string 'stub', which will be expanded
+based on the parameter baseDir and the media types expected - either audioTypes or
+videoTypes as appropriate. For example, if you provide the audio source <code>intro</code>
+and baseDir is <a href="https://mystimuli.org/mystudy/">https://mystimuli.org/mystudy/</a>, with audioTypes ['mp3', 'ogg'], then this
+will be expanded to:</p>
+<pre class="code prettyprint"><code class="language-json">                 [
+                        {
+                            src: 'https://mystimuli.org/mystudy/mp3/intro.mp3',
+                            type: 'audio/mp3'
+                        },
+                        {
+                            src: 'https://mystimuli.org/mystudy/ogg/intro.ogg',
+                            type: 'audio/ogg'
+                        }
+                ]
+</code></pre>
+<p>This allows you to simplify your JSON document a bit and also easily switch to a
+new version of your stimuli without changing every URL. You can mix source objects with
+full URLs and those using stubs within the same directory. However, any stimuli
+specified using stubs MUST be organized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.</p>
+<pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
+    &quot;video-assent&quot;: {
+        &quot;kind&quot;: &quot;exp-lookit-video-assent&quot;,
+            &quot;pages&quot;: [
+                {
+                    &quot;imgSrc&quot;: &quot;jane_smith.png&quot;,
+                    &quot;altText&quot;: &quot;Jane Smith&quot;,
+                    &quot;textBlocks&quot;: [
+                        {
+                            &quot;text&quot;: &quot;My name is Jane Smith. I am a scientist who studies why children love cats.&quot;
+                        }
+                    ]
+                },
+                {
+                    &quot;imgSrc&quot;: &quot;cats_game.png&quot;,
+                    &quot;altText&quot;: &quot;picture of sample game&quot;,
+                    &quot;textBlocks&quot;: [
+                        {
+                            &quot;text&quot;: &quot;In this study, you will play a game about cats.&quot;
+                        }
+                    ]
+                },
+                {
+                    &quot;showWebcam&quot;: true,
+                    &quot;textBlocks&quot;: [
+                        {
+                            &quot;text&quot;: &quot;During the study, your webcam will record a video of you. We will watch this video later to see how much you love cats.&quot;
+                        }
+                    ]
+                }
+            ],
+            &quot;baseDir&quot;: &quot;https://s3.amazonaws.com/lookitcontents/cats/&quot;,
+            &quot;videoTypes&quot;: [
+                &quot;webm&quot;,
+                &quot;mp4&quot;
+            ],
+            &quot;participationQuestion&quot;: &quot;Do you want to participate in this study?&quot;
+        }
     }
 }
 </code></pre>
@@ -213,14 +264,6 @@ Consent document can be downloaded as PDF document by participant.</p>
                     <h3>Properties</h3>
 
                     <ul class="index-list properties extends">
-                            <li class="index-item property">
-                                <a href="#property_blocks">blocks</a>
-
-                            </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_datause">datause</a>
-
-                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_displayFullscreenOverride">displayFullscreenOverride</a>
 
@@ -237,40 +280,24 @@ Consent document can be downloaded as PDF document by participant.</p>
                                 <a href="#property_generateProperties">generateProperties</a>
 
                             </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_institution">institution</a>
-
-                            </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_payment">payment</a>
-
-                            </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_PIContact">PIContact</a>
-
-                            </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_PIName">PIName</a>
-
-                            </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_procedures">procedures</a>
+                            <li class="index-item property">
+                                <a href="#property_nextStimulusText">nextStimulusText</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_prompt">prompt</a>
+                                <a href="#property_pages">pages</a>
 
                             </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_purpose">purpose</a>
+                            <li class="index-item property">
+                                <a href="#property_participationQuestion">participationQuestion</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_previousStimulusText">previousStimulusText</a>
 
                             </li>
                             <li class="index-item property inherited">
                                 <a href="#property_selectNextFrame">selectNextFrame</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_title">title</a>
 
                             </li>
                     </ul>
@@ -281,7 +308,7 @@ Consent document can be downloaded as PDF document by participant.</p>
                     <h3>Events</h3>
 
                     <ul class="index-list events extends">
-                            <li class="index-item event inherited">
+                            <li class="index-item event">
                                 <a href="#event_downloadConsentForm">downloadConsentForm</a>
 
                             </li>
@@ -425,13 +452,16 @@ event sent by a particular frame</p>
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
-                        <code>consentFormText</code>
+                        <code>assentFormText</code>
                 </li>
                 <li class="arg">
                         <code>videoID</code>
                 </li>
                 <li class="arg">
                         <code>videoList</code>
+                </li>
+                <li class="arg">
+                        <code>childResponse</code>
                 </li>
                 <li class="arg">
                         <code>eventTimings</code>
@@ -455,7 +485,7 @@ event sent by a particular frame</p>
                 ExpFrameBase
             </a>
             but overwritten in
-        <a href="../files/app_components_exp-video-consent_component.js.html#l109"><code>app&#x2F;components&#x2F;exp-video-consent&#x2F;component.js:109</code></a>
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l345"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:345</code></a>
         </p>
 
 
@@ -472,12 +502,12 @@ event sent by a particular frame</p>
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">consentFormText</code>
+                        <code class="param-name">assentFormText</code>
                         <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
 
 
                     <div class="param-description">
-                        <p>the exact text shown in the consent document during this frame</p>
+                        <p>the exact text shown in the assent document during this frame</p>
 
                     </div>
 
@@ -500,6 +530,17 @@ event sent by a particular frame</p>
 
                     <div class="param-description">
                         <p>a list of webcam video IDs in case there are &gt;1</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">childResponse</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>The child's response to the assent question - Yes or No</p>
 
                     </div>
 
@@ -564,80 +605,6 @@ event sent by a particular frame</p>
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
 
-<div id="property_blocks" class="property item">
-    <h3 class="name"><code>blocks</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/app_components_exp-video-consent_component.js.html#l74"><code>app&#x2F;components&#x2F;exp-video-consent&#x2F;component.js:74</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Array of paragraphs of the consent document, each with title and text.</p>
-
-    </div>
-
-        <p><strong>Default:</strong> []</p>
-
-
-        <h4>Sub-properties:</h4>
-
-        <ul class="params-list">
-            <li class="param">
-                    <code class="param-name">title</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                     
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">text</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                     
-                </div>
-
-            </li>
-        </ul>
-</div>
-<div id="property_datause" class="property item inherited">
-    <h3 class="name"><code>datause</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/ExpLookitVideoConsent.html#property_datause">ExpLookitVideoConsent</a>:
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l186"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:186</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Study-specific data use statement (optional). This will follow the following more general text: &quot;The research group led by [PIName] at [institution] will have access to video and other data collected during this session. We will also have access to your account profile, demographic survey, and the child profile for the child who is participating, including changes you make in the future to any of this information. We may study your child’s responses in connection with his or her previous responses to this or other studies run by our group, siblings’ responses to this or other studies run by our group, or demographic survey responses.&quot;
-You may want to note what measures you will actually be coding for (looking time, facial expressions, parent-child interaction, etc.) and other more specific information about your use of data from this study here. For instance, you would note if you were building a corpus of naturalistic data that may be used to answer a variety of questions (rather than just collecting data for a single planned study).</p>
-
-    </div>
-
-
-
-</div>
 <div id="property_displayFullscreenOverride" class="property item inherited">
     <h3 class="name"><code>displayFullscreenOverride</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
@@ -796,133 +763,8 @@ to be on one line.)</p>
 
 
 </div>
-<div id="property_institution" class="property item inherited">
-    <h3 class="name"><code>institution</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/ExpLookitVideoConsent.html#property_institution">ExpLookitVideoConsent</a>:
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l141"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:141</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Name of institution running this study (if ambiguous, list institution whose IRB approved the study)</p>
-
-    </div>
-
-
-
-</div>
-<div id="property_payment" class="property item inherited">
-    <h3 class="name"><code>payment</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/ExpLookitVideoConsent.html#property_payment">ExpLookitVideoConsent</a>:
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l177"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:177</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Statement about payment/compensation for participation, including a statement that there are no additional benefits anticipated to the participant. E.g., &quot;After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.&quot;</p>
-
-    </div>
-
-
-
-</div>
-<div id="property_PIContact" class="property item inherited">
-    <h3 class="name"><code>PIContact</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/ExpLookitVideoConsent.html#property_PIContact">ExpLookitVideoConsent</a>:
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l150"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:150</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Contact information for PI or lab in case of participant questions or concerns. This will directly follow the phrase &quot;please contact&quot;, so format accordingly: e.g., &quot;the XYZ lab at <a href="mailto:xyz@science.edu">xyz@science.edu</a>&quot; or &quot;Mary Smith at 123 456 7890&quot;.</p>
-
-    </div>
-
-
-
-</div>
-<div id="property_PIName" class="property item inherited">
-    <h3 class="name"><code>PIName</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/ExpLookitVideoConsent.html#property_PIName">ExpLookitVideoConsent</a>:
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l132"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:132</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Name of PI running this study</p>
-
-    </div>
-
-
-
-</div>
-<div id="property_procedures" class="property item inherited">
-    <h3 class="name"><code>procedures</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/ExpLookitVideoConsent.html#property_procedures">ExpLookitVideoConsent</a>:
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l168"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:168</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Brief description of study procedures, including any risks or a statement that there are no anticipated risks. We add a statement about the duration (from your study definition) to the start (e.g., &quot;This study takes about 10 minutes to complete&quot;), so you don't need to include that. It can be in third person or addressed to the parent. E.g., &quot;Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.&quot;</p>
-
-    </div>
-
-
-
-</div>
-<div id="property_prompt" class="property item">
-    <h3 class="name"><code>prompt</code></h3>
+<div id="property_nextStimulusText" class="property item">
+    <h3 class="name"><code>nextStimulusText</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
 
 
@@ -932,23 +774,101 @@ to be on one line.)</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-video-consent_component.js.html#l97"><code>app&#x2F;components&#x2F;exp-video-consent&#x2F;component.js:97</code></a>
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l311"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:311</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Text the user is asked to read aloud to consent</p>
+        <p>Text on the button to proceed to the next example video/image</p>
 
     </div>
 
-        <p><strong>Default:</strong> &#x27;I consent to participate in this study&#x27;</p>
 
 
 </div>
-<div id="property_purpose" class="property item inherited">
-    <h3 class="name"><code>purpose</code></h3>
+<div id="property_pages" class="property item">
+    <h3 class="name"><code>pages</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l258"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:258</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>A list of pages of assent form text/pictures/video for the participant to read through</p>
+
+    </div>
+
+
+
+        <h4>Sub-properties:</h4>
+
+        <ul class="params-list">
+            <li class="param">
+                    <code class="param-name">altText</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                    <p>Alt-text used for the image displayed, if any</p>
+
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">sources</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+                <div class="param-description">
+                    <p>(Optional) String indicating video path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects.</p>
+
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">imgSrc</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                    <p>(Optional) URL of image to display; can be full path or relative to baseDir</p>
+
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">textBlocks</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+                <div class="param-description">
+                    <p>list of text blocks to show on this page, processed by exp-text-block. Can use HTML.</p>
+
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">showWebcam</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+                <div class="param-description">
+                    <p>Whether to display the participant webcam on this page</p>
+
+                </div>
+
+            </li>
+        </ul>
+</div>
+<div id="property_participationQuestion" class="property item">
+    <h3 class="name"><code>participationQuestion</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
 
 
@@ -956,16 +876,41 @@ to be on one line.)</p>
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/ExpLookitVideoConsent.html#property_purpose">ExpLookitVideoConsent</a>:
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l159"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:159</code></a>
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l331"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:331</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Brief description of purpose of study - 1-2 sentences that describe what you are trying to find out. Language should be as straightforward and accessible as possible! E.g., &quot;Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.&quot;</p>
+        <p>Text of the question to ask about whether to participate. Answer options are Yes/No; No means study will stop, Yes means it will proceed.</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_previousStimulusText" class="property item">
+    <h3 class="name"><code>previousStimulusText</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l321"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:321</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Text on the button to proceed to the previous example video/image</p>
 
     </div>
 
@@ -1039,39 +984,13 @@ just used for attempts to leave the study early</li>
 
 
 </div>
-<div id="property_title" class="property item">
-    <h3 class="name"><code>title</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/app_components_exp-video-consent_component.js.html#l64"><code>app&#x2F;components&#x2F;exp-video-consent&#x2F;component.js:64</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Title of the consent document</p>
-
-    </div>
-
-        <p><strong>Default:</strong> &#x27;Consent to participate in behavioral research: &lt;br&gt; Inference and induction study&#x27;</p>
-
-
-</div>
             </div>
 
 
             <div id="events" class="api-class-tabpanel">
                 <h2 class="off-left">Events</h2>
 
-                    <div id="event_downloadConsentForm" class="events item inherited">
+                    <div id="event_downloadConsentForm" class="events item">
                         <h3 class="name"><code>downloadConsentForm</code></h3>
                         <span class="type"></span>
                     
@@ -1080,9 +999,9 @@ just used for attempts to leave the study early</li>
                     
                     
                         <div class="meta">
-                                    <p>Inherited from
-                                    <a href="../classes/ExpLookitVideoConsent.html#event_downloadConsentForm">ExpLookitVideoConsent</a>:
-                            <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l117"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:117</code></a>
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l243"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:243</code></a>
                             </p>
                     
                     

@@ -19,11 +19,7 @@ $exp-lookit-video-assent-highlight-color: #d4efdf;
         display: block;
         font-size: 1.5em;
         font-weight: bold;
-        background-color: $exp-lookit-video-assent-highlight-color;
-    }
-
-    .exp-assent-title {
-        font-weight: bold;
+        //background-color: $exp-lookit-video-assent-highlight-color;
     }
 
     .video-assent-doc {
@@ -35,6 +31,10 @@ $exp-lookit-video-assent-highlight-color: #d4efdf;
             margin: auto;
             text-align: justify;
         }
+    }
+
+    .exp-lookit-assent-visual-container {
+        height: 40vh;
     }
 
     .exp-lookit-assent-image {
@@ -135,6 +135,11 @@ $exp-lookit-video-assent-highlight-color: #d4efdf;
         font-size: 1.5em;
     }
 
+    .no-assent-warning {
+        color: red;
+        font-size: 1.5em;
+    }
+
     #submitbutton {
         bottom: 5%;
         right: 5vw;
@@ -142,7 +147,14 @@ $exp-lookit-video-assent-highlight-color: #d4efdf;
         font-size: 1.5em;
     }
 
-    #consent-form-full-text {
+    #consent-form-full-text, .hidden-webcam {
         display: none;
     }
+
+    .assent-decision {
+        &.lookit-assent-inactive {
+            opacity:0.5;
+        }
+    }
+
 }
