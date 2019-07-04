@@ -144,6 +144,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "app/components/exp-lookit-video-assent/component.js": {
+            "name": "app/components/exp-lookit-video-assent/component.js",
+            "modules": {},
+            "classes": {
+                "ExpLookitVideoAssent": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "app/components/exp-lookit-video-consent/component.js": {
             "name": "app/components/exp-lookit-video-consent/component.js",
             "modules": {},
@@ -314,6 +323,7 @@
                 "ExpLookitSurvey": 1,
                 "ExpLookitText": 1,
                 "ExpLookitVideo": 1,
+                "ExpLookitVideoAssent": 1,
                 "ExpLookitVideoConsent": 1,
                 "ExpPlayer": 1,
                 "ExpVideoConfig": 1,
@@ -355,6 +365,7 @@
                 "ExpLookitSurvey": 1,
                 "ExpLookitText": 1,
                 "ExpLookitVideo": 1,
+                "ExpLookitVideoAssent": 1,
                 "ExpLookitVideoConsent": 1,
                 "ExpVideoConfig": 1,
                 "ExpVideoConfigQuality": 1,
@@ -475,7 +486,7 @@
             "namespace": "",
             "file": "app/components/exp-frame-base/component.js",
             "line": 11,
-            "description": "This provides common base behavior required for any experiment frame. All experiment frames must extend this one.\nThis frame has no configuration options because all of its logic is internal, and is almost never directly used\n   in an experiment. It exports no data. Sample experiment definition usage (provided for completeness):\n  ```json\n    \"frames\": {\n       \"my-sample-frame\": {\n         \"kind\": \"exp-base-frame\"\n       }\n    }\n ```\nAs a user you will almost never need to insert a component into a template directly- the platform should handle that\n  by automatically inserting an <a href=\"../classes/ExpPlayer.html\" class=\"crosslink\">ExpPlayer</a> component when your experiment starts.\n However, a sample template usage is provided below for completeness.\n```handlebars\n  {{\n      component currentFrameTemplate\n        frameIndex=frameIndex\n        frameConfig=currentFrameConfig\n        frameContext=currentFrameContext\n       session=session\n        experiment=experiment\n       next=(action 'next')\n        previous=(action 'previous')\n        saveHandler=(action 'saveFrame')\n        skipone=(action 'skipone')\n        extra=extra\n    }}\n ```",
+            "description": "This provides common base behavior required for any experiment frame. All experiment frames must extend this one.\nThis frame has no configuration options because all of its logic is internal, and is almost never directly used\n   in an experiment. It exports no data. Sample experiment definition usage (provided for completeness):\n  ```json\n    \"frames\": {\n       \"my-sample-frame\": {\n         \"kind\": \"exp-base-frame\"\n       }\n    }\n ```\nAs a user you will almost never need to insert a component into a template directly- the platform should handle that\n  by automatically inserting an <a href=\"../classes/ExpPlayer.html\" class=\"crosslink\">ExpPlayer</a> component when your experiment starts.\n However, a sample template usage is provided below for completeness.\n```handlebars\n  {{\n      component currentFrameTemplate\n        frameIndex=frameIndex\n        frameConfig=currentFrameConfig\n        frameContext=currentFrameContext\n       session=session\n        experiment=experiment\n       next=(action 'next')\n        exit=(action 'exit')\n        previous=(action 'previous')\n        saveHandler=(action 'saveFrame')\n        skipone=(action 'skipone')\n        extra=extra\n    }}\n ```",
             "uses": [
                 "FullScreen"
             ]
@@ -717,6 +728,25 @@
                 "MediaReload",
                 "VideoRecord",
                 "ExpandAssets"
+            ]
+        },
+        "ExpLookitVideoAssent": {
+            "name": "ExpLookitVideoAssent",
+            "shortname": "ExpLookitVideoAssent",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "submodule": "frames",
+            "namespace": "",
+            "file": "app/components/exp-lookit-video-assent/component.js",
+            "line": 19,
+            "description": "Video assent frame for Lookit studies for older children to agree to participation,\nseparately from parental consent.\n\nA series of assent form \"pages\" is displayed, each one displaying an image, video,\nthe webcam view, and/or text. Once the family has viewed all pages, the child can\nanswer a question about whether to participate. If they choose yes, they proceed; if\nthey choose no, they are sent to the exit URL.\n\nSpecifying media locations:\nFor `imgSrc` parameters within `pages`, you can either specify complete URLs or partial URLs\nrelative to a base directory `baseDir` for the frame. Images are expected to be in an\n`img` directory within the `baseDir`. For instance, in the example below,\nthe first page's image is at `https://s3.amazonaws.com/lookitcontents/cats/img/jane_smith.jpg`.\n\nFor any parameters that expect a list of audio/video sources, you can EITHER provide\na list of src/type pairs with full paths like this:\n```json\n    [\n        {\n            'src': 'http://.../video1.mp4',\n            'type': 'video/mp4'\n        },\n        {\n            'src': 'http://.../video1.webm',\n            'type': 'video/webm'\n        }\n    ]\n```\nOR you can provide a single string 'stub', which will be expanded\nbased on the parameter baseDir and the media types expected - either audioTypes or\nvideoTypes as appropriate. For example, if you provide the audio source `intro`\nand baseDir is https://mystimuli.org/mystudy/, with audioTypes ['mp3', 'ogg'], then this\nwill be expanded to:\n```json\n                 [\n                        {\n                            src: 'https://mystimuli.org/mystudy/mp3/intro.mp3',\n                            type: 'audio/mp3'\n                        },\n                        {\n                            src: 'https://mystimuli.org/mystudy/ogg/intro.ogg',\n                            type: 'audio/ogg'\n                        }\n                ]\n```\nThis allows you to simplify your JSON document a bit and also easily switch to a\nnew version of your stimuli without changing every URL. You can mix source objects with\nfull URLs and those using stubs within the same directory. However, any stimuli\nspecified using stubs MUST be organized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.\n\n```json\n\"frames\": {\n    \"video-assent\": {\n        \"kind\": \"exp-lookit-video-assent\",\n            \"pages\": [\n                {\n                    \"imgSrc\": \"jane_smith.png\",\n                    \"altText\": \"Jane Smith\",\n                    \"textBlocks\": [\n                        {\n                            \"text\": \"My name is Jane Smith. I am a scientist who studies why children love cats.\"\n                        }\n                    ]\n                },\n                {\n                    \"imgSrc\": \"cats_game.png\",\n                    \"altText\": \"picture of sample game\",\n                    \"textBlocks\": [\n                        {\n                            \"text\": \"In this study, you will play a game about cats.\"\n                        }\n                    ]\n                },\n                {\n                    \"showWebcam\": true,\n                    \"textBlocks\": [\n                        {\n                            \"text\": \"During the study, your webcam will record a video of you. We will watch this video later to see how much you love cats.\"\n                        }\n                    ]\n                }\n            ],\n            \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/cats/\",\n            \"videoTypes\": [\n                \"webm\",\n                \"mp4\"\n            ],\n            \"participationQuestion\": \"Do you want to participate in this study?\"\n        }\n    }\n}\n```",
+            "extends": "ExpFrameBase",
+            "uses": [
+                "VideoRecord"
             ]
         },
         "ExpLookitVideoConsent": {
@@ -985,7 +1015,7 @@
     "classitems": [
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 78,
+            "line": 79,
             "description": "Function to generate additional properties for this frame (like {\"kind\": \"exp-lookit-text\"})\nat the time the frame is initialized. Allows behavior of study to depend on what has\nhappened so far (e.g., answers on a form or to previous test trials).\nMust be a valid Javascript function, returning an object, provided as\na string.\n\n\nArguments that will be provided are: `expData`, `sequence`, `child`, `pastSessions`, `conditions`.\n\n\n`expData`, `sequence`, and `conditions` are the same data as would be found in the session data shown\non the Lookit experimenter interface under 'Individual Responses', except that\nthey will only contain information up to this point in the study.\n\n\n`expData` is an object consisting of `frameId`: `frameData` pairs; the data associated\nwith a particular frame depends on the frame kind.\n\n\n`sequence` is an ordered list of frameIds, corresponding to the keys in `expData`.\n\n\n`conditions` is an object representing the data stored by any randomizer frames;\nkeys are `frameId`s for randomizer frames and data stored depends on the randomizer\nused.\n\n\n`child` is an object that has the following properties - use child.get(propertyName)\nto access:\n- `additionalInformation`: String; additional information field from child form\n- `ageAtBirth`: String; child's gestational age at birth in weeks. Possible values are\n  \"24\" through \"39\", \"na\" (not sure or prefer not to answer),\n\"<24\" (under 24 weeks), and \"40>\" (40 or more weeks).\n- `birthday`: timestamp in format \"Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)\"\n- `gender`: \"f\" (female), \"m\" (male), \"o\" (other), or \"na\" (prefer not to answer)\n- `givenName`: String, child's given name/nickname\n- `id`: String, child UUID\n\n\n`pastSessions` is a list of previous response objects for this child and this study,\nordered starting from most recent (at index 0 is this session!). Each has properties\n(access as pastSessions[i].get(propertyName)):\n- `completed`: Boolean, whether they submitted an exit survey\n- `completedConsentFrame`: Boolean, whether they got through at least a consent frame\n- `conditions`: Object representing any conditions assigned by randomizer frames\n- `createdOn`: timestamp in format \"Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)\"\n- `expData`: Object consisting of frameId: frameData pairs\n- `globalEventTimings`: list of any events stored outside of individual frames - currently\n  just used for attempts to leave the study early\n- `sequence`: ordered list of frameIds, corresponding to keys in expData\n\n\nExample:\n```\nfunction(expData, sequence, child, pastSessions, conditions) {\n    return {\n       'blocks':\n            [\n                {\n                    'text': 'Name: ' + child.get('givenName')\n                },\n                {\n                    'text': 'Frame number: ' + sequence.length\n                },\n                {\n                    'text': 'N past sessions: ' + pastSessions.length\n                }\n            ]\n      };\n  }\n```\n\n\n (This example is split across lines for readability; when added to JSON it would need\n to be on one line.)",
             "itemtype": "property",
             "name": "generateProperties",
@@ -997,7 +1027,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 162,
+            "line": 163,
             "description": "Function to select which frame index to go to when using the 'next' action on this\nframe. Allows flexible looping / short-circuiting based on what has happened so far\nin the study (e.g., once the child answers N questions correctly, move on to next\nsegment). Must be a valid Javascript function, returning a number from 0 through\nframes.length - 1, provided as a string.\n\n\nArguments that will be provided are:\n`frames`, `frameIndex`, `expData`, `sequence`, `child`, `pastSessions`\n\n\n`frames` is an ordered list of frame configurations for this study; each element\nis an object corresponding directly to a frame you defined in the\nJSON document for this study (but with any randomizer frames resolved into the\nparticular frames that will be used this time).\n\n\n`frameIndex` is the index in `frames` of the current frame\n\n\n`expData` is an object consisting of `frameId`: `frameData` pairs; the data associated\nwith a particular frame depends on the frame kind.\n\n\n`sequence` is an ordered list of frameIds, corresponding to the keys in `expData`.\n\n\n`child` is an object that has the following properties - use child.get(propertyName)\nto access:\n- `additionalInformation`: String; additional information field from child form\n- `ageAtBirth`: String; child's gestational age at birth in weeks. Possible values are\n  \"24\" through \"39\", \"na\" (not sure or prefer not to answer),\n\"<24\" (under 24 weeks), and \"40>\" (40 or more weeks).\n- `birthday`: timestamp in format \"Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)\"\n- `gender`: \"f\" (female), \"m\" (male), \"o\" (other), or \"na\" (prefer not to answer)\n- `givenName`: String, child's given name/nickname\n- `id`: String, child UUID\n\n\n`pastSessions` is a list of previous response objects for this child and this study,\nordered starting from most recent (at index 0 is this session!). Each has properties\n(access as pastSessions[i].get(propertyName)):\n- `completed`: Boolean, whether they submitted an exit survey\n- `completedConsentFrame`: Boolean, whether they got through at least a consent frame\n- `conditions`: Object representing any conditions assigned by randomizer frames\n- `createdOn`: timestamp in format \"Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)\"\n- `expData`: Object consisting of frameId: frameData pairs\n- `globalEventTimings`: list of any events stored outside of individual frames - currently\n  just used for attempts to leave the study early\n- `sequence`: ordered list of frameIds, corresponding to keys in expData\n\n\nExample that just sends us to the last frame of the study no matter what:\n``\"function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}\"```",
             "itemtype": "property",
             "name": "selectNextFrame",
@@ -1009,7 +1039,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 372,
+            "line": 373,
             "description": "The base class does not define any data to save to the server. It does, however, capture some basic event\n  timing data. (such as when the user clicks the \"next\" button)\n\nThis section slightly breaks YUIDoc conventions- rather than being a literal guide to using the code, the\n  \"parameters\" here are abstract descriptions of what data is captured.\n\nEach frame that extends ExpFrameBase will send an array `eventTimings`\nback to the server upon completion. This array is an ordered list (oldest\nto newest) of every EVENT that happened during the frame. Each event is\nrepresented as an object with at least the properties\n`{'eventType': EVENTNAME, 'timestamp': TIMESTAMP}`. Frame-specific events\nmay define additional properties that are sent.",
             "params": [
                 {
@@ -1030,7 +1060,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 399,
+            "line": 400,
             "description": "Create the time event payload for a particular frame / event. This can be overridden to add fields to every\n event sent by a particular frame",
             "itemtype": "method",
             "name": "makeTimeEvent",
@@ -1057,7 +1087,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 437,
+            "line": 438,
             "description": "Move to next frame",
             "itemtype": "event",
             "name": "nextFrame",
@@ -1067,7 +1097,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 479,
+            "line": 480,
             "description": "Move to previous frame",
             "itemtype": "event",
             "name": "previousFrame",
@@ -3408,6 +3438,128 @@
             "itemtype": "method",
             "name": "whenPossibleToRecord",
             "class": "ExpLookitVideo",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video-assent/component.js",
+            "line": 243,
+            "description": "When participant downloads consent form",
+            "itemtype": "event",
+            "name": "downloadConsentForm",
+            "class": "ExpLookitVideoAssent",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video-assent/component.js",
+            "line": 258,
+            "description": "A list of pages of assent form text/pictures/video for the participant to read through",
+            "itemtype": "property",
+            "name": "pages",
+            "type": "Array",
+            "class": "ExpLookitVideoAssent",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "altText",
+                    "description": "Alt-text used for the image displayed, if any",
+                    "type": "String"
+                },
+                {
+                    "name": "sources",
+                    "description": "(Optional) String indicating video path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects.",
+                    "type": "Object[]"
+                },
+                {
+                    "name": "imgSrc",
+                    "description": "(Optional) URL of image to display; can be full path or relative to baseDir",
+                    "type": "String"
+                },
+                {
+                    "name": "textBlocks",
+                    "description": "list of text blocks to show on this page, processed by exp-text-block. Can use HTML.",
+                    "type": "Object[]"
+                },
+                {
+                    "name": "showWebcam",
+                    "description": "Whether to display the participant webcam on this page",
+                    "type": "Boolean"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-video-assent/component.js",
+            "line": 311,
+            "description": "Text on the button to proceed to the next example video/image",
+            "itemtype": "property",
+            "name": "nextStimulusText",
+            "type": "String",
+            "class": "ExpLookitVideoAssent",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video-assent/component.js",
+            "line": 321,
+            "description": "Text on the button to proceed to the previous example video/image",
+            "itemtype": "property",
+            "name": "previousStimulusText",
+            "type": "String",
+            "class": "ExpLookitVideoAssent",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video-assent/component.js",
+            "line": 331,
+            "description": "Text of the question to ask about whether to participate. Answer options are Yes/No; No means study will stop, Yes means it will proceed.",
+            "itemtype": "property",
+            "name": "participationQuestion",
+            "type": "String",
+            "class": "ExpLookitVideoAssent",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video-assent/component.js",
+            "line": 345,
+            "description": "Parameters captured and sent to the server",
+            "itemtype": "method",
+            "name": "serializeContent",
+            "params": [
+                {
+                    "name": "assentFormText",
+                    "description": "the exact text shown in the assent document during this frame",
+                    "type": "String"
+                },
+                {
+                    "name": "videoID",
+                    "description": "The ID of any webcam video recorded during this frame",
+                    "type": "String"
+                },
+                {
+                    "name": "videoList",
+                    "description": "a list of webcam video IDs in case there are >1",
+                    "type": "List"
+                },
+                {
+                    "name": "childResponse",
+                    "description": "The child's response to the assent question - Yes or No",
+                    "type": "String"
+                },
+                {
+                    "name": "eventTimings",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The payload sent to the server",
+                "type": "Object"
+            },
+            "class": "ExpLookitVideoAssent",
             "module": "exp-player",
             "submodule": "frames"
         },

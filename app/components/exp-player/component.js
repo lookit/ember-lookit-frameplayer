@@ -245,6 +245,10 @@ export default Ember.Component.extend(FullScreen, {
             this._exit();
         },
 
+        exit() {
+            this._exit();
+        },
+
         previous() {
             var frameIndex = this.get('frameIndex');
             if (frameIndex !== 0) {

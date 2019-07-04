@@ -57,6 +57,7 @@
                             <li><a href="../classes/ExpLookitSurvey.html">ExpLookitSurvey</a></li>
                             <li><a href="../classes/ExpLookitText.html">ExpLookitText</a></li>
                             <li><a href="../classes/ExpLookitVideo.html">ExpLookitVideo</a></li>
+                            <li><a href="../classes/ExpLookitVideoAssent.html">ExpLookitVideoAssent</a></li>
                             <li><a href="../classes/ExpLookitVideoConsent.html">ExpLookitVideoConsent</a></li>
                             <li><a href="../classes/ExpPlayer.html">ExpPlayer</a></li>
                             <li><a href="../classes/ExpVideoConfig.html">ExpVideoConfig</a></li>
@@ -335,15 +336,15 @@ export default Ember.Component.extend(FullScreen, {
             var frameIndex = this.get(&#x27;frameIndex&#x27;);
             if (nextFrameIndex == -1) {
                 nextFrameIndex = frameIndex + 1;
-            } else if (nextFrameIndex &lt; 0 || nextFrameIndex &gt;= this.get(&#x27;frames&#x27;).length) {
+            } else if (nextFrameIndex &lt; 0 || nextFrameIndex &gt; this.get(&#x27;frames&#x27;).length) {
                 throw new Error(&#x27;selectNextFrame function provided for this frame returns a frame index out of bounds&#x27;);
             }
-            if (frameIndex &lt; (this.get(&#x27;frames&#x27;).length - 1)) {
+            if (nextFrameIndex &lt; (this.get(&#x27;frames&#x27;).length)) {
                 this._transition();
                 this.set(&#x27;frameIndex&#x27;, nextFrameIndex);
                 return;
             }
-            this._exit();
+            this._exit(); // exit if nextFrameIndex == this.get(&#x27;frames&#x27;).length
         },
 
         skipone() {
@@ -353,6 +354,10 @@ export default Ember.Component.extend(FullScreen, {
                 this.set(&#x27;frameIndex&#x27;, frameIndex + 2);
                 return;
             }
+            this._exit();
+        },
+
+        exit() {
             this._exit();
         },
 
@@ -380,7 +385,7 @@ export default Ember.Component.extend(FullScreen, {
 
             // Navigate to last page in experiment (assumed to be survey frame)
             var max = this.get(&#x27;frames.length&#x27;) - 1;
-            this.set(&#x27;frameIndex&#x27;, max);
+            this.send(&#x27;next&#x27;, max);
         },
     }
 });
