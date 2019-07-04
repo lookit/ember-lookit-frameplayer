@@ -392,27 +392,29 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
     didInsertElement() {
         this._super(...arguments);
         this.set('assentFormText', $('#consent-form-full-text').text());
-        var dob = this.get('session').get('child').get('birthday');
+        if (this.get('session').get('child')) { // always show in preview mode
+            var dob = this.get('session').get('child').get('birthday');
 
-        // var ageInDays = ((new Date()) - dob)/(1000*60*60*24);
-        // Calculate age in full years (i.e., will line up with how many years old the
-        // child is considered, will not vary based on whether some of those years have been
-        // leap years)
-        var today = new Date();
-        var beforeBirthday = 0;
-        if (today.getMonth() < dob.getMonth() || ((today.getMonth() == dob.getMonth()) && today.getDate() < dob.getDate())) {
-            beforeBirthday = 1;
-        }
-        var ageInYears = today.getFullYear() - dob.getFullYear() - beforeBirthday;
+            // var ageInDays = ((new Date()) - dob)/(1000*60*60*24);
+            // Calculate age in full years (i.e., will line up with how many years old the
+            // child is considered, will not vary based on whether some of those years have been
+            // leap years)
+            var today = new Date();
+            var beforeBirthday = 0;
+            if (today.getMonth() < dob.getMonth() || ((today.getMonth() == dob.getMonth()) && today.getDate() < dob.getDate())) {
+                beforeBirthday = 1;
+            }
+            var ageInYears = today.getFullYear() - dob.getFullYear() - beforeBirthday;
 
-        if (this.get('minimumYearsToAssent') && ageInYears < this.get('minimumYearsToAssent')) {
-            /**
-             * Skip the assent form because the participant is too young to give assent
-             *
-             * @event skipAssentDueToParticipantAge
-             */
-            this.send('setTimeEvent', 'skipAssentDueToParticipantAge');
-            this.send('next');
+            if (this.get('minimumYearsToAssent') && ageInYears < this.get('minimumYearsToAssent')) {
+                /**
+                 * Skip the assent form because the participant is too young to give assent
+                 *
+                 * @event skipAssentDueToParticipantAge
+                 */
+                this.send('setTimeEvent', 'skipAssentDueToParticipantAge');
+                this.send('next');
+            }
         }
     }
 
