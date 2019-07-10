@@ -58,6 +58,7 @@ export default class CatchCheese extends Base {
    */
   init() {
     super.init();
+    document.addEventListener("mousemove",  super.onMouseMove);
     hArray = super.generateHeights();
     Tf = this.context.flightTime;
     Height = this.context.height;

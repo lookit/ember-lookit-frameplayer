@@ -64,7 +64,6 @@ export default class Base {
     // Event listener for mouse and keyboard here
     document.addEventListener('keydown', this.keyDownHandler, false);
     document.addEventListener('keyup', this.keyUpHandler, false);
-    document.addEventListener('mousemove', this.onMouseMove);
     mouseY =  1.1*this.Utils.SCALE;
   }
 
@@ -988,9 +987,47 @@ export default class Base {
 
   }
 
-  onMouseMove(e) {
+
+  onMouseMove(e){
 
     mouseY = e.clientY;
+    let border = paddleBox.position.y+paddleBox.dimensions.height/2;
+    if(mouseY > border){
+
+      mouseY = border;
+    }
+
+  }
+
+
+  onMouseMoveSmoothed(e) {
+
+    let sign = 1;
+
+    let speed = Math.abs(mouseY-e.clientY);
+
+    if(mouseY > e.clientY){
+
+      sign = -1;
+    }
+
+
+
+    if(Math.sqrt(speed) > 4){
+
+      mouseY += 4*sign;
+
+    }else {
+      mouseY += Math.sqrt(speed) * sign;
+
+    }
+
+
+    let border = paddleBox.position.y+paddleBox.dimensions.height/2;
+    if(mouseY > border){
+
+      mouseY = border;
+    }
 
   }
 

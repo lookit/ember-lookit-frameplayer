@@ -61,6 +61,7 @@ export default class FeedCroc extends Base {
    */
   init() {
     super.init();
+    document.addEventListener("mousemove",  super.onMouseMoveSmoothed);
     paddle = {
 
       position: {x: 0, y: 0},
@@ -303,10 +304,10 @@ export default class FeedCroc extends Base {
       let paddleVelocity = this.getPaddleVelocity(paddle.times, paddle.positions);
       //Detect the ball position on Y axes, if the ball is within range  on Y axis
       let paddleDelta = (paddleVelocity*super.Utils.SCALE)/15;
-      if(paddleDelta < 0.09*super.Utils.SCALE){
-        paddleDelta = 0.09*super.Utils.SCALE;
+      if(paddleDelta < 0.021*super.Utils.SCALE){
+        paddleDelta = 0.021*super.Utils.SCALE;
       }
-      if(ball.position.y - paddle.position.y <= paddleDelta && ball.position.y - paddle.position.y>=0 ){
+      if( Math.abs(ball.position.y - paddle.position.y) <= 0.021*super.Utils.SCALE  ){
         super.trajectory(ball, initialTime);
         bounceSound.play();
         paddle.paddleLastMovedMillis = new Date().getTime();
@@ -316,9 +317,9 @@ export default class FeedCroc extends Base {
         ball.velocity = super.TrajectoryVars.initV - super.TrajectoryVars.gravity * iterator;
         paddle.releaseVelocity = -alpha * (ball.velocity - paddleVelocity) + paddleVelocity;
         //Fix for abrupt trajectory, make sure the trajectory is not negative
-        if(paddle.releaseVelocity <= 0.8){
-          paddle.releaseVelocity  = 0.8;
-        }
+        // if(paddle.releaseVelocity <= 0.8){
+        //   paddle.releaseVelocity  = 0.8;
+        // }
         if (isNaN(paddle.releaseVelocity)) {
           paddle.releaseVelocity = 1.56;
         }

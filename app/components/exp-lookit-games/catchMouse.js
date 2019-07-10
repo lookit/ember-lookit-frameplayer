@@ -59,7 +59,7 @@ export default class CatchMouse extends Base {
    */
   init() {
     super.init();
-
+    document.addEventListener("mousemove",  super.onMouseMove);
     audio = new Audio(super.Utils.drumRollSound);
     audio.load();
     audio.addEventListener('onloadeddata', this.initGame(), false);
