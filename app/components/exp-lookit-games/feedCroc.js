@@ -61,7 +61,7 @@ export default class FeedCroc extends Base {
    */
   init() {
     super.init();
-    document.addEventListener("mousemove",  super.onMouseMoveSmoothed);
+    document.addEventListener("mousemove",  super.onMouseMove);
     paddle = {
 
       position: {x: 0, y: 0},
@@ -301,13 +301,15 @@ export default class FeedCroc extends Base {
     super.paddleMove(paddle,initialTime);
     //Detect the ball position on X axis , if the ball is between paddle edges
     if (ball.position.x >= (1.2810 - 0.025) * super.Utils.SCALE - 0.04*super.Utils.SCALE && ball.position.x <= (1.3810 + 0.025) * super.Utils.SCALE) {
-      let paddleVelocity = this.getPaddleVelocity(paddle.times, paddle.positions);
+
       //Detect the ball position on Y axes, if the ball is within range  on Y axis
-      let paddleDelta = (paddleVelocity*super.Utils.SCALE)/15;
-      if(paddleDelta < 0.021*super.Utils.SCALE){
-        paddleDelta = 0.021*super.Utils.SCALE;
+      let paddleDelta = paddle.positions[paddle.positions.length -1] - paddle.positions[paddle.positions.length -8];
+      if(paddleDelta < 0.005){
+        paddleDelta = 0.008;
       }
-      if( Math.abs(ball.position.y - paddle.position.y) <= 0.021*super.Utils.SCALE  ){
+
+      if( Math.abs(ball.position.y - paddle.position.y) <= paddleDelta*super.Utils.SCALE  ){
+        let paddleVelocity = this.getPaddleVelocity(paddle.times, paddle.positions);
         super.trajectory(ball, initialTime);
         bounceSound.play();
         paddle.paddleLastMovedMillis = new Date().getTime();
