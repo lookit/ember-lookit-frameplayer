@@ -28,7 +28,7 @@ let obstrArr = [];
 let jitterT = 0;
 let radiusRim = 0.1;
 let wrongSound = {};
-
+let obstructionsNum = 0;
 
 /**
  * Main implementation of catch the cheese game.
@@ -102,7 +102,7 @@ export default class CatchCheese extends Base {
 
     super.createPaddleBox();
     basket = super.basketObject(basket);
-    let obstructionsNum = obstrArr[super.currentRounds];
+     obstructionsNum = obstrArr[super.currentRounds];
     if(this.context.no_trees){
       obstructionsNum =0;
     }
@@ -310,7 +310,8 @@ export default class CatchCheese extends Base {
 
     }
 
-    obstructions.forEach(obstruction => super.drawImage(obstruction,obstruction.src));
+
+    obstructions.forEach(obstruction => super.drawImage(obstruction, obstruction.imageURL));
 
     this.basketObject(basket);
     super.paddleMove(basket,initialTime);

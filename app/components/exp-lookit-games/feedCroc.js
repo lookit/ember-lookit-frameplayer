@@ -305,8 +305,8 @@ export default class FeedCroc extends Base {
 
       //Detect the ball position on Y axes, if the ball is within range  on Y axis
       let paddleDelta = paddle.positions[paddle.positions.length -1] - paddle.positions[paddle.positions.length -8];
-      if(paddleDelta < 0.1){
-        paddleDelta = 0.1;
+      if(paddleDelta < 0.05){
+        paddleDelta = 0.05;
       }
 
       if( ball.position.y - paddle.position.y <= paddleDelta*super.Utils.SCALE  && ball.position.y - paddle.position.y>=0 ){
