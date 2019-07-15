@@ -305,16 +305,17 @@ export default class FeedCroc extends Base {
 
       //Detect the ball position on Y axes, if the ball is within range  on Y axis
       let paddleDelta = paddle.positions[paddle.positions.length -1] - paddle.positions[paddle.positions.length -8];
-      if(paddleDelta < 0.005){
-        paddleDelta = 0.008;
+      if(paddleDelta < 0.1){
+        paddleDelta = 0.1;
       }
-      if( Math.abs(ball.position.y - paddle.position.y) <= paddleDelta*super.Utils.SCALE  ){
+
+      if( ball.position.y - paddle.position.y <= paddleDelta*super.Utils.SCALE  && ball.position.y - paddle.position.y>=0 ){
         let paddleVelocity = this.getPaddleVelocity(paddle.times, paddle.positions);
         super.trajectory(ball, initialTime);
         bounceSound.play();
         paddle.paddleLastMovedMillis = new Date().getTime();
-        ball.impactTime = new Date().getTime() + 5;
-        ball.impactPosition = (this.canvas.height - paddle.position.y) / this.canvas.height;
+        ball.impactTime = new Date().getTime() ;
+        ball.impactPosition = (this.canvas.height - (paddle.position.y - paddleDelta) ) / this.canvas.height ;
         let iterator = super.getElapsedTime(initialTime);
         ball.velocity = super.TrajectoryVars.initV - super.TrajectoryVars.gravity * iterator;
         paddle.releaseVelocity = -alpha * (ball.velocity - paddleVelocity) + paddleVelocity;

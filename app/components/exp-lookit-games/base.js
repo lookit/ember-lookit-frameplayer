@@ -807,7 +807,7 @@ export default class Base {
    */
   trialStartTime() {
 
-    let min = this.context.minTime + 350
+    let min = this.context.minTime + 350;
     return ((Math.floor(Math.random() * (this.context.maxTime - min + 1)) + min) / 1000 );
 
   }
