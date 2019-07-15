@@ -302,32 +302,31 @@ export default class FeedCroc extends Base {
     //Detect the ball position on X axis , if the ball is between paddle edges
     if (ball.position.x >= (1.2810 - 0.025) * super.Utils.SCALE - 0.04*super.Utils.SCALE && ball.position.x <= (1.3810 + 0.025) * super.Utils.SCALE) {
 
+
       //Detect the ball position on Y axes, if the ball is within range  on Y axis
       let paddleDelta = paddle.positions[paddle.positions.length -1] - paddle.positions[paddle.positions.length -8];
       if(paddleDelta < 0.005){
         paddleDelta = 0.008;
       }
-
       if( Math.abs(ball.position.y - paddle.position.y) <= paddleDelta*super.Utils.SCALE  ){
         let paddleVelocity = this.getPaddleVelocity(paddle.times, paddle.positions);
         super.trajectory(ball, initialTime);
         bounceSound.play();
         paddle.paddleLastMovedMillis = new Date().getTime();
-        ball.impactTime = new Date().getTime();
+        ball.impactTime = new Date().getTime() + 5;
         ball.impactPosition = (this.canvas.height - paddle.position.y) / this.canvas.height;
         let iterator = super.getElapsedTime(initialTime);
         ball.velocity = super.TrajectoryVars.initV - super.TrajectoryVars.gravity * iterator;
         paddle.releaseVelocity = -alpha * (ball.velocity - paddleVelocity) + paddleVelocity;
         //Fix for abrupt trajectory, make sure the trajectory is not negative
-        // if(paddle.releaseVelocity <= 0.8){
-        //   paddle.releaseVelocity  = 0.8;
-        // }
+        if(paddle.releaseVelocity <= 0.8){
+          paddle.releaseVelocity  = 0.8;
+        }
         if (isNaN(paddle.releaseVelocity)) {
           paddle.releaseVelocity = 1.56;
         }
         ball.state = 'bounce';
         super.bounceTrajectory(ball,paddle,initialTime);
-
       }
     }
 

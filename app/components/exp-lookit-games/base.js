@@ -795,7 +795,7 @@ export default class Base {
 
     ball.positions.push(ball.position);
     ball.position.x = leftBorder;
-    ball.position.y = downBorder;
+    ball.position.y = this.canvas.height - positionY * this.canvas.height ;
 
 
   }
