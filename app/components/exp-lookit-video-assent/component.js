@@ -20,10 +20,15 @@ let {
 Video assent frame for Lookit studies for older children to agree to participation,
 separately from parental consent.
 
-A series of assent form "pages" is displayed, each one displaying an image, video,
-the webcam view, and/or text. Once the family has viewed all pages, the child can
-answer a question about whether to participate. If they choose yes, they proceed; if
+A series of assent form "pages" is displayed, each one displaying an image,
+optional audio/video, optional webcam view, and/or text. Once the family has viewed all pages,
+the child can answer a question about whether to participate. If they choose yes, they proceed; if
 they choose no, they are sent to the exit URL.
+
+If audio or video is provided for a page, the participant must finish it to proceed to the
+next page (or to answer the participation question, if this is the last page). They only
+need to complete the audio/video for a given page once, in case they navigate using the
+previous/next buttons.
 
 This frame can optionally be shown only when the child is at least N years old, in case
 some participants will need to give assent and others will rely only on parent consent.
@@ -82,7 +87,8 @@ specified using stubs MUST be organized as expected under baseDir/MEDIATYPE/file
                         {
                             "text": "My name is Jane Smith. I am a scientist who studies why children love cats."
                         }
-                    ]
+                    ],
+                    "audio": "narration_1"
                 },
                 {
                     "imgSrc": "cats_game.png",
@@ -131,8 +137,8 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
     pageIndex: 0,
     readAllPages: false,
 
-    noNext: computed('pageIndex', function() {
-        return this.get('pageIndex') >= this.get('pages.length') - 1;
+    noNext: computed('pageIndex', 'hasCompletedThisPageAudio', function() {
+        return (this.get('pageIndex') >= this.get('pages.length') - 1) || (!this.get('hasCompletedThisPageAudio'));
     }),
 
     noPrev: computed('pageIndex', function() {
@@ -143,26 +149,54 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
         return this.get('pages_parsed')[this.get('pageIndex')];
     }),
 
+    pageHasAudio: computed('pageIndex', function() {
+        return !!this.get('pages_parsed')[this.get('pageIndex')].audio;
+    }),
+
+    hasCompletedEachPageAudio: [false], // start off with just covering page 0, populate in didInsert
+
+    hasCompletedThisPageAudio: false, // Track state of current page for blocking 'continue' action
+
     childResponse: false,
     stoppedRecording: false,
 
     assetsToExpand: {
-        'audio': [],
-        'video': ['pages/sources'],
+        'audio': ['pages/audio'],
+        'video': ['pages/video'],
         'image': ['pages/imgSrc']
+    },
+
+    // Utility to play audio object and avoid failing to actually trigger play for
+    // dumb browser reasons / race conditions
+    playAudio(audioObj) {
+        //audioObj.pause();
+        audioObj.currentTime = 0;
+        audioObj.play().then(() => {
+            }).catch(() => {
+                audioObj.play();
+            }
+        );
     },
 
     actions: {
 
         nextVideo() {
             this.set('pageIndex', this.get('pageIndex') + 1);
-            if (this.get('pageIndex') == this.get('pages').length - 1) {
+            if ((this.get('pageIndex') == this.get('pages').length - 1) && !this.get('pageHasAudio')) {
                 this.set('readAllPages', true);
             }
+            if (this.get('pageHasAudio')) {
+                this.playAudio($('audio#assent-audio')[0]);
+            }
+            this.set('hasCompletedThisPageAudio', this.get('hasCompletedEachPageAudio')[this.get('pageIndex')]);
         },
 
         previousVideo() {
             this.set('pageIndex', this.get('pageIndex') - 1);
+            if (this.get('pageHasAudio')) {
+                this.playAudio($('audio#assent-audio')[0]);
+            }
+            this.set('hasCompletedThisPageAudio', this.get('hasCompletedEachPageAudio')[this.get('pageIndex')]);
         },
 
         selectYes() {
@@ -191,6 +225,20 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
                 this.send('exit');
             }
         },
+
+        audioCompleted() {
+            this.get('hasCompletedEachPageAudio')[this.get('pageIndex')] = true;
+            this.set('hasCompletedThisPageAudio', true);
+
+            if (this.get('pageIndex') == this.get('pages').length - 1) {
+                this.set('readAllPages', true);
+            }
+        },
+
+        startAudio() {
+            this.playAudio($('audio#assent-audio')[0]);
+        },
+
 
         download() {
             // Get the text of the consent form to process. Split into lines, and remove
@@ -265,7 +313,8 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
                  *
                  * @property {Array} pages
                  *   @param {String} altText Alt-text used for the image displayed, if any
-                 *   @param {Object[]} sources (Optional) String indicating video path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects.
+                 *   @param {Object[]} video (Optional) String indicating video path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects. Video will be displayed (with controls shown) and participant must complete to proceed.
+                 *   @param {Object[]} audio (Optional) String indicating audio path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects. Audio will be played (with controls shown) and participant must complete to proceed.
                  *   @param {String} imgSrc (Optional) URL of image to display; can be full path or relative to baseDir
                  *   @param {Object[]} textBlocks list of text blocks to show on this page, processed by exp-text-block. Can use HTML.
                  *   @param {Boolean} showWebcam Whether to display the participant webcam on this page
@@ -284,7 +333,23 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
                                 type: 'string',
                                 default: 'image'
                             },
-                            sources: {
+                            video: {
+                                type: 'array',
+                                default: [],
+                                items: {
+                                    type: 'object',
+                                    properties: {
+                                        src: {
+                                            type: 'string'
+                                        },
+                                        type: {
+                                            type: 'string'
+                                        }
+                                    },
+                                    required: ['src', 'type']
+                                }
+                            },
+                            audio: {
                                 type: 'array',
                                 default: [],
                                 items: {
@@ -345,7 +410,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
                 },
                 /**
                  * How many years old the child has to be for this page to be shown. If child
-                 * is younger, the page is skipped. Leave at 0 to always show.
+                 * is younger, the page is skipped. Leave at 0 to always show. This is an
+                 * age in 'calendar years' - it will line up with the child's birthday,
+                 * regardless of leap years etc.
                  *
                  * @property {String} minimumYearsToAssent
                  */
@@ -392,6 +459,17 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
     didInsertElement() {
         this._super(...arguments);
         this.set('assentFormText', $('#consent-form-full-text').text());
+
+        var hasCompletedEachPageAudio = []
+        for (var iPage = 0; iPage < this.get('pages_parsed').length; iPage++) {
+            hasCompletedEachPageAudio[iPage] = !this.get('pages_parsed')[iPage].audio; // count as completed if no audio
+        }
+        this.set('hasCompletedEachPageAudio', hasCompletedEachPageAudio);
+
+        if (this.get('pages_parsed')[0].audio) { // start audio
+            this.playAudio($('audio#assent-audio')[0]);
+        }
+
         if (this.get('session').get('child')) { // always show in preview mode
             var dob = this.get('session').get('child').get('birthday');
 
