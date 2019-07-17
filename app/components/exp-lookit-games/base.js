@@ -902,7 +902,7 @@ export default class Base {
     }
 
     // Check if paddle is moved outside the box limits
-    if (paddle.position.y  < paddleBox.position.y - paddle.dimensions.height) {
+    if (paddle.position.y  < paddleBox.position.y - paddleBox.dimensions.height + paddle.dimensions.height) {
 
 
       return true;
@@ -991,45 +991,15 @@ export default class Base {
   onMouseMove(e){
 
     mouseY = e.clientY;
-    let border = paddleBox.position.y+paddleBox.dimensions.height/2;
-    if(mouseY > border){
-
-      mouseY = border;
-    }
-
-  }
-
-
-  onMouseMoveSmoothed(e) {
-
-    let sign = 1;
-
-    let speed = Math.abs(mouseY-e.clientY);
-
-    if(mouseY > e.clientY){
-
-      sign = -1;
-    }
-
-
-
-    if(Math.sqrt(speed) > 4){
-
-      mouseY += 4*sign;
-
-    }else {
-      mouseY += Math.sqrt(speed) * sign;
-
-    }
-
-
-    let border = paddleBox.position.y+paddleBox.dimensions.height/2;
-    if(mouseY > border){
-
-      mouseY = border;
-    }
+    // let border = paddleBox.position.y+paddleBox.dimensions.height/2;
+    // if(mouseY > border){
+    //
+    //   mouseY = border;
+    // }
 
   }
+
+
 
 
 }
