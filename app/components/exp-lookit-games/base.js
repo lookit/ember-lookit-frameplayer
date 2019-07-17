@@ -991,11 +991,11 @@ export default class Base {
   onMouseMove(e){
 
     mouseY = e.clientY;
-    // let border = paddleBox.position.y+paddleBox.dimensions.height/2;
-    // if(mouseY > border){
-    //
-    //   mouseY = border;
-    // }
+    let border = paddleBox.position.y+paddleBox.dimensions.height/2;
+    if(mouseY > border){
+
+      mouseY = border;
+    }
 
   }
 
