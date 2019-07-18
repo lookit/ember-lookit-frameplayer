@@ -20,13 +20,16 @@ let {
 Video assent frame for Lookit studies for older children to agree to participation,
 separately from parental consent.
 
-A series of assent form "pages" is displayed, each one displaying an image,
-optional audio/video, optional webcam view, and/or text. Once the family has viewed all pages,
-the child can answer a question about whether to participate. If they choose yes, they proceed; if
-they choose no, they are sent to the exit URL.
+A series of assent form "pages" is displayed, each one displaying some combination of
+(a) an image or the participant's webcam view or a video, (b) audio, and (c) text.
+Once the family has viewed all pages, the child can answer a question about whether
+to participate. If they choose yes, they proceed; if they choose no, they are sent to the
+exit URL.
 
-If audio or video is provided for a page, the participant must finish it to proceed to the
-next page (or to answer the participation question, if this is the last page). They only
+In general it is expected that only one of webcam view, video, and image will be provided per
+page, although it is ok to have only text or only text plus audio. If audio or video is provided for a page,
+the participant must finish it to proceed. (If both audio and video are provided they will
+be played simultaneously and both must finish for the participant to proceed.) They only
 need to complete the audio/video for a given page once, in case they navigate using the
 previous/next buttons.
 
@@ -34,6 +37,7 @@ This frame can optionally be shown only when the child is at least N years old, 
 some participants will need to give assent and others will rely only on parent consent.
 
 Specifying media locations:
+
 For `imgSrc` parameters within `pages`, you can either specify complete URLs or partial URLs
 relative to a base directory `baseDir` for the frame. Images are expected to be in an
 `img` directory within the `baseDir`. For instance, in the example below,
@@ -74,6 +78,8 @@ This allows you to simplify your JSON document a bit and also easily switch to a
 new version of your stimuli without changing every URL. You can mix source objects with
 full URLs and those using stubs within the same directory. However, any stimuli
 specified using stubs MUST be organized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.
+
+Example usage:
 
 ```json
 "frames": {
@@ -134,11 +140,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
     }),
     startedRecording: false,
 
-    pageIndex: 0,
+    pageIndex: null,
     readAllPages: false,
 
-    noNext: computed('pageIndex', 'hasCompletedThisPageAudio', function() {
-        return (this.get('pageIndex') >= this.get('pages.length') - 1) || (!this.get('hasCompletedThisPageAudio'));
+    noNext: computed('pageIndex', 'hasCompletedThisPageAudio', 'hasCompletedThisPageVideo', function() {
+        return (this.get('pageIndex') >= this.get('pages.length') - 1) || (!this.get('hasCompletedThisPageAudio')) || (!this.get('hasCompletedThisPageVideo'));
     }),
 
     noPrev: computed('pageIndex', function() {
@@ -153,9 +159,15 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
         return !!this.get('pages_parsed')[this.get('pageIndex')].audio;
     }),
 
+    pageHasVideo: computed('pageIndex', function() {
+        return !!this.get('pages_parsed')[this.get('pageIndex')].video;
+    }),
+
     hasCompletedEachPageAudio: [false], // start off with just covering page 0, populate in didInsert
+    hasCompletedEachPageVideo: [false],
 
     hasCompletedThisPageAudio: false, // Track state of current page for blocking 'continue' action
+    hasCompletedThisPageVideo: false,
 
     childResponse: false,
     stoppedRecording: false,
@@ -166,37 +178,58 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
         'image': ['pages/imgSrc']
     },
 
-    // Utility to play audio object and avoid failing to actually trigger play for
+    // Utility to play audio/video object and avoid failing to actually trigger play for
     // dumb browser reasons / race conditions
-    playAudio(audioObj) {
-        //audioObj.pause();
-        audioObj.currentTime = 0;
-        audioObj.play().then(() => {
+    playMedia(mediaObj) {
+        //mediaObj.pause();
+        mediaObj.currentTime = 0;
+        mediaObj.play().then(() => {
             }).catch(() => {
-                audioObj.play();
+                mediaObj.play();
             }
         );
+    },
+
+    updatePage() {
+        if (this.get('pageHasAudio')) {
+            this.playMedia($('audio#assent-audio')[0]);
+        }
+        if (this.get('pageHasVideo')) {
+            this.playMedia($('video#assent-video')[0]);
+        }
+        this.set('hasCompletedThisPageAudio', this.get('hasCompletedEachPageAudio')[this.get('pageIndex')]);
+        this.set('hasCompletedThisPageVideo', this.get('hasCompletedEachPageVideo')[this.get('pageIndex')]);
     },
 
     actions: {
 
         nextVideo() {
             this.set('pageIndex', this.get('pageIndex') + 1);
-            if ((this.get('pageIndex') == this.get('pages').length - 1) && !this.get('pageHasAudio')) {
+            if ((this.get('pageIndex') == this.get('pages').length - 1) && !this.get('pageHasAudio') && !this.get('pageHasVideo')) {
                 this.set('readAllPages', true);
             }
-            if (this.get('pageHasAudio')) {
-                this.playAudio($('audio#assent-audio')[0]);
-            }
-            this.set('hasCompletedThisPageAudio', this.get('hasCompletedEachPageAudio')[this.get('pageIndex')]);
+            /**
+             * Participant proceeded to next assent page
+             *
+             * @event nextAssentPage
+             * @param {Number} pageNumber which assent page was viewed (zero-indexed)
+             */
+            this.send('setTimeEvent', 'nextAssentPage',
+                {pageNumber: this.get('pageIndex')});
+            this.updatePage();
         },
 
         previousVideo() {
             this.set('pageIndex', this.get('pageIndex') - 1);
-            if (this.get('pageHasAudio')) {
-                this.playAudio($('audio#assent-audio')[0]);
-            }
-            this.set('hasCompletedThisPageAudio', this.get('hasCompletedEachPageAudio')[this.get('pageIndex')]);
+            /**
+             * Participant returned to previous assent page
+             *
+             * @event previousAssentPage
+             * @param {Number} pageNumber which assent page was viewed (zero-indexed)
+             */
+            this.send('setTimeEvent', 'previousAssentPage',
+                {pageNumber: this.get('pageIndex')});
+            this.updatePage();
         },
 
         selectYes() {
@@ -219,6 +252,14 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
 
         submit() {
             this.session.set('completedConsentFrame', true);
+            /**
+             * Participant submitted assent question answer
+             *
+             * @event assentQuestionSubmit
+             * @param {String} childResponse child response submitted ('Yes' or 'No')
+             */
+            this.send('setTimeEvent', 'assentQuestionSubmit',
+                {childResponse: this.get('childResponse')});
             if (this.get('childResponse') == 'Yes') {
                 this.send('next');
             } else {
@@ -230,15 +271,20 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
             this.get('hasCompletedEachPageAudio')[this.get('pageIndex')] = true;
             this.set('hasCompletedThisPageAudio', true);
 
-            if (this.get('pageIndex') == this.get('pages').length - 1) {
+            if (this.get('pageIndex') == this.get('pages').length - 1) { // TODO
                 this.set('readAllPages', true);
             }
         },
 
-        startAudio() {
-            this.playAudio($('audio#assent-audio')[0]);
-        },
+        videoCompleted() {
+            this.get('hasCompletedEachPageVideo')[this.get('pageIndex')] = true;
+            this.set('hasCompletedThisPageVideo', true);
 
+            if (this.get('pageIndex') == this.get('pages').length - 1) { // TODO
+                this.set('readAllPages', true);
+            }
+            console.log('video completed.');
+        },
 
         download() {
             // Get the text of the consent form to process. Split into lines, and remove
@@ -460,17 +506,22 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
         this._super(...arguments);
         this.set('assentFormText', $('#consent-form-full-text').text());
 
-        var hasCompletedEachPageAudio = []
-        for (var iPage = 0; iPage < this.get('pages_parsed').length; iPage++) {
+        var hasCompletedEachPageAudio = [];
+        for (let iPage = 0; iPage < this.get('pages_parsed').length; iPage++) {
             hasCompletedEachPageAudio[iPage] = !this.get('pages_parsed')[iPage].audio; // count as completed if no audio
         }
         this.set('hasCompletedEachPageAudio', hasCompletedEachPageAudio);
 
-        if (this.get('pages_parsed')[0].audio) { // start audio
-            this.playAudio($('audio#assent-audio')[0]);
+        var hasCompletedEachPageVideo = [];
+        for (let iPage = 0; iPage < this.get('pages_parsed').length; iPage++) {
+            hasCompletedEachPageVideo[iPage] = !this.get('pages_parsed')[iPage].video; // count as completed if no video
         }
+        this.set('hasCompletedEachPageVideo', hasCompletedEachPageVideo);
 
-        if (this.get('session').get('child')) { // always show in preview mode
+        this.set('pageIndex', -1);
+        this.send('nextVideo');
+
+        if (this.get('session').get('child')) { // always show frame in preview mode
             var dob = this.get('session').get('child').get('birthday');
 
             // var ageInDays = ((new Date()) - dob)/(1000*60*60*24);
