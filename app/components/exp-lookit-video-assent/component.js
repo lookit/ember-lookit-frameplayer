@@ -21,10 +21,18 @@ Video assent frame for Lookit studies for older children to agree to participati
 separately from parental consent.
 
 A series of assent form "pages" is displayed, each one displaying some combination of
-(a) an image or the participant's webcam view or a video, (b) audio, and (c) text.
-Once the family has viewed all pages, the child can answer a question about whether
-to participate. If they choose yes, they proceed; if they choose no, they are sent to the
-exit URL.
+(a) an image or the participant's webcam view or a video, (b) audio, and (c) text. You can
+optionally record webcam video during the whole assent procedure or on the last page.
+
+Once the family has viewed all pages, the
+child can answer a question about whether to participate. If they choose yes, they proceed;
+if they choose no, they are sent to the exit URL.
+
+You can either simply have children click on "Yes" or "No," or you can add audio/video on
+the last page that instructs them to answer verbally, and do webcam recording on that page.
+For instance, you might show a video of yourself asking "Do you want to participate in this study?
+You can say "yes" or "no." Parents, once your child has answered, please click on their answer
+to the right."
 
 In general it is expected that only one of webcam view, video, and image will be provided per
 page, although it is ok to have only text or only text plus audio. If audio or video is provided for a page,
@@ -170,7 +178,8 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
     hasCompletedThisPageVideo: false,
 
     childResponse: false,
-    stoppedRecording: false,
+
+    startRecordingAutomatically: Em.computed.alias('recordWholeProcedure'),
 
     assetsToExpand: {
         'audio': ['pages/audio'],
@@ -191,6 +200,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
     },
 
     updatePage() {
+        if (this.get('recordLastPage') && !this.get('recordWholeProcedure') && (this.get('pageIndex') == this.get('pages').length - 1)) {
+            this.startRecorder();
+        }
         if (this.get('pageHasAudio')) {
             this.playMedia($('audio#assent-audio')[0]);
         }
@@ -240,16 +252,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
             this.set('childResponse', 'No');
         },
 
-        record() {
-            this.startRecorder().then(() => {
-                this.set('startedRecording', true);
-                // Require at least 3 s recording
-                setTimeout(function() {
-                    $('#submitbutton').prop('disabled', false);
-                }, 3000);
-            });
-        },
-
         submit() {
             this.session.set('completedConsentFrame', true);
             /**
@@ -260,10 +262,16 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
              */
             this.send('setTimeEvent', 'assentQuestionSubmit',
                 {childResponse: this.get('childResponse')});
-            if (this.get('childResponse') == 'Yes') {
-                this.send('next');
+
+            var _this = this;
+            if (_this.get('childResponse') == 'Yes') {
+                this.stopRecorder().then(() => {
+                    _this.send('next');
+                }, () => {
+                    _this.send('next');
+                });
             } else {
-                this.send('exit');
+                _this.send('exit');
             }
         },
 
@@ -433,6 +441,26 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
                     type: 'string',
                     description: 'Text on the button to proceed to the next example video/image',
                     default: 'Next'
+                },
+                /**
+                 * Whether to record webcam video on the last page
+                 *
+                 * @property {Boolean} recordLastPage
+                 */
+                recordLastPage: {
+                    type: 'Boolean',
+                    description: 'Whether to record webcam video on the last page',
+                    default: false
+                },
+                /**
+                 * Whether to record webcam video during the entire assent frame (if true, overrides recordLastPage)
+                 *
+                 * @property {Boolean} recordWholeProcedure
+                 */
+                recordWholeProcedure: {
+                    type: 'Boolean',
+                    description: 'Whether to record webcam video during the entire assent frame',
+                    default: false
                 },
                 /**
                  * Text on the button to proceed to the previous example video/image
