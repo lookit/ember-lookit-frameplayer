@@ -899,7 +899,7 @@ export default class Base {
    */
   paddleIsMoved(paddle){
 
-    if( paddle.positions.length > 2 && paddle.position.y !== (this.canvas.height - paddle.positions[paddle.positions.length-2]*this.canvas.height)){
+    if( paddle.positions.length > 2 && paddle.position.y !== (this.canvas.height - paddle.positions[paddle.positions.length-3]*this.canvas.height)){
 
       return true;
     }
@@ -919,7 +919,7 @@ export default class Base {
 
   paddleIsMovedPlain(paddle){
 
-    if( paddle.positions.length > 2 && paddle.position.y !== (this.canvas.height - paddle.positions[paddle.positions.length-2]*this.canvas.height)){
+    if( paddle.positions.length > 2 && paddle.position.y !== (this.canvas.height - paddle.positions[paddle.positions.length-3]*this.canvas.height)){
 
       return true;
     }
