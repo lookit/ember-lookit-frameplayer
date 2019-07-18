@@ -142,7 +142,7 @@ export default class FeedCroc extends Base {
     let hitTheTarget = this.collisionDetection();
     let hitTheWall = super.wallCollision(ball);
 
-    if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMoved(paddle)){
+    if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMovedPlain(paddle)){
 
       audio.play();
     }
@@ -150,7 +150,7 @@ export default class FeedCroc extends Base {
     if(ball.state === 'start'){
       super.moveBallToStart(ball, false);
 
-      if(initialTime > 0 && super.paddleIsMoved(paddle)){
+      if(initialTime > 0 && super.paddleIsMovedPlain(paddle)){
         initialTime = new Date().getTime();
         paddleBoxColor = super.Utils.redColor;
         super.createPaddleBox(paddleBoxColor);
@@ -282,8 +282,8 @@ export default class FeedCroc extends Base {
    */
   getPaddleVelocity(time,position){
 
-    let timeVector = this.vectorCalculation(time.slice(time.length-8,time.length));
-    let positionVector = this.vectorCalculation(position.slice(position.length-8,position.length));
+    let timeVector = this.vectorCalculation(time.slice(time.length-15,time.length));
+    let positionVector = this.vectorCalculation(position.slice(position.length-15,position.length));
 
     return  this.getArraysum(this.arrayProduct(timeVector,positionVector))/this.getArraysum(this.arrayProduct(timeVector,timeVector));
   }
@@ -304,25 +304,25 @@ export default class FeedCroc extends Base {
 
 
       //Detect the ball position on Y axes, if the ball is within range  on Y axis
-      let paddleDelta = paddle.positions[paddle.positions.length -1] - paddle.positions[paddle.positions.length -8];
-      if(paddleDelta < 0.05){
-        paddleDelta = 0.05;
+      let paddleDelta = paddle.positions[paddle.positions.length -1] - paddle.positions[paddle.positions.length -12];
+      if(paddleDelta < 0.1){
+        paddleDelta = 0.1;
       }
 
-      if( ball.position.y - paddle.position.y <= paddleDelta*super.Utils.SCALE  && ball.position.y - paddle.position.y>=0 ){
+      if( Math.abs(ball.position.y - paddle.position.y) <= paddleDelta*super.Utils.SCALE  && ball.position.y - paddle.position.y>=0 ){
         let paddleVelocity = this.getPaddleVelocity(paddle.times, paddle.positions);
         super.trajectory(ball, initialTime);
         bounceSound.play();
         paddle.paddleLastMovedMillis = new Date().getTime();
         ball.impactTime = new Date().getTime() ;
-        ball.impactPosition = (this.canvas.height - (paddle.position.y - paddleDelta) ) / this.canvas.height ;
+        ball.impactPosition = (this.canvas.height - (paddle.position.y - paddle.dimensions.height - paddleDelta) ) / this.canvas.height ;
         let iterator = super.getElapsedTime(initialTime);
         ball.velocity = super.TrajectoryVars.initV - super.TrajectoryVars.gravity * iterator;
         paddle.releaseVelocity = -alpha * (ball.velocity - paddleVelocity) + paddleVelocity;
         //Fix for abrupt trajectory, make sure the trajectory is not negative
-        if(paddle.releaseVelocity <= 0.8){
-          paddle.releaseVelocity  = 0.8;
-        }
+        // if(paddle.releaseVelocity <= 1){
+        //   paddle.releaseVelocity  = 1;
+        // }
         if (isNaN(paddle.releaseVelocity)) {
           paddle.releaseVelocity = 1.56;
         }
@@ -394,7 +394,7 @@ export default class FeedCroc extends Base {
     initialTime =0;
     initSoundPlaying = true;
 
-    if(super.currentRounds >0 || (super.currentRounds === 0 && !super.paddleIsMoved(paddle))) {
+    if(super.currentRounds >0 || (super.currentRounds === 0 && !super.paddleIsMovedPlain(paddle))) {
       audio.play();
     }
     //super.generateTrajectoryParams(hArray,0.65,0.75);

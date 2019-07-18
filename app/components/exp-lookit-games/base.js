@@ -912,6 +912,26 @@ export default class Base {
     }
 
 
+
+    return false;
+  }
+
+
+  paddleIsMovedPlain(paddle){
+
+    if( paddle.positions.length > 2 && paddle.position.y !== (this.canvas.height - paddle.positions[paddle.positions.length-2]*this.canvas.height)){
+
+      return true;
+    }
+
+    // Check if paddle is moved outside the box limits
+    if (paddle.position.y  < paddleBox.position.y - paddle.dimensions.height) {
+
+
+      return true;
+    }
+
+
     return false;
   }
 
