@@ -322,7 +322,7 @@ export default class Base {
       let inst = this;
       dataLoop = setTimeout(function () {
         inst.dataCollection();
-      }, 50);
+      }, 30);
 
     };
 
@@ -366,6 +366,8 @@ export default class Base {
     this.ctx.fillStyle = Utils.blackColor;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.save();
+
+    this.drawScore();
 
     this.loopTimer = function () {
       let inst = this;
@@ -586,7 +588,7 @@ export default class Base {
 
       dataLoop = setTimeout(function () {
         inst.dataCollection();
-      }, 50);
+      }, 30);
 
     };
 
@@ -687,6 +689,9 @@ export default class Base {
 
 
     paddle.times.push(this.getElapsedTime(initialTime));
+    if(paddle.positions.length > 80){
+      paddle.positions = paddle.positions.slice(-80);
+    }
     paddle.positions.push((this.canvas.height - paddle.position.y) / this.canvas.height);
 
   }
@@ -777,6 +782,16 @@ export default class Base {
 
   }
 
+  /**
+   * Draw the game score
+   * @method drawScore
+   */
+  drawScore() {
+    this.ctx.font = '16px Arial';
+    this.ctx.fillStyle = Utils.scoreColor;
+    this.ctx.fillText('Score: ' + this.currentScore, 8, 20);
+  }
+
 
   /**
    * @method bounceTrajectory
@@ -794,8 +809,9 @@ export default class Base {
     let positionY = ball.impactPosition + paddle.releaseVelocity * (Yiterator) + 0.5 * -gravity * Math.pow(Yiterator, 2);
     let positionX = initX + ballvx * (Xiterator);
     let leftBorder = (positionX - .0175) * Utils.SCALE;
-    let downBorder = (1.3571 - positionY + .0175) * Utils.SCALE;
-
+    if(ball.positions.length > 80){
+      ball.positions = ball.positions.slice(-80);
+    }
     ball.positions.push(ball.position);
     ball.position.x = leftBorder;
     ball.position.y = this.canvas.height - positionY * this.canvas.height ;
@@ -1013,9 +1029,10 @@ export default class Base {
 
   onMouseMove(e){
 
-    mouseY += e.movementY;
+
     let border = paddleBox.position.y+paddleBox.dimensions.height/2;
-    if(mouseY  > border){
+    mouseY += e.movementY;
+    if(mouseY  > border && e.movementY >0){
       mouseY =  border;
     }
 
