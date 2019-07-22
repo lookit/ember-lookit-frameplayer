@@ -1031,10 +1031,13 @@ export default class Base {
 
 
     let border = paddleBox.position.y+paddleBox.dimensions.height/2;
+
     mouseY += e.movementY;
+
     if(e.movementY === 0){
-      mouseY += 1;
+      mouseY -= 1;
     }
+
     if(mouseY  > border && e.movementY >0){
       mouseY =  border;
     }
