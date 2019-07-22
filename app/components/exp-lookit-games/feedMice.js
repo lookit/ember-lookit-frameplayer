@@ -306,6 +306,7 @@ export default class FeedMice extends Base {
       super.moveBallToStart(ball, false);
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         audio.pause();
+        audio.currentTime = 0;
         initialTime = new Date().getTime();
         ball.state = 'fall';
 
@@ -357,7 +358,7 @@ export default class FeedMice extends Base {
 
       // Check if current index of the pressed item corresponds to the actual target index
       if (index === currentTargetIndex) {
-
+        super.increaseScore();
         goodJob.play();
 
       } else {
@@ -396,8 +397,8 @@ export default class FeedMice extends Base {
     super.dataCollection();
     let exportData = {
       game_type: 'feedMice',
-      ball_position_x: ball.position.x,
-      ball_position_y: ball.position.y,
+      ball_position_x: ball.position.x/this.canvas.width,
+      ball_position_y:(this.canvas.height - ball.position.y)/this.canvas.height,
       key_pressed_up: pressed[0],
       key_pressed_mid: pressed[1],
       key_pressed_down: pressed[2],

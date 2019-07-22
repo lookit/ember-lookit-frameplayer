@@ -197,10 +197,10 @@ export default class CatchMouse extends Base {
     super.dataCollection();
     let exportData = {
       game_type: 'catchMouse',
-      basket_x: basket.position.x,
-      basket_y: basket.position.y,
-      mice_x: mice.position.x,
-      mice_y: mice.position.y,
+      basket_x: basket.position.x/this.canvas.width,
+      basket_y: (this.canvas.height - basket.position.y)/this.canvas.height,
+      mice_x: mice.position.x/this.canvas.width,
+      mice_y:(this.canvas.height - mice.position.y)/this.canvas.height,
       trial: super.currentRounds,
       timestamp: new Date().getTime()
 
@@ -319,7 +319,7 @@ export default class CatchMouse extends Base {
 
     if (mice.state === 'done') {
 
-      super.paddleAtZero(basket, false);
+      super.paddleAtZero(basket,false);
       super.gameOver = true;
 
     }
@@ -361,7 +361,7 @@ export default class CatchMouse extends Base {
 
             cheese3Sound.play();
           }
-
+          super.increaseScore();
           this.showCheese();
 
         }

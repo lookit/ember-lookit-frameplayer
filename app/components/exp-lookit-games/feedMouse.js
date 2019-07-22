@@ -237,8 +237,8 @@ export default class FeedMouse extends Base {
     let exportData = {
 
       game_type: 'feedMouse',
-      ball_position_x: ball.position.x,
-      ball_position_y: ball.position.y,
+      ball_position_x: ball.position.x/this.canvas.width,
+      ball_position_y: (this.canvas.height - ball.position.y)/this.canvas.height,
       button_pressed: keyPressed.value,
       trial: super.currentRounds,
       timestamp: new Date().getTime()
@@ -291,6 +291,7 @@ export default class FeedMouse extends Base {
       super.moveBallToStart(ball, false);
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         startSound.pause();
+        startSound.currentTime = 0;
         ball.state = 'fall';
         initialTime = new Date().getTime();
 
@@ -325,7 +326,7 @@ export default class FeedMouse extends Base {
       this.createWindow();
 
 
-      if (keyPressed.value == true ) {
+      if (keyPressed.value === true ) {
 
         if(ball.position.x < (targetX+0.42)*super.Utils.SCALE   ){
 
@@ -335,6 +336,7 @@ export default class FeedMouse extends Base {
             target.houseColor = super.Utils.whiteColor;
             this.createHouse();
             this.createWindow();
+            super.increaseScore();
             greatJob.play();
 
           }else if(position < (winsize/2)*super.Utils.SCALE){
@@ -343,6 +345,7 @@ export default class FeedMouse extends Base {
             target.houseColor = super.Utils.whiteColor;
             this.createHouse();
             this.createWindow();
+            super.increaseScore();
             goodJob.play();
 
           }else{

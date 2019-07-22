@@ -160,6 +160,7 @@ export default class FeedCroc extends Base {
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
 
         audio.pause();
+        audio.currentTime = 0;
         ball.state = 'fall';
         initialTime = new Date().getTime();
       }
@@ -200,10 +201,11 @@ export default class FeedCroc extends Base {
       if (ball.hitstate === 'very good') {
         goodJob.play();
         this.drawImageAngle(target, target.imageTargetReachedURL, 45);
-
+        super.increaseScore();
       } else if(ball.hitstate === 'good'){
         crocEatingSound.play();
         this.drawImageAngle(target, super.Utils.crocclosednotongImage, 45);
+        super.increaseScore();
       }else{
 
         ballCatchFail.play();
@@ -233,7 +235,7 @@ export default class FeedCroc extends Base {
         super.drawBall(ball);
       }
 
-      super.paddleAtZero(paddle, hitTheTarget);
+      super.paddleAtZero(paddle, false);
 
     }
     super.paddleMove(paddle,initialTime);
@@ -304,7 +306,7 @@ export default class FeedCroc extends Base {
 
 
       //Detect the ball position on Y axes, if the ball is within range  on Y axis
-      let paddleDelta = paddle.positions[paddle.positions.length -1] - paddle.positions[paddle.positions.length -12];
+      let paddleDelta = paddle.positions[paddle.positions.length -1] - paddle.positions[paddle.positions.length -20];
       if(paddleDelta < 0.1){
         paddleDelta = 0.1;
       }
@@ -320,9 +322,9 @@ export default class FeedCroc extends Base {
         ball.velocity = super.TrajectoryVars.initV - super.TrajectoryVars.gravity * iterator;
         paddle.releaseVelocity = -alpha * (ball.velocity - paddleVelocity) + paddleVelocity;
         //Fix for abrupt trajectory, make sure the trajectory is not negative
-        // if(paddle.releaseVelocity <= 1){
-        //   paddle.releaseVelocity  = 1;
-        // }
+        if(paddle.releaseVelocity > 1.4){
+          paddle.releaseVelocity  = 1.4;
+        }
         if (isNaN(paddle.releaseVelocity)) {
           paddle.releaseVelocity = 1.56;
         }
@@ -416,10 +418,11 @@ export default class FeedCroc extends Base {
     super.dataCollection();
     let exportData = {
       game_type: 'feedCroc',
-      ball_position_x: ball.position.x,
-      ball_position_y: ball.position.y,
-      paddle_position_x: paddle.position.x,
-      paddle_position_y: paddle.position.y,
+      ball_position_x: ball.position.x/this.canvas.width,
+      ball_position_y: (this.canvas.height - ball.position.y)/this.canvas.height,
+      paddle_center_x: paddle.position.x+ paddle.dimensions.width/2,
+      paddle_width: paddle.dimensions.width,
+      paddle_position_y: (this.canvas.height - paddle.position.y)/this.canvas.height,
       trial: super.currentRounds,
       timestamp: new Date().getTime()
 

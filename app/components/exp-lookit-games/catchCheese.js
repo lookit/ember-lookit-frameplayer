@@ -145,10 +145,10 @@ export default class CatchCheese extends Base {
     super.dataCollection();
     let exportData = {
       game_type: 'catchCheese',
-      ball_position_x: ball.position.x,
-      ball_position_y: ball.position.y,
-      paddle_position_x: basket.position.x,
-      paddle_position_y: basket.position.y,
+      ball_position_x: ball.position.x/this.canvas.width,
+      ball_position_y:  (this.canvas.height - ball.position.y)/this.canvas.height,
+      paddle_position_x: basket.position.x/this.canvas.width,
+      paddle_position_y: (this.canvas.height - basket.position.y)/this.canvas.height,
       trial: super.currentRounds,
       timestamp: new Date().getTime()
 
@@ -240,6 +240,7 @@ export default class CatchCheese extends Base {
 
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         audio.pause();
+        audio.currentTime = 0;
         ball.state = 'fall';
         initialTime = new Date().getTime();
       }
@@ -272,7 +273,7 @@ export default class CatchCheese extends Base {
 
 
       if (ball.hitstate === 'very good' || ball.hitstate === 'good') {
-
+        super.increaseScore();
         goodJob.play();
 
       }else{
@@ -304,7 +305,7 @@ export default class CatchCheese extends Base {
       //User should set the paddle to initial position , call stop after that
       if(super.getElapsedTime(initialTime)  > 1.5) {
         super.moveBallToStart(ball, false);
-        super.paddleAtZero(basket, hitTheTarget);
+        super.paddleAtZero(basket,false);
       }
 
 
