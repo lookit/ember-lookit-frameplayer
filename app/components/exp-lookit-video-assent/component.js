@@ -20,15 +20,32 @@ let {
 Video assent frame for Lookit studies for older children to agree to participation,
 separately from parental consent.
 
-A series of assent form "pages" is displayed, each one displaying an image, video,
-the webcam view, and/or text. Once the family has viewed all pages, the child can
-answer a question about whether to participate. If they choose yes, they proceed; if
-they choose no, they are sent to the exit URL.
+A series of assent form "pages" is displayed, each one displaying some combination of
+(a) an image or the participant's webcam view or a video, (b) audio, and (c) text. You can
+optionally record webcam video during the whole assent procedure or on the last page.
+
+Once the family has viewed all pages, the
+child can answer a question about whether to participate. If they choose yes, they proceed;
+if they choose no, they are sent to the exit URL.
+
+You can either simply have children click on "Yes" or "No," or you can add audio/video on
+the last page that instructs them to answer verbally, and do webcam recording on that page.
+For instance, you might show a video of yourself asking "Do you want to participate in this study?
+You can say "yes" or "no." Parents, once your child has answered, please click on their answer
+to the right."
+
+In general it is expected that only one of webcam view, video, and image will be provided per
+page, although it is ok to have only text or only text plus audio. If audio or video is provided for a page,
+the participant must finish it to proceed. (If both audio and video are provided they will
+be played simultaneously and both must finish for the participant to proceed.) They only
+need to complete the audio/video for a given page once, in case they navigate using the
+previous/next buttons.
 
 This frame can optionally be shown only when the child is at least N years old, in case
 some participants will need to give assent and others will rely only on parent consent.
 
 Specifying media locations:
+
 For `imgSrc` parameters within `pages`, you can either specify complete URLs or partial URLs
 relative to a base directory `baseDir` for the frame. Images are expected to be in an
 `img` directory within the `baseDir`. For instance, in the example below,
@@ -70,6 +87,8 @@ new version of your stimuli without changing every URL. You can mix source objec
 full URLs and those using stubs within the same directory. However, any stimuli
 specified using stubs MUST be organized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.
 
+Example usage:
+
 ```json
 "frames": {
     "video-assent": {
@@ -82,7 +101,8 @@ specified using stubs MUST be organized as expected under baseDir/MEDIATYPE/file
                         {
                             "text": "My name is Jane Smith. I am a scientist who studies why children love cats."
                         }
-                    ]
+                    ],
+                    "audio": "narration_1"
                 },
                 {
                     "imgSrc": "cats_game.png",
@@ -128,11 +148,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
     }),
     startedRecording: false,
 
-    pageIndex: 0,
+    pageIndex: null,
     readAllPages: false,
 
-    noNext: computed('pageIndex', function() {
-        return this.get('pageIndex') >= this.get('pages.length') - 1;
+    noNext: computed('pageIndex', 'hasCompletedThisPageAudio', 'hasCompletedThisPageVideo', function() {
+        return (this.get('pageIndex') >= this.get('pages.length') - 1) || (!this.get('hasCompletedThisPageAudio')) || (!this.get('hasCompletedThisPageVideo'));
     }),
 
     noPrev: computed('pageIndex', function() {
@@ -143,26 +163,85 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
         return this.get('pages_parsed')[this.get('pageIndex')];
     }),
 
+    pageHasAudio: computed('pageIndex', function() {
+        return !!this.get('pages_parsed')[this.get('pageIndex')].audio;
+    }),
+
+    pageHasVideo: computed('pageIndex', function() {
+        return !!this.get('pages_parsed')[this.get('pageIndex')].video;
+    }),
+
+    hasCompletedEachPageAudio: [false], // start off with just covering page 0, populate in didInsert
+    hasCompletedEachPageVideo: [false],
+
+    hasCompletedThisPageAudio: false, // Track state of current page for blocking 'continue' action
+    hasCompletedThisPageVideo: false,
+
     childResponse: false,
-    stoppedRecording: false,
+
+    startRecordingAutomatically: Em.computed.alias('recordWholeProcedure'),
 
     assetsToExpand: {
-        'audio': [],
-        'video': ['pages/sources'],
+        'audio': ['pages/audio'],
+        'video': ['pages/video'],
         'image': ['pages/imgSrc']
+    },
+
+    // Utility to play audio/video object and avoid failing to actually trigger play for
+    // dumb browser reasons / race conditions
+    playMedia(mediaObj) {
+        //mediaObj.pause();
+        mediaObj.currentTime = 0;
+        mediaObj.play().then(() => {
+            }).catch(() => {
+                mediaObj.play();
+            }
+        );
+    },
+
+    updatePage() {
+        if (this.get('recordLastPage') && !this.get('recordWholeProcedure') && (this.get('pageIndex') == this.get('pages').length - 1)) {
+            this.startRecorder();
+        }
+        if (this.get('pageHasAudio')) {
+            this.playMedia($('audio#assent-audio')[0]);
+        }
+        if (this.get('pageHasVideo')) {
+            this.playMedia($('video#assent-video')[0]);
+        }
+        this.set('hasCompletedThisPageAudio', this.get('hasCompletedEachPageAudio')[this.get('pageIndex')]);
+        this.set('hasCompletedThisPageVideo', this.get('hasCompletedEachPageVideo')[this.get('pageIndex')]);
     },
 
     actions: {
 
         nextVideo() {
             this.set('pageIndex', this.get('pageIndex') + 1);
-            if (this.get('pageIndex') == this.get('pages').length - 1) {
+            if ((this.get('pageIndex') == this.get('pages').length - 1) && !this.get('pageHasAudio') && !this.get('pageHasVideo')) {
                 this.set('readAllPages', true);
             }
+            /**
+             * Participant proceeded to next assent page
+             *
+             * @event nextAssentPage
+             * @param {Number} pageNumber which assent page was viewed (zero-indexed)
+             */
+            this.send('setTimeEvent', 'nextAssentPage',
+                {pageNumber: this.get('pageIndex')});
+            this.updatePage();
         },
 
         previousVideo() {
             this.set('pageIndex', this.get('pageIndex') - 1);
+            /**
+             * Participant returned to previous assent page
+             *
+             * @event previousAssentPage
+             * @param {Number} pageNumber which assent page was viewed (zero-indexed)
+             */
+            this.send('setTimeEvent', 'previousAssentPage',
+                {pageNumber: this.get('pageIndex')});
+            this.updatePage();
         },
 
         selectYes() {
@@ -173,23 +252,46 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
             this.set('childResponse', 'No');
         },
 
-        record() {
-            this.startRecorder().then(() => {
-                this.set('startedRecording', true);
-                // Require at least 3 s recording
-                setTimeout(function() {
-                    $('#submitbutton').prop('disabled', false);
-                }, 3000);
-            });
-        },
-
         submit() {
             this.session.set('completedConsentFrame', true);
-            if (this.get('childResponse') == 'Yes') {
-                this.send('next');
+            /**
+             * Participant submitted assent question answer
+             *
+             * @event assentQuestionSubmit
+             * @param {String} childResponse child response submitted ('Yes' or 'No')
+             */
+            this.send('setTimeEvent', 'assentQuestionSubmit',
+                {childResponse: this.get('childResponse')});
+
+            var _this = this;
+            if (_this.get('childResponse') == 'Yes') {
+                this.stopRecorder().then(() => {
+                    _this.send('next');
+                }, () => {
+                    _this.send('next');
+                });
             } else {
-                this.send('exit');
+                _this.send('exit');
             }
+        },
+
+        audioCompleted() {
+            this.get('hasCompletedEachPageAudio')[this.get('pageIndex')] = true;
+            this.set('hasCompletedThisPageAudio', true);
+
+            if (this.get('pageIndex') == this.get('pages').length - 1) { // TODO
+                this.set('readAllPages', true);
+            }
+        },
+
+        videoCompleted() {
+            this.get('hasCompletedEachPageVideo')[this.get('pageIndex')] = true;
+            this.set('hasCompletedThisPageVideo', true);
+
+            if (this.get('pageIndex') == this.get('pages').length - 1) { // TODO
+                this.set('readAllPages', true);
+            }
+            console.log('video completed.');
         },
 
         download() {
@@ -265,7 +367,8 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
                  *
                  * @property {Array} pages
                  *   @param {String} altText Alt-text used for the image displayed, if any
-                 *   @param {Object[]} sources (Optional) String indicating video path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects.
+                 *   @param {Object[]} video (Optional) String indicating video path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects. Video will be displayed (with controls shown) and participant must complete to proceed.
+                 *   @param {Object[]} audio (Optional) String indicating audio path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects. Audio will be played (with controls shown) and participant must complete to proceed.
                  *   @param {String} imgSrc (Optional) URL of image to display; can be full path or relative to baseDir
                  *   @param {Object[]} textBlocks list of text blocks to show on this page, processed by exp-text-block. Can use HTML.
                  *   @param {Boolean} showWebcam Whether to display the participant webcam on this page
@@ -284,7 +387,23 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
                                 type: 'string',
                                 default: 'image'
                             },
-                            sources: {
+                            video: {
+                                type: 'array',
+                                default: [],
+                                items: {
+                                    type: 'object',
+                                    properties: {
+                                        src: {
+                                            type: 'string'
+                                        },
+                                        type: {
+                                            type: 'string'
+                                        }
+                                    },
+                                    required: ['src', 'type']
+                                }
+                            },
+                            audio: {
                                 type: 'array',
                                 default: [],
                                 items: {
@@ -324,6 +443,26 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
                     default: 'Next'
                 },
                 /**
+                 * Whether to record webcam video on the last page
+                 *
+                 * @property {Boolean} recordLastPage
+                 */
+                recordLastPage: {
+                    type: 'Boolean',
+                    description: 'Whether to record webcam video on the last page',
+                    default: false
+                },
+                /**
+                 * Whether to record webcam video during the entire assent frame (if true, overrides recordLastPage)
+                 *
+                 * @property {Boolean} recordWholeProcedure
+                 */
+                recordWholeProcedure: {
+                    type: 'Boolean',
+                    description: 'Whether to record webcam video during the entire assent frame',
+                    default: false
+                },
+                /**
                  * Text on the button to proceed to the previous example video/image
                  *
                  * @property {String} previousStimulusText
@@ -345,7 +484,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
                 },
                 /**
                  * How many years old the child has to be for this page to be shown. If child
-                 * is younger, the page is skipped. Leave at 0 to always show.
+                 * is younger, the page is skipped. Leave at 0 to always show. This is an
+                 * age in 'calendar years' - it will line up with the child's birthday,
+                 * regardless of leap years etc.
                  *
                  * @property {String} minimumYearsToAssent
                  */
@@ -392,7 +533,23 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
     didInsertElement() {
         this._super(...arguments);
         this.set('assentFormText', $('#consent-form-full-text').text());
-        if (this.get('session').get('child')) { // always show in preview mode
+
+        var hasCompletedEachPageAudio = [];
+        for (let iPage = 0; iPage < this.get('pages_parsed').length; iPage++) {
+            hasCompletedEachPageAudio[iPage] = !this.get('pages_parsed')[iPage].audio; // count as completed if no audio
+        }
+        this.set('hasCompletedEachPageAudio', hasCompletedEachPageAudio);
+
+        var hasCompletedEachPageVideo = [];
+        for (let iPage = 0; iPage < this.get('pages_parsed').length; iPage++) {
+            hasCompletedEachPageVideo[iPage] = !this.get('pages_parsed')[iPage].video; // count as completed if no video
+        }
+        this.set('hasCompletedEachPageVideo', hasCompletedEachPageVideo);
+
+        this.set('pageIndex', -1);
+        this.send('nextVideo');
+
+        if (this.get('session').get('child')) { // always show frame in preview mode
             var dob = this.get('session').get('child').get('birthday');
 
             // var ageInDays = ((new Date()) - dob)/(1000*60*60*24);

@@ -1,5 +1,6 @@
 {{! template-lint-disable triple-curlies }}
 {{! template-lint-disable html-comments}}
+{{! template-lint-disable no-invalid-interactive}}
 
 <div class="row exp-lookit-video-assent">
     <div class="col-md-8">
@@ -32,6 +33,7 @@
             <div class="col-md-11 col-md-offset-1 text-center well video-assent-doc assent-info " id="consent-form-text">
 
                 <div class="exp-lookit-assent-visual-container">
+
                     {{#if currentPage.imgSrc}}
                         <img class="exp-lookit-assent-image" src={{currentPage.imgSrc}} alt={{currentPage.altText}}>
                     {{/if}}
@@ -40,16 +42,23 @@
                         <div id="recorder" class="col-xs-12"></div>
                     </div>
 
-                    {{#if currentPage.sources}}
+                    <video id="assent-video" class="exp-lookit-assent-image {{if (not currentPage.video) 'hidden'}}" controls onended={{action 'videoCompleted'}}>
+                        {{#each currentPage.video as |vidsource|}}
+                            <source src={{vidsource.src}} type={{vidsource.type}}>
+                        {{/each}}
+                        Your browser does not support the video tag.
+                    </video>
 
-                        <video class="exp-lookit-assent-video" controls style="width: 100%;">
-                            {{#each currentPage.sources as |vidsource|}}
-                                <source src={{vidsource.src}} type={{vidsource.type}}>
-                            {{/each}}
-                            Your browser does not support the video tag.
-                        </video>
+                </div>
 
-                    {{/if}}
+
+                <div class="{{if (not currentPage.audio) 'hidden'}}">
+                    <audio id="assent-audio" controls onended={{action 'audioCompleted'}}>
+                        {{#each currentPage.audio as |vidsource|}}
+                            <source src={{vidsource.src}} type={{vidsource.type}} >
+                        {{/each}}
+                        Your browser does not support the audio tag.
+                    </audio>
                 </div>
 
                 {{#if currentPage.textBlocks}}
