@@ -85,17 +85,10 @@ const VideoRecorder = Ember.Object.extend({
     install(videoFilename = '', pipeKey = '', pipeEnv = 1, maxRecordingTime = 100000000, autosave = 1, audioOnly = 0) {
 
         let origDivId = this.get('divId');
-        console.log(origDivId);
 
         this.set('divId', `${this.get('divId')}-${this.get('recorderId')}`);
-        console.log(this.get('divId'));
 
         var $element = $(this.get('element'));
-        let hidden = this.get('hidden');
-        if (hidden) {
-            $element = $('body');
-        }
-        console.log($element);
 
         let divId = this.get('divId');
         let videoId = this.get('videoId');
@@ -369,7 +362,7 @@ export default Ember.Service.extend({
     //    $.cachedScript( 'https://cdn.addpipe.com/2.0/pipe.js' );
     //},
 
-    //Insert the recorder
+    //Insert a recorder
     start(videoId, element) {
         if (typeof (videoId) !== 'string') {
             throw new Error('videoId must be a string');
@@ -386,12 +379,6 @@ export default Ember.Service.extend({
         delete recorders[recorder.get('recorderId')];
         this.set('_recorders', recorders);
         recorder.uninstall();
-    },
-
-    destroyAll() {
-        for (let rec in PipeSDK.recorders) {
-            rec.remove();
-        }
     }
 
 });

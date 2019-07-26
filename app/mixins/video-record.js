@@ -11,7 +11,7 @@ let {
  */
 
 /**
- * A mixin that can be used to add basic support for video recording to a particular experiment frame
+ * A mixin that can be used to add basic support for video recording across frames
  *
  * By default, the recorder will be installed when this frame loads, but recording
  * will not start automatically. To override either of these settings, set
@@ -91,7 +91,7 @@ export default Ember.Mixin.create({
      */
     recorder: null,
 
-    videoRecorder: Ember.inject.service(), // equiv to passing 'video-recorder'
+    videoRecorderService: Ember.inject.service('video-recorder'), // equiv to passing 'video-recorder'
 
     /**
      * A list of all video IDs used in this mixing (a new one is created for each recording).
@@ -204,7 +204,7 @@ export default Ember.Mixin.create({
     setupRecorder(element) {
         const videoId = this._generateVideoId();
         this.set('videoId', videoId);
-        const recorder = this.get('videoRecorder').start(videoId, element);
+        const recorder = this.get('videoRecorderService').start(videoId, element);
         const pipeLoc = Ember.getOwner(this).resolveRegistration('config:environment').pipeLoc;
         const pipeEnv = Ember.getOwner(this).resolveRegistration('config:environment').pipeEnv;
         const installPromise = recorder.install(this.get('videoId'), pipeLoc, pipeEnv,
