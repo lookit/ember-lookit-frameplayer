@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 //import config from 'ember-get-config';
 import FullScreen from '../../mixins/full-screen';
+import SessionRecord from '../../mixins/session-record';
 
 /**
  * @module exp-player
@@ -48,7 +49,7 @@ import FullScreen from '../../mixins/full-screen';
  *
  * @uses FullScreen
  */
-export default Ember.Component.extend(FullScreen, {
+export default Ember.Component.extend(FullScreen, SessionRecord, {
     toast: Ember.inject.service(),
     // {String} the unique identifier for the _instance_
     id: null,
