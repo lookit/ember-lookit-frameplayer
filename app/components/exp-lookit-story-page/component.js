@@ -351,15 +351,18 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         updateCharacterHighlighting() {
 
             var thisAudioData = this.get('audioSources')[this.currentAudioIndex];
-            var t = $('#' + thisAudioData.audioId)[0].currentTime;
 
-            $('.story-image-container').removeClass('highlight');
+            if (thisAudioData.highlights) {
+                var t = $('#' + thisAudioData.audioId)[0].currentTime;
 
-            thisAudioData.highlights.forEach(function (h) {
-                if (t > h.range[0] && t < h.range[1]) {
-                    $('#' + h.image).addClass('highlight');
-                }
-            });
+                $('.story-image-container').removeClass('highlight');
+
+                thisAudioData.highlights.forEach(function (h) {
+                    if (t > h.range[0] && t < h.range[1]) {
+                        $('#' + h.image).addClass('highlight');
+                    }
+                });
+            }
         },
 
         replay() {
