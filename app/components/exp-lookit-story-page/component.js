@@ -29,7 +29,10 @@ let {
  * fullscreen mode.
  *
  * The parent may press 'next' to proceed, or the study may proceed
- * automatically when audio finishes (autoProceed).
+ * automatically when audio finishes (autoProceed). Optionally, if using autoProceed,
+ * the frame may be displayed for a minimum duration, so that e.g. it lasts exactly 10
+ * seconds from start of audio even though the audio is only 2 seconds long. If using this
+ * feature a progress bar may be displayed.
  *
  * Any number of images may be placed on the screen, and their position
  * specified. (Aspect ratio will be the same as the original image.)
@@ -77,8 +80,8 @@ let {
                     "audioId": "firstAudio",
                     "sources": "intro1",
                     "highlights": [
-                        {"range": [3.017343,	5.600283], "image": 	"leftA"},
-                        {"range": [5.752911,	8.899402], "image": 	"rightA"}
+                        {"range": [3.017343,    5.600283], "image":     "leftA"},
+                        {"range": [5.752911,    8.899402], "image":     "rightA"}
                     ]
                 }
             ]
@@ -113,6 +116,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     // Don't need to override startRecordingAutomatically as we override the observer
     // whenPossibleToRecord directly.
 
+    pageTimer: null,
+    progressTimer: null,
+    timerStart: null,
+    finishedAllAudio: false,
+    minDurationAchieved: false,
+
     assetsToExpand: {
         'audio': ['audioSources/sources'],
         'video': [],
@@ -145,6 +154,30 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     type: 'boolean',
                     description: 'Whether to proceed automatically after audio (and hide replay/next buttons)'
                 },
+
+                /**
+                 * [Only used if autoProceed is true] Minimum duration of frame in seconds.
+                 * Frame will auto-proceed after this much time has elapsed and all audio
+                 * has completed.
+                 *
+                 * @property {Number} durationSeconds
+                 */
+                durationSeconds: {
+                    type: 'Number',
+                    description: 'Minimum duration of frame in seconds if autoproceeding'
+                },
+
+                /**
+                 * [Only used if autoProceed is true and durationSeconds set] Whether to
+                 * show a progress bar based on durationSeconds in the parent text area.
+                 *
+                 * @property {Number} showProgressBar
+                 */
+                showProgressBar: {
+                    type: 'Boolean',
+                    description: 'Whether to show a progress bar based on durationSeconds'
+                },
+
                 /**
                  * Array of objects describing audio to play at the start of
                  * this frame. Each element describes a separate audio segment.
@@ -353,17 +386,38 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         playNextAudioSegment() {
             this.set('currentAudioIndex', this.get('currentAudioIndex') + 1);
+            if (this.currentAudioIndex == 0) { // Starting first audio segment: start timer & progress bar
+                if (this.get('durationSeconds')) {
+                    let _this = this;
+                    this.set('pageTimer', window.setTimeout(function() {
+                            _this.set('minDurationAchieved', true);
+                            if (_this.get('finishedAllAudio')) {
+                                _this.send('finish');
+                            }
+                        }, _this.get('durationSeconds') * 1000));
+                    if (this.get('showProgressBar')) {
+                        this.set('timerStart', new Date().getTime());
+                        this.set('progressTimer', window.setInterval(function() {
+                            var prctDone =  ((new Date().getTime() - _this.get('timerStart'))) / (_this.get('durationSeconds') * 10);
+                            $('.progress-bar').css('width', prctDone + '%');
+                        }, 100));
+
+                    }
+                } else {
+                    this.set('minDurationAchieved', true);
+                }
+            }
             if (this.currentAudioIndex < this.get('audioSources').length) {
                 $('#' + this.get('audioSources')[this.currentAudioIndex].audioId)[0].play();
             } else {
-                if (this.get('autoProceed')) {
+                this.set('finishedAllAudio', true);
+                if (this.get('autoProceed') && this.get('minDurationAchieved')) {
                     this.send('finish');
                 } else {
                     $('#nextbutton').prop('disabled', false);
                 }
             }
         }
-
     },
 
     didInsertElement() {
@@ -384,6 +438,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             this.send('playNextAudioSegment');
         }
 
+    },
+
+    willDestroyElement() {
+        window.clearInterval(this.get('pageTimer'));
+        window.clearInterval(this.get('progressTimer'));
+        this._super(...arguments);
     },
 
     // Hide story once rendered (as long as story hasn't started yet anyway)

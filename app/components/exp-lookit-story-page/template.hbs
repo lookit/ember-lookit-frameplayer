@@ -40,7 +40,13 @@
         {{#unless autoProceed}}
             <button id="replaybutton" class="btn btn-primary left"  {{ action 'replay' }}> Replay</button>
         {{/unless}}
+
         <div id="parenttext">
+            {{#if (and autoProceed showProgressBar)}}
+                <div class="progress" id="progressbar">
+                    <div class="progress-bar bg-info progress-bar-striped" role="progressbar" style="width:0%" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            {{/if}}
             {{exp-text-block block=parentTextBlock}}
         </div>
         {{#unless autoProceed}}
