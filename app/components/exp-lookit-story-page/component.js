@@ -329,7 +329,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         }
     },
 
-    // Override to do a bit extra when recording
+    // Override to do a bit extra when recording (single-frame)
     whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
         if (this.get('doRecording')) {
             var _this = this;
@@ -338,6 +338,23 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     _this.set('currentAudioIndex', -1);
                     _this.send('playNextAudioSegment');
                     _this.set('recorderReady', false);
+                    $('#waitForVideo').hide();
+                    $('.story-image-container').show();
+                });
+            }
+        }
+    }),
+
+    // Override to do a bit extra when starting session recorder
+    whenPossibleToRecordSession: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
+        if (this.get('startSessionRecording')) {
+            var _this = this;
+            if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
+                this.startSessionRecorder().then(() => {
+                    _this.send('setTimeEvent', 'startedSessionRecording');
+                    _this.set('sessionRecorderReady', false);
+                    _this.set('currentAudioIndex', -1);
+                    _this.send('playNextAudioSegment');
                     $('#waitForVideo').hide();
                     $('.story-image-container').show();
                 });
@@ -379,12 +396,18 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         finish() {
             var _this = this;
-            this.stopRecorder().then(() => {
-                _this.set('stoppedRecording', true);
+            this.send('setTimeEvent', 'finish called');
+
+            if (this.get('doRecording')) {
+                this.stopRecorder().then(() => {
+                    _this.set('stoppedRecording', true);
+                    _this.send('next');
+                }, () => {
+                    _this.send('next');
+                });
+            } else {
                 _this.send('next');
-            }, () => {
-                _this.send('next');
-            });
+            }
         },
 
         playNextAudioSegment() {
@@ -392,26 +415,34 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             if (this.currentAudioIndex == 0) { // Starting first audio segment: start timer & progress bar
                 if (this.get('durationSeconds')) {
                     let _this = this;
+                    this.send('setTimeEvent', 'setting timer');
                     this.set('pageTimer', window.setTimeout(function() {
+                            _this.send('setTimeEvent', 'timer ended');
                             _this.set('minDurationAchieved', true);
                             if (_this.get('finishedAllAudio')) {
                                 _this.send('finish');
                             }
                         }, _this.get('durationSeconds') * 1000));
                     if (this.get('showProgressBar')) {
-                        this.set('timerStart', new Date().getTime());
-                        this.set('progressTimer', window.setInterval(function() {
-                            var prctDone =  ((new Date().getTime() - _this.get('timerStart'))) / (_this.get('durationSeconds') * 10);
-                            $('.progress-bar').css('width', prctDone + '%');
-                        }, 100));
-
-                    }
+                       this.set('timerStart', new Date().getTime());
+                       let timerStart = _this.get('timerStart');
+                       let durationSeconds = _this.get('durationSeconds') * 10;
+                       var _this = this;
+                       this.set('progressTimer', window.setInterval(function() {
+                           let now = new Date().getTime();
+                           var prctDone =  (now - timerStart) / durationSeconds;
+                           $('.progress-bar').css('width', prctDone + '%');
+                       }, 100));
+                   }
                 } else {
                     this.set('minDurationAchieved', true);
                 }
             }
             if (this.currentAudioIndex < this.get('audioSources').length) {
-                $('#' + this.get('audioSources')[this.currentAudioIndex].audioId)[0].play();
+
+                $('#' + this.get('audioSources')[this.currentAudioIndex].audioId)[0].play().then( () => {
+                     this.send('setTimeEvent', 'startAudioSegment', {'currentAudioIndex': this.currentAudioIndex});
+                });
             } else {
                 this.set('finishedAllAudio', true);
                 if (this.get('autoProceed') && this.get('minDurationAchieved')) {
@@ -437,7 +468,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         // If not recording, go to audio right away! Otherwise will be triggered when
         // recording starts.
-        if (!this.get('doRecording')) {
+        if (!(this.get('doRecording') || this.get('startSessionRecording'))) {
             this.send('playNextAudioSegment');
         }
 
@@ -451,7 +482,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
     // Hide story once rendered (as long as story hasn't started yet anyway)
     didRender() {
-        if (this.get('doRecording') && this.get('currentAudioIndex') == -1) {
+        if ((this.get('doRecording') || this.get('startSessionRecording')) && this.get('currentAudioIndex') == -1) {
             $('.story-image-container').hide();
         }
     }

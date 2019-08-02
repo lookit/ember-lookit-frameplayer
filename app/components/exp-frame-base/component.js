@@ -413,7 +413,16 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
             timestamp: curTime.toISOString()
         };
         Ember.assign(eventData, extra);
+        // Add some extra info if there's session recording ongoing
+        if (this.get('sessionRecorder') && this.get('sessionRecordingInProgress')) {
+             Ember.assign(eventData, {
+                 sessionVideoId: this.get('sessionVideoId'),
+                 sessionPipeId: this.get('sessionRecorder').get('pipeVideoName'),
+                 sessionStreamTime: this.get('sessionRecorder').getTime()
+             });
+        }
         return eventData;
+
     },
 
     setSessionCompleted() {
@@ -442,15 +451,9 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
              * @event nextFrame
              */
             this.send('setTimeEvent', 'nextFrame');
-            // Note: this will allow participant to proceed even if saving fails. The
-            // reason not to execute 'next' within this._save().then() is that an action
-            // executed as a promise doesn't count as a 'user interaction' event, so
-            // we wouldn't be able to enter FS mode upon starting the next frame. Given
-            // that the user is likely to have limited ability to FIX a save error, and the
-            // only thing they'll really be able to do is try again anyway, preventing
-            // them from continuing is unnecessarily disruptive.
-            this.send('save');
 
+            // Determine which frame to go to next
+            var iNextFrame = -1;
             if (this._selectNextFrameFn) {
                 var session = this.get('session');
                 var expData = session ? session.get('expData') : null;
@@ -462,15 +465,34 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
                 var frameIndex = this.get('frameIndex');
                 var frameData = this.serializeContent(); // note - may not have saved to expData yet at time of call
 
-                var iNextFrame = this._selectNextFrameFn(frames, frameIndex, frameData, expData, sequence, child, pastSessions);
+                iNextFrame = this._selectNextFrameFn(frames, frameIndex, frameData, expData, sequence, child, pastSessions);
                 if (!(typeof (iNextFrame) === 'number')) {
                     throw new Error('selectNextFrame function provided for this frame, but did not return a number');
                 }
-                this.sendAction('next', iNextFrame);
-            } else {
-                this.sendAction('next');
             }
-            window.scrollTo(0, 0);
+
+            // Note: this will allow participant to proceed even if saving fails. The
+            // reason not to execute 'next' within this._save().then() is that an action
+            // executed as a promise doesn't count as a 'user interaction' event, so
+            // we wouldn't be able to enter FS mode upon starting the next frame. Given
+            // that the user is likely to have limited ability to FIX a save error, and the
+            // only thing they'll really be able to do is try again anyway, preventing
+            // them from continuing is unnecessarily disruptive.
+            this.send('save');
+
+            if (this.get('endSessionRecording') && this.get('sessionRecorder')) {
+                this.get('session').set('recordingInProgress', false);
+                var _this = this;
+                this.stopSessionRecorder().finally(() => {
+                    _this.sendAction('next', iNextFrame);
+                    window.scrollTo(0, 0);
+                    _this.destroySessionRecorder();
+                });
+            } else {
+                this.sendAction('next', iNextFrame);
+                window.scrollTo(0, 0);
+            }
+
         },
 
         exit() {

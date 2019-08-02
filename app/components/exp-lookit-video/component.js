@@ -140,6 +140,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
 
     // Override setting in VideoRecord mixin - only use camera if doing recording
     doUseCamera: Ember.computed.alias('doRecording'),
+    startRecordingAutomatically: Ember.computed.alias('doRecording'),
 
     completedAnnouncementAudio: false,
     completedAnnouncementTime: false,
@@ -781,22 +782,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         this.set('currentTask', 'announce');
         this.segmentObserver(this);
     },
-
-    /**
-     * Observer that starts recording once recorder is ready. Override to do additional
-     * stuff at this point!
-     * @method whenPossibleToRecord
-     */
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('doRecording')) {
-            var _this = this;
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                this.startRecorder().then(() => {
-                    _this.set('recorderReady', false);
-                });
-            }
-        }
-    }),
 
     willDestroyElement() { // remove event handler
         $(document).off('keyup.pauser');
