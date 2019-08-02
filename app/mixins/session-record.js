@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { observer } from '@ember/object';
+import VideoRecorder from '../services/video-recorder';
 
 let {
     $
@@ -39,14 +40,7 @@ let {
  * the recording service),
  * and streamTime (when in the video they happened, in s).
  *
- * Setting up the camera is handled in didInsertElement, and making sure recording is
- * stopped is handled in willDestroyElement (Ember hooks that fire during the component
- * lifecycle). It is very important (in general, but especially when using this mixin)
- * that you call `this._super(...arguments);` in any functions where your frame overrides
- * hooks like this, so that the mixin's functions get called too!
- *
- *
- * @class SessionRecordMixin
+ * @class Session-record
  */
 
 /**
@@ -72,42 +66,30 @@ let {
 
 export default Ember.Mixin.create({
 
-    /**
+    /*
      * The recorder object, accessible to the consuming frame. Includes properties
      * recorder.nWebcams, recorder.hasCamAccess, recorder.micChecked, recorder.connected.
-     * @property {VideoRecorder} sessionRecorder
      */
     sessionRecorder: Ember.computed.alias('session.recorder'),
     sessionRecordingInProgress: Ember.computed.alias('session.recordingInProgress'),
 
-    /**
-     * A video ID to use for the current recording. Format is
+    /* A video ID to use for the current recording. Format is
      * `videoStream_<experimentId>_multiframe-<frameIdOfFirstFrame>_<sessionId>_timestampMS_RRR`
      * where RRR are random numeric digits.
-     *
-     * @property {String} sessionVideoId
      */
     sessionVideoId: Ember.computed.alias('session.videoId'),
 
-    sessionRecorderService: Ember.inject.service('video-recorder'), // equiv to passing 'video-recorder'
-
-    /**
-     * JQuery ID to identify the recorder element.
-     * @property {String} [sessionRecorderElement='#recorder']
-     */
+    // JQuery ID to identify the recorder element.
     sessionRecorderElement: 'sessionRecorder',
 
     startSessionRecording: false,
     endSessionRecording: false,
 
-    /**
-     * Whether recorder has been set up yet. Automatically set when doing setup.
-     * @property {Boolean} sessionRecorderReady
-     */
+    // Whether recorder has been set up yet. Automatically set when doing setup.
     sessionRecorderReady: false,
 
     /**
-     * Whether to do audio-only (vs also video) recording. Can be overridden by consuming frame.
+     * Whether to do audio-only (vs also video) recording for session (multiframe) recording. Can be overridden by consuming frame.
      * @property {Number} sessionAudioOnly
      * @default 0
      */
@@ -117,7 +99,7 @@ export default Ember.Mixin.create({
         return [
             'videoStream',
             this.get('experiment.id'),
-            'multiframe-' + this.get('id'),
+            this.get('id') + '-multiframe',
             this.get('session.id'),
             +Date.now(), // Timestamp in ms
             Math.floor(Math.random() * 1000)
@@ -125,45 +107,33 @@ export default Ember.Mixin.create({
     },
 
     /**
-     * Extend any base time event capture with information about the recorded video
-     * @method makeTimeEvent
-     * @param eventName
-     * @param extra
-     * @return {Object} Event data object
-     */
-      makeTimeEvent(eventName, extra) {
-         // If there is a current session recording, add some extra info
-         let base = this._super(eventName, extra);
-         if (this.get('sessionRecorder') && this.get('sessionRecordingInProgress')) {
-             Ember.assign(base, {
-                 sessionVideoId: this.get('sessionVideoId'),
-                 sessionPipeId: this.get('sessionRecorder').get('pipeVideoName'),
-                 sessionStreamTime: this.get('sessionRecorder').getTime()
-             });
-         }
-
-         return base;
-     },
-
-    /**
      * Set up a video recorder instance
      * @method setupRecorder
      * @param {Node} element A DOM node representing where to mount the recorder
      * @return {Promise} A promise representing the result of installing the recorder
      */
-    setupSessionRecorder(element) {
+    setupSessionRecorder(recorderElementId) {
+
+        var $sessionRecorderElement = $('<div>', {
+            id: recorderElementId,
+            class: 'video-recorder-hidden'
+        });
+        // Make sure to append to the player's parent so that this doesn't get removed
+        // (which won't prevent recording, but WILL prevent receiving events!)
+        $('#' + this.get('elementId')).parent().append($sessionRecorderElement);
+        var element = $('#' + recorderElementId);
 
         const maxRecordingLength = 100000000;
         const autosave = 1;
         const sessionVideoId = this._generateSessionVideoId();
         this.get('session').set('videoId', sessionVideoId);
-        const sessionRecorder = this.get('sessionRecorderService').start(sessionVideoId, element);
+        const sessionRecorder = new VideoRecorder({element: element});
         const pipeLoc = Ember.getOwner(this).resolveRegistration('config:environment').pipeLoc;
         const pipeEnv = Ember.getOwner(this).resolveRegistration('config:environment').pipeEnv;
         const installPromise = sessionRecorder.install(sessionVideoId, pipeLoc, pipeEnv,
           maxRecordingLength, autosave, this.get('sessionAudioOnly'));
 
-        // Track specific events for all frames that use  VideoRecorder
+        // Track specific events for all frames that use VideoRecorder
         var _this = this;
         sessionRecorder.on('onCamAccess', (recId, hasAccess) => {   // eslint-disable-line no-unused-vars
             if (!(_this.get('isDestroyed') || _this.get('isDestroying'))) {
@@ -191,61 +161,48 @@ export default Ember.Mixin.create({
     startSessionRecorder() {
         const sessionRecorder = this.get('sessionRecorder');
         if (sessionRecorder) {
-            return sessionRecorder.record().then(() => {
-                this.send('setTimeEvent', 'startRecording');
-            });
+            return sessionRecorder.record();
         } else {
-            return Ember.RSVP.resolve();
+            return Ember.RSVP.reject();
         }
     },
 
     /**
-     * Stop the recording
-     * @method stopSessionRecorder
-     * @return Promise A promise that resolves when upload is complete
+     * Stop recording
+     * @method startSessionRecorder
+     * @return Promise Resolves when recording has started
      */
     stopSessionRecorder() {
         const sessionRecorder = this.get('sessionRecorder');
-        if (sessionRecorder && sessionRecorder.get('recording')) {
+        if (sessionRecorder) {
             this.send('setTimeEvent', 'stoppingCapture');
             return sessionRecorder.stop();
         } else {
-            return Ember.RSVP.resolve(1);
+            return Ember.RSVP.reject();
         }
     },
 
     /**
      * Destroy recorder and stop accessing webcam
-     * @method destroyRecorder
+     * @method destroySessionRecorder
      */
-    destroyRecorder() {
-        const sessionRecorder = this.get('sessionRecorder');
-        if (sessionRecorder) {
+    destroySessionRecorder() {
+        const recorder = this.get('sessionRecorder');
+        if (recorder) {
             if (!(this.get('isDestroyed') || this.get('isDestroying'))) {
                 this.send('setTimeEvent', 'destroyingRecorder');
             }
-            sessionRecorder.destroy();
+            recorder.destroy();
         }
-    },
-
-    willDestroyElement() {
-        var _this = this;
-        if (_this.get('endSessionRecording') && _this.get('sessionRecorder')) {
-            _this.stopSessionRecorder().finally(() => {
-                _this.get('session').set('recordingInProgress', false);
-                _this.destroyRecorder();
-            });
-        }
-        _this._super(...arguments);
     },
 
     didInsertElement() {
         if (this.get('startSessionRecording')) {
             var _this = this;
 
-            this.setupSessionRecorder($('#' + this.get('sessionRecorderElement'))).then(() => {
+            this.setupSessionRecorder(this.get('sessionRecorderElement')).then(() => {
                 /**
-                 * When video recorder has been installed
+                 * When session video recorder has been installed
                  *
                  * @event sessionRecorderReady
                  */
@@ -258,8 +215,26 @@ export default Ember.Mixin.create({
         this._super(...arguments);
     },
 
+    willDestroyElement() {
+        var _this = this;
+        if (_this.get('sessionRecorder') && _this.get('endSessionRecording')) {
+            if (!(_this.get('session').get('recordingInProgress'))) {
+                _this.destroySessionRecorder();
+            } else {
+                _this.stopSessionRecorder().then(() => {
+                    _this.set('stoppedSessionRecording', true);
+                    _this.destroySessionRecorder();
+                }, () => {
+                    _this.destroySessionRecorder();
+                });
+            }
+        }
+        _this.send('setTimeEvent', 'destroyingElement');
+        _this._super(...arguments);
+    },
+
     /**
-     * Observer that starts recording once recorder is ready. Override to do additional
+     * Observer that starts recording once session recorder is ready. Override to do additional
      * stuff at this point!
      * @method whenPossibleToRecord
      */
@@ -268,28 +243,11 @@ export default Ember.Mixin.create({
             var _this = this;
             if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
                 this.startSessionRecorder().then(() => {
+                    _this.send('setTimeEvent', 'startedSessionRecording');
                     _this.set('sessionRecorderReady', false);
                 });
             }
         }
-    }),
-
-    /**
-     * Hide the recorder from display. Useful if you would like to keep recording without extra UI elements to
-     *   distract the user.
-     * @method hideRecorder
-     */
-    hideSessionRecorder() {
-        $(this.get('sessionRecorderElement')).parent().addClass('video-recorder-hidden');
-    },
-
-    /**
-     * Show the recorder to the user. Useful if you want to temporarily show a hidden recorder- eg to let the user fix
-     *   a problem with video capture settings
-     * @method showRecorder
-     */
-    showSessionRecorder() {
-        $(this.get('sessionRecorderElement')).parent().removeClass('video-recorder-hidden');
-    }
+    })
 
 });

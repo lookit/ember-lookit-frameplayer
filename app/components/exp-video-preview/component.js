@@ -36,11 +36,11 @@ import { computed } from '@ember/object';
     }
 
  * ```
- * @class ExpVideoPreview
- * @extends ExpFrameBase
- * @uses ExpandAssets
- * @uses VideoRecord
- * @uses MediaReload
+ * @class Exp-video-preview
+ * @extends Exp-frame-base
+ * @uses Expand-assets
+ * @uses Video-record
+ * @uses Media-reload
  */
 export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAssets, {
     layout,

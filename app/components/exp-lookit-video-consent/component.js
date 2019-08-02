@@ -44,10 +44,10 @@ The consent document can be downloaded as PDF document by participant.
 }
 ```
 
-@class ExpLookitVideoConsent
-@extends ExpFrameBase
+@class Exp-lookit-video-consent
+@extends Exp-frame-base
 
-@uses VideoRecord
+@uses Video-record
 */
 
 export default ExpFrameBaseComponent.extend(VideoRecord, {

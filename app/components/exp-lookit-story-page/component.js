@@ -89,11 +89,11 @@ let {
  }
 
  * ```
- * @class ExpLookitStoryPage
- * @extends ExpFrameBase
- * @uses FullScreen
- * @uses VideoRecord
- * @uses ExpandAssets
+ * @class Exp-lookit-story-page
+ * @extends Exp-frame-base
+ * @uses Full-screen
+ * @uses Video-record
+ * @uses Expand-assets
  */
 
 export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {

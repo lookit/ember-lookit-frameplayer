@@ -134,10 +134,10 @@ Example usage:
 }
 ```
 
-@class ExpLookitVideoAssent
-@extends ExpFrameBase
+@class Exp-lookit-video-assent
+@extends Exp-frame-base
 
-@uses VideoRecord
+@uses Video-record
 */
 
 export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAssets, {

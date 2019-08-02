@@ -117,12 +117,12 @@ let {
     }
 * ```
 *
-* @class ExpLookitPreferentialLooking
-* @extends ExpFrameBase
-* @uses FullScreen
-* @uses MediaReload
-* @uses VideoRecord
-* @uses ExpandAssets
+* @class Exp-lookit-preferential-looking
+* @extends Exp-frame-base
+* @uses Full-screen
+* @uses Media-reload
+* @uses Video-record
+* @uses Expand-assets
 */
 
 // TODO: refactor into cleaner structure with segments announcement, intro, calibration,

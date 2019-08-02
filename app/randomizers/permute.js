@@ -48,7 +48,7 @@
 }
 *
 * ```
-* @class permute
+* @class Permute
 */
 
 var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {

@@ -101,12 +101,12 @@ let {
         }
 
 * ```
-* @class ExpLookitVideo
-* @extends ExpFrameBase
-* @uses FullScreen
-* @uses MediaReload
-* @uses VideoRecord
-* @uses ExpandAssets
+* @class Exp-lookit-video
+* @extends Exp-frame-base
+* @uses Full-screen
+* @uses Media-reload
+* @uses Video-record
+* @uses Expand-assets
 */
 
 // TODO: refactor into cleaner structure with segments announcement, intro, calibration, test, with more general logic for transitions. Construct list at start since some elements optional. Then proceed through - instead of setting task manually, use utility to move to next task within list.

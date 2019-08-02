@@ -24,7 +24,7 @@ import SessionRecord from '../../mixins/session-record';
  * ```
  *
  * As a user you will almost never need to insert a component into a template directly- the platform should handle that
- *  by automatically inserting an <a href="../classes/ExpPlayer.html" class="crosslink">ExpPlayer</a> component when your experiment starts.
+ *  by automatically inserting an <a href="../classes/Exp-player.html" class="crosslink">exp-player</a> component when your experiment starts.
  * However, a sample template usage is provided below for completeness.
  *
  * ```handlebars
@@ -45,9 +45,9 @@ import SessionRecord from '../../mixins/session-record';
         extra=extra
     }}
  * ```
- * @class ExpFrameBase
+ * @class Exp-frame-base
  *
- * @uses FullScreen
+ * @uses Full-screen
  */
 export default Ember.Component.extend(FullScreen, SessionRecord, {
     toast: Ember.inject.service(),

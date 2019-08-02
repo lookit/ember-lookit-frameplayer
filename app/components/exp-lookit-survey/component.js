@@ -504,8 +504,8 @@ let {
         }
 
  * ```
- * @class ExpLookitSurvey
- * @extends ExpFrameBase
+ * @class Exp-lookit-survey
+ * @extends Exp-frame-base
  */
 
 export default ExpFrameBaseComponent.extend({

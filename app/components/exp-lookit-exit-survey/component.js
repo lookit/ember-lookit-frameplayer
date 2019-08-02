@@ -47,10 +47,10 @@ Standard exit survey for Lookit studies: confirm participant birthdate, ask user
 }
 ```
 
-@class ExpLookitExitSurvey
-@extends ExpFrameBase
+@class Exp-lookit-exit-survey
+@extends Exp-frame-base
 
-@uses FullScreen
+@uses Full-screen
 @uses Validations
 */
 
