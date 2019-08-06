@@ -27,7 +27,7 @@ let {
  *   fullScreenElementId='expContainer'}}
  * ```
  *
- * @class ExpPlayer
+ * @class Exp-player
  */
 export default Ember.Component.extend(FullScreen, {
     layout: layout,
@@ -224,15 +224,15 @@ export default Ember.Component.extend(FullScreen, {
             var frameIndex = this.get('frameIndex');
             if (nextFrameIndex == -1) {
                 nextFrameIndex = frameIndex + 1;
-            } else if (nextFrameIndex < 0 || nextFrameIndex >= this.get('frames').length) {
+            } else if (nextFrameIndex < 0 || nextFrameIndex > this.get('frames').length) {
                 throw new Error('selectNextFrame function provided for this frame returns a frame index out of bounds');
             }
-            if (frameIndex < (this.get('frames').length - 1)) {
+            if (nextFrameIndex < (this.get('frames').length)) {
                 this._transition();
                 this.set('frameIndex', nextFrameIndex);
                 return;
             }
-            this._exit();
+            this._exit(); // exit if nextFrameIndex == this.get('frames').length
         },
 
         skipone() {
@@ -262,6 +262,19 @@ export default Ember.Component.extend(FullScreen, {
         },
 
         exitEarly() {
+            // Stop/destroy session recorder if needed
+            if (this.get('session').get('recorder')) {
+                var sessionRecorder = this.get('session').get('recorder');
+                this.get('session').set('recordingInProgress', false);
+                if (sessionRecorder.get('recording')) {
+                    sessionRecorder.stop().finally(() => {
+                        sessionRecorder.destroy();
+                    });
+                } else {
+                    sessionRecorder.destroy();
+                }
+            }
+
             this.set('hasAttemptedExit', false);
             Ember.$(window).off('keydown');
             // Save any available data immediately
@@ -273,7 +286,7 @@ export default Ember.Component.extend(FullScreen, {
 
             // Navigate to last page in experiment (assumed to be survey frame)
             var max = this.get('frames.length') - 1;
-            this.set('frameIndex', max);
+            this.send('next', max);
         },
     }
 });

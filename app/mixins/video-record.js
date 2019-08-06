@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { observer } from '@ember/object';
+import VideoRecorder from '../services/video-recorder';
 
 let {
     $
@@ -11,7 +12,7 @@ let {
  */
 
 /**
- * A mixin that can be used to add basic support for video recording to a particular experiment frame
+ * A mixin that can be used to add basic support for video recording across frames
  *
  * By default, the recorder will be installed when this frame loads, but recording
  * will not start automatically. To override either of these settings, set
@@ -46,7 +47,7 @@ let {
  * hooks like this, so that the mixin's functions get called too!
  *
  *
- * @class VideoRecordMixin
+ * @class Video-record
  */
 
 /**
@@ -90,8 +91,6 @@ export default Ember.Mixin.create({
      * @property {VideoRecorder} recorder
      */
     recorder: null,
-
-    videoRecorder: Ember.inject.service(), // equiv to passing 'video-recorder'
 
     /**
      * A list of all video IDs used in this mixing (a new one is created for each recording).
@@ -204,7 +203,7 @@ export default Ember.Mixin.create({
     setupRecorder(element) {
         const videoId = this._generateVideoId();
         this.set('videoId', videoId);
-        const recorder = this.get('videoRecorder').start(videoId, element);
+        const recorder = new VideoRecorder({element: element});
         const pipeLoc = Ember.getOwner(this).resolveRegistration('config:environment').pipeLoc;
         const pipeEnv = Ember.getOwner(this).resolveRegistration('config:environment').pipeEnv;
         const installPromise = recorder.install(this.get('videoId'), pipeLoc, pipeEnv,
@@ -298,9 +297,9 @@ export default Ember.Mixin.create({
         const recorder = this.get('recorder');
         if (recorder && recorder.get('recording')) {
             this.send('setTimeEvent', 'stoppingCapture');
-            return this.get('recorder').stop();
+            return recorder.stop();
         } else {
-            return Ember.RSVP.resolve(1);
+            return Ember.RSVP.reject(1);
         }
     },
 

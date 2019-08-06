@@ -18,7 +18,7 @@ let {
  * displayed, and audio and video clips may be included in the instructions (and may be
  * required to be played before moving on).
  *
- * Each element of the 'blocks' parameter is rendered using {{#crossLink "ExpTextBlock"}}{{/crossLink}}.
+ * Each element of the 'blocks' parameter is rendered using {{#crossLink "Exp-text-block"}}{{/crossLink}}.
 
 ```json
  "frames": {
@@ -103,9 +103,9 @@ let {
  }
 
  * ```
- * @class ExpLookitInstructions
- * @extends ExpFrameBase
- * @extends VideoRecord
+ * @class Exp-lookit-instructions
+ * @extends Exp-frame-base
+ * @extends Video-record
  */
 
 export default ExpFrameBaseComponent.extend(VideoRecord, {
@@ -131,7 +131,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 },
 
                 /**
-                 * Array of blocks for {{#crossLink "ExpTextBlock"}}{{/crossLink}}, specifying text/images of instructions to display
+                 * Array of blocks for {{#crossLink "Exp-text-block"}}{{/crossLink}}, specifying text/images of instructions to display
                  *
                  * @property {Object[]} blocks
                  *   @param {String} title Title of this section
