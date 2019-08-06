@@ -112,11 +112,10 @@
     <pre class="code prettyprint linenums">
 import Ember from &#x27;ember&#x27;;
 import { observer } from &#x27;@ember/object&#x27;;
-import VideoRecorder from &#x27;../services/video-recorder&#x27;
+import VideoRecorder from &#x27;../services/video-recorder&#x27;;
 
 let {
-    $,
-    RSVP
+    $
 } = Ember;
 
 /**
@@ -295,17 +294,17 @@ export default Ember.Mixin.create({
      * @param extra
      * @return {Object} Event data object
      */
-    //makeTimeEvent(eventName, extra) {
+    makeTimeEvent(eventName, extra) {
         // All frames using this mixin will add videoId and streamTime to every server event
-    //    let base = this._super(eventName, extra);
-     //   const streamTime = this.get(&#x27;recorder&#x27;) ? this.get(&#x27;recorder&#x27;).getTime() : null;
-    //    Ember.assign(base, {
-    //        videoId: this.get(&#x27;videoId&#x27;),
-    //        pipeId: this.get(&#x27;recorder&#x27;) ? this.get(&#x27;recorder&#x27;).get(&#x27;pipeVideoName&#x27;) : null,
-    //        streamTime: streamTime
-    //    });
-    //    return base;
-    //},
+        let base = this._super(eventName, extra);
+        const streamTime = this.get(&#x27;recorder&#x27;) ? this.get(&#x27;recorder&#x27;).getTime() : null;
+        Ember.assign(base, {
+            videoId: this.get(&#x27;videoId&#x27;),
+            pipeId: this.get(&#x27;recorder&#x27;) ? this.get(&#x27;recorder&#x27;).get(&#x27;pipeVideoName&#x27;) : null,
+            streamTime: streamTime
+        });
+        return base;
+    },
 
     /**
      * Set up a video recorder instance
@@ -410,9 +409,9 @@ export default Ember.Mixin.create({
         const recorder = this.get(&#x27;recorder&#x27;);
         if (recorder &amp;&amp; recorder.get(&#x27;recording&#x27;)) {
             this.send(&#x27;setTimeEvent&#x27;, &#x27;stoppingCapture&#x27;);
-            return this.get(&#x27;recorder&#x27;).stop();
+            return recorder.stop();
         } else {
-            return Ember.RSVP.resolve(1);
+            return Ember.RSVP.reject(1);
         }
     },
 

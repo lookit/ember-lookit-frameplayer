@@ -136,7 +136,7 @@ import SessionRecord from &#x27;../../mixins/session-record&#x27;;
  * &#x60;&#x60;&#x60;
  *
  * As a user you will almost never need to insert a component into a template directly- the platform should handle that
- *  by automatically inserting an &lt;a href=&quot;../classes/exp-player.html&quot; class=&quot;crosslink&quot;&gt;exp-player&lt;/a&gt; component when your experiment starts.
+ *  by automatically inserting an &lt;a href=&quot;../classes/Exp-player.html&quot; class=&quot;crosslink&quot;&gt;exp-player&lt;/a&gt; component when your experiment starts.
  * However, a sample template usage is provided below for completeness.
  *
  * &#x60;&#x60;&#x60;handlebars
@@ -160,6 +160,7 @@ import SessionRecord from &#x27;../../mixins/session-record&#x27;;
  * @class Exp-frame-base
  *
  * @uses Full-screen
+ * @uses Session-record
  */
 export default Ember.Component.extend(FullScreen, SessionRecord, {
     toast: Ember.inject.service(),
@@ -527,11 +528,11 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         Ember.assign(eventData, extra);
         // Add some extra info if there&#x27;s session recording ongoing
         if (this.get(&#x27;sessionRecorder&#x27;) &amp;&amp; this.get(&#x27;sessionRecordingInProgress&#x27;)) {
-             Ember.assign(eventData, {
-                 sessionVideoId: this.get(&#x27;sessionVideoId&#x27;),
-                 sessionPipeId: this.get(&#x27;sessionRecorder&#x27;).get(&#x27;pipeVideoName&#x27;),
-                 sessionStreamTime: this.get(&#x27;sessionRecorder&#x27;).getTime()
-             });
+            Ember.assign(eventData, {
+                sessionVideoId: this.get(&#x27;sessionVideoId&#x27;),
+                sessionPipeId: this.get(&#x27;sessionRecorder&#x27;).get(&#x27;pipeVideoName&#x27;),
+                sessionStreamTime: this.get(&#x27;sessionRecorder&#x27;).getTime()
+            });
         }
         return eventData;
 
@@ -563,21 +564,9 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
              * @event nextFrame
              */
             this.send(&#x27;setTimeEvent&#x27;, &#x27;nextFrame&#x27;);
-            // Note: this will allow participant to proceed even if saving fails. The
-            // reason not to execute &#x27;next&#x27; within this._save().then() is that an action
-            // executed as a promise doesn&#x27;t count as a &#x27;user interaction&#x27; event, so
-            // we wouldn&#x27;t be able to enter FS mode upon starting the next frame. Given
-            // that the user is likely to have limited ability to FIX a save error, and the
-            // only thing they&#x27;ll really be able to do is try again anyway, preventing
-            // them from continuing is unnecessarily disruptive.
-            this.send(&#x27;save&#x27;);
 
-            if (this.get(&#x27;endSessionRecording&#x27;) &amp;&amp; this.get(&#x27;sessionRecorder&#x27;)) {
-                this.send(&#x27;setTimeEvent&#x27;, &#x27;destroyingSessionRecorder&#x27;);
-                this.get(&#x27;session&#x27;).set(&#x27;recordingInProgress&#x27;, false);
-                this.get(&#x27;sessionRecorder&#x27;).destroy();
-            }
-
+            // Determine which frame to go to next
+            var iNextFrame = -1;
             if (this._selectNextFrameFn) {
                 var session = this.get(&#x27;session&#x27;);
                 var expData = session ? session.get(&#x27;expData&#x27;) : null;
@@ -589,15 +578,34 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
                 var frameIndex = this.get(&#x27;frameIndex&#x27;);
                 var frameData = this.serializeContent(); // note - may not have saved to expData yet at time of call
 
-                var iNextFrame = this._selectNextFrameFn(frames, frameIndex, frameData, expData, sequence, child, pastSessions);
+                iNextFrame = this._selectNextFrameFn(frames, frameIndex, frameData, expData, sequence, child, pastSessions);
                 if (!(typeof (iNextFrame) === &#x27;number&#x27;)) {
                     throw new Error(&#x27;selectNextFrame function provided for this frame, but did not return a number&#x27;);
                 }
-                this.sendAction(&#x27;next&#x27;, iNextFrame);
-            } else {
-                this.sendAction(&#x27;next&#x27;);
             }
-            window.scrollTo(0, 0);
+
+            // Note: this will allow participant to proceed even if saving fails. The
+            // reason not to execute &#x27;next&#x27; within this._save().then() is that an action
+            // executed as a promise doesn&#x27;t count as a &#x27;user interaction&#x27; event, so
+            // we wouldn&#x27;t be able to enter FS mode upon starting the next frame. Given
+            // that the user is likely to have limited ability to FIX a save error, and the
+            // only thing they&#x27;ll really be able to do is try again anyway, preventing
+            // them from continuing is unnecessarily disruptive.
+            this.send(&#x27;save&#x27;);
+
+            if (this.get(&#x27;endSessionRecording&#x27;) &amp;&amp; this.get(&#x27;sessionRecorder&#x27;)) {
+                this.get(&#x27;session&#x27;).set(&#x27;recordingInProgress&#x27;, false);
+                var _this = this;
+                this.stopSessionRecorder().finally(() =&gt; {
+                    _this.sendAction(&#x27;next&#x27;, iNextFrame);
+                    window.scrollTo(0, 0);
+                    _this.destroySessionRecorder();
+                });
+            } else {
+                this.sendAction(&#x27;next&#x27;, iNextFrame);
+                window.scrollTo(0, 0);
+            }
+
         },
 
         exit() {

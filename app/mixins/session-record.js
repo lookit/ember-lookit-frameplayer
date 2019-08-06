@@ -82,14 +82,25 @@ export default Ember.Mixin.create({
     // JQuery ID to identify the recorder element.
     sessionRecorderElement: 'sessionRecorder',
 
+    /**
+     * Whether to start a session (multi-frame) recording as soon as possible upon loading this frame. This allows you to conduct video recording across multiple frames, simply specifying which frame to start and end on. Individual frames may also provide frame-specific recording capabilities; it is best NOT to conduct both a multiframe 'session' recording and frame-specific recording simultaneously as multiple video streams will eat up bandwidth. If you decide to use session recording, turn off recording for any frames that would otherwise record. There can be multiple session recordings in an experiment, e.g. from frames 1-3 and 5-10.
+     * @property {Number} startSessionRecording
+     * @default false
+     */
     startSessionRecording: false,
+
+    /**
+     * Whether to end any session (multi-frame) recording at the end of this frame.
+     * @property {Number} endSessionRecording
+     * @default false
+     */
     endSessionRecording: false,
 
     // Whether recorder has been set up yet. Automatically set when doing setup.
     sessionRecorderReady: false,
 
     /**
-     * Whether to do audio-only (vs also video) recording for session (multiframe) recording. Can be overridden by consuming frame.
+     * Whether to do audio-only (vs also video) recording for session (multiframe) recording. Only used if starting session recording this frame.
      * @property {Number} sessionAudioOnly
      * @default 0
      */

@@ -463,7 +463,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             var _this = this;
             if (this.get(&#x27;sessionRecorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;sessionRecorderReady&#x27;)) {
                 this.startSessionRecorder().then(() =&gt; {
-                    _this.send(&#x27;setTimeEvent&#x27;, &#x27;recorder started&#x27;);
+                    _this.send(&#x27;setTimeEvent&#x27;, &#x27;startedSessionRecording&#x27;);
                     _this.set(&#x27;sessionRecorderReady&#x27;, false);
                     _this.set(&#x27;currentAudioIndex&#x27;, -1);
                     _this.send(&#x27;playNextAudioSegment&#x27;);
@@ -529,7 +529,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     let _this = this;
                     this.send(&#x27;setTimeEvent&#x27;, &#x27;setting timer&#x27;);
                     this.set(&#x27;pageTimer&#x27;, window.setTimeout(function() {
-                            _this.send(&#x27;setTimeEvent&#x27;, &#x27;timer ended&#x27;); // TODO: here. Why is the first frame with session recording longer?? Timer is ending at 5.3-5.5s instead of 5.
+                            _this.send(&#x27;setTimeEvent&#x27;, &#x27;timer ended&#x27;);
                             _this.set(&#x27;minDurationAchieved&#x27;, true);
                             if (_this.get(&#x27;finishedAllAudio&#x27;)) {
                                 _this.send(&#x27;finish&#x27;);
@@ -550,8 +550,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 }
             }
             if (this.currentAudioIndex &lt; this.get(&#x27;audioSources&#x27;).length) {
-                this.send(&#x27;setTimeEvent&#x27;, &#x27;startAudioSegment&#x27;, {&#x27;currentAudioIndex&#x27;: this.currentAudioIndex});
-                $(&#x27;#&#x27; + this.get(&#x27;audioSources&#x27;)[this.currentAudioIndex].audioId)[0].play();
+
+                $(&#x27;#&#x27; + this.get(&#x27;audioSources&#x27;)[this.currentAudioIndex].audioId)[0].play().then(() =&gt; {
+                    this.send(&#x27;setTimeEvent&#x27;, &#x27;startAudioSegment&#x27;, {&#x27;currentAudioIndex&#x27;: this.currentAudioIndex});
+                });
             } else {
                 this.set(&#x27;finishedAllAudio&#x27;, true);
                 if (this.get(&#x27;autoProceed&#x27;) &amp;&amp; this.get(&#x27;minDurationAchieved&#x27;)) {

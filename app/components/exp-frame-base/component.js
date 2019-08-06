@@ -48,6 +48,7 @@ import SessionRecord from '../../mixins/session-record';
  * @class Exp-frame-base
  *
  * @uses Full-screen
+ * @uses Session-record
  */
 export default Ember.Component.extend(FullScreen, SessionRecord, {
     toast: Ember.inject.service(),
