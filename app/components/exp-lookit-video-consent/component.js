@@ -252,7 +252,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 template: {
                     type: 'string',
                     description: 'Which consent document template to use',
-                    default: 'consent001'
+                    default: 'consent_001'
                 }
             },
             required: ['PIName', 'institution', 'PIContact', 'purpose', 'procedures', 'payment', 'template']
