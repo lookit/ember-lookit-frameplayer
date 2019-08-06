@@ -4976,7 +4976,7 @@
         {
             "file": "app/randomizers/random-parameter-set.js",
             "line": 321,
-            "description": "[Optional] Array of weights for parameter sets; elements correspond to\nelements of parameterSets. The probability of selecting an element\n`parameterSets[i]` is `parameterSetWeights[i]/sum(parameterSetWeights)`.\n\nIf not provided, all `parameterSets` are weighted equally.\n\nThis is intended to allow manual control of counterbalancing during\ndata collection, e.g. to allow one condition to \"catch up\" if it was\nrandomly selected less often.",
+            "description": "[Optional] Array of weights for parameter sets; elements correspond to\nelements of parameterSets. The probability of selecting an element\n`parameterSets[i]` is `parameterSetWeights[i]/sum(parameterSetWeights)`.\n\nIf not provided, all `parameterSets` are weighted equally.\n\nThis is intended to allow manual control of counterbalancing during\ndata collection, e.g. to allow one condition to \"catch up\" if it was\nrandomly selected less often.\n\nInstead of providing a single list of the same length as parameterSets,\nyou may instead provide a list of objects specifying the weights to use within\nvarious age ranges, like this:\n\n```\n   \"parameterSetWeights\": [\n       {\n           \"minAge\": 0,\n           \"maxAge\": 365,\n           \"weights\": [1, 0, 1]\n       },\n       {\n           \"minAge\": 365,\n           \"maxAge\": 10000,\n           \"weights\": [0, 1, 0]\n       },\n   ]\n```\nThe child's age in days will be computed, and the weights used will be based on the\nfirst element of `parameterSetWeights` where the child falls between the min and max\nage. In the example above, children under one year old will be assigned to either\nthe first or third condition; children over a year will be assigned to the second condition.\nThis may be useful for researchers who need to balance condition assignment per\nage bracket. As you code data and realize you are set on 3-year-olds in condition A, for\ninstance, you can stop assigning any more 3-year-olds to that condition.",
             "itemtype": "property",
             "name": "parameterSetWeights",
             "type": "Number[]",
@@ -4986,7 +4986,7 @@
         },
         {
             "file": "app/randomizers/random-parameter-set.js",
-            "line": 426,
+            "line": 484,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "conditions",

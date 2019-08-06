@@ -299,7 +299,7 @@ function shuffleArray(array) {
 // e.g. LISTVAR__3__4, LISTVAR1__LISTVAR2__3, LISTVAR1__1__LISTVAR2__3 - but this quickly
 // also requires appropriate processing of parentheses/order-of-operations.
 
-var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
+var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame, child) {
 
     // Data provided to randomizer (properties of frameConfig):
 
@@ -441,6 +441,32 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
      * data collection, e.g. to allow one condition to &quot;catch up&quot; if it was
      * randomly selected less often.
      *
+     * Instead of providing a single list of the same length as parameterSets,
+     * you may instead provide a list of objects specifying the weights to use within
+     * various age ranges, like this:
+     *
+&#x60;&#x60;&#x60;
+    &quot;parameterSetWeights&quot;: [
+        {
+            &quot;minAge&quot;: 0,
+            &quot;maxAge&quot;: 365,
+            &quot;weights&quot;: [1, 0, 1]
+        },
+        {
+            &quot;minAge&quot;: 365,
+            &quot;maxAge&quot;: 10000,
+            &quot;weights&quot;: [0, 1, 0]
+        },
+    ]
+&#x60;&#x60;&#x60;
+     * The child&#x27;s age in days will be computed, and the weights used will be based on the
+     * first element of &#x60;parameterSetWeights&#x60; where the child falls between the min and max
+     * age. In the example above, children under one year old will be assigned to either
+     * the first or third condition; children over a year will be assigned to the second condition.
+     * This may be useful for researchers who need to balance condition assignment per
+     * age bracket. As you code data and realize you are set on 3-year-olds in condition A, for
+     * instance, you can stop assigning any more 3-year-olds to that condition.
+     *
      * @property {Number[]} parameterSetWeights
      */
 
@@ -499,8 +525,40 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
     }
 
     // Select a parameter set to use for this trial.
+
+    var equalWeights = new Array(frameConfig.parameterSets.length).fill(1);
     if (!(frameConfig.hasOwnProperty(&#x27;parameterSetWeights&#x27;))) {
-        frameConfig.parameterSetWeights = new Array(frameConfig.parameterSets.length).fill(1);
+        frameConfig.parameterSetWeights = equalWeights;
+    } else {
+        if (typeof frameConfig.parameterSetWeights[0] === &#x27;object&#x27;) {
+            // Get child&#x27;s age in days
+            var childDOB;
+            try {
+                childDOB = child.get(&#x27;birthday&#x27;);
+                if (isNaN(childDOB)) {
+                    console.warn(&#x27;No child birthday available for randomization. Using today\&#x27;s date.&#x27;);
+                    childDOB = new Date().getTime();
+                }
+            } catch(error) {
+                console.warn(&#x27;No child birthday available for randomization. Using today\&#x27;s date.&#x27;);
+                childDOB = new Date().getTime();
+            }
+            var childAgeDays = (new Date().getTime() - childDOB)/(1000*60*60*24);
+
+            console.log(childAgeDays);
+
+            // Find the age range this child fits in
+            var ageBasedWeightObj = frameConfig.parameterSetWeights.find(function(element) {
+                return (element.minAge &lt;= childAgeDays &amp;&amp; childAgeDays &lt;= element.maxAge);
+            });
+            if (ageBasedWeightObj) {
+                frameConfig.parameterSetWeights = ageBasedWeightObj.weights;
+                console.log(&#x27;Using age-based randomization parameters&#x27;);
+            } else { // Set to equal weights if child doesn&#x27;t fall in any range given
+                console.warn(&#x27;Child does not fall into any designated age range for randomization. Weighting parameter sets equally.&#x27;);
+                frameConfig.parameterSetWeights = equalWeights;
+            }
+        }
     }
 
     var parameterData = getRandomElement(frameConfig.parameterSets, frameConfig.parameterSetWeights);
