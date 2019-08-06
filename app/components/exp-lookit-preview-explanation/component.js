@@ -7,7 +7,7 @@ import ExpFrameBaseComponent from '../exp-frame-base/component';
  */
 
 /**
- * A frame that to explain any blinding procedures to parents, and offer them the option to preview stimuli before the study. Two buttons allow the user to move forward: one goes to the next frame (if the parent wants to preview stimuli), and one skips the next frame and goes to the one after that (if the parent declins). Therefore, this frame should be followed by an {{#crossLink "ExpVideoPreview"}}{{/crossLink}} frame.
+ * A frame that to explain any blinding procedures to parents, and offer them the option to preview stimuli before the study. Two buttons allow the user to move forward: one goes to the next frame (if the parent wants to preview stimuli), and one skips the next frame and goes to the one after that (if the parent declins). Therefore, this frame should be followed by an {{#crossLink "Exp-video-preview"}}{{/crossLink}} frame.
 
 ```json
  "frames": {
@@ -35,8 +35,8 @@ import ExpFrameBaseComponent from '../exp-frame-base/component';
  }
 
  * ```
- * @class ExpLookitPreviewExplanation
- * @extends ExpFrameBase
+ * @class Exp-lookit-preview-explanation
+ * @extends Exp-frame-base
  */
 
 export default ExpFrameBaseComponent.extend({

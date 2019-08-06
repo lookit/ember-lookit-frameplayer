@@ -99,11 +99,11 @@ let {
  }
 
  * ```
- * @class ExpLookitGeometryAlternation
- * @extends ExpFrameBase
- * @uses FullScreen
- * @uses VideoRecord
- * @uses ExpandAssets
+ * @class Exp-lookit-geometry-alternation
+ * @extends Exp-frame-base
+ * @uses Full-screen
+ * @uses Video-record
+ * @uses Expand-assets
  */
 
 export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
@@ -119,9 +119,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     completedAttn: false,
     currentSegment: 'intro', // 'calibration', 'test' (mutually exclusive)
 
-    startRecordingAutomatically: true,
-    doRecording: true,
-    doUseCamera: true,
+    // Override setting in VideoRecord mixin - only use camera if doing recording
+    doUseCamera: Ember.computed.alias('doRecording'),
+    startRecordingAutomatically: Ember.computed.alias('doRecording'),
+
     recordingStarted: false,
 
     assetsToExpand: {
@@ -144,6 +145,11 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
     readyToStartCalibration: Ember.computed('recordingStarted', 'completedAudio', 'completedAttn',
         function() {
+            if (this.get('session').get('recorder')) {
+                if (this.get('session').get('recorder').get('recording')) {
+                    return true;
+                }
+            }
             return (this.get('recordingStarted') && this.get('completedAudio') && this.get('completedAttn'));
         }),
 
@@ -172,6 +178,16 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         parameters: {
             type: 'object',
             properties: {
+                /**
+                 * Whether to do webcam recording on this frame
+                 *
+                 * @property {Boolean} doRecording
+                 */
+                doRecording: {
+                    type: 'boolean',
+                    description: 'Whether to do webcam recording',
+                    default: true
+                },
                 /**
                  * True to use big fat triangle as context figure, or false to use small skinny triangle as context.
                  *
@@ -872,6 +888,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             calLength: this.get('calibrationLength')});
 
         this.send('showFullscreen');
+        this.notifyPropertyChange('readyToStartCalibration');
         this.startIntro();
     },
 
@@ -888,14 +905,30 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
      * @method whenPossibleToRecord
      */
     whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        var _this = this;
-        console.log(this.get('recorder.hasCamAccess'));
-        console.log(this.get('recorderReady'));
-        if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-            this.startRecorder().then(() => {
-                _this.set('recorderReady', false);
-                _this.set('recordingStarted', true);
-            });
+        if (this.get('doRecording')) {
+            var _this = this;
+            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
+                this.startRecorder().then(() => {
+                    _this.set('recorderReady', false);
+                    _this.set('recordingStarted', true);
+                });
+            }
         }
-    })
+    }),
+
+    /**
+     * Observer that starts recording once sessionrecorder is ready.
+     * @method whenPossibleToRecordSession
+     */
+    whenPossibleToRecordSession: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
+        if (this.get('startSessionRecording')) {
+            var _this = this;
+            if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
+                this.startSessionRecorder().then(() => {
+                    _this.set('sessionRecorderReady', false);
+                    _this.set('recordingStarted', true);
+                });
+            }
+        }
+    }),
 });

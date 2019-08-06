@@ -11,11 +11,11 @@ import ExperimentParser from '../../utils/parse-experiment';
  * Frame that allows you to specify a list of possible frames to show, plus an index or
  * list of indices of which ones to actually show. The frame(s) will be inserted into the
  * sequence of frames for this study on the fly, so that you can use a custom
- * {{#crossLink "ExpFrameBase/generateProperties:property"}}{{/crossLink}}
+ * <a href="../classes/Exp-frame-base.html#property_generateProperties" class="crosslink">generateProperties</a>
  * function to select which frame(s) to show.
  *
  *
- * This frame serves as a wrapper for the randomizer <a href="../classes/Select.html" class="crosslink">Select</a>,
+ * This frame serves as a wrapper for the randomizer <a href="../classes/Select.html" class="crosslink">select</a>,
  * which is evaluated during experiment parsing and cannot be modified on the fly.
  *
  *
@@ -59,7 +59,7 @@ import ExperimentParser from '../../utils/parse-experiment';
  *
  *
  * **Warning:** to avoid unpredictable behavior, this frame does not itself use any
- * {{#crossLink "ExpFrameBase/selectNextFrame:property"}}{{/crossLink}} passed to it.
+ * <a href="../classes/Exp-frame-base.html#property_selectNextFrame" class="crosslink">selectNextFrame</a> passed to it.
  * (Frames within the `frameOptions` list are welcome to make use of `selectNextFrame`, though!)
  *
  *
@@ -76,8 +76,8 @@ import ExperimentParser from '../../utils/parse-experiment';
  * `1-study-procedure-2`.
  *
  *
- * @class ExpFrameSelect
- * @extends ExpFrameBase
+ * @class Exp-frame-select
+ * @extends Exp-frame-base
  *
  */
 export default ExpFrameBaseComponent.extend({

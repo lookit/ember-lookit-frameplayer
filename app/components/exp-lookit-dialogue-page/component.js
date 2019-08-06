@@ -133,11 +133,11 @@ let {
  }
 
  * ```
- * @class ExpLookitDialoguePage
- * @extends ExpFrameBase
- * @uses FullScreen
- * @uses ExpandAssets
- * @uses VideoRecord
+ * @class Exp-lookit-dialogue-page
+ * @extends Exp-frame-base
+ * @uses Full-screen
+ * @uses Expand-assets
+ * @uses Video-record
  */
 
 export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
@@ -188,14 +188,31 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
     // Override to do a bit extra when starting recording
     whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        var _this = this;
-        if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-            this.startRecorder().then(() => {
-                _this.set('recorderReady', false);
-                $('#waitForVideo').hide();
-                _this.set('currentAudioIndex', -1);
-                _this.send('playNextAudioSegment');
-            });
+        if (this.get('doRecording')) {
+            var _this = this;
+            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
+                this.startRecorder().then(() => {
+                    _this.set('recorderReady', false);
+                    $('#waitForVideo').hide();
+                    _this.set('currentAudioIndex', -1);
+                    _this.send('playNextAudioSegment');
+                });
+            }
+        }
+    }),
+
+    // Override to do a bit extra when starting session recorder
+    whenPossibleToRecordSession: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
+        if (this.get('startSessionRecording')) {
+            var _this = this;
+            if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
+                this.startSessionRecorder().then(() => {
+                    _this.set('sessionRecorderReady', false);
+                    $('#waitForVideo').hide();
+                    _this.set('currentAudioIndex', -1);
+                    _this.send('playNextAudioSegment');
+                });
+            }
         }
     }),
 
@@ -642,7 +659,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         });
 
         // If not waiting for recording to start, just go ahead with audio now
-        if (!this.get('doUseCamera')) {
+        if (!(this.get('doUseCamera') || this.get('startSessionRecording'))) {
             this.send('playNextAudioSegment');
         }
 

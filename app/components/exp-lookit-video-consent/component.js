@@ -44,10 +44,10 @@ The consent document can be downloaded as PDF document by participant.
 }
 ```
 
-@class ExpLookitVideoConsent
-@extends ExpFrameBase
+@class Exp-lookit-video-consent
+@extends Exp-frame-base
 
-@uses VideoRecord
+@uses Video-record
 */
 
 export default ExpFrameBaseComponent.extend(VideoRecord, {
@@ -252,7 +252,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 template: {
                     type: 'string',
                     description: 'Which consent document template to use',
-                    default: 'consent001'
+                    default: 'consent_001'
                 }
             },
             required: ['PIName', 'institution', 'PIContact', 'purpose', 'procedures', 'payment', 'template']
