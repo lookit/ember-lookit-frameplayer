@@ -353,7 +353,7 @@ as shown below, in addition to the parameters described under 'properties'.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_randomizers_random-parameter-set.js.html#l426"><code>app&#x2F;randomizers&#x2F;random-parameter-set.js:426</code></a>
+        <a href="../files/app_randomizers_random-parameter-set.js.html#l484"><code>app&#x2F;randomizers&#x2F;random-parameter-set.js:484</code></a>
         </p>
 
 
@@ -665,6 +665,29 @@ elements of parameterSets. The probability of selecting an element
 <p>This is intended to allow manual control of counterbalancing during
 data collection, e.g. to allow one condition to &quot;catch up&quot; if it was
 randomly selected less often.</p>
+<p>Instead of providing a single list of the same length as parameterSets,
+you may instead provide a list of objects specifying the weights to use within
+various age ranges, like this:</p>
+<pre class="code prettyprint"><code>   &quot;parameterSetWeights&quot;: [
+       {
+           &quot;minAge&quot;: 0,
+           &quot;maxAge&quot;: 365,
+           &quot;weights&quot;: [1, 0, 1]
+       },
+       {
+           &quot;minAge&quot;: 365,
+           &quot;maxAge&quot;: 10000,
+           &quot;weights&quot;: [0, 1, 0]
+       },
+   ]
+</code></pre>
+<p>The child's age in days will be computed, and the weights used will be based on the
+first element of <code>parameterSetWeights</code> where the child falls between the min and max
+age. In the example above, children under one year old will be assigned to either
+the first or third condition; children over a year will be assigned to the second condition.
+This may be useful for researchers who need to balance condition assignment per
+age bracket. As you code data and realize you are set on 3-year-olds in condition A, for
+instance, you can stop assigning any more 3-year-olds to that condition.</p>
 
     </div>
 

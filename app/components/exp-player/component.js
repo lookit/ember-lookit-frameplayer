@@ -146,7 +146,8 @@ export default Ember.Component.extend(FullScreen, {
 
         var parser = new ExperimentParser({
             structure: this.get('experiment.structure'),
-            pastSessions: this.get('pastSessions').toArray()
+            pastSessions: this.get('pastSessions').toArray(),
+            child: this.get('session.child')
         });
         var [frameConfigs, conditions] = parser.parse();
         this.set('frames', frameConfigs); // When player loads, convert structure to list of frames
