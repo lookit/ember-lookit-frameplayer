@@ -10,11 +10,13 @@ var ExperimentParser = function (context = {
     structure: {
         frames: {},
         sequence: []
-    }
+    },
+    child: {}
 }) {
     this.pastSessions = context.pastSessions;
     this.frames = context.structure.frames;
     this.sequence = context.structure.sequence;
+    this.child = context.child;
 
 };
 /* Modifies the data in the experiment schema definition to match
@@ -41,7 +43,8 @@ ExperimentParser.prototype._resolveRandom = function (frame, frameId) {
             frameId,
             frame,
             this.pastSessions,
-            this._resolveFrame.bind(this)
+            this._resolveFrame.bind(this),
+            this.child
         );
     }
 };
