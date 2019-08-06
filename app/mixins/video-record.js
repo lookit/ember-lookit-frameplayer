@@ -1,10 +1,9 @@
 import Ember from 'ember';
 import { observer } from '@ember/object';
-import VideoRecorder from '../services/video-recorder'
+import VideoRecorder from '../services/video-recorder';
 
 let {
-    $,
-    RSVP
+    $
 } = Ember;
 
 /**
@@ -184,15 +183,15 @@ export default Ember.Mixin.create({
      * @return {Object} Event data object
      */
     makeTimeEvent(eventName, extra) {
-      //All frames using this mixin will add videoId and streamTime to every server event
-       let base = this._super(eventName, extra);
-       const streamTime = this.get('recorder') ? this.get('recorder').getTime() : null;
-       Ember.assign(base, {
-           videoId: this.get('videoId'),
-           pipeId: this.get('recorder') ? this.get('recorder').get('pipeVideoName') : null,
-           streamTime: streamTime
-       });
-       return base;
+        // All frames using this mixin will add videoId and streamTime to every server event
+        let base = this._super(eventName, extra);
+        const streamTime = this.get('recorder') ? this.get('recorder').getTime() : null;
+        Ember.assign(base, {
+            videoId: this.get('videoId'),
+            pipeId: this.get('recorder') ? this.get('recorder').get('pipeVideoName') : null,
+            streamTime: streamTime
+        });
+        return base;
     },
 
     /**

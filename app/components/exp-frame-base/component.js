@@ -415,11 +415,11 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         Ember.assign(eventData, extra);
         // Add some extra info if there's session recording ongoing
         if (this.get('sessionRecorder') && this.get('sessionRecordingInProgress')) {
-             Ember.assign(eventData, {
-                 sessionVideoId: this.get('sessionVideoId'),
-                 sessionPipeId: this.get('sessionRecorder').get('pipeVideoName'),
-                 sessionStreamTime: this.get('sessionRecorder').getTime()
-             });
+            Ember.assign(eventData, {
+                sessionVideoId: this.get('sessionVideoId'),
+                sessionPipeId: this.get('sessionRecorder').get('pipeVideoName'),
+                sessionStreamTime: this.get('sessionRecorder').getTime()
+            });
         }
         return eventData;
 

@@ -178,7 +178,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         parameters: {
             type: 'object',
             properties: {
-                 /**
+                /**
                  * Whether to do webcam recording on this frame
                  *
                  * @property {Boolean} doRecording

@@ -267,7 +267,7 @@ export default Ember.Component.extend(FullScreen, {
                 var sessionRecorder = this.get('session').get('recorder');
                 this.get('session').set('recordingInProgress', false);
                 if (sessionRecorder.get('recording')) {
-                    sessionRecorder.stop().finally( () => {
+                    sessionRecorder.stop().finally(() => {
                         sessionRecorder.destroy();
                     });
                 } else {

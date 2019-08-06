@@ -234,10 +234,10 @@ const VideoRecorder = Ember.Object.extend({
             var _stopPromise = new Ember.RSVP.Promise((resolve, reject) => {
                 // If we don't end up uploading within 5 seconds, call reject
                 _this.set('uploadTimeout', window.setTimeout(function() {
-                       console.warn('waiting for upload timed out');
-                       window.clearTimeout(_this.get('uploadTimeout'));
-                       reject();
-                   }, 5000));
+                        console.warn('waiting for upload timed out');
+                        window.clearTimeout(_this.get('uploadTimeout'));
+                        reject();
+                    }, 5000));
                 if (_this.get('_isuploaded')) {
                     resolve(this);
                 } else {

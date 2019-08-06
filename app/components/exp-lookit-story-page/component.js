@@ -424,24 +424,23 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                             }
                         }, _this.get('durationSeconds') * 1000));
                     if (this.get('showProgressBar')) {
-                       this.set('timerStart', new Date().getTime());
-                       let timerStart = _this.get('timerStart');
-                       let durationSeconds = _this.get('durationSeconds') * 10;
-                       var _this = this;
-                       this.set('progressTimer', window.setInterval(function() {
-                           let now = new Date().getTime();
-                           var prctDone =  (now - timerStart) / durationSeconds;
-                           $('.progress-bar').css('width', prctDone + '%');
-                       }, 100));
-                   }
+                        this.set('timerStart', new Date().getTime());
+                        let timerStart = _this.get('timerStart');
+                        let durationSeconds = _this.get('durationSeconds') * 10;
+                        this.set('progressTimer', window.setInterval(function() {
+                            let now = new Date().getTime();
+                            var prctDone =  (now - timerStart) / durationSeconds;
+                            $('.progress-bar').css('width', prctDone + '%');
+                        }, 100));
+                    }
                 } else {
                     this.set('minDurationAchieved', true);
                 }
             }
             if (this.currentAudioIndex < this.get('audioSources').length) {
 
-                $('#' + this.get('audioSources')[this.currentAudioIndex].audioId)[0].play().then( () => {
-                     this.send('setTimeEvent', 'startAudioSegment', {'currentAudioIndex': this.currentAudioIndex});
+                $('#' + this.get('audioSources')[this.currentAudioIndex].audioId)[0].play().then(() => {
+                    this.send('setTimeEvent', 'startAudioSegment', {'currentAudioIndex': this.currentAudioIndex});
                 });
             } else {
                 this.set('finishedAllAudio', true);

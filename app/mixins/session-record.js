@@ -121,13 +121,13 @@ export default Ember.Mixin.create({
         // Make sure to append to the player's parent so that this doesn't get removed
         // (which won't prevent recording, but WILL prevent receiving events!)
         $('#' + this.get('elementId')).parent().append($sessionRecorderElement);
-        var element = $('#' + recorderElementId);
+        var $element = $('#' + recorderElementId);
 
         const maxRecordingLength = 100000000;
         const autosave = 1;
         const sessionVideoId = this._generateSessionVideoId();
         this.get('session').set('videoId', sessionVideoId);
-        const sessionRecorder = new VideoRecorder({element: element});
+        const sessionRecorder = new VideoRecorder({element: $element});
         const pipeLoc = Ember.getOwner(this).resolveRegistration('config:environment').pipeLoc;
         const pipeEnv = Ember.getOwner(this).resolveRegistration('config:environment').pipeEnv;
         const installPromise = sessionRecorder.install(sessionVideoId, pipeLoc, pipeEnv,
