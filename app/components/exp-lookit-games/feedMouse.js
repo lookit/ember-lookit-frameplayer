@@ -18,14 +18,16 @@ let initSoundPlaying = false;
 let startSound = {};
 let ballCatchFail = {};
 let goodJob = {};
-const scale = [
+let greatJob = {};
+let initialTime = 0;
 
-  {scale_x:1.32,scale_y:1.1},
-  {scale_x:1.56,scale_y:1.3},
-  {scale_x:1.44,scale_y:1.2}
-];
-let current_index = 0;
 
+let TfArr = [];
+let wallsize = 0.25;
+let targetX = 1.3310;
+let winsize = 0.1;
+let targetsize = 0.005;
+let jitterT = 0;
 
 /**
  * @class FeedMouse
@@ -48,30 +50,36 @@ export default class FeedMouse extends Base {
   }
 
 
+
+  createRect(x,y,width,height,color){
+
+    this.ctx.beginPath();
+    this.ctx.fillStyle = color;
+    this.ctx.rect(x, y, width, height);
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
+
   /**
    * Draw house with roof according to coordinates
    * @method createHouse
    */
   createHouse() {
 
-    let houseX = this.canvas.width / 2 + super.paddleWidth;
-    let houseY = this.canvas.height / 2.5;
-    let houseWidth = this.canvas.width / 3.5;
-    let houseHeight = this.canvas.height / 2;
-    let roofSpace = 20;
+    let leftBorder = (targetX-wallsize)*super.Utils.SCALE ;
+    let topBorder = (0.8)*super.Utils.SCALE;
+    let rightBorder = (targetX+wallsize)*super.Utils.SCALE;
+    let downBorder =  (1.3671+0.15)*super.Utils.SCALE ;
 
-    this.ctx.beginPath();
-    this.ctx.fillStyle = target.color;
-    this.ctx.rect(houseX, houseY, houseWidth, houseHeight);
-    this.ctx.fill();
-    this.ctx.closePath();
+    this.createRect(leftBorder, topBorder, rightBorder-leftBorder, downBorder-topBorder,target.houseColor);
+
+
     //Draw roof
-
     this.ctx.beginPath();
-    this.ctx.fillStyle = target.roofcolor;
-    this.ctx.moveTo(houseX - roofSpace, houseY);
-    this.ctx.lineTo(houseX + houseWidth / 2, houseY - houseHeight + 100);
-    this.ctx.lineTo(houseX + houseWidth + roofSpace, houseY);
+    this.ctx.fillStyle = super.Utils.redColor;
+    this.ctx.moveTo(targetX*super.Utils.SCALE, 0.5*super.Utils.SCALE);
+    this.ctx.lineTo((targetX-1.5*wallsize)*super.Utils.SCALE, 0.8*super.Utils.SCALE);
+    this.ctx.lineTo((targetX+1.5*wallsize)*super.Utils.SCALE, 0.8*super.Utils.SCALE);
     this.ctx.fill();
     this.ctx.closePath();
   }
@@ -95,6 +103,7 @@ export default class FeedMouse extends Base {
     this.ctx.lineTo(target.position.x + target.dimensions.width / 2, target.position.y + target.dimensions.height);
     this.ctx.moveTo(target.position.x, target.position.y + target.dimensions.height / 2);
     this.ctx.lineTo(target.position.x + target.dimensions.width, target.position.y + target.dimensions.height / 2);
+    this.ctx.lineWidth = '4';
     this.ctx.stroke();
     this.ctx.fill();
     this.ctx.closePath();
@@ -116,14 +125,9 @@ export default class FeedMouse extends Base {
    * @method showBallLocation
    * @param target
    */
-  showBallLocation(center){
-
-    if(center){
-      ball.position.x = target.position.x + target.dimensions.width / 2 - ball.radius / 2;
-      ball.position.y = target.position.y + target.dimensions.height / 2 - ball.radius / 2;
+  showBallLocation(){
 
 
-    }
 
     //Put the ball in the center of target once it hits window constraint
     this.ctx.beginPath();
@@ -131,8 +135,6 @@ export default class FeedMouse extends Base {
     this.ctx.fillStyle = ball.color;
     this.ctx.fill();
     this.ctx.closePath();
-
-
 
 
   }
@@ -145,7 +147,7 @@ export default class FeedMouse extends Base {
    */
   init() {
     super.init();
-
+    TfArr = super.uniformArr([0.8,0.9,1]);
     goodJob = new Audio(super.Utils.doorbellSound);
     goodJob.load();
 
@@ -153,6 +155,14 @@ export default class FeedMouse extends Base {
     ballCatchFail.load();
 
     startSound = new Audio(super.Utils.rattleSound);
+    startSound.src = super.Utils.rattleSound;
+    goodJob.src = super.Utils.doorbellSound;
+
+    greatJob =  new Audio(super.Utils.yaySound);
+    greatJob.src = super.Utils.yaySound;
+    greatJob.load();
+
+    ballCatchFail.src = super.Utils.ballcatchFailSound;
     startSound.load();
     startSound.addEventListener('onloadeddata', this.initGame(), false);
 
@@ -167,27 +177,27 @@ export default class FeedMouse extends Base {
    * @method initGame
    */
   initGame() {
+    initialTime = 0;
+    ball.startTime =0;
+    jitterT = super.trialStartTime();
+    keyPressed.value = false;
+    let topBorder = (1.14)*super.Utils.SCALE;
+    let downBorder =  (1.22)*super.Utils.SCALE ;
+    let leftBorder = (targetX-0.05)*super.Utils.SCALE ;
+    let rightBorder = (targetX+0.05)*super.Utils.SCALE;
 
-    let Angle = (100*(Math.PI)/180);
-    const  trajectories = [
-      {velocity: {x: 4.4* (60*(Math.PI)/180), y: -6.2*Math.sin(Angle)}},
-      {velocity: {x: 4.4* (60*(Math.PI)/180), y: -6.2*Math.sin(Angle)}},
-      {velocity: {x: 4.4* (60*(Math.PI)/180), y: -6.2*Math.sin(Angle)}}
-    ];
-    current_index = Math.floor(Math.random() * 3);
-    // current_index = 1;
-    let trajectory = trajectories[current_index];
-    trajectory.velocity  = super.velocityToScale(trajectory.velocity);
+
     target = {
 
-      dimensions: {width: super.paddleWidth, height: super.paddleWidth},
+      dimensions: {width: rightBorder-leftBorder,height: downBorder-topBorder},
       position: {
-        x: (this.canvas.width - super.paddleWidth * 3 - this.canvas.width / 3.2) + this.canvas.width / 6.4 - super.paddleWidth / 2,
-        y: this.canvas.height / 3 + this.canvas.height / 4
+        x: leftBorder,
+        y: topBorder
       },
-      radius: 4,
+      radius: 3,
       color: super.Utils.grayColor,
       roofcolor: super.Utils.redColor,
+      houseColor: super.Utils.grayColor,
       windowbackground: super.Utils.blackColor
 
     };
@@ -195,8 +205,8 @@ export default class FeedMouse extends Base {
 
 
     ball = {
-      position: {x: super.paddleWidth * 5 + 20, y: (this.canvas.height - super.paddleWidth * 2)},
-      velocity: trajectory.velocity,
+      position: {x: 0, y: 0},
+      velocity: 0,
       mass: super.Utils.ballMass,
       radius: 10,
       restitution: super.Utils.restitution,
@@ -205,33 +215,32 @@ export default class FeedMouse extends Base {
 
     };
 
-    initSoundPlaying = true;
-    goodJob.src = super.Utils.doorbellSound;
-    ballCatchFail.src = super.Utils.ballcatchFailSound;
-    startSound.src = super.Utils.rattleSound;
+    ball = super.ballObject();
 
+    initSoundPlaying = true;
     startSound.play();
-    startSound.addEventListener('ended', function () {
-      ball.timeReached = new Date().getTime();
+    startSound.addEventListener('playing', function () {
       initSoundPlaying = false;
+      initialTime = new Date().getTime();
     });
 
     super.initGame();
 
   }
 
+
   /**
    * @method dataCollection
    */
   dataCollection() {
-
+    super.dataCollection();
     let exportData = {
 
       game_type: 'feedMouse',
-      ball_position_x: ball.position.x,
-      ball_position_y: ball.position.y,
+      ball_position_x: ball.position.x/this.canvas.width,
+      ball_position_y: (this.canvas.height - ball.position.y)/this.canvas.height,
       button_pressed: keyPressed.value,
-      trial: super.currentRound,
+      trial: super.currentRounds,
       timestamp: new Date().getTime()
 
     };
@@ -240,24 +249,6 @@ export default class FeedMouse extends Base {
 
   }
 
-  /**
-   *
-   * Check collision of appropriate key and window
-   * When ball hits the window set coordinates of the ball to the center of the window
-   * @method collisionDetection
-   * @return {boolean}
-   */
-  collisionDetection() {
-
-    // Window collision detection
-    if (ball.position.x > target.position.x && ball.position.x - ball.radius < target.position.x + target.dimensions.width) {
-
-      return true;
-
-    }
-
-    return false;
-  }
 
 
   //Might need to set the key as a super parameter
@@ -274,18 +265,6 @@ export default class FeedMouse extends Base {
 
   }
 
-  /**
-   * @method keyUpHandler Get current keyboard event on release button
-   * @param {object} e
-   */
-  keyUpHandler(e) {
-
-    if (e.key === 'l' || e.key === 'L') {
-
-      keyPressed = {value:false,when:new Date().getTime()};
-    }
-
-  }
 
   /**
    *
@@ -300,40 +279,84 @@ export default class FeedMouse extends Base {
    * @method loop
    */
   loop() {
+
     super.loop();
+    super.generateTrajectoryParamsDiscrete(TfArr);
+    super.discreteLauncer();
+    this.createHouse();
+    this.createWindow();
 
-    let didHitWindow = this.collisionDetection();
+    if(ball.state === 'start'){
 
-    if (super.gameOver) {
-      super.waitSeconds(2000);
+      super.moveBallToStart(ball, false);
+      if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
+        startSound.pause();
+        startSound.currentTime = 0;
+        ball.state = 'fall';
+        initialTime = new Date().getTime();
+
+
+      }
+
+    }
+
+
+    if (ball.state === 'hit') {
+      super.drawBall(ball);
+      super.waitSeconds(2500);
       super.finishGame(false);
 
-    } else {
+    }
 
-      super.wallCollision(ball);
-      if (!didHitWindow) {
-        if (initSoundPlaying) {
-          super.moveBallToStart(ball, false);
-        } else {
 
-          super.ballTrajectory(ball,scale[current_index].scale_x,scale[current_index].scale_y);
-        }
+    if(ball.state === 'fall'){
+
+      if(initialTime > 0 && super.getElapsedTime(initialTime) < 1.5) {
+        super.trajectory(ball, initialTime);
       }
-      super.createBallBox();
+
+      if(initialTime > 0 && super.ballIsOnFloor(ball)) {
+        ballCatchFail.play();
+        ball.state = 'hit';
+      }
+
+
+      super.drawBall(ball);
       this.createHouse();
       this.createWindow();
 
 
-      if (keyPressed.value || new Date().getTime() -keyPressed.when < 150 ) {
+      if (keyPressed.value === true ) {
+
+        if(ball.position.x < (targetX+0.42)*super.Utils.SCALE   ){
+
+          let position = Math.abs(ball.position.x - targetX*super.Utils.SCALE);
+          if(position < targetsize*super.Utils.SCALE){
+            target.color = super.Utils.whiteColor;
+            target.houseColor = super.Utils.whiteColor;
+            this.createHouse();
+            this.createWindow();
+            super.increaseScore();
+            greatJob.play();
+
+          }else if(position < (winsize/2)*super.Utils.SCALE){
+
+            target.color = super.Utils.whiteColor;
+            target.houseColor = super.Utils.whiteColor;
+            this.createHouse();
+            this.createWindow();
+            super.increaseScore();
+            goodJob.play();
+
+          }else{
+
+            ballCatchFail.play();
+
+          }
 
 
-        if(didHitWindow){
+          this.showBallLocation();
 
-          target.color = super.Utils.whiteColor;
-          this.createHouse();
-          this.createWindow();
-          super.increaseScore();
-          goodJob.play();
 
         }else{
 
@@ -341,21 +364,18 @@ export default class FeedMouse extends Base {
 
         }
 
-        this.showBallLocation(didHitWindow);
-        super.moveBallToStart(ball, true);
-        didHitWindow = false;
+
+
+        ball.state = 'hit';
+
+
       }
 
 
-      if(didHitWindow){
 
-        this.showBallLocation(didHitWindow);
-        ballCatchFail.play();
-        super.moveBallToStart(ball, true);
-      }
+
 
     }
-
   }
 
 }

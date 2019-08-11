@@ -20,10 +20,15 @@ let goodJob = {};
 let initSoundPlaying = true;
 let ballCatchFail = {};
 let targetStars = {};
-let redDot = {};
-
-
-
+let initialTime = 0;
+let hArray = [];
+let Tf = 0.8;
+let Height = 0.8;
+let obstrArr = [];
+let jitterT = 0;
+let radiusRim = 0.1;
+let wrongSound = {};
+let obstructionsNum = 0;
 
 /**
  * Main implementation of catch the cheese game.
@@ -53,12 +58,23 @@ export default class CatchCheese extends Base {
    */
   init() {
     super.init();
+    document.addEventListener("mousemove",  super.onMouseMove);
+    hArray = super.generateHeights();
+    Tf = this.context.flightTime;
+    Height = this.context.height;
+
+    obstrArr  = super.uniformArr([1,2,3]);
     goodJob = new Audio(super.Utils.goodCatchSound);
     goodJob.load();
-    ballCatchFail = new Audio(super.Utils.ballcatchFailSound);
+    ballCatchFail = new Audio(super.Utils.failcatchSound);
     ballCatchFail.load();
     audio = new Audio(super.Utils.rattleSound);
     audio.load();
+    ballCatchFail.src = super.Utils.failcatchSound;
+    goodJob.src = super.Utils.goodCatchSound;
+    audio.src = super.Utils.rattleSound;
+    wrongSound = new Audio();
+    wrongSound.src = super.Utils.wrongSound;
     audio.addEventListener('onloadeddata', this.initGame(), false);
 
   }
@@ -72,113 +88,76 @@ export default class CatchCheese extends Base {
    * @method initGame
    */
   initGame() {
-
+    jitterT = super.trialStartTime();
+    initialTime =0;
     super.gameOver = false;
     super.initGame();
-
     basket = {
-      dimensions: {width: super.paddleWidth * 1.3, height: super.paddleWidth * 1.3},
-      position: {x: this.canvas.width / 2 + super.paddleWidth * 3, y: (this.canvas.height / 2 + super.paddleHeight * 2)},
-      prevposition:{x: this.canvas.width / 2 + super.paddleWidth * 3, y: (this.canvas.height / 2 + super.paddleHeight * 2)},
+      positions:[],
+      times:[],
       velocity: super.Utils.paddleSpeed,
       paddleLastMovedMillis: 0,
       imageURL: super.Utils.basketImage
     };
 
-
-
-    let trajectories = [
-
-      {velocity: {x: 4.2, y: -7.7}},
-      {velocity: {x: 4.7, y: -7.0}},
-      {velocity: {x: 4.5, y: -7.6}},
-      {velocity: {x: 4.5, y: -7.4}}
-    ];
-
-    let obstructionsNum = Math.floor(Math.random() * trajectories.length);
-    let trajectory = trajectories[Math.floor(Math.random() * trajectories.length)];
-    trajectory.velocity  = super.velocityToScale(trajectory.velocity);
-    ball = {
-
-      position: {x: super.paddleWidth * 5 + 20, y: (this.canvas.height - super.paddleWidth * 2)},
-      velocity: trajectory.velocity,
-      mass: super.Utils.ballMass,
-      radius: 10,
-      restitution: super.Utils.restitution,
-      color: '#dadd0f'
-
-    };
+    super.createPaddleBox();
+    basket = super.basketObject(basket);
+     obstructionsNum = obstrArr[super.currentRounds];
+    if(this.context.no_trees){
+      obstructionsNum =0;
+    }
+    ball = super.ballObject();
 
     obstructions = Array(obstructionsNum).fill({}).map((value, index) =>
 
-      ({
-        dimensions: {width: super.paddleWidth * 3.5, height: this.canvas.height / 1.5},
-        position: {
-          x: this.canvas.width / 2 - (index + 1) * super.paddleWidth,
-          y: this.canvas.height / 2.5 - super.paddleWidth * 1.5
-        },
-        imageURL: super.Utils.treeImage
-      })
+      ( super.treeObject(index+1))
     );
 
+
     initSoundPlaying = true;
-    ballCatchFail.src = super.Utils.ballcatchFailSound;
-    goodJob.src = super.Utils.goodCatchSound;
-    audio.src = super.Utils.rattleSound;
-    audio.play();
-    audio.addEventListener('ended', function () {
+    if(super.currentRounds >0 || (super.currentRounds === 0 && !super.paddleIsMoved(basket))) {
+      audio.play();
+    }
+    audio.addEventListener('playing', function () {
 
       initSoundPlaying = false;
+      initialTime = new Date().getTime();
+
     });
 
   }
 
-
+  /**
+   * Create red dot target location
+   * @method drawRedDot
+   */
   drawRedDot(){
 
-    redDot ={
-      position:{x:basket.position.x+basket.dimensions.width/2 - ball.radius,y:basket.position.y},
-      radius: 4,
-      color:super.Utils.redColor
-
-    };
+    let redDot = super.basketCenter(basket);
     this.ctx.beginPath();
     this.ctx.fillStyle = redDot.color;
-    this.ctx.fillRect(redDot.position.x, redDot.position.y, ball.radius*2, ball.radius);
+    this.ctx.fillRect(redDot.position.x, redDot.position.y, redDot.dimensions.width, redDot.dimensions.height);
     this.ctx.fill();
     this.ctx.closePath();
   }
 
   dataCollection() {
-
+    super.dataCollection();
     let exportData = {
       game_type: 'catchCheese',
-      ball_position_x: ball.position.x,
-      ball_position_y: ball.position.y,
-      paddle_position_x: basket.position.x,
-      paddle_position_y: basket.position.y,
-      trial: super.currentRound,
+      ball_position_x: ball.position.x/this.canvas.width,
+      ball_position_y:  (this.canvas.height - ball.position.y)/this.canvas.height,
+      paddle_position_x: basket.position.x/this.canvas.width,
+      paddle_position_y: (this.canvas.height - basket.position.y)/this.canvas.height,
+      trial: super.currentRounds,
       timestamp: new Date().getTime()
 
     };
-
     super.storeData(exportData);
   }
 
 
-  /**
-   * Check if paddle is moving up or down
-   * @method paddleMovingUp
-   * @return {boolean}
-   */
-  paddleIsMovingUp(){
 
-    if(basket.position.y < basket.prevposition.y){
-      return  true;
-    }
-
-    return false;
-  }
 
   /**
    * Check if ball reaches the target
@@ -187,17 +166,23 @@ export default class CatchCheese extends Base {
    */
   collisionDetection() {
 
-    let midPAddlePoint = basket.position.x+basket.dimensions.width/2;
+    let basketPrevPosition = 0;
+    if(basket.positions.length >2){
 
-    if ( ball.position.y > basket.position.y && ball.position.y - ball.radius < basket.position.y + basket.dimensions.height) {
+      basketPrevPosition = this.canvas.height - (basket.positions[basket.positions.length-2])*this.canvas.height;
+    }
 
-      if ( ball.position.x > midPAddlePoint - ball.radius && ball.position.x - ball.radius < midPAddlePoint + ball.radius ) {
+    if(ball.positions.length >2 && ball.positions[ball.positions.length-2] <= basketPrevPosition && ball.position.y > basket.position.y){
+      if (ball.position.x >= basket.position.x && ball.position.x <=  basket.position.x +  basket.dimensions.width ) {
 
-        if(this.paddleIsMovingUp()) {
-          return true;
+        ball.hitstate = 'good';
+
+        if (ball.position.x > (1.3301 - radiusRim / 4) * super.Utils.SCALE && ball.position.x < (1.3301 + radiusRim / 4) * super.Utils.SCALE) {
+
+          ball.hitstate = 'very good';
         }
+        return true;
       }
-
     }
 
     return false;
@@ -212,8 +197,8 @@ export default class CatchCheese extends Base {
 
     targetStars = {
 
-      position: {x: basket.position.x + super.paddleWidth, y: basket.position.y - super.paddleHeight / 2},
-      dimensions: {width: super.paddleWidth / 1.5, height: super.paddleWidth / 1.5},
+      position: {x: basket.position.x + 0.01* super.Utils.SCALE , y: basket.position.y - 0.2* super.Utils.SCALE},
+      dimensions: {width: 0.14*super.Utils.SCALE, height: 0.2*super.Utils.SCALE},
       imageURL: super.Utils.basketStarsImage
 
     };
@@ -231,69 +216,112 @@ export default class CatchCheese extends Base {
    */
   loop() {
     super.loop();
-
     super.createBallBox();
+    super.generateTrajectoryParams(hArray,Height,Tf);
     let hitTheTarget = this.collisionDetection();
     let hitTheWall = super.wallCollision(ball);
+    let paddleBoxColor = super.Utils.blueColor;
 
-    if (hitTheTarget || hitTheWall || super.gameOver) {
 
-      if (hitTheTarget) {
+    if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMoved(basket)){
 
-        if (!super.gameOver && goodJob.readyState === 4) {
-
-          goodJob.play();
-        }
-
-      } else {
-        if (!super.gameOver) {
-
-          ballCatchFail.play();
-        }
-
-      }
-      // Remove ball and show in the starting point,
-      //User should set the paddle to initial position , call stop after that
-      super.moveBallToStart(ball, true);
-      super.paddleAtZero(basket, hitTheTarget);
-      if (hitTheTarget) {
-        this.starsLocationUpdate();
-        this.drawImage(targetStars);
-      }
-
-    } else {
-
-      if (initSoundPlaying) {
-
-        super.moveBallToStart(ball, false);
-
-      } else {
-
-        super.ballTrajectory(ball);
-
-      }
+      audio.play();
     }
 
-    super.createPaddleBox(this.canvas.width / 2 + super.paddleWidth * 3, this.canvas.height / 2.5 + this.canvas.height / 2 - super.paddleWidth * 1.3);
-    basket.prevposition.y = basket.position.y;
-    super.paddleMove(basket);
-    this.drawImage(basket);
+    if(ball.state === 'start'){
+
+      super.moveBallToStart(ball, false);
+
+      if(initialTime > 0 && super.paddleIsMoved(basket)){
+        initialTime = new Date().getTime();
+        paddleBoxColor = super.Utils.redColor;
+        wrongSound.play();
+      }
+
+      if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
+        audio.pause();
+        audio.currentTime = 0;
+        ball.state = 'fall';
+        initialTime = new Date().getTime();
+      }
+
+    }
+
+
+
+    if((hitTheTarget || hitTheWall) && ball.state === 'fall'){
+
+      ball.state = 'hit';
+    }
+
+    if(ball.state === 'fall'){
+      if(initialTime > 0 && super.getElapsedTime(initialTime) <= 1.5) {
+        ball.positions.push(ball.position.y);
+        super.trajectory(ball, initialTime);
+      }
+
+      if(initialTime > 0 && super.ballIsOnFloor(ball)) {
+        ball.state = 'hit';
+      }
+
+
+      super.drawBall(ball);
+    }
+
+
+    if (ball.state === 'hit') {
+
+
+      if (ball.hitstate === 'very good' || ball.hitstate === 'good') {
+        super.increaseScore();
+        goodJob.play();
+
+      }else{
+
+        ballCatchFail.play();
+      }
+
+
+      ball.state = 'done';
+
+    }
+
+
+    if(ball.state === 'done'){
+
+
+      if (ball.hitstate === 'very good') {
+        this.starsLocationUpdate();
+        super.drawImage(targetStars,super.Utils.basketStarsImage);
+      }
+
+      if(ball.hitstate === ''){
+
+        super.drawBall(ball);
+      }
+
+
+      // Remove ball and show in the starting point,
+      //User should set the paddle to initial position , call stop after that
+      if(super.getElapsedTime(initialTime)  > 1.5) {
+        super.moveBallToStart(ball, false);
+        super.paddleAtZero(basket,false);
+      }
+
+
+    }
+
+
+    obstructions.forEach(obstruction => super.drawImage(obstruction, obstruction.imageURL));
+
+    this.basketObject(basket);
+    super.paddleMove(basket,initialTime);
+    super.drawImage(basket,basket.imageURL);
+    super.createPaddleBox(paddleBoxColor);
     this.drawRedDot();
-
-    obstructions.forEach(obstruction => this.drawImage(obstruction));
-
   }
 
 
-  /**
-   * @method
-   * Draw image object according to object locations
-   * @param object
-   */
-  drawImage(object) {
-    let image = new Image();
-    image.src = object.imageURL;
-    this.ctx.drawImage(image, object.position.x, object.position.y, object.dimensions.width, object.dimensions.height);
-  }
+
 
 }

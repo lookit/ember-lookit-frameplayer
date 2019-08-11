@@ -7,6 +7,7 @@
 
 import Base from './base';
 
+
 /**
  *
  * @submodule games
@@ -18,8 +19,15 @@ let basket = {};
 let initSoundPlaying = false;
 let audio = {};
 let ballCatchFail = {};
-let goodJob = {};
-
+let cheese1Sound = {};
+let cheese2Sound = {};
+let cheese3Sound = {};
+let swooshSound = {};
+let wrongSound = {};
+let initBallY = 0.27;
+let initX = 1.33;
+let initialTime = 0;
+let jitterT = 0;
 
 /**
  * @class CatchMouse
@@ -30,222 +38,345 @@ let goodJob = {};
  * The user should catch the mice until cheese(symbolizing the clock) is gone.
  */
 export default class CatchMouse extends Base {
-    /**
-     * @method constructor
-     * @constructor constructor
-     * @param context Context of the game
-     * @param document
-     */
-    constructor(context, document) {
+  /**
+   * @method constructor
+   * @constructor constructor
+   * @param context Context of the game
+   * @param document
+   */
+  constructor(context, document) {
 
-        super(context, document);
+    super(context, document);
 
+  }
+
+
+  /**
+   *
+   * Main point to start the game.
+   * Initialize static parameters and preload sounds here
+   * @method init
+   */
+  init() {
+    super.init();
+    document.addEventListener("mousemove",  super.onMouseMove);
+    audio = new Audio(super.Utils.drumRollSound);
+    audio.load();
+    audio.addEventListener('onloadeddata', this.initGame(), false);
+
+    cheese1Sound = new Audio(super.Utils.cheese_ser1Sound);
+    cheese1Sound.load();
+    cheese2Sound = new Audio(super.Utils.cheese_ser2Sound);
+    cheese2Sound.load();
+    cheese3Sound = new Audio(super.Utils.cheese_ser1Sound);
+    cheese3Sound.load();
+    swooshSound = new Audio(super.Utils.swooshSound);
+    swooshSound.load();
+    wrongSound = new Audio(super.Utils.wrongSound);
+    wrongSound.load();
+    wrongSound.src = super.Utils.wrongSound;
+
+    ballCatchFail = new Audio(super.Utils.ballcatchFailSound);
+    cheese1Sound.src = super.Utils.cheese_ser1Sound;
+    cheese2Sound.src = super.Utils.cheese_ser2Sound;
+    cheese3Sound.src = super.Utils.cheese_ser3Sound;
+    ballCatchFail.src = super.Utils.ballcatchFailSound;
+    swooshSound.src = super.Utils.swooshSound;
+    audio.src = super.Utils.drumRollSound;
+    wrongSound = new Audio();
+    wrongSound.src = super.Utils.wrongSound;
+
+    ballCatchFail.load();
+
+    this.initGame();
+  }
+
+
+
+
+  /**
+   *
+   * Draw image object according to object positions
+   * @method drawImage
+   * @param object
+   */
+  drawImage(object) {
+    let image = new Image();
+    image.src = object.imageURL;
+    this.ctx.drawImage(image, object.position.x, object.position.y, object.dimensions.width, object.dimensions.height);
+  }
+
+
+
+
+  /**
+   *
+   * Initialize each game round with initial object parameters
+   * Randomize number of obstructions
+   * Reset the sounds sources for older browser versions
+   * @method initGame
+   */
+  initGame() {
+    initialTime =0;
+    jitterT = super.trialStartTime();
+    basket = {
+      dimensions: {width: super.paddleWidth * 1.3, height: super.paddleWidth * 1.3},
+      position: {
+        x: 0,
+        y: 0
+      },
+      positions:[],
+      times:[],
+      moved:0,
+      paddleLastMovedMillis: 0,
+      velocity: super.Utils.paddleSpeed,
+      imageURL: super.Utils.basketImage
+    };
+
+
+    //Mice coord
+
+    let x = initX;
+    let y = initBallY;
+    let leftBorder = (x-0.064)*super.Utils.SCALE ;
+    let topBorder = (1.3671-initBallY-0.07)*super.Utils.SCALE;
+    let rightBorder = (1.325+0.1)*super.Utils.SCALE;
+    let downBorder =  (1.3671+0.17-y)*super.Utils.SCALE ;
+
+
+    mice = {
+      dimensions: {width: 0.18*super.Utils.SCALE, height: 0.18*super.Utils.SCALE},
+      position: {x: leftBorder, y: topBorder},
+      radius: 40,
+      delay: 2000,
+      state:'fall',
+      showTime:0,
+      lastTime: new Date().getTime(),
+      imageURL: super.Utils.miceImage
+    };
+
+
+    //Cheese coord
+    leftBorder = (1.43)*super.Utils.SCALE ;
+    topBorder = (1.3671-initBallY-0.07)*super.Utils.SCALE;
+    rightBorder = (1.36+0.09+0.15)*super.Utils.SCALE;
+    downBorder =  (1.3671-initBallY+0.07)*super.Utils.SCALE ;
+
+
+    cheeseClock = {
+      dimensions: {width: rightBorder-leftBorder, height: downBorder-topBorder},
+      position: {x: leftBorder ,y: topBorder},
+      angle: 0,
+      state:10,
+      velocity: 1.4,
+      imageURL: super.Utils.cheeseImage
+    };
+
+
+    initSoundPlaying = true;
+    super.createPaddleBox();
+    basket = super.basketObject(basket);
+    if(super.currentRounds >0 || (super.currentRounds === 0 && !super.paddleIsMoved(basket))) {
+      audio.play();
+    }
+
+    audio.addEventListener('playing', function () {
+      initialTime = new Date().getTime();
+      initSoundPlaying = false;
+
+    });
+
+    super.initGame();
+  }
+
+
+  /**
+   * @method  dataCollection Collect data
+   */
+  dataCollection() {
+    super.dataCollection();
+    let exportData = {
+      game_type: 'catchMouse',
+      basket_x: basket.position.x/this.canvas.width,
+      basket_y: (this.canvas.height - basket.position.y)/this.canvas.height,
+      mice_x: mice.position.x/this.canvas.width,
+      mice_y:(this.canvas.height - mice.position.y)/this.canvas.height,
+      trial: super.currentRounds,
+      timestamp: new Date().getTime()
+
+    };
+
+    super.storeData(exportData);
+
+  }
+
+
+
+  /**
+   *
+   *  Show cheese portion according to angle
+   *  @method showCheese
+   */
+  showCheese() {
+
+    if (super.gameOver) {
+
+      cheeseClock.dimensions.width = super.paddleWidth * 1.5;
+      cheeseClock.dimensions.height = super.paddleWidth * 1.5;
+    }
+
+    let angle = Math.PI * (0.2*cheeseClock.state);
+    this.ctx.beginPath();
+    this.ctx.moveTo(cheeseClock.position.x + cheeseClock.dimensions.width / 2, cheeseClock.position.y + cheeseClock.dimensions.height / 2);
+    this.ctx.fillStyle = super.Utils.blackColor;
+    this.ctx.arc(cheeseClock.position.x + cheeseClock.dimensions.width / 2, cheeseClock.position.y + cheeseClock.dimensions.height / 2, cheeseClock.dimensions.height / 2, angle, Math.PI * 2,false);
+    this.ctx.lineTo(cheeseClock.position.x + cheeseClock.dimensions.width / 2, cheeseClock.position.y + cheeseClock.dimensions.height / 2);
+    this.ctx.fill();
+    this.ctx.closePath();
+    this.ctx.restore();
+  }
+
+
+
+  cheeseState() {
+
+    let time = super.getElapsedTime(mice.showTime);
+
+    if (time < 0.1) {
+      cheeseClock.state = 9;
+    } else if (time < 0.2) {
+      cheeseClock.state = 8;
+    } else if (time < 0.3) {
+
+      cheeseClock.state = 7;
+    } else if (time < 0.4) {
+
+      cheeseClock.state = 6;
+    } else if (time < 0.5){
+
+      cheeseClock.state = 5;
+    }else if (time < 0.6){
+
+      cheeseClock.state = 4;
+    }else if(time < 0.7) {
+
+      cheeseClock.state = 3;
+    }else if (time < 0.8){
+
+      cheeseClock.state = 2;
+
+    }else{
+      cheeseClock.state = 1;
+    }
+    this.showCheese();
+  }
+
+
+
+
+  /**
+   *
+   * Main loop of the game.
+   * Set initial position of the ball in a box and starting rattling sound (initSoundPlaying).
+   * After that  start showing the mouse.
+   * Increase the score if ball hits the target.
+   * @method loop
+   */
+  loop() {
+    super.loop();
+    let paddleBoxColor = super.Utils.blueColor;
+    super.createPaddleBox(paddleBoxColor);
+    basket = super.basketObject(basket);
+    super.paddleMove(basket,initialTime);
+    this.drawImage(cheeseClock);
+
+    if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMoved(basket)){
+
+      audio.play();
     }
 
 
-    /**
-     *
-     * Main point to start the game.
-     * Initialize static parameters and preload sounds here
-     * @method init
-     */
-    init() {
-        super.init();
-
-        audio = new Audio(super.Utils.drumRollSound);
-        audio.load();
-        audio.addEventListener('onloadeddata', this.initGame(), false);
-
-        goodJob = new Audio(super.Utils.goodCatchSound);
-        goodJob.load();
-
-        ballCatchFail = new Audio(super.Utils.ballcatchFailSound);
-        ballCatchFail.load();
-
-        this.initGame();
+    if(initialTime > 0 && super.paddleIsMoved(basket) && mice.state === 'fall'){
+      initialTime = new Date().getTime();
+      paddleBoxColor = super.Utils.redColor;
+      super.createPaddleBox(paddleBoxColor);
+      wrongSound.play();
     }
 
-    /**
-     *
-     * Draw image object according to object locations
-     * @method drawImage
-     * @param object
-     */
-    drawImage(object) {
-        let image = new Image();
-        image.src = object.imageURL;
-        this.ctx.drawImage(image, object.position.x, object.position.y, object.dimensions.width, object.dimensions.height);
+    //Randomize initial wait time here
+    if(mice.state === 'fall' && initialTime >0 && super.getElapsedTime(initialTime) > jitterT){
+      audio.pause();
+      audio.currentTime = 0;
+      mice.state = 'show';
+      mice.showTime = new Date().getTime();
     }
 
-
-
-
-    /**
-     *
-     * Initialize each game round with initial object parameters
-     * Randomize number of obstructions
-     * Reset the sounds sources for older browser versions
-     * @method initGame
-     */
-    initGame() {
-
-        basket = {
-            dimensions: {width: super.paddleWidth * 1.3, height: super.paddleWidth * 1.3},
-            position: {
-                x: 15 + this.canvas.width / 2 - super.paddleWidth * 1.5 + 15,
-                y: this.canvas.height / 2.5 + this.canvas.height / 2 - 1.5 * super.paddleWidth
-            },
-            prevposition: {
-                x: 15 + this.canvas.width / 2 - super.paddleWidth * 1.5 + 15,
-                y: this.canvas.height / 2.5 + this.canvas.height / 2 - 1.5 * super.paddleWidth
-            },
-            paddleLastMovedMillis: 0,
-            velocity: super.Utils.paddleSpeed,
-            imageURL: super.Utils.basketImage
-        };
-
-        mice = {
-            dimensions: {width: super.paddleWidth, height: super.paddleWidth},
-            position: {x: this.canvas.width / 2 - basket.dimensions.width / 2, y: (this.canvas.height - basket.dimensions.height) / 2 - basket.dimensions.height},
-            radius: 40,
-            delay: 2000,
-            lastTime: new Date().getTime(),
-            imageURL: super.Utils.miceImage
-        };
-
-        cheeseClock = {
-            dimensions: {width: super.paddleWidth * 2, height: super.paddleWidth * 1.6},
-            position: {x: this.canvas.width / 2 + super.paddleWidth, y: mice.position.y - mice.dimensions.height / 2.2},
-            angle: 0,
-            velocity: 1.4,
-            imageURL: super.Utils.cheeseImage
-        };
-
-        initSoundPlaying = true;
-        goodJob.src = super.Utils.goodCatchSound;
-        ballCatchFail.src = super.Utils.ballcatchFailSound;
-        audio.src = super.Utils.drumRollSound;
-        audio.play();
-        audio.addEventListener('ended', function () {
-
-            initSoundPlaying = false;
-        });
-
-        super.initGame();
-    }
-
-    /**
-     * @method  dataCollection Collect data
-     */
-    dataCollection() {
-
-        let exportData = {
-                game_type: 'catchMouse',
-                basket_x: basket.position.x,
-                basket_y: basket.position.y,
-                mice_x: mice.position.x,
-                mice_y: mice.position.y,
-                trial: super.currentRound,
-                timestamp: new Date().getTime()
-
-            };
-
-        super.storeData(exportData);
+    if(mice.state === 'show'){
+      this.cheeseState();
+      this.drawImage(mice);
 
     }
 
+    if (mice.state === 'done') {
 
-    /**
-     *
-     * Start showing the mouse and the cheese.
-     * Update the radians angle  of the cheese with each iteration.
-     * Detect collision with paddle(basket) here and set gameOver object to true
-     * if the basket reached or not the target (mouse)
-     * @method startClock
-     */
-    startClock() {
+      super.paddleAtZero(basket,false);
+      super.gameOver = true;
 
-        this.drawImage(mice);
+    }
 
-        //Collision detection basket with mice
-        if (mice.position.y > basket.position.y - mice.dimensions.height / 3 && mice.position.y < basket.position.y + basket.dimensions.height) {
-            goodJob.play();
-            super.gameOver = true;
-            super.increaseScore();
+    if(mice.state === 'show'){
 
-        } else {
 
-            // fill the cheeseClock
-            cheeseClock.angle = cheeseClock.angle + cheeseClock.velocity / 50;
+      if(mice.showTime >0 &&  super.getElapsedTime(mice.showTime) > 1 ){
+
+        mice.state = 'done';
+        ballCatchFail.play();
+        cheeseClock.imageURL = super.Utils.cheeseMissedImage;
+
+      }
+
+
+
+      if(basket.moved === 0  &&  basket.positions.length >5 && basket.position.y -  mice.position.y <=100 ){
+
+        swooshSound.play();
+        basket.moved = 1;
+
+      }
+
+
+      if (mice.position.y - basket.position.y >=0 ) {
+        mice.state = 'done';
+        if(cheeseClock.state >1){
+          cheeseClock.dimensions.width =  cheeseClock.dimensions.width*2;
+          cheeseClock.dimensions.height =  cheeseClock.dimensions.height*2;
+
+          if(cheeseClock.state < 4){
+
+            cheese1Sound.play();
+          }else if(cheeseClock.state>=4 && cheeseClock.state <8 ){
+            cheese2Sound.play();
+
+          }else{
+
+            cheese3Sound.play();
+          }
+          super.increaseScore();
+          this.showCheese();
 
         }
 
-        // Ran out of time
-        if (cheeseClock.angle >= 2) {
-            ballCatchFail.play();
-            super.gameOver = true;
-            cheeseClock.angle = 0.1;
-            cheeseClock.imageURL = super.Utils.cheeseMissedImage;
-        }
+
+      }
+
+
 
     }
 
-    /**
-     *
-     *  Show cheese portion according to angle
-     *  @method showCheese
-     */
-    showCheese() {
-
-        if (super.gameOver) {
-
-            cheeseClock.dimensions.width = super.paddleWidth * 1.5;
-            cheeseClock.dimensions.height = super.paddleWidth * 1.5;
-        }
-
-        let angle = Math.PI * (1.65 - cheeseClock.angle);
-        this.ctx.beginPath();
-        this.ctx.moveTo(cheeseClock.position.x + cheeseClock.dimensions.width / 2, cheeseClock.position.y + cheeseClock.dimensions.height / 2);
-        this.ctx.fillStyle = super.Utils.blackColor;
-        this.ctx.arc(cheeseClock.position.x + cheeseClock.dimensions.width / 2, cheeseClock.position.y + cheeseClock.dimensions.height / 2, cheeseClock.dimensions.height / 2, angle, Math.PI * 1.65);
-        this.ctx.lineTo(cheeseClock.position.x + cheeseClock.dimensions.width / 2, cheeseClock.position.y + cheeseClock.dimensions.height / 2);
-        this.ctx.fill();
-        this.ctx.closePath();
-        this.ctx.restore();
-    }
 
 
-    /**
-     *
-     * Main loop of the game.
-     * Set initial position of the ball in a box and starting rattling sound (initSoundPlaying).
-     * After that  start showing the mouse.
-     * Increase the score if ball hits the target.
-     * @method loop
-     */
-    loop() {
-        super.loop();
-        super.createPaddleBox(this.canvas.width / 2 - super.paddleWidth, this.canvas.height / 2.5 + this.canvas.height / 2 - 1.5 * super.paddleWidth);
-        this.drawImage(cheeseClock);
-
-        if (super.gameOver) {
-
-            super.paddleAtZero(basket, false);
-
-        } else {
-
-            // Start the clock and check if we ran out of time
-            if (!initSoundPlaying && new Date().getTime() - mice.lastTime > mice.delay) {
-
-                this.startClock();
-
-            }
-        }
-        this.showCheese();
-        this.drawImage(basket);
-        basket.prevposition.y = basket.position.y;
-        super.paddleMove(basket);
-
-    }
+    this.showCheese();
+    this.drawImage(basket);
+  }
 
 }

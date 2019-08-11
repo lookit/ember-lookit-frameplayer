@@ -51,7 +51,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     type: 'exp-lookit-games',
     displayFullscreen: false,
     doUseCamera: true,
-    startedRecording: false,
     currentGame: null,
     layout: layout,
     meta: {
@@ -163,6 +162,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
             type: 'object',
             properties: {
                 // define data to be sent to the server here
+
+                videoId: {
+                    type: 'string'
+                },
+                videoList: {
+                    type: 'list'
+                },
+
                 export_arr: {
                     type: 'array',
                     default: [],
@@ -214,9 +221,11 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
         // Define any actions that you need to be able to trigger from within the template here
 
         play() {
+            this.send('showFullscreen');
             this.set('showInstructions', false);
             this.set('export_arr', Ember.A());
             this.startRecorder();
+            this.hideRecorder();
             new Game(this, document, this.gameType);
         }
     },
@@ -239,5 +248,4 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     willDestroyElement() {
         this._super(...arguments);
     }
-
 });

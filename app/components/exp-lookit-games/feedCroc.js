@@ -18,9 +18,17 @@ let audio = {};
 let bounceSound = {};
 let ballCatchFail = {};
 let goodJob = {};
+let crocEatingSound = {};
 let initSoundPlaying = true;
-
-
+let initialTime = 0;
+let alpha = 0.7;
+let hArray = [];
+let targetLocH = 1.66;
+let targetLocV = 0.77;
+let jitterT = 0;
+let Tf = 0.75;
+let Height = 0.65;
+let wrongSound = {};
 
 /**
  * @class FeedCroc
@@ -53,21 +61,32 @@ export default class FeedCroc extends Base {
    */
   init() {
     super.init();
-
+    document.addEventListener("mousemove",  super.onMouseMove);
     paddle = {
 
-      position: {x: super.paddleWidth * 10-5, y: this.canvas.height / 2.5 + this.canvas.height / 2 - super.paddleHeight},
-      prevposition:{x: this.canvas.width / 2 + super.paddleWidth * 3, y: (this.canvas.height / 2 + super.paddleHeight * 2)},
+      position: {x: 0, y: 0},
+      dimensions: {width: 0 , height:0},
       paddleLastMovedMillis: 100,
-      velocity: super.Utils.paddleSpeed
+      velocity: super.Utils.paddleSpeed,
+      releaseVelocity:1,
+      positions:[],
+      times:[]
 
     };
+    hArray = super.generateHeights();
+
+
+
+    let leftBorder = (1.57)*super.Utils.SCALE ;
+    let topBorder = (0.567)*super.Utils.SCALE;
+    let rightBorder = (2.17)*super.Utils.SCALE;
+    let downBorder =  (0.987)*super.Utils.SCALE ;
 
     target = {
 
-      dimensions: {width: this.canvas.width / 5, height: this.canvas.width / 5},
-      position: {x: this.canvas.width - this.canvas.width / 3.5, y: 10},
-      imageURL: super.Utils.crocStartImage,
+      dimensions: {width: rightBorder-leftBorder, height: topBorder-downBorder},
+      position: {x: leftBorder, y: downBorder},
+      imageURL: super.Utils.croctongImage,
       imageTargetReachedURL: super.Utils.crocdoneImage
 
     };
@@ -78,12 +97,21 @@ export default class FeedCroc extends Base {
     goodJob = new Audio(super.Utils.crocSlurpSound);
     goodJob.load();
 
-    ballCatchFail = new Audio(super.Utils.ballcatchFailSound);
+    ballCatchFail = new Audio(super.Utils.failcatchSound);
     ballCatchFail.load();
 
+    crocEatingSound = new Audio(super.Utils.crocEatSound);
+    crocEatingSound.load();
     audio = new Audio(super.Utils.rattleSound);
     audio.load();
-    audio.addEventListener('onloadeddata', this.initGame(), false);
+    crocEatingSound.src =  super.Utils.crocEatSound;
+    goodJob.src = super.Utils.crocSlurpSound;
+    ballCatchFail.src = super.Utils.failcatchSound;
+    bounceSound.src = super.Utils.bouncingSound;
+    audio.src = super.Utils.rattleSound;
+    audio.addEventListener('canplaythrough', this.initGame(), false);
+    wrongSound = new Audio();
+    wrongSound.src = super.Utils.wrongSound;
 
   }
 
@@ -101,55 +129,168 @@ export default class FeedCroc extends Base {
    * @method loop
    */
   loop() {
-
     super.loop();
-
+    paddle = super.paddleObject(paddle);
+    let paddleBoxColor = super.Utils.blueColor;
+    super.createPaddleBox(paddleBoxColor);
+    super.generateTrajectoryParams(hArray,Height,Tf);
     super.createBallBox();
-    super.createPaddleBox(super.paddleWidth * 10, this.canvas.height / 2.5 + this.canvas.height / 2 - super.paddleWidth*1.3);
-    super.drawPaddle(paddle.position.x + 5, paddle.position.y);
-    this.drawImage(target, target.imageURL);
-    paddle.prevposition.y = paddle.position.y;
-    super.paddleMove(paddle);
+    this.drawImageAngle(target, target.imageURL,45);
+    super.drawPaddle(paddle);
+    super.paddleMove(paddle,initialTime);
     this.paddleBallCollision();
-
     let hitTheTarget = this.collisionDetection();
     let hitTheWall = super.wallCollision(ball);
 
-    if (hitTheTarget || hitTheWall || super.gameOver) {
+    if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMovedPlain(paddle)){
+
+      audio.play();
+    }
+
+    if(ball.state === 'start'){
+      super.moveBallToStart(ball, false);
+
+      if(initialTime > 0 && super.paddleIsMovedPlain(paddle)){
+        initialTime = new Date().getTime();
+        paddleBoxColor = super.Utils.redColor;
+        super.createPaddleBox(paddleBoxColor);
+        wrongSound.play();
+      }
+
+      if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
+
+        audio.pause();
+        audio.currentTime = 0;
+        ball.state = 'fall';
+        initialTime = new Date().getTime();
+      }
+
+    }
+
+
+    if(ball.state === 'fall' ){
+
+      if(initialTime > 0 && super.getElapsedTime(initialTime) < 0.95) {
+        super.trajectory(ball, initialTime);
+      }
+
+      if(initialTime > 0 && super.ballIsOnFloor(ball)) {
+        ball.state = 'hit';
+      }
+      super.drawBall(ball);
+
+    }
+
+    if(ball.state === 'bounce'){
+
+      super.bounceTrajectory(ball,paddle,initialTime);
+      super.drawBall(ball);
+    }
+
+
+    if((hitTheTarget || hitTheWall) && ball.state !== 'done' ){
+
+      ball.state = 'hit';
+    }
+
+
+    if(ball.state === 'hit'){
       // Remove ball and show in the starting point,
       //User should set the paddle to initial position , call stop after that
 
-      if (hitTheTarget) {
-        if (!super.gameOver && goodJob.readyState === 4) {
+      if (ball.hitstate === 'very good') {
+        goodJob.play();
+        this.drawImageAngle(target, target.imageTargetReachedURL, 45);
+        super.increaseScore();
+      } else if(ball.hitstate === 'good'){
+        crocEatingSound.play();
+        this.drawImageAngle(target, super.Utils.crocclosednotongImage, 45);
+        super.increaseScore();
+      }else{
 
-          goodJob.play();
-        }
-        this.drawImage(target, target.imageTargetReachedURL);
-
-      } else {
-        if (!super.gameOver) {
-
-          ballCatchFail.play();
-        }
+        ballCatchFail.play();
       }
 
-      super.moveBallToStart(ball, true);
-      super.paddleAtZero(paddle, hitTheTarget);
 
-    } else {
+      ball.state = 'done';
 
-      if (initSoundPlaying) {
-
-        super.moveBallToStart(ball, false);
-
-      } else {
-
-        super.ballTrajectory(ball);
-
-      }
     }
 
+
+
+
+    if(ball.state === 'done'){
+
+      if(ball.hitstate === 'very good'){
+
+        this.drawImageAngle(target, target.imageTargetReachedURL, 45);
+      }
+
+      if(ball.hitstate === 'good'){
+
+        this.drawImageAngle(target, super.Utils.crocclosednotongImage, 45);
+      }
+
+      if(super.ballIsOnFloor(ball)){
+        super.drawBall(ball);
+      }
+
+      super.paddleAtZero(paddle, false);
+
+    }
+    super.paddleMove(paddle,initialTime);
+
+
   }
+
+
+
+  getArraysum(a){
+
+    return a.reduce((t,n)=>t+n);
+
+  }
+
+  getArrayMean(a){
+
+    return this.getArraysum(a)/a.length;
+
+  }
+
+  subtractFromEachElement(a,val){
+
+    return  a.map((v,index)=>v-val);
+
+  }
+
+  arrayProduct(a1,a2){
+
+    return a1.map((value,index)=> value*a2[index]);
+
+  }
+
+  vectorCalculation(a){
+
+    return this.subtractFromEachElement(a,this.getArrayMean(a));
+
+  }
+
+  /**
+   * @method getPaddleVelocity
+   * sum((time-mean(time)).*(position-mean(position)))/sum((time-mean(time)).*(time-mean(time)))
+   * @param time
+   * @param position
+   * @returns {number}
+   */
+  getPaddleVelocity(time,position){
+
+    let timeVector = this.vectorCalculation(time.slice(time.length-15,time.length));
+    let positionVector = this.vectorCalculation(position.slice(position.length-15,position.length));
+
+    return  this.getArraysum(this.arrayProduct(timeVector,positionVector))/this.getArraysum(this.arrayProduct(timeVector,timeVector));
+  }
+
+
 
   /**
    *
@@ -158,24 +299,40 @@ export default class FeedCroc extends Base {
    * @method paddleBallCollision
    */
   paddleBallCollision() {
-    if (ball.position.y > paddle.position.y  - ball.radius && ball.position.y < paddle.position.y + ball.radius  ) {
-      if ((ball.position.x > paddle.position.x && ball.position.x < paddle.position.x + super.paddleWidth*1.3 )) {
-        if (new Date().getTime() - paddle.paddleLastMovedMillis > 120) {
-          bounceSound.play();
-          ball.velocity.y =  -4.8;
-          paddle.paddleLastMovedMillis = new Date().getTime();
-          ball.position.x += ball.velocity.x * super.Utils.frameRate * 100;
-          ball.position.y += ball.velocity.y * super.Utils.frameRate * 100  ;
 
-          this.ctx.translate(ball.position.x, ball.position.y);
-          this.ctx.beginPath();
-          this.ctx.arc(0, 0, ball.radius, 0, Math.PI * 2, true);
-          this.ctx.fillStyle = ball.color;
-          this.ctx.fill();
-          this.ctx.closePath();
+    super.paddleMove(paddle,initialTime);
+    //Detect the ball position on X axis , if the ball is between paddle edges
+    if (ball.position.x >= (1.2810 - 0.025) * super.Utils.SCALE - 0.04*super.Utils.SCALE && ball.position.x <= (1.3810 + 0.025) * super.Utils.SCALE) {
+
+
+      //Detect the ball position on Y axes, if the ball is within range  on Y axis
+      let paddleDelta = paddle.positions[paddle.positions.length -1] - paddle.positions[paddle.positions.length -20];
+      if(paddleDelta < 0.1){
+        paddleDelta = 0.1;
+      }
+
+      if( Math.abs(ball.position.y - paddle.position.y) <= paddleDelta*super.Utils.SCALE  && ball.position.y - paddle.position.y>=0 ){
+        let paddleVelocity = this.getPaddleVelocity(paddle.times, paddle.positions);
+        super.trajectory(ball, initialTime);
+        bounceSound.play();
+        paddle.paddleLastMovedMillis = new Date().getTime();
+        ball.impactTime = new Date().getTime() ;
+        ball.impactPosition = (this.canvas.height - (paddle.position.y - paddle.dimensions.height - paddleDelta) ) / this.canvas.height ;
+        let iterator = super.getElapsedTime(initialTime);
+        ball.velocity = super.TrajectoryVars.initV - super.TrajectoryVars.gravity * iterator;
+        paddle.releaseVelocity = -alpha * (ball.velocity - paddleVelocity) + paddleVelocity;
+        //Fix for abrupt trajectory, make sure the trajectory is not negative
+        if(paddle.releaseVelocity > 1.4){
+          paddle.releaseVelocity  = 1.4;
         }
+        if (isNaN(paddle.releaseVelocity)) {
+          paddle.releaseVelocity = 1.56;
+        }
+        ball.state = 'bounce';
+        super.bounceTrajectory(ball,paddle,initialTime);
       }
     }
+
   }
 
 
@@ -187,9 +344,38 @@ export default class FeedCroc extends Base {
    */
   collisionDetection() {
 
-    if ((ball.position.y < target.position.y + target.dimensions.height) && (ball.position.y > target.position.y + target.dimensions.height / 1.6) && ball.position.x > target.position.x + 40 && ball.position.x < target.position.x + 80) {
+
+    let YL = (targetLocV-0.45)*super.Utils.SCALE;
+    let YH = (targetLocV+0.12)*super.Utils.SCALE;
+    let XH = targetLocH *super.Utils.SCALE;
+
+    if (ball.position.y > YL && ball.position.y < YH  && ball.position.x > XH ) {
+      let currenImpactCoord = Math.abs(ball.position.y - targetLocV*super.Utils.SCALE);
+
+      if (currenImpactCoord < 0.087*super.Utils.SCALE){
+
+        if(currenImpactCoord < 0.025*super.Utils.SCALE){
+
+          ball.hitstate = 'very good';
+
+        }else{
+
+          ball.hitstate = 'good';
+        }
+
+
+      }else{
+
+        ball.hitstate = 'hit';
+
+      }
+
+
       return true;
+
     }
+
+
 
     return false;
   }
@@ -203,38 +389,22 @@ export default class FeedCroc extends Base {
    * @method initGame
    */
   initGame() {
-    let Angle = (65*(Math.PI)/180);
-    const  trajectories = [
-      {velocity: {x: 5.7* (45*(Math.PI)/180), y: -6.1*Math.sin(Angle)}},
-      {velocity: {x: 5.5* (45*(Math.PI)/180), y: -6.3*Math.sin(Angle)}},
-      {velocity: {x: 5.4* (45*(Math.PI)/180), y: -6.2*Math.sin(Angle)}}
-    ];
 
-    let index = Math.floor(Math.random() * trajectories.length);
-    let trajectory = trajectories[index];
 
-    ball = {
-
-      position: {x: super.paddleWidth * 5 + 20, y: (this.canvas.height - super.paddleWidth * 2)},
-      velocity: {x: trajectory.velocity.x, y: trajectory.velocity.y},
-      mass: super.Utils.ballMass,
-      radius: 10,
-      restitution: -1.15,
-      color: '#dadd0f'
-
-    };
-
+    jitterT = super.trialStartTime();
+    ball = super.ballObject();
+    initialTime =0;
     initSoundPlaying = true;
-    goodJob.src = super.Utils.crocSlurpSound;
-    ballCatchFail.src = super.Utils.ballcatchFailSound;
-    bounceSound.src = super.Utils.bouncingSound;
-    audio.src = super.Utils.rattleSound;
-    audio.play();
-    audio.addEventListener('ended', function () {
+
+    if(super.currentRounds >0 || (super.currentRounds === 0 && !super.paddleIsMovedPlain(paddle))) {
+      audio.play();
+    }
+    //super.generateTrajectoryParams(hArray,0.65,0.75);
+    audio.addEventListener('playing', function () {
 
       initSoundPlaying = false;
+      initialTime = new Date().getTime();
     });
-
     super.initGame();
 
   }
@@ -245,14 +415,15 @@ export default class FeedCroc extends Base {
    * @method dataCollection
    */
   dataCollection() {
-
+    super.dataCollection();
     let exportData = {
       game_type: 'feedCroc',
-      ball_position_x: ball.position.x,
-      ball_position_y: ball.position.y,
-      paddle_position_x: paddle.position.x,
-      paddle_position_y: paddle.position.y,
-      trial: super.currentRound,
+      ball_position_x: ball.position.x/this.canvas.width,
+      ball_position_y: (this.canvas.height - ball.position.y)/this.canvas.height,
+      paddle_center_x: paddle.position.x+ paddle.dimensions.width/2,
+      paddle_width: paddle.dimensions.width,
+      paddle_position_y: (this.canvas.height - paddle.position.y)/this.canvas.height,
+      trial: super.currentRounds,
       timestamp: new Date().getTime()
 
     };
