@@ -14,7 +14,6 @@ import Base from './base';
 let target = {};
 let ball = {};
 let keyPressed = {};
-let initSoundPlaying = false;
 let startSound = {};
 let ballCatchFail = {};
 let goodJob = {};
@@ -53,14 +52,6 @@ export default class FeedMouse extends Base {
 
 
 
-  createRect(x,y,width,height,color){
-
-    this.ctx.beginPath();
-    this.ctx.fillStyle = color;
-    this.ctx.rect(x, y, width, height);
-    this.ctx.fill();
-    this.ctx.closePath();
-  }
 
   /**
    * Draw house with roof according to coordinates
@@ -208,11 +199,8 @@ export default class FeedMouse extends Base {
     };
 
     ball = super.ballObject();
-
-    initSoundPlaying = true;
     startSound.play();
     startSound.addEventListener('playing', function () {
-      initSoundPlaying = false;
       initialTime = new Date().getTime();
     });
 
@@ -276,7 +264,7 @@ export default class FeedMouse extends Base {
     super.generateTrajectoryParamsDiscrete(TfArr);
     this.createHouse();
     this.createWindow();
-    super.discreteLauncer(super.Utils.boxOfFireworks);
+
     if(ball.state === 'start'){
 
       super.moveBallToStart(ball, super.Utils.Fireball,false);
@@ -293,6 +281,8 @@ export default class FeedMouse extends Base {
 
 
     if (ball.state === 'hit') {
+      greatJob.currentTime = 0;
+      goodJob.currentTime = 0;
       super.drawBall(ball, super.Utils.Fireball);
       super.waitSeconds(2500);
       super.finishGame(false);
@@ -313,7 +303,7 @@ export default class FeedMouse extends Base {
 
 
       super.drawBall(ball,super.Utils.Fireball);
-
+      this.createHouse();
 
       if (keyPressed.value === true ) {
 
@@ -375,6 +365,9 @@ export default class FeedMouse extends Base {
 
 
     }
+
+    super.discreteLauncer(super.Utils.boxOfFireworks);
+
   }
 
 }

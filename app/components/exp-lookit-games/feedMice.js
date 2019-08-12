@@ -21,7 +21,6 @@ let imageURLS = [];
 let audio = {};
 let ballCatchFail = {};
 let goodJob = {};
-let initSoundPlaying = false;
 let currentTargetIndex = 0;
 let initialTime = 0;
 let initVmatrix = [];
@@ -232,10 +231,8 @@ export default class FeedMice extends Base {
       (this.targetCoord(index))
     );
 
-    initSoundPlaying = true;
     audio.play();
     audio.addEventListener('playing', function () {
-      initSoundPlaying = false;
       initialTime = new Date().getTime();
     });
 
