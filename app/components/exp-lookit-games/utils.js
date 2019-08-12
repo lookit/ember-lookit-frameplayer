@@ -16,14 +16,14 @@ export default class Utils{
   static get  paddleSpeed() {return 1;}
   static get  ballMass() {return 0.1;}
   static get  restitution() {return -1.2;}
-  static get  gameRounds() {return 30;}
+  static get  gameRounds() {return 18;}
   static get  gravityFactor() {return 1;}
   static get  SCALE(){return 420;}
 
 
   //Sound Resources
-  static get  bucketImageResource() {return 'https://s3.us-east-2.amazonaws.com/piproject/Resources/images/';}
-  static get  bucketSoundResources() {return 'https://s3.us-east-2.amazonaws.com/piproject/Resources/sounds/';}
+  static get  bucketImageResource() {return 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/';}
+  static get  bucketSoundResources() {return 'https://piproject.s3.us-east-2.amazonaws.com/Resources/sounds/';}
   static get  bouncingSound() {return this.bucketSoundResources + 'BallBouncing.mp3';}
   static get  rattleSound() {return this.bucketSoundResources + 'rattling_sound.mp3';}
   static get  doorbellSound() {return this.bucketSoundResources + 'doorbell.mp3';}
@@ -42,6 +42,33 @@ export default class Utils{
   static get  wrongSound() {return this.bucketSoundResources + 'wrongSound.mp3';}
   static get  failcatchSound(){return this.bucketSoundResources + 'failcatch.mp3';}
 
+  // Brick smasher Sounds
+
+  static get  brickHitsmall(){return this.bucketSoundResources + 'brickhit_small.mp3';}
+  static get  brickHitlarge(){return this.bucketSoundResources + 'brickhit_big.mp3';}
+  static get  brickHitwall(){return this.bucketSoundResources + 'brickhit_wall_impact.mp3';}
+
+
+
+  // Fireworks Sounds
+
+  static get  firework_big(){return this.bucketSoundResources + 'firework_big.mp3';}
+  static get  firework_small(){return this.bucketSoundResources + 'firework_small.mp3';}
+  static get  firework_hidden(){return this.bucketSoundResources + 'firework_hidden.mp3';}
+  static get  firework_whistle(){return this.bucketSoundResources + 'firework_whistle.mp3';}
+  static get  fuse(){return this.bucketSoundResources + 'fuse.mp3';}
+
+
+  // Slime game Sounds
+
+  static get  monsterLaunch(){return this.bucketSoundResources + 'Monster_launch.mp3';}
+  static get  monsterSplash(){return this.bucketSoundResources + 'Monster_splash.mp3';}
+  static get  monsterGrowl(){return this.bucketSoundResources + 'Monster_growl.mp3';}
+
+
+
+
+
   //Image Resources
   static get  treeImage() {return this.bucketImageResource + 'tree_original.png';}
   static get  tree2Image() {return this.bucketImageResource + 'tree2.png';}
@@ -58,7 +85,71 @@ export default class Utils{
   static get  blueMouseImage() {return this.bucketImageResource + 'mouse-blue.png';}
   static get  redMouseImage() {return this.bucketImageResource + 'mouse-red.png';}
   static get  greenMouseImage() {return this.bucketImageResource + 'mouse-green.png';}
-  static get  arrowImage() {return this.bucketImageResource + 'arrow.png';}
+
+
+  // Brick smasher Images
+  static get paddleImage() {return this.bucketImageResource + 'Paddle1.png';}
+  static get wallInitial() {return this.bucketImageResource + 'wall_hor.png';}
+  static get wallMissed() {return this.bucketImageResource + 'wall_hor_clip.png';}
+  static get basketBalls() {return this.bucketImageResource + 'BasketballsPile2.png';}
+  static get basketBall() {return this.bucketImageResource + 'basketball.png';}
+  static get tokenImage() {return this.bucketImageResource + 'coin.png';}
+  static get smallbricksImage() {return this.bucketImageResource + 'SmallBricksPile.png';}
+  static get largebricksImage() {return this.bucketImageResource + 'LargeBricksPile.png';}
+
+
+  //Space Junk Sounds
+
+
+
+  // Fireworks Images
+
+
+  static get skyline() {return this.bucketImageResource + 'skyline_clipped.png';}
+  static get Explosion_big_blue() {return this.bucketImageResource + 'Explosion_big_blue.png';}
+  static get Explosion_big_green() {return this.bucketImageResource + 'Explosion_big_green.png';}
+  static get Explosion_big_red() {return this.bucketImageResource + 'Explosion_big_red.png';}
+  static get Explosion_big() {return this.bucketImageResource + 'Explosion_big.png';}
+  static get Explosion_small() {return this.bucketImageResource + 'Explosion_small.png';}
+  static get Fireball() {return this.bucketImageResource + 'Fireball.png';}
+  static get boxOfFireworks() {return this.bucketImageResource + 'Box_of_fireworks.png';}
+
+
+
+
+  //Space Junk Images
+  static get robotImage() {return this.bucketImageResource + 'Robot.png';}
+  static get obstruction1() {return this.bucketImageResource + 'Obstruction1.png';}
+  static get obstruction2() {return this.bucketImageResource + 'Obstruction2.png';}
+  static get obstruction3() {return this.bucketImageResource + 'Obstruction3.png';}
+  static get gear() {return this.bucketImageResource + 'Gear.png';}
+  static get ironBasket() {return this.bucketImageResource + 'Basket_metal.png';}
+
+
+
+
+  //Slime Quest Images
+
+  static get shuttleNarrow() {return this.bucketImageResource + 'Shuttle7_narrow.png';}
+  static get shuttleWide() {return this.bucketImageResource + 'Shuttle7_wide.png';}
+  static get shuttle() {return this.bucketImageResource + 'Shuttle7.png';}
+  static get slimeBall() {return this.bucketImageResource + 'SlimeBall_orange.png';}
+  static get splat() {return this.bucketImageResource + 'Splat_orange2.png';}
+  static get slimeMonster() {return this.bucketImageResource + 'Monster2_orange.png';}
+  static get openWindowGreen() {return this.bucketImageResource + 'Open_window_Green.png';}
+  static get openWindowViolet() {return this.bucketImageResource + 'Open_window_Violet.png';}
+  static get openWindowYellow() {return this.bucketImageResource + 'Open_window_Yellow.png';}
+
+
+
+
+  //Catch mouse Images
+  static get rat() {return this.bucketImageResource + 'Rat.png';}
+  static get pizza() {return this.bucketImageResource + 'Pizza.png';}
+  static get rectangleCage() {return this.bucketImageResource + 'Rectangle_cage.png';}
+
+
+
   //Colors
   static  get redColor() {return '#ff2d23';}
   static  get grayColor() {return '#808080';}
