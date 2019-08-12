@@ -24,8 +24,6 @@ let initialTime = 0;
 let TfArr = [];
 let wallsize = 0.25;
 let targetX = 1.3310;
-let winsize = 0.1;
-let targetsize = 0.005;
 let jitterT = 0;
 let fireworks =  []
 /**
@@ -305,39 +303,57 @@ export default class FeedMouse extends Base {
       super.drawBall(ball,super.Utils.Fireball);
       this.createHouse();
 
-      if (keyPressed.value === true ) {
+      if(ball.state === 'fall') {
 
-        if(ball.position.x < (targetX+0.42)*super.Utils.SCALE   ){
+        if (initialTime > 0 && super.getElapsedTime(initialTime) < 1.5) {
+          super.trajectory(ball, initialTime);
+        }
 
-          let position = Math.abs(ball.position.x - targetX*super.Utils.SCALE);
-          if(position < targetsize*super.Utils.SCALE){
+        if (initialTime > 0 && super.getElapsedTime(initialTime) > 1 && super.ballIsOnFloor(ball)) {
+          ballCatchFail.play();
+          ball.state = 'hit';
+        }
+
+
+        super.drawBall(ball, super.Utils.Fireball);
+        this.createHouse();
+        // this.createWindow();
+
+
+        //Check for target (red dot) position , if we are within the window size
+        if (keyPressed.value === true) {
+
+          let position = Math.abs(ball.position.x - target.position.x);
+
+          if (position < 0.05 * super.Utils.SCALE) {
+
             let exposion = {
 
-              dimensions:{width:target.dimensions.width*4 , height:target.dimensions.width*4 },
-              position:ball.position
+              dimensions: {width: target.dimensions.width * 4, height: target.dimensions.width * 4},
+              position: target.position
 
-            }
+            };
 
             // this.createWindow();
+            this.drawImageObject(exposion, super.Utils.Explosion_big_green);
             greatJob.play();
-            this.drawImageObject(exposion,super.Utils.Explosion_big_blue);
 
-          }else if(position < (winsize/2)*super.Utils.SCALE){
+
+          } else if (position < (target.dimensions.width / 2) * super.Utils.SCALE) {
 
             let exposion = {
 
-              dimensions:{width:target.dimensions.width*2 , height:target.dimensions.width*2 },
-              position:ball.position
+              dimensions: {width: target.dimensions.width * 2, height: target.dimensions.width * 2},
+              position: target.position
 
-            }
+            };
 
             // this.createHouse();
-
+            this.drawImageObject(exposion, super.Utils.Explosion_small);
             goodJob.play();
-            this.drawImageObject(exposion,super.Utils.Explosion_small);
 
 
-          }else{
+          } else {
 
             ballCatchFail.play();
 
@@ -347,23 +363,12 @@ export default class FeedMouse extends Base {
           this.showBallLocation();
 
 
-        }else{
-
-          ballCatchFail.play();
+          ball.state = 'hit';
 
         }
 
 
-
-        ball.state = 'hit';
-
-
       }
-
-
-
-
-
     }
 
     super.discreteLauncer(super.Utils.boxOfFireworks);
