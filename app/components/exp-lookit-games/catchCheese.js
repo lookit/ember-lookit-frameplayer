@@ -17,7 +17,6 @@ let ball = {};
 let obstructions = [];
 let audio = {};
 let goodJob = {};
-let initSoundPlaying = true;
 let ballCatchFail = {};
 let targetStars = {};
 let initialTime = 0;
@@ -29,6 +28,7 @@ let jitterT = 0;
 let radiusRim = 0.1;
 let wrongSound = {};
 let obstructionsNum = 0;
+let basketImage = {};
 
 /**
  * Main implementation of catch the cheese game.
@@ -60,9 +60,6 @@ export default class CatchCheese extends Base {
     super.init();
     document.addEventListener("mousemove",  super.onMouseMove);
     hArray = super.generateHeights();
-    Tf = this.context.flightTime;
-    Height = this.context.height;
-
     obstrArr  = super.uniformArr([1,2,3]);
     goodJob = new Audio(super.Utils.goodCatchSound);
     goodJob.load();
@@ -70,12 +67,17 @@ export default class CatchCheese extends Base {
     ballCatchFail.load();
     audio = new Audio(super.Utils.rattleSound);
     audio.load();
-    ballCatchFail.src = super.Utils.failcatchSound;
+    ballCatchFail.src = super.Utils.ballcatchFailSound;
     goodJob.src = super.Utils.goodCatchSound;
     audio.src = super.Utils.rattleSound;
+    audio.setAttribute("preload", "auto");
+    ballCatchFail.setAttribute("preload", "auto");
+    goodJob.setAttribute("preload", "auto");
+    audio.addEventListener('onloadeddata', this.initGame(), false);
+    basketImage= new Image();
+    basketImage.src = super.Utils.ironBasket;
     wrongSound = new Audio();
     wrongSound.src = super.Utils.wrongSound;
-    audio.addEventListener('onloadeddata', this.initGame(), false);
 
   }
 
@@ -114,32 +116,18 @@ export default class CatchCheese extends Base {
     );
 
 
-    initSoundPlaying = true;
     if(super.currentRounds >0 || (super.currentRounds === 0 && !super.paddleIsMoved(basket))) {
       audio.play();
     }
     audio.addEventListener('playing', function () {
 
-      initSoundPlaying = false;
       initialTime = new Date().getTime();
 
     });
 
   }
 
-  /**
-   * Create red dot target location
-   * @method drawRedDot
-   */
-  drawRedDot(){
 
-    let redDot = super.basketCenter(basket);
-    this.ctx.beginPath();
-    this.ctx.fillStyle = redDot.color;
-    this.ctx.fillRect(redDot.position.x, redDot.position.y, redDot.dimensions.width, redDot.dimensions.height);
-    this.ctx.fill();
-    this.ctx.closePath();
-  }
 
   dataCollection() {
     super.dataCollection();
@@ -216,7 +204,7 @@ export default class CatchCheese extends Base {
    */
   loop() {
     super.loop();
-    super.createBallBox();
+    super.createBallBox(super.Utils.robotImage);
     super.generateTrajectoryParams(hArray,Height,Tf);
     let hitTheTarget = this.collisionDetection();
     let hitTheWall = super.wallCollision(ball);
@@ -230,7 +218,8 @@ export default class CatchCheese extends Base {
 
     if(ball.state === 'start'){
 
-      super.moveBallToStart(ball, false);
+      super.moveBallToStart(ball, super.Utils.gear,false);
+
 
       if(initialTime > 0 && super.paddleIsMoved(basket)){
         initialTime = new Date().getTime();
@@ -265,7 +254,7 @@ export default class CatchCheese extends Base {
       }
 
 
-      super.drawBall(ball);
+      super.drawBall(ball,super.Utils.gear);
     }
 
 
@@ -292,19 +281,20 @@ export default class CatchCheese extends Base {
 
       if (ball.hitstate === 'very good') {
         this.starsLocationUpdate();
-        super.drawImage(targetStars,super.Utils.basketStarsImage);
+        super.drawImageObject(targetStars,super.Utils.basketStarsImage);
+
       }
 
       if(ball.hitstate === ''){
 
-        super.drawBall(ball);
+        super.drawBall(ball,super.Utils.gear);
       }
 
 
       // Remove ball and show in the starting point,
       //User should set the paddle to initial position , call stop after that
       if(super.getElapsedTime(initialTime)  > 1.5) {
-        super.moveBallToStart(ball, false);
+        super.moveBallToStart(ball, super.Utils.gear,false);
         super.paddleAtZero(basket,false);
       }
 
@@ -316,9 +306,8 @@ export default class CatchCheese extends Base {
 
     this.basketObject(basket);
     super.paddleMove(basket,initialTime);
-    super.drawImage(basket,basket.imageURL);
+    super.drawImageObject(basket,super.Utils.ironBasket);
     super.createPaddleBox(paddleBoxColor);
-    this.drawRedDot();
   }
 
 
