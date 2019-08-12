@@ -28,7 +28,7 @@ let targetX = 1.3310;
 let winsize = 0.1;
 let targetsize = 0.005;
 let jitterT = 0;
-
+let fireworks =  []
 /**
  * @class FeedMouse
  * @extends Base
@@ -46,6 +46,8 @@ export default class FeedMouse extends Base {
   constructor(context, document) {
 
     super(context, document);
+    fireworks = [super.Utils.Explosion_big_blue,super.Utils.Explosion_big_green,super.Utils.Explosion_big_red];
+
 
   }
 
@@ -66,22 +68,18 @@ export default class FeedMouse extends Base {
    */
   createHouse() {
 
-    let leftBorder = (targetX-wallsize)*super.Utils.SCALE ;
+    let leftBorder = (targetX - 0.5-wallsize)*super.Utils.SCALE ;
     let topBorder = (0.8)*super.Utils.SCALE;
-    let rightBorder = (targetX+wallsize)*super.Utils.SCALE;
-    let downBorder =  (1.3671+0.15)*super.Utils.SCALE ;
 
-    this.createRect(leftBorder, topBorder, rightBorder-leftBorder, downBorder-topBorder,target.houseColor);
+    let houseObj ={
 
+      dimensions:  {width: 1.54*super.Utils.SCALE, height:  0.9 * super.Utils.SCALE},
+      position : {x : leftBorder , y : topBorder}
 
-    //Draw roof
-    this.ctx.beginPath();
-    this.ctx.fillStyle = super.Utils.redColor;
-    this.ctx.moveTo(targetX*super.Utils.SCALE, 0.5*super.Utils.SCALE);
-    this.ctx.lineTo((targetX-1.5*wallsize)*super.Utils.SCALE, 0.8*super.Utils.SCALE);
-    this.ctx.lineTo((targetX+1.5*wallsize)*super.Utils.SCALE, 0.8*super.Utils.SCALE);
-    this.ctx.fill();
-    this.ctx.closePath();
+    }
+
+    super.drawImageObject(houseObj, super.Utils.skyline);
+
   }
 
   /**
@@ -128,13 +126,7 @@ export default class FeedMouse extends Base {
   showBallLocation(){
 
 
-
-    //Put the ball in the center of target once it hits window constraint
-    this.ctx.beginPath();
-    this.ctx.arc(ball.position.x, ball.position.y, ball.radius, 0, Math.PI * 2, true);
-    this.ctx.fillStyle = ball.color;
-    this.ctx.fill();
-    this.ctx.closePath();
+    super.drawBall(ball, super.Utils.Fireball);
 
 
   }
@@ -148,18 +140,18 @@ export default class FeedMouse extends Base {
   init() {
     super.init();
     TfArr = super.uniformArr([0.8,0.9,1]);
-    goodJob = new Audio(super.Utils.doorbellSound);
+    goodJob = new Audio(super.Utils.firework_small);
     goodJob.load();
 
-    ballCatchFail = new Audio(super.Utils.ballcatchFailSound);
+    ballCatchFail = new Audio(super.Utils.firework_hidden);
     ballCatchFail.load();
 
-    startSound = new Audio(super.Utils.rattleSound);
-    startSound.src = super.Utils.rattleSound;
-    goodJob.src = super.Utils.doorbellSound;
+    startSound = new Audio(super.Utils.fuse);
+    startSound.src = super.Utils.fuse;
+    goodJob.src = super.Utils.firework_small;
 
-    greatJob =  new Audio(super.Utils.yaySound);
-    greatJob.src = super.Utils.yaySound;
+    greatJob =  new Audio(super.Utils.firework_big);
+    greatJob.src = super.Utils.firework_big;
     greatJob.load();
 
     ballCatchFail.src = super.Utils.ballcatchFailSound;
@@ -258,7 +250,7 @@ export default class FeedMouse extends Base {
    */
   keyDownHandler(e) {
 
-    if (e.key === 'l' || e.key === 'L') {
+    if (e.key === ' ' || e.key === 'Spacebar') {
 
       keyPressed = {value:true,when:new Date().getTime()};
     }
@@ -282,13 +274,12 @@ export default class FeedMouse extends Base {
 
     super.loop();
     super.generateTrajectoryParamsDiscrete(TfArr);
-    super.discreteLauncer();
     this.createHouse();
     this.createWindow();
-
+    super.discreteLauncer(super.Utils.boxOfFireworks);
     if(ball.state === 'start'){
 
-      super.moveBallToStart(ball, false);
+      super.moveBallToStart(ball, super.Utils.Fireball,false);
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         startSound.pause();
         startSound.currentTime = 0;
@@ -302,7 +293,7 @@ export default class FeedMouse extends Base {
 
 
     if (ball.state === 'hit') {
-      super.drawBall(ball);
+      super.drawBall(ball, super.Utils.Fireball);
       super.waitSeconds(2500);
       super.finishGame(false);
 
@@ -315,15 +306,13 @@ export default class FeedMouse extends Base {
         super.trajectory(ball, initialTime);
       }
 
-      if(initialTime > 0 && super.ballIsOnFloor(ball)) {
+      if(initialTime > 0 && super.getElapsedTime(initialTime)> 1 && super.ballIsOnFloor(ball)) {
         ballCatchFail.play();
         ball.state = 'hit';
       }
 
 
-      super.drawBall(ball);
-      this.createHouse();
-      this.createWindow();
+      super.drawBall(ball,super.Utils.Fireball);
 
 
       if (keyPressed.value === true ) {
@@ -332,21 +321,31 @@ export default class FeedMouse extends Base {
 
           let position = Math.abs(ball.position.x - targetX*super.Utils.SCALE);
           if(position < targetsize*super.Utils.SCALE){
-            target.color = super.Utils.whiteColor;
-            target.houseColor = super.Utils.whiteColor;
-            this.createHouse();
-            this.createWindow();
-            super.increaseScore();
+            let exposion = {
+
+              dimensions:{width:target.dimensions.width*4 , height:target.dimensions.width*4 },
+              position:ball.position
+
+            }
+
+            // this.createWindow();
             greatJob.play();
+            this.drawImageObject(exposion,super.Utils.Explosion_big_blue);
 
           }else if(position < (winsize/2)*super.Utils.SCALE){
 
-            target.color = super.Utils.whiteColor;
-            target.houseColor = super.Utils.whiteColor;
-            this.createHouse();
-            this.createWindow();
-            super.increaseScore();
+            let exposion = {
+
+              dimensions:{width:target.dimensions.width*2 , height:target.dimensions.width*2 },
+              position:ball.position
+
+            }
+
+            // this.createHouse();
+
             goodJob.play();
+            this.drawImageObject(exposion,super.Utils.Explosion_small);
+
 
           }else{
 
