@@ -130,8 +130,6 @@ export default class Base {
    * @param Tf Flight time coefficient
    */
   generateTrajectoryParams(hArr, height, Tf) {
-    Tf = this.context.flightTime / 100;
-    height = this.context.height / 100;
     let currentHeight = hArr[currentRounds] * 0.05 + height;
     gravity = 2 * currentHeight / Math.pow(Tf, 2);
     ballvx = (1.0310 + 0.02) / Tf;
@@ -245,24 +243,24 @@ export default class Base {
     let topBorder = (0.914 + 0.05) * Utils.SCALE;
     let rightBorder = 400 + 0.25 * Utils.SCALE;
     let downBorder = (1.542 + 0.05) * Utils.SCALE;
-    let imgURL = Utils.treeImage;
+    let imgURL = Utils.obstruction1;
     switch (treeIndex) {
 
       case 1:
 
-        imgURL = Utils.treeImage;
+        imgURL = Utils.obstruction1;
 
         break;
 
       case 2:
 
-        imgURL = Utils.tree2Image;
+        imgURL = Utils.obstruction2;
 
         break;
 
       case 3:
 
-        imgURL = Utils.tree3Image;
+        imgURL = Utils.obstruction3;
         break;
 
 
@@ -384,43 +382,22 @@ export default class Base {
    * @method createBallBox
    * @param {int} paddleWidth
    */
-  createBallBox() {
+  createBallBox(imageURL) {
 
-    this.ctx.beginPath();
-    this.ctx.lineWidth = '8';
-    this.ctx.strokeStyle = Utils.blueColor;
+    let leftBorder = 0.4 * Utils.SCALE;
+    let topBorder = 1.2971 * Utils.SCALE;
+    let rightBorder = (0.64) * Utils.SCALE;
+    let downBorder = 1.5671 * Utils.SCALE;
 
-    let leftBorder = 0.45 * Utils.SCALE;
-    let topBorder = (1.3471 - 0.05) * Utils.SCALE;
-    let rightBorder = (0.59) * Utils.SCALE;
-    let downBorder = (1.3671 + 0.15 + 0.05) * Utils.SCALE;
+    let image = new Image();
+    image.src = imageURL;
+    this.ctx.drawImage(image, leftBorder, topBorder, rightBorder - leftBorder, downBorder - topBorder);
 
-    this.ctx.rect(leftBorder, downBorder, rightBorder - leftBorder, topBorder - downBorder);
-    this.ctx.fillStyle = Utils.blackColor;
-    this.ctx.lineWidth = '8';
-    this.ctx.strokeStyle = Utils.blueColor;
-    this.ctx.stroke();
-    this.ctx.closePath();
-
-
-    let InnerleftBorder = (0.52) * Utils.SCALE;
-    let InnertopBorder = (1.2971) * Utils.SCALE;
-    let InnerrightBorder = (0.59) * Utils.SCALE;
-    let InnerdownBorder = (1.5171 - 0.12) * Utils.SCALE;
-
-    this.ctx.beginPath();
-    this.ctx.rect(InnerleftBorder, InnerdownBorder, InnerrightBorder - InnerleftBorder, InnertopBorder - InnerdownBorder);
-    this.ctx.fillStyle = Utils.blackColor;
-    this.ctx.strokeStyle = Utils.blackColor;
-    this.ctx.lineWidth = '8';
-    this.ctx.stroke();
-    this.ctx.fill();
-    this.ctx.closePath();
   }
 
 
   //TODO: merge this with launcher implementation for paddle games
-  discreteLauncer() {
+  discreteLauncer(imageURL) {
 
     this.ctx.beginPath();
     this.ctx.lineWidth = '8';
@@ -431,27 +408,11 @@ export default class Base {
     let rightBorder = (initX + 0.07) * Utils.SCALE;
     let downBorder = (1.3871 + 0.15) * Utils.SCALE;
 
-    this.ctx.rect(leftBorder, downBorder, rightBorder - leftBorder, topBorder - downBorder);
-    this.ctx.fillStyle = Utils.blackColor;
-    this.ctx.lineWidth = '8';
-    this.ctx.strokeStyle = Utils.blueColor;
-    this.ctx.stroke();
-    this.ctx.closePath();
+    let image = new Image();
+    image.src = imageURL;
+    this.ctx.drawImage(image, leftBorder, topBorder, rightBorder - leftBorder, downBorder - topBorder);
 
 
-    let InnerleftBorder = (initX) * Utils.SCALE;
-    let InnertopBorder = (1.2971) * Utils.SCALE;
-    let InnerrightBorder = (initX + 0.07) * Utils.SCALE;
-    let InnerdownBorder = (1.5171 - 0.12) * Utils.SCALE;
-
-    this.ctx.beginPath();
-    this.ctx.rect(InnerleftBorder, InnerdownBorder, InnerrightBorder - InnerleftBorder, InnertopBorder - InnerdownBorder);
-    this.ctx.fillStyle = Utils.blackColor;
-    this.ctx.strokeStyle = Utils.blackColor;
-    this.ctx.lineWidth = '8';
-    this.ctx.stroke();
-    this.ctx.fill();
-    this.ctx.closePath();
   }
 
   /**
@@ -734,7 +695,7 @@ export default class Base {
       position: {x: leftBorder, y:downBorder},
       velocity: 0,
       mass: Utils.ballMass,
-      radius: (0.037)*Utils.SCALE/2,
+      radius: (0.037)*Utils.SCALE,
       state: 'start',
       impactTime: 0,
       hitstate:'',
@@ -847,16 +808,12 @@ export default class Base {
    * Draw ball per x,y ball location
    * @param ball
    */
-  drawBall(ball) {
+  drawBall(ball,ballURL) {
 
-    this.ctx.save();
-    this.ctx.beginPath();
-    this.ctx.translate(ball.position.x, ball.position.y);
-    this.ctx.arc(0, 0, ball.radius, 0, Math.PI * 2, true);
-    this.ctx.fillStyle = ball.color;
-    this.ctx.fill();
-    this.ctx.closePath();
-    this.ctx.restore();
+
+    let image = new Image();
+    image.src = ballURL;
+    this.ctx.drawImage(image, ball.position.x, ball.position.y, ball.radius, ball.radius);
 
   }
 
@@ -867,10 +824,10 @@ export default class Base {
    * @param {object} ball object parameters
    * @param {boolean} gameOver set game to be over
    */
-  moveBallToStart(ball, gameOver) {
+  moveBallToStart(ball,ballURL ,gameOver) {
 
     ball = this.ballObject();
-    this.drawBall(ball);
+    this.drawBall(ball,ballURL);
 
     if (gameOver) {
       this.gameOver = true;
@@ -949,6 +906,15 @@ export default class Base {
 
 
     return false;
+  }
+
+
+  drawImageObject(object,imageURL){
+
+    let image = new Image();
+    image.src = imageURL;
+    this.ctx.drawImage(image, object.position.x, object.position.y, object.dimensions.width, object.dimensions.height);
+
   }
 
   /**
