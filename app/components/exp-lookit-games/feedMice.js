@@ -46,7 +46,7 @@ export default class FeedMice extends Base {
    */
   constructor(context, document) {
     super(context, document);
-    imageURLS = [super.Utils.openWindowYellow, super.Utils.openWindowViolet, super.Utils.openWindowGreen];
+    imageURLS = [super.Utils.openWindowYellow,super.Utils.openWindowGreen, super.Utils.openWindowViolet];
 
   }
 
