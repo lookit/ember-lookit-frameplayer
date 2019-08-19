@@ -20,7 +20,7 @@ let goodJob = {};
 let greatJob = {};
 let initialTime = 0;
 let fireworkWhistle = {};
-
+let randomNumber = 0;
 let TfArr = [];
 let wallsize = 0.25;
 let targetX = 1.3310;
@@ -173,6 +173,7 @@ export default class FeedMouse extends Base {
 
     };
 
+    randomNumber = Math.floor(Math.random() * 2) + 1;
     ball = super.ballObject();
     startSound = new Audio(super.Utils.fuse);
     startSound.play();
@@ -263,7 +264,7 @@ export default class FeedMouse extends Base {
 
       if(ball.hitstate === 'great'){
         let explosion = this.setExplostionPosition(4,ball);
-        super.drawImageObject(explosion,super.Utils.Explosion_big);
+        super.drawImageObject(explosion,fireworks[randomNumber]);
       }
 
       if(ball.hitstate === 'good'){
@@ -315,7 +316,7 @@ export default class FeedMouse extends Base {
         //Check for target (red dot) position , if we are within the window size
         if (keyPressed.value === true) {
 
-          let position = Math.abs(ball.position.x - target.position.x);
+          let position = Math.abs(ball.position.x - target.position.x - 5);
 
           if (position < 0.03 * super.Utils.SCALE) {
             super.increaseScore();
@@ -324,7 +325,7 @@ export default class FeedMouse extends Base {
             greatJob.play();
 
 
-          } else if (position < (target.dimensions.width / 2) * super.Utils.SCALE) {
+          }else if(position < (0.05)*super.Utils.SCALE){
 
             ball.hitstate = 'good';
             goodJob = new Audio(super.Utils.firework_small);
