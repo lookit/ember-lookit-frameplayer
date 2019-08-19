@@ -195,6 +195,28 @@ export default class CatchCheese extends Base {
 
 
   /**
+   * Create initial ball box object to start from
+   * @method createBallBox
+   * @param {int} paddleWidth
+   */
+  createBallBox(imageURL) {
+
+
+    let leftBorder = 0.3 * super.Utils.SCALE;
+    let topBorder = 1.2971 * super.Utils.SCALE;
+    let rightBorder = (0.54) * super.Utils.SCALE;
+    let downBorder = 1.5671 * super.Utils.SCALE;
+
+
+    let image = new Image();
+    image.src = imageURL;
+    this.ctx.drawImage(image, leftBorder, topBorder, rightBorder - leftBorder, downBorder - topBorder);
+
+
+  }
+
+
+  /**
    * Main loop of the game.
    * Set initial position of the ball in a box and starting rattling sound (initSoundPlaying).
    * After that  start ball trajectory.
@@ -204,7 +226,7 @@ export default class CatchCheese extends Base {
    */
   loop() {
     super.loop();
-    super.createBallBox(super.Utils.robotImage);
+    this.createBallBox(super.Utils.robotImage);
     super.generateTrajectoryParams(hArray,Height,Tf);
     let hitTheTarget = this.collisionDetection();
     let hitTheWall = super.wallCollision(ball);
