@@ -202,7 +202,7 @@ export default class CatchCheese extends Base {
   createBallBox(imageURL) {
 
 
-    let leftBorder = 0.3 * super.Utils.SCALE;
+    let leftBorder = 0.35 * super.Utils.SCALE;
     let topBorder = 1.2971 * super.Utils.SCALE;
     let rightBorder = (0.54) * super.Utils.SCALE;
     let downBorder = 1.5671 * super.Utils.SCALE;
