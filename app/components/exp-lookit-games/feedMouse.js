@@ -25,6 +25,8 @@ let TfArr = [];
 let wallsize = 0.25;
 let targetX = 1.3310;
 let jitterT = 0;
+let winsize = 0.05;
+let targetsize = 0.02;
 let fireworks =  []
 /**
  * @class FeedMouse
@@ -259,26 +261,6 @@ export default class FeedMouse extends Base {
     }
 
 
-    if (ball.state === 'hit') {
-      this.createWindow();
-
-      if(ball.hitstate === 'great'){
-        let explosion = this.setExplostionPosition(4,ball);
-        super.drawImageObject(explosion,fireworks[randomNumber]);
-      }
-
-      if(ball.hitstate === 'good'){
-        let explosion = this.setExplostionPosition(2,ball);
-        super.drawImageObject(explosion,super.Utils.Explosion_small);
-      }
-
-
-
-      if(super.getElapsedTime(initialTime) > 3.5) {
-        super.finishGame(false);
-      }
-
-    }
 
 
     if(ball.state === 'fall'){
@@ -316,16 +298,16 @@ export default class FeedMouse extends Base {
         //Check for target (red dot) position , if we are within the window size
         if (keyPressed.value === true) {
 
-          let position = Math.abs(ball.position.x - target.position.x - 5);
+          let position = Math.abs(ball.position.x - targetX*super.Utils.SCALE);
 
-          if (position < 0.03 * super.Utils.SCALE) {
+          if (position < targetsize * super.Utils.SCALE) {
             super.increaseScore();
             ball.hitstate = 'great';
             greatJob = new Audio(super.Utils.firework_big);
             greatJob.play();
 
 
-          }else if(position < (0.05)*super.Utils.SCALE){
+          }else if(position < (winsize)*super.Utils.SCALE){
 
             ball.hitstate = 'good';
             goodJob = new Audio(super.Utils.firework_small);
@@ -347,6 +329,33 @@ export default class FeedMouse extends Base {
 
 
       }
+
+
+      if (ball.state === 'hit') {
+
+        // greatJob.currentTime = 0;
+        //goodJob.currentTime = 0;
+        //super.drawBall(ball, super.Utils.Fireball);
+        // this.createWindow();
+        let difference = ball.position.x - targetX*super.Utils.SCALE;
+        if(ball.hitstate === 'great'){
+          let explosion = this.setExplostionPosition(4,ball);
+          super.drawImageObject(explosion,fireworks[randomNumber]);
+        }
+
+        if(ball.hitstate === 'good'){
+          let explosion = this.setExplostionPosition2(2,ball,difference);
+          super.drawImageObject(explosion,super.Utils.Explosion_small);
+        }
+
+
+        if(super.getElapsedTime(initialTime) > 3.5) {
+          super.finishGame(false);
+        }
+
+      }
+
+
     }
 
     super.discreteLauncer(super.Utils.boxOfFireworks);
@@ -354,10 +363,24 @@ export default class FeedMouse extends Base {
   }
 
   setExplostionPosition(multiplyer,ball) {
+
     let explosion = {
 
       dimensions: {width: target.dimensions.width * multiplyer, height: target.dimensions.height * multiplyer},
-      position: {x:ball.position.x-target.dimensions.width*multiplyer/2 + target.dimensions.width/2, y : ball.position.y - target.dimensions.height*multiplyer/2  + target.dimensions.height/2 - 10}
+      position: {x:targetX*super.Utils.SCALE - (target.dimensions.width*multiplyer/2)  , y : ball.position.y - target.dimensions.height*multiplyer/2}
+
+    };
+    return explosion;
+  }
+
+
+  setExplostionPosition2(multiplyer,ball,difference) {
+
+
+    let explosion = {
+
+      dimensions: {width: target.dimensions.width * multiplyer, height: target.dimensions.height * multiplyer},
+      position: {x:targetX*super.Utils.SCALE - (target.dimensions.width*multiplyer/2) + difference - 10  , y : ball.position.y - target.dimensions.height*multiplyer/2}
 
     };
     return explosion;
