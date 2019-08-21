@@ -950,22 +950,8 @@ export default class Base {
 
 
     if(currentRounds === 0 && paddle.position.y < paddleBox.position.y) {
-      if(waitIndexTIme === 0){
-        waitIndexTIme = new Date().getTime();
-      }
 
-
-      if (waitIndex > 3) {
-        waitIndex = 1;
-      }
-
-      if(this.getElapsedTime(waitIndexTIme) > 0.4){
-
-        waitIndex++;
-        waitIndexTIme = new Date().getTime();
-      }
-
-      this.downIndicator(paddle, waitIndex);
+      mouseY = paddle.position.y + 10;
     }
 
     this.paddleHistory(paddle,initialTime);
