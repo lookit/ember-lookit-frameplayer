@@ -256,6 +256,7 @@ export default class FeedCroc extends Base {
 
       if(super.ballIsOnFloor(ball)){
         super.drawBall(ball,super.Utils.basketBall);
+        super.drawImageObject(target, super.Utils.wallInitial);
       }
 
       super.paddleAtZero(paddle, false);
