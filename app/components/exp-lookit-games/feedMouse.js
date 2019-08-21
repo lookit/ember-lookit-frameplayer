@@ -331,30 +331,32 @@ export default class FeedMouse extends Base {
       }
 
 
-      if (ball.state === 'hit') {
-
-        // greatJob.currentTime = 0;
-        //goodJob.currentTime = 0;
-        //super.drawBall(ball, super.Utils.Fireball);
-        // this.createWindow();
-        let difference = ball.position.x - targetX*super.Utils.SCALE;
-        if(ball.hitstate === 'great'){
-          let explosion = this.setExplostionPosition(4,ball);
-          super.drawImageObject(explosion,fireworks[randomNumber]);
-        }
-
-        if(ball.hitstate === 'good'){
-          let explosion = this.setExplostionPosition2(2,ball,difference);
-          super.drawImageObject(explosion,super.Utils.Explosion_small);
-        }
 
 
-        if(super.getElapsedTime(initialTime) > 3.5) {
-          super.finishGame(false);
-        }
 
+    }
+
+    if (ball.state === 'hit') {
+
+      // greatJob.currentTime = 0;
+      //goodJob.currentTime = 0;
+      //super.drawBall(ball, super.Utils.Fireball);
+      // this.createWindow();
+      let difference = ball.position.x - targetX*super.Utils.SCALE;
+      if(ball.hitstate === 'great'){
+        let explosion = this.setExplostionPosition(4,ball);
+        super.drawImageObject(explosion,fireworks[randomNumber]);
       }
 
+      if(ball.hitstate === 'good'){
+        let explosion = this.setExplostionPosition2(2,ball,difference);
+        super.drawImageObject(explosion,super.Utils.Explosion_small);
+      }
+
+
+      if(super.getElapsedTime(initialTime) > 3.5) {
+        super.finishGame(false);
+      }
 
     }
 
