@@ -239,9 +239,9 @@ export default class Base {
    */
   treeObject(treeIndex = 1) {
 
-    let leftBorder = 400 - 50 - 55 * treeIndex + 0.25 * Utils.SCALE;
+    let leftBorder = 390 - 50 - 55 * treeIndex + 0.25 * Utils.SCALE;
     let topBorder = (0.914 + 0.05) * Utils.SCALE;
-    let rightBorder = 400 + 0.25 * Utils.SCALE;
+    let rightBorder = 390 + 0.25 * Utils.SCALE;
     let downBorder = (1.542 + 0.05) * Utils.SCALE;
     let imgURL = Utils.obstruction1;
     switch (treeIndex) {
