@@ -225,6 +225,13 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
     selectNextFrame: null,
     _selectNextFrameFn: null,
 
+    /**
+     *
+     * @property {Object} parameters
+     * @default {}
+     */
+    parameters: {},
+
     session: null,
 
     // see https://github.com/emberjs/ember.js/issues/3908. Moved
