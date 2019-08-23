@@ -96,7 +96,7 @@ let {
  }
 
  * ```
- * @class Exp-lookit-geometry-alternation
+ * @class Exp-lookit-geometry-alternation-open
  * @extends Exp-frame-base
  * @uses Full-screen
  * @uses Video-record
@@ -701,12 +701,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             transform=" translate(${LX}, ${LY})
                         translate(37.5, 56)
                         rotate(${LRot})
-                        scale(${LFlip * LSize})" />`;
+                        scale(${LSize})
+                        scale(${LFlip}, 1)" />`;
         var rightTriangle = `${this.triangleBases[Rshape]}
             transform=" translate(${RX}, ${RY})
                         translate(162.5, 56)
                         rotate(${RRot})
-                        scale(${RFlip * RSize})" />`;
+                        scale(${RSize})
+                        scale(${RFlip}, 1)" />`;
         $('#stimuli').html(leftTriangle + rightTriangle);
     },
 
@@ -737,6 +739,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                                   this.settings.rotRange[1]);
         var LFlip = this.getRandomElement(this.settings.flipVals);
         var RFlip = this.getRandomElement(this.settings.flipVals);
+        console.log(LFlip);
+        console.log(RFlip);
         var LSize = this.getRandom(this.settings.sizeRange[0],
                                    this.settings.sizeRange[1]) * LsizeBase[0];
         var RSize = this.getRandom(this.settings.sizeRange[0],

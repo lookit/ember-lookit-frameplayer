@@ -47,6 +47,7 @@
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
                             <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
@@ -539,13 +540,11 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame, chil
                     console.warn(&#x27;No child birthday available for randomization. Using today\&#x27;s date.&#x27;);
                     childDOB = new Date().getTime();
                 }
-            } catch(error) {
+            } catch (error) {
                 console.warn(&#x27;No child birthday available for randomization. Using today\&#x27;s date.&#x27;);
                 childDOB = new Date().getTime();
             }
-            var childAgeDays = (new Date().getTime() - childDOB)/(1000*60*60*24);
-
-            console.log(childAgeDays);
+            var childAgeDays = (new Date().getTime() - childDOB) / (1000 * 60 * 60 * 24);
 
             // Find the age range this child fits in
             var ageBasedWeightObj = frameConfig.parameterSetWeights.find(function(element) {

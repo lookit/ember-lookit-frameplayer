@@ -704,12 +704,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             transform=" translate(${LX}, ${LY})
                         translate(37.5, 56)
                         rotate(${LRot})
-                        scale(${LFlip * LSize})" />`;
+                        scale(${LFlip * LSize})
+                        scale(${LFlip, 1})" />`;
         var rightTriangle = `${this.triangleBases[Rshape]}
             transform=" translate(${RX}, ${RY})
                         translate(162.5, 56)
                         rotate(${RRot})
-                        scale(${RFlip * RSize})" />`;
+                        scale(${RSize})
+                        scale(${RFlip, 1})" />`;
         $('#stimuli').html(leftTriangle + rightTriangle);
     },
 
