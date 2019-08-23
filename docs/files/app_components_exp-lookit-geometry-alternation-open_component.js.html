@@ -47,6 +47,7 @@
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
                             <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
@@ -208,7 +209,7 @@ let {
  }
 
  * &#x60;&#x60;&#x60;
- * @class Exp-lookit-geometry-alternation
+ * @class Exp-lookit-geometry-alternation-open
  * @extends Exp-frame-base
  * @uses Full-screen
  * @uses Video-record
@@ -813,12 +814,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             transform=&quot; translate(${LX}, ${LY})
                         translate(37.5, 56)
                         rotate(${LRot})
-                        scale(${LFlip * LSize})&quot; /&gt;&#x60;;
+                        scale(${LSize})
+                        scale(${LFlip}, 1)&quot; /&gt;&#x60;;
         var rightTriangle = &#x60;${this.triangleBases[Rshape]}
             transform=&quot; translate(${RX}, ${RY})
                         translate(162.5, 56)
                         rotate(${RRot})
-                        scale(${RFlip * RSize})&quot; /&gt;&#x60;;
+                        scale(${RSize})
+                        scale(${RFlip}, 1)&quot; /&gt;&#x60;;
         $(&#x27;#stimuli&#x27;).html(leftTriangle + rightTriangle);
     },
 
@@ -849,6 +852,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                                   this.settings.rotRange[1]);
         var LFlip = this.getRandomElement(this.settings.flipVals);
         var RFlip = this.getRandomElement(this.settings.flipVals);
+        console.log(LFlip);
+        console.log(RFlip);
         var LSize = this.getRandom(this.settings.sizeRange[0],
                                    this.settings.sizeRange[1]) * LsizeBase[0];
         var RSize = this.getRandom(this.settings.sizeRange[0],

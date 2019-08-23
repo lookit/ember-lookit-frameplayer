@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Exp-lookit-video-consent - ember-lookit-frameplayer</title>
+    <title>Exp-lookit-geometry-alternation-open - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -107,12 +107,14 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>Exp-lookit-video-consent Class</h1>
+<h1>Exp-lookit-geometry-alternation-open Class</h1>
 <div class="box meta">
         <div class="uses">
             Uses
             <ul class="inline commas">
+                    <li><a href="Full-screen.html">Full-screen</a></li>
                     <li><a href="Video-record.html">Video-record</a></li>
+                    <li><a href="Expand-assets.html">Expand-assets</a></li>
             </ul>
         </div>
 
@@ -121,7 +123,7 @@
         </div>
 
         <div class="foundat">
-            Defined in: <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l16"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:16</code></a>
+            Defined in: <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l18"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:18</code></a>
         </div>
 
             Collection: <a href="../modules/frames.html">frames</a><br>
@@ -131,33 +133,81 @@
 
 <div>
 
-    <img src="../assets/screenshots/Exp-lookit-video-consent.png" class="class-screenshot">
+    <img src="../assets/screenshots/Exp-lookit-geometry-alternation-open.png" class="class-screenshot">
 
 </div>
 
 <div class="box intro">
-    <p>Video consent frame for Lookit studies, with consent document displayed at left and instructions to start recording, read a statement out loud, and send. A standard consent
-document is displayed, with additional study-specific information provided by the researcher, in accordance with the Lookit terms of use.</p>
-<p>Researchers can select from the following named templates:</p>
-<p><code>consent_001</code>: Original Lookit consent document (2019)
-<code>consent_002</code>: Added optional GDPR section and research subject rights statement</p>
-<p>To look up the exact text of the consent document, see <a href="https://github.com/lookit/ember-lookit-frameplayer/blob/master/app/components/exp-lookit-video-consent/template.hbs">https://github.com/lookit/ember-lookit-frameplayer/blob/master/app/components/exp-lookit-video-consent/template.hbs</a></p>
-<p>The consent document can be downloaded as PDF document by participant.</p>
-<pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
-    &quot;video-consent&quot;: {
-        &quot;kind&quot;: &quot;exp-lookit-video-consent&quot;,
-        &quot;template&quot;: &quot;consent_002&quot;,
-        &quot;PIName&quot;: &quot;Jane Smith&quot;,
-        &quot;institution&quot;: &quot;Science University&quot;,
-        &quot;PIContact&quot;: &quot;Jane Smith at 123 456 7890&quot;,
-        &quot;purpose&quot;: &quot;Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.&quot;,
-        &quot;procedures&quot;: &quot;Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.&quot;,
-        &quot;payment&quot;: &quot;After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.&quot;,
-        &quot;datause&quot;: &quot;We are primarily interested in your child's emotional reactions to the images and sounds. A research assistant will watch your video to measure the precise amount of delight in your child's face as he or she sees each cat picture.&quot;
-        &quot;gdpr&quot;: false,
-        &quot;research_rights_statement&quot;: &quot;You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Chairman of the Committee on the Use of Humans as Experimental Subjects, M.I.T., Room E25-143B, 77 Massachusetts Ave, Cambridge, MA 02139, phone 1-617-253 6787.&quot;&quot;
+    <p>Frame to implement specific test trial structure for geometry alternation
+replication study. Includes announcement, calibration, and alternation (test)
+phases. During &quot;alternation,&quot; two streams of &quot;open triangles&quot; are shown, in
+rectangles on the left and right of the screen: one one side both size and
+shape change, on the other only size changes. Frame is displayed fullscreen
+and video recording is conducted during calibration/test.
+This frame is displayed fullscreen; if the frame before it is not, that frame
+needs to include a manual &quot;next&quot; button so that there's a user interaction
+event to trigger fullscreen mode. (Browsers don't allow us to switch to FS
+without a user event.)
+Specifying media locations:
+For any parameters that expect a list of audio/video sources, you can EITHER provide
+a list of src/type pairs with full paths like this:</p>
+<pre class="code prettyprint"><code class="language-json">   [
+       {
+           'src': 'http://.../video1.mp4',
+           'type': 'video/mp4'
+       },
+       {
+           'src': 'http://.../video1.webm',
+           'type': 'video/webm'
+       }
+   ]
+</code></pre>
+<p>OR you can provide a single string 'stub', which will be expanded
+based on the parameter baseDir and the media types expected - either audioTypes or
+videoTypes as appropriate. For example, if you provide the audio source <code>intro</code>
+and baseDir is <a href="https://mystimuli.org/mystudy/">https://mystimuli.org/mystudy/</a>, with audioTypes ['mp3', 'ogg'], then this
+will be expanded to:</p>
+<pre class="code prettyprint"><code class="language-json">                 [
+                        {
+                            src: 'https://mystimuli.org/mystudy/mp3/intro.mp3',
+                            type: 'audio/mp3'
+                        },
+                        {
+                            src: 'https://mystimuli.org/mystudy/ogg/intro.ogg',
+                            type: 'audio/ogg'
+                        }
+                ]
+</code></pre>
+<p>This allows you to simplify your JSON document a bit and also easily switch to a
+new version of your stimuli without changing every URL. You can mix source objects with
+full URLs and those using stubs within the same directory. However, any stimuli
+specified using stubs MUST be
+organized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.
+Example usage:</p>
+<pre class="code prettyprint"><code class="language-json"> &quot;frames&quot;: {
+    &quot;alt-trial&quot;: {
+        &quot;kind&quot;: &quot;exp-lookit-geometry-alternation-open&quot;,
+        &quot;triangleLineWidth&quot;: 8,
+        &quot;baseDir&quot;: &quot;https://s3.amazonaws.com/lookitcontents/geometry/&quot;,
+        &quot;videoTypes&quot;: [&quot;mp4&quot;, &quot;webm&quot;],
+        &quot;audioTypes&quot;: [&quot;mp3&quot;, &quot;ogg&quot;],
+        &quot;calibrationVideoSources&quot;: &quot;attention&quot;,
+        &quot;trialLength&quot;: 60,
+        &quot;attnLength&quot;: 10,
+        &quot;calibrationLength&quot;: 3000,
+        &quot;fsAudio&quot;: &quot;fullscreen&quot;,
+        &quot;triangleColor&quot;: &quot;#056090&quot;,
+        &quot;unpauseAudio&quot;: &quot;return_after_pause&quot;,
+        &quot;pauseAudio&quot;: &quot;pause&quot;,
+        &quot;videoSources&quot;: &quot;attentiongrabber&quot;,
+        &quot;musicSources&quot;: &quot;happy-stroll&quot;,
+        &quot;calibrationAudioSources&quot;: &quot;chimes&quot;,
+        &quot;altOnLeft&quot;: true,
+        &quot;context&quot;: true,
+        &quot;audioSources&quot;: &quot;video_01&quot;,
+        &quot;endAudioSources&quot;: &quot;all_done&quot;
     }
-}
+ }
 </code></pre>
 
 </div>
@@ -188,7 +238,7 @@ document is displayed, with additional study-specific information provided by th
                                 <a href="#method_destroySessionRecorder">destroySessionRecorder</a>
 
                             </li>
-                            <li class="index-item method inherited">
+                            <li class="index-item method inherited inherited">
                                 <a href="#method_exitFullscreen">exitFullscreen</a>
 
                             </li>
@@ -216,7 +266,7 @@ document is displayed, with additional study-specific information provided by th
                                 <a href="#method_setupRecorder">setupRecorder</a>
 
                             </li>
-                            <li class="index-item method inherited">
+                            <li class="index-item method inherited inherited">
                                 <a href="#method_showFullscreen">showFullscreen</a>
 
                             </li>
@@ -236,8 +286,12 @@ document is displayed, with additional study-specific information provided by th
                                 <a href="#method_stopRecorder">stopRecorder</a>
 
                             </li>
-                            <li class="index-item method inherited inherited">
+                            <li class="index-item method inherited">
                                 <a href="#method_whenPossibleToRecord">whenPossibleToRecord</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_whenPossibleToRecordSession">whenPossibleToRecordSession</a>
 
                             </li>
                     </ul>
@@ -259,52 +313,84 @@ document is displayed, with additional study-specific information provided by th
                                 <a href="#property_[startRecordingAutomatically=false]">[startRecordingAutomatically=false]</a>
 
                             </li>
+                            <li class="index-item property">
+                                <a href="#property_altOnLeft">altOnLeft</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_assetsToExpand">assetsToExpand</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_attnLength">attnLength</a>
+
+                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_audioOnly">audioOnly</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_audioSources">audioSources</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_audioTypes">audioTypes</a>
 
                             </li>
                             <li class="index-item property inherited">
                                 <a href="#property_autosave">autosave</a>
 
                             </li>
-                            <li class="index-item property">
-                                <a href="#property_datause">datause</a>
+                            <li class="index-item property inherited">
+                                <a href="#property_baseDir">baseDir</a>
 
                             </li>
-                            <li class="index-item property inherited">
+                            <li class="index-item property">
+                                <a href="#property_calibrationAudioSources">calibrationAudioSources</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_calibrationLength">calibrationLength</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_calibrationVideoSources">calibrationVideoSources</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_context">context</a>
+
+                            </li>
+                            <li class="index-item property inherited inherited">
                                 <a href="#property_displayFullscreenOverride">displayFullscreenOverride</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_doRecording">doRecording</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_endAudioSources">endAudioSources</a>
 
                             </li>
                             <li class="index-item property inherited">
                                 <a href="#property_endSessionRecording">endSessionRecording</a>
 
                             </li>
-                            <li class="index-item property inherited">
+                            <li class="index-item property">
+                                <a href="#property_fsAudio">fsAudio</a>
+
+                            </li>
+                            <li class="index-item property inherited inherited">
                                 <a href="#property_fsButtonID">fsButtonID</a>
 
                             </li>
-                            <li class="index-item property inherited">
+                            <li class="index-item property inherited inherited">
                                 <a href="#property_fullScreenElementId">fullScreenElementId</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_gdpr">gdpr</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_gdpr_personal_data">gdpr_personal_data</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_gdpr_sensitive_data">gdpr_sensitive_data</a>
 
                             </li>
                             <li class="index-item property inherited">
                                 <a href="#property_generateProperties">generateProperties</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_institution">institution</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -312,23 +398,11 @@ document is displayed, with additional study-specific information provided by th
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_payment">payment</a>
+                                <a href="#property_musicSources">musicSources</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_PIContact">PIContact</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_PIName">PIName</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_procedures">procedures</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_purpose">purpose</a>
+                                <a href="#property_pauseAudio">pauseAudio</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -337,10 +411,6 @@ document is displayed, with additional study-specific information provided by th
                             </li>
                             <li class="index-item property inherited">
                                 <a href="#property_recorderReady">recorderReady</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_research_rights_statement">research_rights_statement</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -360,7 +430,19 @@ document is displayed, with additional study-specific information provided by th
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_template">template</a>
+                                <a href="#property_trialLength">trialLength</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_triangleColor">triangleColor</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_triangleLineWidth">triangleLineWidth</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_unpauseAudio">unpauseAudio</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -369,6 +451,14 @@ document is displayed, with additional study-specific information provided by th
                             </li>
                             <li class="index-item property inherited">
                                 <a href="#property_videoList">videoList</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_videoSources">videoSources</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_videoTypes">videoTypes</a>
 
                             </li>
                     </ul>
@@ -380,10 +470,10 @@ document is displayed, with additional study-specific information provided by th
 
                     <ul class="index-list events extends">
                             <li class="index-item event">
-                                <a href="#event_downloadConsentForm">downloadConsentForm</a>
+                                <a href="#event_clearTriangles">clearTriangles</a>
 
                             </li>
-                            <li class="index-item event inherited">
+                            <li class="index-item event inherited inherited">
                                 <a href="#event_enteredFullscreen">enteredFullscreen</a>
 
                             </li>
@@ -391,7 +481,7 @@ document is displayed, with additional study-specific information provided by th
                                 <a href="#event_hasCamAccess">hasCamAccess</a>
 
                             </li>
-                            <li class="index-item event inherited">
+                            <li class="index-item event inherited inherited">
                                 <a href="#event_leftFullscreen">leftFullscreen</a>
 
                             </li>
@@ -415,7 +505,19 @@ document is displayed, with additional study-specific information provided by th
                                 <a href="#event_sessionRecorderReady">sessionRecorderReady</a>
 
                             </li>
-                            <li class="index-item event inherited inherited">
+                            <li class="index-item event">
+                                <a href="#event_startCalibration">startCalibration</a>
+
+                            </li>
+                            <li class="index-item event">
+                                <a href="#event_startIntro">startIntro</a>
+
+                            </li>
+                            <li class="index-item event">
+                                <a href="#event_startTestTrial">startTestTrial</a>
+
+                            </li>
+                            <li class="index-item event inherited">
                                 <a href="#event_stoppingCapture">stoppingCapture</a>
 
                             </li>
@@ -423,7 +525,7 @@ document is displayed, with additional study-specific information provided by th
                                 <a href="#event_unpauseVideo">unpauseVideo</a>
 
                             </li>
-                            <li class="index-item event inherited inherited">
+                            <li class="index-item event inherited">
                                 <a href="#event_videoStreamConnection">videoStreamConnection</a>
 
                             </li>
@@ -507,8 +609,11 @@ document is displayed, with additional study-specific information provided by th
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/Full-screen.html#method_exitFullscreen">Full-screen</a>:
+            <p>Inherited from
+            <a href="../classes/Full-screen.html#method_exitFullscreen">
+                Full-screen
+            </a>
+            but overwritten in
         <a href="../files/app_mixins_full-screen.js.html#l137"><code>app&#x2F;mixins&#x2F;full-screen.js:137</code></a>
         </p>
 
@@ -736,13 +841,16 @@ instead stop/start and make separate clips if needed.
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
-                        <code>consentFormText</code>
+                        <code>context</code>
+                </li>
+                <li class="arg">
+                        <code>altOnLeft</code>
                 </li>
                 <li class="arg">
                         <code>videoID</code>
                 </li>
                 <li class="arg">
-                        <code>videoList</code>
+                        <code>hasBeenPaused</code>
                 </li>
                 <li class="arg">
                         <code>eventTimings</code>
@@ -766,7 +874,7 @@ instead stop/start and make separate clips if needed.
                 Exp-frame-base
             </a>
             but overwritten in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l261"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:261</code></a>
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l469"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:469</code></a>
         </p>
 
 
@@ -783,12 +891,23 @@ instead stop/start and make separate clips if needed.
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">consentFormText</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                        <code class="param-name">context</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
 
 
                     <div class="param-description">
-                        <p>the exact text shown in the consent document during this frame</p>
+                        <p>True to use big fat triangle as context figure, or false to use small skinny triangle as context. [same as passed to this frame]</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">altOnLeft</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+                    <div class="param-description">
+                        <p>Whether to put the shape+size alternating stream on the left (other stream alternates only in size) [same as passed to this frame]</p>
 
                     </div>
 
@@ -799,18 +918,18 @@ instead stop/start and make separate clips if needed.
 
 
                     <div class="param-description">
-                        <p>The ID of any webcam video recorded during this frame</p>
+                        <p>The ID of any video recorded during this frame</p>
 
                     </div>
 
                 </li>
                 <li class="param">
-                        <code class="param-name">videoList</code>
-                        <span class="type">List</span>
+                        <code class="param-name">hasBeenPaused</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
 
 
                     <div class="param-description">
-                        <p>a list of webcam video IDs in case there are &gt;1</p>
+                        <p>whether this trial was paused</p>
 
                     </div>
 
@@ -919,8 +1038,11 @@ instead stop/start and make separate clips if needed.
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/Full-screen.html#method_showFullscreen">Full-screen</a>:
+            <p>Inherited from
+            <a href="../classes/Full-screen.html#method_showFullscreen">
+                Full-screen
+            </a>
+            but overwritten in
         <a href="../files/app_mixins_full-screen.js.html#l104"><code>app&#x2F;mixins&#x2F;full-screen.js:104</code></a>
         </p>
 
@@ -1090,7 +1212,7 @@ instead stop/start and make separate clips if needed.
 
 
 </div>
-<div id="method_whenPossibleToRecord" class="method item inherited">
+<div id="method_whenPossibleToRecord" class="method item">
     <h3 class="name"><code>whenPossibleToRecord</code></h3>
 
         <span class="paren">()</span>
@@ -1108,7 +1230,7 @@ instead stop/start and make separate clips if needed.
                 Session-record
             </a>
             but overwritten in
-        <a href="../files/app_mixins_video-record.js.html#l355"><code>app&#x2F;mixins&#x2F;video-record.js:355</code></a>
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l902"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:902</code></a>
         </p>
 
 
@@ -1116,8 +1238,40 @@ instead stop/start and make separate clips if needed.
     </div>
 
     <div class="description">
-        Observer that starts recording once recorder is ready. Override to do additional
-stuff at this point!
+        <p>Observer that starts recording once recorder is ready. Override to do additional
+stuff at this point!</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_whenPossibleToRecordSession" class="method item">
+    <h3 class="name"><code>whenPossibleToRecordSession</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l919"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:919</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Observer that starts recording once sessionrecorder is ready.</p>
+
     </div>
 
 
@@ -1203,6 +1357,82 @@ should set to override if needed.
 
 
 </div>
+<div id="property_altOnLeft" class="property item">
+    <h3 class="name"><code>altOnLeft</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l199"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:199</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Whether to put the shape+size alternating stream on the left (other stream alternates only in size)</p>
+
+    </div>
+
+        <p><strong>Default:</strong> true</p>
+
+
+</div>
+<div id="property_assetsToExpand" class="property item inherited">
+    <h3 class="name"><code>assetsToExpand</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Expand-assets.html#property_assetsToExpand">Expand-assets </a> (click for formatted description):
+        <a href="../files/app_mixins_expand-assets.js.html#l91"><code>app&#x2F;mixins&#x2F;expand-assets.js:91</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Object describing which properties may need expansion
+    </div>
+
+
+
+</div>
+<div id="property_attnLength" class="property item">
+    <h3 class="name"><code>attnLength</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l232"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:232</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>minimum amount of time to show attention-getter in seconds</p>
+
+    </div>
+
+        <p><strong>Default:</strong> 5</p>
+
+
+</div>
 <div id="property_audioOnly" class="property item inherited">
     <h3 class="name"><code>audioOnly</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
@@ -1225,6 +1455,73 @@ should set to override if needed.
     </div>
 
         <p><strong>Default:</strong> 0</p>
+
+
+</div>
+<div id="property_audioSources" class="property item">
+    <h3 class="name"><code>audioSources</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l265"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:265</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+instructions during attention-getter video</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_audioTypes" class="property item inherited">
+    <h3 class="name"><code>audioTypes</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Expand-assets.html#property_audioTypes">Expand-assets </a> (click for formatted description):
+        <a href="../files/app_mixins_expand-assets.js.html#l121"><code>app&#x2F;mixins&#x2F;expand-assets.js:121</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        List of audio types to expect for any audio specified just
+with a string rather than with a list of src/type objects.
+If audioTypes is <code>[&#x27;typeA&#x27;, &#x27;typeB&#x27;]</code> and an audio source
+is given as <code>intro</code>, the audio source will be
+expanded out to
+
+
+    [
+        {
+            src: 'baseDir' + 'typeA/intro.typeA',
+            type: 'audio/typeA'
+        },
+        {
+            src: 'baseDir' + 'typeB/intro.typeB',
+            type: 'audio/typeB'
+        }
+    ]
+    </div>
+
+        <p><strong>Default:</strong> [&#x27;mp3&#x27;, &#x27;ogg&#x27;]</p>
 
 
 </div>
@@ -1253,9 +1550,43 @@ should set to override if needed.
 
 
 </div>
-<div id="property_datause" class="property item">
-    <h3 class="name"><code>datause</code></h3>
+<div id="property_baseDir" class="property item inherited">
+    <h3 class="name"><code>baseDir</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Expand-assets.html#property_baseDir">Expand-assets </a> (click for formatted description):
+        <a href="../files/app_mixins_expand-assets.js.html#l101"><code>app&#x2F;mixins&#x2F;expand-assets.js:101</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Base directory for where to find stimuli. Any image src
+values that are not full paths will be expanded by prefixing
+with <code>baseDir</code> + <code>img&#x2F;</code>. Any audio/video src values provided as
+strings rather than objects with <code>src</code> and <code>type</code> will be
+expanded out to <code>baseDir&#x2F;avtype&#x2F;[stub].avtype</code>, where the potential
+avtypes are given by <code>audioTypes</code> and <code>videoTypes</code>.
+
+baseDir should include a trailing slash
+(e.g., <code>http:&#x2F;&#x2F;stimuli.org&#x2F;myexperiment&#x2F;</code>); if a value is provided that
+does not end in a slash, one will be added.
+    </div>
+
+        <p><strong>Default:</strong> &#x27;&#x27;</p>
+
+
+</div>
+<div id="property_calibrationAudioSources" class="property item">
+    <h3 class="name"><code>calibrationAudioSources</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
 
 
 
@@ -1264,18 +1595,97 @@ should set to override if needed.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l198"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:198</code></a>
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l332"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:332</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Study-specific data use statement (optional). This will follow the following more general text: &quot;The research group led by [PIName] at [institution] will have access to video and other data collected during this session. We will also have access to your account profile, demographic survey, and the child profile for the child who is participating, including changes you make in the future to any of this information. We may study your child’s responses in connection with his or her previous responses to this or other studies run by our group, siblings’ responses to this or other studies run by our group, or demographic survey responses.&quot;
-You may want to note what measures you will actually be coding for (looking time, facial expressions, parent-child interaction, etc.) and other more specific information about your use of data from this study here. For instance, you would note if you were building a corpus of naturalistic data that may be used to answer a variety of questions (rather than just collecting data for a single planned study).</p>
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+calibration audio (played 4 times during calibration)</p>
 
     </div>
 
+
+
+</div>
+<div id="property_calibrationLength" class="property item">
+    <h3 class="name"><code>calibrationLength</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l254"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:254</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>length of single calibration segment in ms</p>
+
+    </div>
+
+        <p><strong>Default:</strong> 3000</p>
+
+
+</div>
+<div id="property_calibrationVideoSources" class="property item">
+    <h3 class="name"><code>calibrationVideoSources</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l354"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:354</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+calibration video (played from start 4 times during
+calibration)</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_context" class="property item">
+    <h3 class="name"><code>context</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l188"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:188</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>True to use big uneven triangle as context figure, or false to use small even triangle as context.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> true</p>
 
 
 </div>
@@ -1288,8 +1698,11 @@ You may want to note what measures you will actually be coding for (looking time
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/Full-screen.html#property_displayFullscreenOverride">Full-screen </a> (click for formatted description):
+            <p>Inherited from
+            <a href="../classes/Full-screen.html#property_displayFullscreenOverride">
+                Full-screen
+            </a>
+            but overwritten in
         <a href="../files/app_mixins_full-screen.js.html#l166"><code>app&#x2F;mixins&#x2F;full-screen.js:166</code></a>
         </p>
 
@@ -1299,6 +1712,58 @@ You may want to note what measures you will actually be coding for (looking time
     <div class="description">
         Whether to display this frame as fullscreen, even though it is not
 generally used that way.
+    </div>
+
+
+
+</div>
+<div id="property_doRecording" class="property item">
+    <h3 class="name"><code>doRecording</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l178"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:178</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Whether to do webcam recording on this frame</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_endAudioSources" class="property item">
+    <h3 class="name"><code>endAudioSources</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l309"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:309</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+audio after completion of trial (optional; used for last
+trial &quot;okay to open your eyes now&quot; announcement)</p>
+
     </div>
 
 
@@ -1329,6 +1794,32 @@ generally used that way.
 
 
 </div>
+<div id="property_fsAudio" class="property item">
+    <h3 class="name"><code>fsAudio</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l443"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:443</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+audio played when study is paused due to not being fullscreen</p>
+
+    </div>
+
+
+
+</div>
 <div id="property_fsButtonID" class="property item inherited">
     <h3 class="name"><code>fsButtonID</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
@@ -1338,8 +1829,11 @@ generally used that way.
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/Full-screen.html#property_fsButtonID">Full-screen </a> (click for formatted description):
+            <p>Inherited from
+            <a href="../classes/Full-screen.html#property_fsButtonID">
+                Full-screen
+            </a>
+            but overwritten in
         <a href="../files/app_mixins_full-screen.js.html#l24"><code>app&#x2F;mixins&#x2F;full-screen.js:24</code></a>
         </p>
 
@@ -1362,8 +1856,11 @@ generally used that way.
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/Full-screen.html#property_fullScreenElementId">Full-screen </a> (click for formatted description):
+            <p>Inherited from
+            <a href="../classes/Full-screen.html#property_fullScreenElementId">
+                Full-screen
+            </a>
+            but overwritten in
         <a href="../files/app_mixins_full-screen.js.html#l17"><code>app&#x2F;mixins&#x2F;full-screen.js:17</code></a>
         </p>
 
@@ -1372,82 +1869,6 @@ generally used that way.
 
     <div class="description">
         The element ID of the thing to make full screen (video element, div, etc)
-    </div>
-
-
-
-</div>
-<div id="property_gdpr" class="property item">
-    <h3 class="name"><code>gdpr</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l208"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:208</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Whether to include a section on GDPR; only used in template consent_002 + .</p>
-
-    </div>
-
-        <p><strong>Default:</strong> false</p>
-
-
-</div>
-<div id="property_gdpr_personal_data" class="property item">
-    <h3 class="name"><code>gdpr_personal_data</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l219"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:219</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>List of types of personal information collected, for GDPR section only. Do not include special category information, which is listed separately.</p>
-
-    </div>
-
-
-
-</div>
-<div id="property_gdpr_sensitive_data" class="property item">
-    <h3 class="name"><code>gdpr_sensitive_data</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l228"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:228</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>List of types of special category information collected, for GDPR section only. Include all that apply: racial or ethnic origin; political opinions; religious or philosophical beliefs; trade union membership; processing of genetic data; biometric data; health data; and/or sex life or sexual orientation information</p>
-
     </div>
 
 
@@ -1538,31 +1959,6 @@ to be on one line.)</p>
 
 
 </div>
-<div id="property_institution" class="property item">
-    <h3 class="name"><code>institution</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l153"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:153</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Name of institution running this study (if ambiguous, list institution whose IRB approved the study)</p>
-
-    </div>
-
-
-
-</div>
 <div id="property_maxRecordingLength" class="property item inherited">
     <h3 class="name"><code>maxRecordingLength</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
@@ -1588,9 +1984,9 @@ to be on one line.)</p>
 
 
 </div>
-<div id="property_payment" class="property item">
-    <h3 class="name"><code>payment</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+<div id="property_musicSources" class="property item">
+    <h3 class="name"><code>musicSources</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
 
 
 
@@ -1599,23 +1995,24 @@ to be on one line.)</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l189"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:189</code></a>
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l287"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:287</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Statement about payment/compensation for participation, including a statement that there are no additional benefits anticipated to the participant. E.g., &quot;After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.&quot;</p>
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+music during trial</p>
 
     </div>
 
 
 
 </div>
-<div id="property_PIContact" class="property item">
-    <h3 class="name"><code>PIContact</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+<div id="property_pauseAudio" class="property item">
+    <h3 class="name"><code>pauseAudio</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
 
 
 
@@ -1624,89 +2021,15 @@ to be on one line.)</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l162"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:162</code></a>
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l399"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:399</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Contact information for PI or lab in case of participant questions or concerns. This will directly follow the phrase &quot;please contact&quot;, so format accordingly: e.g., &quot;the XYZ lab at <a href="mailto:xyz@science.edu">xyz@science.edu</a>&quot; or &quot;Mary Smith at 123 456 7890&quot;.</p>
-
-    </div>
-
-
-
-</div>
-<div id="property_PIName" class="property item">
-    <h3 class="name"><code>PIName</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l144"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:144</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Name of PI running this study</p>
-
-    </div>
-
-
-
-</div>
-<div id="property_procedures" class="property item">
-    <h3 class="name"><code>procedures</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l180"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:180</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Brief description of study procedures, including any risks or a statement that there are no anticipated risks. We add a statement about the duration (from your study definition) to the start (e.g., &quot;This study takes about 10 minutes to complete&quot;), so you don't need to include that. It can be in third person or addressed to the parent. E.g., &quot;Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.&quot;</p>
-
-    </div>
-
-
-
-</div>
-<div id="property_purpose" class="property item">
-    <h3 class="name"><code>purpose</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l171"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:171</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Brief description of purpose of study - 1-2 sentences that describe what you are trying to find out. Language should be as straightforward and accessible as possible! E.g., &quot;Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.&quot;</p>
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+audio played upon pausing study</p>
 
     </div>
 
@@ -1758,31 +2081,6 @@ recorder.nWebcams, recorder.hasCamAccess, recorder.micChecked, recorder.connecte
     <div class="description">
         Whether recorder has been set up yet. Automatically set when doing setup.
 Accessible to consuming frame.
-    </div>
-
-
-
-</div>
-<div id="property_research_rights_statement" class="property item">
-    <h3 class="name"><code>research_rights_statement</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l237"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:237</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Statement about rights of research subjects and how to contact IRB.  Used only in template consent_002+. For instance, MIT's standard language is: You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Chairman of the Committee on the Use of Humans as Experimental Subjects, M.I.T., Room E25-143B, 77 Massachusetts Ave, Cambridge, MA 02139, phone 1-617-253 6787.</p>
-
     </div>
 
 
@@ -1931,8 +2229,34 @@ stopped.
 
 
 </div>
-<div id="property_template" class="property item">
-    <h3 class="name"><code>template</code></h3>
+<div id="property_trialLength" class="property item">
+    <h3 class="name"><code>trialLength</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l243"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:243</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>length of alternation trial in seconds</p>
+
+    </div>
+
+        <p><strong>Default:</strong> 6</p>
+
+
+</div>
+<div id="property_triangleColor" class="property item">
+    <h3 class="name"><code>triangleColor</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
 
 
@@ -1942,16 +2266,67 @@ stopped.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l246"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:246</code></a>
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l210"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:210</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Which consent document template to use. If you are setting up a new study,
-use the most recent (highest number) of these options. Options: consent_001,
-consent_002.</p>
+        <p>color of triangle outline (3 or 6 char hex, starting with #)</p>
+
+    </div>
+
+        <p><strong>Default:</strong> &#x27;#056090&#x27;</p>
+
+
+</div>
+<div id="property_triangleLineWidth" class="property item">
+    <h3 class="name"><code>triangleLineWidth</code></h3>
+    <span class="type">Integer</span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l221"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:221</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>triangle line width in pixels</p>
+
+    </div>
+
+        <p><strong>Default:</strong> 5</p>
+
+
+</div>
+<div id="property_unpauseAudio" class="property item">
+    <h3 class="name"><code>unpauseAudio</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l421"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:421</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+audio played upon unpausing study</p>
 
     </div>
 
@@ -2009,14 +2384,81 @@ Accessible to consuming frame.
 
 
 </div>
+<div id="property_videoSources" class="property item">
+    <h3 class="name"><code>videoSources</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l377"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:377</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+attention-getter video (should be loopable)</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_videoTypes" class="property item inherited">
+    <h3 class="name"><code>videoTypes</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Expand-assets.html#property_videoTypes">Expand-assets </a> (click for formatted description):
+        <a href="../files/app_mixins_expand-assets.js.html#l149"><code>app&#x2F;mixins&#x2F;expand-assets.js:149</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        List of video types to expect for any audio specified just
+with a string rather than with a list of src/type objects.
+If vidioTypes is <code>[&#x27;typeA&#x27;, &#x27;typeB&#x27;]</code> and a video source
+is given as <code>intro</code>, the video source will be
+expanded out to
+
+
+    [
+        {
+            src: 'baseDir' + 'typeA/intro.typeA',
+            type: 'video/typeA'
+        },
+        {
+            src: 'baseDir' + 'typeB/intro.typeB',
+            type: 'video/typeB'
+        }
+    ]
+    </div>
+
+        <p><strong>Default:</strong> [&#x27;mp4&#x27;, &#x27;webm&#x27;]</p>
+
+
+</div>
             </div>
 
 
             <div id="events" class="api-class-tabpanel">
                 <h2 class="off-left">Events</h2>
 
-                    <div id="event_downloadConsentForm" class="events item">
-                        <h3 class="name"><code>downloadConsentForm</code></h3>
+                    <div id="event_clearTriangles" class="events item">
+                        <h3 class="name"><code>clearTriangles</code></h3>
                         <span class="type"></span>
                     
                     
@@ -2026,14 +2468,14 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l129"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:129</code></a>
+                            <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l716"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:716</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>When participant downloads consent form</p>
+                            <p>Records each time triangles are cleared from display</p>
                     
                         </div>
                     
@@ -2049,8 +2491,11 @@ Accessible to consuming frame.
                     
                     
                         <div class="meta">
-                                    <p>Inherited from
-                                    <a href="../classes/Full-screen.html#event_enteredFullscreen">Full-screen</a>:
+                                <p>Inherited from
+                                <a href="../classes/Full-screen.html#event_enteredFullscreen">
+                                    Full-screen
+                                </a>
+                                but overwritten in
                             <a href="../files/app_mixins_full-screen.js.html#l76"><code>app&#x2F;mixins&#x2F;full-screen.js:76</code></a>
                             </p>
                     
@@ -2116,8 +2561,11 @@ Accessible to consuming frame.
                     
                     
                         <div class="meta">
-                                    <p>Inherited from
-                                    <a href="../classes/Full-screen.html#event_leftFullscreen">Full-screen</a>:
+                                <p>Inherited from
+                                <a href="../classes/Full-screen.html#event_leftFullscreen">
+                                    Full-screen
+                                </a>
+                                but overwritten in
                             <a href="../files/app_mixins_full-screen.js.html#l88"><code>app&#x2F;mixins&#x2F;full-screen.js:88</code></a>
                             </p>
                     
@@ -2253,7 +2701,99 @@ Accessible to consuming frame.
                     
                     
                     </div>
-                    <div id="event_stoppingCapture" class="events item inherited">
+                    <div id="event_startCalibration" class="events item">
+                        <h3 class="name"><code>startCalibration</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l591"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:591</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Start of EACH calibration segment</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Event Payload:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">location</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>location of calibration ball, relative to child: 'left', 'right', or 'center'</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="event_startIntro" class="events item">
+                        <h3 class="name"><code>startIntro</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l556"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:556</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Immediately before starting intro/announcement segment</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_startTestTrial" class="events item">
+                        <h3 class="name"><code>startTestTrial</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l620"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:620</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Immediately before starting test trial segment</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_stoppingCapture" class="events item">
                         <h3 class="name"><code>stoppingCapture</code></h3>
                         <span class="type"></span>
                     
@@ -2267,14 +2807,15 @@ Accessible to consuming frame.
                                     Session-record
                                 </a>
                                 but overwritten in
-                            <a href="../files/app_mixins_video-record.js.html#l80"><code>app&#x2F;mixins&#x2F;video-record.js:80</code></a>
+                            <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l529"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:529</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            Just before stopping webcam video capture
+                            <p>Just before stopping webcam video capture</p>
+                    
                         </div>
                     
                     
@@ -2304,7 +2845,7 @@ Accessible to consuming frame.
                     
                     
                     </div>
-                    <div id="event_videoStreamConnection" class="events item inherited">
+                    <div id="event_videoStreamConnection" class="events item">
                         <h3 class="name"><code>videoStreamConnection</code></h3>
                         <span class="type"></span>
                     
@@ -2318,14 +2859,15 @@ Accessible to consuming frame.
                                     Session-record
                                 </a>
                                 but overwritten in
-                            <a href="../files/app_mixins_video-record.js.html#l60"><code>app&#x2F;mixins&#x2F;video-record.js:60</code></a>
+                            <a href="../files/app_components_exp-lookit-geometry-alternation-open_component.js.html#l668"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation-open&#x2F;component.js:668</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            When recorder detects a change in video stream connection status
+                            <p>records EACH triangle presentation during test trial</p>
+                    
                         </div>
                     
                             <div class="params">
@@ -2333,13 +2875,133 @@ Accessible to consuming frame.
                     
                                 <ul class="params-list">
                                     <li class="param">
-                                            <code class="param-name">status</code>
+                                            <code class="param-name">Lshape</code>
                                             <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
                     
                     
                                         <div class="param-description">
-                                            <p>status of video stream connection, e.g.
-                    'NetConnection.Connect.Success' if successful</p>
+                                            <p>shape of left triangle: 'skinny' or 'fat'</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">Rshape</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>shape of right triangle: 'skinny' or 'fat'</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">LX</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Horizontal offset of left triangle from rectangle center, in units where rectangle width = 70; positive = to right</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">LY</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Vertical offset of left triangle from rectangle center, in units where rectangle height = 100.8; positive = down</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">RX</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Horizontal offset of right triangle from rectangle center, in units where screen width = 200 and rectangle width = 70; positive = to right</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">RY</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Vertical offset of right triangle from rectangle center, in units where rectangle height = 100.8; positive = down</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">LRot</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>rotation of left triangle in degrees. 0 degrees has long side horizontal and 15 degree angle (skinny triangle) or 60 degree angle (fat triangle) on left.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">RRot</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>rotation of right triangle in degrees. 0 degrees has long side horizontal and 15 degree angle (skinny triangle) or 60 degree angle (fat triangle) on left.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">LFlip</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>whether left triangle is flipped (1 = no, -1 = yes)</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">RFlip</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>whether right triangle is flipped (1 = no, -1 = yes)</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">LSize</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>size of left triangle, relative to standard ('standard' sizes are set so that areas of skinny &amp; fat triangles are equal), in terms of side length (e.g. for a rectangle, 2 would mean take a 1x3 rectangle and make it a 2x6 rectangle, quadrupling the area)</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">RSize</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>size of right triangle, relative to standard ('standard' sizes are set so that areas of skinny &amp; fat triangles are equal), in terms of side length (e.g. for a rectangle, 2 would mean take a 1x3 rectangle and make it a 2x6 rectangle, quadrupling the area)</p>
                     
                                         </div>
                     

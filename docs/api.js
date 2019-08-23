@@ -7,6 +7,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Exp-lookit-dialogue-page",
         "Exp-lookit-exit-survey",
         "Exp-lookit-geometry-alternation",
+        "Exp-lookit-geometry-alternation-open",
         "Exp-lookit-instructions",
         "Exp-lookit-mood-questionnaire",
         "Exp-lookit-observation",
