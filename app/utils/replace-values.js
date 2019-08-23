@@ -1,10 +1,22 @@
 import Ember from 'ember';
 
-function Substituter() {
-  this.storedProperties = {};
+// http://stackoverflow.com/a/12646864
+function shuffleArray(array) {
+    var shuffled = Ember.$.extend(true, [], array); // deep copy array
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = shuffled[i];
+        shuffled[i] = shuffled[j];
+        shuffled[j] = temp;
+    }
+    return shuffled;
+}
 
-  this.replaceValues = function(obj, rep) {
-      for (var property in obj) {
+function Substituter() {
+    this.storedProperties = {};
+
+    this.replaceValues = function(obj, rep) {
+        for (var property in obj) {
             if (obj.hasOwnProperty(property)) {
                 if (typeof obj[property] === 'object') { // recursively handle objects
                     obj[property] = this.replaceValues(obj[property], rep);
@@ -35,16 +47,16 @@ function Substituter() {
                                 obj[property] = shuffleArray(theList);
                             } else if (selector === 'UNIQ') {
                                 // If no shuffled version & index stored for this property, create
-                                if (!storedProperties.hasOwnProperty(propName)) {
-                                    storedProperties[propName] = {'shuffledArray': shuffleArray(theList), 'index': 0};
+                                if (!this.storedProperties.hasOwnProperty(propName)) {
+                                    this.storedProperties[propName] = {'shuffledArray': shuffleArray(theList), 'index': 0};
                                 }
                                 // Fetch current element from shuffled array
-                                obj[property] = storedProperties[propName].shuffledArray[storedProperties[propName].index];
+                                obj[property] = this.storedProperties[propName].shuffledArray[this.storedProperties[propName].index];
                                 // Move to next for next UNIQ element using this property
-                                storedProperties[propName].index = storedProperties[propName].index + 1;
+                                this.storedProperties[propName].index = this.storedProperties[propName].index + 1;
                                 // Loop around to start if needed
-                                if (storedProperties[propName].index == storedProperties[propName].shuffledArray.length) {
-                                    storedProperties[propName].index = 0;
+                                if (this.storedProperties[propName].index == this.storedProperties[propName].shuffledArray.length) {
+                                    this.storedProperties[propName].index = 0;
                                 }
                             } else {
                                 throw 'Unknown selector after # in parameter specification';
@@ -55,7 +67,7 @@ function Substituter() {
             }
         }
         return obj;
-    }
+    };
 }
 
 export default Substituter;

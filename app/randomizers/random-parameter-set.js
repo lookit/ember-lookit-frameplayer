@@ -172,18 +172,6 @@ function getRandomElement(arr, weights) {
     }
 }
 
-// http://stackoverflow.com/a/12646864
-function shuffleArray(array) {
-    var shuffled = Ember.$.extend(true, [], array); // deep copy array
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = shuffled[i];
-        shuffled[i] = shuffled[j];
-        shuffled[j] = temp;
-    }
-    return shuffled;
-}
-
 // TODO: in the future we may want to allow nesting of the list-object-selector syntax,
 // e.g. LISTVAR__3__4, LISTVAR1__LISTVAR2__3, LISTVAR1__1__LISTVAR2__3 - but this quickly
 // also requires appropriate processing of parentheses/order-of-operations.
