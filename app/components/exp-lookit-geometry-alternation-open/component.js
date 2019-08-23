@@ -18,14 +18,11 @@ let {
 /**
  *
  * Frame to implement specific test trial structure for geometry alternation
- * experiment. Includes announcement, calibration, and alternation (test)
- * phases. During "alternation," two streams of triangles are shown, in
+ * replication study. Includes announcement, calibration, and alternation (test)
+ * phases. During "alternation," two streams of "open triangles" are shown, in
  * rectangles on the left and right of the screen: one one side both size and
  * shape change, on the other only size changes. Frame is displayed fullscreen
  * and video recording is conducted during calibration/test.
- *
- * The geometry randomizer generates a series of ExpLookitGeometryAlternation
- * frames.
  *
  * This frame is displayed fullscreen; if the frame before it is not, that frame
  * needs to include a manual "next" button so that there's a user interaction
@@ -75,7 +72,7 @@ let {
  ```json
  "frames": {
     "alt-trial": {
-        "kind": "exp-lookit-geometry-alternation",
+        "kind": "exp-lookit-geometry-alternation-open",
         "triangleLineWidth": 8,
         "baseDir": "https://s3.amazonaws.com/lookitcontents/geometry/",
         "videoTypes": ["mp4", "webm"],
@@ -99,7 +96,7 @@ let {
  }
 
  * ```
- * @class Exp-lookit-geometry-alternation
+ * @class Exp-lookit-geometry-alternation-open
  * @extends Exp-frame-base
  * @uses Full-screen
  * @uses Video-record
@@ -189,14 +186,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     default: true
                 },
                 /**
-                 * True to use big fat triangle as context figure, or false to use small skinny triangle as context.
+                 * True to use big uneven triangle as context figure, or false to use small even triangle as context.
                  *
                  * @property {Boolean} context
                  * @default true
                  */
                 context: {
                     type: 'boolean',
-                    description: 'True to use big fat triangle as context, or false to use small skinny triangle as context.',
+                    description: 'True to use big uneven triangle as context figure, or false to use small even triangle as context.',
                     default: true
                 },
                 /**
@@ -704,14 +701,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             transform=" translate(${LX}, ${LY})
                         translate(37.5, 56)
                         rotate(${LRot})
-                        scale(${LFlip * LSize})
-                        scale(${LFlip, 1})" />`;
+                        scale(${LSize})
+                        scale(${LFlip}, 1)" />`;
         var rightTriangle = `${this.triangleBases[Rshape]}
             transform=" translate(${RX}, ${RY})
                         translate(162.5, 56)
                         rotate(${RRot})
                         scale(${RSize})
-                        scale(${RFlip, 1})" />`;
+                        scale(${RFlip}, 1)" />`;
         $('#stimuli').html(leftTriangle + rightTriangle);
     },
 
@@ -742,6 +739,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                                   this.settings.rotRange[1]);
         var LFlip = this.getRandomElement(this.settings.flipVals);
         var RFlip = this.getRandomElement(this.settings.flipVals);
+        console.log(LFlip);
+        console.log(RFlip);
         var LSize = this.getRandom(this.settings.sizeRange[0],
                                    this.settings.sizeRange[1]) * LsizeBase[0];
         var RSize = this.getRandom(this.settings.sizeRange[0],
@@ -823,44 +822,43 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         // --kim
 
         this.set('triangleBases', {
-            'fat': `<polygon stroke="${this.get('triangleColor')}"
+            'even': `<polyline stroke="${this.get('triangleColor')}"
                      stroke-width="${this.get('triangleLineWidth')}"
                      fill="none"
-                     points="-12.1369327415 ,  -5.63277008813,
-                              14.5176215029 ,  -5.63277008813,
-                              -2.38068876146 ,  11.2655401763"
+                     points="-5.75451015291 ,  -5.14699035165
+                             -5.75451015291 ,  10.2939807033
+                             11.5090203058  ,  -5.14699035165"
                      vector-effect="non-scaling-stroke"
                      stroke-linejoin="round"`,
-            'skinny': `<polygon stroke="${this.get('triangleColor')}"
+            'uneven': `<polyline stroke="${this.get('triangleColor')}"
                      stroke-width="${this.get('triangleLineWidth')}"
                      fill="none"
-                     points="-27.5259468096 ,  -3.25208132666,
-                              18.6410953948 ,  -3.25208132666,
-                               8.88485141479 ,  6.50416265333"
+                     points="-7.19313769114 ,  0.0
+                              -7.19313769114 ,  9.65060690934
+                              14.3862753823 ,  -9.65060690934"
                      vector-effect="non-scaling-stroke"
                      stroke-linejoin="round"`
 
         });
 
         // COUNTERBALANCING (2x2):
-        // context: whether to use big fat triangle or
-        // small skinny triangle as context figure. If 'fat', contrasts are
-        // big fat/small fat and big fat/small skinny. If 'skinny', contrasts
-        // are big skinny/small skinny and big fat/small skinny.
+        // context: whether to use even or uneven triangle as context. If 'even',
+        // contrasts are small even/big even and small even/big uneven. If 'uneven',
+        // contrasts are big uneven/small even and big uneven/small uneven.
         // altOnLeft: whether to put size-and-shape alteration on left
 
         var diffShapes;
         var sameShapes;
         var shapeSizes;
+
         if (this.get('context')) {
-            sameShapes = ['fat']; // context: big fat triangle
-            shapeSizes = [1, 0.7071]; // big fat vs. small fat/small skinny
-            // sqrt(0.5) = 0.7071, to get factor of two difference in area
-            diffShapes = ['fat', 'skinny']; // start with context
+            sameShapes = ['uneven']; // context: big fat triangle
+            shapeSizes = [1.6, 1]; // big fat vs. small fat/small skinny
+            diffShapes = ['uneven', 'even']; // start with context
         } else {
-            sameShapes = ['skinny']; // context: small skinny triangle
-            shapeSizes = [0.7071, 1]; // small skinny vs. big skinny/big fat
-            diffShapes = ['skinny', 'fat']; // start with context
+            sameShapes = ['even']; // context: small skinny triangle
+            shapeSizes = [1, 1.6]; // small skinny vs. big skinny/big fat
+            diffShapes = ['even', 'uneven']; // start with context
         }
 
         var Lshapes;
