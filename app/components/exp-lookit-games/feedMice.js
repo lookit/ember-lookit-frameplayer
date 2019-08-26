@@ -374,7 +374,7 @@ export default class FeedMice extends Base {
 
     if(ball.state === 'hit house'){
       this.createHouse();
-      if( super.getElapsedTime(initialTime) >= 3.7){
+      if( super.getElapsedTime(initialTime) >= 2.5){
         initialTime = new Date().getTime();
         ball.state = 'hit';
       }
@@ -385,9 +385,11 @@ export default class FeedMice extends Base {
 
     if(ball.state === 'hit') {
       this.createHouse();
-      let target = targets[index];
-      this.createWindow(target);
-      this.showWindow(index);
+      if(index >= 0 ) {
+        let target = targets[index];
+        this.createWindow(target);
+        this.showWindow(index);
+      }
 
       // Check if current index of the pressed item corresponds to the actual target index
       if (index === currentTargetIndex) {
@@ -410,9 +412,11 @@ export default class FeedMice extends Base {
 
     if (ball.state === 'hit target') {
       this.createHouse();
-      let target = targets[index];
-      this.createWindow(target);
-      this.showWindow(index);
+      if(index >= 0 ) {
+        let target = targets[index];
+        this.createWindow(target);
+        this.showWindow(index);
+      }
       if(super.getElapsedTime(initialTime) >= 2.5){
         super.finishGame(false);
       }
