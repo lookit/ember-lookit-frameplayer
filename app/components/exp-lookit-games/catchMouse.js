@@ -287,7 +287,7 @@ export default class CatchMouse extends Base {
     let paddleBoxColor = super.Utils.blueColor;
     super.createPaddleBox(paddleBoxColor);
     basket = super.basketObject(basket);
-    super.paddleMove(basket,initialTime);
+    super.paddleMove(basket,initialTime,mice);
     this.drawImage(cheeseClock);
 
     if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMoved(basket)){
@@ -296,7 +296,7 @@ export default class CatchMouse extends Base {
     }
 
 
-    if(initialTime > 0 && super.paddleIsMoved(basket) && mice.state === 'fall'){
+    if(initialTime > 0 && super.paddleIsMoved(basket) && mice.state === 'start'){
       initialTime = new Date().getTime();
       paddleBoxColor = super.Utils.redColor;
       super.createPaddleBox(paddleBoxColor);
@@ -304,7 +304,7 @@ export default class CatchMouse extends Base {
     }
 
     //Randomize initial wait time here
-    if(mice.state === 'fall' && initialTime >0 && super.getElapsedTime(initialTime) > jitterT){
+    if(mice.state === 'start' && initialTime >0 && super.getElapsedTime(initialTime) > jitterT){
       audio.pause();
       audio.currentTime = 0;
       mice.state = 'show';

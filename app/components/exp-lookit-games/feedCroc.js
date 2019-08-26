@@ -148,7 +148,7 @@ export default class FeedCroc extends Base {
     super.generateTrajectoryParams(hArray,Height,Tf);
     super.createBallBox(super.Utils.basketBalls);
     super.drawImageObject(paddle,this.Utils.paddleImage);
-    super.paddleMove(paddle,initialTime);
+    super.paddleMove(paddle,initialTime,ball);
     this.paddleBallCollision();
     let hitTheTarget = this.collisionDetection();
     let hitTheWall = super.wallCollision(ball);
@@ -262,7 +262,7 @@ export default class FeedCroc extends Base {
       super.paddleAtZero(paddle, false);
 
     }
-    super.paddleMove(paddle,initialTime);
+    super.paddleMove(paddle,initialTime,ball);
 
 
   }
@@ -324,7 +324,7 @@ export default class FeedCroc extends Base {
    */
   paddleBallCollision() {
 
-    super.paddleMove(paddle,initialTime);
+    super.paddleMove(paddle,initialTime,ball);
     //Detect the ball position on X axis , if the ball is between paddle edges
     if (ball.position.x >= (1.2810 - 0.025) * super.Utils.SCALE - 0.04*super.Utils.SCALE && ball.position.x <= (1.3810 + 0.025) * super.Utils.SCALE) {
 

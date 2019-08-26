@@ -24,8 +24,6 @@ let initX = 0.52;
 let initV = 0;
 let gravity = 0;
 let ballvx = 0;
-let waitIndex = 0;
-let waitIndexTIme = 0;
 let paddleBox = {
   position: {x: 0, y: 0},
   dimensions: {width: 0, height: 0}
@@ -939,7 +937,7 @@ export default class Base {
    * @method paddleMove
    * @param {object} paddle
    */
-  paddleMove(paddle,initialTime) {
+  paddleMove(paddle,initialTime,ball) {
 
 
     //Do not go over the bottom border
@@ -949,7 +947,7 @@ export default class Base {
     }
 
 
-    if(currentRounds === 0 && paddle.position.y < paddleBox.position.y) {
+    if(ball.state === 'start' && currentRounds === 0 && paddle.position.y < paddleBox.position.y) {
 
       mouseY = paddle.position.y + 10;
     }

@@ -327,7 +327,7 @@ export default class CatchCheese extends Base {
     obstructions.forEach(obstruction => super.drawImage(obstruction, obstruction.imageURL));
 
     this.basketObject(basket);
-    super.paddleMove(basket,initialTime);
+    super.paddleMove(basket,initialTime,ball);
     super.drawImageObject(basket,super.Utils.ironBasket);
     super.createPaddleBox(paddleBoxColor);
   }
