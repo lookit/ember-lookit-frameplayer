@@ -5,8 +5,11 @@ moduleForModel('child', 'Unit | Model | child', {
   needs: ['model:child', 'model:user']
 });
 
-test('it exists', function(assert) {
-  let model = this.subject();
+test('Child model exists, can get and set properties', function(assert) {
+  let baby = this.subject();
+  baby.set('birthday', new Date().getTime() - 1000 * 60 * 60 * 24 * 30 * 6);
+  baby.get('birthday');
+  baby.get('gender');
   // let store = this.store();
-  assert.ok(!!model);
+  assert.ok(!!baby);
 });
