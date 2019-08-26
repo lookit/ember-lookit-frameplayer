@@ -1,7 +1,7 @@
 import { module, skip } from 'qunit';
 import test from 'ember-sinon-qunit/test-support/test';
 
-
+import Child from '../../../models/child';
 import { getRandomElement, randomizer } from '../../../randomizers/random-parameter-set';
 import ExperimentParser from '../../../utils/parse-experiment';
 
@@ -93,7 +93,7 @@ test('Values are replaced at multiple levels of object hierarchy and within arra
 });
 
 
-test('Randomizer does basic parameter replacement using expected parameter set', function (assert) {
+test('Randomizer does basic parameter replacement using expected parameter set based on fixed and age-based weights', function (assert) {
 
     const frameId = 'frame-id';
     const frameConfig = {
@@ -136,7 +136,7 @@ test('Randomizer does basic parameter replacement using expected parameter set',
         parameterSetWeights: [1, 0]
     };
 
-    const expectedResult = [
+    const set1Result = [
             {
                 'id': 'frame-id',
                 'kind': 'exp-lookit-experiment-page',
@@ -159,15 +159,63 @@ test('Randomizer does basic parameter replacement using expected parameter set',
                 'endAudio': 'roar.mp3'
             },
         ];
-
+    const set2Result = [
+            {
+                'id': 'frame-id',
+                'kind': 'exp-lookit-experiment-page',
+                'leftImage': 'bunny.jpg',
+                'rightImage': 'frog.jpg',
+                'size': 300
+            },
+            {
+                'id': 'frame-id',
+                'kind': 'exp-lookit-experiment-page',
+                'leftImage': 'cat.jpg',
+                'rightImage': 'frog.jpg'
+            },
+            {
+                'id': 'frame-id',
+                'kind': 'exp-lookit-experiment-page',
+                'leftImage': 'dog.jpg',
+                'rightImage': 'giraffe.jpg',
+                'size': 300,
+                'endAudio': 'purr.mp3'
+            },
+        ];
 
     var parser = new ExperimentParser();
     let [actualResult, ] = randomizer(frameId, frameConfig, [], parser._resolveFrame.bind(parser));
 
-    assert.deepEqual(actualResult, expectedResult,
+    assert.deepEqual(actualResult, set1Result,
         'Randomizer did not create expected frame list'
     );
 
+    frameConfig.parameterSetWeights = [
+       {
+           'minAge': 0,
+           'maxAge': 365,
+           'weight': [1, 0]
+       },
+       {
+           'minAge': 365,
+           'maxAge': 10000,
+           'weight': [0, 1]
+       }
+   ];
+
+    var sixMonthOldBirthday = new Date().getTime() - 1000 * 60 * 60 * 24 * 30 * 6;
+    var eighteenMonthOldBirthday = new Date().getTime() - 1000 * 60 * 60 * 24 * 30 * 18;
+
+    for (var i = 0; i++; i < 20) {
+        let [sixMonthResult, ] = randomizer(frameId, frameConfig, [], parser._resolveFrame.bind(parser), new Child({'birthday': sixMonthOldBirthday}));
+        let [eighteenMonthResult, ] = randomizer(frameId, frameConfig, [], parser._resolveFrame.bind(parser), new Child({'birthday': eighteenMonthOldBirthday}));
+        assert.deepEqual(sixMonthResult, set1Result,
+            'Child in age range 0-365 days was not assigned to correct age-based parameter set'
+        );
+        assert.deepEqual(eighteenMonthResult, set2Result,
+            'Child in age range 365-10000 days was not assigned to correct age-based parameter set'
+        );
+    }
 });
 
 test('Randomizer accepts selector syntax INDEX, RAND, PERM, UNIQ to choose from lists in parameter set', function (assert) {

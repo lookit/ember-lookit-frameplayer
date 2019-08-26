@@ -225,6 +225,58 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
     selectNextFrame: null,
     _selectNextFrameFn: null,
 
+    /**
+     * An object containing values for any parameters (variables) to use in this frame.
+     * Any property VALUES in this frame that match any of the property NAMES in `parameters`
+     * will be replaced by the corresponding parameter value. For example, suppose your frame
+     * is:
+     *
+```
+{
+    'kind': 'FRAME_KIND',
+    'parameters': {
+        'FRAME_KIND': 'exp-lookit-text'
+    }
+}
+```
+     *
+     * Then the frame `kind` will be `exp-lookit-text`. This may be useful if you need
+     * to repeat values for different frame properties, especially if your frame is actually
+     * a randomizer or group. You may use parameters nested within objects (at any depth) or
+     * within lists.
+     *
+     * You can also use selectors to randomly sample from or permute
+     * a list defined in `parameters`. Suppose `STIMLIST` is defined in
+     * `parameters`, e.g. a list of potential stimuli. Rather than just using `STIMLIST`
+     * as a value in your frames, you can also:
+     *
+     * * Select the Nth element (0-indexed) of the value of `STIMLIST`: (Will cause error if `N >= THELIST.length`)
+```
+    'parameterName': 'STIMLIST#N'
+```
+     * * Select (uniformly) a random element of the value of `STIMLIST`:
+```
+    'parameterName': 'STIMLIST#RAND'
+```
+    * * Set `parameterName` to a random permutation of the value of `STIMLIST`:
+```
+    'parameterName': 'STIMLIST#PERM'
+```
+    * * Select the next element in a random permutation of the value of `STIMLIST`, which is used across all
+    * substitutions in this randomizer. This allows you, for instance, to provide a list
+    * of possible images in your `parameterSet`, and use a different one each frame with the
+    * subset/order randomized per participant. If more `STIMLIST#UNIQ` parameters than
+    * elements of `STIMLIST` are used, we loop back around to the start of the permutation
+    * generated for this randomizer.
+```
+    'parameterName': 'STIMLIST#UNIQ'
+```
+     *
+     * @property {Object[]} parameters
+     * @default {}
+     */
+    parameters: {},
+
     session: null,
 
     // see https://github.com/emberjs/ember.js/issues/3908. Moved
