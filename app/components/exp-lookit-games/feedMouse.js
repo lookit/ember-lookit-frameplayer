@@ -28,6 +28,7 @@ let jitterT = 0;
 let winsize = 0.05;
 let targetsize = 0.02;
 let fireworks =  []
+const CENTER  = 549;
 /**
  * @class FeedMouse
  * @extends Base
@@ -298,7 +299,7 @@ export default class FeedMouse extends Base {
         //Check for target (red dot) position , if we are within the window size
         if (keyPressed.value === true) {
 
-          let position = Math.abs(ball.position.x - targetX*super.Utils.SCALE);
+          let position = Math.abs(ball.position.x - CENTER );
 
           if (position < targetsize * super.Utils.SCALE) {
             super.increaseScore();
@@ -342,7 +343,7 @@ export default class FeedMouse extends Base {
       //goodJob.currentTime = 0;
       //super.drawBall(ball, super.Utils.Fireball);
       // this.createWindow();
-      let difference = ball.position.x - targetX*super.Utils.SCALE;
+      let difference = ball.position.x - CENTER ;
       if(ball.hitstate === 'great'){
         let explosion = this.setExplostionPosition(4,ball);
         super.drawImageObject(explosion,fireworks[randomNumber]);
@@ -364,25 +365,25 @@ export default class FeedMouse extends Base {
 
   }
 
-  setExplostionPosition(multiplyer,ball) {
+  setExplostionPosition(multiplier,ball) {
 
     let explosion = {
 
-      dimensions: {width: target.dimensions.width * multiplyer, height: target.dimensions.height * multiplyer},
-      position: {x:targetX*super.Utils.SCALE - (target.dimensions.width*multiplyer/2)  , y : ball.position.y - target.dimensions.height*multiplyer/2}
+      dimensions: {width: target.dimensions.width * multiplier, height: target.dimensions.height * multiplier},
+      position: {x:CENTER - (target.dimensions.width*multiplier/2)  + 15, y : ball.position.y - target.dimensions.height*multiplier/2 + 10}
 
     };
     return explosion;
   }
 
 
-  setExplostionPosition2(multiplyer,ball,difference) {
+  setExplostionPosition2(multiplier,ball,difference) {
 
 
     let explosion = {
 
-      dimensions: {width: target.dimensions.width * multiplyer, height: target.dimensions.height * multiplyer},
-      position: {x:targetX*super.Utils.SCALE - (target.dimensions.width*multiplyer/2) + difference - 10  , y : ball.position.y - target.dimensions.height*multiplyer/2}
+      dimensions: {width: target.dimensions.width * multiplier, height: target.dimensions.height * multiplier},
+      position: {x:CENTER - (target.dimensions.width*multiplier/2) + difference , y : ball.position.y - target.dimensions.height*multiplier/2 + 10}
 
     };
     return explosion;
