@@ -69,13 +69,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             });
         },
         finish() {
-            if (!this.get('stoppedRecording')) {
-                this.stopRecorder().then(() => {
-                    this.session.set('completedConsentFrame', true);
-                    this.set('stoppedRecording', true);
-                    this.send('next');
-                });
-            }
+            this.stopRecorder().finally(() => {
+                this.session.set('completedConsentFrame', true);
+                this.set('stoppedRecording', true);
+                this.send('next');
+            });
         },
         download() {
             // Get the text of the consent form to process. Split into lines, and remove
