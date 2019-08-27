@@ -320,10 +320,6 @@ export default class FeedMouse extends Base {
 
           }
 
-
-          this.showBallLocation();
-
-
           ball.state = 'hit';
 
         }
@@ -359,6 +355,7 @@ export default class FeedMouse extends Base {
         super.finishGame(false);
       }
 
+      this.showBallLocation();
     }
 
     super.discreteLauncer(super.Utils.boxOfFireworks);
