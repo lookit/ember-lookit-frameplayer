@@ -251,8 +251,6 @@ export default class FeedMouse extends Base {
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         startSound.pause();
         startSound.currentTime = 0;
-        fireworkWhistle = new Audio(super.Utils.firework_whistle);
-        fireworkWhistle.play();
         ball.state = 'fall';
         initialTime = new Date().getTime();
 
@@ -304,18 +302,15 @@ export default class FeedMouse extends Base {
           if (position < targetsize * super.Utils.SCALE) {
             super.increaseScore();
             ball.hitstate = 'great';
-            greatJob = new Audio(super.Utils.firework_big);
             greatJob.play();
 
 
           }else if(position < (winsize)*super.Utils.SCALE){
 
             ball.hitstate = 'good';
-            goodJob = new Audio(super.Utils.firework_small);
             goodJob.play();
 
           } else {
-            ballCatchFail = new Audio(super.Utils.firework_hidden);
             ballCatchFail.play();
 
           }
