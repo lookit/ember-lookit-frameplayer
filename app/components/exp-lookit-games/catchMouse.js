@@ -16,7 +16,6 @@ import Base from './base';
 let mice = {};
 let cheeseClock = {};
 let basket = {};
-let initSoundPlaying = false;
 let audio = {};
 let ballCatchFail = {};
 let cheese1Sound = {};
@@ -149,7 +148,7 @@ export default class CatchMouse extends Base {
       position: {x: leftBorder, y: topBorder},
       radius: 40,
       delay: 2000,
-      state:'fall',
+      state:'start',
       showTime:0,
       lastTime: new Date().getTime(),
       imageURL: super.Utils.rat
@@ -173,7 +172,6 @@ export default class CatchMouse extends Base {
     };
 
 
-    initSoundPlaying = true;
     super.createPaddleBox();
     basket = super.basketObject(basket);
     if(super.currentRounds >0 || (super.currentRounds === 0 && !super.paddleIsMoved(basket))) {
@@ -182,7 +180,6 @@ export default class CatchMouse extends Base {
 
     audio.addEventListener('playing', function () {
       initialTime = new Date().getTime();
-      initSoundPlaying = false;
 
     });
 

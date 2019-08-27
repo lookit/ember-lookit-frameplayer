@@ -22,8 +22,8 @@ let crocEatingSound = {};
 let initialTime = 0;
 let alpha = 0.7;
 let hArray = [];
-let targetLocH = 1.67;
-let targetLocV = 0.68;
+let targetLocH = 1.66;
+let targetLocV = 0.69;
 let jitterT = 0;
 let Tf = 0.75;
 let Height = 0.65;
@@ -190,6 +190,7 @@ export default class FeedCroc extends Base {
         ball.state = 'hit';
       }
       super.drawBall(ball,super.Utils.basketBall);
+      super.drawImageObject(token,token.imageURL);
 
     }
 
@@ -247,16 +248,17 @@ export default class FeedCroc extends Base {
         super.drawImageObject(token2,token.imageURL);
       }
 
-      if(ball.hitstate === 'good'){
+      else if(ball.hitstate === 'good'){
 
         super.drawImageObject(target, super.Utils.wallMissed);
         super.drawImageObject(bricks,bricks.imageURL);
         super.drawImageObject(token,token.imageURL);
       }
 
-      if(super.ballIsOnFloor(ball)){
+      else {
         super.drawBall(ball,super.Utils.basketBall);
         super.drawImageObject(target, super.Utils.wallInitial);
+        super.drawImageObject(token,token.imageURL);
       }
 
       super.paddleAtZero(paddle, false);
@@ -373,7 +375,7 @@ export default class FeedCroc extends Base {
     let YH = (targetLocV+0.72)*super.Utils.SCALE;
     let XH = targetLocH *super.Utils.SCALE;
 
-    if (ball.position.y > YL && ball.position.y < YH  && ball.position.x > XH ) {
+    if (ball.state !== 'done' && ball.position.y > YL && ball.position.y < YH  && ball.position.x > XH ) {
       let currenImpactCoord = Math.abs(ball.position.y - targetLocV*super.Utils.SCALE);
 
       if (currenImpactCoord < 0.27*super.Utils.SCALE){
