@@ -3,18 +3,38 @@
     <div id="recorder" class="col-xs-12">
     </div>
   </div>
-    {{#if showInstructions}}
-        <h1> {{gameDescription}} </h1>
-        <hr>
-        <p> {{instructions}}</p>
-        <hr >
+  {{#if showInstructions}}
+    <h1> {{gameDescription}} </h1>
+    <hr>
+    <p> {{instructions}}</p>
+    <hr >
 
-        <button class="btn btn-success" {{ action 'play' }} >Play</button>
-    {{/if}}
-    <canvas  id="gamesCanvas"  height="0" width="0"></canvas>
-    {{#unless showInstructions}}
-      {{bs-button class="pull-right" defaultText="Show data" type="success" onClick=(action "export")}}
-    {{/unless}}
+    <div class="col-md-3" >
+      Trajectory height : {{height}}
+      <input type="range" min="50" max="100" steps="1" oninput={{action (mut height) value="target.value"}}
+             value={{height}} >
+      Trajectory flight time  : {{flightTime}}
+      <input type="range" min="50" max="100" steps="1" oninput={{action (mut flightTime) value="target.value"}}
+             value={{flightTime}} >
+      Trajectory gravity : {{gravity}}
+      <input type="range" min="10" max="80" steps="1" oninput={{action (mut gravity) value="target.value"}}
+             value={{gravity}} >
+      Time delay min : {{minTime}}
+      <input type="range" min="500" max="1500" steps="100" oninput={{action (mut minTime) value="target.value"}}
+             value={{minTime}} >
+      Time delay max : {{maxTime}}
+      <input type="range" min="1500" max="2500" steps="100" oninput={{action (mut maxTime) value="target.value"}}
+             value={{maxTime}} >
+
+    </div>
+
+
+    <button class="btn btn-success" {{ action 'play' }} >Play</button>
+  {{/if}}
+  <canvas  id="gamesCanvas"  height="0" width="0"></canvas>
+  {{#unless showInstructions}}
+    {{bs-button class="pull-right" defaultText="Show data" type="success" onClick=(action "export")}}
+  {{/unless}}
 </div>
 
 
