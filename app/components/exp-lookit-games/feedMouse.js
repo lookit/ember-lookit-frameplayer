@@ -141,8 +141,8 @@ export default class FeedMouse extends Base {
     ball.startTime =0;
     jitterT = super.trialStartTime();
     keyPressed.value = false;
-    let topBorder = (1.14)*super.Utils.SCALE;
-    let downBorder =  (1.22)*super.Utils.SCALE ;
+    let topBorder = (1.15)*super.Utils.SCALE;
+    let downBorder =  (1.23)*super.Utils.SCALE ;
     let leftBorder = (targetX-0.05)*super.Utils.SCALE ;
     let rightBorder = (targetX+0.05)*super.Utils.SCALE;
 
@@ -329,10 +329,6 @@ export default class FeedMouse extends Base {
 
     if (ball.state === 'hit') {
 
-      // greatJob.currentTime = 0;
-      //goodJob.currentTime = 0;
-      //super.drawBall(ball, super.Utils.Fireball);
-      // this.createWindow();
       let difference = ball.position.x - CENTER ;
       if(ball.hitstate === 'great'){
         let explosion = this.setExplostionPosition(4,ball);
