@@ -22,7 +22,7 @@ let {
  * presenting stimuli ourselves. E.g., you might give instructions to conduct a structured
  * interview and allow the parent to control recording.
  *
- * Each element of the 'blocks' parameter is rendered using {{#crossLink "ExpTextBlock"}}{{/crossLink}}.
+ * Each element of the 'blocks' parameter is rendered using {{#crossLink "Exp-text-block"}}{{/crossLink}}.
  *
  ```
     "frames": {
@@ -50,9 +50,9 @@ let {
         }
     }
 ```
- * @class ExpLookitObservation
- * @extends ExpFrameBase
- * @extends VideoRecord
+ * @class Exp-lookit-observation
+ * @extends Exp-frame-base
+ * @extends Video-record
  */
 
 export default ExpFrameBaseComponent.extend(VideoRecord, {
@@ -77,7 +77,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             type: 'object',
             properties: {
                 /**
-                 * Array of blocks for {{#crossLink "ExpTextBlock"}}{{/crossLink}}, specifying text/images of instructions to display
+                 * Array of blocks for {{#crossLink "Exp-text-block"}}{{/crossLink}}, specifying text/images of instructions to display
                  *
                  * @property {Object[]} blocks
                  *   @param {String} title Title of this section

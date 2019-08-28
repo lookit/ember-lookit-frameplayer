@@ -11,7 +11,7 @@ let {
 
 /**
  * Allow components to specify fullscreen capabilities based on minimal configuration options
- * @class FullScreen
+ * @class Full-screen
  */
 export default Ember.Mixin.create({
     /**

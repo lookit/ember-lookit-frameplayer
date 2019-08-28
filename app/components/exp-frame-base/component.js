@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 //import config from 'ember-get-config';
 import FullScreen from '../../mixins/full-screen';
+import SessionRecord from '../../mixins/session-record';
 
 /**
  * @module exp-player
@@ -23,7 +24,7 @@ import FullScreen from '../../mixins/full-screen';
  * ```
  *
  * As a user you will almost never need to insert a component into a template directly- the platform should handle that
- *  by automatically inserting an <a href="../classes/ExpPlayer.html" class="crosslink">ExpPlayer</a> component when your experiment starts.
+ *  by automatically inserting an <a href="../classes/Exp-player.html" class="crosslink">exp-player</a> component when your experiment starts.
  * However, a sample template usage is provided below for completeness.
  *
  * ```handlebars
@@ -37,17 +38,19 @@ import FullScreen from '../../mixins/full-screen';
         experiment=experiment
 
         next=(action 'next')
+        exit=(action 'exit')
         previous=(action 'previous')
         saveHandler=(action 'saveFrame')
         skipone=(action 'skipone')
         extra=extra
     }}
  * ```
- * @class ExpFrameBase
+ * @class Exp-frame-base
  *
- * @uses FullScreen
+ * @uses Full-screen
+ * @uses Session-record
  */
-export default Ember.Component.extend(FullScreen, {
+export default Ember.Component.extend(FullScreen, SessionRecord, {
     toast: Ember.inject.service(),
     // {String} the unique identifier for the _instance_
     id: null,
@@ -221,6 +224,58 @@ export default Ember.Component.extend(FullScreen, {
      */
     selectNextFrame: null,
     _selectNextFrameFn: null,
+
+    /**
+     * An object containing values for any parameters (variables) to use in this frame.
+     * Any property VALUES in this frame that match any of the property NAMES in `parameters`
+     * will be replaced by the corresponding parameter value. For example, suppose your frame
+     * is:
+     *
+```
+{
+    'kind': 'FRAME_KIND',
+    'parameters': {
+        'FRAME_KIND': 'exp-lookit-text'
+    }
+}
+```
+     *
+     * Then the frame `kind` will be `exp-lookit-text`. This may be useful if you need
+     * to repeat values for different frame properties, especially if your frame is actually
+     * a randomizer or group. You may use parameters nested within objects (at any depth) or
+     * within lists.
+     *
+     * You can also use selectors to randomly sample from or permute
+     * a list defined in `parameters`. Suppose `STIMLIST` is defined in
+     * `parameters`, e.g. a list of potential stimuli. Rather than just using `STIMLIST`
+     * as a value in your frames, you can also:
+     *
+     * * Select the Nth element (0-indexed) of the value of `STIMLIST`: (Will cause error if `N >= THELIST.length`)
+```
+    'parameterName': 'STIMLIST#N'
+```
+     * * Select (uniformly) a random element of the value of `STIMLIST`:
+```
+    'parameterName': 'STIMLIST#RAND'
+```
+    * * Set `parameterName` to a random permutation of the value of `STIMLIST`:
+```
+    'parameterName': 'STIMLIST#PERM'
+```
+    * * Select the next element in a random permutation of the value of `STIMLIST`, which is used across all
+    * substitutions in this randomizer. This allows you, for instance, to provide a list
+    * of possible images in your `parameterSet`, and use a different one each frame with the
+    * subset/order randomized per participant. If more `STIMLIST#UNIQ` parameters than
+    * elements of `STIMLIST` are used, we loop back around to the start of the permutation
+    * generated for this randomizer.
+```
+    'parameterName': 'STIMLIST#UNIQ'
+```
+     *
+     * @property {Object[]} parameters
+     * @default {}
+     */
+    parameters: {},
 
     session: null,
 
@@ -411,7 +466,16 @@ export default Ember.Component.extend(FullScreen, {
             timestamp: curTime.toISOString()
         };
         Ember.assign(eventData, extra);
+        // Add some extra info if there's session recording ongoing
+        if (this.get('sessionRecorder') && this.get('sessionRecordingInProgress')) {
+            Ember.assign(eventData, {
+                sessionVideoId: this.get('sessionVideoId'),
+                sessionPipeId: this.get('sessionRecorder').get('pipeVideoName'),
+                sessionStreamTime: this.get('sessionRecorder').getTime()
+            });
+        }
         return eventData;
+
     },
 
     setSessionCompleted() {
@@ -440,15 +504,9 @@ export default Ember.Component.extend(FullScreen, {
              * @event nextFrame
              */
             this.send('setTimeEvent', 'nextFrame');
-            // Note: this will allow participant to proceed even if saving fails. The
-            // reason not to execute 'next' within this._save().then() is that an action
-            // executed as a promise doesn't count as a 'user interaction' event, so
-            // we wouldn't be able to enter FS mode upon starting the next frame. Given
-            // that the user is likely to have limited ability to FIX a save error, and the
-            // only thing they'll really be able to do is try again anyway, preventing
-            // them from continuing is unnecessarily disruptive.
-            this.send('save');
 
+            // Determine which frame to go to next
+            var iNextFrame = -1;
             if (this._selectNextFrameFn) {
                 var session = this.get('session');
                 var expData = session ? session.get('expData') : null;
@@ -460,19 +518,38 @@ export default Ember.Component.extend(FullScreen, {
                 var frameIndex = this.get('frameIndex');
                 var frameData = this.serializeContent(); // note - may not have saved to expData yet at time of call
 
-                var iNextFrame = this._selectNextFrameFn(frames, frameIndex, frameData, expData, sequence, child, pastSessions);
+                iNextFrame = this._selectNextFrameFn(frames, frameIndex, frameData, expData, sequence, child, pastSessions);
                 if (!(typeof (iNextFrame) === 'number')) {
                     throw new Error('selectNextFrame function provided for this frame, but did not return a number');
                 }
-                this.sendAction('next', iNextFrame);
-            } else {
-                this.sendAction('next');
             }
-            window.scrollTo(0, 0);
+
+            // Note: this will allow participant to proceed even if saving fails. The
+            // reason not to execute 'next' within this._save().then() is that an action
+            // executed as a promise doesn't count as a 'user interaction' event, so
+            // we wouldn't be able to enter FS mode upon starting the next frame. Given
+            // that the user is likely to have limited ability to FIX a save error, and the
+            // only thing they'll really be able to do is try again anyway, preventing
+            // them from continuing is unnecessarily disruptive.
+            this.send('save');
+
+            if (this.get('endSessionRecording') && this.get('sessionRecorder')) {
+                this.get('session').set('recordingInProgress', false);
+                var _this = this;
+                this.stopSessionRecorder().finally(() => {
+                    _this.sendAction('next', iNextFrame);
+                    window.scrollTo(0, 0);
+                    _this.destroySessionRecorder();
+                });
+            } else {
+                this.sendAction('next', iNextFrame);
+                window.scrollTo(0, 0);
+            }
+
         },
 
-        last() {
-            this.sendAction('last');
+        exit() {
+            this.sendAction('exit');
         },
 
         previous() {

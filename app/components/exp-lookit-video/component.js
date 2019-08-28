@@ -5,7 +5,6 @@ import FullScreen from '../../mixins/full-screen';
 import MediaReload from '../../mixins/media-reload';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
-import { observer } from '@ember/object';
 
 let {
     $
@@ -101,12 +100,12 @@ let {
         }
 
 * ```
-* @class ExpLookitVideo
-* @extends ExpFrameBase
-* @uses FullScreen
-* @uses MediaReload
-* @uses VideoRecord
-* @uses ExpandAssets
+* @class Exp-lookit-video
+* @extends Exp-frame-base
+* @uses Full-screen
+* @uses Media-reload
+* @uses Video-record
+* @uses Expand-assets
 */
 
 // TODO: refactor into cleaner structure with segments announcement, intro, calibration, test, with more general logic for transitions. Construct list at start since some elements optional. Then proceed through - instead of setting task manually, use utility to move to next task within list.
@@ -140,6 +139,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
 
     // Override setting in VideoRecord mixin - only use camera if doing recording
     doUseCamera: Ember.computed.alias('doRecording'),
+    startRecordingAutomatically: Ember.computed.alias('doRecording'),
 
     completedAnnouncementAudio: false,
     completedAnnouncementTime: false,
@@ -548,7 +548,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         },
 
         finish() { // Move to next frame altogether
-            // Call this something separate from test because stopRecorder promise needs
+            // Call this something separate from next because stopRecorder promise needs
             // to call next AFTER recording is stopped and we don't want this to have
             // already been destroyed at that point.
             window.clearInterval(this.get('testTimer'));
@@ -781,22 +781,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         this.set('currentTask', 'announce');
         this.segmentObserver(this);
     },
-
-    /**
-     * Observer that starts recording once recorder is ready. Override to do additional
-     * stuff at this point!
-     * @method whenPossibleToRecord
-     */
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('doRecording')) {
-            var _this = this;
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                this.startRecorder().then(() => {
-                    _this.set('recorderReady', false);
-                });
-            }
-        }
-    }),
 
     willDestroyElement() { // remove event handler
         $(document).off('keyup.pauser');

@@ -25,9 +25,9 @@ hard-coded, to provide a general-purpose technical setup frame.
 }
 ```
 
-@class ExpVideoConfig
-@extends ExpFrameBase
-@extends VideoRecord
+@class Exp-video-config
+@extends Exp-frame-base
+@extends Video-record
 */
 
 export default ExpFrameBaseComponent.extend(VideoRecord, {

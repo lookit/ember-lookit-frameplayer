@@ -5,7 +5,6 @@ import FullScreen from '../../mixins/full-screen';
 import MediaReload from '../../mixins/media-reload';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
-import { observer } from '@ember/object';
 
 let {
     $
@@ -117,12 +116,12 @@ let {
     }
 * ```
 *
-* @class ExpLookitPreferentialLooking
-* @extends ExpFrameBase
-* @uses FullScreen
-* @uses MediaReload
-* @uses VideoRecord
-* @uses ExpandAssets
+* @class Exp-lookit-preferential-looking
+* @extends Exp-frame-base
+* @uses Full-screen
+* @uses Media-reload
+* @uses Video-record
+* @uses Expand-assets
 */
 
 // TODO: refactor into cleaner structure with segments announcement, intro, calibration,
@@ -141,6 +140,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
 
     // Override setting in VideoRecord mixin - only use camera if doing recording
     doUseCamera: Ember.computed.alias('doRecording'),
+    startRecordingAutomatically: Ember.computed.alias('doRecording'),
 
     assetsToExpand: {
         'audio': [
@@ -998,22 +998,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         this.set('currentTask', 'announce');
         this.segmentObserver(this);
     },
-
-    /**
-     * Observer that starts recording once recorder is ready. Override to do additional
-     * stuff at this point!
-     * @method whenPossibleToRecord
-     */
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('doRecording')) {
-            var _this = this;
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                this.startRecorder().then(() => {
-                    _this.set('recorderReady', false);
-                });
-            }
-        }
-    }),
 
     willDestroyElement() { // remove event handler
         $(document).off('keyup.pauser');

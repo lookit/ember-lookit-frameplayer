@@ -31,8 +31,8 @@ import ExpFrameBaseComponent from '../exp-frame-base/component';
  }
 
  * ```
- * @class ExpLookitText
- * @extends ExpFrameBase
+ * @class Exp-lookit-text
+ * @extends Exp-frame-base
  */
 
 export default ExpFrameBaseComponent.extend({
@@ -56,7 +56,7 @@ export default ExpFrameBaseComponent.extend({
                 },
                 /**
                  * Array of text blocks (paragraphs) to display. Rendered using
-                 * {{#crossLink "ExpTextBlock"}}{{/crossLink}}, so all parameters
+                 * {{#crossLink "Exp-text-block"}}{{/crossLink}}, so all parameters
                  * of ExpTextBlock can be used.
                  *
                  * @property {Object} blocks

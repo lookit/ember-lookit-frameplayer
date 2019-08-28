@@ -92,9 +92,9 @@ You can also customize any or all text and images as in the following example.
 }
 ```
 
-@class ExpVideoConfigQuality
-@extends ExpFrameBase
-@extends VideoRecord
+@class Exp-video-config-quality
+@extends Exp-frame-base
+@extends Video-record
 
 */
 
@@ -190,7 +190,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 },
                 /**
                 List of instruction segments to display to participant. Rendered using
-                {{#crossLink "ExpTextBlock"}}{{/crossLink}}, so all parameters
+                {{#crossLink "Exp-text-block"}}{{/crossLink}}, so all parameters
                 of ExpTextBlock can be used.
                 @property {Object} instructionBlocks
                   @param {String} text instructions text (can include html)

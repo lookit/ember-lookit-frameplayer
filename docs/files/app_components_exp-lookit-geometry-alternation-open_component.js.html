@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>app/components/exp-lookit-geometry-alternation-open/component.js - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/Exp-exit-survey.html">Exp-exit-survey</a></li>
+                            <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
+                            <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
+                            <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
+                            <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
+                            <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
+                            <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
+                            <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
+                            <li><a href="../classes/Exp-lookit-preview-explanation.html">Exp-lookit-preview-explanation</a></li>
+                            <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
+                            <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-text.html">Exp-lookit-text</a></li>
+                            <li><a href="../classes/Exp-lookit-video.html">Exp-lookit-video</a></li>
+                            <li><a href="../classes/Exp-lookit-video-assent.html">Exp-lookit-video-assent</a></li>
+                            <li><a href="../classes/Exp-lookit-video-consent.html">Exp-lookit-video-consent</a></li>
+                            <li><a href="../classes/Exp-player.html">Exp-player</a></li>
+                            <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
+                            <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
+                            <li><a href="../classes/Exp-video-consent.html">Exp-video-consent</a></li>
+                            <li><a href="../classes/Exp-video-preview.html">Exp-video-preview</a></li>
+                            <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
+                            <li><a href="../classes/Full-screen.html">Full-screen</a></li>
+                            <li><a href="../classes/Media-reload.html">Media-reload</a></li>
+                            <li><a href="../classes/Permute.html">Permute</a></li>
+                            <li><a href="../classes/Random-parameter-set.html">Random-parameter-set</a></li>
+                            <li><a href="../classes/Select.html">Select</a></li>
+                            <li><a href="../classes/Session-record.html">Session-record</a></li>
+                            <li><a href="../classes/Video-record.html">Video-record</a></li>
+                            <li><a href="../classes/video-recorder.html">video-recorder</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: app/components/exp-lookit-geometry-alternation-open/component.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import Ember from &#x27;ember&#x27;;
+import layout from &#x27;./template&#x27;;
+import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
+import FullScreen from &#x27;../../mixins/full-screen&#x27;;
+import VideoRecord from &#x27;../../mixins/video-record&#x27;;
+import ExpandAssets from &#x27;../../mixins/expand-assets&#x27;;
+import { observer } from &#x27;@ember/object&#x27;;
+
+let {
+    $
+} = Ember;
+
+/**
+ * @module exp-player
+ * @submodule frames
+ */
+
+/**
+ *
+ * Frame to implement specific test trial structure for geometry alternation
+ * replication study. Includes announcement, calibration, and alternation (test)
+ * phases. During &quot;alternation,&quot; two streams of &quot;open triangles&quot; are shown, in
+ * rectangles on the left and right of the screen: one one side both size and
+ * shape change, on the other only size changes. Frame is displayed fullscreen
+ * and video recording is conducted during calibration/test.
+ *
+ * This frame is displayed fullscreen; if the frame before it is not, that frame
+ * needs to include a manual &quot;next&quot; button so that there&#x27;s a user interaction
+ * event to trigger fullscreen mode. (Browsers don&#x27;t allow us to switch to FS
+ * without a user event.)
+ *
+ * Specifying media locations:
+ * For any parameters that expect a list of audio/video sources, you can EITHER provide
+ * a list of src/type pairs with full paths like this:
+ &#x60;&#x60;&#x60;json
+    [
+        {
+            &#x27;src&#x27;: &#x27;http://.../video1.mp4&#x27;,
+            &#x27;type&#x27;: &#x27;video/mp4&#x27;
+        },
+        {
+            &#x27;src&#x27;: &#x27;http://.../video1.webm&#x27;,
+            &#x27;type&#x27;: &#x27;video/webm&#x27;
+        }
+    ]
+ &#x60;&#x60;&#x60;
+ * OR you can provide a single string &#x27;stub&#x27;, which will be expanded
+ * based on the parameter baseDir and the media types expected - either audioTypes or
+ * videoTypes as appropriate. For example, if you provide the audio source &#x60;intro&#x60;
+ * and baseDir is https://mystimuli.org/mystudy/, with audioTypes [&#x27;mp3&#x27;, &#x27;ogg&#x27;], then this
+ * will be expanded to:
+ &#x60;&#x60;&#x60;json
+                  [
+                         {
+                             src: &#x27;https://mystimuli.org/mystudy/mp3/intro.mp3&#x27;,
+                             type: &#x27;audio/mp3&#x27;
+                         },
+                         {
+                             src: &#x27;https://mystimuli.org/mystudy/ogg/intro.ogg&#x27;,
+                             type: &#x27;audio/ogg&#x27;
+                         }
+                 ]
+ &#x60;&#x60;&#x60;
+ * This allows you to simplify your JSON document a bit and also easily switch to a
+ * new version of your stimuli without changing every URL. You can mix source objects with
+ * full URLs and those using stubs within the same directory. However, any stimuli
+ * specified using stubs MUST be
+ * organized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.
+ *
+ * Example usage:
+
+ &#x60;&#x60;&#x60;json
+ &quot;frames&quot;: {
+    &quot;alt-trial&quot;: {
+        &quot;kind&quot;: &quot;exp-lookit-geometry-alternation-open&quot;,
+        &quot;triangleLineWidth&quot;: 8,
+        &quot;baseDir&quot;: &quot;https://s3.amazonaws.com/lookitcontents/geometry/&quot;,
+        &quot;videoTypes&quot;: [&quot;mp4&quot;, &quot;webm&quot;],
+        &quot;audioTypes&quot;: [&quot;mp3&quot;, &quot;ogg&quot;],
+        &quot;calibrationVideoSources&quot;: &quot;attention&quot;,
+        &quot;trialLength&quot;: 60,
+        &quot;attnLength&quot;: 10,
+        &quot;calibrationLength&quot;: 3000,
+        &quot;fsAudio&quot;: &quot;fullscreen&quot;,
+        &quot;triangleColor&quot;: &quot;#056090&quot;,
+        &quot;unpauseAudio&quot;: &quot;return_after_pause&quot;,
+        &quot;pauseAudio&quot;: &quot;pause&quot;,
+        &quot;videoSources&quot;: &quot;attentiongrabber&quot;,
+        &quot;musicSources&quot;: &quot;happy-stroll&quot;,
+        &quot;calibrationAudioSources&quot;: &quot;chimes&quot;,
+        &quot;altOnLeft&quot;: true,
+        &quot;context&quot;: true,
+        &quot;audioSources&quot;: &quot;video_01&quot;,
+        &quot;endAudioSources&quot;: &quot;all_done&quot;
+    }
+ }
+
+ * &#x60;&#x60;&#x60;
+ * @class Exp-lookit-geometry-alternation-open
+ * @extends Exp-frame-base
+ * @uses Full-screen
+ * @uses Video-record
+ * @uses Expand-assets
+ */
+
+export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
+
+    type: &#x27;exp-lookit-geometry-alternation&#x27;,
+    layout: layout,
+    displayFullscreen: true, // force fullscreen for all uses of this component
+    fullScreenElementId: &#x27;experiment-player&#x27;,
+    fsButtonID: &#x27;fsButton&#x27;,
+
+    // Track state of experiment
+    completedAudio: false,
+    completedAttn: false,
+    currentSegment: &#x27;intro&#x27;, // &#x27;calibration&#x27;, &#x27;test&#x27; (mutually exclusive)
+
+    // Override setting in VideoRecord mixin - only use camera if doing recording
+    doUseCamera: Ember.computed.alias(&#x27;doRecording&#x27;),
+    startRecordingAutomatically: Ember.computed.alias(&#x27;doRecording&#x27;),
+
+    recordingStarted: false,
+
+    assetsToExpand: {
+        &#x27;audio&#x27;: [
+            &#x27;audioSources&#x27;,
+            &#x27;musicSources&#x27;,
+            &#x27;calibrationAudioSources&#x27;,
+            &#x27;endAudioSources&#x27;,
+            &#x27;pauseAudio&#x27;,
+            &#x27;unpauseAudio&#x27;,
+            &#x27;fsAudio&#x27;
+        ],
+        &#x27;video&#x27;: [
+            &#x27;calibrationVideoSources&#x27;,
+            &#x27;videoSources&#x27;
+        ],
+        &#x27;image&#x27;: [
+        ]
+    },
+
+    readyToStartCalibration: Ember.computed(&#x27;recordingStarted&#x27;, &#x27;completedAudio&#x27;, &#x27;completedAttn&#x27;,
+        function() {
+            if (this.get(&#x27;session&#x27;).get(&#x27;recorder&#x27;)) {
+                if (this.get(&#x27;session&#x27;).get(&#x27;recorder&#x27;).get(&#x27;recording&#x27;)) {
+                    return true;
+                }
+            }
+            return (this.get(&#x27;recordingStarted&#x27;) &amp;&amp; this.get(&#x27;completedAudio&#x27;) &amp;&amp; this.get(&#x27;completedAttn&#x27;));
+        }),
+
+    // used only by template
+    doingCalibration: Ember.computed(&#x27;currentSegment&#x27;, function() {
+        return (this.get(&#x27;currentSegment&#x27;) === &#x27;calibration&#x27;);
+    }),
+    doingIntro: Ember.computed(&#x27;currentSegment&#x27;, function() {
+        return (this.get(&#x27;currentSegment&#x27;) === &#x27;intro&#x27;);
+    }),
+
+    isPaused: false,
+    hasBeenPaused: false,
+
+    // Timers for intro &amp; stimuli
+    introTimer: null, // minimum length of intro segment
+    stimTimer: null,
+
+    // Store data about triangles to show, display lengths, etc. in frame
+    settings: null,
+    triangleBases: null,
+
+    meta: {
+        name: &#x27;ExpLookitGeometryAlternation&#x27;,
+        description: &#x27;Frame to implement specific test trial structure for geometry alternation experiment. Includes announcement, calibration, and alternation (test) phases. During &quot;alternation,&quot; two streams of triangles are shown, in rectangles on the left and right of the screen: one one side both size and shape change, on the other only size changes. Frame is displayed fullscreen and video recording is conducted during calibration/test.&#x27;,
+        parameters: {
+            type: &#x27;object&#x27;,
+            properties: {
+                /**
+                 * Whether to do webcam recording on this frame
+                 *
+                 * @property {Boolean} doRecording
+                 */
+                doRecording: {
+                    type: &#x27;boolean&#x27;,
+                    description: &#x27;Whether to do webcam recording&#x27;,
+                    default: true
+                },
+                /**
+                 * True to use big uneven triangle as context figure, or false to use small even triangle as context.
+                 *
+                 * @property {Boolean} context
+                 * @default true
+                 */
+                context: {
+                    type: &#x27;boolean&#x27;,
+                    description: &#x27;True to use big uneven triangle as context figure, or false to use small even triangle as context.&#x27;,
+                    default: true
+                },
+                /**
+                 * Whether to put the shape+size alternating stream on the left (other stream alternates only in size)
+                 *
+                 * @property {Boolean} altOnLeft
+                 * @default true
+                */
+                altOnLeft: {
+                    type: &#x27;boolean&#x27;,
+                    description: &#x27;Whether to put the shape+size alternating stream on the left.&#x27;,
+                    default: true
+                },
+                /**
+                 * color of triangle outline (3 or 6 char hex, starting with #)
+                 *
+                 * @property {String} triangleColor
+                 * @default &#x27;#056090&#x27;
+                 */
+                triangleColor: {
+                    type: &#x27;string&#x27;,
+                    description: &#x27;color of triangle outline (3 or 6 char hex, starting with #)&#x27;,
+                    default: &#x27;#056090&#x27;
+                },
+                /**
+                 * triangle line width in pixels
+                 *
+                 * @property {Integer} triangleLineWidth
+                 * @default 5
+                 */
+                triangleLineWidth: {
+                    type: &#x27;integer&#x27;,
+                    description: &#x27;triangle line width in pixels&#x27;,
+                    default: 5
+                },
+                /**
+                 * minimum amount of time to show attention-getter in seconds
+                 *
+                 * @property {Number} attnLength
+                 * @default 5
+                 */
+                attnLength: {
+                    type: &#x27;number&#x27;,
+                    description: &#x27;minimum amount of time to show attention-getter in seconds&#x27;,
+                    default: 5
+                },
+                /**
+                 * length of alternation trial in seconds
+                 *
+                 * @property {Number} trialLength
+                 * @default 6
+                 */
+                trialLength: {
+                    type: &#x27;number&#x27;,
+                    description: &#x27;length of alternation trial in seconds&#x27;,
+                    default: 6
+                },
+                /**
+                 * length of single calibration segment in ms
+                 *
+                 * @property {Number} calibrationLength
+                 * @default 3000
+                 */
+                calibrationLength: {
+                    type: &#x27;number&#x27;,
+                    description: &#x27;length of single calibration segment in ms&#x27;,
+                    default: 3000
+                },
+                /**
+                 * Sources Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects for
+                 * instructions during attention-getter video
+                 *
+                 * @property {Object[]} audioSources
+                 */
+                audioSources: {
+                    type: &#x27;array&#x27;,
+                    description: &#x27;List of objects specifying audio src and type for instructions during attention-getter video&#x27;,
+                    default: [],
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            &#x27;src&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;type&#x27;: {
+                                type: &#x27;string&#x27;
+                            }
+                        }
+                    }
+                },
+                /**
+                 * Sources Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects for
+                 * music during trial
+                 *
+                 * @property {Object[]} musicSources
+                 */
+                musicSources: {
+                    type: &#x27;array&#x27;,
+                    description: &#x27;List of objects specifying audio src and type for music during trial&#x27;,
+                    default: [],
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            &#x27;src&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;type&#x27;: {
+                                type: &#x27;string&#x27;
+                            }
+                        }
+                    }
+                },
+                /**
+                 * Sources Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects for
+                 * audio after completion of trial (optional; used for last
+                 * trial &quot;okay to open your eyes now&quot; announcement)
+                 *
+                 * @property {Object[]} endAudioSources
+                 */
+                endAudioSources: {
+                    type: &#x27;array&#x27;,
+                    description: &#x27;Supply this to play audio at the end of the trial; list of objects specifying audio src and type&#x27;,
+                    default: [],
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            &#x27;src&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;type&#x27;: {
+                                type: &#x27;string&#x27;
+                            }
+                        }
+                    }
+                },
+                /**
+                 * Sources Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects for
+                 * calibration audio (played 4 times during calibration)
+                 *
+                 * @property {Object[]} calibrationAudioSources
+                 */
+                calibrationAudioSources: {
+                    type: &#x27;array&#x27;,
+                    description: &#x27;list of objects specifying audio src and type for calibration audio&#x27;,
+                    default: [],
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            &#x27;src&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;type&#x27;: {
+                                type: &#x27;string&#x27;
+                            }
+                        }
+                    }
+                },
+                /**
+                 * Sources Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects for
+                 * calibration video (played from start 4 times during
+                 * calibration)
+                 *
+                 * @property {Object[]} calibrationVideoSources
+                 */
+                calibrationVideoSources: {
+                    type: &#x27;array&#x27;,
+                    description: &#x27;list of objects specifying video src and type for calibration audio&#x27;,
+                    default: [],
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            &#x27;src&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;type&#x27;: {
+                                type: &#x27;string&#x27;
+                            }
+                        }
+                    }
+                },
+                /**
+                 * Sources Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects for
+                 * attention-getter video (should be loopable)
+                 *
+                 * @property {Object[]} videoSources
+                 */
+                videoSources: {
+                    type: &#x27;array&#x27;,
+                    description: &#x27;List of objects specifying video src and type for attention-getter video&#x27;,
+                    default: [],
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            &#x27;src&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;type&#x27;: {
+                                type: &#x27;string&#x27;
+                            }
+                        }
+                    }
+                },
+                /**
+                 * Sources Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects for
+                 * audio played upon pausing study
+                 *
+                 * @property {Object[]} pauseAudio
+                 */
+                pauseAudio: {
+                    type: &#x27;array&#x27;,
+                    description: &#x27;List of objects specifying audio src and type for audio played when pausing study&#x27;,
+                    default: [],
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            &#x27;src&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;type&#x27;: {
+                                type: &#x27;string&#x27;
+                            }
+                        }
+                    }
+                },
+                /**
+                 * Sources Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects for
+                 * audio played upon unpausing study
+                 *
+                 * @property {Object[]} unpauseAudio
+                 */
+                unpauseAudio: {
+                    type: &#x27;array&#x27;,
+                    description: &#x27;List of objects specifying audio src and type for audio played when pausing study&#x27;,
+                    default: [],
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            &#x27;src&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;type&#x27;: {
+                                type: &#x27;string&#x27;
+                            }
+                        }
+                    }
+                },
+                /**
+                 * Sources Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects for
+                 * audio played when study is paused due to not being fullscreen
+                 *
+                 * @property {Object[]} fsAudio
+                 */
+                fsAudio: {
+                    type: &#x27;array&#x27;,
+                    description: &#x27;List of objects specifying audio src and type for audio played when pausing study if study is not fullscreen&#x27;,
+                    default: [],
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            &#x27;src&#x27;: {
+                                type: &#x27;string&#x27;
+                            },
+                            &#x27;type&#x27;: {
+                                type: &#x27;string&#x27;
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        data: {
+            /**
+             * Parameters captured and sent to the server
+             *
+             * @method serializeContent
+             * @param {Boolean} context True to use big fat triangle as context figure, or false to use small skinny triangle as context. [same as passed to this frame]
+             * @param {Boolean} altOnLeft Whether to put the shape+size alternating stream on the left (other stream alternates only in size) [same as passed to this frame]
+             * @param {String} videoID The ID of any video recorded during this frame
+             * @param {Boolean} hasBeenPaused whether this trial was paused
+             * @param {Object} eventTimings
+             * @return {Object} The payload sent to the server
+             */
+            type: &#x27;object&#x27;,
+            properties: {
+                context: {
+                    type: &#x27;boolean&#x27;
+                },
+                altOnLeft: {
+                    type: &#x27;boolean&#x27;
+                },
+                videoId: {
+                    type: &#x27;string&#x27;
+                },
+                hasBeenPaused: {
+                    type: &#x27;boolean&#x27;
+                }
+            }
+        }
+    },
+
+    calObserver: observer(&#x27;readyToStartCalibration&#x27;, function(frame) {
+        if (frame.get(&#x27;readyToStartCalibration&#x27;) &amp;&amp; frame.get(&#x27;currentSegment&#x27;) === &#x27;intro&#x27;) {
+            if (!frame.checkFullscreen()) {
+                frame.pauseStudy();
+            } else {
+                frame.set(&#x27;currentSegment&#x27;, &#x27;calibration&#x27;);
+            }
+        }
+    }),
+
+    segmentObserver: observer(&#x27;currentSegment&#x27;, function(frame) {
+        // Don&#x27;t trigger starting intro; that&#x27;ll be done manually.
+        if (frame.get(&#x27;currentSegment&#x27;) === &#x27;calibration&#x27;) {
+            frame.startCalibration();
+        } else if (frame.get(&#x27;currentSegment&#x27;) === &#x27;test&#x27;) {
+            frame.startTrial();
+        }
+    }),
+
+    actions: {
+        // When intro audio is complete
+        endAudio() {
+            this.set(&#x27;completedAudio&#x27;, true);
+            this.notifyPropertyChange(&#x27;readyToStartCalibration&#x27;);
+        },
+
+        finish() {
+
+            // Call this something separate from next because stopRecorder promise needs
+            // to call next AFTER recording is stopped and we don&#x27;t want this to have
+            // already been destroyed at that point.
+            /**
+             * Just before stopping webcam video capture
+             *
+             * @event stoppingCapture
+            */
+            var _this = this;
+            this.stopRecorder().then(() =&gt; {
+                _this.set(&#x27;stoppedRecording&#x27;, true);
+                _this.send(&#x27;next&#x27;);
+                return;
+            }, () =&gt; {
+                _this.send(&#x27;next&#x27;);
+                return;
+            });
+
+            this._super(...arguments);
+        }
+
+    },
+
+    startIntro() {
+        // Allow pausing during intro
+        var _this = this;
+        $(document).off(&#x27;keyup.pauser&#x27;);
+        $(document).on(&#x27;keyup.pauser&#x27;, function(e) {_this.handleSpace(e, _this);});
+
+        // Start placeholder video right away
+        /**
+         * Immediately before starting intro/announcement segment
+         *
+         * @event startIntro
+         */
+        this.send(&#x27;setTimeEvent&#x27;, &#x27;startIntro&#x27;);
+        $(&#x27;#player-video&#x27;)[0].play();
+
+        // Set a timer for the minimum length for the intro/break
+        $(&#x27;#player-audio&#x27;)[0].play();
+        this.set(&#x27;introTimer&#x27;, window.setTimeout(function() {
+            _this.set(&#x27;completedAttn&#x27;, true);
+            _this.notifyPropertyChange(&#x27;readyToStartCalibration&#x27;);
+        }, _this.get(&#x27;attnLength&#x27;) * 1000));
+
+    },
+
+    startCalibration() {
+        var _this = this;
+
+        // Don&#x27;t allow pausing during calibration/test.
+        $(document).off(&#x27;keyup.pauser&#x27;);
+
+        var calAudio = $(&#x27;#player-calibration-audio&#x27;)[0];
+        var calVideo = $(&#x27;#player-calibration-video&#x27;)[0];
+        $(&#x27;#player-calibration-video&#x27;).show();
+
+        // Show the calibration segment at center, left, right, center, each
+        // time recording an event and playing the calibration audio.
+        var doCalibrationSegments = function(calList, lastLoc) {
+            if (calList.length === 0) {
+                $(&#x27;#player-calibration-video&#x27;).hide();
+                _this.set(&#x27;currentSegment&#x27;, &#x27;test&#x27;);
+            } else {
+                var thisLoc = calList.shift();
+                /**
+                 * Start of EACH calibration segment
+                 *
+                 * @event startCalibration
+                 * @param {String} location location of calibration ball, relative to child: &#x27;left&#x27;, &#x27;right&#x27;, or &#x27;center&#x27;
+                 */
+                _this.send(&#x27;setTimeEvent&#x27;, &#x27;startCalibration&#x27;,
+                    {location: thisLoc});
+                calAudio.pause();
+                calAudio.currentTime = 0;
+                calAudio.play();
+                calVideo.pause();
+                calVideo.currentTime = 0;
+                calVideo.play();
+                $(&#x27;#player-calibration-video&#x27;).removeClass(lastLoc);
+                $(&#x27;#player-calibration-video&#x27;).addClass(thisLoc);
+                window.setTimeout(function() {
+                    doCalibrationSegments(calList, thisLoc);
+                }, _this.settings.calLength);
+            }
+        };
+
+        doCalibrationSegments([&#x27;center&#x27;, &#x27;left&#x27;, &#x27;right&#x27;, &#x27;center&#x27;], &#x27;&#x27;);
+
+    },
+
+    startTrial() {
+
+        var _this = this;
+        /**
+         * Immediately before starting test trial segment
+         *
+         * @event startTestTrial
+         */
+        _this.send(&#x27;setTimeEvent&#x27;, &#x27;startTestTrial&#x27;);
+
+        // Begin playing music; fade in and set to fade out at end of trial
+        var $musicPlayer = $(&#x27;#player-music&#x27;);
+        $musicPlayer.prop(&#x27;volume&#x27;, 0.1);
+        $musicPlayer[0].play();
+        $musicPlayer.animate({volume: 1}, _this.settings.musicFadeLength);
+        window.setTimeout(function() {
+            $musicPlayer.animate({volume: 0}, _this.settings.musicFadeLength);
+        }, _this.settings.trialLength * 1000 - _this.settings.musicFadeLength);
+
+        // Start presenting triangles and set to stop after trial length
+        _this.presentTriangles(_this.settings.LshapesStart,
+                                        _this.settings.RshapesStart,
+                                        _this.settings.LsizeBaseStart,
+                                        _this.settings.RsizeBaseStart);
+        window.setTimeout(function() {
+                window.clearTimeout(_this.get(&#x27;stimTimer&#x27;));
+                _this.clearTriangles();
+                _this.endTrial();
+            }, _this.settings.trialLength * 1000);
+    },
+
+    // When triangles have been shown for time indicated: play end-audio if
+    // present, or just move on.
+    endTrial() {
+        this.stopRecorder();
+        if (this.get(&#x27;endAudioSources&#x27;).length) {
+            $(&#x27;#player-endaudio&#x27;)[0].play();
+        } else {
+            this.send(&#x27;finish&#x27;);
+        }
+    },
+
+    getRandomElement(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+    },
+
+    getRandom(min, max) {
+        return Math.random() * (max - min) + min;
+    },
+
+    drawTriangles(Lshape, LX, LY, LRot, LFlip, LSize, Rshape, RX, RY, RRot, RFlip, RSize) {
+        /**
+         * records EACH triangle presentation during test trial
+         *
+         * @event videoStreamConnection
+         * @param {String} Lshape shape of left triangle: &#x27;skinny&#x27; or &#x27;fat&#x27;
+         * @param {String} Rshape shape of right triangle: &#x27;skinny&#x27; or &#x27;fat&#x27;
+         * @param {Number} LX Horizontal offset of left triangle from rectangle center, in units where rectangle width = 70; positive = to right
+         * @param {Number} LY Vertical offset of left triangle from rectangle center, in units where rectangle height = 100.8; positive = down
+         * @param {Number} RX Horizontal offset of right triangle from rectangle center, in units where screen width = 200 and rectangle width = 70; positive = to right
+         * @param {Number} RY Vertical offset of right triangle from rectangle center, in units where rectangle height = 100.8; positive = down
+         * @param {Number} LRot rotation of left triangle in degrees. 0 degrees has long side horizontal and 15 degree angle (skinny triangle) or 60 degree angle (fat triangle) on left.
+         * @param {Number} RRot rotation of right triangle in degrees. 0 degrees has long side horizontal and 15 degree angle (skinny triangle) or 60 degree angle (fat triangle) on left.
+         * @param {Number} LFlip whether left triangle is flipped (1 = no, -1 = yes)
+         * @param {Number} RFlip whether right triangle is flipped (1 = no, -1 = yes)
+         * @param {Number} LSize size of left triangle, relative to standard (&#x27;standard&#x27; sizes are set so that areas of skinny &amp; fat triangles are equal), in terms of side length (e.g. for a rectangle, 2 would mean take a 1x3 rectangle and make it a 2x6 rectangle, quadrupling the area)
+         * @param {Number} RSize size of right triangle, relative to standard (&#x27;standard&#x27; sizes are set so that areas of skinny &amp; fat triangles are equal), in terms of side length (e.g. for a rectangle, 2 would mean take a 1x3 rectangle and make it a 2x6 rectangle, quadrupling the area)
+         */
+        this.send(&#x27;setTimeEvent&#x27;, &#x27;presentTriangles&#x27;, {
+                Lshape: Lshape,
+                LX: LX,
+                LY: LY,
+                LRot: LRot,
+                LFlip: LFlip,
+                LSize: LSize,
+                Rshape: Rshape,
+                RX: RX,
+                RY: RY,
+                RRot: RRot,
+                RFlip: RFlip,
+                RSize: RSize
+            });
+
+        var leftTriangle = &#x60;${this.triangleBases[Lshape]}
+            transform=&quot; translate(${LX}, ${LY})
+                        translate(37.5, 56)
+                        rotate(${LRot})
+                        scale(${LSize})
+                        scale(${LFlip}, 1)&quot; /&gt;&#x60;;
+        var rightTriangle = &#x60;${this.triangleBases[Rshape]}
+            transform=&quot; translate(${RX}, ${RY})
+                        translate(162.5, 56)
+                        rotate(${RRot})
+                        scale(${RSize})
+                        scale(${RFlip}, 1)&quot; /&gt;&#x60;;
+        $(&#x27;#stimuli&#x27;).html(leftTriangle + rightTriangle);
+    },
+
+    clearTriangles() {
+        /**
+         * Records each time triangles are cleared from display
+         *
+         * @event clearTriangles
+        */
+        this.send(&#x27;setTimeEvent&#x27;, &#x27;clearTriangles&#x27;);
+        $(&#x27;#stimuli&#x27;).html(&#x27;&#x27;);
+    },
+
+    presentTriangles(Lshapes, Rshapes, LsizeBase, RsizeBase) {
+        // select X and Y positions for each shape
+        var LX = this.getRandom(this.settings.XRange[0],
+                                this.settings.XRange[1]);
+        var RX = this.getRandom(this.settings.XRange[0],
+                                this.settings.XRange[1]);
+        var LY = this.getRandom(this.settings.YRange[0],
+                                this.settings.YRange[1]);
+        var RY = this.getRandom(this.settings.YRange[0],
+                                this.settings.YRange[1]);
+        // select rotation, flip, size per shape
+        var LRot = this.getRandom(this.settings.rotRange[0],
+                                  this.settings.rotRange[1]);
+        var RRot = this.getRandom(this.settings.rotRange[0],
+                                  this.settings.rotRange[1]);
+        var LFlip = this.getRandomElement(this.settings.flipVals);
+        var RFlip = this.getRandomElement(this.settings.flipVals);
+        console.log(LFlip);
+        console.log(RFlip);
+        var LSize = this.getRandom(this.settings.sizeRange[0],
+                                   this.settings.sizeRange[1]) * LsizeBase[0];
+        var RSize = this.getRandom(this.settings.sizeRange[0],
+                                   this.settings.sizeRange[1]) * RsizeBase[0];
+
+        var _this = this;
+        _this.clearTriangles();
+        _this.set(&#x27;stimTimer&#x27;, window.setTimeout(function() {
+            _this.drawTriangles(Lshapes[0], LX, LY, LRot, LFlip, LSize,
+                            Rshapes[0], RX, RY, RRot, RFlip, RSize);
+            _this.set(&#x27;stimTimer&#x27;, window.setTimeout(function() {
+                _this.presentTriangles(Lshapes.reverse(), Rshapes.reverse(),
+                                    LsizeBase.reverse(), RsizeBase.reverse());
+            }, _this.settings.msTriangles));
+        }, _this.settings.msBlank));
+    },
+
+    handleSpace(event, frame) {
+        if (frame.checkFullscreen() || !frame.isPaused) {
+            if (event.which === 32) { // space
+                frame.pauseStudy();
+            }
+        }
+    },
+
+    // Pause/unpause study; only called if doing intro.
+    pauseStudy() {
+
+        $(&#x27;#player-audio&#x27;)[0].pause();
+        $(&#x27;#player-audio&#x27;)[0].currentTime = 0;
+        $(&#x27;#player-pause-audio&#x27;)[0].pause();
+        $(&#x27;#player-pause-audio&#x27;)[0].currentTime = 0;
+        $(&#x27;#player-pause-audio-leftfs&#x27;)[0].pause();
+        $(&#x27;#player-pause-audio-leftfs&#x27;)[0].currentTime = 0;
+
+        this.set(&#x27;completedAudio&#x27;, false);
+        this.set(&#x27;completedAttn&#x27;, false);
+
+        Ember.run.once(this, () =&gt; {
+            this.set(&#x27;hasBeenPaused&#x27;, true);
+            var wasPaused = this.get(&#x27;isPaused&#x27;);
+            this.set(&#x27;currentSegment&#x27;, &#x27;intro&#x27;);
+
+            // Currently paused: RESUME
+            if (wasPaused) {
+                try {
+                    this.resumeRecorder();
+                } catch (_) {
+                    return;
+                }
+                this.startIntro();
+                this.set(&#x27;isPaused&#x27;, false);
+            } else { // Not currently paused: PAUSE
+                window.clearTimeout(this.get(&#x27;introTimer&#x27;));
+                this.pauseRecorder(true);
+                if (this.checkFullscreen()) {
+                    $(&#x27;#player-pause-audio&#x27;)[0].play();
+                } else {
+                    $(&#x27;#player-pause-audio-leftfs&#x27;)[0].play();
+                }
+                this.set(&#x27;isPaused&#x27;, true);
+            }
+        });
+
+    },
+
+    didInsertElement() {
+        this._super(...arguments);
+
+        // Define basic properties for two triangle shapes used. It would be
+        // more natural to define these in the template, and then use the
+        // &lt;use xlink:href=&quot;#name&quot; .../&gt; syntax to transform them as
+        // appropriate, but although this worked fine on experimenter I couldn&#x27;t
+        // get the links working on lookit. The code was correctly generated,
+        // but while a direct use of polygon showed up, nothing that used
+        // xlink:href showed up at all (even when hard-coded into the template).
+        // Possibly related to issues like
+        // https://github.com/emberjs/ember.js/issues/14752.
+        // --kim
+
+        this.set(&#x27;triangleBases&#x27;, {
+            &#x27;even&#x27;: &#x60;&lt;polyline stroke=&quot;${this.get(&#x27;triangleColor&#x27;)}&quot;
+                     stroke-width=&quot;${this.get(&#x27;triangleLineWidth&#x27;)}&quot;
+                     fill=&quot;none&quot;
+                     points=&quot;-5.75451015291 ,  -5.14699035165
+                             -5.75451015291 ,  10.2939807033
+                             11.5090203058  ,  -5.14699035165&quot;
+                     vector-effect=&quot;non-scaling-stroke&quot;
+                     stroke-linejoin=&quot;round&quot;&#x60;,
+            &#x27;uneven&#x27;: &#x60;&lt;polyline stroke=&quot;${this.get(&#x27;triangleColor&#x27;)}&quot;
+                     stroke-width=&quot;${this.get(&#x27;triangleLineWidth&#x27;)}&quot;
+                     fill=&quot;none&quot;
+                     points=&quot;-7.19313769114 ,  0.0
+                              -7.19313769114 ,  9.65060690934
+                              14.3862753823 ,  -9.65060690934&quot;
+                     vector-effect=&quot;non-scaling-stroke&quot;
+                     stroke-linejoin=&quot;round&quot;&#x60;
+
+        });
+
+        // COUNTERBALANCING (2x2):
+        // context: whether to use even or uneven triangle as context. If &#x27;even&#x27;,
+        // contrasts are small even/big even and small even/big uneven. If &#x27;uneven&#x27;,
+        // contrasts are big uneven/small even and big uneven/small uneven.
+        // altOnLeft: whether to put size-and-shape alteration on left
+
+        var diffShapes;
+        var sameShapes;
+        var shapeSizes;
+
+        if (this.get(&#x27;context&#x27;)) {
+            sameShapes = [&#x27;uneven&#x27;]; // context: big fat triangle
+            shapeSizes = [1.6, 1]; // big fat vs. small fat/small skinny
+            diffShapes = [&#x27;uneven&#x27;, &#x27;even&#x27;]; // start with context
+        } else {
+            sameShapes = [&#x27;even&#x27;]; // context: small skinny triangle
+            shapeSizes = [1, 1.6]; // small skinny vs. big skinny/big fat
+            diffShapes = [&#x27;even&#x27;, &#x27;uneven&#x27;]; // start with context
+        }
+
+        var Lshapes;
+        var Rshapes;
+        if (this.get(&#x27;altOnLeft&#x27;)) {
+            Lshapes = diffShapes;
+            Rshapes = sameShapes;
+        } else {
+            Lshapes = sameShapes;
+            Rshapes = diffShapes;
+        }
+
+        this.set(&#x27;settings&#x27;, {
+            msBlank: 300,
+            msTriangles: 500,
+            LsizeBaseStart: shapeSizes,
+            RsizeBaseStart: shapeSizes.slice(),
+            XRange: [-3.125, 3.125],
+            YRange: [-3.125, 3.125],
+            rotRange: [0, 360],
+            flipVals: [-1, 1],
+            sizeRange: [0.921954, 1.072381], // 15% by AREA: sqrt(0.85), sqrt(1.15)
+            trialLength: this.get(&#x27;trialLength&#x27;),
+            LshapesStart: Lshapes,
+            RshapesStart: Rshapes,
+            musicFadeLength: 2000,
+            calLength: this.get(&#x27;calibrationLength&#x27;)});
+
+        this.send(&#x27;showFullscreen&#x27;);
+        this.notifyPropertyChange(&#x27;readyToStartCalibration&#x27;);
+        this.startIntro();
+    },
+
+    willDestroyElement() { // remove event handler
+        $(document).off(&#x27;keyup.pauser&#x27;);
+        window.clearInterval(this.get(&#x27;introTimer&#x27;));
+        window.clearInterval(this.get(&#x27;stimTimer&#x27;));
+        this._super(...arguments);
+    },
+
+    /**
+     * Observer that starts recording once recorder is ready. Override to do additional
+     * stuff at this point!
+     * @method whenPossibleToRecord
+     */
+    whenPossibleToRecord: observer(&#x27;recorder.hasCamAccess&#x27;, &#x27;recorderReady&#x27;, function() {
+        if (this.get(&#x27;doRecording&#x27;)) {
+            var _this = this;
+            if (this.get(&#x27;recorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;recorderReady&#x27;)) {
+                this.startRecorder().then(() =&gt; {
+                    _this.set(&#x27;recorderReady&#x27;, false);
+                    _this.set(&#x27;recordingStarted&#x27;, true);
+                });
+            }
+        }
+    }),
+
+    /**
+     * Observer that starts recording once sessionrecorder is ready.
+     * @method whenPossibleToRecordSession
+     */
+    whenPossibleToRecordSession: observer(&#x27;sessionRecorder.hasCamAccess&#x27;, &#x27;sessionRecorderReady&#x27;, function() {
+        if (this.get(&#x27;startSessionRecording&#x27;)) {
+            var _this = this;
+            if (this.get(&#x27;sessionRecorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;sessionRecorderReady&#x27;)) {
+                this.startSessionRecorder().then(() =&gt; {
+                    _this.set(&#x27;sessionRecorderReady&#x27;, false);
+                    _this.set(&#x27;recordingStarted&#x27;, true);
+                });
+            }
+        }
+    }),
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

@@ -15,12 +15,22 @@ let {
 
 /**
 Video consent frame for Lookit studies, with consent document displayed at left and instructions to start recording, read a statement out loud, and send. A standard consent
-document is displayed, with additional study-specific information provided by the researcher, in accordance with the Lookit terms of use. Consent document can be downloaded as PDF document by participant.
+document is displayed, with additional study-specific information provided by the researcher, in accordance with the Lookit terms of use.
+
+Researchers can select from the following named templates:
+
+`consent_001`: Original Lookit consent document (2019)
+`consent_002`: Added optional GDPR section and research subject rights statement
+
+To look up the exact text of the consent document, see https://github.com/lookit/ember-lookit-frameplayer/blob/master/app/components/exp-lookit-video-consent/template.hbs
+
+The consent document can be downloaded as PDF document by participant.
 
 ```json
 "frames": {
     "video-consent": {
         "kind": "exp-lookit-video-consent",
+        "template": "consent_002",
         "PIName": "Jane Smith",
         "institution": "Science University",
         "PIContact": "Jane Smith at 123 456 7890",
@@ -28,18 +38,20 @@ document is displayed, with additional study-specific information provided by th
         "procedures": "Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.",
         "payment": "After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.",
         "datause": "We are primarily interested in your child's emotional reactions to the images and sounds. A research assistant will watch your video to measure the precise amount of delight in your child's face as he or she sees each cat picture."
+        "gdpr": false,
+        "research_rights_statement": "You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Chairman of the Committee on the Use of Humans as Experimental Subjects, M.I.T., Room E25-143B, 77 Massachusetts Ave, Cambridge, MA 02139, phone 1-617-253 6787.""
     }
 }
 ```
 
-@class ExpLookitVideoConsent
-@extends ExpFrameBase
+@class Exp-lookit-video-consent
+@extends Exp-frame-base
 
-@uses VideoRecord
+@uses Video-record
 */
 
 export default ExpFrameBaseComponent.extend(VideoRecord, {
-    layout,
+    layout: layout,
     frameType: 'CONSENT',
     disableRecord: Em.computed('recorder.recording', 'recorder.hasCamAccess', function () {
         return !this.get('recorder.hasCamAccess') || this.get('recorder.recording');
@@ -57,13 +69,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             });
         },
         finish() {
-            if (!this.get('stoppedRecording')) {
-                this.stopRecorder().then(() => {
-                    this.session.set('completedConsentFrame', true);
-                    this.set('stoppedRecording', true);
-                    this.send('next');
-                });
-            }
+            this.stopRecorder().finally(() => {
+                this.session.set('completedConsentFrame', true);
+                this.set('stoppedRecording', true);
+                this.send('next');
+            });
         },
         download() {
             // Get the text of the consent form to process. Split into lines, and remove
@@ -191,9 +201,59 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 datause: {
                     type: 'string',
                     description: 'Study-specific data use statement'
+                },
+
+                /**
+                Whether to include a section on GDPR; only used in template consent_002 + .
+                @property {String} gdpr
+                @default false
+                */
+                gdpr: {
+                    type: 'Boolean',
+                    description: 'Whether to include a section on GDPR',
+                    default: false
+                },
+
+                /**
+                List of types of personal information collected, for GDPR section only. Do not include special category information, which is listed separately.
+                @property {String} gdpr_personal_data
+                */
+                gdpr_personal_data: {
+                    type: 'string',
+                    description: 'List of types of personal information collected'
+                },
+
+                /**
+                List of types of special category information collected, for GDPR section only. Include all that apply: racial or ethnic origin; political opinions; religious or philosophical beliefs; trade union membership; processing of genetic data; biometric data; health data; and/or sex life or sexual orientation information
+                @property {String} gdpr_sensitive_data
+                */
+                gdpr_sensitive_data: {
+                    type: 'string',
+                    description: 'List of types of special category information collected'
+                },
+
+                /**
+                Statement about rights of research subjects and how to contact IRB.  Used only in template consent_002+. For instance, MIT's standard language is: You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Chairman of the Committee on the Use of Humans as Experimental Subjects, M.I.T., Room E25-143B, 77 Massachusetts Ave, Cambridge, MA 02139, phone 1-617-253 6787.
+                @property {String} research_rights_statement
+                */
+                research_rights_statement: {
+                    type: 'string',
+                    description: ' Statement about rights of research subjects and how to contact IRB'
+                },
+
+                /**
+                Which consent document template to use. If you are setting up a new study,
+                use the most recent (highest number) of these options. Options: consent_001,
+                consent_002.
+                @property {String} template
+                */
+                template: {
+                    type: 'string',
+                    description: 'Which consent document template to use',
+                    default: 'consent_001'
                 }
             },
-            required: ['PIName', 'institution', 'PIContact', 'purpose', 'procedures', 'payment']
+            required: ['PIName', 'institution', 'PIContact', 'purpose', 'procedures', 'payment', 'template']
         },
         data: {
             /**
@@ -224,6 +284,10 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     didInsertElement() {
         this._super(...arguments);
+        let validTemplateNames = ['consent_001', 'consent_002'];
+        if (!validTemplateNames.includes(this.get('template'))) {
+            console.warn('Invalid consent form specified. \'template\' parameter of \'exp-lookit-video-consent\' frame should be one of: ' + validTemplateNames.join(' '));
+        }
         this.set('consentFormText', $('#consent-form-text').text());
     }
 });

@@ -11,8 +11,9 @@ let {
 /**
  * @module exp-player
  * @submodule components
- * @class ExpPlayer
- *
+ */
+
+/**
  * Experiment player: a component that renders a series of frames that define an experiment
  *
  * Sample usage:
@@ -25,6 +26,8 @@ let {
  *   frameIndex=0
  *   fullScreenElementId='expContainer'}}
  * ```
+ *
+ * @class Exp-player
  */
 export default Ember.Component.extend(FullScreen, {
     layout: layout,
@@ -143,7 +146,8 @@ export default Ember.Component.extend(FullScreen, {
 
         var parser = new ExperimentParser({
             structure: this.get('experiment.structure'),
-            pastSessions: this.get('pastSessions').toArray()
+            pastSessions: this.get('pastSessions').toArray(),
+            child: this.get('session.child')
         });
         var [frameConfigs, conditions] = parser.parse();
         this.set('frames', frameConfigs); // When player loads, convert structure to list of frames
@@ -208,7 +212,9 @@ export default Ember.Component.extend(FullScreen, {
 
         saveFrame(frameId, frameData) {
             // Save the data from a completed frame to the session data item
-            this.get('session.sequence').push(frameId);
+            if (this.get('session.sequence') && frameId != this.get('session.sequence')[this.get('session.sequence').length - 1]) {
+                this.get('session.sequence').push(frameId);
+            }
             this.get('session.expData')[frameId] = frameData;
             if (this.get('session').child.content.id === 'TEST_CHILD_DISREGARD') {
                 return Ember.RSVP.Promise.resolve();
@@ -221,15 +227,15 @@ export default Ember.Component.extend(FullScreen, {
             var frameIndex = this.get('frameIndex');
             if (nextFrameIndex == -1) {
                 nextFrameIndex = frameIndex + 1;
-            } else if (nextFrameIndex < 0 || nextFrameIndex >= this.get('frames').length) {
+            } else if (nextFrameIndex < 0 || nextFrameIndex > this.get('frames').length) {
                 throw new Error('selectNextFrame function provided for this frame returns a frame index out of bounds');
             }
-            if (frameIndex < (this.get('frames').length - 1)) {
+            if (nextFrameIndex < (this.get('frames').length)) {
                 this._transition();
                 this.set('frameIndex', nextFrameIndex);
                 return;
             }
-            this._exit();
+            this._exit(); // exit if nextFrameIndex == this.get('frames').length
         },
 
         skipone() {
@@ -239,6 +245,10 @@ export default Ember.Component.extend(FullScreen, {
                 this.set('frameIndex', frameIndex + 2);
                 return;
             }
+            this._exit();
+        },
+
+        exit() {
             this._exit();
         },
 
@@ -255,6 +265,19 @@ export default Ember.Component.extend(FullScreen, {
         },
 
         exitEarly() {
+            // Stop/destroy session recorder if needed
+            if (this.get('session').get('recorder')) {
+                var sessionRecorder = this.get('session').get('recorder');
+                this.get('session').set('recordingInProgress', false);
+                if (sessionRecorder.get('recording')) {
+                    sessionRecorder.stop().finally(() => {
+                        sessionRecorder.destroy();
+                    });
+                } else {
+                    sessionRecorder.destroy();
+                }
+            }
+
             this.set('hasAttemptedExit', false);
             Ember.$(window).off('keydown');
             // Save any available data immediately
@@ -266,7 +289,7 @@ export default Ember.Component.extend(FullScreen, {
 
             // Navigate to last page in experiment (assumed to be survey frame)
             var max = this.get('frames.length') - 1;
-            this.set('frameIndex', max);
+            this.send('next', max);
         },
     }
 });

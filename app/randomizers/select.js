@@ -5,9 +5,9 @@
 
 /**
 * Randomizer to allow selection of one (or arbitrary sequence) of defined frames.
-* This is intended to be used either within a {{#crossLink "RandomParameterSet"}}{{/crossLink}} randomizer with
+* This is intended to be used either within a {{#crossLink "Random-parameter-set"}}{{/crossLink}} randomizer with
 * different `parameterSets` picking out different values for `whichFrames`) or indirectly
-* via the {{#crossLink "ExpFrameSelect"}}{{/crossLink}} frame (which allows setting `whichFrames` using a custom
+* via the {{#crossLink "Exp-frame-select"}}{{/crossLink}} frame (which allows setting `whichFrames` using a custom
 * `generateProperties` function). Note that you cannot add a `generateProperties` function
 * directly to a randomizer!
 *
