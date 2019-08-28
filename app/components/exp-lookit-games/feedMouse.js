@@ -19,7 +19,6 @@ let ballCatchFail = {};
 let goodJob = {};
 let greatJob = {};
 let initialTime = 0;
-let fireworkWhistle = {};
 let randomNumber = 0;
 let TfArr = [];
 let wallsize = 0.25;
