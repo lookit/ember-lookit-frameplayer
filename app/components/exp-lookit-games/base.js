@@ -16,8 +16,6 @@ let dataLoop = {};
 let gameLoop = {};
 let mouseY = 0;
 let gameOver = false;
-let paddleWidth = 0;
-let paddleHeight = 0;
 let currentRounds = 0;
 let initBallY = 0.0;
 let initX = 0.52;
@@ -57,13 +55,10 @@ export default class Base {
     this.ctx = this.canvas.getContext('2d');
     this.currentScore = 0;
     this.canvas.style.cursor = 'none';
-    paddleWidth = this.canvas.width / 20;
-    paddleHeight = this.canvas.width / 15;
     // Event listener for mouse and keyboard here
     document.addEventListener('keydown', this.keyDownHandler, false);
     document.addEventListener('keyup', this.keyUpHandler, false);
-    this.canvas.requestPointerLock =  this.canvas.requestPointerLock ||
-      this.canvas.mozRequestPointerLock;
+    this.canvas.requestPointerLock =  this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock;
     this.canvas.requestPointerLock()
     mouseY =  1.1*this.Utils.SCALE;
   }
@@ -78,26 +73,6 @@ export default class Base {
     this.currentRounds = 0;
     clearInterval(dataLoop);
 
-  }
-
-  /**
-   * Get standard paddle width
-   * @method paddleWidth
-   * @return {number}
-   */
-  get paddleWidth() {
-
-    return paddleWidth;
-  }
-
-  /**
-   * Get standard paddle height
-   * @method paddleHeight
-   * @return {number}
-   */
-  get paddleHeight() {
-
-    return paddleHeight;
   }
 
 
