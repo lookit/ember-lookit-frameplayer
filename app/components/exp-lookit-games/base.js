@@ -100,18 +100,7 @@ export default class Base {
     return paddleHeight;
   }
 
-  /**
-   * Draw paddle according to the location parameters
-   * @method drawPaddle
-   *
-   */
-  drawPaddle(paddle) {
-    this.ctx.beginPath();
-    this.ctx.rect(paddle.position.x, paddle.position.y, paddle.dimensions.width, paddle.dimensions.height);
-    this.ctx.fillStyle = Utils.whiteColor;
-    this.ctx.fill();
-    this.ctx.closePath();
-  }
+
 
 
   generateHeights() {
@@ -500,26 +489,6 @@ export default class Base {
   }
 
 
-  /**
-   * Show current image
-   * @method drawImage
-   * @param {object} Current object with x,y position, width , height and URL of the image to show
-   * @param {String} URL
-   */
-  drawImageAngle(object, URL, angle) {
-    this.ctx.save();
-    this.ctx.fillStyle = Utils.blackColor;
-    this.ctx.fillRect(object.position.x - object.dimensions.width, object.position.y, object.dimensions.width * 4, object.dimensions.height * 4);
-    //find center of rotation
-    let x = (object.position.x + object.dimensions.width / 2);
-    let y = (object.position.y + object.dimensions.height);
-    this.ctx.translate(x, y);
-    this.ctx.rotate(angle * Math.PI / 180);
-    let image = new Image();
-    image.src = URL;
-    this.ctx.drawImage(image, -(object.dimensions.height / 2), -(object.dimensions.width / 2), object.dimensions.height, object.dimensions.width);
-    this.ctx.restore();
-  }
 
   /**
    * Disabled for now
@@ -589,31 +558,12 @@ export default class Base {
    * @method clearInterval
    */
   clearInterval() {
-    for (let i = 1; i < 10; i++) {
-      window.clearInterval(i);
-    }
+
+      window.clearInterval(0);
+
   }
 
 
-  /**
-   * @method basketCenter
-   * Center of the basket target
-   * @param basket
-   * @returns {{color: string, position: {x: number, y: number}, dimensions: {width: number, height: number}}}
-   */
-  basketCenter(basket) {
-    let radiusRim = 0.1;
-    let leftBorder = (1.3310 - radiusRim / 5) * Utils.SCALE;
-    let topBorder = basket.position.y;
-    let rightBorder = (1.3310 + radiusRim / 5) * Utils.SCALE;
-
-
-    return {
-      position: {x: leftBorder, y: topBorder},
-      dimensions: {width: rightBorder - leftBorder, height: (radiusRim / 5) * Utils.SCALE},
-      color: Utils.redColor
-    };
-  }
 
 
   /**
@@ -915,22 +865,6 @@ export default class Base {
 
   }
 
-  /**
-   * Minimal implementation of interruption between rounds
-   * @method waitSeconds
-   * @param {int} iMilliSeconds
-   */
-  waitSeconds(iMilliSeconds) {
-    let counter = 0;
-    let start = new Date().getTime();
-    let end = 0;
-
-    while (counter < iMilliSeconds) {
-      end = new Date().getTime();
-      counter = end - start;
-
-    }
-  }
 
   /**
    * Set paddle coordinates up to velocity
