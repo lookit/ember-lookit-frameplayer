@@ -342,7 +342,7 @@ export default class CatchMouse extends Base {
       }
 
 
-      if (mice.position.y - basket.position.y >=0 ) {
+      if ((mice.position.y + 20) - basket.position.y >=0 ) {
         mice.state = 'done';
         if(cheeseClock.state >1){
           cheeseClock.dimensions.width =  cheeseClock.dimensions.width*2;
