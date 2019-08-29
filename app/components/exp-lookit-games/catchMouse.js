@@ -309,7 +309,9 @@ export default class CatchMouse extends Base {
     if (mice.state === 'done') {
 
       super.paddleAtZero(basket,false);
-      super.gameOver = true;
+      if(super.getElapsedTime(mice.showTime) > 3){
+        super.finishGame(false);
+      }
 
     }
 
