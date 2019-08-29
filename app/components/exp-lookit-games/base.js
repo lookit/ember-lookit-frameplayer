@@ -61,6 +61,15 @@ export default class Base {
     this.canvas.requestPointerLock =  this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock;
     this.canvas.requestPointerLock()
     mouseY =  1.1*this.Utils.SCALE;
+
+    let leftBorder = (1.8560 - 0.6525) * Utils.SCALE;
+    let topBorder = (1.3671 - 0.05 + 0.05) * Utils.SCALE;
+    let rightBorder = (2.1110 - 0.6525) * Utils.SCALE;
+    let downBorder = (1.3671 + 0.15 + 0.05) * Utils.SCALE;
+    paddleBox.position.x = leftBorder;
+    paddleBox.position.y = topBorder;
+    paddleBox.dimensions.width = rightBorder - leftBorder;
+    paddleBox.dimensions.height = downBorder - topBorder;
   }
 
 
@@ -135,6 +144,19 @@ export default class Base {
    */
   createPaddleBox(color = Utils.blueColor) {
     this.ctx.beginPath();
+    this.ctx.rect(paddleBox.position.x, paddleBox.position.y, paddleBox.dimensions.width, paddleBox.dimensions.height);
+    this.ctx.fillStyle = color;
+    this.ctx.lineWidth = '8';
+    this.ctx.strokeStyle = color;
+    this.ctx.stroke();
+
+
+  }
+
+
+  fillPaddleBox(color = Utils.blueColor){
+
+    this.ctx.beginPath();
     let leftBorder = (1.8560 - 0.6525) * Utils.SCALE;
     let topBorder = (1.3671 - 0.05 + 0.05) * Utils.SCALE;
     let rightBorder = (2.1110 - 0.6525) * Utils.SCALE;
@@ -143,13 +165,8 @@ export default class Base {
     paddleBox.position.y = topBorder;
     paddleBox.dimensions.width = rightBorder - leftBorder;
     paddleBox.dimensions.height = downBorder - topBorder;
-    this.ctx.rect(paddleBox.position.x, paddleBox.position.y, paddleBox.dimensions.width, paddleBox.dimensions.height);
     this.ctx.fillStyle = color;
-    this.ctx.lineWidth = '8';
-    this.ctx.strokeStyle = color;
-    this.ctx.stroke();
-
-
+    this.ctx.fillRect(paddleBox.position.x, paddleBox.position.y, paddleBox.dimensions.width, paddleBox.dimensions.height);
   }
 
   /**
@@ -295,26 +312,6 @@ export default class Base {
   }
 
 
-  downIndicator(paddle,index){
-
-    this.ctx.save();
-    let indicator = {
-      position : {x:paddle.position.x+paddle.dimensions.width/4, y: paddle.position.y + index*0.1*Utils.SCALE + 0.15*Utils.SCALE},
-      dimensions: {width: paddle.dimensions.width/2, height: 0.05*Utils.SCALE}
-    }
-    this.ctx.globalAlpha = index*0.3;
-    this.ctx.beginPath();
-    this.ctx.strokeStyle = Utils.greenColor;
-    this.ctx.moveTo(indicator.position.x , indicator.position.y);
-    this.ctx.lineTo(indicator.position.x + indicator.dimensions.width / 2, indicator.position.y + indicator.dimensions.height);
-    this.ctx.lineTo(indicator.position.x + indicator.dimensions.width, indicator.position.y );
-    this.ctx.lineWidth = '6';
-    this.ctx.stroke();
-    this.ctx.closePath();
-
-    this.ctx.restore();
-
-  }
 
   /**
    * Abstract Main game loop method
@@ -723,7 +720,7 @@ export default class Base {
    */
   ballIsOnFloor(ball){
 
-    return ball.position.y > paddleBox.position.y + paddleBox.dimensions.height;
+    return ball.position.y > paddleBox.position.y + paddleBox.dimensions.height - 20;
   }
 
   /**
