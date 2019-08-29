@@ -27,7 +27,6 @@ let targetLocV = 0.69;
 let jitterT = 0;
 let Tf = 0.75;
 let Height = 0.65;
-let wrongSound = {};
 let token = {};
 let bricks = {};
 
@@ -121,8 +120,6 @@ export default class FeedCroc extends Base {
     bounceSound.src = super.Utils.bouncingSound;
     audio.src = super.Utils.drumRollSound;
     audio.addEventListener('canplaythrough', this.initGame(), false);
-    wrongSound = new Audio();
-    wrongSound.src = super.Utils.wrongSound;
 
 
   }
@@ -166,7 +163,6 @@ export default class FeedCroc extends Base {
         initialTime = new Date().getTime();
         paddleBoxColor = super.Utils.redColor;
         super.createPaddleBox(paddleBoxColor);
-        wrongSound.play();
       }
 
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {

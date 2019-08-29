@@ -26,7 +26,6 @@ let Height = 0.8;
 let obstrArr = [];
 let jitterT = 0;
 let radiusRim = 0.1;
-let wrongSound = {};
 let obstructionsNum = 0;
 let basketImage = {};
 
@@ -76,8 +75,6 @@ export default class CatchCheese extends Base {
     audio.addEventListener('onloadeddata', this.initGame(), false);
     basketImage= new Image();
     basketImage.src = super.Utils.ironBasket;
-    wrongSound = new Audio();
-    wrongSound.src = super.Utils.wrongSound;
 
   }
 
@@ -242,7 +239,6 @@ export default class CatchCheese extends Base {
       if(initialTime > 0 && super.paddleIsMoved(basket)){
         initialTime = new Date().getTime();
         paddleBoxColor = super.Utils.redColor;
-        wrongSound.play();
       }
 
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {

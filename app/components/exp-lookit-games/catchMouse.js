@@ -22,7 +22,6 @@ let cheese1Sound = {};
 let cheese2Sound = {};
 let cheese3Sound = {};
 let swooshSound = {};
-let wrongSound = {};
 let initBallY = 0.27;
 let initX = 1.33;
 let initialTime = 0;
@@ -71,10 +70,6 @@ export default class CatchMouse extends Base {
     cheese3Sound.load();
     swooshSound = new Audio(super.Utils.swooshSound);
     swooshSound.load();
-    wrongSound = new Audio(super.Utils.wrongSound);
-    wrongSound.load();
-    wrongSound.src = super.Utils.wrongSound;
-
     ballCatchFail = new Audio(super.Utils.ballcatchFailSound);
     cheese1Sound.src = super.Utils.cheese_ser1Sound;
     cheese2Sound.src = super.Utils.cheese_ser2Sound;
@@ -82,8 +77,6 @@ export default class CatchMouse extends Base {
     ballCatchFail.src = super.Utils.ballcatchFailSound;
     swooshSound.src = super.Utils.swooshSound;
     audio.src = super.Utils.drumRollSound;
-    wrongSound = new Audio();
-    wrongSound.src = super.Utils.wrongSound;
 
     ballCatchFail.load();
 
@@ -297,7 +290,6 @@ export default class CatchMouse extends Base {
       initialTime = new Date().getTime();
       paddleBoxColor = super.Utils.redColor;
       super.createPaddleBox(paddleBoxColor);
-      wrongSound.play();
     }
 
     //Randomize initial wait time here
