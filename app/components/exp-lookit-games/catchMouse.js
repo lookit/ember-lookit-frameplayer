@@ -255,8 +255,12 @@ export default class CatchMouse extends Base {
 
       cheeseClock.state = 2;
 
-    }else{
+    }else if (time < 0.9){
+
       cheeseClock.state = 1;
+
+    }else{
+      cheeseClock.state = 0;
     }
     this.showCheese();
   }
@@ -308,9 +312,8 @@ export default class CatchMouse extends Base {
 
     if (mice.state === 'done') {
 
-      super.paddleAtZero(basket,false);
-      if(super.getElapsedTime(mice.showTime) > 3){
-        super.finishGame(false);
+      if(super.getElapsedTime(mice.showTime) > 3.5){
+        super.paddleAtZero(basket,false);
       }
 
     }
@@ -338,14 +341,14 @@ export default class CatchMouse extends Base {
 
       if ((mice.position.y + 20) - basket.position.y >=0 ) {
         mice.state = 'done';
-        if(cheeseClock.state >1){
+        if(cheeseClock.state > 0){
           cheeseClock.dimensions.width =  cheeseClock.dimensions.width*2;
           cheeseClock.dimensions.height =  cheeseClock.dimensions.height*2;
 
           if(cheeseClock.state < 4){
 
             cheese1Sound.play();
-          }else if(cheeseClock.state>=4 && cheeseClock.state <8 ){
+          }else if(cheeseClock.state >= 4 && cheeseClock.state < 8 ){
             cheese2Sound.play();
 
           }else{
