@@ -49,16 +49,15 @@ export default class Base {
     this.context = context;
     this.document = document;
     this.canvas = this.document.getElementById('gamesCanvas');
-    this.calculateCanvas();
     this.ctx = this.canvas.getContext('2d');
     this.currentScore = 0;
     this.canvas.style.cursor = 'none';
     // Event listener for mouse and keyboard here
     document.addEventListener('keydown', this.keyDownHandler, false);
     document.addEventListener('keyup', this.keyUpHandler, false);
-    this.canvas.requestPointerLock =  this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock;
-    this.canvas.requestPointerLock()
-
+    // this.canvas.requestPointerLock =  this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock || this.canvas.webkitRequestPointerLock;
+    // this.canvas.requestPointerLock()
+    this.calculateCanvas();
     let leftBorder = (1.2035) * Utils.SCALE;
     let topBorder = (1.3671) * Utils.SCALE;
     let rightBorder = (1.4585) * Utils.SCALE;
@@ -72,8 +71,8 @@ export default class Base {
 
   calculateCanvas(){
 
-    this.canvas.height = window.innerHeight;
-    this.canvas.width = window.innerWidth;
+    this.canvas.height =  screen.height ;
+    this.canvas.width = screen.width;
     this.Utils.SCALE  =  this.context.scale_factor * (this.canvas.height/this.Utils.SCREEN_HEIGHT);
   }
 
