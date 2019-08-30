@@ -18,10 +18,7 @@
 
         <button class="btn btn-success" {{ action 'play' }} >Play</button>
     {{/if}}
-    <canvas  id="gamesCanvas"  height="0" width="0"></canvas>
-    {{#unless showInstructions}}
-      {{bs-button class="pull-right" defaultText="Show data" type="success" onClick=(action "export")}}
-    {{/unless}}
+    <canvas  id="gamesCanvas"  height="300" width="600"></canvas>
 </div>
 
 
