@@ -27,7 +27,6 @@ let targetLocV = 0.69;
 let jitterT = 0;
 let Tf = 0.75;
 let Height = 0.65;
-let wrongSound = {};
 let token = {};
 let bricks = {};
 
@@ -121,8 +120,6 @@ export default class FeedCroc extends Base {
     bounceSound.src = super.Utils.bouncingSound;
     audio.src = super.Utils.drumRollSound;
     audio.addEventListener('canplaythrough', this.initGame(), false);
-    wrongSound = new Audio();
-    wrongSound.src = super.Utils.wrongSound;
 
 
   }
@@ -166,7 +163,6 @@ export default class FeedCroc extends Base {
         initialTime = new Date().getTime();
         paddleBoxColor = super.Utils.redColor;
         super.createPaddleBox(paddleBoxColor);
-        wrongSound.play();
       }
 
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
@@ -242,7 +238,7 @@ export default class FeedCroc extends Base {
         let token2 = {
 
           dimensions:{width: token.dimensions.width *2 ,height: token.dimensions.height *2  },
-          position: token.position
+          position: {x: token.position.x -  token.dimensions.width /2 , y : token.position.y - token.dimensions.height /2  }
         }
 
         super.drawImageObject(token2,token.imageURL);
@@ -261,7 +257,9 @@ export default class FeedCroc extends Base {
         super.drawImageObject(token,token.imageURL);
       }
 
-      super.paddleAtZero(paddle, false);
+      if(super.getElapsedTime(initialTime) > 3.5) {
+        super.paddleAtZero(paddle, false);
+      }
 
     }
     super.paddleMove(paddle,initialTime,ball);
@@ -423,11 +421,11 @@ export default class FeedCroc extends Base {
 
     token = {
 
-      dimensions: {width: 0.2*super.Utils.SCALE, height: 0.2*super.Utils.SCALE},
-      position: {x: 1.85*super.Utils.SCALE, y: 0.3*super.Utils.SCALE},
+      dimensions: {width: 0.21*super.Utils.SCALE, height: 0.2*super.Utils.SCALE},
+      position: {x: 1.85*super.Utils.SCALE, y: 0.36*super.Utils.SCALE},
       imageURL: super.Utils.tokenImage
 
-    }
+    };
 
     if(super.currentRounds >0 || (super.currentRounds === 0 && !super.paddleIsMovedPlain(paddle))) {
       audio.play();

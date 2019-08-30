@@ -141,8 +141,8 @@ export default class FeedMouse extends Base {
     ball.startTime =0;
     jitterT = super.trialStartTime();
     keyPressed.value = false;
-    let topBorder = (1.15)*super.Utils.SCALE;
-    let downBorder =  (1.23)*super.Utils.SCALE ;
+    let topBorder = (1.155)*super.Utils.SCALE;
+    let downBorder =  (1.235)*super.Utils.SCALE ;
     let leftBorder = (targetX-0.05)*super.Utils.SCALE ;
     let rightBorder = (targetX+0.05)*super.Utils.SCALE;
 
@@ -345,7 +345,6 @@ export default class FeedMouse extends Base {
         super.finishGame(false);
       }
 
-      this.showBallLocation();
     }
 
     super.discreteLauncer(super.Utils.boxOfFireworks);

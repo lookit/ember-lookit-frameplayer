@@ -22,7 +22,6 @@ let cheese1Sound = {};
 let cheese2Sound = {};
 let cheese3Sound = {};
 let swooshSound = {};
-let wrongSound = {};
 let initBallY = 0.27;
 let initX = 1.33;
 let initialTime = 0;
@@ -71,10 +70,6 @@ export default class CatchMouse extends Base {
     cheese3Sound.load();
     swooshSound = new Audio(super.Utils.swooshSound);
     swooshSound.load();
-    wrongSound = new Audio(super.Utils.wrongSound);
-    wrongSound.load();
-    wrongSound.src = super.Utils.wrongSound;
-
     ballCatchFail = new Audio(super.Utils.ballcatchFailSound);
     cheese1Sound.src = super.Utils.cheese_ser1Sound;
     cheese2Sound.src = super.Utils.cheese_ser2Sound;
@@ -82,8 +77,6 @@ export default class CatchMouse extends Base {
     ballCatchFail.src = super.Utils.ballcatchFailSound;
     swooshSound.src = super.Utils.swooshSound;
     audio.src = super.Utils.drumRollSound;
-    wrongSound = new Audio();
-    wrongSound.src = super.Utils.wrongSound;
 
     ballCatchFail.load();
 
@@ -262,8 +255,12 @@ export default class CatchMouse extends Base {
 
       cheeseClock.state = 2;
 
-    }else{
+    }else if (time < 0.9){
+
       cheeseClock.state = 1;
+
+    }else{
+      cheeseClock.state = 0;
     }
     this.showCheese();
   }
@@ -297,7 +294,6 @@ export default class CatchMouse extends Base {
       initialTime = new Date().getTime();
       paddleBoxColor = super.Utils.redColor;
       super.createPaddleBox(paddleBoxColor);
-      wrongSound.play();
     }
 
     //Randomize initial wait time here
@@ -316,8 +312,9 @@ export default class CatchMouse extends Base {
 
     if (mice.state === 'done') {
 
-      super.paddleAtZero(basket,false);
-      super.gameOver = true;
+      if(super.getElapsedTime(mice.showTime) > 3.5){
+        super.paddleAtZero(basket,false);
+      }
 
     }
 
@@ -342,16 +339,16 @@ export default class CatchMouse extends Base {
       }
 
 
-      if (mice.position.y - basket.position.y >=0 ) {
+      if ((mice.position.y + 20) - basket.position.y >=0 ) {
         mice.state = 'done';
-        if(cheeseClock.state >1){
+        if(cheeseClock.state > 0){
           cheeseClock.dimensions.width =  cheeseClock.dimensions.width*2;
           cheeseClock.dimensions.height =  cheeseClock.dimensions.height*2;
 
           if(cheeseClock.state < 4){
 
             cheese1Sound.play();
-          }else if(cheeseClock.state>=4 && cheeseClock.state <8 ){
+          }else if(cheeseClock.state >= 4 && cheeseClock.state < 8 ){
             cheese2Sound.play();
 
           }else{

@@ -26,7 +26,6 @@ let Height = 0.8;
 let obstrArr = [];
 let jitterT = 0;
 let radiusRim = 0.1;
-let wrongSound = {};
 let obstructionsNum = 0;
 let basketImage = {};
 
@@ -76,8 +75,6 @@ export default class CatchCheese extends Base {
     audio.addEventListener('onloadeddata', this.initGame(), false);
     basketImage= new Image();
     basketImage.src = super.Utils.ironBasket;
-    wrongSound = new Audio();
-    wrongSound.src = super.Utils.wrongSound;
 
   }
 
@@ -202,15 +199,11 @@ export default class CatchCheese extends Base {
   createBallBox(imageURL) {
 
 
-    let leftBorder = 0.35 * super.Utils.SCALE;
-    let topBorder = 1.2971 * super.Utils.SCALE;
-    let rightBorder = (0.54) * super.Utils.SCALE;
-    let downBorder = 1.5671 * super.Utils.SCALE;
-
-
+    let leftBorder = (0.35 - 0.3) * super.Utils.SCALE;
+    let topBorder = (1.2971 - 0.15 )* super.Utils.SCALE;
     let image = new Image();
     image.src = imageURL;
-    this.ctx.drawImage(image, leftBorder, topBorder, rightBorder - leftBorder, downBorder - topBorder);
+    this.ctx.drawImage(image, leftBorder, topBorder, basket.dimensions.height*3, basket.dimensions.height*3);
 
 
   }
@@ -246,7 +239,6 @@ export default class CatchCheese extends Base {
       if(initialTime > 0 && super.paddleIsMoved(basket)){
         initialTime = new Date().getTime();
         paddleBoxColor = super.Utils.redColor;
-        wrongSound.play();
       }
 
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
@@ -327,9 +319,10 @@ export default class CatchCheese extends Base {
     obstructions.forEach(obstruction => super.drawImage(obstruction, obstruction.imageURL));
 
     this.basketObject(basket);
+    super.fillPaddleBox(paddleBoxColor);
     super.paddleMove(basket,initialTime,ball);
     super.drawImageObject(basket,super.Utils.ironBasket);
-    super.createPaddleBox(paddleBoxColor);
+
   }
 
 
