@@ -9,6 +9,13 @@
         <p> {{instructions}}</p>
         <hr >
 
+      <div class="col-md-3" >
+        Scaling factor : {{scale_factor}}
+        <input type="range" min="380" max="420" steps="10" oninput={{action (mut height) value="target.value"}}
+               value={{scale_factor}} >
+
+      </div>
+
         <button class="btn btn-success" {{ action 'play' }} >Play</button>
     {{/if}}
     <canvas  id="gamesCanvas"  height="0" width="0"></canvas>

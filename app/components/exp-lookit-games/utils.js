@@ -19,6 +19,7 @@ export default class Utils{
   static get  gameRounds() {return 18;}
   static get  gravityFactor() {return 1;}
   static get  SCALE(){return 420;}
+  static get  SCREEN_HEIGHT(){return 645;}
 
 
   //Sound Resources
