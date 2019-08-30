@@ -3,14 +3,25 @@
     <div id="recorder" class="col-xs-12">
     </div>
   </div>
-  {{#if showInstructions}}
-    <h1> {{gameDescription}} </h1>
-    <hr>
-    <p> {{instructions}}</p>
-    <hr >
-    <button class="btn btn-success" {{ action 'play' }} >Play</button>
-  {{/if}}
-  <canvas  id="gamesCanvas"  height="0" width="0"></canvas>
+    {{#if showInstructions}}
+        <h1> {{gameDescription}} </h1>
+        <hr>
+        <p> {{instructions}}</p>
+        <hr >
+
+      <div class="col-md-3" >
+        Scaling factor : {{scale_factor}}
+        <input type="range" min="380" max="420" steps="10" oninput={{action (mut height) value="target.value"}}
+               value={{scale_factor}} >
+
+      </div>
+
+        <button class="btn btn-success" {{ action 'play' }} >Play</button>
+    {{/if}}
+    <canvas  id="gamesCanvas"  height="0" width="0"></canvas>
+    {{#unless showInstructions}}
+      {{bs-button class="pull-right" defaultText="Show data" type="success" onClick=(action "export")}}
+    {{/unless}}
 </div>
 
 

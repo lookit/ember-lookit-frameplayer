@@ -59,6 +59,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
         parameters: {
             type: 'object',
             properties: {
+                scale_factor: {
+                    default: 405,
+                    type: 'number'
+                },
                 /**
                  * Set current game type
                  *

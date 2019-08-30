@@ -49,9 +49,7 @@ export default class Base {
     this.context = context;
     this.document = document;
     this.canvas = this.document.getElementById('gamesCanvas');
-    let height = 768;
-    this.canvas.height = height;
-    this.canvas.width = 1024;
+    this.calculateCanvas();
     this.ctx = this.canvas.getContext('2d');
     this.currentScore = 0;
     this.canvas.style.cursor = 'none';
@@ -60,16 +58,23 @@ export default class Base {
     document.addEventListener('keyup', this.keyUpHandler, false);
     this.canvas.requestPointerLock =  this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock;
     this.canvas.requestPointerLock()
-    mouseY =  1.1*this.Utils.SCALE;
 
-    let leftBorder = (1.8560 - 0.6525) * Utils.SCALE;
-    let topBorder = (1.3671 - 0.05 + 0.05) * Utils.SCALE;
-    let rightBorder = (2.1110 - 0.6525) * Utils.SCALE;
-    let downBorder = (1.3671 + 0.15 + 0.05) * Utils.SCALE;
+    let leftBorder = (1.2035) * Utils.SCALE;
+    let topBorder = (1.3671) * Utils.SCALE;
+    let rightBorder = (1.4585) * Utils.SCALE;
+    let downBorder = (1.5671) * Utils.SCALE;
     paddleBox.position.x = leftBorder;
     paddleBox.position.y = topBorder;
     paddleBox.dimensions.width = rightBorder - leftBorder;
     paddleBox.dimensions.height = downBorder - topBorder;
+  }
+
+
+  calculateCanvas(){
+
+    this.canvas.height = window.innerHeight;
+    this.canvas.width = window.innerWidth;
+    this.Utils.SCALE  =  this.context.scale_factor * (this.canvas.height/this.Utils.SCREEN_HEIGHT);
   }
 
 
@@ -158,9 +163,9 @@ export default class Base {
 
     this.ctx.beginPath();
     let leftBorder = (1.8560 - 0.6525) * Utils.SCALE;
-    let topBorder = (1.3671 - 0.05 + 0.05) * Utils.SCALE;
+    let topBorder = (1.3671) * Utils.SCALE;
     let rightBorder = (2.1110 - 0.6525) * Utils.SCALE;
-    let downBorder = (1.3671 + 0.15 + 0.05) * Utils.SCALE;
+    let downBorder = (1.5671) * Utils.SCALE;
     paddleBox.position.x = leftBorder;
     paddleBox.position.y = topBorder;
     paddleBox.dimensions.width = rightBorder - leftBorder;
