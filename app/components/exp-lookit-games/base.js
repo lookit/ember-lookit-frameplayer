@@ -30,7 +30,7 @@ let paddleBox = {
 
 // let INITIAL_SCREEN_WIDTH = this.canvas.width/1024; // X  screen from matlab
 // let INITIAL_SCREEN_HEIGHT = this.canvas.height/768; // Y screen from matlab
-const PADDLE_REST_TIME_MS = 800;
+const PADDLE_REST_TIME_MS = 2000;
 
 /**
  * Base class for common game functions

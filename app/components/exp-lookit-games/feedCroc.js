@@ -257,9 +257,9 @@ export default class FeedCroc extends Base {
         super.drawImageObject(token,token.imageURL);
       }
 
-      if(super.getElapsedTime(initialTime) > 3.5) {
-        super.paddleAtZero(paddle, false);
-      }
+
+      super.paddleAtZero(paddle, false);
+
 
     }
     super.paddleMove(paddle,initialTime,ball);
