@@ -71,9 +71,9 @@ export default class Base {
 
   calculateCanvas(){
 
-    this.canvas.height =  screen.height ;
-    this.canvas.width = screen.width;
-    this.Utils.SCALE  =  this.context.scale_factor * (this.canvas.height/this.Utils.SCREEN_HEIGHT);
+    this.canvas.height = 768 ;
+    this.canvas.width =  1024;
+    this.Utils.SCALE  =  420;
   }
 
 
