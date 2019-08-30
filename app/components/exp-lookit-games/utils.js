@@ -9,6 +9,9 @@
  * @class Utils
  * Shared Utility class for project static methods and constants
  */
+
+let SCALE = 420;
+
 export default class Utils{
 
   static get  frameRate() {  return 1 / 200; } // Seconds
@@ -18,8 +21,10 @@ export default class Utils{
   static get  restitution() {return -1.2;}
   static get  gameRounds() {return 18;}
   static get  gravityFactor() {return 1;}
-  static get  SCALE(){return 420;}
+  static get  SCALE(){return SCALE;}
+  static set  SCALE(val){ SCALE = val;}
   static get  SCREEN_HEIGHT(){return 645;}
+
 
 
   //Sound Resources
