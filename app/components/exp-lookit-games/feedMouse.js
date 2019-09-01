@@ -345,6 +345,11 @@ export default class FeedMouse extends Base {
         super.finishGame(false);
       }
 
+      if(ball.hitstate !== 'good' && ball.hitstate !== 'great' ){
+
+          this.showBallLocation();
+      }
+
     }
 
     super.discreteLauncer(super.Utils.boxOfFireworks);
