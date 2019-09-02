@@ -259,6 +259,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     },
     jsonToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
       //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
+      JSONData = JSON.stringify(JSONData);
       let arrData = typeof JSONData !== 'object' ? JSON.parse(JSONData) : JSONData;
 
       let CSV = '';
@@ -309,8 +310,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
       fileName += ReportTitle.replace(/ /g,"_");
 
       //Initialize file format you want csv or xls
-      let uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
-
+      //let uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
+      let blob = new Blob([CSV], { type: 'text/csv;charset=utf-8;' });
       // Now the little tricky part.
       // you can use either>> window.open(uri);
       // but this will not work in some browsers
@@ -318,7 +319,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
 
       //this trick will generate a temp <a /> tag
       let link = document.createElement("a");
-      link.href = uri;
+      link.href = URL.createObjectURL(blob);
 
       //set the visibility hidden so it will not effect on your web-layout
       link.style = "visibility:hidden";
