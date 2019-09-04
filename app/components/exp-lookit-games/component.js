@@ -350,7 +350,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                   break;
 
               case 6:
-                  this.set('button_position','button button-5');
+                  this.set('button_position','button button-6');
                   this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
                   this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2.png');
                   this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3.png');
