@@ -14,12 +14,12 @@ import FullScreen from '../../mixins/full-screen';
  */
 
 /**
-This is the exit survey used by "Your baby the physicist". Use the updated frame {{#crossLink "ExpLookitExitSurvey"}}{{/crossLink}} instead.
+This is the exit survey used by "Your baby the physicist". Use the updated frame {{#crossLink "Exp-lookit-exit-survey"}}{{/crossLink}} instead.
 
-@class ExpExitSurvey
-@extends ExpFrameBase
+@class Exp-exit-survey
+@extends Exp-frame-base
 @uses Validations
-@uses FullScreen
+@uses Full-screen
 */
 
 const Validations = buildValidations({

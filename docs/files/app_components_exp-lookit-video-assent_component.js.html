@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>app/components/exp-lookit-video-assent/component.js - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/Exp-exit-survey.html">Exp-exit-survey</a></li>
+                            <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
+                            <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
+                            <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
+                            <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
+                            <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
+                            <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
+                            <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
+                            <li><a href="../classes/Exp-lookit-preview-explanation.html">Exp-lookit-preview-explanation</a></li>
+                            <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
+                            <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-text.html">Exp-lookit-text</a></li>
+                            <li><a href="../classes/Exp-lookit-video.html">Exp-lookit-video</a></li>
+                            <li><a href="../classes/Exp-lookit-video-assent.html">Exp-lookit-video-assent</a></li>
+                            <li><a href="../classes/Exp-lookit-video-consent.html">Exp-lookit-video-consent</a></li>
+                            <li><a href="../classes/Exp-player.html">Exp-player</a></li>
+                            <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
+                            <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
+                            <li><a href="../classes/Exp-video-consent.html">Exp-video-consent</a></li>
+                            <li><a href="../classes/Exp-video-preview.html">Exp-video-preview</a></li>
+                            <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
+                            <li><a href="../classes/Full-screen.html">Full-screen</a></li>
+                            <li><a href="../classes/Media-reload.html">Media-reload</a></li>
+                            <li><a href="../classes/Permute.html">Permute</a></li>
+                            <li><a href="../classes/Random-parameter-set.html">Random-parameter-set</a></li>
+                            <li><a href="../classes/Select.html">Select</a></li>
+                            <li><a href="../classes/Session-record.html">Session-record</a></li>
+                            <li><a href="../classes/Video-record.html">Video-record</a></li>
+                            <li><a href="../classes/video-recorder.html">video-recorder</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: app/components/exp-lookit-video-assent/component.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import Em from &#x27;ember&#x27;;
+import layout from &#x27;./template&#x27;;
+
+import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
+import MediaReload from &#x27;../../mixins/media-reload&#x27;;
+import VideoRecord from &#x27;../../mixins/video-record&#x27;;
+import ExpandAssets from &#x27;../../mixins/expand-assets&#x27;;
+import { computed } from &#x27;@ember/object&#x27;;
+
+let {
+    $
+} = Em;
+
+/**
+ * @module exp-player
+ * @submodule frames
+ */
+
+/**
+Video assent frame for Lookit studies for older children to agree to participation,
+separately from parental consent.
+
+A series of assent form &quot;pages&quot; is displayed, each one displaying some combination of
+(a) an image or the participant&#x27;s webcam view or a video, (b) audio, and (c) text. You can
+optionally record webcam video during the whole assent procedure or on the last page.
+
+Once the family has viewed all pages, the
+child can answer a question about whether to participate. If they choose yes, they proceed;
+if they choose no, they are sent to the exit URL.
+
+You can either simply have children click on &quot;Yes&quot; or &quot;No,&quot; or you can add audio/video on
+the last page that instructs them to answer verbally, and do webcam recording on that page.
+For instance, you might show a video of yourself asking &quot;Do you want to participate in this study?
+You can say &quot;yes&quot; or &quot;no.&quot; Parents, once your child has answered, please click on their answer
+to the right.&quot;
+
+In general it is expected that only one of webcam view, video, and image will be provided per
+page, although it is ok to have only text or only text plus audio. If audio or video is provided for a page,
+the participant must finish it to proceed. (If both audio and video are provided they will
+be played simultaneously and both must finish for the participant to proceed.) They only
+need to complete the audio/video for a given page once, in case they navigate using the
+previous/next buttons.
+
+This frame can optionally be shown only when the child is at least N years old, in case
+some participants will need to give assent and others will rely only on parent consent.
+
+Specifying media locations:
+
+For &#x60;imgSrc&#x60; parameters within &#x60;pages&#x60;, you can either specify complete URLs or partial URLs
+relative to a base directory &#x60;baseDir&#x60; for the frame. Images are expected to be in an
+&#x60;img&#x60; directory within the &#x60;baseDir&#x60;. For instance, in the example below,
+the first page&#x27;s image is at &#x60;https://s3.amazonaws.com/lookitcontents/cats/img/jane_smith.jpg&#x60;.
+
+For any parameters that expect a list of audio/video sources, you can EITHER provide
+a list of src/type pairs with full paths like this:
+&#x60;&#x60;&#x60;json
+    [
+        {
+            &#x27;src&#x27;: &#x27;http://.../video1.mp4&#x27;,
+            &#x27;type&#x27;: &#x27;video/mp4&#x27;
+        },
+        {
+            &#x27;src&#x27;: &#x27;http://.../video1.webm&#x27;,
+            &#x27;type&#x27;: &#x27;video/webm&#x27;
+        }
+    ]
+&#x60;&#x60;&#x60;
+OR you can provide a single string &#x27;stub&#x27;, which will be expanded
+based on the parameter baseDir and the media types expected - either audioTypes or
+videoTypes as appropriate. For example, if you provide the audio source &#x60;intro&#x60;
+and baseDir is https://mystimuli.org/mystudy/, with audioTypes [&#x27;mp3&#x27;, &#x27;ogg&#x27;], then this
+will be expanded to:
+&#x60;&#x60;&#x60;json
+                 [
+                        {
+                            src: &#x27;https://mystimuli.org/mystudy/mp3/intro.mp3&#x27;,
+                            type: &#x27;audio/mp3&#x27;
+                        },
+                        {
+                            src: &#x27;https://mystimuli.org/mystudy/ogg/intro.ogg&#x27;,
+                            type: &#x27;audio/ogg&#x27;
+                        }
+                ]
+&#x60;&#x60;&#x60;
+This allows you to simplify your JSON document a bit and also easily switch to a
+new version of your stimuli without changing every URL. You can mix source objects with
+full URLs and those using stubs within the same directory. However, any stimuli
+specified using stubs MUST be organized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.
+
+Example usage:
+
+&#x60;&#x60;&#x60;json
+&quot;frames&quot;: {
+    &quot;video-assent&quot;: {
+        &quot;kind&quot;: &quot;exp-lookit-video-assent&quot;,
+            &quot;pages&quot;: [
+                {
+                    &quot;imgSrc&quot;: &quot;jane_smith.png&quot;,
+                    &quot;altText&quot;: &quot;Jane Smith&quot;,
+                    &quot;textBlocks&quot;: [
+                        {
+                            &quot;text&quot;: &quot;My name is Jane Smith. I am a scientist who studies why children love cats.&quot;
+                        }
+                    ],
+                    &quot;audio&quot;: &quot;narration_1&quot;
+                },
+                {
+                    &quot;imgSrc&quot;: &quot;cats_game.png&quot;,
+                    &quot;altText&quot;: &quot;picture of sample game&quot;,
+                    &quot;textBlocks&quot;: [
+                        {
+                            &quot;text&quot;: &quot;In this study, you will play a game about cats.&quot;
+                        }
+                    ]
+                },
+                {
+                    &quot;showWebcam&quot;: true,
+                    &quot;textBlocks&quot;: [
+                        {
+                            &quot;text&quot;: &quot;During the study, your webcam will record a video of you. We will watch this video later to see how much you love cats.&quot;
+                        }
+                    ]
+                }
+            ],
+            &quot;baseDir&quot;: &quot;https://s3.amazonaws.com/lookitcontents/cats/&quot;,
+            &quot;videoTypes&quot;: [
+                &quot;webm&quot;,
+                &quot;mp4&quot;
+            ],
+            &quot;participationQuestion&quot;: &quot;Do you want to participate in this study?&quot;,
+            &quot;minimumYearsToAssent&quot;: 7
+        }
+    }
+}
+&#x60;&#x60;&#x60;
+
+@class Exp-lookit-video-assent
+@extends Exp-frame-base
+
+@uses Video-record
+*/
+
+export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAssets, {
+    layout,
+    frameType: &#x27;CONSENT&#x27;,
+    disableRecord: Em.computed(&#x27;recorder.recording&#x27;, &#x27;recorder.hasCamAccess&#x27;, function () {
+        return !this.get(&#x27;recorder.hasCamAccess&#x27;) || this.get(&#x27;recorder.recording&#x27;);
+    }),
+    startedRecording: false,
+
+    pageIndex: null,
+    readAllPages: false,
+
+    noNext: computed(&#x27;pageIndex&#x27;, &#x27;hasCompletedThisPageAudio&#x27;, &#x27;hasCompletedThisPageVideo&#x27;, function() {
+        return (this.get(&#x27;pageIndex&#x27;) &gt;= this.get(&#x27;pages.length&#x27;) - 1) || (!this.get(&#x27;hasCompletedThisPageAudio&#x27;)) || (!this.get(&#x27;hasCompletedThisPageVideo&#x27;));
+    }),
+
+    noPrev: computed(&#x27;pageIndex&#x27;, function() {
+        return this.get(&#x27;pageIndex&#x27;) &lt;= 0;
+    }),
+
+    currentPage: computed(&#x27;pageIndex&#x27;, function() {
+        return this.get(&#x27;pages_parsed&#x27;)[this.get(&#x27;pageIndex&#x27;)];
+    }),
+
+    pageHasAudio: computed(&#x27;pageIndex&#x27;, function() {
+        return !!this.get(&#x27;pages_parsed&#x27;)[this.get(&#x27;pageIndex&#x27;)].audio;
+    }),
+
+    pageHasVideo: computed(&#x27;pageIndex&#x27;, function() {
+        return !!this.get(&#x27;pages_parsed&#x27;)[this.get(&#x27;pageIndex&#x27;)].video;
+    }),
+
+    hasCompletedEachPageAudio: [false], // start off with just covering page 0, populate in didInsert
+    hasCompletedEachPageVideo: [false],
+
+    hasCompletedThisPageAudio: false, // Track state of current page for blocking &#x27;continue&#x27; action
+    hasCompletedThisPageVideo: false,
+
+    childResponse: false,
+
+    startRecordingAutomatically: Em.computed.alias(&#x27;recordWholeProcedure&#x27;),
+
+    assetsToExpand: {
+        &#x27;audio&#x27;: [&#x27;pages/audio&#x27;],
+        &#x27;video&#x27;: [&#x27;pages/video&#x27;],
+        &#x27;image&#x27;: [&#x27;pages/imgSrc&#x27;]
+    },
+
+    // Utility to play audio/video object and avoid failing to actually trigger play for
+    // dumb browser reasons / race conditions
+    playMedia(mediaObj) {
+        //mediaObj.pause();
+        mediaObj.currentTime = 0;
+        mediaObj.play().then(() =&gt; {
+            }).catch(() =&gt; {
+                mediaObj.play();
+            }
+        );
+    },
+
+    updatePage() {
+        if (this.get(&#x27;recordLastPage&#x27;) &amp;&amp; !this.get(&#x27;recordWholeProcedure&#x27;) &amp;&amp; (this.get(&#x27;pageIndex&#x27;) == this.get(&#x27;pages&#x27;).length - 1)) {
+            this.startRecorder();
+        }
+        if (this.get(&#x27;pageHasAudio&#x27;)) {
+            this.playMedia($(&#x27;audio#assent-audio&#x27;)[0]);
+        }
+        if (this.get(&#x27;pageHasVideo&#x27;)) {
+            this.playMedia($(&#x27;video#assent-video&#x27;)[0]);
+        }
+        this.set(&#x27;hasCompletedThisPageAudio&#x27;, this.get(&#x27;hasCompletedEachPageAudio&#x27;)[this.get(&#x27;pageIndex&#x27;)]);
+        this.set(&#x27;hasCompletedThisPageVideo&#x27;, this.get(&#x27;hasCompletedEachPageVideo&#x27;)[this.get(&#x27;pageIndex&#x27;)]);
+    },
+
+    actions: {
+
+        nextVideo() {
+            this.set(&#x27;pageIndex&#x27;, this.get(&#x27;pageIndex&#x27;) + 1);
+            if ((this.get(&#x27;pageIndex&#x27;) == this.get(&#x27;pages&#x27;).length - 1) &amp;&amp; !this.get(&#x27;pageHasAudio&#x27;) &amp;&amp; !this.get(&#x27;pageHasVideo&#x27;)) {
+                this.set(&#x27;readAllPages&#x27;, true);
+            }
+            /**
+             * Participant proceeded to next assent page
+             *
+             * @event nextAssentPage
+             * @param {Number} pageNumber which assent page was viewed (zero-indexed)
+             */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;nextAssentPage&#x27;,
+                {pageNumber: this.get(&#x27;pageIndex&#x27;)});
+            this.updatePage();
+        },
+
+        previousVideo() {
+            this.set(&#x27;pageIndex&#x27;, this.get(&#x27;pageIndex&#x27;) - 1);
+            /**
+             * Participant returned to previous assent page
+             *
+             * @event previousAssentPage
+             * @param {Number} pageNumber which assent page was viewed (zero-indexed)
+             */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;previousAssentPage&#x27;,
+                {pageNumber: this.get(&#x27;pageIndex&#x27;)});
+            this.updatePage();
+        },
+
+        selectYes() {
+            this.set(&#x27;childResponse&#x27;, &#x27;Yes&#x27;);
+        },
+
+        selectNo() {
+            this.set(&#x27;childResponse&#x27;, &#x27;No&#x27;);
+        },
+
+        submit() {
+            this.session.set(&#x27;completedConsentFrame&#x27;, true);
+            /**
+             * Participant submitted assent question answer
+             *
+             * @event assentQuestionSubmit
+             * @param {String} childResponse child response submitted (&#x27;Yes&#x27; or &#x27;No&#x27;)
+             */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;assentQuestionSubmit&#x27;,
+                {childResponse: this.get(&#x27;childResponse&#x27;)});
+
+            var _this = this;
+            if (_this.get(&#x27;childResponse&#x27;) == &#x27;Yes&#x27;) {
+                this.stopRecorder().then(() =&gt; {
+                    _this.send(&#x27;next&#x27;);
+                }, () =&gt; {
+                    _this.send(&#x27;next&#x27;);
+                });
+            } else {
+                _this.send(&#x27;exit&#x27;);
+            }
+        },
+
+        audioCompleted() {
+            this.get(&#x27;hasCompletedEachPageAudio&#x27;)[this.get(&#x27;pageIndex&#x27;)] = true;
+            this.set(&#x27;hasCompletedThisPageAudio&#x27;, true);
+
+            if (this.get(&#x27;pageIndex&#x27;) == this.get(&#x27;pages&#x27;).length - 1) { // TODO
+                this.set(&#x27;readAllPages&#x27;, true);
+            }
+        },
+
+        videoCompleted() {
+            this.get(&#x27;hasCompletedEachPageVideo&#x27;)[this.get(&#x27;pageIndex&#x27;)] = true;
+            this.set(&#x27;hasCompletedThisPageVideo&#x27;, true);
+
+            if (this.get(&#x27;pageIndex&#x27;) == this.get(&#x27;pages&#x27;).length - 1) { // TODO
+                this.set(&#x27;readAllPages&#x27;, true);
+            }
+            console.log(&#x27;video completed.&#x27;);
+        },
+
+        download() {
+            // Get the text of the consent form to process. Split into lines, and remove
+            // repeat empty lines. Start each new line with an indent.
+
+            console.log(this);
+
+            var origText = $(&#x27;#consent-form-full-text&#x27;).text().split(/\r?\n/);
+            var trimmedText = [];
+            var emptyLineWasLast = false;
+            $.each(origText, function(idx, val) {
+                if (val.trim() || !emptyLineWasLast) {
+                    trimmedText.push(&#x27;     &#x27; + val.trim());
+                    if (emptyLineWasLast) {
+                        trimmedText.push(&#x27;&#x27;);
+                    }
+                }
+                if (val.trim()) {
+                    emptyLineWasLast = false;
+                } else {
+                    emptyLineWasLast = true;
+                }
+            });
+
+            // Prep PDF - need to set font before splitting lines
+            // jscs:disable requireCapitalizedConstructors
+            var consentPDF = new jsPDF();
+            // jscs:enable requireCapitalizedConstructors
+            consentPDF.setFont(&#x27;times&#x27;);
+            consentPDF.setFontSize(12);
+            var timeString = moment().format(&#x27;MMMM Do YYYY, h:mm:ss a&#x27;); // for header
+
+            // Wrap lines so they&#x27;ll fit nicely on the page
+            var splitText = consentPDF.splitTextToSize(trimmedText, 150);
+
+            // Split into pages
+            var linesPerPage = 55;
+            var nPages = Math.ceil(splitText.length / linesPerPage);
+            for (var iPage = 0; iPage &lt; nPages; iPage++) {
+                // Header on each page
+                consentPDF.setFontSize(10);
+                consentPDF.text(&#x27;Child assent form: &#x27; + this.get(&#x27;experiment&#x27;).get(&#x27;name&#x27;), 10, 10);
+                consentPDF.text(timeString + &#x27; (page &#x27; + (iPage + 1) + &#x27; of &#x27; + nPages + &#x27;)&#x27;, 10, 15);
+                // Actual text for the page
+                consentPDF.setFontSize(12);
+                consentPDF.text(splitText.slice(linesPerPage * iPage, linesPerPage * (iPage + 1)), 25, 25);
+
+                // Go to the next page
+                if (iPage &lt; (nPages - 1)) {
+                    consentPDF.addPage();
+                }
+            }
+            consentPDF.save(&#x27;Lookit_study_child_assent_&#x27; + moment().format(&#x27;YYYY_MM_DD&#x27;) + &#x27;.pdf&#x27;);
+
+            /**
+             * When participant downloads consent form
+             *
+             * @event downloadConsentForm
+             */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;downloadConsentForm&#x27;);
+        }
+    },
+
+    meta: {
+        name: &#x27;Video assent form&#x27;,
+        description: &#x27;A video assent form.&#x27;,
+        parameters: {
+            type: &#x27;object&#x27;,
+            properties: {
+                /**
+                 * A list of pages of assent form text/pictures/video for the participant to read through
+                 *
+                 * @property {Array} pages
+                 *   @param {String} altText Alt-text used for the image displayed, if any
+                 *   @param {Object[]} video (Optional) String indicating video path relative to baseDir (see baseDir), OR Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects. Video will be displayed (with controls shown) and participant must complete to proceed.
+                 *   @param {Object[]} audio (Optional) String indicating audio path relative to baseDir (see baseDir), OR Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects. Audio will be played (with controls shown) and participant must complete to proceed.
+                 *   @param {String} imgSrc (Optional) URL of image to display; can be full path or relative to baseDir
+                 *   @param {Object[]} textBlocks list of text blocks to show on this page, processed by exp-text-block. Can use HTML.
+                 *   @param {Boolean} showWebcam Whether to display the participant webcam on this page
+                 */
+                pages: {
+                    type: &#x27;array&#x27;,
+                    description: &#x27;A list of videos to preview&#x27;,
+                    items: {
+                        type: &#x27;object&#x27;,
+                        properties: {
+                            imgSrc: {
+                                type: &#x27;string&#x27;,
+                                default: &#x27;&#x27;
+                            },
+                            altText: {
+                                type: &#x27;string&#x27;,
+                                default: &#x27;image&#x27;
+                            },
+                            video: {
+                                type: &#x27;array&#x27;,
+                                default: [],
+                                items: {
+                                    type: &#x27;object&#x27;,
+                                    properties: {
+                                        src: {
+                                            type: &#x27;string&#x27;
+                                        },
+                                        type: {
+                                            type: &#x27;string&#x27;
+                                        }
+                                    },
+                                    required: [&#x27;src&#x27;, &#x27;type&#x27;]
+                                }
+                            },
+                            audio: {
+                                type: &#x27;array&#x27;,
+                                default: [],
+                                items: {
+                                    type: &#x27;object&#x27;,
+                                    properties: {
+                                        src: {
+                                            type: &#x27;string&#x27;
+                                        },
+                                        type: {
+                                            type: &#x27;string&#x27;
+                                        }
+                                    },
+                                    required: [&#x27;src&#x27;, &#x27;type&#x27;]
+                                }
+                            },
+                            textBlocks: {
+                                type: &#x27;array&#x27;,
+                                default: []
+                            },
+                            showWebcam: {
+                                type: &#x27;Boolean&#x27;,
+                                default: false
+                            }
+                        },
+                        required: []
+                    },
+                    default: []
+                },
+                /**
+                 * Text on the button to proceed to the next example video/image
+                 *
+                 * @property {String} nextStimulusText
+                 */
+                nextStimulusText: {
+                    type: &#x27;string&#x27;,
+                    description: &#x27;Text on the button to proceed to the next example video/image&#x27;,
+                    default: &#x27;Next&#x27;
+                },
+                /**
+                 * Whether to record webcam video on the last page
+                 *
+                 * @property {Boolean} recordLastPage
+                 */
+                recordLastPage: {
+                    type: &#x27;Boolean&#x27;,
+                    description: &#x27;Whether to record webcam video on the last page&#x27;,
+                    default: false
+                },
+                /**
+                 * Whether to record webcam video during the entire assent frame (if true, overrides recordLastPage)
+                 *
+                 * @property {Boolean} recordWholeProcedure
+                 */
+                recordWholeProcedure: {
+                    type: &#x27;Boolean&#x27;,
+                    description: &#x27;Whether to record webcam video during the entire assent frame&#x27;,
+                    default: false
+                },
+                /**
+                 * Text on the button to proceed to the previous example video/image
+                 *
+                 * @property {String} previousStimulusText
+                 */
+                previousStimulusText: {
+                    type: &#x27;string&#x27;,
+                    description: &#x27;Text on the button to proceed to the previous example video/image&#x27;,
+                    default: &#x27;Previous&#x27;
+                },
+                /**
+                 * Text of the question to ask about whether to participate. Answer options are Yes/No; No means study will stop, Yes means it will proceed.
+                 *
+                 * @property {String} participationQuestion
+                 */
+                participationQuestion: {
+                    type: &#x27;string&#x27;,
+                    description: &#x27;Text on the button to proceed to the previous example video/image&#x27;,
+                    default: &#x27;Do you want to participate in this study?&#x27;
+                },
+                /**
+                 * How many years old the child has to be for this page to be shown. If child
+                 * is younger, the page is skipped. Leave at 0 to always show. This is an
+                 * age in &#x27;calendar years&#x27; - it will line up with the child&#x27;s birthday,
+                 * regardless of leap years etc.
+                 *
+                 * @property {String} minimumYearsToAssent
+                 */
+                minimumYearsToAssent: {
+                    type: &#x27;number&#x27;,
+                    description: &#x27;How many years old the child has to be for this page to be shown&#x27;,
+                    default: 0
+                }
+            },
+            required: []
+        },
+
+        data: {
+            /**
+             * Parameters captured and sent to the server
+             *
+             * @method serializeContent
+             * @param {String} assentFormText the exact text shown in the assent document during this frame
+             * @param {String} videoID The ID of any webcam video recorded during this frame
+             * @param {List} videoList a list of webcam video IDs in case there are &gt;1
+             * @param {String} childResponse The child&#x27;s response to the assent question - Yes or No
+             * @param {Object} eventTimings
+             * @return {Object} The payload sent to the server
+             */
+            type: &#x27;object&#x27;,
+            properties: {
+                videoId: {
+                    type: &#x27;string&#x27;
+                },
+                videoList: {
+                    type: &#x27;list&#x27;
+                },
+                assentFormText: {
+                    type: &#x27;string&#x27;
+                },
+                childResponse: {
+                    type: &#x27;string&#x27;
+                }
+            },
+            required: []
+        }
+    },
+
+    didInsertElement() {
+        this._super(...arguments);
+        this.set(&#x27;assentFormText&#x27;, $(&#x27;#consent-form-full-text&#x27;).text());
+
+        var hasCompletedEachPageAudio = [];
+        for (let iPage = 0; iPage &lt; this.get(&#x27;pages_parsed&#x27;).length; iPage++) {
+            hasCompletedEachPageAudio[iPage] = !this.get(&#x27;pages_parsed&#x27;)[iPage].audio; // count as completed if no audio
+        }
+        this.set(&#x27;hasCompletedEachPageAudio&#x27;, hasCompletedEachPageAudio);
+
+        var hasCompletedEachPageVideo = [];
+        for (let iPage = 0; iPage &lt; this.get(&#x27;pages_parsed&#x27;).length; iPage++) {
+            hasCompletedEachPageVideo[iPage] = !this.get(&#x27;pages_parsed&#x27;)[iPage].video; // count as completed if no video
+        }
+        this.set(&#x27;hasCompletedEachPageVideo&#x27;, hasCompletedEachPageVideo);
+
+        this.set(&#x27;pageIndex&#x27;, -1);
+        this.send(&#x27;nextVideo&#x27;);
+
+        if (this.get(&#x27;session&#x27;).get(&#x27;child&#x27;)) { // always show frame in preview mode
+            var dob = this.get(&#x27;session&#x27;).get(&#x27;child&#x27;).get(&#x27;birthday&#x27;);
+
+            // var ageInDays = ((new Date()) - dob)/(1000*60*60*24);
+            // Calculate age in full years (i.e., will line up with how many years old the
+            // child is considered, will not vary based on whether some of those years have been
+            // leap years)
+            var today = new Date();
+            var beforeBirthday = 0;
+            if (today.getMonth() &lt; dob.getMonth() || ((today.getMonth() == dob.getMonth()) &amp;&amp; today.getDate() &lt; dob.getDate())) {
+                beforeBirthday = 1;
+            }
+            var ageInYears = today.getFullYear() - dob.getFullYear() - beforeBirthday;
+
+            if (this.get(&#x27;minimumYearsToAssent&#x27;) &amp;&amp; ageInYears &lt; this.get(&#x27;minimumYearsToAssent&#x27;)) {
+                /**
+                 * Skip the assent form because the participant is too young to give assent
+                 *
+                 * @event skipAssentDueToParticipantAge
+                 */
+                this.send(&#x27;setTimeEvent&#x27;, &#x27;skipAssentDueToParticipantAge&#x27;);
+                this.send(&#x27;next&#x27;);
+            }
+        }
+    }
+
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

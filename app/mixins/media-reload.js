@@ -15,7 +15,7 @@ import Ember from 'ember';
  *
  * See commentary here: http://stackoverflow.com/a/18454389/1422268
  *
- * @class MediaReload
+ * @class Media-reload
  */
 export default Ember.Mixin.create({
     mediaTags: ['audio', 'video'],

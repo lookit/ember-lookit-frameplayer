@@ -4,6 +4,7 @@
 */
 
 import Ember from 'ember';
+import Substituter from '../utils/replace-values';
 
 /**
 * Randomizer to implement flexible condition assignment and counterbalancing by
@@ -154,7 +155,7 @@ import Ember from 'ember';
 }
 
 * ```
-* @class RandomParameterSet
+* @class Random-parameter-set
 */
 
 function getRandomElement(arr, weights) {
@@ -171,23 +172,11 @@ function getRandomElement(arr, weights) {
     }
 }
 
-// http://stackoverflow.com/a/12646864
-function shuffleArray(array) {
-    var shuffled = Ember.$.extend(true, [], array); // deep copy array
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = shuffled[i];
-        shuffled[i] = shuffled[j];
-        shuffled[j] = temp;
-    }
-    return shuffled;
-}
-
 // TODO: in the future we may want to allow nesting of the list-object-selector syntax,
 // e.g. LISTVAR__3__4, LISTVAR1__LISTVAR2__3, LISTVAR1__1__LISTVAR2__3 - but this quickly
 // also requires appropriate processing of parentheses/order-of-operations.
 
-var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
+var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame, child) {
 
     // Data provided to randomizer (properties of frameConfig):
 
@@ -329,75 +318,78 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
      * data collection, e.g. to allow one condition to "catch up" if it was
      * randomly selected less often.
      *
+     * Instead of providing a single list of the same length as parameterSets,
+     * you may instead provide a list of objects specifying the weights to use within
+     * various age ranges, like this:
+     *
+```
+    "parameterSetWeights": [
+        {
+            "minAge": 0,
+            "maxAge": 365,
+            "weights": [1, 0, 1]
+        },
+        {
+            "minAge": 365,
+            "maxAge": 10000,
+            "weights": [0, 1, 0]
+        },
+    ]
+```
+     * The child's age in days will be computed, and the weights used will be based on the
+     * first element of `parameterSetWeights` where the child falls between the min and max
+     * age. In the example above, children under one year old will be assigned to either
+     * the first or third condition; children over a year will be assigned to the second condition.
+     * This may be useful for researchers who need to balance condition assignment per
+     * age bracket. As you code data and realize you are set on 3-year-olds in condition A, for
+     * instance, you can stop assigning any more 3-year-olds to that condition.
+     *
      * @property {Number[]} parameterSetWeights
      */
 
-    function replaceValues(obj, rep) {
-        for (var property in obj) {
-            if (obj.hasOwnProperty(property)) {
-                if (typeof obj[property] === 'object') { // recursively handle objects
-                    obj[property] = replaceValues(obj[property], rep);
-                } else if (Array.isArray(obj[property])) { // and lists
-                    for (var iElement = 0; iElement < obj[property].length; iElement++) {
-                        obj[property][iElement] = replaceValues(obj[property][iElement], rep);
-                    }
-                } else if (typeof obj[property] === 'string') { // do substitution for strings
-                    // If rep has this exact property, just sub in that value
-                    if (rep.hasOwnProperty(obj[property])) {
-                        obj[property] = rep[obj[property]];
-                    } else if (typeof obj[property] === 'string' && obj[property].includes('#')) { // Also check for selector syntax:
-                        // property of form X__Y, rep has property X, Y is a valid selector.
-                        var segments = obj[property].split('#');
-                        var propName = segments[0];
-                        var selector = segments.slice(1).join('#');
-                        if (rep.hasOwnProperty(propName)) {
-                            var theList = rep[propName];
-                            if (!Array.isArray(theList)) {
-                                throw 'Selector syntax used in frame but corresponding value in parameterSet is not a list';
-                            }
-                            if (Ember.$.isNumeric(selector)) {
-                                var index = Math.round(selector);
-                                obj[property] = theList[index];
-                            } else if (selector === 'RAND') {
-                                obj[property] = theList[Math.floor(Math.random() * theList.length)];
-                            } else if (selector === 'PERM') {
-                                obj[property] = shuffleArray(theList);
-                            } else if (selector === 'UNIQ') {
-                                // If no shuffled version & index stored for this property, create
-                                if (!storedProperties.hasOwnProperty(propName)) {
-                                    storedProperties[propName] = {'shuffledArray': shuffleArray(theList), 'index': 0};
-                                }
-                                // Fetch current element from shuffled array
-                                obj[property] = storedProperties[propName].shuffledArray[storedProperties[propName].index];
-                                // Move to next for next UNIQ element using this property
-                                storedProperties[propName].index = storedProperties[propName].index + 1;
-                                // Loop around to start if needed
-                                if (storedProperties[propName].index == storedProperties[propName].shuffledArray.length) {
-                                    storedProperties[propName].index = 0;
-                                }
-                            } else {
-                                throw 'Unknown selector after # in parameter specification';
-                            }
-                        }
-                    }
+    // Select a parameter set to use for this trial.
+
+    var equalWeights = new Array(frameConfig.parameterSets.length).fill(1);
+    if (!(frameConfig.hasOwnProperty('parameterSetWeights'))) {
+        frameConfig.parameterSetWeights = equalWeights;
+    } else {
+        if (typeof frameConfig.parameterSetWeights[0] === 'object') {
+            // Get child's age in days
+            var childDOB;
+            try {
+                childDOB = child.get('birthday');
+                if (isNaN(childDOB)) {
+                    console.warn('No child birthday available for randomization. Using today\'s date.');
+                    childDOB = new Date().getTime();
                 }
+            } catch (error) {
+                console.warn('No child birthday available for randomization. Using today\'s date.');
+                childDOB = new Date().getTime();
+            }
+            var childAgeDays = (new Date().getTime() - childDOB) / (1000 * 60 * 60 * 24);
+
+            // Find the age range this child fits in
+            var ageBasedWeightObj = frameConfig.parameterSetWeights.find(function(element) {
+                return (element.minAge <= childAgeDays && childAgeDays <= element.maxAge);
+            });
+            if (ageBasedWeightObj) {
+                frameConfig.parameterSetWeights = ageBasedWeightObj.weights;
+                console.log('Using age-based randomization parameters');
+            } else { // Set to equal weights if child doesn't fall in any range given
+                console.warn('Child does not fall into any designated age range for randomization. Weighting parameter sets equally.');
+                frameConfig.parameterSetWeights = equalWeights;
             }
         }
-        return obj;
-    }
-
-    // Select a parameter set to use for this trial.
-    if (!(frameConfig.hasOwnProperty('parameterSetWeights'))) {
-        frameConfig.parameterSetWeights = new Array(frameConfig.parameterSets.length).fill(1);
     }
 
     var parameterData = getRandomElement(frameConfig.parameterSets, frameConfig.parameterSetWeights);
     var parameterSetIndex = parameterData[0];
     var parameterSet = parameterData[1];
-    var storedProperties = {}; // any properties we need to permute and keep track of indices within, across frames, when replacing
 
     var frames = [];
     var thisFrame = {};
+
+    var substituter = new Substituter();
 
     for (var iFrame = 0; iFrame < frameConfig.frameList.length; iFrame++) {
 
@@ -414,7 +406,7 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
 
         // Substitute any properties that can be replaced based on
         // the parameter set.
-        thisFrame = replaceValues(thisFrame, parameterSet);
+        thisFrame = substituter.replaceValues(thisFrame, parameterSet);
 
         // Assign frame ID
         //thisFrame.id = `${frameId}`;

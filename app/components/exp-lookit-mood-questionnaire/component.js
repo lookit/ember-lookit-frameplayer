@@ -52,8 +52,8 @@ let pad = function(number) {
  }
 
  * ```
- * @class ExpLookitMoodQuestionnaire
- * @extends ExpFrameBase
+ * @class Exp-lookit-mood-questionnaire
+ * @extends Exp-frame-base
  */
 
 const Validations = buildValidations({

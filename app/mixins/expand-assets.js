@@ -85,7 +85,7 @@ import Ember from 'ember';
  * values. This avoids potential problems with the template being rendered using the original
  * values and not updated.
  *
- * @class ExpandAssets
+ * @class Expand-assets
  */
 export default Ember.Mixin.create({
     /**

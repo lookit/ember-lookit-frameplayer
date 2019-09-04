@@ -12,7 +12,7 @@ import VideoRecord from '../../mixins/video-record';
 Video consent frame for Lookit studies UNDER INITIAL MIT PROTOCOL ONLY, with consent document displayed at left and instructions to start recording, read a statement out loud, and send.
 This version allows custom specification of consent form text.
 For studies by researchers who have signed the Lookit Usage Agreement and have approval from their own IRB,
-please use an {{#crossLink "ExpLookitVideoConsent"}}{{/crossLink}}  frame instead.
+please use an {{#crossLink "Exp-lookit-video-consent"}}{{/crossLink}}  frame instead.
 Consent document can be downloaded as PDF document by participant.
 
 ```json
@@ -46,10 +46,10 @@ Consent document can be downloaded as PDF document by participant.
 }
 ```
 
-@class ExpVideoConsent
-@extends ExpLookitVideoConsent
+@class Exp-video-consent
+@extends Exp-lookit-video-consent
 
-@uses VideoRecord
+@uses Video-record
 */
 
 export default ExpLookitVideoConsent.extend(VideoRecord, {

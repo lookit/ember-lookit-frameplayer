@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Permute - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/Exp-exit-survey.html">Exp-exit-survey</a></li>
+                            <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
+                            <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
+                            <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
+                            <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
+                            <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
+                            <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
+                            <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
+                            <li><a href="../classes/Exp-lookit-preview-explanation.html">Exp-lookit-preview-explanation</a></li>
+                            <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
+                            <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-text.html">Exp-lookit-text</a></li>
+                            <li><a href="../classes/Exp-lookit-video.html">Exp-lookit-video</a></li>
+                            <li><a href="../classes/Exp-lookit-video-assent.html">Exp-lookit-video-assent</a></li>
+                            <li><a href="../classes/Exp-lookit-video-consent.html">Exp-lookit-video-consent</a></li>
+                            <li><a href="../classes/Exp-player.html">Exp-player</a></li>
+                            <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
+                            <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
+                            <li><a href="../classes/Exp-video-consent.html">Exp-video-consent</a></li>
+                            <li><a href="../classes/Exp-video-preview.html">Exp-video-preview</a></li>
+                            <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
+                            <li><a href="../classes/Full-screen.html">Full-screen</a></li>
+                            <li><a href="../classes/Media-reload.html">Media-reload</a></li>
+                            <li><a href="../classes/Permute.html">Permute</a></li>
+                            <li><a href="../classes/Random-parameter-set.html">Random-parameter-set</a></li>
+                            <li><a href="../classes/Select.html">Select</a></li>
+                            <li><a href="../classes/Session-record.html">Session-record</a></li>
+                            <li><a href="../classes/Video-record.html">Video-record</a></li>
+                            <li><a href="../classes/video-recorder.html">video-recorder</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1>Permute Class</h1>
+<div class="box meta">
+
+
+        <div class="foundat">
+            Defined in: <a href="../files/app_randomizers_permute.js.html#l6"><code>app&#x2F;randomizers&#x2F;permute.js:6</code></a>
+        </div>
+
+            Collection: <a href="../modules/randomizers.html">randomizers</a><br>
+
+</div>
+
+
+<div>
+
+    <img src="../assets/screenshots/Permute.png" class="class-screenshot">
+
+</div>
+
+<div class="box intro">
+    <p>Randomizer to allow random ordering of a list of frames. Intended to be
+useful for e.g. randomly permuting the order of particular stimuli used during
+a set of trials (although frames need not be of the same kind to permute).</p>
+<p>To use, define a frame with &quot;kind&quot;: &quot;choice&quot; and &quot;sampler&quot;: &quot;permute&quot;,
+as shown below, in addition to the parameters described under 'properties'.</p>
+<pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
+   &quot;test-trials&quot;: {
+       &quot;sampler&quot;: &quot;permute&quot;,
+       &quot;kind&quot;: &quot;choice&quot;,
+       &quot;commonFrameProperties&quot;: {
+           &quot;showPreviousButton&quot;: false
+       },
+       &quot;frameOptions&quot;: [
+           {
+               &quot;blocks&quot;: [
+                   {
+                       &quot;emph&quot;: true,
+                       &quot;text&quot;: &quot;Let's think about hippos!&quot;,
+                       &quot;title&quot;: &quot;hippos!&quot;
+                   },
+                   {
+                       &quot;text&quot;: &quot;Some more about hippos...&quot;
+                   }
+               ],
+               &quot;kind&quot;: &quot;exp-lookit-text&quot;
+           },
+           {
+               &quot;blocks&quot;: [
+                   {
+                       &quot;emph&quot;: false,
+                       &quot;text&quot;: &quot;Let's think about dolphins!&quot;,
+                       &quot;title&quot;: &quot;dolphins!&quot;
+                   }
+               ],
+               &quot;kind&quot;: &quot;exp-lookit-text&quot;
+           }
+       ]
+   }
+}
+
+</code></pre>
+
+</div>
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                            <li class="index-item method">
+                                <a href="#method_conditions">conditions</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                            <li class="index-item property">
+                                <a href="#property_commonFrameProperties">commonFrameProperties</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_frameOptions">frameOptions</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_orderedFrameOptions">orderedFrameOptions</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+        </div>
+
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method_conditions" class="method item">
+    <h3 class="name"><code>conditions</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>frameList</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_randomizers_permute.js.html#l143"><code>app&#x2F;randomizers&#x2F;permute.js:143</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Parameters captured and sent to the server</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">frameList</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+                    <div class="param-description">
+                        <p>the list of frames used, in the final shuffled order</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+            </div>
+
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+<div id="property_commonFrameProperties" class="property item">
+    <h3 class="name"><code>commonFrameProperties</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_randomizers_permute.js.html#l90"><code>app&#x2F;randomizers&#x2F;permute.js:90</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Object describing common parameters to use in EVERY frame created
+by this randomizer. Parameter names and values are as described in
+the documentation for the frameType used.</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_frameOptions" class="property item">
+    <h3 class="name"><code>frameOptions</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_randomizers_permute.js.html#l58"><code>app&#x2F;randomizers&#x2F;permute.js:58</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>List of frames to be created by this randomizer. Each frame is an
+object with any necessary frame-specific properties specified. The
+'kind' of frame can be specified either here (per frame) or in
+commonFrameProperties. If a property is defined for a given frame both
+in this frame list and in commonFrameProperties, the value in the frame
+list will take precedence.</p>
+<p>(E.g., you could include 'kind': 'normal-frame' in
+commmonFrameProperties, but for a single frame in frameOptions, include
+'kind': 'special-frame'.)</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_orderedFrameOptions" class="property item">
+    <h3 class="name"><code>orderedFrameOptions</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_randomizers_permute.js.html#l73"><code>app&#x2F;randomizers&#x2F;permute.js:73</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>List of sets of frame properties of the same length as frameOptions. The order
+of this list will be preserved; the properties in orderedFrameOptions[0] will be added to the
+frame shown first, the properties in orderedFrameOptions[1] will be added to the
+frame shown second, etc. Properties are applied in this order:
+commonFrameProperties, frameOptions, orderedFrameOptions
+so orderedFrameOptions properties will take priority over regular frameOptions.
+This allows you to, for instance, do something different during the first or last
+trial (e.g., a practice/training trial or a debriefing trial).
+If <code>parameterSets</code> is included as one of the properties in orderedFrameOptions[n],
+the values will be added to any parameterSets property on the existing frame
+(value-by-value, iterating through corresponding parameterSets)
+rather than overwriting the whole property.</p>
+
+    </div>
+
+
+
+</div>
+            </div>
+
+
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

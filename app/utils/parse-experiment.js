@@ -4,17 +4,20 @@ var frameNamePattern = new RegExp(/^exp(?:-\w+)+$/);
 var urlPattern = /^(URL|JSON):(.*)$/;
 
 import randomizers from '../randomizers/index';
+import Substituter from './replace-values';
 
 var ExperimentParser = function (context = {
     pastSessions: [],
     structure: {
         frames: {},
         sequence: []
-    }
+    },
+    child: {}
 }) {
     this.pastSessions = context.pastSessions;
     this.frames = context.structure.frames;
     this.sequence = context.structure.sequence;
+    this.child = context.child;
 
 };
 /* Modifies the data in the experiment schema definition to match
@@ -41,7 +44,8 @@ ExperimentParser.prototype._resolveRandom = function (frame, frameId) {
             frameId,
             frame,
             this.pastSessions,
-            this._resolveFrame.bind(this)
+            this._resolveFrame.bind(this),
+            this.child
         );
     }
 };
@@ -74,12 +78,32 @@ ExperimentParser.prototype._resolveDependencies = function (frame) {
 ExperimentParser.prototype._resolveFrame = function (frameId, frame) {
     try {
         frame = frame || this.frames[frameId];
+        if (frame.parameters) {
+            var substituter = new Substituter();
+            frame = substituter.replaceValues(frame, frame.parameters);
+        }
         if (frameNamePattern.test(frame.kind)) {
             // Base case: this is a plain experiment frame
             frame.id = frame.id || frameId;
             return [[
                 this._resolveDependencies(frame)
             ], null];
+        } else if (frame.kind === 'group') {
+            var resolvedFrameList = [];
+            var resolvedChoices = {};
+
+            var thisFrame;
+            frame.frameList.forEach((fr, index) => {
+                thisFrame = {};
+                Ember.$.extend(true, thisFrame, frame.commonFrameProperties || {});
+                Ember.$.extend(true, thisFrame, fr);
+                var [resolved, choice] = this._resolveFrame(null, thisFrame);
+                resolvedFrameList.push(...resolved);
+                if (choice) {
+                    resolvedChoices[`${index}`] = choice;
+                }
+            });
+            return [resolvedFrameList, resolvedChoices];
         } else if (frame.kind === 'choice') {
             return this._resolveRandom(frame, frameId);
         } else {
