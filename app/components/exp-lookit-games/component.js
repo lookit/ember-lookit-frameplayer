@@ -104,7 +104,29 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                  */
                 showInstructions: {
                     type: 'boolean',
-                    default: true
+                    default: false
+                },
+
+                /**
+                 * Whether to show the progress page
+                 *
+                 * @property {Boolean} showInstructions
+                 * @default true
+                 */
+                showProgress: {
+                    type: 'boolean',
+                    default: false
+                },
+
+                /**
+                 * Whether to show the intro page
+                 *
+                 * @property {Boolean} showInstructions
+                 * @default true
+                 */
+                showIntro: {
+                    type: 'boolean',
+                    default: false
                 },
 
                 export_arr: {
@@ -227,6 +249,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
         play() {
             this.send('showFullscreen');
             this.set('showInstructions', false);
+            this.set('showProgress', false);
+            this.set('showIntro', false);
             this.set('export_arr', Ember.A());
             this.startRecorder();
             this.hideRecorder();
@@ -242,10 +266,88 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     // hooks you can use and when they're all called). You can delete this if not doing
     // anything additional.
     didInsertElement() {
-
         this._super(...arguments);
+        if (this.get('showProgress') === true) {
+            let current_game = this.get('gameType') + 1;
+            switch (current_game){
+              case 1:
+                  this.set('button_position','button button-1');
+                  this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
+                  this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2_off.png');
+                  this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3_off.png');
+                  this.set('machine4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine4_off.png');
+                  this.set('machine5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine5_off.png');
+                  this.set('arrow1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow1_on.png');
+                  this.set('arrow2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow2_off.png');
+                  this.set('arrow3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow3_off.png');
+                  this.set('arrow4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow4_off.png');
+                  this.set('arrow5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow5_off.png');
+                  this.set('exit_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/exit_off.png');
+                  break;
+              case 2:
+                  this.set('button_position','button button-2');
+                  this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
+                  this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2.png');
+                  this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3_off.png');
+                  this.set('machine4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine4_off.png');
+                  this.set('machine5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine5_off.png');
+                  this.set('arrow1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow1_on.png');
+                  this.set('arrow2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow2_on.png');
+                  this.set('arrow3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow3_off.png');
+                  this.set('arrow4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow4_off.png');
+                  this.set('arrow5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow5_off.png');
+                  this.set('exit_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/exit_off.png');
+                  break;
+
+              case 3:
+                  this.set('button_position','button button-3');
+                  this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
+                  this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2.png');
+                  this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3.png');
+                  this.set('machine4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine4_off.png');
+                  this.set('machine5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine5_off.png');
+                  this.set('arrow1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow1_on.png');
+                  this.set('arrow2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow2_on.png');
+                  this.set('arrow3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow3_on.png');
+                  this.set('arrow4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow4_off.png');
+                  this.set('arrow5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow5_off.png');
+                  this.set('exit_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/exit_off.png');
+                  break;
+
+              case 4:
+                  this.set('button_position','button button-4');
+                  this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
+                  this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2.png');
+                  this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3.png');
+                  this.set('machine4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine4.png');
+                  this.set('machine5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine5_off.png');
+                  this.set('arrow1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow1_on.png');
+                  this.set('arrow2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow2_on.png');
+                  this.set('arrow3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow3_on.png');
+                  this.set('arrow4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow4_on.png');
+                  this.set('arrow5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow5_off.png');
+                  this.set('exit_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/exit_off.png');
+                  break;
+
+              case 5:
+                  this.set('button_position','button button-5');
+                  this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
+                  this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2.png');
+                  this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3.png');
+                  this.set('machine4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine4.png');
+                  this.set('machine5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine5.png');
+                  this.set('arrow1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow1_on.png');
+                  this.set('arrow2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow2_on.png');
+                  this.set('arrow3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow3_on.png');
+                  this.set('arrow4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow4_on.png');
+                  this.set('arrow5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow5_on.png');
+                  this.set('exit_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/exit_on.png');
+                  break;
+        }
+        }
 
     },
+
 
     // Anything that should happen before destroying your frame, e.g. removing a keypress
     // handlers. You can delete this if not doing anything additional.
