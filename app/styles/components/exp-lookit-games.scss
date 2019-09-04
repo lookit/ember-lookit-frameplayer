@@ -1,0 +1,162 @@
+
+.door {
+  position: absolute;
+  height: 35%;
+  width: 20%;
+  left: 2%;
+  z-index: 1;
+  bottom: 5%;
+}
+
+.box-set {
+  background: #000000;
+  height: 100vh;
+  width:100%;
+  position: absolute;
+}
+.box {
+  height: 30%;
+  position: absolute;
+  width: 8%;
+}
+.box-1 {
+  left: 20%;
+  top: 10%;
+}
+.box-2 {
+  top: 2%;
+  left: 50%;
+}
+.box-3 {
+  left: 77%;
+  top: 10%;
+}
+.box-4 {
+  top: 60%;
+  left: 60%;
+}
+
+.box-5 {
+  top: 55%;
+  left: 32%;
+}
+
+.arrow {
+  height: 8%;
+  position: absolute;
+  width: 20%;
+}
+
+.arrow-1 {
+  top: 15%;
+  left: 30%;
+  z-index: 1;
+}
+
+.arrow-2 {
+  top: 20%;
+  left: 58%;
+  z-index: 1;
+}
+
+.arrow-3 {
+  height: 50%;
+  top: 26%;
+  left: 68%;
+  z-index: 1;
+}
+
+.arrow-4 {
+  height: 12%;
+  top: 65%;
+  left: 41%;
+  z-index: 1;
+}
+
+.arrow-5 {
+  height: 14%;
+  width: 15%;
+  top: 70%;
+  left: 16%;
+  z-index: 1;
+}
+
+.button {
+  background-color: #FF7F00;
+  border: none;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  margin: 4px 4px;
+  border-radius: 30px;
+  position: absolute;
+}
+
+.button-1 {
+  top: 23%;
+  left: 23%;
+  z-index: 1;
+}
+
+.button-2 {
+  top: 16%;
+  left: 50%;
+  z-index: 1;
+}
+
+.button-3 {
+  top: 23%;
+  left: 78%;
+  z-index: 1;
+}
+
+.button-4 {
+  top: 70%;
+  left: 63%;
+  z-index: 1;
+}
+
+.button-5 {
+  top: 65%;
+  left: 33%;
+  z-index: 1;
+}
+
+.intro {
+  background: #000000;
+  height: 100vh;
+  width:100%;
+  position: absolute;
+
+}
+
+.intro-button {
+  background: #FFFFF000;
+  border: 4px solid #FF7F00;
+  color: #FF7F00;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 2px 2px 4px #000000;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 4px;
+  height: 29vh;
+  width: 7%;
+  top: 56vh;
+  left: 40%;
+  position: absolute;
+  z-index: 1;
+}
+
+.intro-button:hover {
+
+  background: #ffffcc;
+}
+
+
+
+
