@@ -346,8 +346,24 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                   this.set('arrow3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow3_on.png');
                   this.set('arrow4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow4_on.png');
                   this.set('arrow5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow5_on.png');
-                  this.set('exit_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/exit_on.png');
+                  this.set('exit_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/exit_off.png');
                   break;
+
+              case 6:
+                  this.set('button_position','button button-5');
+                  this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
+                  this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2.png');
+                  this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3.png');
+                  this.set('machine4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine4.png');
+                  this.set('machine5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine5.png');
+                  this.set('arrow1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow1_on.png');
+                  this.set('arrow2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow2_on.png');
+                  this.set('arrow3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow3_on.png');
+                  this.set('arrow4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow4_on.png');
+                  this.set('arrow5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow5_on.png');
+                  this.set('exit_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/exit_on.png');
+                break;
+
         }
         }
 
