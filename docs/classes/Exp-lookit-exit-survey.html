@@ -237,6 +237,10 @@
 
                             </li>
                             <li class="index-item property inherited">
+                                <a href="#property_parameters">parameters</a>
+
+                            </li>
+                            <li class="index-item property inherited">
                                 <a href="#property_selectNextFrame">selectNextFrame</a>
 
                             </li>
@@ -385,7 +389,7 @@
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Exp-frame-base.html#method_makeTimeEvent">Exp-frame-base</a>:
-        <a href="../files/app_components_exp-frame-base_component.js.html#l402"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:402</code></a>
+        <a href="../files/app_components_exp-frame-base_component.js.html#l454"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:454</code></a>
         </p>
 
 
@@ -1006,6 +1010,75 @@ to be on one line.)</p>
 
 
 </div>
+<div id="property_parameters" class="property item inherited">
+    <h3 class="name"><code>parameters</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Exp-frame-base.html#property_parameters">Exp-frame-base </a> (click for formatted description):
+        <a href="../files/app_components_exp-frame-base_component.js.html#l228"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:228</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>An object containing values for any parameters (variables) to use in this frame.
+Any property VALUES in this frame that match any of the property NAMES in <code>parameters</code>
+will be replaced by the corresponding parameter value. For example, suppose your frame
+is:</p>
+<pre class="code prettyprint"><code>{
+   'kind': 'FRAME_KIND',
+   'parameters': {
+       'FRAME_KIND': 'exp-lookit-text'
+   }
+}
+</code></pre>
+<p>Then the frame <code>kind</code> will be <code>exp-lookit-text</code>. This may be useful if you need
+to repeat values for different frame properties, especially if your frame is actually
+a randomizer or group. You may use parameters nested within objects (at any depth) or
+within lists.</p>
+<p>You can also use selectors to randomly sample from or permute
+a list defined in <code>parameters</code>. Suppose <code>STIMLIST</code> is defined in
+<code>parameters</code>, e.g. a list of potential stimuli. Rather than just using <code>STIMLIST</code>
+as a value in your frames, you can also:</p>
+<ul>
+<li>Select the Nth element (0-indexed) of the value of <code>STIMLIST</code>: (Will cause error if <code>N &gt;= THELIST.length</code>)</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#N'
+</code></pre>
+<ul>
+<li>Select (uniformly) a random element of the value of <code>STIMLIST</code>:</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#RAND'
+</code></pre>
+<ul>
+<li>Set <code>parameterName</code> to a random permutation of the value of <code>STIMLIST</code>:</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#PERM'
+</code></pre>
+<ul>
+<li>Select the next element in a random permutation of the value of <code>STIMLIST</code>, which is used across all
+substitutions in this randomizer. This allows you, for instance, to provide a list
+of possible images in your <code>parameterSet</code>, and use a different one each frame with the
+subset/order randomized per participant. If more <code>STIMLIST#UNIQ</code> parameters than
+elements of <code>STIMLIST</code> are used, we loop back around to the start of the permutation
+generated for this randomizer.</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#UNIQ'
+</code></pre>
+
+    </div>
+
+        <p><strong>Default:</strong> {}</p>
+
+
+</div>
 <div id="property_selectNextFrame" class="property item inherited">
     <h3 class="name"><code>selectNextFrame</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
@@ -1234,7 +1307,7 @@ just used for attempts to leave the study early</li>
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Exp-frame-base.html#event_nextFrame">Exp-frame-base</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l449"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:449</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l501"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:501</code></a>
                             </p>
                     
                     
@@ -1259,7 +1332,7 @@ just used for attempts to leave the study early</li>
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Exp-frame-base.html#event_previousFrame">Exp-frame-base</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l504"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:504</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l556"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:556</code></a>
                             </p>
                     
                     

@@ -311,6 +311,10 @@ document is displayed, with additional study-specific information provided by th
                                 <a href="#property_maxRecordingLength">maxRecordingLength</a>
 
                             </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_parameters">parameters</a>
+
+                            </li>
                             <li class="index-item property">
                                 <a href="#property_payment">payment</a>
 
@@ -585,7 +589,7 @@ document is displayed, with additional study-specific information provided by th
                 Video-record
             </a>
             but overwritten in
-        <a href="../files/app_components_exp-frame-base_component.js.html#l402"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:402</code></a>
+        <a href="../files/app_components_exp-frame-base_component.js.html#l454"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:454</code></a>
         </p>
 
 
@@ -766,7 +770,7 @@ instead stop/start and make separate clips if needed.
                 Exp-frame-base
             </a>
             but overwritten in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l261"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:261</code></a>
+        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l259"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:259</code></a>
         </p>
 
 
@@ -1264,7 +1268,7 @@ should set to override if needed.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l198"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:198</code></a>
+        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l196"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:196</code></a>
         </p>
 
 
@@ -1388,7 +1392,7 @@ generally used that way.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l208"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:208</code></a>
+        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l206"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:206</code></a>
         </p>
 
 
@@ -1414,7 +1418,7 @@ generally used that way.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l219"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:219</code></a>
+        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l217"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:217</code></a>
         </p>
 
 
@@ -1439,7 +1443,7 @@ generally used that way.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l228"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:228</code></a>
+        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l226"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:226</code></a>
         </p>
 
 
@@ -1549,7 +1553,7 @@ to be on one line.)</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l153"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:153</code></a>
+        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l151"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:151</code></a>
         </p>
 
 
@@ -1588,6 +1592,75 @@ to be on one line.)</p>
 
 
 </div>
+<div id="property_parameters" class="property item inherited">
+    <h3 class="name"><code>parameters</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Exp-frame-base.html#property_parameters">Exp-frame-base </a> (click for formatted description):
+        <a href="../files/app_components_exp-frame-base_component.js.html#l228"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:228</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>An object containing values for any parameters (variables) to use in this frame.
+Any property VALUES in this frame that match any of the property NAMES in <code>parameters</code>
+will be replaced by the corresponding parameter value. For example, suppose your frame
+is:</p>
+<pre class="code prettyprint"><code>{
+   'kind': 'FRAME_KIND',
+   'parameters': {
+       'FRAME_KIND': 'exp-lookit-text'
+   }
+}
+</code></pre>
+<p>Then the frame <code>kind</code> will be <code>exp-lookit-text</code>. This may be useful if you need
+to repeat values for different frame properties, especially if your frame is actually
+a randomizer or group. You may use parameters nested within objects (at any depth) or
+within lists.</p>
+<p>You can also use selectors to randomly sample from or permute
+a list defined in <code>parameters</code>. Suppose <code>STIMLIST</code> is defined in
+<code>parameters</code>, e.g. a list of potential stimuli. Rather than just using <code>STIMLIST</code>
+as a value in your frames, you can also:</p>
+<ul>
+<li>Select the Nth element (0-indexed) of the value of <code>STIMLIST</code>: (Will cause error if <code>N &gt;= THELIST.length</code>)</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#N'
+</code></pre>
+<ul>
+<li>Select (uniformly) a random element of the value of <code>STIMLIST</code>:</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#RAND'
+</code></pre>
+<ul>
+<li>Set <code>parameterName</code> to a random permutation of the value of <code>STIMLIST</code>:</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#PERM'
+</code></pre>
+<ul>
+<li>Select the next element in a random permutation of the value of <code>STIMLIST</code>, which is used across all
+substitutions in this randomizer. This allows you, for instance, to provide a list
+of possible images in your <code>parameterSet</code>, and use a different one each frame with the
+subset/order randomized per participant. If more <code>STIMLIST#UNIQ</code> parameters than
+elements of <code>STIMLIST</code> are used, we loop back around to the start of the permutation
+generated for this randomizer.</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#UNIQ'
+</code></pre>
+
+    </div>
+
+        <p><strong>Default:</strong> {}</p>
+
+
+</div>
 <div id="property_payment" class="property item">
     <h3 class="name"><code>payment</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
@@ -1599,7 +1672,7 @@ to be on one line.)</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l189"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:189</code></a>
+        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l187"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:187</code></a>
         </p>
 
 
@@ -1624,7 +1697,7 @@ to be on one line.)</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l162"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:162</code></a>
+        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l160"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:160</code></a>
         </p>
 
 
@@ -1649,7 +1722,7 @@ to be on one line.)</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l144"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:144</code></a>
+        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l142"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:142</code></a>
         </p>
 
 
@@ -1674,7 +1747,7 @@ to be on one line.)</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l180"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:180</code></a>
+        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l178"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:178</code></a>
         </p>
 
 
@@ -1699,7 +1772,7 @@ to be on one line.)</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l171"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:171</code></a>
+        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l169"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:169</code></a>
         </p>
 
 
@@ -1774,7 +1847,7 @@ Accessible to consuming frame.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l237"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:237</code></a>
+        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l235"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:235</code></a>
         </p>
 
 
@@ -1942,7 +2015,7 @@ stopped.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l246"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:246</code></a>
+        <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l244"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:244</code></a>
         </p>
 
 
@@ -2026,7 +2099,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l129"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:129</code></a>
+                            <a href="../files/app_components_exp-lookit-video-consent_component.js.html#l127"><code>app&#x2F;components&#x2F;exp-lookit-video-consent&#x2F;component.js:127</code></a>
                             </p>
                     
                     
@@ -2142,7 +2215,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Exp-frame-base.html#event_nextFrame">Exp-frame-base</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l449"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:449</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l501"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:501</code></a>
                             </p>
                     
                     
@@ -2191,7 +2264,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Exp-frame-base.html#event_previousFrame">Exp-frame-base</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l504"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:504</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l556"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:556</code></a>
                             </p>
                     
                     
