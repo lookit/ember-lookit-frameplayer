@@ -29,6 +29,11 @@ let radiusRim = 0.1;
 let obstructionsNum = 0;
 let basketImage = {};
 
+let ballImg = {};
+let paddleImg = {};
+let ballBoxImg = {};
+let starsImg = {};
+
 /**
  * Main implementation of catch the cheese game.
  * The user will operate with paddle to catch the ball started
@@ -56,7 +61,6 @@ export default class CatchCheese extends Base {
    * @method init
    */
   init() {
-    super.init();
     document.addEventListener("mousemove",  super.onMouseMove);
     hArray = super.generateHeights();
     obstrArr  = super.uniformArr([1,2,3]);
@@ -72,9 +76,31 @@ export default class CatchCheese extends Base {
     audio.setAttribute("preload", "auto");
     ballCatchFail.setAttribute("preload", "auto");
     goodJob.setAttribute("preload", "auto");
-    audio.addEventListener('onloadeddata', this.initGame(), false);
     basketImage= new Image();
     basketImage.src = super.Utils.ironBasket;
+
+
+    basket = {
+      positions:[],
+      times:[],
+      velocity: super.Utils.paddleSpeed,
+      paddleLastMovedMillis: 0,
+      imageURL: super.Utils.basketImage
+    };
+
+
+
+    paddleImg = new Image();
+    paddleImg.src = basket.imageURL;
+    ballImg = new Image();
+    ballImg.src = super.Utils.gear;
+    ballBoxImg = new Image();
+    ballBoxImg.src = super.Utils.robotImage;
+    starsImg = new Image();
+    starsImg.src = super.Utils.basketStarsImage;
+
+    audio.addEventListener('onloadeddata', this.initGame(), false);
+    super.init();
 
   }
 
@@ -91,17 +117,10 @@ export default class CatchCheese extends Base {
     initialTime =0;
     super.gameOver = false;
     super.initGame();
-    basket = {
-      positions:[],
-      times:[],
-      velocity: super.Utils.paddleSpeed,
-      paddleLastMovedMillis: 0,
-      imageURL: super.Utils.basketImage
-    };
 
     super.createPaddleBox();
     basket = super.basketObject(basket);
-     obstructionsNum = obstrArr[super.currentRounds];
+    obstructionsNum = obstrArr[super.currentRounds];
     if(this.context.no_trees){
       obstructionsNum =0;
     }
@@ -196,13 +215,10 @@ export default class CatchCheese extends Base {
    * @method createBallBox
    * @param {int} paddleWidth
    */
-  createBallBox(imageURL) {
-
+  createBallBox(image) {
 
     let leftBorder = (0.35 - 0.3) * super.Utils.SCALE;
     let topBorder = (1.2971 - 0.15 )* super.Utils.SCALE;
-    let image = new Image();
-    image.src = imageURL;
     this.ctx.drawImage(image, leftBorder, topBorder, basket.dimensions.height*3, basket.dimensions.height*3);
 
 
@@ -219,7 +235,7 @@ export default class CatchCheese extends Base {
    */
   loop() {
     super.loop();
-    this.createBallBox(super.Utils.robotImage);
+    this.createBallBox(ballBoxImg);
     super.generateTrajectoryParams(hArray,Height,Tf);
     let hitTheTarget = this.collisionDetection();
     let hitTheWall = super.wallCollision(ball);
@@ -233,7 +249,7 @@ export default class CatchCheese extends Base {
 
     if(ball.state === 'start'){
 
-      super.moveBallToStart(ball, super.Utils.gear,false);
+      super.moveBallToStart(ball, ballImg,false);
 
 
       if(initialTime > 0 && super.paddleIsMoved(basket)){
@@ -268,7 +284,7 @@ export default class CatchCheese extends Base {
       }
 
 
-      super.drawBall(ball,super.Utils.gear);
+      super.drawBall(ball,ballImg);
     }
 
 
@@ -295,20 +311,20 @@ export default class CatchCheese extends Base {
 
       if (ball.hitstate === 'very good') {
         this.starsLocationUpdate();
-        super.drawImageObject(targetStars,super.Utils.basketStarsImage);
+        super.drawImageObject(targetStars,starsImg);
 
       }
 
       if(ball.hitstate === ''){
 
-        super.drawBall(ball,super.Utils.gear);
+        super.drawBall(ball,ballImg);
       }
 
 
       // Remove ball and show in the starting point,
       //User should set the paddle to initial position , call stop after that
       if(super.getElapsedTime(initialTime)  > 1.5) {
-        super.moveBallToStart(ball, super.Utils.gear,false);
+        super.moveBallToStart(ball, ballImg,false);
         super.paddleAtZero(basket,false);
       }
 
@@ -316,12 +332,12 @@ export default class CatchCheese extends Base {
     }
 
 
-    obstructions.forEach(obstruction => super.drawImage(obstruction, obstruction.imageURL));
+    obstructions.forEach(obstruction => super.drawImage(obstruction, obstruction.image));
 
     this.basketObject(basket);
     super.fillPaddleBox(paddleBoxColor);
     super.paddleMove(basket,initialTime,ball);
-    super.drawImageObject(basket,super.Utils.ironBasket);
+    super.drawImageObject(basket,basketImage);
 
   }
 
