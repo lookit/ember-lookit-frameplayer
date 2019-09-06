@@ -71,17 +71,21 @@ export default class Base {
 
   calculateCanvas(){
 
-     this.canvas.height =  screen.height ;
-     this.canvas.width = screen.width;
-     let ratio = this.canvas.height/this.canvas.width;
-     let height = this.Utils.SCREEN_HEIGHT;
-     if(ratio >= 0.6 && ratio < 0.7 ){
-       height = 800;
-     }else if(ratio >= 0.7){
-       height = 900;
-     }
+    //  this.canvas.height =  screen.height ;
+    //  this.canvas.width = screen.width;
+    //  let ratio = this.canvas.height/this.canvas.width;
+    //  let height = this.Utils.SCREEN_HEIGHT;
+    //  if(ratio >= 0.6 && ratio < 0.7 ){
+    //    height = 800;
+    //  }else if(ratio >= 0.7){
+    //    height = 900;
+    //  }
+    //
+    // this.Utils.SCALE  =  this.context.scale_factor * (this.canvas.height/height);
 
-    this.Utils.SCALE  =  this.context.scale_factor * (this.canvas.height/height);
+    this.canvas.height = 768 ;
+    this.canvas.width =  1024;
+    this.Utils.SCALE  =  420;
 
   }
 
