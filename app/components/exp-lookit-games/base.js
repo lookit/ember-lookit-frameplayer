@@ -82,6 +82,7 @@ export default class Base {
     //  }
     //
     // this.Utils.SCALE  =  this.context.scale_factor * (this.canvas.height/height);
+
     this.canvas.height = 768 ;
     this.canvas.width =  1024;
     this.Utils.SCALE  =  420;
@@ -238,24 +239,25 @@ export default class Base {
     let topBorder = (0.914 + 0.05) * Utils.SCALE;
     let rightBorder = 390 + 0.25 * Utils.SCALE;
     let downBorder = (1.542 + 0.05) * Utils.SCALE;
-    let imgURL = Utils.obstruction1;
+    let img = new Image();
+    img.src = Utils.obstruction1;
     switch (treeIndex) {
 
       case 1:
 
-        imgURL = Utils.obstruction1;
+        img.src  = Utils.obstruction1;
 
         break;
 
       case 2:
 
-        imgURL = Utils.obstruction2;
+        img.src = Utils.obstruction2;
 
         break;
 
       case 3:
 
-        imgURL = Utils.obstruction3;
+        img.src = Utils.obstruction3;
         break;
 
 
@@ -265,7 +267,7 @@ export default class Base {
     return {
       position: {x: leftBorder, y: topBorder},
       dimensions: {width: rightBorder - leftBorder, height: downBorder - topBorder},
-      imageURL: imgURL
+      image: img
     };
 
   }
@@ -355,24 +357,22 @@ export default class Base {
   /**
    * Create initial ball box object to start from
    * @method createBallBox
-   * @param {int} paddleWidth
+   * @param {String} imageURL
    */
-  createBallBox(imageURL) {
+  createBallBox(image) {
 
     let leftBorder = 0.4 * Utils.SCALE;
     let topBorder = 1.2971 * Utils.SCALE;
     let rightBorder = (0.64) * Utils.SCALE;
     let downBorder = 1.5671 * Utils.SCALE;
 
-    let image = new Image();
-    image.src = imageURL;
     this.ctx.drawImage(image, leftBorder, topBorder, rightBorder - leftBorder, downBorder - topBorder);
 
   }
 
 
   //TODO: merge this with launcher implementation for paddle games
-  discreteLauncer(imageURL) {
+  discreteLauncer(image) {
 
     this.ctx.beginPath();
     this.ctx.lineWidth = '8';
@@ -383,8 +383,6 @@ export default class Base {
     let rightBorder = (initX + 0.07) * Utils.SCALE;
     let downBorder = (1.3871 + 0.15) * Utils.SCALE;
 
-    let image = new Image();
-    image.src = imageURL;
     this.ctx.drawImage(image, leftBorder, topBorder, rightBorder - leftBorder, downBorder - topBorder);
 
 
@@ -468,11 +466,9 @@ export default class Base {
    * @param {object} Current object with x,y position, width , height and URL of the image to show
    * @param {String} URL
    */
-  drawImage(object, URL) {
+  drawImage(object, image) {
     this.ctx.fillStyle = Utils.blackColor;
     this.ctx.fillRect(object.position.x, object.position.y, object.dimensions.width, object.dimensions.height);
-    let image = new Image();
-    image.src = URL;
     this.ctx.drawImage(image, object.position.x, object.position.y, object.dimensions.width, object.dimensions.height);
   }
 
@@ -535,7 +531,6 @@ export default class Base {
       this.context.set('showInstructions', true);
       this.context.stopRecorder().finally(() => {
         this.context.destroyRecorder();
-        this.context.send("export");
         this.context.send('next');
       });
     }
@@ -745,11 +740,8 @@ export default class Base {
    * Draw ball per x,y ball location
    * @param ball
    */
-  drawBall(ball,ballURL) {
+  drawBall(ball,image) {
 
-
-    let image = new Image();
-    image.src = ballURL;
     this.ctx.drawImage(image, ball.position.x, ball.position.y, ball.radius, ball.radius);
 
   }
@@ -761,10 +753,10 @@ export default class Base {
    * @param {object} ball object parameters
    * @param {boolean} gameOver set game to be over
    */
-  moveBallToStart(ball,ballURL ,gameOver) {
+  moveBallToStart(ball,image ,gameOver) {
 
     ball = this.ballObject();
-    this.drawBall(ball,ballURL);
+    this.drawBall(ball,image);
 
     if (gameOver) {
       this.gameOver = true;
@@ -846,10 +838,8 @@ export default class Base {
   }
 
 
-  drawImageObject(object,imageURL){
+  drawImageObject(object,image){
 
-    let image = new Image();
-    image.src = imageURL;
     this.ctx.drawImage(image, object.position.x, object.position.y, object.dimensions.width, object.dimensions.height);
 
   }
