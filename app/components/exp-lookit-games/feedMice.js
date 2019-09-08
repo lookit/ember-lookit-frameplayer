@@ -63,7 +63,6 @@ export default class FeedMice extends Base {
 
   targetCoord(index) {
     index = index + 1;
-
     let top = 1.12;
     let leftBorder = (1.5450) * super.Utils.SCALE;
 
@@ -87,9 +86,6 @@ export default class FeedMice extends Base {
     }
 
     let topBorder = top * super.Utils.SCALE;
-    let image = new Image();
-    image.src = windowImageURLS[index - 1];
-
     let target = {
 
       dimensions: {width: 86 / 2, height: 63 / 2},
@@ -142,24 +138,25 @@ export default class FeedMice extends Base {
    */
   getShuttle(houseObj) {
 
-    let index = shuttles[super.currentRounds];
-    let shuttle = shuttlImgs[0];
-    houseObj.position.x = 0.81 * super.Utils.SCALE;
+    let index = shuttles[super.currentRounds]; // Get current shuttle case
+    let shuttle = {};
+    houseObj.position.x = {};
 
     switch (index) {
 
       case 2:
-
         houseObj.position.x = 0.798 * super.Utils.SCALE;
         shuttle = shuttlImgs[1];
-
         break;
       case 3:
-
         houseObj.position.x = 0.77 * super.Utils.SCALE;
         shuttle = shuttlImgs[2];
-
         break;
+      default:
+        houseObj.position.x = 0.81 * super.Utils.SCALE;
+        shuttle = shuttlImgs[0];
+        break;
+
 
     }
 
