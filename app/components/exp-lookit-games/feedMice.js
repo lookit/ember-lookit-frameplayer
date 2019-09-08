@@ -16,21 +16,25 @@ import Base from './base';
 let ball = {};
 let targets = [];
 let pressed = {};
-let keys = ['y', 'g', 'v']; //Might need to set as super parameter
-let imageURLS = [];
+let keys = ['y', 'g', 'v']; //Keyboard keys for upper,middle and lower windows
+let windowImageURLS = [];
+let shuttlImageURLS = [];
 let audio = {};
 let ballCatchFail = {};
 let goodJob = {};
 let currentTargetIndex = 0;
 let initialTime = 0;
 let initVmatrix = [];
-let walls = [];
+let shuttles = [];
 let jitterT = 0;
 
 
 let ballImg = {};
 let ballBoxImg = {};
 let splatImg = {};
+
+let windowImgs = [];
+let shuttlImgs = [];
 
 /**
  * Main implementation of feed  the mice in the house game.
@@ -51,7 +55,8 @@ export default class FeedMice extends Base {
    */
   constructor(context, document) {
     super(context, document);
-    imageURLS = [super.Utils.openWindowYellow, super.Utils.openWindowGreen, super.Utils.openWindowViolet];
+    windowImageURLS = [super.Utils.openWindowYellow, super.Utils.openWindowGreen, super.Utils.openWindowViolet];
+    shuttlImageURLS = [super.Utils.shuttleNarrow, super.Utils.shuttle, super.Utils.shuttleWide];
 
   }
 
@@ -83,7 +88,7 @@ export default class FeedMice extends Base {
 
     let topBorder = top * super.Utils.SCALE;
     let image = new Image();
-    image.src = imageURLS[index - 1];
+    image.src = windowImageURLS[index - 1];
 
     let target = {
 
@@ -96,8 +101,7 @@ export default class FeedMice extends Base {
       color: super.Utils.grayColor,
       roofcolor: super.Utils.redColor,
       windowbackground: super.Utils.blackColor,
-      imageURL: imageURLS[index - 1],
-      image: image
+      image: windowImgs[index-1]
 
 
     };
@@ -108,10 +112,30 @@ export default class FeedMice extends Base {
 
 
   /**
-   * Draw house with roof according to coordinates
-   * @method createHouse
+   * Fill image array with URL sources
+   * @method fillImageArray
+   * @param urlArr
+   * @param imgArr
    */
-  createHouse() {
+  fillImageArray(urlArr,imgArr){
+
+    urlArr.forEach(
+      url =>{
+        let img = new Image();
+        img.src = url;
+        imgArr.push(img);
+      }
+
+    );
+
+  }
+
+
+  /**
+   * Draw house with roof according to coordinates
+   * @method createShuttle
+   */
+  createShuttle() {
 
 
     //Draw House
@@ -122,7 +146,7 @@ export default class FeedMice extends Base {
 
       dimensions: {width: 1.19 * super.Utils.SCALE, height: 1.135 * super.Utils.SCALE},
       position: {x: leftBorder, y: topBorder}
-    }
+    };
 
 
     this.getShuttle(houseObj);
@@ -137,24 +161,22 @@ export default class FeedMice extends Base {
    */
   getShuttle(houseObj) {
 
-    let index = walls[super.currentRounds]
-    let shuttle = new Image();
-    shuttle.src = super.Utils.shuttleNarrow;
+    let index = shuttles[super.currentRounds];
+    let shuttle = shuttlImgs[0];
     houseObj.position.x = 0.81 * super.Utils.SCALE;
-
 
     switch (index) {
 
       case 2:
 
         houseObj.position.x = 0.798 * super.Utils.SCALE;
-        shuttle.src = super.Utils.shuttle;
+        shuttle = shuttlImgs[1];
 
         break;
       case 3:
 
         houseObj.position.x = 0.77 * super.Utils.SCALE;
-        shuttle.src = super.Utils.shuttleWide;
+        shuttle = shuttlImgs[2];
 
         break;
 
@@ -166,13 +188,13 @@ export default class FeedMice extends Base {
 
 
   /**
-   * Create the window in the house
+   * Create the window in the target
    * @method createWindow
    * @param target
    */
   createWindow(target) {
 
-    super.drawImageObject(target, target.image)
+    super.drawImageObject(target, target.image);
 
   }
 
@@ -184,7 +206,7 @@ export default class FeedMice extends Base {
   init() {
     super.init();
     initVmatrix = super.uniformArr([1, 2, 3]);
-    walls = super.uniformArr([1, 2, 3]);
+    shuttles = super.uniformArr([1, 2, 3]);
     goodJob = new Audio(super.Utils.good3MouseSound);
     goodJob.load();
 
@@ -206,6 +228,9 @@ export default class FeedMice extends Base {
 
     splatImg = new Image();
     splatImg.src = super.Utils.splat;
+
+    this.fillImageArray(windowImageURLS,windowImgs);
+    this.fillImageArray(shuttlImageURLS,shuttlImgs);
 
     audio.addEventListener('onloadeddata', this.initGame(), false);
   }
@@ -263,7 +288,7 @@ export default class FeedMice extends Base {
 
       dimensions: {width: 162 / 4, height: 153 / 4},
       position: {x: target.position.x - 10, y: target.position.y}
-    }
+    };
 
     super.drawImageObject(splat, splatImg);
 
@@ -296,7 +321,7 @@ export default class FeedMice extends Base {
 
       dimensions: {width: 0.19 * super.Utils.SCALE, height: 0.273 * super.Utils.SCALE},
       position: {x: leftBorder, y: topBorder}
-    }
+    };
     super.drawImageObject(launcher, image);
 
 
@@ -323,7 +348,6 @@ export default class FeedMice extends Base {
 
 
     if (ball.state === 'start') {
-      this.createHouse();
       super.moveBallToStart(ball, ballImg, false);
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         audio.pause();
@@ -343,7 +367,6 @@ export default class FeedMice extends Base {
 
       super.trajectory(ball, initialTime);
       super.drawBall(ball, ballImg);
-      this.createHouse();
       if (super.getElapsedTime(initialTime) >= 0.5) {
 
         ball.state = 'hit house';
@@ -360,7 +383,6 @@ export default class FeedMice extends Base {
 
 
     if (ball.state === 'hit house') {
-      this.createHouse();
       if (super.getElapsedTime(initialTime) >= 2.5) {
         initialTime = new Date().getTime();
         ball.state = 'hit';
@@ -370,7 +392,6 @@ export default class FeedMice extends Base {
 
 
     if (ball.state === 'hit') {
-      this.createHouse();
       if (index >= 0) {
         let target = targets[index];
         this.createWindow(target);
@@ -392,9 +413,9 @@ export default class FeedMice extends Base {
 
     }
 
+    this.createShuttle();
 
     if (ball.state === 'hit target') {
-      this.createHouse();
       if (index >= 0) {
         let target = targets[index];
         this.createWindow(target);
@@ -410,6 +431,12 @@ export default class FeedMice extends Base {
 
   }
 
+
+  /**
+   * Show selected window
+   * @method showWindow
+   * @param index
+   */
   showWindow(index) {
     let pressed_target = targets[index];
 
@@ -439,11 +466,11 @@ export default class FeedMice extends Base {
     let target_state =  0;
     let index = pressed.findIndex(item => item !== false);
     if(keys[index] !== undefined){
-        target_state = index + 1;
+      target_state = index + 1;
 
-        if(index === currentTargetIndex){
-          target_state = target_state +3;
-        }
+      if(index === currentTargetIndex){
+        target_state = target_state +3;
+      }
     }
 
 

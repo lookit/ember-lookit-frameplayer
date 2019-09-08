@@ -61,7 +61,7 @@ export default class FeedMouse extends Base {
 
   /**
    * Draw house with roof according to coordinates
-   * @method createHouse
+   * @method createShuttle
    */
   createHouse() {
 
