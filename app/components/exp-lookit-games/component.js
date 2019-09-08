@@ -108,6 +108,15 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                 },
 
                 /**
+                 * Media resource location (image, sound,video)
+                 */
+                source: {
+                    type: 'string',
+                    default: ''
+
+                  },
+
+                /**
                  * Whether to show the progress page
                  *
                  * @property {Boolean} showInstructions
