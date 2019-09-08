@@ -473,6 +473,24 @@ export default class Base {
   }
 
 
+  /**
+   * Fill image array with URL sources
+   * @method fillImageArray
+   * @param urlArr
+   * @param imgArr
+   */
+  fillImageArray(urlArr,imgArr){
+
+    urlArr.forEach(
+      url =>{
+        let img = new Image();
+        img.src = url;
+        imgArr.push(img);
+      }
+
+    );
+
+  }
 
   /**
    * Disabled for now

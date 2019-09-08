@@ -111,25 +111,6 @@ export default class FeedMice extends Base {
   }
 
 
-  /**
-   * Fill image array with URL sources
-   * @method fillImageArray
-   * @param urlArr
-   * @param imgArr
-   */
-  fillImageArray(urlArr,imgArr){
-
-    urlArr.forEach(
-      url =>{
-        let img = new Image();
-        img.src = url;
-        imgArr.push(img);
-      }
-
-    );
-
-  }
-
 
   /**
    * Draw house with roof according to coordinates
@@ -229,8 +210,8 @@ export default class FeedMice extends Base {
     splatImg = new Image();
     splatImg.src = super.Utils.splat;
 
-    this.fillImageArray(windowImageURLS,windowImgs);
-    this.fillImageArray(shuttlImageURLS,shuttlImgs);
+    super.fillImageArray(windowImageURLS,windowImgs);
+    super.fillImageArray(shuttlImageURLS,shuttlImgs);
 
     audio.addEventListener('onloadeddata', this.initGame(), false);
   }

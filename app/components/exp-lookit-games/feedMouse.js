@@ -27,14 +27,15 @@ let targetX = 1.3310;
 let jitterT = 0;
 let winsize = 0.056;
 let targetsize = 0.02;
-let fireworks = [];
+let fireworksURLs = [];
 const CENTER = 549;
 
 let ballImg = {};
-let targetImg = {};
+let targetImgs = [];
 let ballBoxImg = {};
 let starImg = {};
 let background = {};
+
 
 /**
  * @class FeedMouse
@@ -53,7 +54,7 @@ export default class FeedMouse extends Base {
   constructor(context, document) {
 
     super(context, document);
-    fireworks = [super.Utils.Explosion_big_blue, super.Utils.Explosion_big_green, super.Utils.Explosion_big_red];
+    fireworksURLs = [super.Utils.Explosion_big_blue, super.Utils.Explosion_big_green, super.Utils.Explosion_big_red, super.Utils.Explosion_small];
 
 
   }
@@ -73,7 +74,7 @@ export default class FeedMouse extends Base {
       dimensions: {width: 1.54 * super.Utils.SCALE, height: 0.9 * super.Utils.SCALE},
       position: {x: leftBorder, y: topBorder}
 
-    }
+    };
 
     super.drawImageObject(houseObj, background);
 
@@ -124,8 +125,7 @@ export default class FeedMouse extends Base {
     ballBoxImg.src = super.Utils.boxOfFireworks;
 
     this.createTarget();
-    targetImg = new Image();
-    targetImg.src = target.imageURL;
+    super.fillImageArray(fireworksURLs,targetImgs);
 
     starImg = new Image();
     starImg.src = super.Utils.star;
@@ -165,7 +165,7 @@ export default class FeedMouse extends Base {
 
     };
 
-    randomNumber = Math.floor(Math.random() * 2) + 1;
+    randomNumber = Math.floor(Math.random() * 3); // Get random value from 0 to 2
     ball = super.ballObject();
     startSound = new Audio(super.Utils.fuse);
     startSound.play();
@@ -327,15 +327,12 @@ export default class FeedMouse extends Base {
       let difference = ball.position.x - CENTER;
       if (ball.hitstate === 'great') {
         let explosion = this.setExplosionPosition(4, ball, 15);
-        target.imageURL = fireworks[randomNumber];
-        targetImg.src = target.imageURL;
-        super.drawImageObject(explosion, targetImg);
+        super.drawImageObject(explosion, targetImgs[randomNumber]);
       }
 
       if (ball.hitstate === 'good') {
         let explosion = this.setExplosionPosition(2, ball, difference);
-        targetImg.src = super.Utils.Explosion_small;
-        super.drawImageObject(explosion, targetImg);
+        super.drawImageObject(explosion, targetImgs[3]);
       }
 
 
