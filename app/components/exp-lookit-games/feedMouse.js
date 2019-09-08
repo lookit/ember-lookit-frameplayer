@@ -195,12 +195,10 @@ export default class FeedMouse extends Base {
       color: super.Utils.grayColor,
       roofcolor: super.Utils.redColor,
       houseColor: super.Utils.grayColor,
-      windowbackground: super.Utils.blackColor,
-      imageURL: super.Utils.firework_small
+      windowbackground: super.Utils.blackColor
 
     };
 
-    targetImg.src = target.imageURL;
   }
 
   /**
