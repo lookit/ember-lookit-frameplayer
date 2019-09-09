@@ -28,7 +28,7 @@ let jitterT = 0;
 let winsize = 0.056;
 let targetsize = 0.02;
 let fireworksURLs = [];
-const CENTER = 549;
+const CENTER = 1.30715;
 
 let ballImg = {};
 let targetImgs = [];
@@ -294,7 +294,7 @@ export default class FeedMouse extends Base {
       //Check for target (red dot) position , if we are within the window size
       if (keyPressed.value === 1) {
 
-        let position = Math.abs(ball.position.x - CENTER);
+        let position = Math.abs(ball.position.x - CENTER * super.Utils.SCALE );
 
         if (position < targetsize * super.Utils.SCALE) {
           super.increaseScore();
@@ -322,9 +322,9 @@ export default class FeedMouse extends Base {
 
     if (ball.state === 'hit') {
 
-      let difference = ball.position.x - CENTER;
+      let difference = ball.position.x - CENTER * super.Utils.SCALE;
       if (ball.hitstate === 'great') {
-        let explosion = this.setExplosionPosition(4, ball, 15);
+        let explosion = this.setExplosionPosition(4, ball, 0.03572 * super.Utils.SCALE);
         super.drawImageObject(explosion, targetImgs[randomNumber]);
       }
 
@@ -351,7 +351,7 @@ export default class FeedMouse extends Base {
 
       dimensions: {width: target.dimensions.width * multiplier, height: target.dimensions.height * multiplier},
       position: {
-        x: CENTER - (target.dimensions.width * multiplier / 2) + difference,
+        x: CENTER * super.Utils.SCALE - (target.dimensions.width * multiplier / 2) + difference,
         y: ball.position.y - target.dimensions.height * multiplier / 2 + 0.02381 * super.Utils.SCALE
       }
 
