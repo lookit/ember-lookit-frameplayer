@@ -63,7 +63,7 @@ export default class CatchCheese extends Base {
   init() {
     document.addEventListener("mousemove",  super.onMouseMove);
     hArray = super.generateHeights();
-    obstrArr  = super.uniformArr([1,2,3]);
+    obstrArr  = super.uniformArr([0,1,2,3]);
     goodJob = new Audio(super.Utils.goodCatchSound);
     goodJob.load();
     ballCatchFail = new Audio(super.Utils.failcatchSound);
@@ -121,9 +121,6 @@ export default class CatchCheese extends Base {
     super.createPaddleBox();
     basket = super.basketObject(basket);
     obstructionsNum = obstrArr[super.currentRounds];
-    if(this.context.no_trees){
-      obstructionsNum =0;
-    }
     ball = super.ballObject();
 
     obstructions = Array(obstructionsNum).fill({}).map((value, index) =>

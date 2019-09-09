@@ -8,7 +8,7 @@
 
       <div>
         <button class="intro-button" {{ action 'next' }}>Start</button>
-        <img src="https://piproject.s3.us-east-2.amazonaws.com/Resources/images/intro.png" class="intro"
+        <img src={{source}} class="intro"
                 alt="background">
       </div>
 
@@ -38,13 +38,7 @@
         <hr>
         <p> {{instructions}}</p>
         <hr >
-
-      <div class="col-md-3" >
-          Scaling factor : {{scale_factor}}
-          <input type="range" min="300" max="420" steps="10" oninput={{action (mut scale_factor) value="target.value"}}
-               value={{scale_factor}} >
-
-      </div>
+        <button class="btn btn-success" {{ action 'play' }} >Play</button>
 
     {{/if}}
     <canvas  id="gamesCanvas"  height="0" width="0"></canvas>

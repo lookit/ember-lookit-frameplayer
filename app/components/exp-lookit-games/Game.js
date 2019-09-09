@@ -44,30 +44,23 @@ export default class Game {
 
         case 1:
 
-            context.no_trees = true;
             game = new CatchCheese(context, document);
 
         break;
 
         case 2:
 
-            game = new CatchCheese(context, document);
+            game = new CatchMouse(context, document);
 
         break;
 
         case 3:
 
-            game = new CatchMouse(context, document);
-
-        break;
-
-        case 4:
-
             game =   new FeedMice(context, document);
 
         break;
 
-        case 5:
+        case 4:
 
             game =  new FeedMouse(context, document);
 
