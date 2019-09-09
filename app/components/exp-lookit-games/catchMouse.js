@@ -93,7 +93,7 @@ export default class CatchMouse extends Base {
     mice = {
       dimensions: {width: 0.18 * super.Utils.SCALE, height: 0.18 * super.Utils.SCALE},
       position: {x: leftBorder, y: topBorder},
-      radius: 40,
+      radius: 0.09525 * super.Utils.SCALE,
       delay: 2000,
       state: 'start',
       showTime: 0,
@@ -135,10 +135,10 @@ export default class CatchMouse extends Base {
   setCheeseObj() {
 
     //Cheese coord
-    let leftBorder = (1.43 + 0.1) * super.Utils.SCALE;
-    let topBorder = (1.3671 - initBallY - 0.07) * super.Utils.SCALE;
-    let rightBorder = (1.36 + 0.09 + 0.25) * super.Utils.SCALE;
-    let downBorder = (1.3671 - initBallY + 0.07) * super.Utils.SCALE;
+    let leftBorder = (1.53) * super.Utils.SCALE;
+    let topBorder = (1.2971 - initBallY) * super.Utils.SCALE;
+    let rightBorder = (1.7) * super.Utils.SCALE;
+    let downBorder = (1.4371 - initBallY) * super.Utils.SCALE;
 
 
     cheeseClock = {

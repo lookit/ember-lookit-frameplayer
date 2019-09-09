@@ -158,7 +158,7 @@ export default class FeedMouse extends Base {
       position: {x: 0, y: 0},
       velocity: 0,
       mass: super.Utils.ballMass,
-      radius: 10,
+      radius: 0.02381 * super.Utils.SCALE,
       restitution: super.Utils.restitution,
       color: super.Utils.yellowColor,
       timeReached: 0
@@ -191,7 +191,7 @@ export default class FeedMouse extends Base {
         x: leftBorder,
         y: topBorder
       },
-      radius: 3,
+      radius: 0.007143 * super.Utils.SCALE,
       color: super.Utils.grayColor,
       roofcolor: super.Utils.redColor,
       houseColor: super.Utils.grayColor,
@@ -352,7 +352,7 @@ export default class FeedMouse extends Base {
       dimensions: {width: target.dimensions.width * multiplier, height: target.dimensions.height * multiplier},
       position: {
         x: CENTER - (target.dimensions.width * multiplier / 2) + difference,
-        y: ball.position.y - target.dimensions.height * multiplier / 2 + 10
+        y: ball.position.y - target.dimensions.height * multiplier / 2 + 0.02381 * super.Utils.SCALE
       }
 
     };

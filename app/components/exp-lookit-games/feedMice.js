@@ -88,12 +88,12 @@ export default class FeedMice extends Base {
     let topBorder = top * super.Utils.SCALE;
     let target = {
 
-      dimensions: {width: 86 / 2, height: 63 / 2},
+      dimensions: {width: 0.10238 * super.Utils.SCALE, height: 0.075 * super.Utils.SCALE },
       position: {
         x: leftBorder,
         y: topBorder
       },
-      radius: 4,
+      radius: 0.00956 * super.Utils.SCALE ,
       color: super.Utils.grayColor,
       roofcolor: super.Utils.redColor,
       windowbackground: super.Utils.blackColor,
@@ -117,7 +117,7 @@ export default class FeedMice extends Base {
 
     //Draw House
     let leftBorder = 0.798 * super.Utils.SCALE;
-    let topBorder = (0.78) * super.Utils.SCALE;
+    let topBorder = 0.78 * super.Utils.SCALE;
 
     let houseObj = {
 
@@ -264,8 +264,8 @@ export default class FeedMice extends Base {
 
     let splat = {
 
-      dimensions: {width: 162 / 4, height: 153 / 4},
-      position: {x: target.position.x - 10, y: target.position.y}
+      dimensions: {width: 0.09645 * super.Utils.SCALE, height: 0.09107 * super.Utils.SCALE},
+      position: {x: target.position.x - 0.0238 * super.Utils.SCALE, y: target.position.y}
     };
 
     super.drawImageObject(splat, splatImg);
@@ -292,7 +292,7 @@ export default class FeedMice extends Base {
   discreteLauncer(image) {
 
 
-    let leftBorder = (0.7510 - 0.05) * super.Utils.SCALE;
+    let leftBorder = (0.701) * super.Utils.SCALE;
     let topBorder = (1.3671) * super.Utils.SCALE;
 
     let launcher = {

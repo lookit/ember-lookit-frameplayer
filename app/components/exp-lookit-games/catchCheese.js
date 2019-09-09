@@ -129,7 +129,7 @@ export default class CatchCheese extends Base {
     );
 
 
-    if(super.currentRounds >0 || (super.currentRounds === 0 && !super.paddleIsMoved(basket))) {
+    if(super.currentRounds > 0 || (super.currentRounds === 0 && !super.paddleIsMoved(basket))) {
       audio.play();
     }
     audio.addEventListener('playing', function () {
@@ -214,8 +214,8 @@ export default class CatchCheese extends Base {
    */
   createBallBox(image) {
 
-    let leftBorder = (0.35 - 0.3) * super.Utils.SCALE;
-    let topBorder = (1.2971 - 0.15 )* super.Utils.SCALE;
+    let leftBorder = (0.05) * super.Utils.SCALE;
+    let topBorder = (1.1471 )* super.Utils.SCALE;
     this.ctx.drawImage(image, leftBorder, topBorder, basket.dimensions.height*3, basket.dimensions.height*3);
 
 
