@@ -535,7 +535,6 @@ export default class Base {
   finishGame(score) {
 
     this.currentRounds++;
-    console.log('finishGame');
     this.clearInterval();
     cancelAnimationFrame(gameLoop);
     if (score) {
@@ -549,6 +548,7 @@ export default class Base {
       this.context.set('showInstructions', true);
       this.context.stopRecorder().finally(() => {
         this.context.destroyRecorder();
+        this.context.send('export');
         this.context.send('next');
       });
     }
