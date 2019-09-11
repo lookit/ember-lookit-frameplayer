@@ -27,11 +27,12 @@ let initialTime = 0;
 let initVmatrix = [];
 let shuttles = [];
 let jitterT = 0;
-
+let start_time = 0;
 
 let ballImg = {};
 let ballBoxImg = {};
 let splatImg = {};
+let startSound = {};
 
 let windowImgs = [];
 let shuttlImgs = [];
@@ -182,7 +183,7 @@ export default class FeedMice extends Base {
    * @method init
    */
   init() {
-    super.init();
+    start_time = new Date().getTime();
     initVmatrix = super.uniformArr([1, 2, 3]);
     shuttles = super.uniformArr([1, 2, 3]);
     goodJob = new Audio(super.Utils.good3MouseSound);
@@ -196,7 +197,8 @@ export default class FeedMice extends Base {
     goodJob.src = super.Utils.good3MouseSound;
     ballCatchFail.src = super.Utils.bad3MouseSound;
     audio.src = super.Utils.monsterGrowl;
-
+    startSound = new Audio(super.Utils.monsterLaunch);
+    startSound.src = super.Utils.monsterLaunch;
 
     ballImg = new Image();
     ballImg.src = super.Utils.slimeBall;
@@ -211,6 +213,10 @@ export default class FeedMice extends Base {
     super.fillImageArray(shuttlImageURLS,shuttlImgs);
 
     audio.addEventListener('onloadeddata', this.initGame(), false);
+    audio.addEventListener('playing', function () {
+      initialTime = new Date().getTime();
+    });
+    super.init();
   }
 
 
@@ -224,11 +230,11 @@ export default class FeedMice extends Base {
   initGame() {
     initialTime = 0;
     pressed = Array(3).fill(false);
-    jitterT = super.trialStartTime() / 10;
+    jitterT = super.trialStartTime();
     ball = {
       position: {x: 0, y: 0},
       mass: super.Utils.ballMass,
-      radius: 10,
+      radius: 0.02385 * super.Utils.SCALE,
       restitution: super.Utils.restitution,
       color: super.Utils.yellowColor,
       timeReached: new Date().getTime()
@@ -237,14 +243,17 @@ export default class FeedMice extends Base {
 
     ball = super.ballObject();
 
+    if(super.currentRounds > 0 ){
+      audio.play();
+    }
+
     targets = Array(3).fill({}).map((_, index) =>
 
       (this.targetCoord(index))
     );
-    audio.play();
-    audio.addEventListener('playing', function () {
-      initialTime = new Date().getTime();
-    });
+    if(super.getElapsedTime(start_time) >= 2) {
+      audio.play();
+    }
 
     super.initGame();
 
@@ -324,13 +333,16 @@ export default class FeedMice extends Base {
 
     let index = pressed.findIndex(item => item !== false);
 
+    if(initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(start_time) >= 2.5) {
+
+      audio.play();
+
+    }
 
     if (ball.state === 'start') {
       super.moveBallToStart(ball, ballImg, false);
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         audio.pause();
-        let startSound = new Audio(super.Utils.monsterLaunch);
-        startSound.src = super.Utils.monsterLaunch;
         startSound.play();
         initialTime = new Date().getTime();
         ball.state = 'fall';
@@ -399,7 +411,7 @@ export default class FeedMice extends Base {
         this.createWindow(target);
         this.showWindow(index);
       }
-      if (super.getElapsedTime(initialTime) >= 2.5) {
+      if (super.getElapsedTime(initialTime) >= 3) {
         super.finishGame(false);
       }
 
