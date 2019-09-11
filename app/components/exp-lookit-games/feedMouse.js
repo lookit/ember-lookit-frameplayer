@@ -91,6 +91,20 @@ export default class FeedMouse extends Base {
 
   }
 
+  /**
+   * Show the current  ball location .
+   * Center the ball location.
+   * @method showBallLocation
+   * @param target
+   */
+  showBallLocation(){
+
+
+    super.drawBall(ball, ballImg);
+
+
+  }
+
 
   /**
    * Main point to start the game.
@@ -338,9 +352,14 @@ export default class FeedMouse extends Base {
         super.finishGame(false);
       }
 
+      if(ball.hitstate !== 'good' && ball.hitstate !== 'great' ){
+
+        this.showBallLocation();
+      }
+
     }
 
-    super.discreteLauncer(ballBoxImg);
+    this.discreteLauncer(ballBoxImg);
 
   }
 
@@ -359,5 +378,21 @@ export default class FeedMouse extends Base {
     return explosion;
   }
 
+
+
+  discreteLauncer(image) {
+
+    let initX  = 0.7510;
+    let leftBorder = (initX - 0.05) * super.Utils.SCALE;
+    let topBoarder = (1.3671 - 0.05) * super.Utils.SCALE;
+
+    let launcher = {
+      position: {x:leftBorder, y:topBoarder },
+      dimensions: {width: 0.13605 * super.Utils.SCALE , height:0.1548 * super.Utils.SCALE }
+    };
+
+    super.drawImageObject(launcher, image);
+
+  }
 
 }
