@@ -30,6 +30,7 @@ let targetsize = 0.02;
 let fireworksURLs = [];
 const CENTER = 1.30715;
 
+let start_time = 0;
 let ballImg = {};
 let targetImgs = [];
 let ballBoxImg = {};
@@ -113,7 +114,7 @@ export default class FeedMouse extends Base {
    */
   init() {
 
-
+    start_time = new Date().getTime();
     TfArr = super.uniformArr([0.8, 0.9, 1]);
     goodJob = new Audio(super.Utils.firework_small);
     goodJob.load();
@@ -149,6 +150,10 @@ export default class FeedMouse extends Base {
 
 
     startSound.addEventListener('onloadeddata', this.initGame(), false);
+    startSound.addEventListener('playing', function () {
+      initialTime = new Date().getTime();
+    });
+
     super.init();
 
   }
@@ -181,11 +186,10 @@ export default class FeedMouse extends Base {
 
     randomNumber = Math.floor(Math.random() * 3); // Get random value from 0 to 2
     ball = super.ballObject();
-    startSound = new Audio(super.Utils.fuse);
-    startSound.play();
-    startSound.addEventListener('playing', function () {
-      initialTime = new Date().getTime();
-    });
+
+    if(super.currentRounds > 0 ) {
+      startSound.play();
+    }
 
     super.initGame();
 
@@ -272,6 +276,13 @@ export default class FeedMouse extends Base {
     super.generateTrajectoryParamsDiscrete(TfArr);
     this.createHouse();
     this.createWindow();
+
+    if(initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(start_time) >= 2.5) {
+
+      startSound.play();
+
+    }
+
 
     if (ball.state === 'start') {
 

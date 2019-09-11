@@ -30,7 +30,7 @@ let paddleBox = {
 
 // let INITIAL_SCREEN_WIDTH = this.canvas.width/1024; // X  screen from matlab
 // let INITIAL_SCREEN_HEIGHT = this.canvas.height/768; // Y screen from matlab
-const PADDLE_REST_TIME_MS = 2000;
+const PADDLE_REST_TIME_MS = 3000;
 
 /**
  * Base class for common game functions
@@ -749,7 +749,6 @@ export default class Base {
    * @returns {number} seconds
    */
   trialStartTime() {
-
     let min = this.context.minTime + 350;
     return ((Math.floor(Math.random() * (this.context.maxTime - min + 1)) + min) / 1000 );
 
