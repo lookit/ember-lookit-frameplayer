@@ -28,7 +28,7 @@ let jitterT = 0;
 let radiusRim = 0.1;
 let obstructionsNum = 0;
 let basketImage = {};
-
+let consecutive_counts = 0;
 let ballImg = {};
 let paddleImg = {};
 let ballBoxImg = {};
@@ -291,11 +291,13 @@ export default class CatchCheese extends Base {
 
       if (ball.hitstate === 'very good' || ball.hitstate === 'good') {
         super.increaseScore();
+        consecutive_counts++;
         goodJob.play();
 
       }else{
 
         ballCatchFail.play();
+        consecutive_counts = 0;
       }
 
 
