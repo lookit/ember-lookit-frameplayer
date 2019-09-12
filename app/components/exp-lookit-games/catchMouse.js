@@ -16,7 +16,7 @@ import Base from './base';
 let mice = {};
 let cheeseClock = {};
 let basket = {};
-let audio = {};
+let startSound = {};
 let ballCatchFail = {};
 let cheese1Sound = {};
 let cheese2Sound = {};
@@ -61,10 +61,9 @@ export default class CatchMouse extends Base {
    * @method init
    */
   init() {
-    super.init();
     document.addEventListener("mousemove", super.onMouseMove);
-    audio = new Audio(super.Utils.drumRollSound);
-    audio.load();
+    startSound = new Audio();
+    startSound.load();
     cheese1Sound = new Audio(super.Utils.cheese_ser1Sound);
     cheese1Sound.load();
     cheese2Sound = new Audio(super.Utils.cheese_ser2Sound);
@@ -79,14 +78,13 @@ export default class CatchMouse extends Base {
     cheese3Sound.src = super.Utils.cheese_ser3Sound;
     ballCatchFail.src = super.Utils.ballcatchFailSound;
     swooshSound.src = super.Utils.swooshSound;
-    audio.src = super.Utils.drumRollSound;
+    startSound.src = super.Utils.drumRollSound;
 
     ballCatchFail.load();
 
     //Mice coord
 
     let x = initX;
-    let y = initBallY;
     let leftBorder = (x - 0.08) * super.Utils.SCALE;
     let topBorder = (1.3671 - initBallY - 0.07) * super.Utils.SCALE;
 
@@ -127,25 +125,25 @@ export default class CatchMouse extends Base {
     basketImg = new Image();
     basketImg.src = basket.imageURL;
 
-    this.initGame();
-    audio.addEventListener('onloadeddata', this.initGame(), false);
+    startSound.addEventListener('onloadeddata', this.initGame(), false);
+    super.init();
+
   }
 
 
   setCheeseObj() {
 
     //Cheese coord
-    let leftBorder = (1.53) * super.Utils.SCALE;
-    let topBorder = (1.2971 - initBallY) * super.Utils.SCALE;
-    let rightBorder = (1.7) * super.Utils.SCALE;
-    let downBorder = (1.4371 - initBallY) * super.Utils.SCALE;
-
+    let leftBorder = (1.53)*super.Utils.SCALE ;
+    let topBorder = (1.2974-initBallY)*super.Utils.SCALE;
+    let width = 0.27777 * super.Utils.SCALE;
+    let height = 0.26031 * super.Utils.SCALE;
 
     cheeseClock = {
-      dimensions: {width: rightBorder - leftBorder, height: downBorder - topBorder},
-      position: {x: leftBorder, y: topBorder},
+      dimensions: {width: width, height: height},
+      position: {x: leftBorder ,y: topBorder},
       angle: 0,
-      state: 10,
+      state:10,
       velocity: 1.4,
       imageURL: super.Utils.pizza
     };
@@ -183,10 +181,10 @@ export default class CatchMouse extends Base {
     basket = super.basketObject(basket);
 
     if (super.currentRounds > 0 || (super.currentRounds === 0 && !super.paddleIsMoved(basket))) {
-      audio.play();
+      startSound.play();
     }
 
-    audio.addEventListener('playing', function () {
+    startSound.addEventListener('playing', function () {
       initialTime = new Date().getTime();
 
     });
@@ -293,7 +291,7 @@ export default class CatchMouse extends Base {
 
     if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMoved(basket)) {
 
-      audio.play();
+      startSound.play();
     }
 
 
@@ -305,8 +303,8 @@ export default class CatchMouse extends Base {
 
     //Randomize initial wait time here
     if (mice.state === 'start' && initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
-      audio.pause();
-      audio.currentTime = 0;
+      startSound.pause();
+      startSound.currentTime = 0;
       mice.state = 'show';
       mice.showTime = new Date().getTime();
     }
@@ -348,9 +346,6 @@ export default class CatchMouse extends Base {
       if ((mice.position.y + 20) - basket.position.y >= 0) {
         mice.state = 'done';
         if (cheeseClock.state > 0) {
-          cheeseClock.dimensions.width = cheeseClock.dimensions.width * 1.5;
-          cheeseClock.dimensions.height = cheeseClock.dimensions.height * 1.5;
-
           if (cheeseClock.state < 4) {
 
             cheese1Sound.play();
