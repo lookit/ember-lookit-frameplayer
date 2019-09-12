@@ -460,7 +460,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                  * @default ["center", "left", "right", "center"]
                  */
                 calibrationPositions: {
-                    type: 'Array',
+                    type: 'array',
                     description: 'Ordered list of positions to show calibration',
                     default: ['center', 'left', 'right', 'center']
                 },

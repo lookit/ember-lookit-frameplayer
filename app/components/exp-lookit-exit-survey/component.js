@@ -97,9 +97,9 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
                             }
                         }
                     }
-                },
-                required: ['debriefing']
-            }
+                }
+            },
+            required: ['debriefing']
         },
         data: {
             /**

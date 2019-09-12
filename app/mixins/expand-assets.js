@@ -87,6 +87,7 @@ import Ember from 'ember';
  *
  * @class Expand-assets
  */
+
 export default Ember.Mixin.create({
     /**
      * Object describing which properties may need expansion
@@ -114,7 +115,7 @@ export default Ember.Mixin.create({
                  * @default ''
                  */
                 baseDir: {
-                    type: 'string',
+                    type: 'somethingsomething',
                     default: '',
                     description: 'Base directory for all stimuli'
                 },
@@ -149,7 +150,7 @@ export default Ember.Mixin.create({
                 /**
                  * List of video types to expect for any audio specified just
                  * with a string rather than with a list of src/type objects.
-                 * If vidioTypes is `['typeA', 'typeB']` and a video source
+                 * If videoTypes is `['typeA', 'typeB']` and a video source
                  * is given as `intro`, the video source will be
                  * expanded out to
                  *
@@ -195,6 +196,7 @@ export default Ember.Mixin.create({
                     // Image: replace stub with full URL if needed
                     fullAsset = this.baseDir + 'img/' + asset;
                 }
+                fetch(url, { method: 'HEAD', mode: "no-cors" }); // Throws error if unavailable
                 return fullAsset;
             case 'audio':
             case 'video':
@@ -203,8 +205,10 @@ export default Ember.Mixin.create({
                 if (typeof asset === 'string' && asset) {
                     fullAsset = [];
                     for (var iType = 0; iType < types.length; iType++) {
+                        let url = _this.baseDir + types[iType] + '/' + asset + '.' + types[iType]
+                        fetch(url, { method: 'HEAD', mode: "no-cors" }); // Throws error if unavailable
                         fullAsset.push({
-                            src: _this.baseDir + types[iType] + '/' + asset + '.' + types[iType],
+                            src: url,
                             type: type + '/' + types[iType]
                         });
                     }

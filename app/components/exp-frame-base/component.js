@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import Ajv from 'ajv';
 
 //import config from 'ember-get-config';
 import FullScreen from '../../mixins/full-screen';
@@ -370,6 +371,53 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
                 }
             }
 
+            // After adding any generated properties, check that all required fields are set
+            console.log(this.get('meta.parameters'));
+            if (this.get('meta.parameters').hasOwnProperty('required')) {
+                var requiredFields = this.get('meta.parameters.required', []);
+                requiredFields.forEach((key) => {
+                    if (!this.hasOwnProperty(key) || this.get(key) === undefined) {
+                        // Don't actually throw an error here because the frame may actually still function and that's probably good
+                        console.error(`Missing required parameter '${key}' for frame of kind '${this.get('kind')}'.`);
+                    }
+                });
+            }
+
+            // TODO: Use JSON schema validator to check that all values are set to something reasonable
+
+//             var schema = {
+//               "properties": {
+//                 "foo": { "type": "string" },
+//                 "bar": { "type": "number", "maximum": 3 }
+//               }
+//             };
+//
+//             var validate = ajv.compile(schema);
+//
+//             test({"foo": "abc", "bar": 2});
+//             test({"foo": "def", "bar": 1});
+//
+//             function test(data) {
+//               var valid = validate(data);
+//               if (valid) console.log('Valid!');
+//               else console.log('Invalid: ' + ajv.errorsText(validate.errors));
+//             }
+
+
+            var ajv = new Ajv({
+                allErrors: true,
+                verbose: true
+            }); // options can be passed, e.g. {allErrors: true}
+            var frameSchema = this.get('meta.parameters');
+            // TODO: wrap compile in try
+            var validate = ajv.compile(frameSchema);
+            var valid = validate(this);
+            if (valid) {
+                console.log('Valid!');
+            } else {
+                console.warn('Invalid: ' + ajv.errorsText(validate.errors));
+            }
+
         }
 
         this.set('_oldFrameIndex', currentFrameIndex);
@@ -421,6 +469,7 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         defaultParams.generatedProperties = null;
         defaultParams.selectNextFrame = null;
         Ember.assign(defaultParams, params);
+
         return defaultParams;
     },
 

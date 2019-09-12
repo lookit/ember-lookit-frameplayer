@@ -107,10 +107,6 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
         parameters: {
             type: 'object',
             properties: {
-                index: {
-                    type: 'integer',
-                    default: 0
-                },
                 /**
                  * A series of preview videos to display within a single frame, defined as an array of objects.
                  *
@@ -159,17 +155,9 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
                  * @property {String} prompt
                  */
                 prompt: {
-                    type: 'object',
+                    type: 'string',
                     description: 'Text on the button prompt asking the user to continue to the videos',
-                    properties: {
-                        title: {
-                            type: 'string'
-                        },
-                        text: {
-                            type: 'string'
-                        }
-                    },
-                    default: null
+                    default: 'Begin preview'
                 },
                 /**
                  * Informational text to display to the user before videos are shown, along with button to continue

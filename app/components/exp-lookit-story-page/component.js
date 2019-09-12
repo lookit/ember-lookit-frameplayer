@@ -163,7 +163,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                  * @property {Number} durationSeconds
                  */
                 durationSeconds: {
-                    type: 'Number',
+                    type: 'number',
                     description: 'Minimum duration of frame in seconds if autoproceeding'
                 },
 
@@ -174,7 +174,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                  * @property {Number} showProgressBar
                  */
                 showProgressBar: {
-                    type: 'Boolean',
+                    type: 'boolean',
                     description: 'Whether to show a progress bar based on durationSeconds'
                 },
 

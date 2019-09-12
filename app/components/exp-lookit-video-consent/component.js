@@ -209,7 +209,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 @default false
                 */
                 gdpr: {
-                    type: 'Boolean',
+                    type: 'boolean',
                     description: 'Whether to include a section on GDPR',
                     default: false
                 },

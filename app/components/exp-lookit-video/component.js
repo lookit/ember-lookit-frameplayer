@@ -265,9 +265,30 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 @default []
                 */
                 musicSources: {
-                    type: 'string',
+                    anyOf: [
+                        {
+                            type: 'string'
+                            // TODO: require baseDir & audioTypes in this case
+                        },
+                        {
+                            type: 'array',
+                            items: {
+                                type: 'object',
+                                properties: {
+                                    'src': {
+                                        type: 'string'
+                                        // TODO: require URL
+                                    },
+                                    'type': {
+                                        type: 'string'
+                                        // TODO: require enum
+                                    }
+                                }
+                            }
+                        }
+                    ],
                     description: 'List of objects specifying music audio src and type',
-                    default: []
+                    default: ''
                 },
 
                 /**
@@ -322,7 +343,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                  * @default ["center", "left", "right", "center"]
                  */
                 calibrationPositions: {
-                    type: 'Array',
+                    type: 'array',
                     description: 'Ordered list of positions to show calibration',
                     default: ['center', 'left', 'right', 'center']
                 },

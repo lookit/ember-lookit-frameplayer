@@ -308,6 +308,10 @@
                                 <a href="#property_nextStimulusText">nextStimulusText</a>
 
                             </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_parameters">parameters</a>
+
+                            </li>
                             <li class="index-item property">
                                 <a href="#property_previousStimulusText">previousStimulusText</a>
 
@@ -570,7 +574,7 @@
                 Video-record
             </a>
             but overwritten in
-        <a href="../files/app_components_exp-frame-base_component.js.html#l402"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:402</code></a>
+        <a href="../files/app_components_exp-frame-base_component.js.html#l457"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:457</code></a>
         </p>
 
 
@@ -749,7 +753,7 @@ instead stop/start and make separate clips if needed.
                 Exp-frame-base
             </a>
             but overwritten in
-        <a href="../files/app_components_exp-video-preview_component.js.html#l209"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:209</code></a>
+        <a href="../files/app_components_exp-video-preview_component.js.html#l197"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:197</code></a>
         </p>
 
 
@@ -1190,7 +1194,7 @@ should set to override if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Expand-assets.html#property_assetsToExpand">Expand-assets </a> (click for formatted description):
-        <a href="../files/app_mixins_expand-assets.js.html#l91"><code>app&#x2F;mixins&#x2F;expand-assets.js:91</code></a>
+        <a href="../files/app_mixins_expand-assets.js.html#l92"><code>app&#x2F;mixins&#x2F;expand-assets.js:92</code></a>
         </p>
 
 
@@ -1239,7 +1243,7 @@ should set to override if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Expand-assets.html#property_audioTypes">Expand-assets </a> (click for formatted description):
-        <a href="../files/app_mixins_expand-assets.js.html#l121"><code>app&#x2F;mixins&#x2F;expand-assets.js:121</code></a>
+        <a href="../files/app_mixins_expand-assets.js.html#l122"><code>app&#x2F;mixins&#x2F;expand-assets.js:122</code></a>
         </p>
 
 
@@ -1305,7 +1309,7 @@ expanded out to
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Expand-assets.html#property_baseDir">Expand-assets </a> (click for formatted description):
-        <a href="../files/app_mixins_expand-assets.js.html#l101"><code>app&#x2F;mixins&#x2F;expand-assets.js:101</code></a>
+        <a href="../files/app_mixins_expand-assets.js.html#l102"><code>app&#x2F;mixins&#x2F;expand-assets.js:102</code></a>
         </p>
 
 
@@ -1547,7 +1551,7 @@ to be on one line.)</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-video-preview_component.js.html#l184"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:184</code></a>
+        <a href="../files/app_components_exp-video-preview_component.js.html#l172"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:172</code></a>
         </p>
 
 
@@ -1558,6 +1562,75 @@ to be on one line.)</p>
 
     </div>
 
+
+
+</div>
+<div id="property_parameters" class="property item inherited">
+    <h3 class="name"><code>parameters</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Exp-frame-base.html#property_parameters">Exp-frame-base </a> (click for formatted description):
+        <a href="../files/app_components_exp-frame-base_component.js.html#l228"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:228</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>An object containing values for any parameters (variables) to use in this frame.
+Any property VALUES in this frame that match any of the property NAMES in <code>parameters</code>
+will be replaced by the corresponding parameter value. For example, suppose your frame
+is:</p>
+<pre class="code prettyprint"><code>{
+   'kind': 'FRAME_KIND',
+   'parameters': {
+       'FRAME_KIND': 'exp-lookit-text'
+   }
+}
+</code></pre>
+<p>Then the frame <code>kind</code> will be <code>exp-lookit-text</code>. This may be useful if you need
+to repeat values for different frame properties, especially if your frame is actually
+a randomizer or group. You may use parameters nested within objects (at any depth) or
+within lists.</p>
+<p>You can also use selectors to randomly sample from or permute
+a list defined in <code>parameters</code>. Suppose <code>STIMLIST</code> is defined in
+<code>parameters</code>, e.g. a list of potential stimuli. Rather than just using <code>STIMLIST</code>
+as a value in your frames, you can also:</p>
+<ul>
+<li>Select the Nth element (0-indexed) of the value of <code>STIMLIST</code>: (Will cause error if <code>N &gt;= THELIST.length</code>)</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#N'
+</code></pre>
+<ul>
+<li>Select (uniformly) a random element of the value of <code>STIMLIST</code>:</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#RAND'
+</code></pre>
+<ul>
+<li>Set <code>parameterName</code> to a random permutation of the value of <code>STIMLIST</code>:</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#PERM'
+</code></pre>
+<ul>
+<li>Select the next element in a random permutation of the value of <code>STIMLIST</code>, which is used across all
+substitutions in this randomizer. This allows you, for instance, to provide a list
+of possible images in your <code>parameterSet</code>, and use a different one each frame with the
+subset/order randomized per participant. If more <code>STIMLIST#UNIQ</code> parameters than
+elements of <code>STIMLIST</code> are used, we loop back around to the start of the permutation
+generated for this randomizer.</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#UNIQ'
+</code></pre>
+
+    </div>
+
+        <p><strong>Default:</strong> {}</p>
 
 
 </div>
@@ -1572,7 +1645,7 @@ to be on one line.)</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-video-preview_component.js.html#l194"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:194</code></a>
+        <a href="../files/app_components_exp-video-preview_component.js.html#l182"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:182</code></a>
         </p>
 
 
@@ -1597,7 +1670,7 @@ to be on one line.)</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-video-preview_component.js.html#l156"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:156</code></a>
+        <a href="../files/app_components_exp-video-preview_component.js.html#l152"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:152</code></a>
         </p>
 
 
@@ -1815,7 +1888,7 @@ stopped.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-video-preview_component.js.html#l174"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:174</code></a>
+        <a href="../files/app_components_exp-video-preview_component.js.html#l162"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:162</code></a>
         </p>
 
 
@@ -1891,7 +1964,7 @@ Accessible to consuming frame.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-video-preview_component.js.html#l114"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:114</code></a>
+        <a href="../files/app_components_exp-video-preview_component.js.html#l110"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:110</code></a>
         </p>
 
 
@@ -1950,7 +2023,7 @@ Accessible to consuming frame.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Expand-assets.html#property_videoTypes">Expand-assets </a> (click for formatted description):
-        <a href="../files/app_mixins_expand-assets.js.html#l149"><code>app&#x2F;mixins&#x2F;expand-assets.js:149</code></a>
+        <a href="../files/app_mixins_expand-assets.js.html#l150"><code>app&#x2F;mixins&#x2F;expand-assets.js:150</code></a>
         </p>
 
 
@@ -1959,7 +2032,7 @@ Accessible to consuming frame.
     <div class="description">
         List of video types to expect for any audio specified just
 with a string rather than with a list of src/type objects.
-If vidioTypes is <code>[&#x27;typeA&#x27;, &#x27;typeB&#x27;]</code> and a video source
+If videoTypes is <code>[&#x27;typeA&#x27;, &#x27;typeB&#x27;]</code> and a video source
 is given as <code>intro</code>, the video source will be
 expanded out to
 
@@ -2088,7 +2161,7 @@ expanded out to
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Exp-frame-base.html#event_nextFrame">Exp-frame-base</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l449"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:449</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l504"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:504</code></a>
                             </p>
                     
                     
@@ -2137,7 +2210,7 @@ expanded out to
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Exp-frame-base.html#event_previousFrame">Exp-frame-base</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l504"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:504</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l559"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:559</code></a>
                             </p>
                     
                     

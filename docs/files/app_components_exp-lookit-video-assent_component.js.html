@@ -392,7 +392,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
             this.get(&#x27;hasCompletedEachPageAudio&#x27;)[this.get(&#x27;pageIndex&#x27;)] = true;
             this.set(&#x27;hasCompletedThisPageAudio&#x27;, true);
 
-            if (this.get(&#x27;pageIndex&#x27;) == this.get(&#x27;pages&#x27;).length - 1) { // TODO
+            if (this.get(&#x27;pageIndex&#x27;) == this.get(&#x27;pages&#x27;).length - 1) {
                 this.set(&#x27;readAllPages&#x27;, true);
             }
         },
@@ -401,10 +401,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
             this.get(&#x27;hasCompletedEachPageVideo&#x27;)[this.get(&#x27;pageIndex&#x27;)] = true;
             this.set(&#x27;hasCompletedThisPageVideo&#x27;, true);
 
-            if (this.get(&#x27;pageIndex&#x27;) == this.get(&#x27;pages&#x27;).length - 1) { // TODO
+            if (this.get(&#x27;pageIndex&#x27;) == this.get(&#x27;pages&#x27;).length - 1) {
                 this.set(&#x27;readAllPages&#x27;, true);
             }
-            console.log(&#x27;video completed.&#x27;);
         },
 
         download() {
