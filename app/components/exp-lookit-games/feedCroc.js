@@ -87,12 +87,12 @@ export default class FeedCroc extends Base {
     hArray = super.generateHeights();
 
 
-    let leftBorder = (1.42) * super.Utils.SCALE;
-    let downBorder = (0.36) * super.Utils.SCALE;
+    let leftBorder = (1.48) * super.Utils.SCALE;
+    let downBorder = (0.43) * super.Utils.SCALE;
 
     target = {
 
-      dimensions: {width: 0.657 * super.Utils.SCALE, height: 0.657 * super.Utils.SCALE},
+      dimensions: {width: 0.5 * super.Utils.SCALE, height: 0.5 * super.Utils.SCALE},
       position: {x: leftBorder, y: downBorder},
       imageURL: super.Utils.wallMissed,
       imageTargetReachedURL: super.Utils.wallInitial
@@ -112,7 +112,7 @@ export default class FeedCroc extends Base {
     token = {
 
       dimensions: {width: 0.21 * super.Utils.SCALE, height: 0.2 * super.Utils.SCALE},
-      position: {x: 1.85 * super.Utils.SCALE, y: 0.36 * super.Utils.SCALE},
+      position: {x: 1.85 * super.Utils.SCALE, y: 0.34 * super.Utils.SCALE},
       imageURL: super.Utils.tokenImage
 
     };
