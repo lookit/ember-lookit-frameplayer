@@ -59,6 +59,13 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
 
     extra: {},
 
+    mergedProperties: ['frameSchemaProperties'],
+    concatenatedProperties: ['frameSchemaRequired'],
+
+    frameSchemaRequired: [],
+    frameSchemaProperties: { // Configuration parameters, which can be auto-populated from the experiment structure JSON
+    },
+
     meta: { // Configuration for all fields available on the component/template
         name: 'Base Experimenter Frame',
         description: 'The abstract base frame for Experimenter frames.',
@@ -372,9 +379,9 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
             }
 
             // After adding any generated properties, check that all required fields are set
-            console.log(this.get('meta.parameters'));
-            if (this.get('meta.parameters').hasOwnProperty('required')) {
-                var requiredFields = this.get('meta.parameters.required', []);
+            console.log(this.get('frameSchemaProperties'));
+            if (this.get('frameSchemaProperties').hasOwnProperty('required')) {
+                var requiredFields = this.get('frameSchemaProperties.required', []);
                 requiredFields.forEach((key) => {
                     if (!this.hasOwnProperty(key) || this.get(key) === undefined) {
                         // Don't actually throw an error here because the frame may actually still function and that's probably good
@@ -384,31 +391,13 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
             }
 
             // TODO: Use JSON schema validator to check that all values are set to something reasonable
-
-//             var schema = {
-//               "properties": {
-//                 "foo": { "type": "string" },
-//                 "bar": { "type": "number", "maximum": 3 }
-//               }
-//             };
-//
-//             var validate = ajv.compile(schema);
-//
-//             test({"foo": "abc", "bar": 2});
-//             test({"foo": "def", "bar": 1});
-//
-//             function test(data) {
-//               var valid = validate(data);
-//               if (valid) console.log('Valid!');
-//               else console.log('Invalid: ' + ajv.errorsText(validate.errors));
-//             }
-
-
             var ajv = new Ajv({
                 allErrors: true,
                 verbose: true
-            }); // options can be passed, e.g. {allErrors: true}
-            var frameSchema = this.get('meta.parameters');
+            });
+            var frameSchema = {type: 'object', properties: this.get('frameSchemaProperties')};//this.get('meta.parameters');
+            console.log(frameSchema);
+
             // TODO: wrap compile in try
             var validate = ajv.compile(frameSchema);
             var valid = validate(this);
@@ -445,8 +434,8 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         var params = this.get('frameConfig');
 
         var defaultParams = {};
-        Object.keys(this.get('meta.parameters').properties || {}).forEach((key) => {
-            defaultParams[key] = this.get(`meta.parameters.properties.${key}.default`);
+        Object.keys(this.get('frameSchemaProperties') || {}).forEach((key) => {
+            defaultParams[key] = this.get(`frameSchemaProperties.${key}.default`);
         });
 
         Object.keys(this.get('meta.data').properties || {}).forEach((key) => {
@@ -456,7 +445,7 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
             var value = !clean ? this.get(key) : undefined;
             if (typeof value === 'undefined') {
                 // Make deep copy of the default value (to avoid subtle reference errors from reusing mutable containers)
-                defaultParams[key] = Ember.copy(this.get(`meta.data.properties.${key}.default`), true);
+                defaultParams[key] = Ember.copy(this.get(`frameSchemaProperties.${key}.default`), true);
             } else {
                 defaultParams[key] = value;
             }

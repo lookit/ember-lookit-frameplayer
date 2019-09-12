@@ -172,302 +172,299 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     settings: null,
     triangleBases: null,
 
-    meta: {
-        name: 'ExpLookitGeometryAlternation',
-        description: 'Frame to implement specific test trial structure for geometry alternation experiment. Includes announcement, calibration, and alternation (test) phases. During "alternation," two streams of triangles are shown, in rectangles on the left and right of the screen: one one side both size and shape change, on the other only size changes. Frame is displayed fullscreen and video recording is conducted during calibration/test.',
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                 * Whether to do webcam recording on this frame
-                 *
-                 * @property {Boolean} doRecording
-                 */
-                doRecording: {
-                    type: 'boolean',
-                    description: 'Whether to do webcam recording',
-                    default: true
-                },
-                /**
-                 * True to use big fat triangle as context figure, or false to use small skinny triangle as context.
-                 *
-                 * @property {Boolean} context
-                 * @default true
-                 */
-                context: {
-                    type: 'boolean',
-                    description: 'True to use big fat triangle as context, or false to use small skinny triangle as context.',
-                    default: true
-                },
-                /**
-                 * Whether to put the shape+size alternating stream on the left (other stream alternates only in size)
-                 *
-                 * @property {Boolean} altOnLeft
-                 * @default true
-                */
-                altOnLeft: {
-                    type: 'boolean',
-                    description: 'Whether to put the shape+size alternating stream on the left.',
-                    default: true
-                },
-                /**
-                 * color of triangle outline (3 or 6 char hex, starting with #)
-                 *
-                 * @property {String} triangleColor
-                 * @default '#056090'
-                 */
-                triangleColor: {
-                    type: 'string',
-                    description: 'color of triangle outline (3 or 6 char hex, starting with #)',
-                    default: '#056090'
-                },
-                /**
-                 * triangle line width in pixels
-                 *
-                 * @property {Integer} triangleLineWidth
-                 * @default 5
-                 */
-                triangleLineWidth: {
-                    type: 'integer',
-                    description: 'triangle line width in pixels',
-                    default: 5
-                },
-                /**
-                 * minimum amount of time to show attention-getter in seconds
-                 *
-                 * @property {Number} attnLength
-                 * @default 5
-                 */
-                attnLength: {
-                    type: 'number',
-                    description: 'minimum amount of time to show attention-getter in seconds',
-                    default: 5
-                },
-                /**
-                 * length of alternation trial in seconds
-                 *
-                 * @property {Number} trialLength
-                 * @default 6
-                 */
-                trialLength: {
-                    type: 'number',
-                    description: 'length of alternation trial in seconds',
-                    default: 6
-                },
-                /**
-                 * length of single calibration segment in ms
-                 *
-                 * @property {Number} calibrationLength
-                 * @default 3000
-                 */
-                calibrationLength: {
-                    type: 'number',
-                    description: 'length of single calibration segment in ms',
-                    default: 3000
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * instructions during attention-getter video
-                 *
-                 * @property {Object[]} audioSources
-                 */
-                audioSources: {
-                    type: 'array',
-                    description: 'List of objects specifying audio src and type for instructions during attention-getter video',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * music during trial
-                 *
-                 * @property {Object[]} musicSources
-                 */
-                musicSources: {
-                    type: 'array',
-                    description: 'List of objects specifying audio src and type for music during trial',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * audio after completion of trial (optional; used for last
-                 * trial "okay to open your eyes now" announcement)
-                 *
-                 * @property {Object[]} endAudioSources
-                 */
-                endAudioSources: {
-                    type: 'array',
-                    description: 'Supply this to play audio at the end of the trial; list of objects specifying audio src and type',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * calibration audio (played 4 times during calibration)
-                 *
-                 * @property {Object[]} calibrationAudioSources
-                 */
-                calibrationAudioSources: {
-                    type: 'array',
-                    description: 'list of objects specifying audio src and type for calibration audio',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * calibration video (played from start 4 times during
-                 * calibration)
-                 *
-                 * @property {Object[]} calibrationVideoSources
-                 */
-                calibrationVideoSources: {
-                    type: 'array',
-                    description: 'list of objects specifying video src and type for calibration audio',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * attention-getter video (should be loopable)
-                 *
-                 * @property {Object[]} videoSources
-                 */
-                videoSources: {
-                    type: 'array',
-                    description: 'List of objects specifying video src and type for attention-getter video',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * audio played upon pausing study
-                 *
-                 * @property {Object[]} pauseAudio
-                 */
-                pauseAudio: {
-                    type: 'array',
-                    description: 'List of objects specifying audio src and type for audio played when pausing study',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * audio played upon unpausing study
-                 *
-                 * @property {Object[]} unpauseAudio
-                 */
-                unpauseAudio: {
-                    type: 'array',
-                    description: 'List of objects specifying audio src and type for audio played when pausing study',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * audio played when study is paused due to not being fullscreen
-                 *
-                 * @property {Object[]} fsAudio
-                 */
-                fsAudio: {
-                    type: 'array',
-                    description: 'List of objects specifying audio src and type for audio played when pausing study if study is not fullscreen',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
+    frameSchemaProperties: {
+        /**
+         * Whether to do webcam recording on this frame
+         *
+         * @property {Boolean} doRecording
+         */
+        doRecording: {
+            type: 'boolean',
+            description: 'Whether to do webcam recording',
+            default: true
+        },
+        /**
+         * True to use big fat triangle as context figure, or false to use small skinny triangle as context.
+         *
+         * @property {Boolean} context
+         * @default true
+         */
+        context: {
+            type: 'boolean',
+            description: 'True to use big fat triangle as context, or false to use small skinny triangle as context.',
+            default: true
+        },
+        /**
+         * Whether to put the shape+size alternating stream on the left (other stream alternates only in size)
+         *
+         * @property {Boolean} altOnLeft
+         * @default true
+        */
+        altOnLeft: {
+            type: 'boolean',
+            description: 'Whether to put the shape+size alternating stream on the left.',
+            default: true
+        },
+        /**
+         * color of triangle outline (3 or 6 char hex, starting with #)
+         *
+         * @property {String} triangleColor
+         * @default '#056090'
+         */
+        triangleColor: {
+            type: 'string',
+            description: 'color of triangle outline (3 or 6 char hex, starting with #)',
+            default: '#056090'
+        },
+        /**
+         * triangle line width in pixels
+         *
+         * @property {Integer} triangleLineWidth
+         * @default 5
+         */
+        triangleLineWidth: {
+            type: 'integer',
+            description: 'triangle line width in pixels',
+            default: 5
+        },
+        /**
+         * minimum amount of time to show attention-getter in seconds
+         *
+         * @property {Number} attnLength
+         * @default 5
+         */
+        attnLength: {
+            type: 'number',
+            description: 'minimum amount of time to show attention-getter in seconds',
+            default: 5
+        },
+        /**
+         * length of alternation trial in seconds
+         *
+         * @property {Number} trialLength
+         * @default 6
+         */
+        trialLength: {
+            type: 'number',
+            description: 'length of alternation trial in seconds',
+            default: 6
+        },
+        /**
+         * length of single calibration segment in ms
+         *
+         * @property {Number} calibrationLength
+         * @default 3000
+         */
+        calibrationLength: {
+            type: 'number',
+            description: 'length of single calibration segment in ms',
+            default: 3000
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * instructions during attention-getter video
+         *
+         * @property {Object[]} audioSources
+         */
+        audioSources: {
+            type: 'array',
+            description: 'List of objects specifying audio src and type for instructions during attention-getter video',
+            default: [],
+            items: {
+                type: 'object',
+                properties: {
+                    'src': {
+                        type: 'string'
+                    },
+                    'type': {
+                        type: 'string'
                     }
                 }
             }
         },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * music during trial
+         *
+         * @property {Object[]} musicSources
+         */
+        musicSources: {
+            type: 'array',
+            description: 'List of objects specifying audio src and type for music during trial',
+            default: [],
+            items: {
+                type: 'object',
+                properties: {
+                    'src': {
+                        type: 'string'
+                    },
+                    'type': {
+                        type: 'string'
+                    }
+                }
+            }
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * audio after completion of trial (optional; used for last
+         * trial "okay to open your eyes now" announcement)
+         *
+         * @property {Object[]} endAudioSources
+         */
+        endAudioSources: {
+            type: 'array',
+            description: 'Supply this to play audio at the end of the trial; list of objects specifying audio src and type',
+            default: [],
+            items: {
+                type: 'object',
+                properties: {
+                    'src': {
+                        type: 'string'
+                    },
+                    'type': {
+                        type: 'string'
+                    }
+                }
+            }
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * calibration audio (played 4 times during calibration)
+         *
+         * @property {Object[]} calibrationAudioSources
+         */
+        calibrationAudioSources: {
+            type: 'array',
+            description: 'list of objects specifying audio src and type for calibration audio',
+            default: [],
+            items: {
+                type: 'object',
+                properties: {
+                    'src': {
+                        type: 'string'
+                    },
+                    'type': {
+                        type: 'string'
+                    }
+                }
+            }
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * calibration video (played from start 4 times during
+         * calibration)
+         *
+         * @property {Object[]} calibrationVideoSources
+         */
+        calibrationVideoSources: {
+            type: 'array',
+            description: 'list of objects specifying video src and type for calibration audio',
+            default: [],
+            items: {
+                type: 'object',
+                properties: {
+                    'src': {
+                        type: 'string'
+                    },
+                    'type': {
+                        type: 'string'
+                    }
+                }
+            }
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * attention-getter video (should be loopable)
+         *
+         * @property {Object[]} videoSources
+         */
+        videoSources: {
+            type: 'array',
+            description: 'List of objects specifying video src and type for attention-getter video',
+            default: [],
+            items: {
+                type: 'object',
+                properties: {
+                    'src': {
+                        type: 'string'
+                    },
+                    'type': {
+                        type: 'string'
+                    }
+                }
+            }
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * audio played upon pausing study
+         *
+         * @property {Object[]} pauseAudio
+         */
+        pauseAudio: {
+            type: 'array',
+            description: 'List of objects specifying audio src and type for audio played when pausing study',
+            default: [],
+            items: {
+                type: 'object',
+                properties: {
+                    'src': {
+                        type: 'string'
+                    },
+                    'type': {
+                        type: 'string'
+                    }
+                }
+            }
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * audio played upon unpausing study
+         *
+         * @property {Object[]} unpauseAudio
+         */
+        unpauseAudio: {
+            type: 'array',
+            description: 'List of objects specifying audio src and type for audio played when pausing study',
+            default: [],
+            items: {
+                type: 'object',
+                properties: {
+                    'src': {
+                        type: 'string'
+                    },
+                    'type': {
+                        type: 'string'
+                    }
+                }
+            }
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * audio played when study is paused due to not being fullscreen
+         *
+         * @property {Object[]} fsAudio
+         */
+        fsAudio: {
+            type: 'array',
+            description: 'List of objects specifying audio src and type for audio played when pausing study if study is not fullscreen',
+            default: [],
+            items: {
+                type: 'object',
+                properties: {
+                    'src': {
+                        type: 'string'
+                    },
+                    'type': {
+                        type: 'string'
+                    }
+                }
+            }
+        }
+     },
 
+    meta: {
+        name: 'ExpLookitGeometryAlternation',
+        description: 'Frame to implement specific test trial structure for geometry alternation experiment. Includes announcement, calibration, and alternation (test) phases. During "alternation," two streams of triangles are shown, in rectangles on the left and right of the screen: one one side both size and shape change, on the other only size changes. Frame is displayed fullscreen and video recording is conducted during calibration/test.',
         data: {
             /**
              * Parameters captured and sent to the server

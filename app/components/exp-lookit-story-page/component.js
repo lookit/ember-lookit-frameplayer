@@ -128,185 +128,183 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         'image': ['images/src']
     },
 
-    meta: {
-        name: 'ExpLookitStoryPage',
-        description: 'Frame to display a basic storybook page trial, with images and audio',
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                 * Whether to do webcam recording (will wait for webcam
-                 * connection before starting audio if so)
-                 *
-                 * @property {Boolean} doRecording
-                 */
-                doRecording: {
-                    type: 'boolean',
-                    description: 'Whether to do webcam recording (will wait for webcam connection before starting audio if so'
-                },
-                /**
-                 * Whether to proceed automatically after audio (and hide
-                 * replay/next buttons)
-                 *
-                 * @property {Boolean} autoProceed
-                 */
-                autoProceed: {
-                    type: 'boolean',
-                    description: 'Whether to proceed automatically after audio (and hide replay/next buttons)'
-                },
+    frameSchemaProperties: {
+        /**
+         * Whether to do webcam recording (will wait for webcam
+         * connection before starting audio if so)
+         *
+         * @property {Boolean} doRecording
+         */
+        doRecording: {
+            type: 'boolean',
+            description: 'Whether to do webcam recording (will wait for webcam connection before starting audio if so'
+        },
+        /**
+         * Whether to proceed automatically after audio (and hide
+         * replay/next buttons)
+         *
+         * @property {Boolean} autoProceed
+         */
+        autoProceed: {
+            type: 'boolean',
+            description: 'Whether to proceed automatically after audio (and hide replay/next buttons)'
+        },
 
-                /**
-                 * [Only used if autoProceed is true] Minimum duration of frame in seconds.
-                 * Frame will auto-proceed after this much time has elapsed and all audio
-                 * has completed.
-                 *
-                 * @property {Number} durationSeconds
-                 */
-                durationSeconds: {
-                    type: 'number',
-                    description: 'Minimum duration of frame in seconds if autoproceeding'
-                },
+        /**
+         * [Only used if autoProceed is true] Minimum duration of frame in seconds.
+         * Frame will auto-proceed after this much time has elapsed and all audio
+         * has completed.
+         *
+         * @property {Number} durationSeconds
+         */
+        durationSeconds: {
+            type: 'number',
+            description: 'Minimum duration of frame in seconds if autoproceeding'
+        },
 
-                /**
-                 * [Only used if autoProceed is true and durationSeconds set] Whether to
-                 * show a progress bar based on durationSeconds in the parent text area.
-                 *
-                 * @property {Number} showProgressBar
-                 */
-                showProgressBar: {
-                    type: 'boolean',
-                    description: 'Whether to show a progress bar based on durationSeconds'
-                },
+        /**
+         * [Only used if autoProceed is true and durationSeconds set] Whether to
+         * show a progress bar based on durationSeconds in the parent text area.
+         *
+         * @property {Number} showProgressBar
+         */
+        showProgressBar: {
+            type: 'boolean',
+            description: 'Whether to show a progress bar based on durationSeconds'
+        },
 
-                /**
-                 * Array of objects describing audio to play at the start of
-                 * this frame. Each element describes a separate audio segment.
-                 *
-                 * @property {Object[]} audioSources
-                 *   @param {String} audioId unique string identifying this
-                 *      audio segment
-                 *   @param {Object[]} sources Array of {src: 'url', type:
-                 *      'MIMEtype'} objects with audio sources for this segment
-                 *
-                 * Can also give a single string `filename`, which will
-                 * be expanded out to the appropriate array based on `baseDir`
-                 * and `audioTypes` values; see `audioTypes`.
-                 *
-                 *   @param {Object[]} highlights Array of {'range': [startT,
-                 *      endT], 'image': 'imageId'} objects, where the imageId
-                 *      values correspond to the ids given in images
-                 */
-                audioSources: {
-                    type: 'array',
-                    description: 'List of objects specifying audio src and type for audio played during test trial',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'audioId': {
-                                type: 'string'
-                            },
-                            'sources': {
-                                type: 'array',
-                                items: {
-                                    type: 'object',
-                                    properties: {
-                                        'src': {
-                                            type: 'string'
-                                        },
-                                        'type': {
-                                            type: 'string'
-                                        }
-                                    }
-                                }
-                            },
-                            'highlights': {
-                                type: 'array',
-                                items: {
-                                    type: 'object',
-                                    properties: {
-                                        'range': {
-                                            type: 'array',
-                                            items: {
-                                                type: 'number'
-                                            }
-                                        },
-                                        'image': {
-                                            'type': 'string'
-                                        }
-                                    }
+        /**
+         * Array of objects describing audio to play at the start of
+         * this frame. Each element describes a separate audio segment.
+         *
+         * @property {Object[]} audioSources
+         *   @param {String} audioId unique string identifying this
+         *      audio segment
+         *   @param {Object[]} sources Array of {src: 'url', type:
+         *      'MIMEtype'} objects with audio sources for this segment
+         *
+         * Can also give a single string `filename`, which will
+         * be expanded out to the appropriate array based on `baseDir`
+         * and `audioTypes` values; see `audioTypes`.
+         *
+         *   @param {Object[]} highlights Array of {'range': [startT,
+         *      endT], 'image': 'imageId'} objects, where the imageId
+         *      values correspond to the ids given in images
+         */
+        audioSources: {
+            type: 'array',
+            description: 'List of objects specifying audio src and type for audio played during test trial',
+            default: [],
+            items: {
+                type: 'object',
+                properties: {
+                    'audioId': {
+                        type: 'string'
+                    },
+                    'sources': {
+                        type: 'array',
+                        items: {
+                            type: 'object',
+                            properties: {
+                                'src': {
+                                    type: 'string'
+                                },
+                                'type': {
+                                    type: 'string'
                                 }
                             }
                         }
-                    }
-                },
-                /**
-                 * Text block to display to parent.  (Each field is optional)
-                 *
-                 * @property {Object} parentTextBlock
-                 *   @param {String} title title to display
-                 *   @param {String} text paragraph of text
-                 *   @param {Boolean} emph whether to bold this paragraph
-                 *   @param {Object} css object specifying any css properties
-                 *      to apply to this section, and their values - e.g.
-                 *      {'color': 'red', 'font-size': '12px'}
-                 */
-                parentTextBlock: {
-                    type: 'object',
-                    properties: {
-                        title: {
-                            type: 'string'
-                        },
-                        text: {
-                            type: 'string'
-                        },
-                        emph: {
-                            type: 'boolean'
-                        },
-                        css: {
-                            type: 'object',
-                            default: {}
-                        }
                     },
-                    default: {}
-                },
-                /**
-                 * Array of images to display and information about their placement
-                 *
-                 * @property {Object[]} images
-                 *   @param {String} id unique ID for this image
-                 *   @param {String} src URL of image source. This can be a full
-                 *     URL, or relative to baseDir (see baseDir).
-                 *   @param {String} left left margin, as percentage of story area width
-                 *   @param {String} width image width, as percentage of story area width
-                 *   @param {String} top top margin, as percentage of story area height
-
-                 */
-                images: {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'id': {
-                                type: 'string'
-                            },
-                            'src': {
-                                type: 'string'
-                            },
-                            'left': {
-                                type: 'string'
-                            },
-                            'width': {
-                                type: 'string'
-                            },
-                            'top': {
-                                type: 'string'
+                    'highlights': {
+                        type: 'array',
+                        items: {
+                            type: 'object',
+                            properties: {
+                                'range': {
+                                    type: 'array',
+                                    items: {
+                                        type: 'number'
+                                    }
+                                },
+                                'image': {
+                                    'type': 'string'
+                                }
                             }
                         }
                     }
                 }
             }
         },
+        /**
+         * Text block to display to parent.  (Each field is optional)
+         *
+         * @property {Object} parentTextBlock
+         *   @param {String} title title to display
+         *   @param {String} text paragraph of text
+         *   @param {Boolean} emph whether to bold this paragraph
+         *   @param {Object} css object specifying any css properties
+         *      to apply to this section, and their values - e.g.
+         *      {'color': 'red', 'font-size': '12px'}
+         */
+        parentTextBlock: {
+            type: 'object',
+            properties: {
+                title: {
+                    type: 'string'
+                },
+                text: {
+                    type: 'string'
+                },
+                emph: {
+                    type: 'boolean'
+                },
+                css: {
+                    type: 'object',
+                    default: {}
+                }
+            },
+            default: {}
+        },
+        /**
+         * Array of images to display and information about their placement
+         *
+         * @property {Object[]} images
+         *   @param {String} id unique ID for this image
+         *   @param {String} src URL of image source. This can be a full
+         *     URL, or relative to baseDir (see baseDir).
+         *   @param {String} left left margin, as percentage of story area width
+         *   @param {String} width image width, as percentage of story area width
+         *   @param {String} top top margin, as percentage of story area height
+
+         */
+        images: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    'id': {
+                        type: 'string'
+                    },
+                    'src': {
+                        type: 'string'
+                    },
+                    'left': {
+                        type: 'string'
+                    },
+                    'width': {
+                        type: 'string'
+                    },
+                    'top': {
+                        type: 'string'
+                    }
+                }
+            }
+        }
+    },
+
+    meta: {
+        name: 'ExpLookitStoryPage',
+        description: 'Frame to display a basic storybook page trial, with images and audio',
         data: {
             type: 'object',
             /**

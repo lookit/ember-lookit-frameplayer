@@ -355,148 +355,145 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
         }
     },
 
+    frameSchemaProperties: {
+        /**
+         * A list of pages of assent form text/pictures/video for the participant to read through
+         *
+         * @property {Array} pages
+         *   @param {String} altText Alt-text used for the image displayed, if any
+         *   @param {Object[]} video (Optional) String indicating video path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects. Video will be displayed (with controls shown) and participant must complete to proceed.
+         *   @param {Object[]} audio (Optional) String indicating audio path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects. Audio will be played (with controls shown) and participant must complete to proceed.
+         *   @param {String} imgSrc (Optional) URL of image to display; can be full path or relative to baseDir
+         *   @param {Object[]} textBlocks list of text blocks to show on this page, processed by exp-text-block. Can use HTML.
+         *   @param {Boolean} showWebcam Whether to display the participant webcam on this page
+         */
+        pages: {
+            type: 'array',
+            description: 'A list of videos to preview',
+            items: {
+                type: 'object',
+                properties: {
+                    imgSrc: {
+                        type: 'string',
+                        default: ''
+                    },
+                    altText: {
+                        type: 'string',
+                        default: 'image'
+                    },
+                    video: {
+                        type: 'array',
+                        default: [],
+                        items: {
+                            type: 'object',
+                            properties: {
+                                src: {
+                                    type: 'string'
+                                },
+                                type: {
+                                    type: 'string'
+                                }
+                            },
+                            required: ['src', 'type']
+                        }
+                    },
+                    audio: {
+                        type: 'array',
+                        default: [],
+                        items: {
+                            type: 'object',
+                            properties: {
+                                src: {
+                                    type: 'string'
+                                },
+                                type: {
+                                    type: 'string'
+                                }
+                            },
+                            required: ['src', 'type']
+                        }
+                    },
+                    textBlocks: {
+                        type: 'array',
+                        default: []
+                    },
+                    showWebcam: {
+                        type: 'boolean',
+                        default: false
+                    }
+                },
+                required: []
+            },
+            default: []
+        },
+        /**
+         * Text on the button to proceed to the next example video/image
+         *
+         * @property {String} nextStimulusText
+         */
+        nextStimulusText: {
+            type: 'string',
+            description: 'Text on the button to proceed to the next example video/image',
+            default: 'Next'
+        },
+        /**
+         * Whether to record webcam video on the last page
+         *
+         * @property {Boolean} recordLastPage
+         */
+        recordLastPage: {
+            type: 'boolean',
+            description: 'Whether to record webcam video on the last page',
+            default: false
+        },
+        /**
+         * Whether to record webcam video during the entire assent frame (if true, overrides recordLastPage)
+         *
+         * @property {Boolean} recordWholeProcedure
+         */
+        recordWholeProcedure: {
+            type: 'boolean',
+            description: 'Whether to record webcam video during the entire assent frame',
+            default: false
+        },
+        /**
+         * Text on the button to proceed to the previous example video/image
+         *
+         * @property {String} previousStimulusText
+         */
+        previousStimulusText: {
+            type: 'string',
+            description: 'Text on the button to proceed to the previous example video/image',
+            default: 'Previous'
+        },
+        /**
+         * Text of the question to ask about whether to participate. Answer options are Yes/No; No means study will stop, Yes means it will proceed.
+         *
+         * @property {String} participationQuestion
+         */
+        participationQuestion: {
+            type: 'string',
+            description: 'Text on the button to proceed to the previous example video/image',
+            default: 'Do you want to participate in this study?'
+        },
+        /**
+         * How many years old the child has to be for this page to be shown. If child
+         * is younger, the page is skipped. Leave at 0 to always show. This is an
+         * age in 'calendar years' - it will line up with the child's birthday,
+         * regardless of leap years etc.
+         *
+         * @property {String} minimumYearsToAssent
+         */
+        minimumYearsToAssent: {
+            type: 'number',
+            description: 'How many years old the child has to be for this page to be shown',
+            default: 0
+        }
+    },
+
     meta: {
         name: 'Video assent form',
         description: 'A video assent form.',
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                 * A list of pages of assent form text/pictures/video for the participant to read through
-                 *
-                 * @property {Array} pages
-                 *   @param {String} altText Alt-text used for the image displayed, if any
-                 *   @param {Object[]} video (Optional) String indicating video path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects. Video will be displayed (with controls shown) and participant must complete to proceed.
-                 *   @param {Object[]} audio (Optional) String indicating audio path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects. Audio will be played (with controls shown) and participant must complete to proceed.
-                 *   @param {String} imgSrc (Optional) URL of image to display; can be full path or relative to baseDir
-                 *   @param {Object[]} textBlocks list of text blocks to show on this page, processed by exp-text-block. Can use HTML.
-                 *   @param {Boolean} showWebcam Whether to display the participant webcam on this page
-                 */
-                pages: {
-                    type: 'array',
-                    description: 'A list of videos to preview',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            imgSrc: {
-                                type: 'string',
-                                default: ''
-                            },
-                            altText: {
-                                type: 'string',
-                                default: 'image'
-                            },
-                            video: {
-                                type: 'array',
-                                default: [],
-                                items: {
-                                    type: 'object',
-                                    properties: {
-                                        src: {
-                                            type: 'string'
-                                        },
-                                        type: {
-                                            type: 'string'
-                                        }
-                                    },
-                                    required: ['src', 'type']
-                                }
-                            },
-                            audio: {
-                                type: 'array',
-                                default: [],
-                                items: {
-                                    type: 'object',
-                                    properties: {
-                                        src: {
-                                            type: 'string'
-                                        },
-                                        type: {
-                                            type: 'string'
-                                        }
-                                    },
-                                    required: ['src', 'type']
-                                }
-                            },
-                            textBlocks: {
-                                type: 'array',
-                                default: []
-                            },
-                            showWebcam: {
-                                type: 'Boolean',
-                                default: false
-                            }
-                        },
-                        required: []
-                    },
-                    default: []
-                },
-                /**
-                 * Text on the button to proceed to the next example video/image
-                 *
-                 * @property {String} nextStimulusText
-                 */
-                nextStimulusText: {
-                    type: 'string',
-                    description: 'Text on the button to proceed to the next example video/image',
-                    default: 'Next'
-                },
-                /**
-                 * Whether to record webcam video on the last page
-                 *
-                 * @property {Boolean} recordLastPage
-                 */
-                recordLastPage: {
-                    type: 'Boolean',
-                    description: 'Whether to record webcam video on the last page',
-                    default: false
-                },
-                /**
-                 * Whether to record webcam video during the entire assent frame (if true, overrides recordLastPage)
-                 *
-                 * @property {Boolean} recordWholeProcedure
-                 */
-                recordWholeProcedure: {
-                    type: 'Boolean',
-                    description: 'Whether to record webcam video during the entire assent frame',
-                    default: false
-                },
-                /**
-                 * Text on the button to proceed to the previous example video/image
-                 *
-                 * @property {String} previousStimulusText
-                 */
-                previousStimulusText: {
-                    type: 'string',
-                    description: 'Text on the button to proceed to the previous example video/image',
-                    default: 'Previous'
-                },
-                /**
-                 * Text of the question to ask about whether to participate. Answer options are Yes/No; No means study will stop, Yes means it will proceed.
-                 *
-                 * @property {String} participationQuestion
-                 */
-                participationQuestion: {
-                    type: 'string',
-                    description: 'Text on the button to proceed to the previous example video/image',
-                    default: 'Do you want to participate in this study?'
-                },
-                /**
-                 * How many years old the child has to be for this page to be shown. If child
-                 * is younger, the page is skipped. Leave at 0 to always show. This is an
-                 * age in 'calendar years' - it will line up with the child's birthday,
-                 * regardless of leap years etc.
-                 *
-                 * @property {String} minimumYearsToAssent
-                 */
-                minimumYearsToAssent: {
-                    type: 'number',
-                    description: 'How many years old the child has to be for this page to be shown',
-                    default: 0
-                }
-            },
-            required: []
-        },
 
         data: {
             /**

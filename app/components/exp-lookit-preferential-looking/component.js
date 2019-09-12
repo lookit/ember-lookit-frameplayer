@@ -192,390 +192,388 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
     currentTask: null, // announce, intro, calibration, or test.
     isPaused: false,
 
-    meta: {
-        name: 'ExpLookitPreferentialLooking',
-        description: 'Component that displays video or images for looking measurements',
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                Array of objects specifying video src and type for test video (these should be the same video, but multiple sources--e.g. mp4 and webm--are generally needed for cross-browser support). If none provided, skip test phase.
+    frameSchemaProperties: {
+        /**
+        Array of objects specifying video src and type for test video (these should be the same video, but multiple sources--e.g. mp4 and webm--are generally needed for cross-browser support). If none provided, skip test phase.
 
-                Example value:
+        Example value:
 
-                ```[{'src': 'http://.../video1.mp4', 'type': 'video/mp4'}, {'src': 'http://.../video1.webm', 'type': 'video/webm'}]```
-                @property {Array} testVideo
-                    @param {String} src
-                    @param {String} type
-                @default []
-                */
-                testVideo: {
-                    type: 'string',
-                    description: 'List of objects specifying video src and type for test videos',
-                    default: []
-                },
+        ```[{'src': 'http://.../video1.mp4', 'type': 'video/mp4'}, {'src': 'http://.../video1.webm', 'type': 'video/webm'}]```
+        @property {Array} testVideo
+            @param {String} src
+            @param {String} type
+        @default []
+        */
+        testVideo: {
+            type: 'string',
+            description: 'List of objects specifying video src and type for test videos',
+            default: []
+        },
 
-                /**
-                Array of objects specifying video src and type for alternate test video, as for testVideo. Alternate test video will be shown if the first test is paused, after restarting the trial. If alternate test video is also paused, we just move on. If altTestVideo is not provided, defaults to playing same test video again (but still only one pause of test video allowed per trial).
-                @property {Array} altTestVideo
-                    @param {String} src
-                    @param {String} type
-                @default []
-                */
-                altTestVideo: {
-                    type: 'string',
-                    description: 'List of objects specifying video src and type for alternate test videos',
-                    default: []
-                },
+        /**
+        Array of objects specifying video src and type for alternate test video, as for testVideo. Alternate test video will be shown if the first test is paused, after restarting the trial. If alternate test video is also paused, we just move on. If altTestVideo is not provided, defaults to playing same test video again (but still only one pause of test video allowed per trial).
+        @property {Array} altTestVideo
+            @param {String} src
+            @param {String} type
+        @default []
+        */
+        altTestVideo: {
+            type: 'string',
+            description: 'List of objects specifying video src and type for alternate test videos',
+            default: []
+        },
 
-                /**
-                Array of objects specifying intro video src and type, as for testVideo.
-                If empty, intro segment will be skipped.
-                @property {Array} introVideo
-                    @param {String} src
-                    @param {String} type
-                @default []
-                */
-                introVideo: {
-                    type: 'string',
-                    description: 'List of objects specifying intro video src and type',
-                    default: []
-                },
+        /**
+        Array of objects specifying intro video src and type, as for testVideo.
+        If empty, intro segment will be skipped.
+        @property {Array} introVideo
+            @param {String} src
+            @param {String} type
+        @default []
+        */
+        introVideo: {
+            type: 'string',
+            description: 'List of objects specifying intro video src and type',
+            default: []
+        },
 
-                /**
-                Array of objects specifying attention-grabber video src and type, as for testVideo. The attention-grabber video is shown (looping) during the announcement phase and when the study is paused.
-                @property {Array} announcementVideo
-                    @param {String} src
-                    @param {String} type
-                @default []
-                */
-                announcementVideo: {
-                    type: 'string',
-                    description: 'List of objects specifying attention-grabber video src and type',
-                    default: []
-                },
-                /**
-                 * minimum amount of time to show attention-getter in seconds. Announcement phase (attention-getter plus audio) will last the minimum of announcementLength and the duration of any announcement audio.
-                 *
-                 * @property {Number} announcementLength
-                 * @default 2
-                 */
-                announcementLength: {
-                    type: 'number',
-                    description: 'minimum duration of announcement phase in seconds',
-                    default: 2
-                },
-                /**
-                List of objects specifying intro announcement src and type. If empty and minimum announcementLength is 0, announcement is skipped.
-                Example: `[{'src': 'http://.../audio1.mp3', 'type': 'audio/mp3'}, {'src': 'http://.../audio1.ogg', 'type': 'audio/ogg'}]`
-                @property {Array} announcementAudio
-                    @param {String} src
-                    @param {String} type
-                @default []
-                */
-                announcementAudio: {
-                    type: 'string',
-                    description: 'List of objects specifying intro announcement audio src and type',
-                    default: []
-                },
+        /**
+        Array of objects specifying attention-grabber video src and type, as for testVideo. The attention-grabber video is shown (looping) during the announcement phase and when the study is paused.
+        @property {Array} announcementVideo
+            @param {String} src
+            @param {String} type
+        @default []
+        */
+        announcementVideo: {
+            type: 'string',
+            description: 'List of objects specifying attention-grabber video src and type',
+            default: []
+        },
+        /**
+         * minimum amount of time to show attention-getter in seconds. Announcement phase (attention-getter plus audio) will last the minimum of announcementLength and the duration of any announcement audio.
+         *
+         * @property {Number} announcementLength
+         * @default 2
+         */
+        announcementLength: {
+            type: 'number',
+            description: 'minimum duration of announcement phase in seconds',
+            default: 2
+        },
+        /**
+        List of objects specifying intro announcement src and type. If empty and minimum announcementLength is 0, announcement is skipped.
+        Example: `[{'src': 'http://.../audio1.mp3', 'type': 'audio/mp3'}, {'src': 'http://.../audio1.ogg', 'type': 'audio/ogg'}]`
+        @property {Array} announcementAudio
+            @param {String} src
+            @param {String} type
+        @default []
+        */
+        announcementAudio: {
+            type: 'string',
+            description: 'List of objects specifying intro announcement audio src and type',
+            default: []
+        },
 
-                /**
-                 * URL of image to show on left, if any. Can be a full URL or a
-                 * stub that will be appended to `baseDir` + `img/` (see
-                 * baseDir).
-                 *
-                 * @property {String} leftImage
-                 */
-                leftImage: {
-                    type: 'string',
-                    description: 'URL of image to show on left'
-                },
-                /**
-                 * URL of image to show on right, if any. Can be a full URL or a
-                 * stub that will be appended to `baseDir` + `img/` (see
-                 * baseDir).
-                 *
-                 * @property {String} rightImage
-                 */
-                rightImage: {
-                    type: 'string',
-                    description: 'URL of image to show on left'
-                },
+        /**
+         * URL of image to show on left, if any. Can be a full URL or a
+         * stub that will be appended to `baseDir` + `img/` (see
+         * baseDir).
+         *
+         * @property {String} leftImage
+         */
+        leftImage: {
+            type: 'string',
+            description: 'URL of image to show on left'
+        },
+        /**
+         * URL of image to show on right, if any. Can be a full URL or a
+         * stub that will be appended to `baseDir` + `img/` (see
+         * baseDir).
+         *
+         * @property {String} rightImage
+         */
+        rightImage: {
+            type: 'string',
+            description: 'URL of image to show on left'
+        },
 
-                /**
-                 * List of possible images that may be shown. Can be full URLs or
-                 * stubs that will be appended to `baseDir` + `img/` (see
-                 * baseDir). If leftImageIndex, rightImageIndex, and/or centerImageIndex
-                 * are provided, they indicate the index of the item in this list.
-                 *
-                 * @property {String} possibleImages
-                 */
-                possibleImages: {
-                    type: 'array',
-                    description: 'list of possible images to use for centerImage, leftImage, rightImage',
-                    default: [],
-                    items: {
+        /**
+         * List of possible images that may be shown. Can be full URLs or
+         * stubs that will be appended to `baseDir` + `img/` (see
+         * baseDir). If leftImageIndex, rightImageIndex, and/or centerImageIndex
+         * are provided, they indicate the index of the item in this list.
+         *
+         * @property {String} possibleImages
+         */
+        possibleImages: {
+            type: 'array',
+            description: 'list of possible images to use for centerImage, leftImage, rightImage',
+            default: [],
+            items: {
+                type: 'string'
+            }
+        },
+
+        /**
+         * Index in possibleImages for image to use on left. This will be overridden
+         * by any actual value provided for leftImage. Index must be in range
+         * [0, len(possibleImages)]. Omit or -1 not to use.
+         *
+         * @property {String} leftImageIndex
+         */
+        leftImageIndex: {
+            type: 'number',
+            description: 'index in possibleImages for image to use on left.',
+            default: -1
+        },
+
+        /**
+         * Index in possibleImages for image to use on right. This will be overridden
+         * by any actual value provided for rightImage. Index must be in range
+         * [0, len(possibleImages)].  Omit or -1 not to use.
+         *
+         * @property {String} rightImageIndex
+         */
+        rightImageIndex: {
+            type: 'number',
+            description: 'index in possibleImages for image to use on right.',
+            default: -1
+        },
+
+        /**
+         * Index in possibleImages for center image. This will be overridden
+         * by any actual value provided for centerImage. Index must be in range
+         * [0, len(possibleImages)].  Omit or -1 not to use.
+         *
+         * @property {String} centerImageIndex
+         */
+        centerImageIndex: {
+            type: 'number',
+            description: 'index in possibleImages for image to use on center.',
+            default: -1
+        },
+        /**
+         * URL of image to show at center, if any. Can be a full URL or
+         * a stub that will be appended to `baseDir` + `img/` (see
+         * baseDir).
+         *
+         * @property {String} centerImage
+         */
+        centerImage: {
+            type: 'string',
+            description: 'URL of image to show on left'
+        },
+
+        /**
+        List of objects specifying test audio src and type, as for announcementAudio.
+        If empty, no additional test audio is played besides any audio in testVideo.
+        @param testAudio
+        @property {Array} testAudio
+            @param {String} src
+            @param {String} type
+        @default []
+        */
+        testAudio: {
+            type: 'string',
+            description: 'List of objects specifying music audio src and type',
+            default: []
+        },
+
+        /**
+        Whether test audio should loop
+        @property {boolean} loopTestAudio
+        @default true
+        */
+        loopTestAudio: {
+            type: 'boolean',
+            description: 'Whether test audio should loop',
+            default: true
+        },
+
+        /**
+        Whether to allow participant to pause study during test. If no, study still
+        pauses but upon unpausing moves to next trial. If yes, study restarts from
+        beginning upon unpausing (with alternate sources).
+        @property {boolean} allowPauseDuringTest
+        @default true
+        */
+        allowPauseDuringTest: {
+            type: 'boolean',
+            description: 'Whether to allow participant to pause study during test',
+            default: true
+        },
+
+        /**
+        Length to loop test videos, in seconds. Set if you want a time-based limit. E.g., setting testLength to 20 means that the first 20 seconds of the video will be played, with shorter videos looping until they get to 20s. Leave out or set to Infinity  to play the video through to the end a set number of times instead. If a testLength is set, it overrides any value set in testCount.
+        @property {Number} testLength
+        @default Infinity
+        */
+        testLength: {
+            type: 'number',
+            description: 'Length of test videos in seconds',
+            default: Infinity
+        },
+
+        /**
+        Number of times to play test video before moving on. This is ignored if
+        testLength is set to a finite value.
+        @property {Number} testCount
+        @default 1
+        */
+        testCount: {
+            type: 'number',
+            description: 'Number of times to play test video',
+            default: 1
+        },
+
+        /**
+        Whether to do any video recording during this frame. Default true. Set to false for e.g. last frame where just doing an announcement.
+        @property {Boolean} doRecording
+        @default true
+        */
+        doRecording: {
+            type: 'boolean',
+            description: 'Whether to do video recording',
+            default: true
+        },
+        /**
+         * length of single calibration segment in ms. 0 to skip calibration.
+         *
+         * @property {Number} calibrationLength
+         * @default 3000
+         */
+        calibrationLength: {
+            type: 'number',
+            description: 'length of single calibration segment in ms',
+            default: 3000
+        },
+        /**
+         * Ordered list of positions to show calibration segment in. Options are
+         * "center", "left", "right". Ignored if calibrationLength is 0.
+         *
+         * @property {Array} calibrationPositions
+         * @default ["center", "left", "right", "center"]
+         */
+        calibrationPositions: {
+            type: 'array',
+            description: 'Ordered list of positions to show calibration',
+            default: ['center', 'left', 'right', 'center']
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * calibration audio (played at each calibration position).
+         * Ignored if calibrationLength is 0.
+         *
+         * @property {Object[]} calibrationAudio
+         * @default []
+         */
+        calibrationAudio: {
+            type: 'array',
+            description: 'list of objects specifying audio src and type for calibration audio',
+            default: [],
+            items: {
+                type: 'object',
+                properties: {
+                    'src': {
+                        type: 'string'
+                    },
+                    'type': {
                         type: 'string'
                     }
-                },
-
-                /**
-                 * Index in possibleImages for image to use on left. This will be overridden
-                 * by any actual value provided for leftImage. Index must be in range
-                 * [0, len(possibleImages)]. Omit or -1 not to use.
-                 *
-                 * @property {String} leftImageIndex
-                 */
-                leftImageIndex: {
-                    type: 'number',
-                    description: 'index in possibleImages for image to use on left.',
-                    default: -1
-                },
-
-                /**
-                 * Index in possibleImages for image to use on right. This will be overridden
-                 * by any actual value provided for rightImage. Index must be in range
-                 * [0, len(possibleImages)].  Omit or -1 not to use.
-                 *
-                 * @property {String} rightImageIndex
-                 */
-                rightImageIndex: {
-                    type: 'number',
-                    description: 'index in possibleImages for image to use on right.',
-                    default: -1
-                },
-
-                /**
-                 * Index in possibleImages for center image. This will be overridden
-                 * by any actual value provided for centerImage. Index must be in range
-                 * [0, len(possibleImages)].  Omit or -1 not to use.
-                 *
-                 * @property {String} centerImageIndex
-                 */
-                centerImageIndex: {
-                    type: 'number',
-                    description: 'index in possibleImages for image to use on center.',
-                    default: -1
-                },
-                /**
-                 * URL of image to show at center, if any. Can be a full URL or
-                 * a stub that will be appended to `baseDir` + `img/` (see
-                 * baseDir).
-                 *
-                 * @property {String} centerImage
-                 */
-                centerImage: {
-                    type: 'string',
-                    description: 'URL of image to show on left'
-                },
-
-                /**
-                List of objects specifying test audio src and type, as for announcementAudio.
-                If empty, no additional test audio is played besides any audio in testVideo.
-                @param testAudio
-                @property {Array} testAudio
-                    @param {String} src
-                    @param {String} type
-                @default []
-                */
-                testAudio: {
-                    type: 'string',
-                    description: 'List of objects specifying music audio src and type',
-                    default: []
-                },
-
-                /**
-                Whether test audio should loop
-                @property {boolean} loopTestAudio
-                @default true
-                */
-                loopTestAudio: {
-                    type: 'boolean',
-                    description: 'Whether test audio should loop',
-                    default: true
-                },
-
-                /**
-                Whether to allow participant to pause study during test. If no, study still
-                pauses but upon unpausing moves to next trial. If yes, study restarts from
-                beginning upon unpausing (with alternate sources).
-                @property {boolean} allowPauseDuringTest
-                @default true
-                */
-                allowPauseDuringTest: {
-                    type: 'boolean',
-                    description: 'Whether to allow participant to pause study during test',
-                    default: true
-                },
-
-                /**
-                Length to loop test videos, in seconds. Set if you want a time-based limit. E.g., setting testLength to 20 means that the first 20 seconds of the video will be played, with shorter videos looping until they get to 20s. Leave out or set to Infinity  to play the video through to the end a set number of times instead. If a testLength is set, it overrides any value set in testCount.
-                @property {Number} testLength
-                @default Infinity
-                */
-                testLength: {
-                    type: 'number',
-                    description: 'Length of test videos in seconds',
-                    default: Infinity
-                },
-
-                /**
-                Number of times to play test video before moving on. This is ignored if
-                testLength is set to a finite value.
-                @property {Number} testCount
-                @default 1
-                */
-                testCount: {
-                    type: 'number',
-                    description: 'Number of times to play test video',
-                    default: 1
-                },
-
-                /**
-                Whether to do any video recording during this frame. Default true. Set to false for e.g. last frame where just doing an announcement.
-                @property {Boolean} doRecording
-                @default true
-                */
-                doRecording: {
-                    type: 'boolean',
-                    description: 'Whether to do video recording',
-                    default: true
-                },
-                /**
-                 * length of single calibration segment in ms. 0 to skip calibration.
-                 *
-                 * @property {Number} calibrationLength
-                 * @default 3000
-                 */
-                calibrationLength: {
-                    type: 'number',
-                    description: 'length of single calibration segment in ms',
-                    default: 3000
-                },
-                /**
-                 * Ordered list of positions to show calibration segment in. Options are
-                 * "center", "left", "right". Ignored if calibrationLength is 0.
-                 *
-                 * @property {Array} calibrationPositions
-                 * @default ["center", "left", "right", "center"]
-                 */
-                calibrationPositions: {
-                    type: 'array',
-                    description: 'Ordered list of positions to show calibration',
-                    default: ['center', 'left', 'right', 'center']
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * calibration audio (played at each calibration position).
-                 * Ignored if calibrationLength is 0.
-                 *
-                 * @property {Object[]} calibrationAudio
-                 * @default []
-                 */
-                calibrationAudio: {
-                    type: 'array',
-                    description: 'list of objects specifying audio src and type for calibration audio',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * calibration video (played from start at each calibration position).
-                 * Ignored if calibrationLength is 0.
-                 *
-                 * @property {Object[]} calibrationVideo
-                 * @default []
-                 */
-                calibrationVideo: {
-                    type: 'array',
-                    description: 'list of objects specifying video src and type for calibration audio',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * audio played upon pausing study
-                 *
-                 * @property {Object[]} pauseAudio
-                 * @default []
-                 */
-                pauseAudio: {
-                    type: 'array',
-                    description: 'List of objects specifying audio src and type for audio played when pausing study',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * audio played upon unpausing study. Unpausing audio will always be played
-                 * before proceeding to next trial, even if this trial will not be redone
-                 * (e.g. because it was paused during test and allowPauseDuringTest is
-                 * set to false)
-                 *
-                 * @property {Object[]} unpauseAudio
-                 * @default []
-                 */
-                unpauseAudio: {
-                    type: 'array',
-                    description: 'List of objects specifying audio src and type for audio played when unpausing study',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Text to show under "Study paused / Press space to resume" when study is paused.
-                 * Default: (You'll have a moment to turn around again.)
-                 *
-                 * @property {String} pauseText
-                 * @default []
-
-                 */
-                pauseText: {
-                    type: 'string',
-                    description: 'Text to show under Study paused when study is paused.',
-                    default: '(You\'ll have a moment to turn around again.)'
                 }
             }
         },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * calibration video (played from start at each calibration position).
+         * Ignored if calibrationLength is 0.
+         *
+         * @property {Object[]} calibrationVideo
+         * @default []
+         */
+        calibrationVideo: {
+            type: 'array',
+            description: 'list of objects specifying video src and type for calibration audio',
+            default: [],
+            items: {
+                type: 'object',
+                properties: {
+                    'src': {
+                        type: 'string'
+                    },
+                    'type': {
+                        type: 'string'
+                    }
+                }
+            }
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * audio played upon pausing study
+         *
+         * @property {Object[]} pauseAudio
+         * @default []
+         */
+        pauseAudio: {
+            type: 'array',
+            description: 'List of objects specifying audio src and type for audio played when pausing study',
+            default: [],
+            items: {
+                type: 'object',
+                properties: {
+                    'src': {
+                        type: 'string'
+                    },
+                    'type': {
+                        type: 'string'
+                    }
+                }
+            }
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * audio played upon unpausing study. Unpausing audio will always be played
+         * before proceeding to next trial, even if this trial will not be redone
+         * (e.g. because it was paused during test and allowPauseDuringTest is
+         * set to false)
+         *
+         * @property {Object[]} unpauseAudio
+         * @default []
+         */
+        unpauseAudio: {
+            type: 'array',
+            description: 'List of objects specifying audio src and type for audio played when unpausing study',
+            default: [],
+            items: {
+                type: 'object',
+                properties: {
+                    'src': {
+                        type: 'string'
+                    },
+                    'type': {
+                        type: 'string'
+                    }
+                }
+            }
+        },
+        /**
+         * Text to show under "Study paused / Press space to resume" when study is paused.
+         * Default: (You'll have a moment to turn around again.)
+         *
+         * @property {String} pauseText
+         * @default []
+
+         */
+        pauseText: {
+            type: 'string',
+            description: 'Text to show under Study paused when study is paused.',
+            default: '(You\'ll have a moment to turn around again.)'
+        }
+    },
+
+    meta: {
+        name: 'ExpLookitPreferentialLooking',
+        description: 'Component that displays video or images for looking measurements',
         data: {
             type: 'object',
             /**

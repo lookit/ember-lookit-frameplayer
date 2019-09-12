@@ -159,22 +159,18 @@ export default Ember.Mixin.create({
         }
     },
 
-    meta: {
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                 * Whether to display this frame as fullscreen, even though it is not
-                 * generally used that way.
-                 *
-                 * @property {String} displayFullscreenOverride
-                 */
-                displayFullscreenOverride: {
-                    type: 'boolean',
-                    description: 'Whether to override default and display this frame as fullscreen',
-                    default: false
-                }
-            }
+    frameSchemaProperties: {
+        /**
+         * Whether to display this frame as fullscreen, even though it is not
+         * generally used that way.
+         *
+         * @property {String} displayFullscreenOverride
+         */
+        displayFullscreenOverride: {
+            type: 'boolean',
+            description: 'Whether to override default and display this frame as fullscreen',
+            default: false
         }
-    },
+    }
+
 });

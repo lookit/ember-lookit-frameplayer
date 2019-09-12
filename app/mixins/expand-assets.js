@@ -95,88 +95,181 @@ export default Ember.Mixin.create({
      */
     assetsToExpand: {},
 
-    meta: {
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                 * Base directory for where to find stimuli. Any image src
-                 * values that are not full paths will be expanded by prefixing
-                 * with `baseDir` + `img/`. Any audio/video src values provided as
-                 * strings rather than objects with `src` and `type` will be
-                 * expanded out to `baseDir/avtype/[stub].avtype`, where the potential
-                 * avtypes are given by `audioTypes` and `videoTypes`.
-                 *
-                 * baseDir should include a trailing slash
-                 * (e.g., `http://stimuli.org/myexperiment/`); if a value is provided that
-                 * does not end in a slash, one will be added.
-                 *
-                 * @property {String} baseDir
-                 * @default ''
-                 */
-                baseDir: {
-                    type: 'somethingsomething',
-                    default: '',
-                    description: 'Base directory for all stimuli'
-                },
-                /**
-                 * List of audio types to expect for any audio specified just
-                 * with a string rather than with a list of src/type objects.
-                 * If audioTypes is `['typeA', 'typeB']` and an audio source
-                 * is given as `intro`, the audio source will be
-                 * expanded out to
-                 *
-                 *
-                 *     [
-                 *         {
-                 *             src: 'baseDir' + 'typeA/intro.typeA',
-                 *             type: 'audio/typeA'
-                 *         },
-                 *         {
-                 *             src: 'baseDir' + 'typeB/intro.typeB',
-                 *             type: 'audio/typeB'
-                 *         }
-                 *     ]
-                 *
-                 *
-                 * @property {String[]} audioTypes
-                 * @default ['mp3', 'ogg']
-                 */
-                audioTypes: {
-                    type: 'array',
-                    default: ['mp3', 'ogg'],
-                    description: 'List of audio types to expect for any audio sources specified as strings rather than lists of src/type pairs'
-                },
-                /**
-                 * List of video types to expect for any audio specified just
-                 * with a string rather than with a list of src/type objects.
-                 * If videoTypes is `['typeA', 'typeB']` and a video source
-                 * is given as `intro`, the video source will be
-                 * expanded out to
-                 *
-                 *
-                 *     [
-                 *         {
-                 *             src: 'baseDir' + 'typeA/intro.typeA',
-                 *             type: 'video/typeA'
-                 *         },
-                 *         {
-                 *             src: 'baseDir' + 'typeB/intro.typeB',
-                 *             type: 'video/typeB'
-                 *         }
-                 *     ]
-                 *
-                 *
-                 * @property {String[]} videoTypes
-                 * @default ['mp4', 'webm']
-                 */
-                videoTypes: {
-                    type: 'array',
-                    default: ['mp4', 'webm'],
-                    description: 'List of audio types to expect for any video sources specified as strings rather than lists of src/type pairs'
-                }
-            }
+    frameSchemaProperties: {
+        /**
+         * Base directory for where to find stimuli. Any image src
+         * values that are not full paths will be expanded by prefixing
+         * with `baseDir` + `img/`. Any audio/video src values provided as
+         * strings rather than objects with `src` and `type` will be
+         * expanded out to `baseDir/avtype/[stub].avtype`, where the potential
+         * avtypes are given by `audioTypes` and `videoTypes`.
+         *
+         * baseDir should include a trailing slash
+         * (e.g., `http://stimuli.org/myexperiment/`); if a value is provided that
+         * does not end in a slash, one will be added.
+         *
+         * @property {String} baseDir
+         * @default ''
+         */
+        baseDir: {
+            type: 'string',
+            default: '',
+            description: 'Base directory for all stimuli'
+        },
+        /**
+         * List of audio types to expect for any audio specified just
+         * with a string rather than with a list of src/type objects.
+         * If audioTypes is `['typeA', 'typeB']` and an audio source
+         * is given as `intro`, the audio source will be
+         * expanded out to
+         *
+         *
+         *     [
+         *         {
+         *             src: 'baseDir' + 'typeA/intro.typeA',
+         *             type: 'audio/typeA'
+         *         },
+         *         {
+         *             src: 'baseDir' + 'typeB/intro.typeB',
+         *             type: 'audio/typeB'
+         *         }
+         *     ]
+         *
+         *
+         * @property {String[]} audioTypes
+         * @default ['mp3', 'ogg']
+         */
+        audioTypes: {
+            type: 'array',
+            default: ['mp3', 'ogg'],
+            description: 'List of audio types to expect for any audio sources specified as strings rather than lists of src/type pairs'
+        },
+        /**
+         * List of video types to expect for any audio specified just
+         * with a string rather than with a list of src/type objects.
+         * If videoTypes is `['typeA', 'typeB']` and a video source
+         * is given as `intro`, the video source will be
+         * expanded out to
+         *
+         *
+         *     [
+         *         {
+         *             src: 'baseDir' + 'typeA/intro.typeA',
+         *             type: 'video/typeA'
+         *         },
+         *         {
+         *             src: 'baseDir' + 'typeB/intro.typeB',
+         *             type: 'video/typeB'
+         *         }
+         *     ]
+         *
+         *
+         * @property {String[]} videoTypes
+         * @default ['mp4', 'webm']
+         */
+        videoTypes: {
+            type: 'array',
+            default: ['mp4', 'webm'],
+            description: 'List of audio types to expect for any video sources specified as strings rather than lists of src/type pairs'
         }
+    },
+
+    audioAssetSchema() {
+        if (this.get('baseDir') && this.get('audioTypes')) {
+            return [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            'src': {
+                                type: 'string'
+                                // TODO: require URL
+                            },
+                            'type': {
+                                type: 'string'
+                                // TODO: require enum
+                            }
+                        }
+                    }
+                }
+            ]
+        } else {
+            return [
+                {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            'src': {
+                                type: 'string'
+                                // TODO: require URL
+                            },
+                            'type': {
+                                type: 'string'
+                                // TODO: require enum
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    },
+
+    videoAssetSchema() {
+        if (this.get('baseDir') && this.get('videoTypes')) {
+            return [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            'src': {
+                                type: 'string'
+                                // TODO: require URL
+                            },
+                            'type': {
+                                type: 'string'
+                                // TODO: require enum
+                            }
+                        }
+                    }
+                }
+            ]
+        } else {
+            return [
+                {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            'src': {
+                                type: 'string'
+                                // TODO: require URL
+                            },
+                            'type': {
+                                type: 'string'
+                                // TODO: require enum
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    },
+
+    imageAssetSchema() {
+        return [
+            {
+                type: 'string'
+            }
+        ]
     },
 
     // Utility to expand stubs into either full URLs (for images) or
