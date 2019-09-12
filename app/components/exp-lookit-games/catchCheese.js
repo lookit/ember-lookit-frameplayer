@@ -15,7 +15,7 @@ import Base from './base';
 let basket = {};
 let ball = {};
 let obstructions = [];
-let audio = {};
+let startSound = {};
 let goodJob = {};
 let ballCatchFail = {};
 let targetStars = {};
@@ -68,12 +68,12 @@ export default class CatchCheese extends Base {
     goodJob.load();
     ballCatchFail = new Audio(super.Utils.failcatchSound);
     ballCatchFail.load();
-    audio = new Audio(super.Utils.rattleSound);
-    audio.load();
+    startSound = new Audio();
+    startSound.load();
     ballCatchFail.src = super.Utils.ballcatchFailSound;
     goodJob.src = super.Utils.goodCatchSound;
-    audio.src = super.Utils.rattleSound;
-    audio.setAttribute("preload", "auto");
+    startSound.src = super.Utils.rattleSound;
+    startSound.setAttribute("preload", "auto");
     ballCatchFail.setAttribute("preload", "auto");
     goodJob.setAttribute("preload", "auto");
     basketImage= new Image();
@@ -99,7 +99,7 @@ export default class CatchCheese extends Base {
     starsImg = new Image();
     starsImg.src = super.Utils.basketStarsImage;
 
-    audio.addEventListener('onloadeddata', this.initGame(), false);
+    startSound.addEventListener('onloadeddata', this.initGame(), false);
     super.init();
 
   }
@@ -115,9 +115,6 @@ export default class CatchCheese extends Base {
   initGame() {
     jitterT = super.trialStartTime();
     initialTime =0;
-    super.gameOver = false;
-    super.initGame();
-
     super.createPaddleBox();
     basket = super.basketObject(basket);
     obstructionsNum = obstrArr[super.currentRounds];
@@ -130,13 +127,16 @@ export default class CatchCheese extends Base {
 
 
     if(super.currentRounds > 0 || (super.currentRounds === 0 && !super.paddleIsMoved(basket))) {
-      audio.play();
+      startSound.play();
     }
-    audio.addEventListener('playing', function () {
+    startSound.addEventListener('playing', function () {
 
       initialTime = new Date().getTime();
 
     });
+
+
+    super.initGame();
 
   }
 
@@ -241,7 +241,7 @@ export default class CatchCheese extends Base {
 
     if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMoved(basket)){
 
-      audio.play();
+      startSound.play();
     }
 
     if(ball.state === 'start'){
@@ -255,8 +255,8 @@ export default class CatchCheese extends Base {
       }
 
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
-        audio.pause();
-        audio.currentTime = 0;
+        startSound.pause();
+        startSound.currentTime = 0;
         ball.state = 'fall';
         initialTime = new Date().getTime();
       }

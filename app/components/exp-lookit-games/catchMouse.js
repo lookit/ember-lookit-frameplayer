@@ -16,7 +16,7 @@ import Base from './base';
 let mice = {};
 let cheeseClock = {};
 let basket = {};
-let audio = {};
+let startSound = {};
 let ballCatchFail = {};
 let cheese1Sound = {};
 let cheese2Sound = {};
@@ -61,10 +61,9 @@ export default class CatchMouse extends Base {
    * @method init
    */
   init() {
-    super.init();
     document.addEventListener("mousemove", super.onMouseMove);
-    audio = new Audio(super.Utils.drumRollSound);
-    audio.load();
+    startSound = new Audio();
+    startSound.load();
     cheese1Sound = new Audio(super.Utils.cheese_ser1Sound);
     cheese1Sound.load();
     cheese2Sound = new Audio(super.Utils.cheese_ser2Sound);
@@ -79,14 +78,13 @@ export default class CatchMouse extends Base {
     cheese3Sound.src = super.Utils.cheese_ser3Sound;
     ballCatchFail.src = super.Utils.ballcatchFailSound;
     swooshSound.src = super.Utils.swooshSound;
-    audio.src = super.Utils.drumRollSound;
+    startSound.src = super.Utils.drumRollSound;
 
     ballCatchFail.load();
 
     //Mice coord
 
     let x = initX;
-    let y = initBallY;
     let leftBorder = (x - 0.08) * super.Utils.SCALE;
     let topBorder = (1.3671 - initBallY - 0.07) * super.Utils.SCALE;
 
@@ -127,8 +125,9 @@ export default class CatchMouse extends Base {
     basketImg = new Image();
     basketImg.src = basket.imageURL;
 
-    this.initGame();
-    audio.addEventListener('onloadeddata', this.initGame(), false);
+    startSound.addEventListener('onloadeddata', this.initGame(), false);
+    super.init();
+
   }
 
 
@@ -182,10 +181,10 @@ export default class CatchMouse extends Base {
     basket = super.basketObject(basket);
 
     if (super.currentRounds > 0 || (super.currentRounds === 0 && !super.paddleIsMoved(basket))) {
-      audio.play();
+      startSound.play();
     }
 
-    audio.addEventListener('playing', function () {
+    startSound.addEventListener('playing', function () {
       initialTime = new Date().getTime();
 
     });
@@ -292,7 +291,7 @@ export default class CatchMouse extends Base {
 
     if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMoved(basket)) {
 
-      audio.play();
+      startSound.play();
     }
 
 
@@ -304,8 +303,8 @@ export default class CatchMouse extends Base {
 
     //Randomize initial wait time here
     if (mice.state === 'start' && initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
-      audio.pause();
-      audio.currentTime = 0;
+      startSound.pause();
+      startSound.currentTime = 0;
       mice.state = 'show';
       mice.showTime = new Date().getTime();
     }
