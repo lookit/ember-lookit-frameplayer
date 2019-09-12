@@ -135,17 +135,16 @@ export default class CatchMouse extends Base {
   setCheeseObj() {
 
     //Cheese coord
-    let leftBorder = (1.53) * super.Utils.SCALE;
-    let topBorder = (1.2971 - initBallY) * super.Utils.SCALE;
-    let rightBorder = (1.7) * super.Utils.SCALE;
-    let downBorder = (1.4371 - initBallY) * super.Utils.SCALE;
-
+    let leftBorder = (1.53)*super.Utils.SCALE ;
+    let topBorder = (1.2974-initBallY)*super.Utils.SCALE;
+    let width = 0.27777 * super.Utils.SCALE;
+    let height = 0.26031 * super.Utils.SCALE;
 
     cheeseClock = {
-      dimensions: {width: rightBorder - leftBorder, height: downBorder - topBorder},
-      position: {x: leftBorder, y: topBorder},
+      dimensions: {width: width, height: height},
+      position: {x: leftBorder ,y: topBorder},
       angle: 0,
-      state: 10,
+      state:10,
       velocity: 1.4,
       imageURL: super.Utils.pizza
     };
@@ -348,9 +347,6 @@ export default class CatchMouse extends Base {
       if ((mice.position.y + 20) - basket.position.y >= 0) {
         mice.state = 'done';
         if (cheeseClock.state > 0) {
-          cheeseClock.dimensions.width = cheeseClock.dimensions.width * 1.5;
-          cheeseClock.dimensions.height = cheeseClock.dimensions.height * 1.5;
-
           if (cheeseClock.state < 4) {
 
             cheese1Sound.play();
