@@ -30,7 +30,7 @@ let paddleBox = {
 
 // let INITIAL_SCREEN_WIDTH = this.canvas.width/1024; // X  screen from matlab
 // let INITIAL_SCREEN_HEIGHT = this.canvas.height/768; // Y screen from matlab
-const PADDLE_REST_TIME_MS = 2000;
+const PADDLE_REST_TIME_MS = 3000;
 
 /**
  * Base class for common game functions
@@ -83,9 +83,22 @@ export default class Base {
     //
     // this.Utils.SCALE  =  this.context.scale_factor * (this.canvas.height/height);
 
-    this.canvas.height = 768 ;
-    this.canvas.width =  1024;
-    this.Utils.SCALE  =  420;
+    // this.canvas.height = 768 ;
+    // this.canvas.width =  1024;
+    // this.Utils.SCALE  =  420;
+
+    if(screen.height < screen.width) {
+      this.canvas.height = screen.height;
+      let coefficient = screen.height/768;
+      this.canvas.width = coefficient * 1024;
+      this.Utils.SCALE  =  420 * coefficient;
+    }else{
+      this.canvas.width = screen.width;
+      let coefficient = screen.width/768;
+      this.canvas.height = coefficient * 768;
+      this.Utils.SCALE  =  420 * coefficient;
+    }
+
 
   }
 
@@ -119,6 +132,7 @@ export default class Base {
    */
   generateTrajectoryParams(hArr, height, Tf) {
     let currentHeight = hArr[currentRounds] * 0.05 + height;
+    initX = 0.52;
     gravity = 2 * currentHeight / Math.pow(Tf, 2);
     ballvx = (1.0310 + 0.02) / Tf;
     initV = 0.5 * gravity * Tf;
@@ -736,7 +750,6 @@ export default class Base {
    * @returns {number} seconds
    */
   trialStartTime() {
-
     let min = this.context.minTime + 350;
     return ((Math.floor(Math.random() * (this.context.maxTime - min + 1)) + min) / 1000 );
 

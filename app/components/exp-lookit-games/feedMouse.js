@@ -28,8 +28,9 @@ let jitterT = 0;
 let winsize = 0.056;
 let targetsize = 0.02;
 let fireworksURLs = [];
-const CENTER = 549;
+const CENTER = 1.30715;
 
+let start_time = 0;
 let ballImg = {};
 let targetImgs = [];
 let ballBoxImg = {};
@@ -91,6 +92,20 @@ export default class FeedMouse extends Base {
 
   }
 
+  /**
+   * Show the current  ball location .
+   * Center the ball location.
+   * @method showBallLocation
+   * @param target
+   */
+  showBallLocation(){
+
+
+    super.drawBall(ball, ballImg);
+
+
+  }
+
 
   /**
    * Main point to start the game.
@@ -99,7 +114,7 @@ export default class FeedMouse extends Base {
    */
   init() {
 
-
+    start_time = new Date().getTime();
     TfArr = super.uniformArr([0.8, 0.9, 1]);
     goodJob = new Audio(super.Utils.firework_small);
     goodJob.load();
@@ -135,6 +150,10 @@ export default class FeedMouse extends Base {
 
 
     startSound.addEventListener('onloadeddata', this.initGame(), false);
+    startSound.addEventListener('playing', function () {
+      initialTime = new Date().getTime();
+    });
+
     super.init();
 
   }
@@ -158,7 +177,7 @@ export default class FeedMouse extends Base {
       position: {x: 0, y: 0},
       velocity: 0,
       mass: super.Utils.ballMass,
-      radius: 10,
+      radius: 0.02381 * super.Utils.SCALE,
       restitution: super.Utils.restitution,
       color: super.Utils.yellowColor,
       timeReached: 0
@@ -167,11 +186,10 @@ export default class FeedMouse extends Base {
 
     randomNumber = Math.floor(Math.random() * 3); // Get random value from 0 to 2
     ball = super.ballObject();
-    startSound = new Audio(super.Utils.fuse);
-    startSound.play();
-    startSound.addEventListener('playing', function () {
-      initialTime = new Date().getTime();
-    });
+
+    if(super.currentRounds > 0 ) {
+      startSound.play();
+    }
 
     super.initGame();
 
@@ -191,7 +209,7 @@ export default class FeedMouse extends Base {
         x: leftBorder,
         y: topBorder
       },
-      radius: 3,
+      radius: 0.007143 * super.Utils.SCALE,
       color: super.Utils.grayColor,
       roofcolor: super.Utils.redColor,
       houseColor: super.Utils.grayColor,
@@ -259,6 +277,13 @@ export default class FeedMouse extends Base {
     this.createHouse();
     this.createWindow();
 
+    if(initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(start_time) >= 2.5) {
+
+      startSound.play();
+
+    }
+
+
     if (ball.state === 'start') {
 
       super.moveBallToStart(ball, ballImg, false);
@@ -294,7 +319,7 @@ export default class FeedMouse extends Base {
       //Check for target (red dot) position , if we are within the window size
       if (keyPressed.value === 1) {
 
-        let position = Math.abs(ball.position.x - CENTER);
+        let position = Math.abs(ball.position.x - CENTER * super.Utils.SCALE );
 
         if (position < targetsize * super.Utils.SCALE) {
           super.increaseScore();
@@ -322,9 +347,9 @@ export default class FeedMouse extends Base {
 
     if (ball.state === 'hit') {
 
-      let difference = ball.position.x - CENTER;
+      let difference = ball.position.x - CENTER * super.Utils.SCALE;
       if (ball.hitstate === 'great') {
-        let explosion = this.setExplosionPosition(4, ball, 15);
+        let explosion = this.setExplosionPosition(4, ball, 0.03572 * super.Utils.SCALE);
         super.drawImageObject(explosion, targetImgs[randomNumber]);
       }
 
@@ -338,9 +363,14 @@ export default class FeedMouse extends Base {
         super.finishGame(false);
       }
 
+      if(ball.hitstate !== 'good' && ball.hitstate !== 'great' ){
+
+        this.showBallLocation();
+      }
+
     }
 
-    super.discreteLauncer(ballBoxImg);
+    this.discreteLauncer(ballBoxImg);
 
   }
 
@@ -351,13 +381,29 @@ export default class FeedMouse extends Base {
 
       dimensions: {width: target.dimensions.width * multiplier, height: target.dimensions.height * multiplier},
       position: {
-        x: CENTER - (target.dimensions.width * multiplier / 2) + difference,
-        y: ball.position.y - target.dimensions.height * multiplier / 2 + 10
+        x: CENTER * super.Utils.SCALE - (target.dimensions.width * multiplier / 2) + difference,
+        y: ball.position.y - target.dimensions.height * multiplier / 2 + 0.02381 * super.Utils.SCALE
       }
 
     };
     return explosion;
   }
 
+
+
+  discreteLauncer(image) {
+
+    let initX  = 0.7510;
+    let leftBorder = (initX - 0.05) * super.Utils.SCALE;
+    let topBoarder = (1.3671 - 0.05) * super.Utils.SCALE;
+
+    let launcher = {
+      position: {x:leftBorder, y:topBoarder },
+      dimensions: {width: 0.13605 * super.Utils.SCALE , height:0.1548 * super.Utils.SCALE }
+    };
+
+    super.drawImageObject(launcher, image);
+
+  }
 
 }
