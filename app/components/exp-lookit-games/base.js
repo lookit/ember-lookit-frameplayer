@@ -132,6 +132,7 @@ export default class Base {
    */
   generateTrajectoryParams(hArr, height, Tf) {
     let currentHeight = hArr[currentRounds] * 0.05 + height;
+    initX = 0.52;
     gravity = 2 * currentHeight / Math.pow(Tf, 2);
     ballvx = (1.0310 + 0.02) / Tf;
     initV = 0.5 * gravity * Tf;
