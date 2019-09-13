@@ -5,6 +5,7 @@ import FullScreen from '../../mixins/full-screen';
 import MediaReload from '../../mixins/media-reload';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
+import { audioAssetOptions, videoAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
 
 let {
     $
@@ -192,6 +193,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
     currentTask: null, // announce, intro, calibration, or test.
     isPaused: false,
 
+    frameSchemaRequired: ['pauseAudio', 'unpauseAudio'],
+
     frameSchemaProperties: {
         /**
         Array of objects specifying video src and type for test video (these should be the same video, but multiple sources--e.g. mp4 and webm--are generally needed for cross-browser support). If none provided, skip test phase.
@@ -205,7 +208,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         @default []
         */
         testVideo: {
-            type: 'string',
+            anyOf: videoAssetOptions,
             description: 'List of objects specifying video src and type for test videos',
             default: []
         },
@@ -218,7 +221,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         @default []
         */
         altTestVideo: {
-            type: 'string',
+            anyOf: videoAssetOptions,
             description: 'List of objects specifying video src and type for alternate test videos',
             default: []
         },
@@ -232,7 +235,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         @default []
         */
         introVideo: {
-            type: 'string',
+            anyOf: videoAssetOptions,
             description: 'List of objects specifying intro video src and type',
             default: []
         },
@@ -245,7 +248,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         @default []
         */
         announcementVideo: {
-            type: 'string',
+            anyOf: videoAssetOptions,
             description: 'List of objects specifying attention-grabber video src and type',
             default: []
         },
@@ -269,7 +272,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         @default []
         */
         announcementAudio: {
-            type: 'string',
+            anyOf: audioAssetOptions,
             description: 'List of objects specifying intro announcement audio src and type',
             default: []
         },
@@ -282,7 +285,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
          * @property {String} leftImage
          */
         leftImage: {
-            type: 'string',
+            anyOf: imageAssetOptions,
             description: 'URL of image to show on left'
         },
         /**
@@ -293,7 +296,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
          * @property {String} rightImage
          */
         rightImage: {
-            type: 'string',
+            anyOf: imageAssetOptions,
             description: 'URL of image to show on left'
         },
 
@@ -310,7 +313,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             description: 'list of possible images to use for centerImage, leftImage, rightImage',
             default: [],
             items: {
-                type: 'string'
+                anyOf: imageAssetOptions
             }
         },
 
@@ -322,7 +325,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
          * @property {String} leftImageIndex
          */
         leftImageIndex: {
-            type: 'number',
+            type: 'integer',
             description: 'index in possibleImages for image to use on left.',
             default: -1
         },
@@ -335,7 +338,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
          * @property {String} rightImageIndex
          */
         rightImageIndex: {
-            type: 'number',
+            type: 'integer',
             description: 'index in possibleImages for image to use on right.',
             default: -1
         },
@@ -348,7 +351,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
          * @property {String} centerImageIndex
          */
         centerImageIndex: {
-            type: 'number',
+            type: 'integer',
             description: 'index in possibleImages for image to use on center.',
             default: -1
         },
@@ -360,7 +363,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
          * @property {String} centerImage
          */
         centerImage: {
-            type: 'string',
+            anyOf: imageAssetOptions,
             description: 'URL of image to show on left'
         },
 
@@ -374,7 +377,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         @default []
         */
         testAudio: {
-            type: 'string',
+            anyOf: audioAssetOptions,
             description: 'List of objects specifying music audio src and type',
             default: []
         },
@@ -411,7 +414,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         testLength: {
             type: 'number',
             description: 'Length of test videos in seconds',
-            default: Infinity
+            default: Infinity,
+            minimum: 0
         },
 
         /**
@@ -421,9 +425,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         @default 1
         */
         testCount: {
-            type: 'number',
+            type: 'integer',
             description: 'Number of times to play test video',
-            default: 1
+            default: 1,
+            minimum: 0
         },
 
         /**
@@ -445,7 +450,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         calibrationLength: {
             type: 'number',
             description: 'length of single calibration segment in ms',
-            default: 3000
+            default: 3000,
+            minimum: 0
         },
         /**
          * Ordered list of positions to show calibration segment in. Options are
@@ -457,7 +463,11 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         calibrationPositions: {
             type: 'array',
             description: 'Ordered list of positions to show calibration',
-            default: ['center', 'left', 'right', 'center']
+            default: ['center', 'left', 'right', 'center'],
+            items: {
+                type: 'string',
+                enum: ['center', 'left', 'right']
+            }
         },
         /**
          * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
@@ -468,20 +478,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
          * @default []
          */
         calibrationAudio: {
-            type: 'array',
+            anyOf: audioAssetOptions,
             description: 'list of objects specifying audio src and type for calibration audio',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        type: 'string'
-                    },
-                    'type': {
-                        type: 'string'
-                    }
-                }
-            }
+            default: []
         },
         /**
          * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
@@ -492,20 +491,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
          * @default []
          */
         calibrationVideo: {
-            type: 'array',
+            anyOf: videoAssetOptions,
             description: 'list of objects specifying video src and type for calibration audio',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        type: 'string'
-                    },
-                    'type': {
-                        type: 'string'
-                    }
-                }
-            }
+            default: []
         },
         /**
          * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
@@ -515,20 +503,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
          * @default []
          */
         pauseAudio: {
-            type: 'array',
+            anyOf: audioAssetOptions,
             description: 'List of objects specifying audio src and type for audio played when pausing study',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        type: 'string'
-                    },
-                    'type': {
-                        type: 'string'
-                    }
-                }
-            }
+            default: []
         },
         /**
          * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
@@ -541,20 +518,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
          * @default []
          */
         unpauseAudio: {
-            type: 'array',
+            anyOf: audioAssetOptions,
             description: 'List of objects specifying audio src and type for audio played when unpausing study',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        type: 'string'
-                    },
-                    'type': {
-                        type: 'string'
-                    }
-                }
-            }
+            default: []
         },
         /**
          * Text to show under "Study paused / Press space to resume" when study is paused.

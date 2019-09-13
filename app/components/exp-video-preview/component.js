@@ -6,6 +6,7 @@ import MediaReload from '../../mixins/media-reload';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
 import { computed } from '@ember/object';
+import { videoAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
 
 /**
  * @module exp-player
@@ -108,7 +109,7 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
          * @property {Array} videos
          *   @param {String} caption Some text to appear under this video
          *   @param {Object[]} sources String indicating video path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects.
-         *   @param {String} imgSrc URL of image to display (optional; each preview video should designate either sources or imgSrc)
+         *   @param {String} imgSrc URL of image to display (optional; each preview video should designate either sources or imgSrc). Can be full path or relative to baseDir.
          */
         videos: {
             type: 'array',
@@ -117,24 +118,11 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
                 type: 'object',
                 properties: {
                     imgSrc: {
-                        type: 'string',
+                        anyOf: imageAssetOptions,
                         default: ''
                     },
                     sources: {
-                        type: 'array',
-                        default: [],
-                        items: {
-                            type: 'object',
-                            properties: {
-                                src: {
-                                    type: 'string'
-                                },
-                                type: {
-                                    type: 'string'
-                                }
-                            },
-                            required: ['src', 'type']
-                        }
+                        anyOf: videoAssetOptions
                     },
                     caption: {
                         type: 'string'

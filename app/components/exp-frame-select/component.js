@@ -138,7 +138,7 @@ export default ExpFrameBaseComponent.extend({
             type: 'number',
             default: -1
         }
-     },
+    },
 
     meta: {
         name: 'ExpFrameSelect',

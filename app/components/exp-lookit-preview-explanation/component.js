@@ -119,7 +119,8 @@ export default ExpFrameBaseComponent.extend({
                 alt: {
                     type: 'string'
                 }
-            }
+            },
+            required: ['src', 'alt']
         },
         /**
          * Text to display on the button to go to the next frame

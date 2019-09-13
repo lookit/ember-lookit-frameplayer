@@ -4,6 +4,7 @@ import ExpFrameBaseComponent from '../exp-frame-base/component';
 import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
+import { audioAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
 import { observer } from '@ember/object';
 
 let {
@@ -245,7 +246,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          * @property {String} backgroundImage
          */
         backgroundImage: {
-            type: 'string',
+            oneOf: imageAssetOptions,
             description: 'URL of background image; will be stretched to width of page'
         },
         /**
@@ -308,18 +309,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                         type: 'string'
                     },
                     'sources': {
-                        type: 'array',
-                        items: {
-                            type: 'object',
-                            properties: {
-                                'src': {
-                                    type: 'string'
-                                },
-                                'type': {
-                                    type: 'string'
-                                }
-                            }
-                        }
+                        oneOf: audioAssetOptions
                     },
                     'highlights': {
                         type: 'array',
@@ -338,7 +328,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                             }
                         }
                     }
-                }
+                },
+                required: ['audioId', 'sources']
             }
         },
         /**
@@ -377,9 +368,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          * @property {Object[]} images
          *   @param {String} id unique ID for this image. This will be used to refer to the choice made by the user, if any.
          *   @param {String} src URL of image source (can be full URL, or stub to append to baseDir; see `baseDir`)
-         *   @param {String} left distance from left of story area to image center, as percentage of story area width
-         *   @param {String} height image height, as percentage of story area height
-         *   @param {String} bottom bottom margin, as percentage of story area height
+         *   @param {String} left distance from left of story area to image center, as percentage of story area width - as string
+         *   @param {String} height image height, as percentage of story area height - as string
+         *   @param {String} bottom bottom margin, as percentage of story area height - as string
          *   @param {String} animate animation to use at start of trial on this image, if any. If not provided, image is shown throughout trial. Options are 'fadein', 'fadeout', 'flyleft' (fly from left), and 'flyright'.
          *   @param {String} text text to display above image, e.g. 'Click to hear what he said!' If omitted, no text is shown.
          *   @param {Object[]} imageAudio sources Array of {src: 'url',
@@ -400,7 +391,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                         type: 'string'
                     },
                     'src': {
-                        type: 'string'
+                        oneOf: imageAssetOptions
                     },
                     'left': {
                         type: 'string'
@@ -418,23 +409,13 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                         type: 'string'
                     },
                     'imageAudio': {
-                        type: 'array',
-                        items: {
-                            type: 'object',
-                            properties: {
-                                'src': {
-                                    type: 'string'
-                                },
-                                'type': {
-                                    type: 'string'
-                                }
-                            }
-                        }
+                        oneOf: audioAssetOptions
                     },
                     'requireAudio': {
                         type: 'boolean'
                     }
-                }
+                },
+                required: ['id', 'src', 'left', 'height', 'bottom']
             }
         }
     },

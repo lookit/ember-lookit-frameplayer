@@ -5,6 +5,7 @@ import FullScreen from '../../mixins/full-screen';
 import MediaReload from '../../mixins/media-reload';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
+import { audioAssetOptions, videoAssetOptions } from '../../mixins/expand-assets';
 
 let {
     $
@@ -181,7 +182,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         @default []
         */
         sources: {
-            type: 'string',
+            anyOf: videoAssetOptions,
             description: 'List of objects specifying video src and type for test videos',
             default: []
         },
@@ -194,7 +195,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         @default []
         */
         altSources: {
-            type: 'string',
+            anyOf: videoAssetOptions,
             description: 'List of objects specifying video src and type for alternate test videos',
             default: []
         },
@@ -208,7 +209,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         @default []
         */
         introSources: {
-            type: 'string',
+            anyOf: videoAssetOptions,
             description: 'List of objects specifying intro video src and type',
             default: []
         },
@@ -221,7 +222,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         @default []
         */
         attnSources: {
-            type: 'string',
+            anyOf: videoAssetOptions,
             description: 'List of objects specifying attention-grabber video src and type',
             default: []
         },
@@ -245,7 +246,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         @default []
         */
         audioSources: {
-            type: 'string',
+            anyOf: audioAssetOptions,
             description: 'List of objects specifying intro announcement audio src and type',
             default: []
         },
@@ -260,7 +261,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         @default []
         */
         musicSources: {
-            anyOf: this.audioAssetSchema(),
+            anyOf: audioAssetOptions,
             description: 'List of objects specifying music audio src and type',
             default: ''
         },
@@ -330,20 +331,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
          * @default []
          */
         calibrationAudioSources: {
-            type: 'array',
+            anyOf: audioAssetOptions,
             description: 'list of objects specifying audio src and type for calibration audio',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        type: 'string'
-                    },
-                    'type': {
-                        type: 'string'
-                    }
-                }
-            }
+            default: []
         },
         /**
          * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
@@ -354,20 +344,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
          * @default []
          */
         calibrationVideoSources: {
-            type: 'array',
+            anyOf: videoAssetOptions,
             description: 'list of objects specifying video src and type for calibration audio',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        type: 'string'
-                    },
-                    'type': {
-                        type: 'string'
-                    }
-                }
-            }
+            default: []
         },
         /**
          * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
@@ -377,20 +356,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
          * @default []
          */
         pauseAudio: {
-            type: 'array',
+            anyOf: audioAssetOptions,
             description: 'List of objects specifying audio src and type for audio played when pausing study',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        type: 'string'
-                    },
-                    'type': {
-                        type: 'string'
-                    }
-                }
-            }
+            default: []
         },
         /**
          * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
@@ -400,20 +368,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
          * @default []
          */
         unpauseAudio: {
-            type: 'array',
+            anyOf: audioAssetOptions,
             description: 'List of objects specifying audio src and type for audio played when unpausing study',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        type: 'string'
-                    },
-                    'type': {
-                        type: 'string'
-                    }
-                }
-            }
+            default: []
         },
         /**
          * Text to show under "Study paused / Press space to resume" when study is paused.

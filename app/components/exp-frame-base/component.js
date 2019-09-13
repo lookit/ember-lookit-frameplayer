@@ -69,10 +69,6 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
     meta: { // Configuration for all fields available on the component/template
         name: 'Base Experimenter Frame',
         description: 'The abstract base frame for Experimenter frames.',
-        parameters: { // Configuration parameters, which can be auto-populated from the experiment structure JSON
-            type: 'object',
-            properties: {}
-        },
         data: { // Controls what and how parameters are serialized and sent to the server. Ideally there should be a validation mechanism.
             type: 'object',
             properties: {}

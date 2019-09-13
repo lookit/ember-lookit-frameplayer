@@ -4,6 +4,7 @@ import ExpFrameBaseComponent from '../exp-frame-base/component';
 import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
+import { audioAssetOptions, videoAssetOptions } from '../../mixins/expand-assets';
 import { observer } from '@ember/object';
 
 let {
@@ -267,20 +268,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          * @property {Object[]} audioSources
          */
         audioSources: {
-            type: 'array',
+            oneOf: audioAssetOptions,
             description: 'List of objects specifying audio src and type for instructions during attention-getter video',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        type: 'string'
-                    },
-                    'type': {
-                        type: 'string'
-                    }
-                }
-            }
+            default: []
         },
         /**
          * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
@@ -289,20 +279,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          * @property {Object[]} musicSources
          */
         musicSources: {
-            type: 'array',
+            oneOf: audioAssetOptions,
             description: 'List of objects specifying audio src and type for music during trial',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        type: 'string'
-                    },
-                    'type': {
-                        type: 'string'
-                    }
-                }
-            }
+            default: []
         },
         /**
          * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
@@ -312,20 +291,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          * @property {Object[]} endAudioSources
          */
         endAudioSources: {
-            type: 'array',
+            oneOf: audioAssetOptions,
             description: 'Supply this to play audio at the end of the trial; list of objects specifying audio src and type',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        type: 'string'
-                    },
-                    'type': {
-                        type: 'string'
-                    }
-                }
-            }
+            default: []
         },
         /**
          * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
@@ -334,20 +302,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          * @property {Object[]} calibrationAudioSources
          */
         calibrationAudioSources: {
-            type: 'array',
+            oneOf: audioAssetOptions,
             description: 'list of objects specifying audio src and type for calibration audio',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        type: 'string'
-                    },
-                    'type': {
-                        type: 'string'
-                    }
-                }
-            }
+            default: []
         },
         /**
          * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
@@ -357,20 +314,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          * @property {Object[]} calibrationVideoSources
          */
         calibrationVideoSources: {
-            type: 'array',
-            description: 'list of objects specifying video src and type for calibration audio',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        type: 'string'
-                    },
-                    'type': {
-                        type: 'string'
-                    }
-                }
-            }
+            oneOf: videoAssetOptions,
+            description: 'list of objects specifying video src and type for calibration video',
+            default: []
         },
         /**
          * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
@@ -379,20 +325,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          * @property {Object[]} videoSources
          */
         videoSources: {
-            type: 'array',
+            oneOf: videoAssetOptions,
             description: 'List of objects specifying video src and type for attention-getter video',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        type: 'string'
-                    },
-                    'type': {
-                        type: 'string'
-                    }
-                }
-            }
+            default: []
         },
         /**
          * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
@@ -401,20 +336,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          * @property {Object[]} pauseAudio
          */
         pauseAudio: {
-            type: 'array',
+            oneOf: audioAssetOptions,
             description: 'List of objects specifying audio src and type for audio played when pausing study',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        type: 'string'
-                    },
-                    'type': {
-                        type: 'string'
-                    }
-                }
-            }
+            default: []
         },
         /**
          * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
@@ -423,20 +347,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          * @property {Object[]} unpauseAudio
          */
         unpauseAudio: {
-            type: 'array',
+            oneOf: audioAssetOptions,
             description: 'List of objects specifying audio src and type for audio played when pausing study',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        type: 'string'
-                    },
-                    'type': {
-                        type: 'string'
-                    }
-                }
-            }
+            default: []
         },
         /**
          * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
@@ -445,22 +358,11 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          * @property {Object[]} fsAudio
          */
         fsAudio: {
-            type: 'array',
+            oneOf: audioAssetOptions,
             description: 'List of objects specifying audio src and type for audio played when pausing study if study is not fullscreen',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        type: 'string'
-                    },
-                    'type': {
-                        type: 'string'
-                    }
-                }
-            }
+            default: []
         }
-     },
+    },
 
     meta: {
         name: 'ExpLookitGeometryAlternation',

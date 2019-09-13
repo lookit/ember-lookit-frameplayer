@@ -4,6 +4,7 @@ import ExpFrameBaseComponent from '../exp-frame-base/component';
 import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
+import { audioAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
 import { observer } from '@ember/object';
 
 let {
@@ -202,18 +203,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                         type: 'string'
                     },
                     'sources': {
-                        type: 'array',
-                        items: {
-                            type: 'object',
-                            properties: {
-                                'src': {
-                                    type: 'string'
-                                },
-                                'type': {
-                                    type: 'string'
-                                }
-                            }
-                        }
+                        anyOf: audioAssetOptions
                     },
                     'highlights': {
                         type: 'array',
@@ -286,7 +276,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                         type: 'string'
                     },
                     'src': {
-                        type: 'string'
+                        anyOf: imageAssetOptions
                     },
                     'left': {
                         type: 'string'

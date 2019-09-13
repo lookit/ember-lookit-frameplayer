@@ -5,6 +5,7 @@ import ExpFrameBaseComponent from '../exp-frame-base/component';
 import MediaReload from '../../mixins/media-reload';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
+import { audioAssetOptions, videoAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
 import { computed } from '@ember/object';
 
 let {
@@ -374,7 +375,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
                 type: 'object',
                 properties: {
                     imgSrc: {
-                        type: 'string',
+                        anyOf: imageAssetOptions,
                         default: ''
                     },
                     altText: {
@@ -382,36 +383,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
                         default: 'image'
                     },
                     video: {
-                        type: 'array',
-                        default: [],
-                        items: {
-                            type: 'object',
-                            properties: {
-                                src: {
-                                    type: 'string'
-                                },
-                                type: {
-                                    type: 'string'
-                                }
-                            },
-                            required: ['src', 'type']
-                        }
+                        anyOf: videoAssetOptions,
+                        default: []
                     },
                     audio: {
-                        type: 'array',
-                        default: [],
-                        items: {
-                            type: 'object',
-                            properties: {
-                                src: {
-                                    type: 'string'
-                                },
-                                type: {
-                                    type: 'string'
-                                }
-                            },
-                            required: ['src', 'type']
-                        }
+                        anyOf: audioAssetOptions,
+                        default: []
                     },
                     textBlocks: {
                         type: 'array',

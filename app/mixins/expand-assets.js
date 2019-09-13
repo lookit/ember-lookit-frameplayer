@@ -88,7 +88,7 @@ import Ember from 'ember';
  * @class Expand-assets
  */
 
-export default Ember.Mixin.create({
+var expandAssetsMixin = Ember.Mixin.create({
     /**
      * Object describing which properties may need expansion
      * @property {String} assetsToExpand
@@ -174,104 +174,6 @@ export default Ember.Mixin.create({
         }
     },
 
-    audioAssetSchema() {
-        if (this.get('baseDir') && this.get('audioTypes')) {
-            return [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                                // TODO: require URL
-                            },
-                            'type': {
-                                type: 'string'
-                                // TODO: require enum
-                            }
-                        }
-                    }
-                }
-            ]
-        } else {
-            return [
-                {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                                // TODO: require URL
-                            },
-                            'type': {
-                                type: 'string'
-                                // TODO: require enum
-                            }
-                        }
-                    }
-                }
-            ]
-        }
-    },
-
-    videoAssetSchema() {
-        if (this.get('baseDir') && this.get('videoTypes')) {
-            return [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                                // TODO: require URL
-                            },
-                            'type': {
-                                type: 'string'
-                                // TODO: require enum
-                            }
-                        }
-                    }
-                }
-            ]
-        } else {
-            return [
-                {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                                // TODO: require URL
-                            },
-                            'type': {
-                                type: 'string'
-                                // TODO: require enum
-                            }
-                        }
-                    }
-                }
-            ]
-        }
-    },
-
-    imageAssetSchema() {
-        return [
-            {
-                type: 'string'
-            }
-        ]
-    },
-
     // Utility to expand stubs into either full URLs (for images) or
     // array of {src: 'url', type: 'MIMEtype'} objects (for audio/video).
     expandAsset(asset, type) {
@@ -289,7 +191,7 @@ export default Ember.Mixin.create({
                     // Image: replace stub with full URL if needed
                     fullAsset = this.baseDir + 'img/' + asset;
                 }
-                fetch(url, { method: 'HEAD', mode: "no-cors" }); // Throws error if unavailable
+                fetch(fullAsset, { method: 'HEAD', mode: 'no-cors' }); // Throws error if unavailable
                 return fullAsset;
             case 'audio':
             case 'video':
@@ -298,8 +200,8 @@ export default Ember.Mixin.create({
                 if (typeof asset === 'string' && asset) {
                     fullAsset = [];
                     for (var iType = 0; iType < types.length; iType++) {
-                        let url = _this.baseDir + types[iType] + '/' + asset + '.' + types[iType]
-                        fetch(url, { method: 'HEAD', mode: "no-cors" }); // Throws error if unavailable
+                        let url = _this.baseDir + types[iType] + '/' + asset + '.' + types[iType];
+                        fetch(url, { method: 'HEAD', mode: 'no-cors' }); // Throws error if unavailable
                         fullAsset.push({
                             src: url,
                             type: type + '/' + types[iType]
@@ -365,8 +267,59 @@ export default Ember.Mixin.create({
     didReceiveAttrs() {
 
         this._super(...arguments);
+        // TODO: possibly here set schema values for the things in assetsToExpand??
         this.expandAssets();
-
+        // TODO: possibly check for valid IRIs after expansion?
     }
 
 });
+
+// JSON Schema values to use for media assets when using this mixin
+var audioTypes = ['mp3', 'ogg', 'wav', 'wave', 'x-wav', 'x-pn-wav', 'webm', 'mpeg', 'flac', 'x-flac'];
+var videoTypes = ['webm', 'mp4', 'ogg'];
+var schemaForSrcTypePairs = function(types) {
+    return {
+        type: 'array',
+        items: {
+            type: 'object',
+            properties: {
+                'src': {
+                    type: 'string',
+                    format: 'iri'
+                },
+                'type': {
+                    type: 'string',
+                    enum: types
+                }
+            }
+        }
+    };
+};
+
+var audioAssetOptions = [
+    {
+        type: 'string'
+    },
+    schemaForSrcTypePairs(audioTypes)
+];
+
+var videoAssetOptions = [
+    {
+        type: 'string'
+    },
+    schemaForSrcTypePairs(videoTypes)
+];
+
+var imageAssetOptions = [
+    {
+        type: 'string'
+    },
+    {
+        type: 'string',
+        format: 'iri'
+    }
+];
+
+export default expandAssetsMixin;
+
+export { expandAssetsMixin, audioAssetOptions, videoAssetOptions, imageAssetOptions };
