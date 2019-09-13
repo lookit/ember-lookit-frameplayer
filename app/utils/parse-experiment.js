@@ -78,7 +78,7 @@ ExperimentParser.prototype._resolveDependencies = function (frame) {
  */
 ExperimentParser.prototype._resolveFrame = function (frameId, frame) {
     try {
-        if (frameId) {
+        if (frameId && !frame) {
             if (!this.frames.hasOwnProperty(frameId)) {
                 console.error(`Parse error: Experiment sequence includes an undefined frame '${frameId}'. Each element of the 'sequence' in your study JSON must also be a key in the 'frames'. The frames you can use are: ${Object.keys(this.frames)}`);
             }
@@ -133,7 +133,7 @@ ExperimentParser.prototype.parse = function (prependFrameInds = true) {
     });
 
     // Basic checks to warn about unusual sequences
-    var frameKinds = expFrames.map((frame, index) => frame.kind);
+    var frameKinds = expFrames.map(frame => frame.kind);
     var nFrames = expFrames.length;
     if (nFrames > 0 && frameKinds[0] != 'exp-video-config') {
         console.warn('Parse warning: First frame is not an exp-video-config frame. Lookit recommends starting with an exp-video-config frame to help participants set up their webcams. If you are testing out a subset of your study, or using a custom replacement for exp-video-config, you can disregard this warning.');
