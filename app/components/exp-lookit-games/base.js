@@ -511,7 +511,7 @@ export default class Base {
     urlArr.forEach(
       url =>{
         let audio = new Audio();
-        audioArr.src = url;
+        audio.src = url;
         audio.load();
         audioArr.push(audio);
       }

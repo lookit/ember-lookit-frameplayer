@@ -15,27 +15,41 @@ import Base from './base';
 let target = {};
 let ball = {};
 let keyPressed = {};
-let startSound = {};
-let ballCatchFail = {};
-let goodJob = {};
-let greatJob = {};
 let initialTime = 0;
 let randomNumber = 0;
 let TfArr = [];
-let wallsize = 0.25;
 let targetX = 1.3310;
 let jitterT = 0;
 let winsize = 0.056;
 let targetsize = 0.02;
 let fireworksURLs = [];
 const CENTER = 1.30715;
-
-let start_time = 0;
-let ballImg = {};
+let startTime = 0;
 let targetImgs = [];
-let ballBoxImg = {};
-let starImg = {};
-let background = {};
+
+let sounds = [];
+let soundURLs = [];
+let imageURLs = [];
+let images = [];
+const gameSound = {
+  START: 0,
+  CATCH_GREAT: 1,
+  CATCH_GOOD: 2,
+  FAIL:3
+};
+const gameImage = {
+  BACKGROUND: 0,
+  BALL: 1,
+  STARS: 2,
+  BALLBOX: 3,
+  fireworks: {
+    BLUE: 0,
+    GREEN: 1,
+    RED: 2
+  }
+
+};
+
 
 
 /**
@@ -56,6 +70,8 @@ export default class FeedMouse extends Base {
 
     super(context, document);
     fireworksURLs = [super.Utils.Explosion_big_blue, super.Utils.Explosion_big_green, super.Utils.Explosion_big_red, super.Utils.Explosion_small];
+    soundURLs = [super.Utils.fuse, super.Utils.firework_big, super.Utils.firework_small, super.Utils.ballcatchFailSound];
+    imageURLs = [super.Utils.skyline,super.Utils.Fireball,super.Utils.star,super.Utils.boxOfFireworks];
 
 
   }
@@ -67,7 +83,7 @@ export default class FeedMouse extends Base {
    */
   createHouse() {
 
-    let leftBorder = (targetX - 0.5 - wallsize) * super.Utils.SCALE;
+    let leftBorder = (targetX - 0.75) * super.Utils.SCALE;
     let topBorder = (0.8) * super.Utils.SCALE;
 
     let houseObj = {
@@ -77,18 +93,17 @@ export default class FeedMouse extends Base {
 
     };
 
-    super.drawImageObject(houseObj, background);
+    super.drawImageObject(houseObj, images[gameImage.BACKGROUND]);
 
   }
 
   /**
-   * Create the window in the house
-   * @method createWindow
-   * @param target
+   * Create target window
+   * @method createTargetWindow
    */
-  createWindow() {
+  createTargetWindow() {
 
-    super.drawImageObject(target, starImg);
+    super.drawImageObject(target, images[gameImage.STARS]);
 
   }
 
@@ -96,13 +111,10 @@ export default class FeedMouse extends Base {
    * Show the current  ball location .
    * Center the ball location.
    * @method showBallLocation
-   * @param target
    */
   showBallLocation(){
 
-
-    super.drawBall(ball, ballImg);
-
+    super.drawBall(ball, images[gameImage.BALL]);
 
   }
 
@@ -114,43 +126,17 @@ export default class FeedMouse extends Base {
    */
   init() {
 
-    start_time = new Date().getTime();
+    startTime = new Date().getTime();
     TfArr = super.uniformArr([0.8, 0.9, 1]);
-    goodJob = new Audio(super.Utils.firework_small);
-    goodJob.load();
 
-    ballCatchFail = new Audio(super.Utils.firework_hidden);
-    ballCatchFail.load();
-
-    startSound = new Audio(super.Utils.fuse);
-    startSound.src = super.Utils.fuse;
-    goodJob.src = super.Utils.firework_small;
-
-    greatJob = new Audio(super.Utils.firework_big);
-    greatJob.src = super.Utils.firework_big;
-    greatJob.load();
-
-    ballCatchFail.src = super.Utils.ballcatchFailSound;
-    startSound.load();
-
-    ballImg = new Image();
-    ballImg.src = super.Utils.Fireball;
-
-    ballBoxImg = new Image();
-    ballBoxImg.src = super.Utils.boxOfFireworks;
-
-    this.createTarget();
+    this.setTargetBackground();
+    super.fillAudioArray(soundURLs,sounds);
     super.fillImageArray(fireworksURLs,targetImgs);
+    super.fillImageArray(imageURLs,images);
+    images.push(targetImgs);
 
-    starImg = new Image();
-    starImg.src = super.Utils.star;
-
-    background = new Image();
-    background.src = super.Utils.skyline;
-
-
-    startSound.addEventListener('onloadeddata', this.initGame(), false);
-    startSound.addEventListener('playing', function () {
+    sounds[gameSound.START].addEventListener('onloadeddata', this.initGame(), false);
+    sounds[gameSound.START].addEventListener('playing', function () {
       initialTime = new Date().getTime();
     });
 
@@ -161,8 +147,6 @@ export default class FeedMouse extends Base {
 
   /**
    * Initialize each game round with initial object parameters
-   * Randomize number of obstructions
-   * Reset the sounds sources for older browser versions
    * Wait for start sound and start the main game loop
    * @method initGame
    */
@@ -171,15 +155,13 @@ export default class FeedMouse extends Base {
     ball.startTime = 0;
     jitterT = super.trialStartTime();
     keyPressed.value = 0;
-    this.createTarget();
+    this.setTargetBackground();
 
     ball = {
       position: {x: 0, y: 0},
       velocity: 0,
-      mass: super.Utils.ballMass,
       radius: 0.02381 * super.Utils.SCALE,
       restitution: super.Utils.restitution,
-      color: super.Utils.yellowColor,
       timeReached: 0
 
     };
@@ -188,7 +170,7 @@ export default class FeedMouse extends Base {
     ball = super.ballObject();
 
     if(super.currentRounds > 0 ) {
-      startSound.play();
+      sounds[gameSound.START].play();
     }
 
     super.initGame();
@@ -196,7 +178,7 @@ export default class FeedMouse extends Base {
   }
 
 
-  createTarget() {
+  setTargetBackground() {
     let topBorder = (1.155) * super.Utils.SCALE;
     let downBorder = (1.235) * super.Utils.SCALE;
     let leftBorder = (targetX - 0.05) * super.Utils.SCALE;
@@ -209,12 +191,7 @@ export default class FeedMouse extends Base {
         x: leftBorder,
         y: topBorder
       },
-      radius: 0.007143 * super.Utils.SCALE,
-      color: super.Utils.grayColor,
-      roofcolor: super.Utils.redColor,
-      houseColor: super.Utils.grayColor,
-      windowbackground: super.Utils.blackColor
-
+      radius: 0.007143 * super.Utils.SCALE
     };
 
   }
@@ -275,21 +252,21 @@ export default class FeedMouse extends Base {
     super.loop();
     super.generateTrajectoryParamsDiscrete(TfArr);
     this.createHouse();
-    this.createWindow();
+    this.createTargetWindow();
 
-    if(initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(start_time) >= 2.5) {
+    if(initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(startTime) >= 2.5) {
 
-      startSound.play();
+      sounds[gameSound.START].play();
 
     }
 
 
     if (ball.state === 'start') {
 
-      super.moveBallToStart(ball, ballImg, false);
+      super.moveBallToStart(ball, images[gameImage.BALL], false);
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
-        startSound.pause();
-        startSound.currentTime = 0;
+        sounds[gameSound.START].pause();
+        sounds[gameSound.START].currentTime = 0;
         ball.state = 'fall';
         initialTime = new Date().getTime();
 
@@ -306,14 +283,14 @@ export default class FeedMouse extends Base {
       }
 
       if (initialTime > 0 && super.getElapsedTime(initialTime) > 0.1 && super.ballIsOnFloor(ball)) {
-        ballCatchFail.play();
+        sounds[gameSound.FAIL].play();
         ball.state = 'hit';
       }
 
 
-      super.drawBall(ball, ballImg);
+      super.drawBall(ball, images[gameImage.BALL]);
       this.createHouse();
-      this.createWindow();
+      this.createTargetWindow();
 
 
       //Check for target (red dot) position , if we are within the window size
@@ -325,16 +302,16 @@ export default class FeedMouse extends Base {
           super.increaseScore();
           ball.hitstate = 'great';
           keyPressed.value = 3;
-          greatJob.play();
+          sounds[gameSound.CATCH_GREAT].play();
 
 
         } else if (position < (winsize) * super.Utils.SCALE) {
           keyPressed.value = 2;
           ball.hitstate = 'good';
-          goodJob.play();
+          sounds[gameSound.CATCH_GOOD].play();
 
         } else {
-          ballCatchFail.play();
+          sounds[gameSound.FAIL].play();
 
         }
 
@@ -370,14 +347,14 @@ export default class FeedMouse extends Base {
 
     }
 
-    this.discreteLauncer(ballBoxImg);
+    this.discreteLauncer(images[gameImage.BALLBOX]);
 
   }
 
 
   setExplosionPosition(multiplier, ball, difference) {
 
-    let explosion = {
+    return {
 
       dimensions: {width: target.dimensions.width * multiplier, height: target.dimensions.height * multiplier},
       position: {
@@ -386,11 +363,10 @@ export default class FeedMouse extends Base {
       }
 
     };
-    return explosion;
   }
 
 
-
+  //TODO: replace with base implementation and target parameters object
   discreteLauncer(image) {
 
     let initX  = 0.7510;
