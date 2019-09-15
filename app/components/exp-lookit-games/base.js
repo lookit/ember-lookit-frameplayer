@@ -16,16 +16,12 @@ let dataLoop = {};
 let gameLoop = {};
 let mouseY = 0;
 let gameOver = false;
-let paddleWidth = 0;
-let paddleHeight = 0;
 let currentRounds = 0;
 let initBallY = 0.0;
 let initX = 0.52;
 let initV = 0;
 let gravity = 0;
 let ballvx = 0;
-let waitIndex = 0;
-let waitIndexTIme = 0;
 let paddleBox = {
   position: {x: 0, y: 0},
   dimensions: {width: 0, height: 0}
@@ -34,7 +30,7 @@ let paddleBox = {
 
 // let INITIAL_SCREEN_WIDTH = this.canvas.width/1024; // X  screen from matlab
 // let INITIAL_SCREEN_HEIGHT = this.canvas.height/768; // Y screen from matlab
-const PADDLE_REST_TIME_MS = 800;
+const PADDLE_REST_TIME_MS = 3000;
 
 /**
  * Base class for common game functions
@@ -53,21 +49,57 @@ export default class Base {
     this.context = context;
     this.document = document;
     this.canvas = this.document.getElementById('gamesCanvas');
-    let height = 768;
-    this.canvas.height = height;
-    this.canvas.width = 1024;
     this.ctx = this.canvas.getContext('2d');
     this.currentScore = 0;
     this.canvas.style.cursor = 'none';
-    paddleWidth = this.canvas.width / 20;
-    paddleHeight = this.canvas.width / 15;
     // Event listener for mouse and keyboard here
     document.addEventListener('keydown', this.keyDownHandler, false);
     document.addEventListener('keyup', this.keyUpHandler, false);
-    this.canvas.requestPointerLock =  this.canvas.requestPointerLock ||
-      this.canvas.mozRequestPointerLock;
-    this.canvas.requestPointerLock()
-    mouseY =  1.1*this.Utils.SCALE;
+    // this.canvas.requestPointerLock =  this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock || this.canvas.webkitRequestPointerLock;
+    // this.canvas.requestPointerLock()
+    this.calculateCanvas();
+    let leftBorder = (1.2035) * Utils.SCALE;
+    let topBorder = (1.3671) * Utils.SCALE;
+    let rightBorder = (1.4585) * Utils.SCALE;
+    let downBorder = (1.5671) * Utils.SCALE;
+    paddleBox.position.x = leftBorder;
+    paddleBox.position.y = topBorder;
+    paddleBox.dimensions.width = rightBorder - leftBorder;
+    paddleBox.dimensions.height = downBorder - topBorder;
+  }
+
+
+  calculateCanvas(){
+
+    //  this.canvas.height =  screen.height ;
+    //  this.canvas.width = screen.width;
+    //  let ratio = this.canvas.height/this.canvas.width;
+    //  let height = this.Utils.SCREEN_HEIGHT;
+    //  if(ratio >= 0.6 && ratio < 0.7 ){
+    //    height = 800;
+    //  }else if(ratio >= 0.7){
+    //    height = 900;
+    //  }
+    //
+    // this.Utils.SCALE  =  this.context.scale_factor * (this.canvas.height/height);
+
+    // this.canvas.height = 768 ;
+    // this.canvas.width =  1024;
+    // this.Utils.SCALE  =  420;
+
+    if(screen.height < screen.width) {
+      this.canvas.height = screen.height;
+      let coefficient = screen.height/768;
+      this.canvas.width = coefficient * 1024;
+      this.Utils.SCALE  =  420 * coefficient;
+    }else{
+      this.canvas.width = screen.width;
+      let coefficient = screen.width/768;
+      this.canvas.height = coefficient * 768;
+      this.Utils.SCALE  =  420 * coefficient;
+    }
+
+
   }
 
 
@@ -82,38 +114,7 @@ export default class Base {
 
   }
 
-  /**
-   * Get standard paddle width
-   * @method paddleWidth
-   * @return {number}
-   */
-  get paddleWidth() {
 
-    return paddleWidth;
-  }
-
-  /**
-   * Get standard paddle height
-   * @method paddleHeight
-   * @return {number}
-   */
-  get paddleHeight() {
-
-    return paddleHeight;
-  }
-
-  /**
-   * Draw paddle according to the location parameters
-   * @method drawPaddle
-   *
-   */
-  drawPaddle(paddle) {
-    this.ctx.beginPath();
-    this.ctx.rect(paddle.position.x, paddle.position.y, paddle.dimensions.width, paddle.dimensions.height);
-    this.ctx.fillStyle = Utils.whiteColor;
-    this.ctx.fill();
-    this.ctx.closePath();
-  }
 
 
   generateHeights() {
@@ -130,9 +131,8 @@ export default class Base {
    * @param Tf Flight time coefficient
    */
   generateTrajectoryParams(hArr, height, Tf) {
-    Tf = this.context.flightTime / 100;
-    height = this.context.height / 100;
     let currentHeight = hArr[currentRounds] * 0.05 + height;
+    initX = 0.52;
     gravity = 2 * currentHeight / Math.pow(Tf, 2);
     ballvx = (1.0310 + 0.02) / Tf;
     initV = 0.5 * gravity * Tf;
@@ -175,14 +175,6 @@ export default class Base {
    */
   createPaddleBox(color = Utils.blueColor) {
     this.ctx.beginPath();
-    let leftBorder = (1.8560 - 0.6525) * Utils.SCALE;
-    let topBorder = (1.3671 - 0.05 + 0.05) * Utils.SCALE;
-    let rightBorder = (2.1110 - 0.6525) * Utils.SCALE;
-    let downBorder = (1.3671 + 0.15 + 0.05) * Utils.SCALE;
-    paddleBox.position.x = leftBorder;
-    paddleBox.position.y = topBorder;
-    paddleBox.dimensions.width = rightBorder - leftBorder;
-    paddleBox.dimensions.height = downBorder - topBorder;
     this.ctx.rect(paddleBox.position.x, paddleBox.position.y, paddleBox.dimensions.width, paddleBox.dimensions.height);
     this.ctx.fillStyle = color;
     this.ctx.lineWidth = '8';
@@ -190,6 +182,22 @@ export default class Base {
     this.ctx.stroke();
 
 
+  }
+
+
+  fillPaddleBox(color = Utils.blueColor){
+
+    this.ctx.beginPath();
+    let leftBorder = (1.8560 - 0.6525) * Utils.SCALE;
+    let topBorder = (1.3671) * Utils.SCALE;
+    let rightBorder = (2.1110 - 0.6525) * Utils.SCALE;
+    let downBorder = (1.5671) * Utils.SCALE;
+    paddleBox.position.x = leftBorder;
+    paddleBox.position.y = topBorder;
+    paddleBox.dimensions.width = rightBorder - leftBorder;
+    paddleBox.dimensions.height = downBorder - topBorder;
+    this.ctx.fillStyle = color;
+    this.ctx.fillRect(paddleBox.position.x, paddleBox.position.y, paddleBox.dimensions.width, paddleBox.dimensions.height);
   }
 
   /**
@@ -241,28 +249,29 @@ export default class Base {
    */
   treeObject(treeIndex = 1) {
 
-    let leftBorder = 400 - 50 - 55 * treeIndex + 0.25 * Utils.SCALE;
+    let leftBorder = 390 - 50 - 55 * treeIndex + 0.25 * Utils.SCALE;
     let topBorder = (0.914 + 0.05) * Utils.SCALE;
-    let rightBorder = 400 + 0.25 * Utils.SCALE;
+    let rightBorder = 390 + 0.25 * Utils.SCALE;
     let downBorder = (1.542 + 0.05) * Utils.SCALE;
-    let imgURL = Utils.treeImage;
+    let img = new Image();
+    img.src = Utils.obstruction1;
     switch (treeIndex) {
 
       case 1:
 
-        imgURL = Utils.treeImage;
+        img.src  = Utils.obstruction1;
 
         break;
 
       case 2:
 
-        imgURL = Utils.tree2Image;
+        img.src = Utils.obstruction2;
 
         break;
 
       case 3:
 
-        imgURL = Utils.tree3Image;
+        img.src = Utils.obstruction3;
         break;
 
 
@@ -272,7 +281,7 @@ export default class Base {
     return {
       position: {x: leftBorder, y: topBorder},
       dimensions: {width: rightBorder - leftBorder, height: downBorder - topBorder},
-      imageURL: imgURL
+      image: img
     };
 
   }
@@ -335,26 +344,6 @@ export default class Base {
   }
 
 
-  downIndicator(paddle,index){
-
-    this.ctx.save();
-    let indicator = {
-      position : {x:paddle.position.x+paddle.dimensions.width/4, y: paddle.position.y + index*0.1*Utils.SCALE + 0.15*Utils.SCALE},
-      dimensions: {width: paddle.dimensions.width/2, height: 0.05*Utils.SCALE}
-    }
-    this.ctx.globalAlpha = index*0.3;
-    this.ctx.beginPath();
-    this.ctx.strokeStyle = Utils.greenColor;
-    this.ctx.moveTo(indicator.position.x , indicator.position.y);
-    this.ctx.lineTo(indicator.position.x + indicator.dimensions.width / 2, indicator.position.y + indicator.dimensions.height);
-    this.ctx.lineTo(indicator.position.x + indicator.dimensions.width, indicator.position.y );
-    this.ctx.lineWidth = '6';
-    this.ctx.stroke();
-    this.ctx.closePath();
-
-    this.ctx.restore();
-
-  }
 
   /**
    * Abstract Main game loop method
@@ -382,45 +371,22 @@ export default class Base {
   /**
    * Create initial ball box object to start from
    * @method createBallBox
-   * @param {int} paddleWidth
+   * @param {String} imageURL
    */
-  createBallBox() {
+  createBallBox(image) {
 
-    this.ctx.beginPath();
-    this.ctx.lineWidth = '8';
-    this.ctx.strokeStyle = Utils.blueColor;
+    let leftBorder = 0.4 * Utils.SCALE;
+    let topBorder = 1.2971 * Utils.SCALE;
+    let rightBorder = (0.64) * Utils.SCALE;
+    let downBorder = 1.5671 * Utils.SCALE;
 
-    let leftBorder = 0.45 * Utils.SCALE;
-    let topBorder = (1.3471 - 0.05) * Utils.SCALE;
-    let rightBorder = (0.59) * Utils.SCALE;
-    let downBorder = (1.3671 + 0.15 + 0.05) * Utils.SCALE;
+    this.ctx.drawImage(image, leftBorder, topBorder, rightBorder - leftBorder, downBorder - topBorder);
 
-    this.ctx.rect(leftBorder, downBorder, rightBorder - leftBorder, topBorder - downBorder);
-    this.ctx.fillStyle = Utils.blackColor;
-    this.ctx.lineWidth = '8';
-    this.ctx.strokeStyle = Utils.blueColor;
-    this.ctx.stroke();
-    this.ctx.closePath();
-
-
-    let InnerleftBorder = (0.52) * Utils.SCALE;
-    let InnertopBorder = (1.2971) * Utils.SCALE;
-    let InnerrightBorder = (0.59) * Utils.SCALE;
-    let InnerdownBorder = (1.5171 - 0.12) * Utils.SCALE;
-
-    this.ctx.beginPath();
-    this.ctx.rect(InnerleftBorder, InnerdownBorder, InnerrightBorder - InnerleftBorder, InnertopBorder - InnerdownBorder);
-    this.ctx.fillStyle = Utils.blackColor;
-    this.ctx.strokeStyle = Utils.blackColor;
-    this.ctx.lineWidth = '8';
-    this.ctx.stroke();
-    this.ctx.fill();
-    this.ctx.closePath();
   }
 
 
   //TODO: merge this with launcher implementation for paddle games
-  discreteLauncer() {
+  discreteLauncer(image) {
 
     this.ctx.beginPath();
     this.ctx.lineWidth = '8';
@@ -431,27 +397,9 @@ export default class Base {
     let rightBorder = (initX + 0.07) * Utils.SCALE;
     let downBorder = (1.3871 + 0.15) * Utils.SCALE;
 
-    this.ctx.rect(leftBorder, downBorder, rightBorder - leftBorder, topBorder - downBorder);
-    this.ctx.fillStyle = Utils.blackColor;
-    this.ctx.lineWidth = '8';
-    this.ctx.strokeStyle = Utils.blueColor;
-    this.ctx.stroke();
-    this.ctx.closePath();
+    this.ctx.drawImage(image, leftBorder, topBorder, rightBorder - leftBorder, downBorder - topBorder);
 
 
-    let InnerleftBorder = (initX) * Utils.SCALE;
-    let InnertopBorder = (1.2971) * Utils.SCALE;
-    let InnerrightBorder = (initX + 0.07) * Utils.SCALE;
-    let InnerdownBorder = (1.5171 - 0.12) * Utils.SCALE;
-
-    this.ctx.beginPath();
-    this.ctx.rect(InnerleftBorder, InnerdownBorder, InnerrightBorder - InnerleftBorder, InnertopBorder - InnerdownBorder);
-    this.ctx.fillStyle = Utils.blackColor;
-    this.ctx.strokeStyle = Utils.blackColor;
-    this.ctx.lineWidth = '8';
-    this.ctx.stroke();
-    this.ctx.fill();
-    this.ctx.closePath();
   }
 
   /**
@@ -532,34 +480,30 @@ export default class Base {
    * @param {object} Current object with x,y position, width , height and URL of the image to show
    * @param {String} URL
    */
-  drawImage(object, URL) {
+  drawImage(object, image) {
     this.ctx.fillStyle = Utils.blackColor;
     this.ctx.fillRect(object.position.x, object.position.y, object.dimensions.width, object.dimensions.height);
-    let image = new Image();
-    image.src = URL;
     this.ctx.drawImage(image, object.position.x, object.position.y, object.dimensions.width, object.dimensions.height);
   }
 
 
   /**
-   * Show current image
-   * @method drawImage
-   * @param {object} Current object with x,y position, width , height and URL of the image to show
-   * @param {String} URL
+   * Fill image array with URL sources
+   * @method fillImageArray
+   * @param urlArr
+   * @param imgArr
    */
-  drawImageAngle(object, URL, angle) {
-    this.ctx.save();
-    this.ctx.fillStyle = Utils.blackColor;
-    this.ctx.fillRect(object.position.x - object.dimensions.width, object.position.y, object.dimensions.width * 4, object.dimensions.height * 4);
-    //find center of rotation
-    let x = (object.position.x + object.dimensions.width / 2);
-    let y = (object.position.y + object.dimensions.height);
-    this.ctx.translate(x, y);
-    this.ctx.rotate(angle * Math.PI / 180);
-    let image = new Image();
-    image.src = URL;
-    this.ctx.drawImage(image, -(object.dimensions.height / 2), -(object.dimensions.width / 2), object.dimensions.height, object.dimensions.width);
-    this.ctx.restore();
+  fillImageArray(urlArr,imgArr){
+
+    urlArr.forEach(
+      url =>{
+        let img = new Image();
+        img.src = url;
+        imgArr.push(img);
+      }
+
+    );
+
   }
 
   /**
@@ -630,31 +574,12 @@ export default class Base {
    * @method clearInterval
    */
   clearInterval() {
-    for (let i = 1; i < 10; i++) {
-      window.clearInterval(i);
-    }
+
+      window.clearInterval(0);
+
   }
 
 
-  /**
-   * @method basketCenter
-   * Center of the basket target
-   * @param basket
-   * @returns {{color: string, position: {x: number, y: number}, dimensions: {width: number, height: number}}}
-   */
-  basketCenter(basket) {
-    let radiusRim = 0.1;
-    let leftBorder = (1.3310 - radiusRim / 5) * Utils.SCALE;
-    let topBorder = basket.position.y;
-    let rightBorder = (1.3310 + radiusRim / 5) * Utils.SCALE;
-
-
-    return {
-      position: {x: leftBorder, y: topBorder},
-      dimensions: {width: rightBorder - leftBorder, height: (radiusRim / 5) * Utils.SCALE},
-      color: Utils.redColor
-    };
-  }
 
 
   /**
@@ -734,7 +659,7 @@ export default class Base {
       position: {x: leftBorder, y:downBorder},
       velocity: 0,
       mass: Utils.ballMass,
-      radius: (0.037)*Utils.SCALE/2,
+      radius: (0.037)*Utils.SCALE,
       state: 'start',
       impactTime: 0,
       hitstate:'',
@@ -825,7 +750,6 @@ export default class Base {
    * @returns {number} seconds
    */
   trialStartTime() {
-
     let min = this.context.minTime + 350;
     return ((Math.floor(Math.random() * (this.context.maxTime - min + 1)) + min) / 1000 );
 
@@ -839,7 +763,7 @@ export default class Base {
    */
   ballIsOnFloor(ball){
 
-    return ball.position.y > paddleBox.position.y + paddleBox.dimensions.height;
+    return ball.position.y > paddleBox.position.y + paddleBox.dimensions.height - 20;
   }
 
   /**
@@ -847,16 +771,9 @@ export default class Base {
    * Draw ball per x,y ball location
    * @param ball
    */
-  drawBall(ball) {
+  drawBall(ball,image) {
 
-    this.ctx.save();
-    this.ctx.beginPath();
-    this.ctx.translate(ball.position.x, ball.position.y);
-    this.ctx.arc(0, 0, ball.radius, 0, Math.PI * 2, true);
-    this.ctx.fillStyle = ball.color;
-    this.ctx.fill();
-    this.ctx.closePath();
-    this.ctx.restore();
+    this.ctx.drawImage(image, ball.position.x, ball.position.y, ball.radius, ball.radius);
 
   }
 
@@ -867,10 +784,10 @@ export default class Base {
    * @param {object} ball object parameters
    * @param {boolean} gameOver set game to be over
    */
-  moveBallToStart(ball, gameOver) {
+  moveBallToStart(ball,image ,gameOver) {
 
     ball = this.ballObject();
-    this.drawBall(ball);
+    this.drawBall(ball,image);
 
     if (gameOver) {
       this.gameOver = true;
@@ -951,29 +868,20 @@ export default class Base {
     return false;
   }
 
-  /**
-   * Minimal implementation of interruption between rounds
-   * @method waitSeconds
-   * @param {int} iMilliSeconds
-   */
-  waitSeconds(iMilliSeconds) {
-    let counter = 0;
-    let start = new Date().getTime();
-    let end = 0;
 
-    while (counter < iMilliSeconds) {
-      end = new Date().getTime();
-      counter = end - start;
+  drawImageObject(object,image){
 
-    }
+    this.ctx.drawImage(image, object.position.x, object.position.y, object.dimensions.width, object.dimensions.height);
+
   }
+
 
   /**
    * Set paddle coordinates up to velocity
    * @method paddleMove
    * @param {object} paddle
    */
-  paddleMove(paddle,initialTime) {
+  paddleMove(paddle,initialTime,ball) {
 
 
     //Do not go over the bottom border
@@ -983,23 +891,9 @@ export default class Base {
     }
 
 
-    if(currentRounds === 0 && paddle.position.y < paddleBox.position.y) {
-      if(waitIndexTIme === 0){
-        waitIndexTIme = new Date().getTime();
-      }
+    if(ball.state === 'start' && currentRounds === 0 && paddle.position.y < paddleBox.position.y) {
 
-
-      if (waitIndex > 3) {
-        waitIndex = 1;
-      }
-
-      if(this.getElapsedTime(waitIndexTIme) > 0.4){
-
-        waitIndex++;
-        waitIndexTIme = new Date().getTime();
-      }
-
-      this.downIndicator(paddle, waitIndex);
+      mouseY = paddle.position.y + 10;
     }
 
     this.paddleHistory(paddle,initialTime);
