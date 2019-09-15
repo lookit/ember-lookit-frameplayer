@@ -395,7 +395,7 @@ export default class FeedMouse extends Base {
 
     let initX  = 0.7510;
     let leftBorder = (initX - 0.05) * super.Utils.SCALE;
-    let topBoarder = (1.3671 - 0.05) * super.Utils.SCALE;
+    let topBoarder = (1.3171) * super.Utils.SCALE;
 
     let launcher = {
       position: {x:leftBorder, y:topBoarder },

@@ -86,7 +86,7 @@ export default class CatchMouse extends Base {
 
     let x = initX;
     let leftBorder = (x - 0.08) * super.Utils.SCALE;
-    let topBorder = (1.3671 - initBallY - 0.07) * super.Utils.SCALE;
+    let topBorder = (1.2971 - initBallY) * super.Utils.SCALE;
 
     mice = {
       dimensions: {width: 0.18 * super.Utils.SCALE, height: 0.18 * super.Utils.SCALE},

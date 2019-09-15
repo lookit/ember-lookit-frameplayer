@@ -134,7 +134,7 @@ export default class Base {
     let currentHeight = hArr[currentRounds] * 0.05 + height;
     initX = 0.52;
     gravity = 2 * currentHeight / Math.pow(Tf, 2);
-    ballvx = (1.0310 + 0.02) / Tf;
+    ballvx = (1.051) / Tf;
     initV = 0.5 * gravity * Tf;
 
   }
@@ -149,7 +149,7 @@ export default class Base {
     let height = 0.8;
     initX = 0.7510;
     gravity = 2 * height / Math.pow(Tf, 2);
-    ballvx = (1.0310 + 0.02) / Tf;
+    ballvx = (1.051) / Tf;
     initV = 0.5 * gravity * Tf;
   }
 
@@ -162,7 +162,7 @@ export default class Base {
   generateTrajectoryParamsDiscreteSpatial(initVmatrix) {
     let Tf = 0.9;
     gravity = 1.8;
-    ballvx = (1.0310 + 0.02) / Tf;
+    ballvx = (1.051) / Tf;
     initV = 0.15 * initVmatrix[currentRounds] + 0.45;
     initX = 0.7510;
     initBallY = -0.02;
@@ -188,9 +188,9 @@ export default class Base {
   fillPaddleBox(color = Utils.blueColor){
 
     this.ctx.beginPath();
-    let leftBorder = (1.8560 - 0.6525) * Utils.SCALE;
+    let leftBorder = (1.2035) * Utils.SCALE;
     let topBorder = (1.3671) * Utils.SCALE;
-    let rightBorder = (2.1110 - 0.6525) * Utils.SCALE;
+    let rightBorder = (1.4585) * Utils.SCALE;
     let downBorder = (1.5671) * Utils.SCALE;
     paddleBox.position.x = leftBorder;
     paddleBox.position.y = topBorder;
@@ -249,10 +249,10 @@ export default class Base {
    */
   treeObject(treeIndex = 1) {
 
-    let leftBorder = 390 - 50 - 55 * treeIndex + 0.25 * Utils.SCALE;
-    let topBorder = (0.914 + 0.05) * Utils.SCALE;
+    let leftBorder = 340  - 55 * treeIndex + 0.25 * Utils.SCALE;
+    let topBorder = (0.964) * Utils.SCALE;
     let rightBorder = 390 + 0.25 * Utils.SCALE;
-    let downBorder = (1.542 + 0.05) * Utils.SCALE;
+    let downBorder = (1.592) * Utils.SCALE;
     let img = new Image();
     img.src = Utils.obstruction1;
     switch (treeIndex) {
@@ -393,9 +393,9 @@ export default class Base {
     this.ctx.strokeStyle = Utils.blueColor;
 
     let leftBorder = (initX - 0.05) * Utils.SCALE;
-    let topBorder = (1.3671 - 0.05) * Utils.SCALE;
+    let topBorder = (1.3171) * Utils.SCALE;
     let rightBorder = (initX + 0.07) * Utils.SCALE;
-    let downBorder = (1.3871 + 0.15) * Utils.SCALE;
+    let downBorder = (1.5371) * Utils.SCALE;
 
     this.ctx.drawImage(image, leftBorder, topBorder, rightBorder - leftBorder, downBorder - topBorder);
 
@@ -506,6 +506,20 @@ export default class Base {
 
   }
 
+  fillAudioArray(urlArr,audioArr){
+
+    urlArr.forEach(
+      url =>{
+        let audio = new Audio();
+        audioArr.src = url;
+        audio.load();
+        audioArr.push(audio);
+      }
+
+    );
+
+  }
+
   /**
    * Disabled for now
    * @method storeData Store data in proposed array
@@ -595,7 +609,7 @@ export default class Base {
     let leftBorder = (1.3310 - radiusRim) * Utils.SCALE;
     let topBorder = (1.3671 - position) * Utils.SCALE;
     let rightBorder = (1.3310 + radiusRim) * Utils.SCALE;
-    let downBorder = (1.3671 + 0.17 - position) * Utils.SCALE;
+    let downBorder = (1.5371 - position) * Utils.SCALE;
 
     basket.position = {x: leftBorder, y: mouseY};
     basket.dimensions = {width: rightBorder - leftBorder, height: downBorder - topBorder};
@@ -629,10 +643,10 @@ export default class Base {
    */
   paddleObject(paddle){
     let position = (this.canvas.height - mouseY)/this.canvas.height ;
-    let leftBorder = (1.3310-0.075)*Utils.SCALE ;
+    let leftBorder = (1.256)*Utils.SCALE ;
     let topBorder = (1.3671-position)*Utils.SCALE;
-    let rightBorder = (1.3310+0.075)*Utils.SCALE;
-    let downBorder =  (1.3671+0.02-position)*Utils.SCALE ;
+    let rightBorder = (1.406)*Utils.SCALE;
+    let downBorder =  (1.3871-position)*Utils.SCALE ;
 
     paddle.position = {x: leftBorder,y:mouseY};
     paddle.dimensions = {width: rightBorder - leftBorder, height: downBorder-topBorder};
@@ -652,7 +666,7 @@ export default class Base {
     let positionY = initBallY+initV*(iterator)+0.5*-gravity*Math.pow(iterator,2);
     let positionX  = initX + ballvx*(iterator);
     let leftBorder =  (positionX-.0175)* Utils.SCALE;
-    let downBorder =  (1.3571-positionY+.0175)*Utils.SCALE ;
+    let downBorder =  (1.3746-positionY)*Utils.SCALE ;
 
     let  ball = {
 
@@ -701,7 +715,7 @@ export default class Base {
     let positionY = initBallY+initV*(iterator)+0.5*-gravity*Math.pow(iterator,2);
     let positionX  = initX + ballvx*(iterator);
     let leftBorder =  (positionX-.0175)* Utils.SCALE;
-    let downBorder =  (1.3571-positionY+.0175)*Utils.SCALE ;
+    let downBorder =  (1.3746-positionY)*Utils.SCALE ;
     ball.position.x = leftBorder;
     ball.position.y = downBorder;
 

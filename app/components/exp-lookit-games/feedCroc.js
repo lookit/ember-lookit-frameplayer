@@ -360,7 +360,7 @@ export default class FeedCroc extends Base {
 
     super.paddleMove(paddle, initialTime, ball);
     //Detect the ball position on X axis , if the ball is between paddle edges
-    if (ball.position.x >= (1.2810 - 0.025) * super.Utils.SCALE - 0.04 * super.Utils.SCALE && ball.position.x <= (1.3810 + 0.025) * super.Utils.SCALE) {
+    if (ball.position.x >= (1.256) * super.Utils.SCALE - 0.04 * super.Utils.SCALE && ball.position.x <= (1.406) * super.Utils.SCALE) {
 
 
       //Detect the ball position on Y axes, if the ball is within range  on Y axis
