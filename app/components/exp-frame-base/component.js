@@ -375,7 +375,6 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
             }
 
             // After adding any generated properties, check that all required fields are set
-            console.log(this.get('frameSchemaProperties'));
             if (this.get('frameSchemaProperties').hasOwnProperty('required')) {
                 var requiredFields = this.get('frameSchemaProperties.required', []);
                 requiredFields.forEach((key) => {
@@ -386,22 +385,24 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
                 });
             }
 
-            // TODO: Use JSON schema validator to check that all values are set to something reasonable
+            // Use JSON schema validator to check that all values are within specified constraints
             var ajv = new Ajv({
                 allErrors: true,
                 verbose: true
             });
-            var frameSchema = {type: 'object', properties: this.get('frameSchemaProperties')};//this.get('meta.parameters');
-            console.log(frameSchema);
-
-            // TODO: wrap compile in try
-            var validate = ajv.compile(frameSchema);
-            var valid = validate(this);
-            if (valid) {
-                console.log('Valid!');
-            } else {
-                console.warn('Invalid: ' + ajv.errorsText(validate.errors));
+            var frameSchema = {type: 'object', properties: this.get('frameSchemaProperties')};
+            try {
+                var validate = ajv.compile(frameSchema);
+                var valid = validate(this);
+                if (!valid) {
+                    console.warn('Invalid: ' + ajv.errorsText(validate.errors));
+                }
             }
+            catch(error) {
+                console.error(`Failed to compile frameSchemaProperties to use for validating researcher usage of frame type '${this.get('kind')}.`);
+            }
+
+
 
         }
 

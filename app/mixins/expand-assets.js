@@ -265,18 +265,15 @@ var expandAssetsMixin = Ember.Mixin.create({
     },
 
     didReceiveAttrs() {
-
         this._super(...arguments);
-        // TODO: possibly here set schema values for the things in assetsToExpand??
         this.expandAssets();
-        // TODO: possibly check for valid IRIs after expansion?
     }
 
 });
 
 // JSON Schema values to use for media assets when using this mixin
-var audioTypes = ['mp3', 'ogg', 'wav', 'wave', 'x-wav', 'x-pn-wav', 'webm', 'mpeg', 'flac', 'x-flac'];
-var videoTypes = ['webm', 'mp4', 'ogg'];
+var audioTypes = ['mp3', 'ogg', 'wav', 'wave', 'x-wav', 'x-pn-wav', 'webm', 'mpeg', 'flac', 'x-flac'].map(type => 'audio/' + type);
+var videoTypes = ['webm', 'mp4', 'ogg'].map(type => 'video/' + type);
 var schemaForSrcTypePairs = function(types) {
     return {
         type: 'array',
@@ -285,7 +282,7 @@ var schemaForSrcTypePairs = function(types) {
             properties: {
                 'src': {
                     type: 'string',
-                    format: 'iri'
+                    format: 'uri'
                 },
                 'type': {
                     type: 'string',
@@ -316,7 +313,7 @@ var imageAssetOptions = [
     },
     {
         type: 'string',
-        format: 'iri'
+        format: 'uri'
     }
 ];
 
