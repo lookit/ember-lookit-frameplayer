@@ -491,10 +491,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 this.send('finish');
             } else if (this.get('shouldLoop')) {
                 this.set('_lastTime', 0);
-                this.$('#player-video')[0].play();
+                if ((this.get('testVideosTimesPlayed') >= this.get('testCount')) && (this.get('testLength') === Infinity)) {
+                    this.send('finish');
+                } else {
+                    this.$('#player-video')[0].play();
+                }
             } else {
                 this.send('setTimeEvent', 'videoStopped', {
-                    currentTask
+                    currentTask: currentTask
                 });
                 if (this.get('currentTask') === 'intro') {
                     this.set('currentTask', 'calibration');
@@ -513,12 +517,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             this.set('testVideosTimesPlayed', 0);
             this.set('completedAnnouncementAudio', false);
             this.set('completedAnnouncementTime', false);
-            if ($('video#player-video').length) {
-                $('video#player-video')[0].pause();
-            }
-            if ($('audio#exp-music').length) {
-                $('audio#exp-music')[0].pause();
-            }
             var _this = this;
             if (this.get('doRecording')) {
                 this.stopRecorder().then(() => {
