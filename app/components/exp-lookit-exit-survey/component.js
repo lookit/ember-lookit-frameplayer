@@ -59,48 +59,45 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
     type: 'exp-lookit-exit-survey',
     frameType: 'EXIT',
     fullScreenElementId: 'experiment-player',
+    frameSchemaProperties: {
+        /**
+        Object specifying information to show on second page of exit survey, before returning to main Lookit site.
+        @property {Object} debriefing
+            @param {String} title Title of debriefing page
+            @param {String} text Paragraph to show as debriefing
+            @param {Object} image Object specifying source URL [src] & alt-text [alt] for any image to show during debriefing (optional). Example: `{
+        "src": "https://s3.amazonaws.com/lookitcontents/ducks/duck.png",
+        "alt": "Very cute duck"
+        }`
+        */
+        debriefing: {
+            type: 'object',
+            properties: {
+                title: {
+                    type: 'string',
+                    default: 'Thank you!'
+                },
+                text: {
+                    type: 'string'
+                },
+                image: {
+                    type: 'object',
+                    properties: {
+                        src: {
+                            type: 'string'
+                        },
+                        alt: {
+                            type: 'string'
+                        }
+                    }
+                }
+            }
+        }
+    },
+    frameSchemaRequired: ['debriefing'],
     meta: {
         name: 'ExpLookitExitSurvey',
         description: 'Exit survey for Lookit.',
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                Object specifying information to show on second page of exit survey, before returning to main Lookit site.
-                @property {Object} debriefing
-                    @param {String} title Title of debriefing page
-                    @param {String} text Paragraph to show as debriefing
-                    @param {Object} image Object specifying source URL [src] & alt-text [alt] for any image to show during debriefing (optional). Example: `{
-                "src": "https://s3.amazonaws.com/lookitcontents/ducks/duck.png",
-                "alt": "Very cute duck"
-                }`
-                */
-                debriefing: {
-                    type: 'object',
-                    properties: {
-                        title: {
-                            type: 'string',
-                            default: 'Thank you!'
-                        },
-                        text: {
-                            type: 'string'
-                        },
-                        image: {
-                            type: 'object',
-                            properties: {
-                                src: {
-                                    type: 'string'
-                                },
-                                alt: {
-                                    type: 'string'
-                                }
-                            }
-                        }
-                    }
-                },
-                required: ['debriefing']
-            }
-        },
         data: {
             /**
              * Parameters captured and sent to the server
