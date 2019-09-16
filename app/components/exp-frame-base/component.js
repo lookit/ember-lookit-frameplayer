@@ -398,11 +398,9 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
                     console.warn('Invalid: ' + ajv.errorsText(validate.errors));
                 }
             }
-            catch(error) {
+            catch (error) {
                 console.error(`Failed to compile frameSchemaProperties to use for validating researcher usage of frame type '${this.get('kind')}.`);
             }
-
-
 
         }
 
