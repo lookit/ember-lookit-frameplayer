@@ -298,8 +298,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
             // Get the text of the consent form to process. Split into lines, and remove
             // repeat empty lines. Start each new line with an indent.
 
-            console.log(this);
-
             var origText = $('#consent-form-full-text').text().split(/\r?\n/);
             var trimmedText = [];
             var emptyLineWasLast = false;

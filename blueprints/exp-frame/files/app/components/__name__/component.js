@@ -1,5 +1,6 @@
-import ExpFrameBaseComponent from '../../components/exp-frame-base/component';
+import ExpFrameBaseComponent from '../exp-frame-base/component';
 import layout from './template';
+// Import any mixins here, e.g. import VideoRecord from '../../mixins/video-record';
 
 // The YUIdoc comments, using /** ... */ syntax, will be automatically compiled into
 // nice user-facing documentation as shown here (https://lookit.github.io/ember-lookit-frameplayer/modules/frames.html)
@@ -35,7 +36,7 @@ import layout from './template';
 
 
 
-export default ExpFrameBaseComponent.extend({
+export default ExpFrameBaseComponent.extend({ //list any mixins here before the {
     type: '<%= dasherizedModuleName %>',
     layout: layout,
 
