@@ -14,23 +14,27 @@ import Base from './base';
  */
 let target = {};
 let ball = {};
-let keyPressed = {};
-let initialTime = 0;
-let randomNumber = 0;
-let TfArr = [];
-let targetX = 1.3310;
-let jitterT = 0;
-let winsize = 0.056;
-let targetsize = 0.02;
-let fireworksURLs = [];
-const CENTER = 1.30715;
-let startTime = 0;
+let keyPressed = {}; // Current key pressed status
+let initialTime = 0;  // initial time for current game trial
+let randomNumber = 0; // Current random number for fireworks (decide which color to display)
+let TfArr = []; // Time Flight array
+const TARGETX = 1.3310; // Current X position
+let jitterT = 0; // Time jitter (variates from 500 ms to 1500 ms), time between sound start and ball starting to fly
+const WINDOW_SIZE = 0.056; //Current window size
+const TARGET_SIZE = 0.02;  // Current target (star) size
+const CENTER = 1.30715; // Appropriate star position in center
+let startTime = 0; // start of the game to wait before music playing
+const INITIAL_DELAY = 2.5;
+const TOTAL_FLIGHT_TIME = 1.5;
+// Media arrays for loading
 let targetImgs = [];
-
 let sounds = [];
 let soundURLs = [];
 let imageURLs = [];
 let images = [];
+let fireworksURLs = [];
+
+// Media mapping as Enum
 const gameSound = {
   START: 0,
   CATCH_GREAT: 1,
@@ -53,13 +57,13 @@ const gameImage = {
 
 
 /**
- * @class FeedMouse
+ * @class ButtonPressWindow
  * @extends Base
  * Main implementation of feed  the mouse in the house game.
  * The user will operate with keyboard keys to predict when ball trajectory will hit the window.
  * The trajectory is randomized with various values in trajectories array
  */
-export default class FeedMouse extends Base {
+export default class ButtonPressWindow extends Base {
   /**
    * @method constructor
    * @constructor constructor
@@ -73,7 +77,6 @@ export default class FeedMouse extends Base {
     soundURLs = [super.Utils.fuse, super.Utils.firework_big, super.Utils.firework_small, super.Utils.ballcatchFailSound];
     imageURLs = [super.Utils.skyline,super.Utils.Fireball,super.Utils.star,super.Utils.boxOfFireworks];
 
-
   }
 
 
@@ -81,9 +84,9 @@ export default class FeedMouse extends Base {
    * Draw house with roof according to coordinates
    * @method createShuttle
    */
-  createHouse() {
+  createShuttle() {
 
-    let leftBorder = (targetX - 0.75) * super.Utils.SCALE;
+    let leftBorder = (TARGETX - 0.75) * super.Utils.SCALE;
     let topBorder = (0.8) * super.Utils.SCALE;
 
     let houseObj = {
@@ -127,8 +130,7 @@ export default class FeedMouse extends Base {
   init() {
 
     startTime = new Date().getTime();
-    TfArr = super.uniformArr([0.8, 0.9, 1]);
-
+    TfArr = super.uniformArr([0.8, 0.9, 1]); // Fill out uniform the Time Flight array
     this.setTargetBackground();
     super.fillAudioArray(soundURLs,sounds);
     super.fillImageArray(fireworksURLs,targetImgs);
@@ -181,8 +183,8 @@ export default class FeedMouse extends Base {
   setTargetBackground() {
     let topBorder = (1.155) * super.Utils.SCALE;
     let downBorder = (1.235) * super.Utils.SCALE;
-    let leftBorder = (targetX - 0.05) * super.Utils.SCALE;
-    let rightBorder = (targetX + 0.05) * super.Utils.SCALE;
+    let leftBorder = (TARGETX - 0.05) * super.Utils.SCALE;
+    let rightBorder = (TARGETX + 0.05) * super.Utils.SCALE;
 
     target = {
 
@@ -234,11 +236,31 @@ export default class FeedMouse extends Base {
 
   }
 
+  /**
+   * Draw launcher image
+   * @method createLauncher
+   * @param image
+   */
+  createLauncher(image) {
+
+    let initX  = 0.7510;
+    let leftBorder = (initX - 0.05) * super.Utils.SCALE;
+    let topBoarder = (1.3171) * super.Utils.SCALE;
+
+    let launcher = {
+      position: {x:leftBorder, y:topBoarder },
+      dimensions: {width: 0.13605 * super.Utils.SCALE , height:0.1548 * super.Utils.SCALE }
+    };
+
+    super.drawImageObject(launcher, image);
+
+  }
+
 
   /**
    *
    * Main loop of the game
-   * Set initial position of the ball in a box and starting rattling sound (initSoundPlaying).
+   * Set initial position of the ball in a box and initiate starting sound.
    * After that  start ball trajectory.
    * If ball hits the target or missed the target(window) show the ball in the window
    * Check if user hits the keyboard key when ball trajectory reached the window bounds.
@@ -251,10 +273,11 @@ export default class FeedMouse extends Base {
 
     super.loop();
     super.generateTrajectoryParamsDiscrete(TfArr);
-    this.createHouse();
+    this.createShuttle();
     this.createTargetWindow();
 
-    if(initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(startTime) >= 2.5) {
+    // Delay before music start
+    if(initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(startTime) >= INITIAL_DELAY) {
 
       sounds[gameSound.START].play();
 
@@ -263,7 +286,7 @@ export default class FeedMouse extends Base {
 
     if (ball.state === 'start') {
 
-      super.moveBallToStart(ball, images[gameImage.BALL], false);
+      super.moveBallToStart(ball, images[gameImage.BALL]);
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         sounds[gameSound.START].pause();
         sounds[gameSound.START].currentTime = 0;
@@ -278,7 +301,7 @@ export default class FeedMouse extends Base {
 
     if (ball.state === 'fall') {
 
-      if (initialTime > 0 && super.getElapsedTime(initialTime) < 1.5) {
+      if (initialTime > 0 && super.getElapsedTime(initialTime) < TOTAL_FLIGHT_TIME) {
         super.trajectory(ball, initialTime);
       }
 
@@ -289,23 +312,23 @@ export default class FeedMouse extends Base {
 
 
       super.drawBall(ball, images[gameImage.BALL]);
-      this.createHouse();
+      this.createShuttle();
       this.createTargetWindow();
 
 
-      //Check for target (red dot) position , if we are within the window size
+      //Check for target (star) position , if we are within the window size
       if (keyPressed.value === 1) {
 
         let position = Math.abs(ball.position.x - CENTER * super.Utils.SCALE );
 
-        if (position < targetsize * super.Utils.SCALE) {
+        if (position < TARGET_SIZE * super.Utils.SCALE) {
           super.increaseScore();
           ball.hitstate = 'great';
           keyPressed.value = 3;
           sounds[gameSound.CATCH_GREAT].play();
 
 
-        } else if (position < (winsize) * super.Utils.SCALE) {
+        } else if (position < (WINDOW_SIZE) * super.Utils.SCALE) {
           keyPressed.value = 2;
           ball.hitstate = 'good';
           sounds[gameSound.CATCH_GOOD].play();
@@ -326,12 +349,12 @@ export default class FeedMouse extends Base {
 
       let difference = ball.position.x - CENTER * super.Utils.SCALE;
       if (ball.hitstate === 'great') {
-        let explosion = this.setExplosionPosition(4, ball, 0.03572 * super.Utils.SCALE);
+        let explosion = this.setExplosionPosition(4, 0.03572 * super.Utils.SCALE);
         super.drawImageObject(explosion, targetImgs[randomNumber]);
       }
 
       if (ball.hitstate === 'good') {
-        let explosion = this.setExplosionPosition(2, ball, difference);
+        let explosion = this.setExplosionPosition(2, difference);
         super.drawImageObject(explosion, targetImgs[3]);
       }
 
@@ -347,12 +370,12 @@ export default class FeedMouse extends Base {
 
     }
 
-    this.discreteLauncer(images[gameImage.BALLBOX]);
+    this.createLauncher(images[gameImage.BALLBOX]);
 
   }
 
 
-  setExplosionPosition(multiplier, ball, difference) {
+  setExplosionPosition(multiplier, difference) {
 
     return {
 
@@ -366,20 +389,5 @@ export default class FeedMouse extends Base {
   }
 
 
-  //TODO: replace with base implementation and target parameters object
-  discreteLauncer(image) {
-
-    let initX  = 0.7510;
-    let leftBorder = (initX - 0.05) * super.Utils.SCALE;
-    let topBoarder = (1.3171) * super.Utils.SCALE;
-
-    let launcher = {
-      position: {x:leftBorder, y:topBoarder },
-      dimensions: {width: 0.13605 * super.Utils.SCALE , height:0.1548 * super.Utils.SCALE }
-    };
-
-    super.drawImageObject(launcher, image);
-
-  }
 
 }

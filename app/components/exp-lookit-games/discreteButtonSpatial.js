@@ -12,25 +12,29 @@ import Base from './base';
  * @submodule games
  *
  */
-
+const INITIAL_DELAY = 2.5;
 let ball = {};
 let targets = [];
 let pressed = {};
 let keys = ['y', 'g', 'v']; //Keyboard keys for upper,middle and lower windows
 let currentTargetIndex = 0;
-let initialTime = 0;
-let initVmatrix = [];
-let shuttles = [];
-let jitterT = 0;
-let startTime = 0;
+let initialTime = 0; // initial time for current game trial
+let initVmatrix = []; //Initial velocity matrix uniformly distributed and randomized
+let obstructions = []; // Array of possible obstructions parameters
+let jitterT = 0; // Time jitter (variates from 500 ms to 1500 ms), time between sound start and ball starting to fly
+let startTime = 0; // start of the game to wait before music playing
+
+// Media arrays for loading
 let windowImgs = [];
 let windowImageURLS = [];
-let shuttlImgs = [];
-let shuttlImageURLS = [];
+let obstrImgs = [];
+let obstrImageURLS = [];
 let sounds = [];
 let soundURLs = [];
 let imageURls = [];
 let images = [];
+
+// Media mapping as Enum
 const gameSound = {
     START: 0,
     LAUNCH: 1,
@@ -57,15 +61,14 @@ const gameImage = {
 
 
 /**
- * Main implementation of feed  the mice in the house game.
  * The user will operate with keyboard keys to predict which ball trajectory will hit which window
  * in the house.
  * The trajectory is randomized with various values in trajectories array
  * Initialize the mice image for each mouse as an array
- * @class FeedMice
+ * @class DiscreteButtonSpatial
  * @extends Base
  */
-export default class FeedMice extends Base {
+export default class DiscreteButtonSpatial extends Base {
 
   /**
    * @method constructor
@@ -77,13 +80,13 @@ export default class FeedMice extends Base {
     super(context, document);
     imageURls = [super.Utils.slimeMonster, super.Utils.slimeBall, super.Utils.splat];
     windowImageURLS = [super.Utils.openWindowYellow, super.Utils.openWindowGreen, super.Utils.openWindowViolet];
-    shuttlImageURLS = [super.Utils.shuttleNarrow, super.Utils.shuttle, super.Utils.shuttleWide];
+    obstrImageURLS = [super.Utils.shuttleNarrow, super.Utils.shuttle, super.Utils.shuttleWide];
     soundURLs = [super.Utils.monsterGrowl, super.Utils.monsterLaunch, super.Utils.good3MouseSound, super.Utils.bad3MouseSound];
 
   }
 
   /**
-   * Get Current window position and align it according to possible target (shuttle) size
+   * Get Current window position and align it according to possible obstruction (shuttle) size
    * @param index of the target (shuttle) in array of objects
    * @returns {{image: *, position: {x: number, y: number}, radius: number, dimensions: {width: number, height: number}}}
    */
@@ -156,7 +159,7 @@ export default class FeedMice extends Base {
    */
   getShuttle(targetParams) {
 
-    let index = shuttles[super.currentRounds]; // Get current shuttle case
+    let index = obstructions[super.currentRounds]; // Get current shuttle case
     let shuttle = {};
     targetParams.position.x = {};
 
@@ -164,15 +167,15 @@ export default class FeedMice extends Base {
 
       case 2:
         targetParams.position.x = 0.798 * super.Utils.SCALE;
-        shuttle = shuttlImgs[gameImage.shuttle.MIDDLE];
+        shuttle = obstrImgs[gameImage.shuttle.MIDDLE];
         break;
       case 3:
         targetParams.position.x = 0.77 * super.Utils.SCALE;
-        shuttle = shuttlImgs[gameImage.shuttle.LARGE];
+        shuttle = obstrImgs[gameImage.shuttle.LARGE];
         break;
       default:
         targetParams.position.x = 0.81 * super.Utils.SCALE;
-        shuttle = shuttlImgs[gameImage.shuttle.SMALL];
+        shuttle = obstrImgs[gameImage.shuttle.SMALL];
         break;
 
 
@@ -202,12 +205,12 @@ export default class FeedMice extends Base {
   init() {
     startTime = new Date().getTime();
     initVmatrix = super.uniformArr([1, 2, 3]);
-    shuttles = super.uniformArr([1, 2, 3]);
+    obstructions = super.uniformArr([1, 2, 3]);
 
     super.fillAudioArray(soundURLs,sounds);
     super.fillImageArray(imageURls,images);
     super.fillImageArray(windowImageURLS,windowImgs);
-    super.fillImageArray(shuttlImageURLS,shuttlImgs);
+    super.fillImageArray(obstrImageURLS,obstrImgs);
 
 
     sounds[gameSound.START].addEventListener('onloadeddata', this.initGame(), false);
@@ -220,7 +223,7 @@ export default class FeedMice extends Base {
 
   /**
    * Initialize each game round with initial object parameters
-   * Randomize number of obstructions
+   * Randomize number of obstructions (obstructions)
    * Reset the sounds sources for older browser versions
    * Wait for start sound and start the main game loop
    * @method initGame
@@ -332,14 +335,14 @@ export default class FeedMice extends Base {
 
     let index = pressed.findIndex(item => item !== false);
 
-    if(initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(startTime) >= 2.5) {
+    if(initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(startTime) >= INITIAL_DELAY) {
 
       sounds[gameSound.START].play();
 
     }
 
     if (ball.state === 'start') {
-      super.moveBallToStart(ball, images[gameImage.BALL], false);
+      super.moveBallToStart(ball, images[gameImage.BALL]);
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         sounds[gameSound.START].pause();
         sounds[gameSound.LAUNCH].play();

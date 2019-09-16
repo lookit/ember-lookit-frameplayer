@@ -12,28 +12,28 @@ import Base from './base';
  *
  */
 
-let paddle = {};
-let ball = {};
-let target = {};
-let initialTime = 0;
-let alpha = 0.7;
-let hArray = [];
+let paddle = {}; // Paddle parameters object
+let ball = {}; // Ball parameters object
+let target = {}; // Target parameters object
+let initialTime = 0; // Initial time for current game trial
+let alpha = 0.7; // Restitute factor
+let hArray = []; // Actual height parameters are calculated from the Initial height by multiplying the  uniformly randomized  values in  vector
 let targetLocH = 1.66;
 let targetLocV = 0.69;
-let jitterT = 0;
-let Tf = 0.75;
-let Height = 0.65;
-let token = {};
-let tokenReached = {};
-let bricks = {};
+let jitterT = 0; // Time jitter (variates from 500 ms to 1500 ms), time between sound start and ball starting to fly
+let Tf = 0.75; // Time Flight for trajectory
+let Height = 0.65; // Current trajectory height
+let token = {}; // Token parameters object
+let tokenReached = {}; // Token parameters object when target is reached
+let bricks = {}; // Bricks positions parameters object
 
-
+// Media arrays for loading
 let sounds = [];
 let soundURLs = [];
 let imageURLs = [];
 let images = [];
 
-
+// Media mapping as Enum
 const gameSound = {
   START: 0,
   BOUNCING: 1,
@@ -58,14 +58,14 @@ const gameImage = {
 
 
 /**
- * @class FeedCroc
+ * @class DiscreteBounce
  * @extends Base
  * Main implementation of Feed the crocodile game.
  * The user will operate with paddle to bounce the ball into the crocodile mouth.
  * The trajectory is randomized with various values in trajectories array
  *
  */
-export default class FeedCroc extends Base {
+export default class DiscreteBounce extends Base {
 
 
   /**
@@ -157,6 +157,8 @@ export default class FeedCroc extends Base {
    * If ball hits the target or missed the target (hits any screen edge) wait util user places the paddle to starting position and move
    * the ball to initial position.
    * Increase the score if ball hits the target.
+   * Currently game has 2 states when ball hits the target : good (hits the target within the window), very good
+   * (hits exact target)
    * @method loop
    */
   loop() {
@@ -165,7 +167,7 @@ export default class FeedCroc extends Base {
     let paddleBoxColor = super.Utils.blueColor;
     super.createPaddleBox(paddleBoxColor);
     super.generateTrajectoryParams(hArray, Height, Tf);
-    super.createBallBox(images[gameImage.BALLBOX]);
+    super.createLauncher(images[gameImage.BALLBOX]);
     super.drawImageObject(paddle, images[gameImage.PADDLE]);
     super.paddleMove(paddle, initialTime, ball);
     this.paddleBallCollision();
@@ -179,7 +181,7 @@ export default class FeedCroc extends Base {
     }
 
     if (ball.state === 'start') {
-      super.moveBallToStart(ball, images[gameImage.BALL], false);
+      super.moveBallToStart(ball, images[gameImage.BALL]);
       if (initialTime > 0 && super.paddleIsMovedPlain(paddle)) {
         initialTime = new Date().getTime();
         paddleBoxColor = super.Utils.redColor;
@@ -208,7 +210,7 @@ export default class FeedCroc extends Base {
     }
 
     if (ball.state === 'bounce') {
-      super.bounceTrajectory(ball, paddle, initialTime);
+      this.bounceTrajectory();
       super.drawBall(ball, images[gameImage.BALL]);
 
     }
@@ -271,7 +273,7 @@ export default class FeedCroc extends Base {
   }
 
 
-  static getArraysum(a) {
+  getArraysum(a) {
 
     return a.reduce((t, n) => t + n);
 
@@ -279,7 +281,7 @@ export default class FeedCroc extends Base {
 
   getArrayMean(a) {
 
-    return FeedCroc.getArraysum(a) / a.length;
+    return this.getArraysum(a) / a.length;
 
   }
 
@@ -302,18 +304,41 @@ export default class FeedCroc extends Base {
   }
 
   /**
+   * Calculates paddle velocity from past n values in paddle vector of y coordinates
    * @method getPaddleVelocity
-   * sum((time-mean(time)).*(position-mean(position)))/sum((time-mean(time)).*(time-mean(time)))
-   * @param time
-   * @param position
-   * @returns {number}
+   * @param time {int} timestamp in Unixtime of paddle position
+   * @param position {Object} {position: {x: number, y: number}, dimensions: {width: number, height: number}}
+   * @returns {number}  sum((time-mean(time)).*(position-mean(position)))/sum((time-mean(time)).*(time-mean(time)))
    */
   getPaddleVelocity(time, position) {
 
     let timeVector = this.vectorCalculation(time.slice(time.length - 15, time.length));
     let positionVector = this.vectorCalculation(position.slice(position.length - 15, position.length));
 
-    return FeedCroc.getArraysum(this.arrayProduct(timeVector, positionVector)) / FeedCroc.getArraysum(this.arrayProduct(timeVector, timeVector));
+    return this.getArraysum(this.arrayProduct(timeVector, positionVector)) / this.getArraysum(this.arrayProduct(timeVector, timeVector));
+  }
+
+
+  /**
+   * Trajectory of the ball after bounce event
+   * @method bounceTrajectory
+   */
+  bounceTrajectory() {
+    let Xiterator = super.getElapsedTime(initialTime);
+    let Yiterator = super.getElapsedTime(ball.impactTime);
+
+    this.ctx.beginPath();
+    let positionY = ball.impactPosition + paddle.releaseVelocity * (Yiterator) + 0.5 * -super.TrajectoryVars.gravity * Math.pow(Yiterator, 2);
+    let positionX = super.TrajectoryVars.initX + super.TrajectoryVars.ballvx * (Xiterator);
+    let leftBorder = (positionX - 0.0175) * super.Utils.SCALE;
+    if(ball.positions.length > 80){
+      ball.positions = ball.positions.slice(-80);
+    }
+    ball.positions.push(ball.position);
+    ball.position.x = leftBorder;
+    ball.position.y = this.canvas.height - positionY * this.canvas.height ;
+
+
   }
 
 
@@ -321,24 +346,25 @@ export default class FeedCroc extends Base {
    *
    * Handle paddle collision here
    * Adjust velocity to the ball by restitution factor
+   * Release velocity calculation ,  alpha : restitute factor = 0.7
+   * ball_velocity  =   initV  -  gravity *  t  , where t is the time since start of the trajectory
+   * paddleVelocity  :  calculated from n past  vector values of paddle y coordinates (in pixel values)  and time in
+   * seconds
    * @method paddleBallCollision
    */
   paddleBallCollision() {
 
-    super.paddleMove(paddle, initialTime, ball);
     //Detect the ball position on X axis , if the ball is between paddle edges
     if (ball.position.x >= (1.256) * super.Utils.SCALE - 0.04 * super.Utils.SCALE && ball.position.x <= (1.406) * super.Utils.SCALE) {
 
-
-      //Detect the ball position on Y axes, if the ball is within range  on Y axis
+      //Check if paddle actually moved on Y axis and delta is significant enough
       let paddleDelta = paddle.positions[paddle.positions.length - 1] - paddle.positions[paddle.positions.length - 20];
       if (paddleDelta < 0.1) {
         paddleDelta = 0.1;
       }
-
+      //Detect the ball position on Y axes, if the ball is within range  on Y axis
       if (Math.abs(ball.position.y - paddle.position.y) <= paddleDelta * super.Utils.SCALE && ball.position.y - paddle.position.y >= 0) {
         let paddleVelocity = this.getPaddleVelocity(paddle.times, paddle.positions);
-        super.trajectory(ball, initialTime);
         sounds[gameSound.BOUNCING].play();
         paddle.paddleLastMovedMillis = new Date().getTime();
         ball.impactTime = new Date().getTime();
@@ -350,11 +376,13 @@ export default class FeedCroc extends Base {
         if (paddle.releaseVelocity > 1.4) {
           paddle.releaseVelocity = 1.4;
         }
+
         if (isNaN(paddle.releaseVelocity)) {
           paddle.releaseVelocity = 1.56;
         }
         ball.state = 'bounce';
-        super.bounceTrajectory(ball, paddle, initialTime);
+        // Update initial position of ball according to trajectory to prevent possible gap
+        this.bounceTrajectory();
       }
     }
 
@@ -409,7 +437,6 @@ export default class FeedCroc extends Base {
    *
    * Initialize each game round with initial object parameters
    * Randomize number of obstructions
-   * Reset the sounds sources for older browser versions
    * @method initGame
    */
   initGame() {
@@ -420,6 +447,7 @@ export default class FeedCroc extends Base {
     initialTime = 0;
 
     token.dimensions = {width: 0.21 * super.Utils.SCALE, height: 0.2 * super.Utils.SCALE};
+    //For first trial wait for paddle to start in Box position, make sure the paddle is not moved
     if (super.currentRounds > 0 || (super.currentRounds === 0 && !super.paddleIsMovedPlain(paddle))) {
       sounds[gameSound.START].play();
     }

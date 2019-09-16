@@ -12,16 +12,18 @@ import Utils from './utils';
  *
  */
 
-let dataLoop = {};
-let gameLoop = {};
-let mouseY = 0;
-let gameOver = false;
-let currentRounds = 0;
-let initBallY = 0.0;
-let initX = 0.52;
-let initV = 0;
+
+const JITTER_MAX_TIME = 2000; // Max value for time Jitter randomizer
+const JITTER_MIN_TIME = 850; // Min value for time Jitter randomizer
+let dataLoop = {}; // controlling data Collection loop
+let gameLoop = {}; // controlling main game loop
+let mouseY = 0; // mouse pointer  position on Y axis
+let currentRounds = 0; // current game trial number
+let initBallY = 0.0; // Initial ball Y position
+let initX = 0.52; // Initial ball X position
+let initV = 0; //  Initial velocity
 let gravity = 0;
-let ballvx = 0;
+let ballvx = 0;  // current ball velocity on X axis
 let paddleBox = {
   position: {x: 0, y: 0},
   dimensions: {width: 0, height: 0}
@@ -58,6 +60,11 @@ export default class Base {
     // this.canvas.requestPointerLock =  this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock || this.canvas.webkitRequestPointerLock;
     // this.canvas.requestPointerLock()
     this.calculateCanvas();
+    this.paddleBoxParameters();
+  }
+
+
+  paddleBoxParameters() {
     let leftBorder = (1.2035) * Utils.SCALE;
     let topBorder = (1.3671) * Utils.SCALE;
     let rightBorder = (1.4585) * Utils.SCALE;
@@ -68,7 +75,12 @@ export default class Base {
     paddleBox.dimensions.height = downBorder - topBorder;
   }
 
-
+  /**
+   * Calculate canvas based on current Width Height
+   * of the screen and initial Aspect ratio.
+   * Currently using Matlab implementation Aspect ratio (4:3)
+   * @method calculateCanvas
+   */
   calculateCanvas(){
 
     //  this.canvas.height =  screen.height ;
@@ -113,10 +125,7 @@ export default class Base {
     clearInterval(dataLoop);
 
   }
-
-
-
-
+  
   generateHeights() {
 
     return this.uniformArr([1, 1]);
@@ -170,40 +179,39 @@ export default class Base {
 
 
   /**
-   * The box symbolizes initial paddle location
+   * Create and draw box for initial paddle location.
+   * The box symbolizes initial paddle location in all games
+   * @param color {int} Color of the Paddle box
+   * @param fill {boolean} Set solid color paddle box
    * @method createPaddleBox
    */
-  createPaddleBox(color = Utils.blueColor) {
-    this.ctx.beginPath();
-    this.ctx.rect(paddleBox.position.x, paddleBox.position.y, paddleBox.dimensions.width, paddleBox.dimensions.height);
-    this.ctx.fillStyle = color;
-    this.ctx.lineWidth = '8';
-    this.ctx.strokeStyle = color;
-    this.ctx.stroke();
+  createPaddleBox(color = Utils.blueColor, fill = false) {
+
+    if(fill){
+
+      this.ctx.fillStyle = color;
+      this.ctx.fillRect(paddleBox.position.x, paddleBox.position.y, paddleBox.dimensions.width, paddleBox.dimensions.height);
+
+    }else{
+
+      this.ctx.beginPath();
+      this.ctx.rect(paddleBox.position.x, paddleBox.position.y, paddleBox.dimensions.width, paddleBox.dimensions.height);
+      this.ctx.fillStyle = color;
+      this.ctx.lineWidth = '8';
+      this.ctx.strokeStyle = color;
+      this.ctx.stroke();
+    }
+
 
 
   }
 
 
-  fillPaddleBox(color = Utils.blueColor){
-
-    this.ctx.beginPath();
-    let leftBorder = (1.2035) * Utils.SCALE;
-    let topBorder = (1.3671) * Utils.SCALE;
-    let rightBorder = (1.4585) * Utils.SCALE;
-    let downBorder = (1.5671) * Utils.SCALE;
-    paddleBox.position.x = leftBorder;
-    paddleBox.position.y = topBorder;
-    paddleBox.dimensions.width = rightBorder - leftBorder;
-    paddleBox.dimensions.height = downBorder - topBorder;
-    this.ctx.fillStyle = color;
-    this.ctx.fillRect(paddleBox.position.x, paddleBox.position.y, paddleBox.dimensions.width, paddleBox.dimensions.height);
-  }
 
   /**
    * Create Uniform array of values
    * @method uniformArr
-   * @param indexes
+   * @param vals {Array} Array of values that  needed to be equally distributed
    * @returns {Array}
    */
   uniformArr(vals) {
@@ -241,50 +249,6 @@ export default class Base {
     return array;
   }
 
-  /**
-   * Tree object with coordinates
-   * @method treeObject
-   * @param treeIndex
-   * @returns {{imageURL: *, position: {x: number, y: number}, dimensions: {width: number, height: number}}}
-   */
-  treeObject(treeIndex = 1) {
-
-    let leftBorder = 340  - 55 * treeIndex + 0.25 * Utils.SCALE;
-    let topBorder = (0.964) * Utils.SCALE;
-    let rightBorder = 390 + 0.25 * Utils.SCALE;
-    let downBorder = (1.592) * Utils.SCALE;
-    let img = new Image();
-    img.src = Utils.obstruction1;
-    switch (treeIndex) {
-
-      case 1:
-
-        img.src  = Utils.obstruction1;
-
-        break;
-
-      case 2:
-
-        img.src = Utils.obstruction2;
-
-        break;
-
-      case 3:
-
-        img.src = Utils.obstruction3;
-        break;
-
-
-    }
-
-
-    return {
-      position: {x: leftBorder, y: topBorder},
-      dimensions: {width: rightBorder - leftBorder, height: downBorder - topBorder},
-      image: img
-    };
-
-  }
 
 
   /**
@@ -339,6 +303,10 @@ export default class Base {
 
   }
 
+  /**
+   * Current score accumulator
+   * @method increaseScore
+   */
   increaseScore() {
     this.currentScore++;
   }
@@ -370,10 +338,10 @@ export default class Base {
 
   /**
    * Create initial ball box object to start from
-   * @method createBallBox
-   * @param {String} imageURL
+   * @method createLauncher
+   * @param image {Object} Image object
    */
-  createBallBox(image) {
+  createLauncher(image) {
 
     let leftBorder = 0.4 * Utils.SCALE;
     let topBorder = 1.2971 * Utils.SCALE;
@@ -384,50 +352,6 @@ export default class Base {
 
   }
 
-
-  //TODO: merge this with launcher implementation for paddle games
-  discreteLauncer(image) {
-
-    this.ctx.beginPath();
-    this.ctx.lineWidth = '8';
-    this.ctx.strokeStyle = Utils.blueColor;
-
-    let leftBorder = (initX - 0.05) * Utils.SCALE;
-    let topBorder = (1.3171) * Utils.SCALE;
-    let rightBorder = (initX + 0.07) * Utils.SCALE;
-    let downBorder = (1.5371) * Utils.SCALE;
-
-    this.ctx.drawImage(image, leftBorder, topBorder, rightBorder - leftBorder, downBorder - topBorder);
-
-
-  }
-
-  /**
-   * @method mouseY Set current cursor position
-   * @param {number} mouse cursor Y coordinate
-   */
-  set mouseY(val) {
-
-    mouseY = val;
-  }
-
-  /**
-   * @method  mouseY Get current cursor position
-   * @return {number} mouse cursor Y coordinate
-   */
-  get mouseY() {
-
-    return mouseY;
-  }
-
-  /**
-   * @method gameOver Set method if game is over
-   * @param {boolean} game is over
-   */
-  set gameOver(val) {
-
-    gameOver = val;
-  }
 
   get currentRounds() {
 
@@ -440,15 +364,7 @@ export default class Base {
   }
 
 
-  /**
-   * Get method if game is over
-   * @method gameOver
-   * @return {boolean} game is over
-   */
-  get gameOver() {
 
-    return gameOver;
-  }
 
   /**
    * Get shared Utils objects
@@ -488,7 +404,7 @@ export default class Base {
 
 
   /**
-   * Fill image array with URL sources
+   * Fill image array with objects according to URL sources
    * @method fillImageArray
    * @param urlArr
    * @param imgArr
@@ -506,6 +422,11 @@ export default class Base {
 
   }
 
+  /**
+   * Fill audio array with objects according to URL sources
+   * @param urlArr
+   * @param audioArr
+   */
   fillAudioArray(urlArr,audioArr){
 
     urlArr.forEach(
@@ -521,7 +442,7 @@ export default class Base {
   }
 
   /**
-   * Disabled for now
+   * Store data and pass to  Lookit platform variable
    * @method storeData Store data in proposed array
    * @param {array} exportData
    */
@@ -558,18 +479,16 @@ export default class Base {
   /**
    * Finish current round and check for rounds left
    * @method finishGame
-   * @param {boolean} should increase score
+   * @param score {boolean} should increase score
    */
   finishGame(score) {
 
     this.currentRounds++;
-    console.log('finishGame');
     this.clearInterval();
     cancelAnimationFrame(gameLoop);
     if (score) {
       this.increaseScore();
     }
-    this.gameOver = false;
     if (this.currentRounds < Utils.gameRounds) {
       this.initGame();
 
@@ -636,10 +555,10 @@ export default class Base {
   }
 
   /**
-   * @method basketObject
-   * Basket object per Matlab coordinates
-   * @param basket
-   * @returns {paddle}
+   * @method paddleObject
+   * Paddlw object per Matlab coordinates
+   * @param paddle
+   * @returns {object} paddle {position: {x: number, y: number}, dimensions: {width: number, height: number}}
    */
   paddleObject(paddle){
     let position = (this.canvas.height - mouseY)/this.canvas.height ;
@@ -656,23 +575,23 @@ export default class Base {
   }
 
   /**
-   * Create initial ball object with state parameters
+   * Create initial ball object with state parameters for all games
+   * Initial state is always 'start' for each game trial
    * @method ballObject
-   * @returns {{color: string, mass: number, impactPosition: number, startTime: number, positions: {x: number, y: number}[], position: {x: number, y: number}, velocity: number, state: string, hitstate: string, radius: number, impactTime: number}}
+   * @returns {{color: string, impactPosition: number, startTime: number, positions: {x: number, y: number}[], position: {x: number, y: number}, velocity: number, state: string, hitstate: string, radius: number, impactTime: number}}
    */
   ballObject(){
 
     let iterator = 0.001;
     let positionY = initBallY+initV*(iterator)+0.5*-gravity*Math.pow(iterator,2);
     let positionX  = initX + ballvx*(iterator);
-    let leftBorder =  (positionX-.0175)* Utils.SCALE;
-    let downBorder =  (1.3746-positionY)*Utils.SCALE ;
+    let leftBorder =  (positionX- 0.0175) * Utils.SCALE;
+    let downBorder =  (1.3746-positionY) * Utils.SCALE ;
 
     let  ball = {
 
       position: {x: leftBorder, y:downBorder},
       velocity: 0,
-      mass: Utils.ballMass,
       radius: (0.037)*Utils.SCALE,
       state: 'start',
       impactTime: 0,
@@ -688,10 +607,10 @@ export default class Base {
   }
 
   /**
-   * @method getElapsedTime
    * Get elapsed time as iterator in seconds
-   * @param intialTime
-   * @returns {number}
+   * @method getElapsedTime
+   * @param intialTime {int} Unixtime formatted time
+   * @returns {number}  difference in seconds between current time and intialTime, decimal
    */
   getElapsedTime(intialTime) {
 
@@ -701,11 +620,9 @@ export default class Base {
   /**
    * @method trajectory
    * Projectile motion trajectory per maximum distance
-   * @param ball
-   * @param ballvx
-   * @param initV
-   * @param Gravity
-   * @param iterator
+   * @param ball {Object} {position: {x: number, y: number}, radius: number, dimensions: {width: number, height:
+   * number}}
+   * @param initialTime {int}
    */
   trajectory(ball, initialTime) {
 
@@ -714,7 +631,7 @@ export default class Base {
 
     let positionY = initBallY+initV*(iterator)+0.5*-gravity*Math.pow(iterator,2);
     let positionX  = initX + ballvx*(iterator);
-    let leftBorder =  (positionX-.0175)* Utils.SCALE;
+    let leftBorder =  (positionX- 0.0175)* Utils.SCALE;
     let downBorder =  (1.3746-positionY)*Utils.SCALE ;
     ball.position.x = leftBorder;
     ball.position.y = downBorder;
@@ -732,31 +649,6 @@ export default class Base {
   }
 
 
-  /**
-   * @method bounceTrajectory
-   * Trajectory after bounce
-   * @param ball
-   * @param paddle
-   * @param initialTime
-   */
-  bounceTrajectory(ball, paddle, initialTime) {
-    let Xiterator = this.getElapsedTime(initialTime);
-    let Yiterator = this.getElapsedTime(ball.impactTime);
-
-
-    this.ctx.beginPath();
-    let positionY = ball.impactPosition + paddle.releaseVelocity * (Yiterator) + 0.5 * -gravity * Math.pow(Yiterator, 2);
-    let positionX = initX + ballvx * (Xiterator);
-    let leftBorder = (positionX - .0175) * Utils.SCALE;
-    if(ball.positions.length > 80){
-      ball.positions = ball.positions.slice(-80);
-    }
-    ball.positions.push(ball.position);
-    ball.position.x = leftBorder;
-    ball.position.y = this.canvas.height - positionY * this.canvas.height ;
-
-
-  }
 
   /**
    * Randomize trial start time
@@ -764,15 +656,16 @@ export default class Base {
    * @returns {number} seconds
    */
   trialStartTime() {
-    let min = this.context.minTime + 350;
-    return ((Math.floor(Math.random() * (this.context.maxTime - min + 1)) + min) / 1000 );
+
+    return ((Math.floor(Math.random() * (JITTER_MAX_TIME - JITTER_MIN_TIME + 1)) + JITTER_MIN_TIME) / 1000 );
 
   }
 
   /**
-   * @method ballIsOnFloor
    * Check if ball is on the floor and missed target
-   * @param ball
+   * @method ballIsOnFloor
+   * @param ball {position: {x: number, y: number}, radius: number, dimensions: {width: number, height:
+   * number}}
    * @returns {boolean}
    */
   ballIsOnFloor(ball){
@@ -781,9 +674,10 @@ export default class Base {
   }
 
   /**
-   * @method drawBall
    * Draw ball per x,y ball location
-   * @param ball
+   * @method drawBall
+   * @param ball {Object} {position: {x: number, y: number}, radius: number, dimensions: {width: number, height:
+   * number}}
    */
   drawBall(ball,image) {
 
@@ -795,17 +689,13 @@ export default class Base {
   /**
    * Set position of the ball to initial coordinates to symbolize the start of the game
    * @method moveBallToStart
-   * @param {object} ball object parameters
-   * @param {boolean} gameOver set game to be over
+   * @param {object} ball {position: {x: number, y: number}, radius: number, dimensions: {width: number, height: number}} object parameters set game to be over
    */
-  moveBallToStart(ball,image ,gameOver) {
+  moveBallToStart(ball,image) {
 
     ball = this.ballObject();
     this.drawBall(ball,image);
 
-    if (gameOver) {
-      this.gameOver = true;
-    }
   }
 
   /**
@@ -813,7 +703,7 @@ export default class Base {
    * current round
    * Check if paddle is stationary for PADDLE_REST_TIME_MS, if yes proceed to the next trial
    * @method paddleAtZero
-   * @param {object} paddle
+   * @param {object} paddle {position: {x: number, y: number}, dimensions: {width: number, height: number}}
    * @param {boolean} score should increase score
    */
   paddleAtZero(paddle, score) {
@@ -882,7 +772,11 @@ export default class Base {
     return false;
   }
 
-
+  /**
+   * Draw image object according to object parameters
+   * @param object {position: {x: number, y: number}, dimensions: {width: number, height: number}}
+   * @param image
+   */
   drawImageObject(object,image){
 
     this.ctx.drawImage(image, object.position.x, object.position.y, object.dimensions.width, object.dimensions.height);
@@ -892,8 +786,12 @@ export default class Base {
 
   /**
    * Set paddle coordinates up to velocity
+   * Check if paddle not going past the paddle box bottom border
+   * Move paddle inside paddle Box upon start of the game
    * @method paddleMove
-   * @param {object} paddle
+   * @param {object} paddle {position: {x: number, y: number}, dimensions: {width: number, height: number}}
+   * @param {int} initialTime,  Initial time (Unixtime) for current game round
+   * @param {object} ball {position: {x: number, y: number}, radius: number, dimensions: {width: number, height: number}}
    */
   paddleMove(paddle,initialTime,ball) {
 
@@ -904,10 +802,10 @@ export default class Base {
       paddle.position.y = paddleBox.position.y + paddleBox.dimensions.height - paddle.dimensions.height;
     }
 
-
+    // Move paddle inside paddle Box upon start of the game
     if(ball.state === 'start' && currentRounds === 0 && paddle.position.y < paddleBox.position.y) {
 
-      mouseY = paddle.position.y + 10;
+      mouseY = paddle.position.y + 0.0238 * Utils.SCALE;
     }
 
     this.paddleHistory(paddle,initialTime);
@@ -934,7 +832,14 @@ export default class Base {
 
   }
 
-
+  /**
+   * Increment current position cursor by movementY value (difference in y coordinate between the given event and the
+   * previous mousemove event )
+   * Check initial cursor position, if the positio is lower then low paddle box border, stop t\
+   * mouse pointer updates.
+   * @method onMouseMove
+   * @param e {Event} currrent mouse event
+   */
   onMouseMove(e){
 
 

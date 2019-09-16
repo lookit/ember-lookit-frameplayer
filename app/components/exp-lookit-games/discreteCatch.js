@@ -14,23 +14,30 @@ import Base from './base';
 
 let basket = {};
 let ball = {};
-let obstructions = [];
-let targetStars = {};
-let initialTime = 0;
+let obstructions = []; // Possible obstructions array
+let targetStars = {}; // Start location (shows upon reaching the rim on basket )
+let initialTime = 0; // initial time for current game trial
 let hArray = [];
-let Tf = 0.8;
-let Height = 0.8;
-let obstrArr = [];
+let Tf = 0.8; // Time Flight for trajectory
+let Height = 0.8; // Current trajectory height
+let obstrArr = []; // Current obstructions  array
 let jitterT = 0;
-let radiusRim = 0.1;
-let obstructionsNum = 0;
-let consecutive_counts = 0;
+let radiusRim = 0.1; //Rim size on basket
+let obstructionsNum = 0; // Current number of obstructions (randomized each trial)
+let consecutiveCounts = 0;  // Calculate number of consecutive successful attempts
 let startTime = 0;
+
+const TRAVEL_TIME = 1.5;
+
+// Media arrays for loading
 let sounds = [];
 let soundURLs = [];
 let imageURls = [];
 let images = [];
-const TRAVEL_TIME = 1.5;
+let obstructionsURLs = [];
+let obstructionImages = [];
+
+// Media mapping as Enum
 const gameSound = {
     START:0,
     CATCH:1,
@@ -49,10 +56,10 @@ const gameImage = {
  * The user will operate with paddle to catch the ball started
  * from ball box. The trajectory is randomized with various values in trajectories array
  * Number of obstructions currently randomized from 0 to 3 trees shown
- * @class CatchCheese
+ * @class DiscreteCatch
  * @extends Base
  */
-export default class CatchCheese extends Base {
+export default class DiscreteCatch extends Base {
   /**
    * @method constructor
    * @constructor constructor
@@ -63,6 +70,7 @@ export default class CatchCheese extends Base {
     super(context, document);
     soundURLs = [super.Utils.rattleSound,super.Utils.goodCatchSound,super.Utils.failcatchSound];
     imageURls = [super.Utils.ironBasket,super.Utils.gear,super.Utils.basketStarsImage,super.Utils.robotImage];
+    obstructionsURLs = [super.Utils.obstruction1, super.Utils.obstruction2, super.Utils.obstruction3];
 
   }
 
@@ -77,6 +85,7 @@ export default class CatchCheese extends Base {
     obstrArr  = super.uniformArr([0,1,2,3]);
     super.fillAudioArray(soundURLs,sounds);
     super.fillImageArray(imageURls,images);
+    super.fillImageArray(obstructionsURLs,obstructionImages);
 
     basket = {
       positions:[],
@@ -113,7 +122,7 @@ export default class CatchCheese extends Base {
 
     obstructions = Array(obstructionsNum).fill({}).map((value, index) =>
 
-      ( super.treeObject(index+1))
+      ( this.getObstruction(index+1))
     );
 
 
@@ -126,6 +135,26 @@ export default class CatchCheese extends Base {
 
   }
 
+
+  /**
+   * Tree object with coordinates
+   * @method getObstruction
+   * @param obstructionIndex
+   * @returns {{imageURL: *, position: {x: number, y: number}, dimensions: {width: number, height: number}}}
+   */
+  getObstruction(obstructionIndex = 1) {
+
+    let leftBorder = 340  - 55 * obstructionIndex + 0.25 * super.Utils.SCALE;
+    let topBorder = (0.964) * super.Utils.SCALE;
+    let rightBorder = 390 + 0.25 * super.Utils.SCALE;
+    let downBorder = (1.592) * super.Utils.SCALE;
+    return {
+      position: {x: leftBorder, y: topBorder},
+      dimensions: {width: rightBorder - leftBorder, height: downBorder - topBorder},
+      image: obstructionImages[obstructionIndex-1]
+    };
+
+  }
 
 
   dataCollection() {
@@ -192,11 +221,11 @@ export default class CatchCheese extends Base {
 
 
   /**
-   * Create initial ball box object to start from
-   * @method createBallBox
-   * @param {int} paddleWidth
+   * Draw initial ball box object
+   * @method createLauncher
+   * @param {image}  BallBox image
    */
-  createBallBox(image) {
+  createLauncher(image) {
 
     let leftBorder = (0.05) * super.Utils.SCALE;
     let topBorder = (1.1471 )* super.Utils.SCALE;
@@ -208,7 +237,7 @@ export default class CatchCheese extends Base {
 
   /**
    * Main loop of the game.
-   * Set initial position of the ball in a box and starting rattling sound (initSoundPlaying).
+   * Set initial position of the ball in a box and starting  sound .
    * After that  start ball trajectory.
    * If ball hits the target or missed the target wait util user places the paddle to starting position.
    * Increase the score if ball hits the target.
@@ -217,11 +246,11 @@ export default class CatchCheese extends Base {
   loop() {
     super.loop();
     super.generateTrajectoryParams(hArray,Height,Tf);
-    this.createBallBox(images[gameImage.BALLBOX]);
+    this.createLauncher(images[gameImage.BALLBOX]);
     let paddleBoxColor = super.Utils.blueColor;
     if(ball.state === 'start'){
 
-      super.moveBallToStart(ball, images[gameImage.BALL],false);
+      super.moveBallToStart(ball, images[gameImage.BALL]);
 
       if (startTime > 0 &&  !super.paddleIsMoved(basket) && super.getElapsedTime(startTime) > TRAVEL_TIME ){
         sounds[gameSound.START].play();
@@ -271,13 +300,13 @@ export default class CatchCheese extends Base {
 
       if (ball.hitstate === 'very good' || ball.hitstate === 'good') {
         super.increaseScore();
-        consecutive_counts++;
+        consecutiveCounts++;
         sounds[gameSound.CATCH].play();
 
       }else{
 
         sounds[gameSound.FAIL].play();
-        consecutive_counts = 0;
+        consecutiveCounts = 0;
       }
 
 
@@ -304,7 +333,7 @@ export default class CatchCheese extends Base {
       // Remove ball and show in the starting point,
       //User should set the paddle to initial position , call stop after that
 
-      super.moveBallToStart(ball, images[gameImage.BALL],false);
+      super.moveBallToStart(ball, images[gameImage.BALL]);
       super.paddleAtZero(basket,false);
 
 
@@ -315,7 +344,7 @@ export default class CatchCheese extends Base {
     obstructions.forEach(obstruction => super.drawImage(obstruction, obstruction.image));
 
     this.basketObject(basket);
-    super.fillPaddleBox(paddleBoxColor);
+    super.createPaddleBox(paddleBoxColor,true);
     super.paddleMove(basket,initialTime,ball);
     super.drawImageObject(basket,images[gameImage.PADDLE]);
 

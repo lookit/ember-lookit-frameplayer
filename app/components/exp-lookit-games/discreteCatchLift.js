@@ -13,20 +13,21 @@ import Base from './base';
  * @submodule games
  *
  */
-let mice = {};
-let clockObject = {};
-let basket = {};
-let initBallY = 0.27;
-let initX = 1.33;
-let initialTime = 0;
-let jitterT = 0;
+let target = {}; // Current target (rat)  position parameters
+let clockObject = {}; //  Object symbolizes clock (pizza) location parameters
+let basket = {}; // Paddle (basket) position parameters
+let initBallY = 0.27; // Initial Y ball location
+let initX = 1.33; // Initial X ball location
+let initialTime = 0; // Initial time for current game trial
+let jitterT = 0; // Time jitter (variates from 500 ms to 1500 ms), time between sound start and ball starting to fly
 
-
+// Media arrays for loading
 let sounds = [];
 let soundURLs = [];
 let imageURLs = [];
 let images = [];
 
+// Media mapping as Enum
 const gameSound = {
   START: 0,
   SERIES1: 1,
@@ -43,14 +44,14 @@ const gameImage = {
 };
 
 /**
- * @class CatchMouse
+ * @class DiscreteCatchLift
  * @extends Base
- * Main implementation of Catch the mouse game.
- * The user will with paddle (basket) to catch the mice.
- * The mice will appear with some unpredictable  delay.
- * The user should catch the mice until cheese(symbolizing the clock) is gone.
+ * Main implementation of Catch the target game.
+ * The user will with paddle (basket) to catch the target.
+ * The target will appear with some unpredictable  delay.
+ * The user should catch the target until object symbolizing the clock is gone.
  */
-export default class CatchMouse extends Base {
+export default class DiscreteCatchLift extends Base {
   /**
    * @method constructor
    * @constructor constructor
@@ -68,7 +69,7 @@ export default class CatchMouse extends Base {
   /**
    *
    * Main point to start the game.
-   * Initialize static parameters and preload sounds here
+   * Initialize initial parameters and preload sounds here
    * @method init
    */
   init() {
@@ -81,7 +82,7 @@ export default class CatchMouse extends Base {
     let leftBorder = (initX - 0.08) * super.Utils.SCALE;
     let topBorder = (1.2971 - initBallY) * super.Utils.SCALE;
 
-    mice = {
+    target = {
       dimensions: {width: 0.18 * super.Utils.SCALE, height: 0.18 * super.Utils.SCALE},
       position: {x: leftBorder, y: topBorder},
       radius: 0.09525 * super.Utils.SCALE,
@@ -105,7 +106,7 @@ export default class CatchMouse extends Base {
     };
 
 
-    this.setCheeseObj();
+    this.setClockObject();
 
     sounds[gameSound.START].addEventListener('onloadeddata', this.initGame(), false);
     sounds[gameSound.START].addEventListener('playing', function () {
@@ -118,9 +119,9 @@ export default class CatchMouse extends Base {
   }
 
 
-  setCheeseObj() {
+  setClockObject() {
 
-    //Cheese coord
+    //Clock coord
     let leftBorder = (1.53)*super.Utils.SCALE ;
     let topBorder = (1.2974-initBallY)*super.Utils.SCALE;
     let width = 0.27777 * super.Utils.SCALE;
@@ -148,10 +149,10 @@ export default class CatchMouse extends Base {
   initGame() {
     initialTime = 0;
     jitterT = super.trialStartTime();
-    mice.state = 'start';
-    mice.lastTime = new Date().getTime();
+    target.state = 'start';
+    target.lastTime = new Date().getTime();
 
-    this.setCheeseObj();
+    this.setClockObject();
     super.createPaddleBox();
     basket = super.basketObject(basket);
     if (super.currentRounds > 0 || (super.currentRounds === 0 && !super.paddleIsMoved(basket))) {
@@ -171,10 +172,10 @@ export default class CatchMouse extends Base {
       game_type: 'catchMouse',
       basket_x: basket.position.x / this.canvas.width,
       basket_y: (this.canvas.height - basket.position.y) / this.canvas.height,
-      mice_x: mice.position.x / this.canvas.width,
-      mice_y: (this.canvas.height - mice.position.y) / this.canvas.height,
+      mice_x: target.position.x / this.canvas.width,
+      mice_y: (this.canvas.height - target.position.y) / this.canvas.height,
       trial: super.currentRounds,
-      mice_state: mice.state,
+      mice_state: target.state,
       timestamp: new Date().getTime()
 
     };
@@ -185,11 +186,10 @@ export default class CatchMouse extends Base {
 
 
   /**
-   *
-   *  Show cheese portion according to angle
-   *  @method showCheese
+   *  Show clock  portion according to angle
+   *  @method showClock
    */
-  showCheese() {
+  showClock() {
 
     let angle = Math.PI * (0.2 * clockObject.state);
     this.ctx.beginPath();
@@ -204,9 +204,9 @@ export default class CatchMouse extends Base {
   }
 
 
-  cheeseState() {
+  clockState() {
 
-    let time = super.getElapsedTime(mice.showTime);
+    let time = super.getElapsedTime(target.showTime);
 
     if (time < 0.1) {
       clockObject.state = 9;
@@ -238,7 +238,7 @@ export default class CatchMouse extends Base {
     } else {
       clockObject.state = 0;
     }
-    this.showCheese();
+    this.showClock();
   }
 
 
@@ -255,7 +255,7 @@ export default class CatchMouse extends Base {
     let paddleBoxColor = super.Utils.blueColor;
     super.createPaddleBox(paddleBoxColor);
     basket = super.basketObject(basket);
-    super.paddleMove(basket, initialTime, mice);
+    super.paddleMove(basket, initialTime, target);
     super.drawImageObject(clockObject, images[gameImage.CLOCK]);
 
     if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMoved(basket)) {
@@ -264,27 +264,27 @@ export default class CatchMouse extends Base {
     }
 
 
-    if (initialTime > 0 && super.paddleIsMoved(basket) && mice.state === 'start') {
+    if (initialTime > 0 && super.paddleIsMoved(basket) && target.state === 'start') {
       initialTime = new Date().getTime();
       paddleBoxColor = super.Utils.redColor;
       super.createPaddleBox(paddleBoxColor);
     }
 
     //Randomize initial wait time here
-    if (mice.state === 'start' && initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
+    if (target.state === 'start' && initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
       sounds[gameSound.START].pause();
       sounds[gameSound.START].currentTime = 0;
-      mice.state = 'show';
-      mice.showTime = new Date().getTime();
+      target.state = 'show';
+      target.showTime = new Date().getTime();
     }
 
-    if (mice.state === 'show') {
-      this.cheeseState();
-      super.drawImageObject(mice, images[gameImage.TARGET]);
+    if (target.state === 'show') {
+      this.clockState();
+      super.drawImageObject(target, images[gameImage.TARGET]);
 
     }
 
-    if (mice.state === 'done') {
+    if (target.state === 'done') {
 
 
       super.paddleAtZero(basket, false);
@@ -292,17 +292,17 @@ export default class CatchMouse extends Base {
 
     }
 
-    if (mice.state === 'show') {
+    if (target.state === 'show') {
 
 
-      if (mice.showTime > 0 && super.getElapsedTime(mice.showTime) > 1) {
+      if (target.showTime > 0 && super.getElapsedTime(target.showTime) > 1) {
 
-        mice.state = 'done';
+        target.state = 'done';
         sounds[gameSound.FAIL].play();
       }
 
 
-      if (basket.moved === 0 && basket.positions.length > 5 && basket.position.y - mice.position.y <= 100) {
+      if (basket.moved === 0 && basket.positions.length > 5 && basket.position.y - target.position.y <= 100) {
 
         sounds[gameSound.SWOOSH].play();
         basket.moved = 1;
@@ -310,8 +310,8 @@ export default class CatchMouse extends Base {
       }
 
 
-      if ((mice.position.y + 20) - basket.position.y >= 0) {
-        mice.state = 'done';
+      if ((target.position.y + 20) - basket.position.y >= 0) {
+        target.state = 'done';
         if (clockObject.state > 0) {
           if (clockObject.state < 4) {
             sounds[gameSound.SERIES1].play();
@@ -321,7 +321,7 @@ export default class CatchMouse extends Base {
             sounds[gameSound.SERIES3].play();
           }
           super.increaseScore();
-          this.showCheese();
+          this.showClock();
 
         }
 
@@ -331,7 +331,7 @@ export default class CatchMouse extends Base {
 
     }
 
-    this.showCheese();
+    this.showClock();
     this.drawImage(basket, images[gameImage.PADDLE]);
   }
 
