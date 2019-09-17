@@ -44,12 +44,12 @@ const gameImage = {
 };
 
 /**
- * @class DiscreteCatchLift
- * @extends Base
- * Main implementation of Catch the target game.
+ *  * Main implementation of Catch the target game.
  * The user will with paddle (basket) to catch the target.
  * The target will appear with some unpredictable  delay.
  * The user should catch the target until object symbolizing the clock is gone.
+ * @class DiscreteCatchLift
+ * @extends Base
  */
 export default class DiscreteCatchLift extends Base {
   /**

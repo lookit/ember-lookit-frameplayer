@@ -36,14 +36,16 @@ const PADDLE_REST_TIME_MS = 3000;
 
 /**
  * Base class for common game functions
+ * TODO : some static methods could be extracted to a separate class, maybe Utils class
  * @class Base
  */
 export default class Base {
 
 
   /**
-   * @method Constructor to get parameters from caller
-   * @constructor Constructor to get parameters from caller
+   * Constructor to get parameters from caller
+   * @method Constructor
+   * @constructor Constructor
    * @param context from component
    * @param document object from component
    */
@@ -211,8 +213,8 @@ export default class Base {
   /**
    * Create Uniform array of values
    * @method uniformArr
-   * @param vals {Array} Array of values that  needed to be equally distributed
-   * @returns {Array}
+   * @param vals {array} Array of values that  needed to be equally distributed
+   * @return {array} array
    */
   uniformArr(vals) {
     let arr = [];
@@ -227,8 +229,9 @@ export default class Base {
 
   /**
    * Fisher-Yates shuffle for uniform distribution
-   * @param array
-   * @return {array}
+   * @method shuffle
+   * @param {array} initial array
+   * @return {array} shuffled array
    */
   shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
@@ -251,10 +254,6 @@ export default class Base {
 
 
 
-  /**
-   * Stop all the game functions
-   * @method stop
-   */
   stop() {
 
     clearInterval(dataLoop);
@@ -265,7 +264,7 @@ export default class Base {
    * Abstract method
    * Triggered when participant pressed some key on keyboard
    * @method keyDownHandler
-   * @param e event
+   * @param {object} e event
    */
   keyDownHandler(e) {
 
@@ -276,7 +275,7 @@ export default class Base {
    * Abstract method
    * Triggered when participant released some key on keyboard
    * @method keyUpHandler
-   * @param e event
+   * @param {object} e event
    */
   keyUpHandler(e) {
 
@@ -381,7 +380,7 @@ export default class Base {
   /**
    * Get trajectory parameters per each trial
    * @method TrajectoryVars
-   * @returns {{initX: number, ballvx: number, gravity: number, initV: number}}
+   * @return {object} {{initX: number, ballvx: number, gravity: number, initV: number}}
    * @constructor
    */
   get TrajectoryVars() {
@@ -406,8 +405,8 @@ export default class Base {
   /**
    * Fill image array with objects according to URL sources
    * @method fillImageArray
-   * @param urlArr
-   * @param imgArr
+   * @param {array} array of URLs
+   * @param {array} array of created objects
    */
   fillImageArray(urlArr,imgArr){
 
@@ -424,8 +423,9 @@ export default class Base {
 
   /**
    * Fill audio array with objects according to URL sources
-   * @param urlArr
-   * @param audioArr
+   * @method fillAudioArray
+   * @param {array} array of URLs
+   * @param {array} array of created objects
    */
   fillAudioArray(urlArr,audioArr){
 
@@ -443,8 +443,8 @@ export default class Base {
 
   /**
    * Store data and pass to  Lookit platform variable
-   * @method storeData Store data in proposed array
-   * @param {array} exportData
+   * @method storeData
+   * @param {array} export Data array of objects with all data passed to Lookit platform
    */
   storeData(exportData) {
 
@@ -516,10 +516,10 @@ export default class Base {
 
 
   /**
-   * @method basketObject
    * Basket object per Matlab coordinates
-   * @param basket
-   * @returns {*}
+   * @method basketObject
+   * @param basket paddle parameters
+   * @return {object} basket parameters
    */
   basketObject(basket) {
 
@@ -540,8 +540,10 @@ export default class Base {
 
 
   /**
-   * @method paddleHistory
    * Store paddle position and time history for velocity calculation
+   * @method paddleHistory
+   * @param {object} paddle
+   * @param {int} trial initial Time in Unixtime
    */
   paddleHistory(paddle, initialTime) {
 
@@ -555,10 +557,10 @@ export default class Base {
   }
 
   /**
+   * Paddle object per Matlab coordinates
    * @method paddleObject
-   * Paddlw object per Matlab coordinates
-   * @param paddle
-   * @returns {object} paddle {position: {x: number, y: number}, dimensions: {width: number, height: number}}
+   * @param {object} paddle
+   * @return {object} paddle {position: {x: number, y: number}, dimensions: {width: number, height: number}}
    */
   paddleObject(paddle){
     let position = (this.canvas.height - mouseY)/this.canvas.height ;
@@ -578,7 +580,9 @@ export default class Base {
    * Create initial ball object with state parameters for all games
    * Initial state is always 'start' for each game trial
    * @method ballObject
-   * @returns {{color: string, impactPosition: number, startTime: number, positions: {x: number, y: number}[], position: {x: number, y: number}, velocity: number, state: string, hitstate: string, radius: number, impactTime: number}}
+   * @return {object} ball  {{color: string, impactPosition: number, startTime: number, positions: {x: number, y:
+   * number}[],
+   * position: {x: number, y: number}, velocity: number, state: string, hitstate: string, radius: number, impactTime: number}}
    */
   ballObject(){
 
@@ -610,7 +614,7 @@ export default class Base {
    * Get elapsed time as iterator in seconds
    * @method getElapsedTime
    * @param intialTime {int} Unixtime formatted time
-   * @returns {number}  difference in seconds between current time and intialTime, decimal
+   * @return {number}  difference in seconds between current time and intialTime, decimal
    */
   getElapsedTime(intialTime) {
 
@@ -618,8 +622,8 @@ export default class Base {
   }
 
   /**
-   * @method trajectory
    * Projectile motion trajectory per maximum distance
+   * @method trajectory
    * @param ball {Object} {position: {x: number, y: number}, radius: number, dimensions: {width: number, height:
    * number}}
    * @param initialTime {int}
@@ -653,7 +657,7 @@ export default class Base {
   /**
    * Randomize trial start time
    * @method trialStartTime
-   * @returns {number} seconds
+   * @return {number} seconds
    */
   trialStartTime() {
 
@@ -666,7 +670,7 @@ export default class Base {
    * @method ballIsOnFloor
    * @param ball {position: {x: number, y: number}, radius: number, dimensions: {width: number, height:
    * number}}
-   * @returns {boolean}
+   * @return {boolean}
    */
   ballIsOnFloor(ball){
 
@@ -732,9 +736,10 @@ export default class Base {
 
   /**
    * Check if paddle is moved ahead of time
-   * @param paddle
+   * @method paddleIsMoved
+   * @param {object} paddle parameters object {position: {x: number, y: number}, dimensions: {width: number, height: number}}
    * @param {boolean} checkPaddleHeight if height needed for reference (bounce game)
-   * @returns {boolean}
+   * @return {boolean}
    */
   paddleIsMoved(paddle,checkPaddleHeight = false){
 
@@ -757,8 +762,9 @@ export default class Base {
 
   /**
    * Draw image object according to object parameters
-   * @param object {position: {x: number, y: number}, dimensions: {width: number, height: number}}
-   * @param image
+   * @method  drawImageObject
+   * @param {object} {position: {x: number, y: number}, dimensions: {width: number, height: number}}
+   * @param {object} image
    */
   drawImageObject(object,image){
 

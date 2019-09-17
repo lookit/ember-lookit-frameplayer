@@ -140,7 +140,7 @@ export default class DiscreteCatch extends Base {
    * Tree object with coordinates
    * @method getObstruction
    * @param obstructionIndex
-   * @returns {{imageURL: *, position: {x: number, y: number}, dimensions: {width: number, height: number}}}
+   * @return {{imageURL: *, position: {x: number, y: number}, dimensions: {width: number, height: number}}}
    */
   getObstruction(obstructionIndex = 1) {
 

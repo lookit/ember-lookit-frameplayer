@@ -57,11 +57,11 @@ const gameImage = {
 
 
 /**
- * @class ButtonPressWindow
- * @extends Base
  * Main implementation of feed  the mouse in the house game.
  * The user will operate with keyboard keys to predict when ball trajectory will hit the window.
  * The trajectory is randomized with various values in trajectories array
+ * @class ButtonPressWindow
+ * @extends Base
  */
 export default class ButtonPressWindow extends Base {
   /**
@@ -222,9 +222,9 @@ export default class ButtonPressWindow extends Base {
   }
 
 
-  //Might need to set the key as a super parameter
   /**
-   * @method keyDownHandler Get current keyboard event on press button
+   * Get current keyboard event on press button
+   * @method keyDownHandler
    * @param {object} e
    */
   keyDownHandler(e) {

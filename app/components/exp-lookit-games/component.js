@@ -11,32 +11,51 @@ import Ember from 'ember';
 import Game from './Game';
 
 /**
- * @module exp-lookit-games
- * @submodule frames
- */
-
-/**
  * Frame to implement various games interventions.
  * The games are developed as a separate HTML5 canvas modules.
+ *
+ * Current implementation of template has 3 scenarios to display :
+ * - Intro page (shows the initial game image with door button)
+ * - Progress page (shows the progress page with slot machines with dynamic button )
+ * - Game instructions page (shows the game instructions set as template parameters)
  *
  * After each game, get the response that game is finished, save the data (pass the data to
  * the appropriate game object array) and proceed to the next game/step.
  *
  * Current implementation has 5 game types :
- * - 0: Feed the crocodile
- * - 1: Catch the cheese
- * - 2: Catch the mouse
- * - 3: Feed the mice
- * - 4: Feed the mouse in the house
+ * - 0: Light the night sky
+ * - 1: Monster slime
+ * - 2: Catch the rat
+ * - 3: Space mechanic
+ * - 4: Brake the wall
  *
  *
  ```
  "frames": {
+
+        "intro": {
+            "kind": "exp-lookit-games",
+            "source": "https://piproject.s3.us-east-2.amazonaws.com/Resources/images/intro.png",
+            "showIntro": true,
+            "showProgress": false,
+            "showInstructions": true
+        },
+
+        "progress-1": {
+            "kind": "exp-lookit-games",
+            "gameType": 0,
+            "showProgress": true,
+            "showIntro": false,
+            "showInstructions": false,
+            "source_button": "https://piproject.s3.us-east-2.amazonaws.com/Resources/images/start_button.png"
+        },
         "game": {
             "kind": "exp-lookit-games",
             "gameType": 0,
-            "gameDescription": "Feed the Crocodile Game",
+            "gameDescription": "Light the night game",
             "instructions" : "Use mouse to move paddle up and down",
+            "showIntro" : false,
+            "showProgress": false,
             "showInstructions": true
         }
     }
@@ -59,10 +78,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
         parameters: {
             type: 'object',
             properties: {
-                scale_factor: {
-                    default: 405,
-                    type: 'number'
-                },
                 /**
                  * Set current game type
                  *
@@ -78,8 +93,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                 /**
                  * Text to display for game instructions
                  *
-                 * @property {String} nextButtonText
-                 * @default 'Next'
+                 * @property {String} instructions
+                 * @default 'empty'
                  */
                 instructions: {
                     type: 'string',
@@ -89,8 +104,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                 /**
                  * Text to display for game description
                  *
-                 * @property {String} nextButtonText
-                 * @default 'Next'
+                 * @property {String} gameDescription
+                 * @default 'empty'
                  */
                 gameDescription: {
                     type: 'string',
@@ -100,7 +115,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                  * Whether to show the instructions for the Game
                  *
                  * @property {Boolean} showInstructions
-                 * @default true
+                 * @default false
                  */
                 showInstructions: {
                     type: 'boolean',
@@ -109,6 +124,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
 
                 /**
                  * Media resource location (image, sound,video)
+                 * @property {String} source
+                 * @default 'empty'
+                 *
                  */
                 source: {
                     type: 'string',
@@ -117,6 +135,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                   },
                 /**
                  * Media resource location for button
+                 * @property {String} source_button
+                 * @default 'empty'
                  */
                 source_button: {
                   type: 'string',
@@ -128,7 +148,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                  * Whether to show the progress page
                  *
                  * @property {Boolean} showInstructions
-                 * @default true
+                 * @default false
                  */
                 showProgress: {
                     type: 'boolean',

@@ -58,11 +58,11 @@ const gameImage = {
 
 
 /**
- * @class DiscreteBounce
- * @extends Base
  * Main implementation of Bounce  game.
  * The user will operate with paddle to bounce the ball into the object target.
  * The trajectory is randomized with various values in trajectories array
+ * @class DiscreteBounce
+ * @extends Base
  *
  */
 export default class DiscreteBounce extends Base {
@@ -308,7 +308,7 @@ export default class DiscreteBounce extends Base {
    * @method getPaddleVelocity
    * @param time {int} timestamp in Unixtime of paddle position
    * @param position {Object} {position: {x: number, y: number}, dimensions: {width: number, height: number}}
-   * @returns {number}  sum((time-mean(time)).*(position-mean(position)))/sum((time-mean(time)).*(time-mean(time)))
+   * @return {number}  sum((time-mean(time)).*(position-mean(position)))/sum((time-mean(time)).*(time-mean(time)))
    */
   getPaddleVelocity(time, position) {
 

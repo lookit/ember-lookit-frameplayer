@@ -71,7 +71,7 @@ export default class DiscreteButtonSpatial extends Base {
 
   /**
    * @method constructor
-   * @constructor
+   * @constructor constructor
    * @param context
    * @param document
    */
@@ -86,8 +86,9 @@ export default class DiscreteButtonSpatial extends Base {
 
   /**
    * Get Current window position and align it according to possible obstruction (shuttle) size
+   * @method getWindow
    * @param index of the target (shuttle) in array of objects
-   * @returns {{image: *, position: {x: number, y: number}, radius: number, dimensions: {width: number, height: number}}}
+   * @return {{image: *, position: {x: number, y: number}, radius: number, dimensions: {width: number, height: number}}}
    */
   getWindow(index) {
     index = index + 1;
@@ -297,6 +298,7 @@ export default class DiscreteButtonSpatial extends Base {
 
   /**
    * Display launcher
+   * @method discreteLauncher
    * @param image of the Launcher
    */
   discreteLauncher(image) {
