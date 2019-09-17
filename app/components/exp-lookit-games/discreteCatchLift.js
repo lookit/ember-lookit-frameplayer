@@ -169,7 +169,7 @@ export default class DiscreteCatchLift extends Base {
   dataCollection() {
     super.dataCollection();
     let exportData = {
-      game_type: 'catchMouse',
+      game_type: 'discreteCatchLift',
       basket_x: basket.position.x / this.canvas.width,
       basket_y: (this.canvas.height - basket.position.y) / this.canvas.height,
       mice_x: target.position.x / this.canvas.width,
@@ -207,7 +207,7 @@ export default class DiscreteCatchLift extends Base {
   clockState() {
 
     let time = super.getElapsedTime(target.showTime);
-
+    //This could be improved with simple math function
     if (time < 0.1) {
       clockObject.state = 9;
     } else if (time < 0.2) {
@@ -245,9 +245,9 @@ export default class DiscreteCatchLift extends Base {
   /**
    *
    * Main loop of the game.
-   * Set initial position of the ball in a box and starting rattling sound (initSoundPlaying).
-   * After that  start showing the mouse.
-   * Increase the score if ball hits the target.
+   * Set initial position of the ball in a box and starting  sound .
+   * After that  start showing the target.
+   * Increase the score if paddle  hits the target.
    * @method loop
    */
   loop() {
@@ -310,7 +310,7 @@ export default class DiscreteCatchLift extends Base {
       }
 
 
-      if ((target.position.y + 20) - basket.position.y >= 0) {
+      if ((target.position.y + 0.0476 * super.Utils.SCALE) - basket.position.y >= 0) {
         target.state = 'done';
         if (clockObject.state > 0) {
           if (clockObject.state < 4) {

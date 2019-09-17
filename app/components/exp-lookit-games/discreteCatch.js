@@ -52,10 +52,10 @@ const gameImage = {
 };
 
 /**
- * Main implementation of catch the cheese game.
+ * Main implementation of catch game.
  * The user will operate with paddle to catch the ball started
  * from ball box. The trajectory is randomized with various values in trajectories array
- * Number of obstructions currently randomized from 0 to 3 trees shown
+ * Number of obstructions currently randomized from 0 to 3 obstructions shown
  * @class DiscreteCatch
  * @extends Base
  */
@@ -160,7 +160,7 @@ export default class DiscreteCatch extends Base {
   dataCollection() {
     super.dataCollection();
     let exportData = {
-      game_type: 'catchCheese',
+      game_type: 'discreteCatch',
       ball_position_x: ball.position.x/this.canvas.width,
       ball_position_y:  (this.canvas.height - ball.position.y)/this.canvas.height,
       paddle_position_x: basket.position.x/this.canvas.width,

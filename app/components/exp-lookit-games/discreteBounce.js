@@ -60,8 +60,8 @@ const gameImage = {
 /**
  * @class DiscreteBounce
  * @extends Base
- * Main implementation of Feed the crocodile game.
- * The user will operate with paddle to bounce the ball into the crocodile mouth.
+ * Main implementation of Bounce  game.
+ * The user will operate with paddle to bounce the ball into the object target.
  * The trajectory is randomized with various values in trajectories array
  *
  */
@@ -152,7 +152,7 @@ export default class DiscreteBounce extends Base {
   /**
    *
    * Main loop of the game.
-   * Set initial position of the ball in a box and starting rattling sound (initSoundPlaying).
+   * Set initial position of the ball in a box and starting  sound .
    * After that  start ball trajectory.
    * If ball hits the target or missed the target (hits any screen edge) wait util user places the paddle to starting position and move
    * the ball to initial position.
@@ -464,7 +464,7 @@ export default class DiscreteBounce extends Base {
   dataCollection() {
     super.dataCollection();
     let exportData = {
-      game_type: 'feedCroc',
+      game_type: 'BounceGame',
       ball_position_x: ball.position.x / this.canvas.width,
       ball_position_y: (this.canvas.height - ball.position.y) / this.canvas.height,
       paddle_center_x: paddle.position.x + paddle.dimensions.width / 2,

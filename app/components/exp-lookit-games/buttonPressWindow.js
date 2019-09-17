@@ -208,7 +208,7 @@ export default class ButtonPressWindow extends Base {
 
     let exportData = {
 
-      game_type: 'feedMouse',
+      game_type: 'buttonPressWindow',
       ball_position_x: ball.position.x / this.canvas.width,
       ball_position_y: (this.canvas.height - ball.position.y) / this.canvas.height,
       button_pressed: keyPressed.value,

@@ -62,9 +62,8 @@ const gameImage = {
 
 /**
  * The user will operate with keyboard keys to predict which ball trajectory will hit which window
- * in the house.
+ * in the obstruction (shuttle).
  * The trajectory is randomized with various values in trajectories array
- * Initialize the mice image for each mouse as an array
  * @class DiscreteButtonSpatial
  * @extends Base
  */
@@ -465,7 +464,7 @@ export default class DiscreteButtonSpatial extends Base {
 
 
     let exportData = {
-      game_type: 'feedMice',
+      game_type: 'discreteButtonSpatial',
       ball_position_x: ball.position.x,
       ball_position_y: ball.position.y,
       key_pressed: target_state,
