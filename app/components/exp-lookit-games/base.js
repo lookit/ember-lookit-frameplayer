@@ -339,7 +339,7 @@ export default class Base {
   /**
    * Create initial ball box object to start from
    * @method createLauncher
-   * @param image {Object} Image object
+   * @param {object} Image object
    */
   createLauncher(image) {
 
@@ -393,8 +393,8 @@ export default class Base {
   /**
    * Show current image
    * @method drawImage
-   * @param {object} Current object with x,y position, width , height and URL of the image to show
-   * @param {String} URL
+   * @param {object} object  Current object with x,y position, width , height and URL of the image to show
+   * @param {object} image Image object
    */
   drawImage(object, image) {
     this.ctx.fillStyle = Utils.blackColor;
@@ -690,6 +690,7 @@ export default class Base {
    * Set position of the ball to initial coordinates to symbolize the start of the game
    * @method moveBallToStart
    * @param {object} ball {position: {x: number, y: number}, radius: number, dimensions: {width: number, height: number}} object parameters set game to be over
+   * @param {object} Image object
    */
   moveBallToStart(ball,image) {
 
@@ -732,45 +733,27 @@ export default class Base {
   /**
    * Check if paddle is moved ahead of time
    * @param paddle
+   * @param {boolean} checkPaddleHeight if height needed for reference (bounce game)
    * @returns {boolean}
    */
-  paddleIsMoved(paddle){
+  paddleIsMoved(paddle,checkPaddleHeight = false){
 
     if( paddle.positions.length > 2 && paddle.position.y !== (this.canvas.height - paddle.positions[paddle.positions.length-3]*this.canvas.height)){
 
       return true;
     }
 
-    // Check if paddle is moved outside the box limits
-    if (paddle.position.y  < paddleBox.position.y - paddleBox.dimensions.height + paddle.dimensions.height) {
-
-
-      return true;
-    }
-
-
-
-    return false;
-  }
-
-
-  paddleIsMovedPlain(paddle){
-
-    if( paddle.positions.length > 2 && paddle.position.y !== (this.canvas.height - paddle.positions[paddle.positions.length-3]*this.canvas.height)){
-
-      return true;
+    let paddleHeight = 0;
+    if(checkPaddleHeight){
+      paddleHeight = paddle.dimensions.height;
     }
 
     // Check if paddle is moved outside the box limits
-    if (paddle.position.y  < paddleBox.position.y - paddle.dimensions.height) {
+    return paddle.position.y < paddleBox.position.y - paddleBox.dimensions.height + paddleHeight;
 
-
-      return true;
-    }
-
-
-    return false;
   }
+
+
 
   /**
    * Draw image object according to object parameters

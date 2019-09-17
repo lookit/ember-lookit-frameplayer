@@ -175,14 +175,14 @@ export default class DiscreteBounce extends Base {
     let hitTheTarget = this.collisionDetection();
     let hitTheWall = super.wallCollision(ball);
 
-    if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMovedPlain(paddle)) {
+    if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMoved(paddle,true)) {
 
       sounds[gameSound.START].play();
     }
 
     if (ball.state === 'start') {
       super.moveBallToStart(ball, images[gameImage.BALL]);
-      if (initialTime > 0 && super.paddleIsMovedPlain(paddle)) {
+      if (initialTime > 0 && super.paddleIsMoved(paddle,true)) {
         initialTime = new Date().getTime();
         paddleBoxColor = super.Utils.redColor;
         super.createPaddleBox(paddleBoxColor);
@@ -448,7 +448,7 @@ export default class DiscreteBounce extends Base {
 
     token.dimensions = {width: 0.21 * super.Utils.SCALE, height: 0.2 * super.Utils.SCALE};
     //For first trial wait for paddle to start in Box position, make sure the paddle is not moved
-    if (super.currentRounds > 0 || (super.currentRounds === 0 && !super.paddleIsMovedPlain(paddle))) {
+    if (super.currentRounds > 0 || (super.currentRounds === 0 && !super.paddleIsMoved(paddle,true))) {
       sounds[gameSound.START].play();
     }
 
