@@ -12,67 +12,97 @@ import Base from './base';
  * @submodule games
  *
  */
-
+const TOTAL_ROUNDS = 36;
+const INITIAL_DELAY = 2.5;
 let ball = {};
 let targets = [];
 let pressed = {};
 let keys = ['y', 'g', 'v']; //Keyboard keys for upper,middle and lower windows
-let windowImageURLS = [];
-let shuttlImageURLS = [];
-let audio = {};
-let ballCatchFail = {};
-let goodJob = {};
 let currentTargetIndex = 0;
-let initialTime = 0;
-let initVmatrix = [];
-let shuttles = [];
-let jitterT = 0;
-let start_time = 0;
+let initialTime = 0; // initial time for current game trial
+let initVmatrix = []; //Initial velocity matrix uniformly distributed and randomized
+let obstructions = []; // Array of possible obstructions parameters
+let jitterT = 0; // Time jitter (variates from 500 ms to 1500 ms), time between sound start and ball starting to fly
+let startTime = 0; // start of the game to wait before music playing
 
-let ballImg = {};
-let ballBoxImg = {};
-let splatImg = {};
-let startSound = {};
-
+// Media arrays for loading
 let windowImgs = [];
-let shuttlImgs = [];
+let windowImageURLS = [];
+let obstrImgs = [];
+let obstrImageURLS = [];
+let sounds = [];
+let soundURLs = [];
+let imageURls = [];
+let images = [];
+
+// Media mapping as Enum
+const gameSound = {
+    START: 0,
+    LAUNCH: 1,
+    CATCH: 2,
+    FAIL: 3
+};
+
+const gameImage = {
+    LAUNCHER: 0,
+    BALL: 1,
+    TARGET: 2,
+    window: {
+      WINDOW1: 0,
+      WINDOW2: 1,
+      WINDOW3: 2
+    },
+    shuttle: {
+      SMALL: 0,
+      MIDDLE: 1,
+      LARGE: 2
+    }
+};
+
+
 
 /**
- * Main implementation of feed  the mice in the house game.
  * The user will operate with keyboard keys to predict which ball trajectory will hit which window
- * in the house.
+ * in the obstruction (shuttle).
  * The trajectory is randomized with various values in trajectories array
- * Initialize the mice image for each mouse as an array
- * @class FeedMice
+ * @class DiscreteButtonSpatial
  * @extends Base
  */
-export default class FeedMice extends Base {
+export default class DiscreteButtonSpatial extends Base {
 
   /**
    * @method constructor
-   * @constructor
+   * @constructor constructor
    * @param context
    * @param document
    */
   constructor(context, document) {
     super(context, document);
+    super.currentRounds = TOTAL_ROUNDS;
+    imageURls = [super.Utils.slimeMonster, super.Utils.slimeBall, super.Utils.splat];
     windowImageURLS = [super.Utils.openWindowYellow, super.Utils.openWindowGreen, super.Utils.openWindowViolet];
-    shuttlImageURLS = [super.Utils.shuttleNarrow, super.Utils.shuttle, super.Utils.shuttleWide];
+    obstrImageURLS = [super.Utils.shuttleNarrow, super.Utils.shuttle, super.Utils.shuttleWide];
+    soundURLs = [super.Utils.monsterGrowl, super.Utils.monsterLaunch, super.Utils.good3MouseSound, super.Utils.bad3MouseSound];
 
   }
 
-
-  targetCoord(index) {
+  /**
+   * Get Current window position and align it according to possible obstruction (shuttle) size
+   * @method getWindow
+   * @param index of the target (shuttle) in array of objects
+   * @return {{image: *, position: {x: number, y: number}, radius: number, dimensions: {width: number, height: number}}}
+   */
+  getWindow(index) {
     index = index + 1;
     let top = 1.12;
     let leftBorder = (1.5450) * super.Utils.SCALE;
-
-
+    let windowPosition = gameImage.window.WINDOW1;
     switch (index) {
 
       case 2:
 
         top = 1.25;
+        windowPosition = gameImage.window.WINDOW2;
         leftBorder = (1.555) * super.Utils.SCALE;
 
         break;
@@ -80,95 +110,87 @@ export default class FeedMice extends Base {
       case 3:
 
         top = 1.39;
+        windowPosition = gameImage.window.WINDOW3;
         leftBorder = (1.555) * super.Utils.SCALE;
-
         break;
 
     }
 
     let topBorder = top * super.Utils.SCALE;
-    let target = {
 
-      dimensions: {width: 0.10238 * super.Utils.SCALE, height: 0.075 * super.Utils.SCALE },
+    return {
+      dimensions: {width: 0.10238 * super.Utils.SCALE, height: 0.075 * super.Utils.SCALE},
       position: {
         x: leftBorder,
         y: topBorder
       },
-      radius: 0.00956 * super.Utils.SCALE ,
-      color: super.Utils.grayColor,
-      roofcolor: super.Utils.redColor,
-      windowbackground: super.Utils.blackColor,
-      image: windowImgs[index-1]
-
-
+      radius: 0.00956 * super.Utils.SCALE,
+      image: windowImgs[windowPosition]
     };
-
-    return target;
 
   }
 
 
 
   /**
-   * Draw house with roof according to coordinates
+   * Draw target  according to coordinates
    * @method createShuttle
    */
   createShuttle() {
 
-
-    //Draw House
     let leftBorder = 0.798 * super.Utils.SCALE;
     let topBorder = 0.78 * super.Utils.SCALE;
 
-    let houseObj = {
+    let targetParams = {
 
       dimensions: {width: 1.19 * super.Utils.SCALE, height: 1.135 * super.Utils.SCALE},
       position: {x: leftBorder, y: topBorder}
     };
 
 
-    this.getShuttle(houseObj);
+    this.getShuttle(targetParams);
 
   }
 
 
   /**
    *
-   * Get shuttle image from sources
+   * Get shuttle image from sources and display according to position parameters
+   * @param targetParams target position parameters
    * @method getShuttle
    */
-  getShuttle(houseObj) {
+  getShuttle(targetParams) {
 
-    let index = shuttles[super.currentRounds]; // Get current shuttle case
+    let index = obstructions[super.currentRounds]; // Get current shuttle case
     let shuttle = {};
-    houseObj.position.x = {};
+    targetParams.position.x = {};
 
     switch (index) {
 
       case 2:
-        houseObj.position.x = 0.798 * super.Utils.SCALE;
-        shuttle = shuttlImgs[1];
+        targetParams.position.x = 0.798 * super.Utils.SCALE;
+        shuttle = obstrImgs[gameImage.shuttle.MIDDLE];
         break;
       case 3:
-        houseObj.position.x = 0.77 * super.Utils.SCALE;
-        shuttle = shuttlImgs[2];
+        targetParams.position.x = 0.77 * super.Utils.SCALE;
+        shuttle = obstrImgs[gameImage.shuttle.LARGE];
         break;
       default:
-        houseObj.position.x = 0.81 * super.Utils.SCALE;
-        shuttle = shuttlImgs[0];
+        targetParams.position.x = 0.81 * super.Utils.SCALE;
+        shuttle = obstrImgs[gameImage.shuttle.SMALL];
         break;
 
 
     }
 
-    super.drawImageObject(houseObj, shuttle);
+    super.drawImageObject(targetParams, shuttle);
 
   }
 
 
   /**
    * Create the window in the target
-   * @method createWindow
+   * @method createTargetWindow
    * @param target
    */
   createWindow(target) {
@@ -183,37 +205,18 @@ export default class FeedMice extends Base {
    * @method init
    */
   init() {
-    start_time = new Date().getTime();
+    startTime = new Date().getTime();
     initVmatrix = super.uniformArr([1, 2, 3]);
-    shuttles = super.uniformArr([1, 2, 3]);
-    goodJob = new Audio(super.Utils.good3MouseSound);
-    goodJob.load();
+    obstructions = super.uniformArr([1, 2, 3]);
 
-    ballCatchFail = new Audio(super.Utils.bad3MouseSound);
-    ballCatchFail.load();
-
-    audio = new Audio(super.Utils.monsterGrowl);
-    audio.load();
-    goodJob.src = super.Utils.good3MouseSound;
-    ballCatchFail.src = super.Utils.bad3MouseSound;
-    audio.src = super.Utils.monsterGrowl;
-    startSound = new Audio(super.Utils.monsterLaunch);
-    startSound.src = super.Utils.monsterLaunch;
-
-    ballImg = new Image();
-    ballImg.src = super.Utils.slimeBall;
-
-    ballBoxImg = new Image();
-    ballBoxImg.src = super.Utils.slimeMonster;
-
-    splatImg = new Image();
-    splatImg.src = super.Utils.splat;
-
+    super.fillAudioArray(soundURLs,sounds);
+    super.fillImageArray(imageURls,images);
     super.fillImageArray(windowImageURLS,windowImgs);
-    super.fillImageArray(shuttlImageURLS,shuttlImgs);
+    super.fillImageArray(obstrImageURLS,obstrImgs);
 
-    audio.addEventListener('onloadeddata', this.initGame(), false);
-    audio.addEventListener('playing', function () {
+
+    sounds[gameSound.START].addEventListener('onloadeddata', this.initGame(), false);
+    sounds[gameSound.START].addEventListener('playing', function () {
       initialTime = new Date().getTime();
     });
     super.init();
@@ -222,7 +225,7 @@ export default class FeedMice extends Base {
 
   /**
    * Initialize each game round with initial object parameters
-   * Randomize number of obstructions
+   * Randomize number of obstructions (obstructions)
    * Reset the sounds sources for older browser versions
    * Wait for start sound and start the main game loop
    * @method initGame
@@ -233,10 +236,8 @@ export default class FeedMice extends Base {
     jitterT = super.trialStartTime();
     ball = {
       position: {x: 0, y: 0},
-      mass: super.Utils.ballMass,
       radius: 0.02385 * super.Utils.SCALE,
       restitution: super.Utils.restitution,
-      color: super.Utils.yellowColor,
       timeReached: new Date().getTime()
 
     };
@@ -244,15 +245,15 @@ export default class FeedMice extends Base {
     ball = super.ballObject();
 
     if(super.currentRounds > 0 ){
-      audio.play();
+      sounds[gameSound.START].play();
     }
 
     targets = Array(3).fill({}).map((_, index) =>
 
-      (this.targetCoord(index))
+      (this.getWindow(index))
     );
-    if(super.getElapsedTime(start_time) >= 2) {
-      audio.play();
+    if(super.getElapsedTime(startTime) >= 2) {
+      sounds[gameSound.START].play();
     }
 
     super.initGame();
@@ -264,7 +265,7 @@ export default class FeedMice extends Base {
    * Show the ball location in window.
    * Center the ball location.
    * @method showBallLocation
-   * @param target
+   * @param index Index of the object in array
    */
   showBallLocation(index) {
 
@@ -277,7 +278,7 @@ export default class FeedMice extends Base {
       position: {x: target.position.x - 0.0238 * super.Utils.SCALE, y: target.position.y}
     };
 
-    super.drawImageObject(splat, splatImg);
+    super.drawImageObject(splat, images[gameImage.TARGET]);
 
 
   }
@@ -292,13 +293,17 @@ export default class FeedMice extends Base {
 
     if (ball.state !== 'hit' && ball.state !== 'hit target') {
       pressed = pressed.fill(false);
-      pressed = pressed.map((val, index) => keys[index] === e.key ? true : false);
+      pressed = pressed.map((val, index) => keys[index] === e.key );
     }
 
   }
 
-
-  discreteLauncer(image) {
+  /**
+   * Display launcher
+   * @method discreteLauncher
+   * @param image of the Launcher
+   */
+  discreteLauncher(image) {
 
 
     let leftBorder = (0.701) * super.Utils.SCALE;
@@ -321,7 +326,7 @@ export default class FeedMice extends Base {
    * After that  start ball trajectory.
    * If ball hits the target or missed the target(window) show the ball in the window and selected window
    * clicked by user (indicate the window background with color).
-   * Increase the score if ball hits the target.
+   * Increase the score if ball hits the window.
    * Move the ball to initial position.
    * Wait for some time until rattle sound played.
    * @method keyDownHandler
@@ -329,21 +334,21 @@ export default class FeedMice extends Base {
   loop() {
     super.loop();
     super.generateTrajectoryParamsDiscreteSpatial(initVmatrix);
-    this.discreteLauncer(ballBoxImg);
+    this.discreteLauncher(images[gameImage.LAUNCHER]);
 
     let index = pressed.findIndex(item => item !== false);
 
-    if(initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(start_time) >= 2.5) {
+    if(initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(startTime) >= INITIAL_DELAY) {
 
-      audio.play();
+      sounds[gameSound.START].play();
 
     }
 
     if (ball.state === 'start') {
-      super.moveBallToStart(ball, ballImg, false);
+      super.moveBallToStart(ball, images[gameImage.BALL]);
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
-        audio.pause();
-        startSound.play();
+        sounds[gameSound.START].pause();
+        sounds[gameSound.LAUNCH].play();
         initialTime = new Date().getTime();
         ball.state = 'fall';
 
@@ -356,7 +361,7 @@ export default class FeedMice extends Base {
     if (ball.state === 'fall') {
 
       super.trajectory(ball, initialTime);
-      super.drawBall(ball, ballImg);
+      super.drawBall(ball, images[gameImage.BALL]);
       if (super.getElapsedTime(initialTime) >= 0.5) {
 
         ball.state = 'hit house';
@@ -390,12 +395,10 @@ export default class FeedMice extends Base {
       // Check if current index of the pressed item corresponds to the actual target index
       if (index === currentTargetIndex) {
 
-        goodJob.play();
+        sounds[gameSound.CATCH].play();
 
       } else {
-        ballCatchFail = new Audio(super.Utils.bad3MouseSound);
-        ballCatchFail.src = super.Utils.bad3MouseSound;
-        ballCatchFail.play();
+        sounds[gameSound.FAIL].play();
       }
 
 
@@ -445,7 +448,7 @@ export default class FeedMice extends Base {
   }
 
   /**
-   * @method dataCollection Data collection
+   * @method dataCollection
    */
   dataCollection() {
     super.dataCollection();
@@ -465,7 +468,7 @@ export default class FeedMice extends Base {
 
 
     let exportData = {
-      game_type: 'feedMice',
+      game_type: 'discreteButtonSpatial',
       ball_position_x: ball.position.x,
       ball_position_y: ball.position.y,
       key_pressed: target_state,

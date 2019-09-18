@@ -10,11 +10,11 @@
  * @submodule games
  *
  */
-import FeedCroc from './feedCroc';
-import CatchMouse from './catchMouse';
-import FeedMouse from './feedMouse';
-import FeedMice from './feedMice';
-import CatchCheese from './catchCheese';
+import DiscreteBounce from './discreteBounce';
+import DiscreteCatchLift from './discreteCatchLift';
+import ButtonPressWindow from './buttonPressWindow';
+import DiscreteButtonSpatial from './discreteButtonSpatial';
+import DiscreteCatch from './discreteCatch';
 
 /**
  * Game orchestrator to set initial parameters and
@@ -38,36 +38,36 @@ export default class Game {
 
         case 0:
 
-            game =   new FeedMouse(context, document);
+            game =   new ButtonPressWindow(context, document);
 
         break;
 
         case 1:
 
-            game = new FeedMice(context, document);
+            game = new DiscreteButtonSpatial(context, document);
 
         break;
 
         case 2:
 
-            game = new CatchMouse(context, document);
+            game = new DiscreteCatchLift(context, document);
 
         break;
 
         case 3:
 
-            game =   new CatchCheese(context, document);
+            game =   new DiscreteCatch(context, document);
 
         break;
 
         case 4:
 
-            game =  new FeedCroc(context, document);
+            game =  new DiscreteBounce(context, document);
 
         break;
 
         default:
-            game =  new FeedMouse(context, document);
+            game =  new ButtonPressWindow(context, document);
         break;
 
     }

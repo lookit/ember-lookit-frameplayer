@@ -119,7 +119,7 @@ export default class Utils{
   static get Explosion_small() {return this.bucketImageResource + 'Explosion_small.png';}
   static get Fireball() {return this.bucketImageResource + 'Fireball.png';}
   static get boxOfFireworks() {return this.bucketImageResource + 'Box_of_fireworks.png';}
-  static get star() {return this.bucketImageResource + 'star.png';}
+  static get star() {return this.bucketImageResource + 'white-star-th.png';}
 
 
 
