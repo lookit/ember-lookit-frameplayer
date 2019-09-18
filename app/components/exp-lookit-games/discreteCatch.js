@@ -11,7 +11,7 @@ import Base from './base';
  * @submodule games
  *
  */
-
+const TOTAL_ROUNDS = 48;
 let basket = {};
 let ball = {};
 let obstructions = []; // Possible obstructions array
@@ -68,6 +68,7 @@ export default class DiscreteCatch extends Base {
    */
   constructor(context, document) {
     super(context, document);
+    super.currentRounds = TOTAL_ROUNDS;
     soundURLs = [super.Utils.rattleSound,super.Utils.goodCatchSound,super.Utils.failcatchSound];
     imageURls = [super.Utils.ironBasket,super.Utils.gear,super.Utils.basketStarsImage,super.Utils.robotImage];
     obstructionsURLs = [super.Utils.obstruction1, super.Utils.obstruction2, super.Utils.obstruction3];

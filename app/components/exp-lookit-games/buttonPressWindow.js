@@ -13,6 +13,7 @@ import Base from './base';
  *
  */
 let target = {};
+const TOTAL_ROUNDS = 30;
 let ball = {};
 let keyPressed = {}; // Current key pressed status
 let initialTime = 0;  // initial time for current game trial
@@ -73,6 +74,7 @@ export default class ButtonPressWindow extends Base {
   constructor(context, document) {
 
     super(context, document);
+    super.currentRounds = TOTAL_ROUNDS;
     fireworksURLs = [super.Utils.Explosion_big_blue, super.Utils.Explosion_big_green, super.Utils.Explosion_big_red, super.Utils.Explosion_small];
     soundURLs = [super.Utils.fuse, super.Utils.firework_big, super.Utils.firework_small, super.Utils.ballcatchFailSound];
     imageURLs = [super.Utils.skyline,super.Utils.Fireball,super.Utils.star,super.Utils.boxOfFireworks];
@@ -128,7 +130,6 @@ export default class ButtonPressWindow extends Base {
    * @method init
    */
   init() {
-
     startTime = new Date().getTime();
     TfArr = super.uniformArr([0.8, 0.9, 1]); // Fill out uniform the Time Flight array
     this.setTargetBackground();

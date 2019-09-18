@@ -13,6 +13,7 @@ import Base from './base';
  * @submodule games
  *
  */
+const TOTAL_ROUNDS = 20;
 let target = {}; // Current target (rat)  position parameters
 let clockObject = {}; //  Object symbolizes clock (pizza) location parameters
 let basket = {}; // Paddle (basket) position parameters
@@ -61,6 +62,7 @@ export default class DiscreteCatchLift extends Base {
   constructor(context, document) {
 
     super(context, document);
+    super.currentRounds = TOTAL_ROUNDS;
     soundURLs = [super.Utils.drumRollSound, super.Utils.cheese_ser1Sound, super.Utils.cheese_ser2Sound, super.Utils.cheese_ser3Sound, super.Utils.swooshSound, super.Utils.ballcatchFailSound] ;
     imageURLs = [super.Utils.rectangleCage, super.Utils.rat, super.Utils.pizza,super.Utils.cheeseMissedImage];
   }

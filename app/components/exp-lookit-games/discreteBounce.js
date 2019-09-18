@@ -11,7 +11,7 @@ import Base from './base';
  * @submodule games
  *
  */
-
+const TOTAL_ROUNDS = 30;
 let paddle = {}; // Paddle parameters object
 let ball = {}; // Ball parameters object
 let target = {}; // Target parameters object
@@ -78,6 +78,7 @@ export default class DiscreteBounce extends Base {
   constructor(context, document) {
 
     super(context, document);
+    super.currentRounds = TOTAL_ROUNDS;
     soundURLs = [super.Utils.drumRollSound, super.Utils.bouncingSound, super.Utils.brickHitlarge, super.Utils.brickHitsmall, super.Utils.ballcatchFailSound];
     imageURLs = [this.Utils.paddleImage, super.Utils.wallInitial, super.Utils.wallMissed, super.Utils.basketBall, super.Utils.basketBalls, super.Utils.smallbricksImage, super.Utils.largebricksImage, super.Utils.tokenImage];
 
