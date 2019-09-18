@@ -4,6 +4,7 @@ import ExpFrameBaseComponent from '../exp-frame-base/component';
 import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
+import { audioAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
 import { observer } from '@ember/object';
 
 let {
@@ -216,234 +217,212 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         }
     }),
 
+    frameSchemaProperties: {
+        /**
+         * Phase number (just included as a convenience & sent to server, to make handling collected data simpler)
+         *
+         * @property {Number} nPhase
+         * @default 0
+         */
+        nPhase: {
+            type: 'number',
+            description: 'Phase number',
+            default: 0
+        },
+        /**
+         * Trial number (just included as a convenience & sent to server, to make handling collected data simpler)
+         *
+         * @property {Number} nTrial
+         * @default 0
+         */
+        nTrial: {
+            type: 'number',
+            description: 'Trial number',
+            default: 0
+        },
+        /**
+         * URL of background image; will be stretched to width of page
+         *
+         * @property {String} backgroundImage
+         */
+        backgroundImage: {
+            oneOf: imageAssetOptions,
+            description: 'URL of background image; will be stretched to width of page'
+        },
+        /**
+         * Whether this is a frame where the user needs to click to
+         * select one of the images before proceeding
+         *
+         * @property {Boolean} isChoiceFrame
+         * @default false
+         */
+        isChoiceFrame: {
+            type: 'boolean',
+            description: 'Whether this is a frame where the user needs to click to select one of the images before proceeding'
+        },
+        /**
+         * Whether to do webcam recording (will wait for webcam
+         * connection before starting audio if so)
+         *
+         * @property {Boolean} doRecording
+         */
+        doRecording: {
+            type: 'boolean',
+            description: 'Whether to do webcam recording (will wait for webcam connection before starting audio if so'
+        },
+        /**
+         * Whether to proceed automatically after audio (and hide
+         * replay/next buttons)
+         *
+         * @property {Boolean} autoProceed
+         */
+        autoProceed: {
+            type: 'boolean',
+            description: 'Whether to proceed automatically after audio (and hide replay/next buttons)'
+        },
+        /**
+         * Array of objects describing audio to play at the start of
+         * this frame. Each element describes a separate audio segment.
+         *
+         * @property {Object[]} audioSources
+         *   @param {String} audioId unique string identifying this
+         *      audio segment
+         *   @param {Object[]} sources Array of {src: 'url', type:
+         *      'MIMEtype'} objects with audio sources for this segment.
+         *
+         * Can also give a single string 'filename', which will
+         * be expanded out to the appropriate array based on `baseDir`
+         * and `audioTypes` values; see `audioTypes`.
+         *
+         *   @param {Object[]} highlights Array of {'range': [startT,
+         *      endT], 'image': 'imageId'} objects, where the imageId
+         *      values correspond to the ids given in images
+         */
+        audioSources: {
+            type: 'array',
+            description: 'List of objects specifying audio src and type for audio played during test trial',
+            default: [],
+            items: {
+                type: 'object',
+                properties: {
+                    'audioId': {
+                        type: 'string'
+                    },
+                    'sources': {
+                        oneOf: audioAssetOptions
+                    },
+                    'highlights': {
+                        type: 'array',
+                        items: {
+                            type: 'object',
+                            properties: {
+                                'range': {
+                                    type: 'array',
+                                    items: {
+                                        type: 'number'
+                                    }
+                                },
+                                'image': {
+                                    'type': 'string'
+                                }
+                            }
+                        }
+                    }
+                },
+                required: ['audioId', 'sources']
+            }
+        },
+        /**
+         * Text block to display to parent. (Each field is optional)
+         *
+         * @property {Object} parentTextBlock
+         *   @param {String} title title to display
+         *   @param {String} text paragraph of text
+         *   @param {Boolean} emph whether to bold this paragraph
+         *   @param {Object} css object specifying any css properties
+         *      to apply to this section, and their values - e.g.
+         *      {'color': 'red', 'font-size': '12px'}.
+         */
+        parentTextBlock: {
+            type: 'object',
+            properties: {
+                title: {
+                    type: 'string'
+                },
+                text: {
+                    type: 'string'
+                },
+                emph: {
+                    type: 'boolean'
+                },
+                css: {
+                    type: 'object',
+                    default: {}
+                }
+            },
+            default: []
+        },
+        /**
+         * Array of images to display and information about their placement
+         *
+         * @property {Object[]} images
+         *   @param {String} id unique ID for this image. This will be used to refer to the choice made by the user, if any.
+         *   @param {String} src URL of image source (can be full URL, or stub to append to baseDir; see `baseDir`)
+         *   @param {String} left distance from left of story area to image center, as percentage of story area width - as string
+         *   @param {String} height image height, as percentage of story area height - as string
+         *   @param {String} bottom bottom margin, as percentage of story area height - as string
+         *   @param {String} animate animation to use at start of trial on this image, if any. If not provided, image is shown throughout trial. Options are 'fadein', 'fadeout', 'flyleft' (fly from left), and 'flyright'.
+         *   @param {String} text text to display above image, e.g. 'Click to hear what he said!' If omitted, no text is shown.
+         *   @param {Object[]} imageAudio sources Array of {src: 'url',
+         * type: 'MIMEtype'} objects with audio sources for audio to play when this image is clicked, if any. (Omit to not associate audio with this image.)
+         *
+         * Can also give a single string `filename`, which will
+         * be expanded out to the appropriate array based on `baseDir`
+         * and `audioTypes` values; see `audioTypes`.
+         *
+         *   @param {Boolean} requireAudio whether to require the user to click this image and complete the audio associated before proceeding to the next trial. (Incompatible with autoProceed.)
+         */
+        images: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    'id': {
+                        type: 'string'
+                    },
+                    'src': {
+                        oneOf: imageAssetOptions
+                    },
+                    'left': {
+                        type: 'string'
+                    },
+                    'height': {
+                        type: 'string'
+                    },
+                    'bottom': {
+                        type: 'string'
+                    },
+                    'animate': {
+                        type: 'string'
+                    },
+                    'text': {
+                        type: 'string'
+                    },
+                    'imageAudio': {
+                        oneOf: audioAssetOptions
+                    },
+                    'requireAudio': {
+                        type: 'boolean'
+                    }
+                },
+                required: ['id', 'src', 'left', 'height', 'bottom']
+            }
+        }
+    },
+
     meta: {
         name: 'ExpLookitDialoguePage',
         description: 'Frame for a storybook page with dialogue spoken by characters',
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                 * Phase number (just included as a convenience & sent to server, to make handling collected data simpler)
-                 *
-                 * @property {Number} nPhase
-                 * @default 0
-                 */
-                nPhase: {
-                    type: 'number',
-                    description: 'Phase number',
-                    default: 0
-                },
-                /**
-                 * Trial number (just included as a convenience & sent to server, to make handling collected data simpler)
-                 *
-                 * @property {Number} nTrial
-                 * @default 0
-                 */
-                nTrial: {
-                    type: 'number',
-                    description: 'Trial number',
-                    default: 0
-                },
-                /**
-                 * URL of background image; will be stretched to width of page
-                 *
-                 * @property {String} backgroundImage
-                 */
-                backgroundImage: {
-                    type: 'string',
-                    description: 'URL of background image; will be stretched to width of page'
-                },
-                /**
-                 * Whether this is a frame where the user needs to click to
-                 * select one of the images before proceeding
-                 *
-                 * @property {Boolean} isChoiceFrame
-                 * @default false
-                 */
-                isChoiceFrame: {
-                    type: 'boolean',
-                    description: 'Whether this is a frame where the user needs to click to select one of the images before proceeding'
-                },
-                /**
-                 * Whether to do webcam recording (will wait for webcam
-                 * connection before starting audio if so)
-                 *
-                 * @property {Boolean} doRecording
-                 */
-                doRecording: {
-                    type: 'boolean',
-                    description: 'Whether to do webcam recording (will wait for webcam connection before starting audio if so'
-                },
-                /**
-                 * Whether to proceed automatically after audio (and hide
-                 * replay/next buttons)
-                 *
-                 * @property {Boolean} autoProceed
-                 */
-                autoProceed: {
-                    type: 'boolean',
-                    description: 'Whether to proceed automatically after audio (and hide replay/next buttons)'
-                },
-                /**
-                 * Array of objects describing audio to play at the start of
-                 * this frame. Each element describes a separate audio segment.
-                 *
-                 * @property {Object[]} audioSources
-                 *   @param {String} audioId unique string identifying this
-                 *      audio segment
-                 *   @param {Object[]} sources Array of {src: 'url', type:
-                 *      'MIMEtype'} objects with audio sources for this segment.
-                 *
-                 * Can also give a single string 'filename', which will
-                 * be expanded out to the appropriate array based on `baseDir`
-                 * and `audioTypes` values; see `audioTypes`.
-                 *
-                 *   @param {Object[]} highlights Array of {'range': [startT,
-                 *      endT], 'image': 'imageId'} objects, where the imageId
-                 *      values correspond to the ids given in images
-                 */
-                audioSources: {
-                    type: 'array',
-                    description: 'List of objects specifying audio src and type for audio played during test trial',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'audioId': {
-                                type: 'string'
-                            },
-                            'sources': {
-                                type: 'array',
-                                items: {
-                                    type: 'object',
-                                    properties: {
-                                        'src': {
-                                            type: 'string'
-                                        },
-                                        'type': {
-                                            type: 'string'
-                                        }
-                                    }
-                                }
-                            },
-                            'highlights': {
-                                type: 'array',
-                                items: {
-                                    type: 'object',
-                                    properties: {
-                                        'range': {
-                                            type: 'array',
-                                            items: {
-                                                type: 'number'
-                                            }
-                                        },
-                                        'image': {
-                                            'type': 'string'
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Text block to display to parent. (Each field is optional)
-                 *
-                 * @property {Object} parentTextBlock
-                 *   @param {String} title title to display
-                 *   @param {String} text paragraph of text
-                 *   @param {Boolean} emph whether to bold this paragraph
-                 *   @param {Object} css object specifying any css properties
-                 *      to apply to this section, and their values - e.g.
-                 *      {'color': 'red', 'font-size': '12px'}.
-                 */
-                parentTextBlock: {
-                    type: 'object',
-                    properties: {
-                        title: {
-                            type: 'string'
-                        },
-                        text: {
-                            type: 'string'
-                        },
-                        emph: {
-                            type: 'boolean'
-                        },
-                        css: {
-                            type: 'object',
-                            default: {}
-                        }
-                    },
-                    default: []
-                },
-                /**
-                 * Array of images to display and information about their placement
-                 *
-                 * @property {Object[]} images
-                 *   @param {String} id unique ID for this image. This will be used to refer to the choice made by the user, if any.
-                 *   @param {String} src URL of image source (can be full URL, or stub to append to baseDir; see `baseDir`)
-                 *   @param {String} left distance from left of story area to image center, as percentage of story area width
-                 *   @param {String} height image height, as percentage of story area height
-                 *   @param {String} bottom bottom margin, as percentage of story area height
-                 *   @param {String} animate animation to use at start of trial on this image, if any. If not provided, image is shown throughout trial. Options are 'fadein', 'fadeout', 'flyleft' (fly from left), and 'flyright'.
-                 *   @param {String} text text to display above image, e.g. 'Click to hear what he said!' If omitted, no text is shown.
-                 *   @param {Object[]} imageAudio sources Array of {src: 'url',
-                 * type: 'MIMEtype'} objects with audio sources for audio to play when this image is clicked, if any. (Omit to not associate audio with this image.)
-                 *
-                 * Can also give a single string `filename`, which will
-                 * be expanded out to the appropriate array based on `baseDir`
-                 * and `audioTypes` values; see `audioTypes`.
-                 *
-                 *   @param {Boolean} requireAudio whether to require the user to click this image and complete the audio associated before proceeding to the next trial. (Incompatible with autoProceed.)
-                 */
-                images: {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'id': {
-                                type: 'string'
-                            },
-                            'src': {
-                                type: 'string'
-                            },
-                            'left': {
-                                type: 'string'
-                            },
-                            'height': {
-                                type: 'string'
-                            },
-                            'bottom': {
-                                type: 'string'
-                            },
-                            'animate': {
-                                type: 'string'
-                            },
-                            'text': {
-                                type: 'string'
-                            },
-                            'imageAudio': {
-                                type: 'array',
-                                items: {
-                                    type: 'object',
-                                    properties: {
-                                        'src': {
-                                            type: 'string'
-                                        },
-                                        'type': {
-                                            type: 'string'
-                                        }
-                                    }
-                                }
-                            },
-                            'requireAudio': {
-                                type: 'boolean'
-                            }
-                        }
-                    }
-                }
-            }
-        },
         data: {
             /**
              * Parameters captured and sent to the server

@@ -1129,7 +1129,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 427,
+            "line": 430,
             "description": "The base class does not define any data to save to the server. It does, however, capture some basic event\n  timing data. (such as when the user clicks the \"next\" button)\n\nThis section slightly breaks YUIDoc conventions- rather than being a literal guide to using the code, the\n  \"parameters\" here are abstract descriptions of what data is captured.\n\nEach frame that extends ExpFrameBase will send an array `eventTimings`\nback to the server upon completion. This array is an ordered list (oldest\nto newest) of every EVENT that happened during the frame. Each event is\nrepresented as an object with at least the properties\n`{'eventType': EVENTNAME, 'timestamp': TIMESTAMP}`. Frame-specific events\nmay define additional properties that are sent.",
             "params": [
                 {
@@ -1150,7 +1150,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 454,
+            "line": 457,
             "description": "Create the time event payload for a particular frame / event. This can be overridden to add fields to every\n event sent by a particular frame",
             "itemtype": "method",
             "name": "makeTimeEvent",
@@ -1177,7 +1177,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 501,
+            "line": 504,
             "description": "Move to next frame",
             "itemtype": "event",
             "name": "nextFrame",
@@ -1187,7 +1187,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 556,
+            "line": 559,
             "description": "Move to previous frame",
             "itemtype": "event",
             "name": "previousFrame",
@@ -4586,7 +4586,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 114,
+            "line": 110,
             "description": "A series of preview videos to display within a single frame, defined as an array of objects.",
             "itemtype": "property",
             "name": "videos",
@@ -4614,7 +4614,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 156,
+            "line": 152,
             "description": "Text on the button prompt asking the user to continue to the videos",
             "itemtype": "property",
             "name": "prompt",
@@ -4625,7 +4625,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 174,
+            "line": 162,
             "description": "Informational text to display to the user before videos are shown, along with button to continue",
             "itemtype": "property",
             "name": "text",
@@ -4636,7 +4636,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 184,
+            "line": 172,
             "description": "Text on the button to proceed to the next example video/image",
             "itemtype": "property",
             "name": "nextStimulusText",
@@ -4647,7 +4647,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 194,
+            "line": 182,
             "description": "Text on the button to proceed to the previous example video/image",
             "itemtype": "property",
             "name": "previousStimulusText",
@@ -4658,7 +4658,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 209,
+            "line": 197,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "serializeContent",
@@ -4689,7 +4689,7 @@
         },
         {
             "file": "app/mixins/expand-assets.js",
-            "line": 91,
+            "line": 92,
             "description": "Object describing which properties may need expansion",
             "itemtype": "property",
             "name": "assetsToExpand",
@@ -4700,7 +4700,7 @@
         },
         {
             "file": "app/mixins/expand-assets.js",
-            "line": 101,
+            "line": 102,
             "description": "Base directory for where to find stimuli. Any image src\nvalues that are not full paths will be expanded by prefixing\nwith `baseDir` + `img/`. Any audio/video src values provided as\nstrings rather than objects with `src` and `type` will be\nexpanded out to `baseDir/avtype/[stub].avtype`, where the potential\navtypes are given by `audioTypes` and `videoTypes`.\n\nbaseDir should include a trailing slash\n(e.g., `http://stimuli.org/myexperiment/`); if a value is provided that\ndoes not end in a slash, one will be added.",
             "itemtype": "property",
             "name": "baseDir",
@@ -4712,7 +4712,7 @@
         },
         {
             "file": "app/mixins/expand-assets.js",
-            "line": 121,
+            "line": 122,
             "description": "List of audio types to expect for any audio specified just\nwith a string rather than with a list of src/type objects.\nIf audioTypes is `['typeA', 'typeB']` and an audio source\nis given as `intro`, the audio source will be\nexpanded out to\n\n\n    [\n        {\n            src: 'baseDir' + 'typeA/intro.typeA',\n            type: 'audio/typeA'\n        },\n        {\n            src: 'baseDir' + 'typeB/intro.typeB',\n            type: 'audio/typeB'\n        }\n    ]",
             "itemtype": "property",
             "name": "audioTypes",
@@ -4724,8 +4724,8 @@
         },
         {
             "file": "app/mixins/expand-assets.js",
-            "line": 149,
-            "description": "List of video types to expect for any audio specified just\nwith a string rather than with a list of src/type objects.\nIf vidioTypes is `['typeA', 'typeB']` and a video source\nis given as `intro`, the video source will be\nexpanded out to\n\n\n    [\n        {\n            src: 'baseDir' + 'typeA/intro.typeA',\n            type: 'video/typeA'\n        },\n        {\n            src: 'baseDir' + 'typeB/intro.typeB',\n            type: 'video/typeB'\n        }\n    ]",
+            "line": 150,
+            "description": "List of video types to expect for any audio specified just\nwith a string rather than with a list of src/type objects.\nIf videoTypes is `['typeA', 'typeB']` and a video source\nis given as `intro`, the video source will be\nexpanded out to\n\n\n    [\n        {\n            src: 'baseDir' + 'typeA/intro.typeA',\n            type: 'video/typeA'\n        },\n        {\n            src: 'baseDir' + 'typeB/intro.typeB',\n            type: 'video/typeB'\n        }\n    ]",
             "itemtype": "property",
             "name": "videoTypes",
             "type": "String[]",

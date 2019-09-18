@@ -200,6 +200,7 @@ import Ember from &#x27;ember&#x27;;
  *
  * @class Expand-assets
  */
+
 export default Ember.Mixin.create({
     /**
      * Object describing which properties may need expansion
@@ -262,7 +263,7 @@ export default Ember.Mixin.create({
                 /**
                  * List of video types to expect for any audio specified just
                  * with a string rather than with a list of src/type objects.
-                 * If vidioTypes is &#x60;[&#x27;typeA&#x27;, &#x27;typeB&#x27;]&#x60; and a video source
+                 * If videoTypes is &#x60;[&#x27;typeA&#x27;, &#x27;typeB&#x27;]&#x60; and a video source
                  * is given as &#x60;intro&#x60;, the video source will be
                  * expanded out to
                  *
@@ -308,6 +309,7 @@ export default Ember.Mixin.create({
                     // Image: replace stub with full URL if needed
                     fullAsset = this.baseDir + &#x27;img/&#x27; + asset;
                 }
+                fetch(url, { method: &#x27;HEAD&#x27;, mode: &quot;no-cors&quot; }); // Throws error if unavailable
                 return fullAsset;
             case &#x27;audio&#x27;:
             case &#x27;video&#x27;:
@@ -316,8 +318,10 @@ export default Ember.Mixin.create({
                 if (typeof asset === &#x27;string&#x27; &amp;&amp; asset) {
                     fullAsset = [];
                     for (var iType = 0; iType &lt; types.length; iType++) {
+                        let url = _this.baseDir + types[iType] + &#x27;/&#x27; + asset + &#x27;.&#x27; + types[iType]
+                        fetch(url, { method: &#x27;HEAD&#x27;, mode: &quot;no-cors&quot; }); // Throws error if unavailable
                         fullAsset.push({
-                            src: _this.baseDir + types[iType] + &#x27;/&#x27; + asset + &#x27;.&#x27; + types[iType],
+                            src: url,
                             type: type + &#x27;/&#x27; + types[iType]
                         });
                     }

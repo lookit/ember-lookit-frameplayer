@@ -195,7 +195,6 @@ const VideoRecorder = Ember.Object.extend({
     getTime() {
         let recorder = this.get('recorder');
         if (recorder && recorder.getStreamTime) {
-            console.log(recorder.getStreamTime());
             return parseFloat(recorder.getStreamTime());
         }
         return null;
@@ -239,6 +238,8 @@ const VideoRecorder = Ember.Object.extend({
                         reject();
                     }, 5000));
                 if (_this.get('_isuploaded')) {
+                    window.clearTimeout(_this.get('uploadTimeout'));
+                    _this.set('_isuploaded', true);
                     resolve(this);
                 } else {
                     _this.set('_stopPromise', {

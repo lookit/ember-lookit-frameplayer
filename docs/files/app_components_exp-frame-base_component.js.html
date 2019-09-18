@@ -509,6 +509,9 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         // Add config properties and data to be serialized as instance parameters (overriding with values explicitly passed in)
         var params = this.get(&#x27;frameConfig&#x27;);
 
+        // TODO: check all required parameters are set
+        // TODO: use JSON schema validator to check
+
         var defaultParams = {};
         Object.keys(this.get(&#x27;meta.parameters&#x27;).properties || {}).forEach((key) =&gt; {
             defaultParams[key] = this.get(&#x60;meta.parameters.properties.${key}.default&#x60;);

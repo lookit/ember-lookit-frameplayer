@@ -174,7 +174,10 @@ export default Ember.Component.extend(FullScreen, {
         var componentName = `${currentFrameConfig.kind}`;
 
         if (!Ember.getOwner(this).lookup(`component:${componentName}`)) {
-            console.warn(`No component named ${componentName} is registered.`);
+            var availableFrames = Ember.getOwner(this).lookup(`container-debug-adapter:main`).catalogEntriesByType('component')
+                .filter(componentName => componentName.includes('component') && componentName.includes('exp-') && !['components/exp-blank', 'components/exp-frame-base', 'components/exp-text-block', 'components/exp-player'].includes(componentName))
+                .map(componentName => componentName.replace('components/', ''));
+            console.error(`Unknown frame kind '${componentName}' specified. Check that 'kind' is specified for all frames and that it is always one of the following available frame kinds:\n\t${availableFrames.join('\n\t')}\nFrames are described in more detail https://lookit.github.io/ember-lookit-frameplayer/modules/frames.html. Frame kinds are all lowercase, like 'exp-lookit-exit-survey'. If you are trying to use a newer frame, you may need to update the frameplayer code for your study; see https://lookit.readthedocs.io/en/develop/researchers-update-code.html.`);
         }
         return componentName;
     }),
