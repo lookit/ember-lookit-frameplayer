@@ -323,7 +323,7 @@ export default class Base {
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.save();
 
-    this.drawScore();
+    //this.drawScore();
 
     this.loopTimer = function () {
       let inst = this;
