@@ -68,7 +68,7 @@ export default class DiscreteCatch extends Base {
    */
   constructor(context, document) {
     super(context, document);
-    super.currentRounds = TOTAL_ROUNDS;
+    super.setMaxRounds(TOTAL_ROUNDS);
     soundURLs = [super.Utils.rattleSound,super.Utils.goodCatchSound,super.Utils.failcatchSound];
     imageURls = [super.Utils.ironBasket,super.Utils.gear,super.Utils.basketStarsImage,super.Utils.robotImage];
     obstructionsURLs = [super.Utils.obstruction1, super.Utils.obstruction2, super.Utils.obstruction3];

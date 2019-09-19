@@ -19,6 +19,7 @@ let dataLoop = {}; // controlling data Collection loop
 let gameLoop = {}; // controlling main game loop
 let mouseY = 0; // mouse pointer  position on Y axis
 let currentRounds = 0; // current game trial number
+let maxRounds = 0;
 let initBallY = 0.0; // Initial ball Y position
 let initX = 0.52; // Initial ball X position
 let initV = 0; //  Initial velocity
@@ -127,7 +128,7 @@ export default class Base {
     clearInterval(dataLoop);
 
   }
-  
+
   generateHeights() {
 
     return this.uniformArr([1, 1]);
@@ -219,7 +220,7 @@ export default class Base {
   uniformArr(vals) {
     let arr = [];
     vals.forEach((v) => {
-      arr = arr.concat(Array(Utils.gameRounds / vals.length).fill(v));
+      arr = arr.concat(Array(maxRounds / vals.length).fill(v));
 
     });
 
@@ -363,6 +364,11 @@ export default class Base {
   }
 
 
+  setMaxRounds(val){
+
+    maxRounds = val;
+
+  }
 
 
   /**
@@ -489,7 +495,7 @@ export default class Base {
     if (score) {
       this.increaseScore();
     }
-    if (this.currentRounds < Utils.gameRounds) {
+    if (this.currentRounds < maxRounds) {
       this.initGame();
 
     } else {
@@ -508,7 +514,7 @@ export default class Base {
    */
   clearInterval() {
 
-      window.clearInterval(0);
+    window.clearInterval(0);
 
   }
 
