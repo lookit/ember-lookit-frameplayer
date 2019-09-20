@@ -145,9 +145,9 @@ export default class DiscreteCatch extends Base {
    */
   getObstruction(obstructionIndex = 1) {
 
-    let leftBorder = 340  - 55 * obstructionIndex + 0.25 * super.Utils.SCALE;
+    let leftBorder = 1.06 * super.Utils.SCALE  - 0.131 * super.Utils.SCALE * obstructionIndex ;
     let topBorder = (0.964) * super.Utils.SCALE;
-    let rightBorder = 390 + 0.25 * super.Utils.SCALE;
+    let rightBorder = 1.18  * super.Utils.SCALE;
     let downBorder = (1.592) * super.Utils.SCALE;
     return {
       position: {x: leftBorder, y: topBorder},
@@ -162,6 +162,7 @@ export default class DiscreteCatch extends Base {
     super.dataCollection();
     let exportData = {
       game_type: 'discreteCatch',
+      trajectory: hArray[super.currentRounds],
       ball_position_x: ball.position.x/this.canvas.width,
       ball_position_y:  (this.canvas.height - ball.position.y)/this.canvas.height,
       paddle_position_x: basket.position.x/this.canvas.width,
@@ -250,8 +251,7 @@ export default class DiscreteCatch extends Base {
     this.createLauncher(images[gameImage.BALLBOX]);
     let paddleBoxColor = super.Utils.blueColor;
     if(ball.state === 'start'){
-
-      super.moveBallToStart(ball, images[gameImage.BALL]);
+      ball = this.ballObject();
 
       if (startTime > 0 &&  !super.paddleIsMoved(basket) && super.getElapsedTime(startTime) > TRAVEL_TIME ){
         sounds[gameSound.START].play();
@@ -283,7 +283,7 @@ export default class DiscreteCatch extends Base {
       }
 
 
-      super.drawBall(ball,images[gameImage.BALL]);
+     // super.drawBall(ball,images[gameImage.BALL]);
     }
 
 
@@ -303,6 +303,7 @@ export default class DiscreteCatch extends Base {
         super.increaseScore();
         consecutiveCounts++;
         sounds[gameSound.CATCH].play();
+        ball.radius = 0;
 
       }else{
 
@@ -325,25 +326,14 @@ export default class DiscreteCatch extends Base {
 
       }
 
-      if(ball.hitstate === ''){
-
-        super.drawBall(ball,images[gameImage.BALL]);
-      }
-
-
       // Remove ball and show in the starting point,
       //User should set the paddle to initial position , call stop after that
-
-      super.moveBallToStart(ball, images[gameImage.BALL]);
       super.paddleAtZero(basket,false);
-
-
 
     }
 
-
+    super.drawBall(ball,images[gameImage.BALL]);
     obstructions.forEach(obstruction => super.drawImage(obstruction, obstruction.image));
-
     this.basketObject(basket);
     super.createPaddleBox(paddleBoxColor,true);
     super.paddleMove(basket,initialTime,ball);
