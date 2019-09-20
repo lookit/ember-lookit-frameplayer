@@ -448,6 +448,10 @@ export default class DiscreteButtonSpatial extends Base {
   }
 
   /**
+   * Columns structure
+   * slime: 1,2,3 indicating correct location of where the slime will land - top, middle or bottom
+   * window : 0,1,2,3 indicating no button or which button was clicked
+   * ship : 1,2,3 indicating size of spaceship
    * @method dataCollection
    */
   dataCollection() {
@@ -469,6 +473,9 @@ export default class DiscreteButtonSpatial extends Base {
 
     let exportData = {
       game_type: 'discreteButtonSpatial',
+      slime: currentTargetIndex,
+      window: target_state,
+      obstruction_number: obstructions[super.currentRounds],
       ball_position_x: ball.position.x,
       ball_position_y: ball.position.y,
       key_pressed: target_state,
