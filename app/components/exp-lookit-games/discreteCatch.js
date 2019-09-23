@@ -11,7 +11,7 @@ import Base from './base';
  * @submodule games
  *
  */
-const TOTAL_ROUNDS = 48;
+const TOTAL_ROUNDS = 12;
 let basket = {};
 let ball = {};
 let obstructions = []; // Possible obstructions array
@@ -120,7 +120,7 @@ export default class DiscreteCatch extends Base {
     basket = super.basketObject(basket);
     obstructionsNum = obstrArr[super.currentRounds];
     ball = super.ballObject();
-
+    // Generate array of obstruction objects
     obstructions = Array(obstructionsNum).fill({}).map((value, index) =>
 
       ( this.getObstruction(index+1))
@@ -138,14 +138,14 @@ export default class DiscreteCatch extends Base {
 
 
   /**
-   * Tree object with coordinates
+   * Obstruction object with coordinates
    * @method getObstruction
    * @param obstructionIndex
    * @return {{imageURL: *, position: {x: number, y: number}, dimensions: {width: number, height: number}}}
    */
   getObstruction(obstructionIndex = 1) {
 
-    let leftBorder = 1.06 * super.Utils.SCALE  - 0.131 * super.Utils.SCALE * obstructionIndex ;
+    let leftBorder = (1.06 - 0.131 * obstructionIndex) * super.Utils.SCALE ;
     let topBorder = (0.964) * super.Utils.SCALE;
     let rightBorder = 1.18  * super.Utils.SCALE;
     let downBorder = (1.592) * super.Utils.SCALE;
@@ -168,7 +168,7 @@ export default class DiscreteCatch extends Base {
       paddle_position_x: basket.position.x/this.canvas.width,
       paddle_position_y: (this.canvas.height - basket.position.y)/this.canvas.height,
       trial: super.currentRounds,
-      timestamp: new Date().getTime()
+      timestamp: super.getElapsedTime(initialTime)
 
     };
     if(ball.state === 'hit' || ball.state === 'fall') {

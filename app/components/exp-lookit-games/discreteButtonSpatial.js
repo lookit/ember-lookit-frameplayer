@@ -480,7 +480,7 @@ export default class DiscreteButtonSpatial extends Base {
       ball_position_y: ball.position.y,
       key_pressed: target_state,
       trial: super.currentRounds,
-      timestamp: new Date().getTime()
+      timestamp: super.getElapsedTime(initialTime)
 
     };
     if(ball.state === 'hit' || ball.state === 'fall') {

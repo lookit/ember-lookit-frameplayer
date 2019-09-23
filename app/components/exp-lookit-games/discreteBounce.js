@@ -432,7 +432,7 @@ export default class DiscreteBounce extends Base {
       paddle_width: paddle.dimensions.width,
       paddle_position_y: (this.canvas.height - paddle.position.y) / this.canvas.height,
       trial: super.currentRounds,
-      timestamp: initialTime
+      timestamp: super.getElapsedTime(initialTime)
 
     };
 
