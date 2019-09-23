@@ -145,7 +145,7 @@ export default class DiscreteCatch extends Base {
    */
   getObstruction(obstructionIndex = 1) {
 
-    let leftBorder = (1.06 - 0.131 * obstructionIndex) * super.Utils.SCALE ;
+    let leftBorder = (1 - 0.105 * obstructionIndex) * super.Utils.SCALE ;
     let topBorder = (0.964) * super.Utils.SCALE;
     let rightBorder = 1.18  * super.Utils.SCALE;
     let downBorder = (1.592) * super.Utils.SCALE;
@@ -163,7 +163,7 @@ export default class DiscreteCatch extends Base {
     let exportData = {
       game_type: 'discreteCatch',
       trajectory: hArray[super.currentRounds],
-      ball_position_x: ball.position.x/this.canvas.width,
+      ball_position_x: ball.position.x,
       ball_position_y:  (this.canvas.height - ball.position.y)/this.canvas.height,
       paddle_position_x: basket.position.x/this.canvas.width,
       paddle_position_y: (this.canvas.height - basket.position.y)/this.canvas.height,
