@@ -178,7 +178,7 @@ export default class DiscreteCatchLift extends Base {
       mice_y: (this.canvas.height - target.position.y) / this.canvas.height,
       trial: super.currentRounds,
       mice_state: target.state,
-      timestamp: new Date().getTime()
+      timestamp: super.getElapsedTime(initialTime)
 
     };
 
