@@ -15,10 +15,12 @@ import Utils from './utils';
 
 const JITTER_MAX_TIME = 2000; // Max value for time Jitter randomizer
 const JITTER_MIN_TIME = 850; // Min value for time Jitter randomizer
+const DATA_COLLECTION_TIME = 30; // Data collection Timeout
 let dataLoop = {}; // controlling data Collection loop
 let gameLoop = {}; // controlling main game loop
 let mouseY = 0; // mouse pointer  position on Y axis
 let currentRounds = 0; // current game trial number
+let maxRounds = 0;
 let initBallY = 0.0; // Initial ball Y position
 let initX = 0.52; // Initial ball X position
 let initV = 0; //  Initial velocity
@@ -127,10 +129,10 @@ export default class Base {
     clearInterval(dataLoop);
 
   }
-  
+
   generateHeights() {
 
-    return this.uniformArr([1, 1]);
+    return this.uniformArr([1,3,5]);
   }
 
 
@@ -219,7 +221,7 @@ export default class Base {
   uniformArr(vals) {
     let arr = [];
     vals.forEach((v) => {
-      arr = arr.concat(Array(Utils.gameRounds / vals.length).fill(v));
+      arr = arr.concat(Array(maxRounds / vals.length).fill(v));
 
     });
 
@@ -285,6 +287,7 @@ export default class Base {
 
   /**
    * Data collection abstract method
+   * Executing method only once in DATA_COLLECTION_TIME timeout
    * @method dataCollection
    */
   dataCollection() {
@@ -294,7 +297,7 @@ export default class Base {
       let inst = this;
       dataLoop = setTimeout(function () {
         inst.dataCollection();
-      }, 30);
+      }, DATA_COLLECTION_TIME);
 
     };
 
@@ -362,7 +365,16 @@ export default class Base {
     currentRounds = val;
   }
 
+  /**
+   * Set maximum number of trials per game
+   * @method setMaxTrials
+   * @param {int} trials
+   */
+  setMaxTrials(trials){
 
+    maxRounds = trials;
+
+  }
 
 
   /**
@@ -489,7 +501,7 @@ export default class Base {
     if (score) {
       this.increaseScore();
     }
-    if (this.currentRounds < Utils.gameRounds) {
+    if (this.currentRounds < maxRounds) {
       this.initGame();
 
     } else {
@@ -509,7 +521,7 @@ export default class Base {
    */
   clearInterval() {
 
-      window.clearInterval(0);
+    window.clearInterval(0);
 
   }
 

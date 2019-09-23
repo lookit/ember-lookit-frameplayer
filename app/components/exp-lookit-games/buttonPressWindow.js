@@ -74,7 +74,7 @@ export default class ButtonPressWindow extends Base {
   constructor(context, document) {
 
     super(context, document);
-    super.currentRounds = TOTAL_ROUNDS;
+    super.setMaxTrials(TOTAL_ROUNDS);
     fireworksURLs = [super.Utils.Explosion_big_blue, super.Utils.Explosion_big_green, super.Utils.Explosion_big_red, super.Utils.Explosion_small];
     soundURLs = [super.Utils.fuse, super.Utils.firework_big, super.Utils.firework_small, super.Utils.ballcatchFailSound];
     imageURLs = [super.Utils.skyline,super.Utils.Fireball,super.Utils.star,super.Utils.boxOfFireworks];
@@ -182,14 +182,12 @@ export default class ButtonPressWindow extends Base {
 
 
   setTargetBackground() {
-    let topBorder = (1.155) * super.Utils.SCALE;
-    let downBorder = (1.235) * super.Utils.SCALE;
-    let leftBorder = (TARGETX - 0.05) * super.Utils.SCALE;
-    let rightBorder = (TARGETX + 0.05) * super.Utils.SCALE;
+    let topBorder = (1.165) * super.Utils.SCALE;
+    let leftBorder = (TARGETX - 0.02) * super.Utils.SCALE;
 
     target = {
 
-      dimensions: {width: rightBorder - leftBorder, height: downBorder - topBorder},
+      dimensions: {width: 0.04 * super.Utils.SCALE , height: 0.04 * super.Utils.SCALE},
       position: {
         x: leftBorder,
         y: topBorder
@@ -210,16 +208,17 @@ export default class ButtonPressWindow extends Base {
     let exportData = {
 
       game_type: 'buttonPressWindow',
-      ball_position_x: ball.position.x / this.canvas.width,
+      ball_position_x: ball.position.x,
       ball_position_y: (this.canvas.height - ball.position.y) / this.canvas.height,
       button_pressed: keyPressed.value,
       trial: super.currentRounds,
-      timestamp: new Date().getTime()
+      timestamp: super.getElapsedTime(initialTime),
+      target_position: TARGETX
 
     };
-
-    super.storeData(exportData);
-
+    if(ball.state === 'hit' || ball.state === 'fall') {
+      super.storeData(exportData);
+    }
   }
 
 
@@ -276,7 +275,6 @@ export default class ButtonPressWindow extends Base {
     super.generateTrajectoryParamsDiscrete(TfArr);
     this.createShuttle();
     this.createTargetWindow();
-
     // Delay before music start
     if(initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(startTime) >= INITIAL_DELAY) {
 
