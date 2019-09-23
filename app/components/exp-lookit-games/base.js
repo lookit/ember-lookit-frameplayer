@@ -15,7 +15,7 @@ import Utils from './utils';
 
 const JITTER_MAX_TIME = 2000; // Max value for time Jitter randomizer
 const JITTER_MIN_TIME = 850; // Min value for time Jitter randomizer
-const DATA_COLLECTION_TIME = 30; // Data collection Timeout
+const DATA_COLLECTION_TIME = 20; // Data collection Timeout
 let dataLoop = {}; // controlling data Collection loop
 let gameLoop = {}; // controlling main game loop
 let mouseY = 0; // mouse pointer  position on Y axis
@@ -65,6 +65,24 @@ export default class Base {
     // this.canvas.requestPointerLock()
     this.calculateCanvas();
     this.paddleBoxParameters();
+
+    this.loopTimer = function () {
+      let inst = this;
+      gameLoop = window.requestAnimationFrame(function () {
+        inst.loop();
+      });
+
+    };
+
+
+    this.dataTimer = function () {
+      let inst = this;
+      dataLoop = setTimeout(function () {
+        inst.dataCollection();
+      }, DATA_COLLECTION_TIME);
+
+    };
+
   }
 
 
@@ -99,21 +117,21 @@ export default class Base {
     //
     // this.Utils.SCALE  =  this.context.scale_factor * (this.canvas.height/height);
 
-    // this.canvas.height = 768 ;
-    // this.canvas.width =  1024;
-    // this.Utils.SCALE  =  420;
+    this.canvas.height = 768 ;
+    this.canvas.width =  1024;
+    this.Utils.SCALE  =  420;
 
-    if(screen.height < screen.width) {
-      this.canvas.height = screen.height;
-      let coefficient = screen.height/768;
-      this.canvas.width = coefficient * 1024;
-      this.Utils.SCALE  =  420 * coefficient;
-    }else{
-      this.canvas.width = screen.width;
-      let coefficient = screen.width/768;
-      this.canvas.height = coefficient * 768;
-      this.Utils.SCALE  =  420 * coefficient;
-    }
+    // if(screen.height < screen.width) {
+    //   this.canvas.height = screen.height;
+    //   let coefficient = screen.height/768;
+    //   this.canvas.width = coefficient * 1024;
+    //   this.Utils.SCALE  =  420 * coefficient;
+    // }else{
+    //   this.canvas.width = screen.width;
+    //   let coefficient = screen.width/768;
+    //   this.canvas.height = coefficient * 768;
+    //   this.Utils.SCALE  =  420 * coefficient;
+    // }
 
 
   }
@@ -127,12 +145,12 @@ export default class Base {
     this.currentScore = 0;
     this.currentRounds = 0;
     clearInterval(dataLoop);
-
+    this.dataTimer();
   }
 
   generateHeights() {
 
-    return this.uniformArr([1,3,5]);
+    return this.uniformArr([1,3,6]);
   }
 
 
@@ -293,15 +311,7 @@ export default class Base {
   dataCollection() {
 
 
-    this.loopTimer = function () {
-      let inst = this;
-      dataLoop = setTimeout(function () {
-        inst.dataCollection();
-      }, DATA_COLLECTION_TIME);
-
-    };
-
-    this.loopTimer();
+    this.dataTimer();
 
   }
 
@@ -328,12 +338,6 @@ export default class Base {
 
     //this.drawScore();
 
-    this.loopTimer = function () {
-      let inst = this;
-      gameLoop = window.requestAnimationFrame(function () {
-        inst.loop();
-      });
-    };
     this.loopTimer();
   }
 
@@ -471,18 +475,6 @@ export default class Base {
    */
   initGame() {
 
-    this.loopTimer = function () {
-      let inst = this;
-      gameLoop = window.requestAnimationFrame(function () {
-        inst.loop();
-      });
-
-      dataLoop = setTimeout(function () {
-        inst.dataCollection();
-      }, 30);
-
-    };
-
     this.loopTimer();
 
   }
@@ -604,22 +596,20 @@ export default class Base {
     let leftBorder =  (positionX- 0.0175) * Utils.SCALE;
     let downBorder =  (1.3746-positionY) * Utils.SCALE ;
 
-    let  ball = {
+    return {
 
-      position: {x: leftBorder, y:downBorder},
+      position: {x: leftBorder, y: downBorder},
       velocity: 0,
-      radius: (0.037)*Utils.SCALE,
+      radius: (0.037) * Utils.SCALE,
       state: 'start',
       impactTime: 0,
-      hitstate:'',
-      startTime:0,
-      impactPosition:0,
-      positions:[{x:0,y:0}],
+      hitstate: '',
+      startTime: 0,
+      impactPosition: 0,
+      positions: [{x: 0, y: 0}],
       color: Utils.yellowColor
 
     };
-
-    return ball;
   }
 
   /**
