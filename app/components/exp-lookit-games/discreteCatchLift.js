@@ -62,7 +62,7 @@ export default class DiscreteCatchLift extends Base {
   constructor(context, document) {
 
     super(context, document);
-    super.setMaxRounds(TOTAL_ROUNDS);
+    super.setMaxTrials(TOTAL_ROUNDS);
     soundURLs = [super.Utils.drumRollSound, super.Utils.cheese_ser1Sound, super.Utils.cheese_ser2Sound, super.Utils.cheese_ser3Sound, super.Utils.swooshSound, super.Utils.ballcatchFailSound] ;
     imageURLs = [super.Utils.rectangleCage, super.Utils.rat, super.Utils.pizza,super.Utils.cheeseMissedImage];
   }

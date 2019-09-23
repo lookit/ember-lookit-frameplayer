@@ -15,6 +15,7 @@ import Utils from './utils';
 
 const JITTER_MAX_TIME = 2000; // Max value for time Jitter randomizer
 const JITTER_MIN_TIME = 850; // Min value for time Jitter randomizer
+const DATA_COLLECTION_TIME = 30; // Data collection Timeout
 let dataLoop = {}; // controlling data Collection loop
 let gameLoop = {}; // controlling main game loop
 let mouseY = 0; // mouse pointer  position on Y axis
@@ -131,7 +132,7 @@ export default class Base {
 
   generateHeights() {
 
-    return this.uniformArr([1, 1]);
+    return this.uniformArr([1,3,5]);
   }
 
 
@@ -286,6 +287,7 @@ export default class Base {
 
   /**
    * Data collection abstract method
+   * Executing method only once in DATA_COLLECTION_TIME timeout
    * @method dataCollection
    */
   dataCollection() {
@@ -295,7 +297,7 @@ export default class Base {
       let inst = this;
       dataLoop = setTimeout(function () {
         inst.dataCollection();
-      }, 30);
+      }, DATA_COLLECTION_TIME);
 
     };
 
@@ -363,10 +365,14 @@ export default class Base {
     currentRounds = val;
   }
 
+  /**
+   * Set maximum number of trials per game
+   * @method setMaxTrials
+   * @param {int} trials
+   */
+  setMaxTrials(trials){
 
-  setMaxRounds(val){
-
-    maxRounds = val;
+    maxRounds = trials;
 
   }
 

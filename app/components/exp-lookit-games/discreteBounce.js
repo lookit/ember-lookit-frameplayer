@@ -77,7 +77,7 @@ export default class DiscreteBounce extends Base {
   constructor(context, document) {
 
     super(context, document);
-    super.setMaxRounds(TOTAL_ROUNDS);
+    super.setMaxTrials(TOTAL_ROUNDS);
     soundURLs = [super.Utils.drumRollSound, super.Utils.bouncingSound, super.Utils.brickHitlarge, super.Utils.brickHitsmall, super.Utils.ballcatchFailSound];
     imageURLs = [this.Utils.paddleImage, super.Utils.wallInitial, super.Utils.wallMissed, super.Utils.basketBall, super.Utils.basketBalls, super.Utils.smallbricksImage, super.Utils.largebricksImage, super.Utils.tokenImage];
 
@@ -422,6 +422,7 @@ export default class DiscreteBounce extends Base {
    */
   dataCollection() {
     super.dataCollection();
+
     let exportData = {
       game_type: 'BounceGame',
       trajectory: hArray[super.currentRounds],
@@ -435,7 +436,9 @@ export default class DiscreteBounce extends Base {
 
     };
 
-    super.storeData(exportData);
+    if(ball.state === 'hit' || ball.state === 'fall') {
+      super.storeData(exportData);
+    }
 
   }
 

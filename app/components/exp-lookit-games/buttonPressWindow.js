@@ -74,7 +74,7 @@ export default class ButtonPressWindow extends Base {
   constructor(context, document) {
 
     super(context, document);
-    super.setMaxRounds(TOTAL_ROUNDS);
+    super.setMaxTrials(TOTAL_ROUNDS);
     fireworksURLs = [super.Utils.Explosion_big_blue, super.Utils.Explosion_big_green, super.Utils.Explosion_big_red, super.Utils.Explosion_small];
     soundURLs = [super.Utils.fuse, super.Utils.firework_big, super.Utils.firework_small, super.Utils.ballcatchFailSound];
     imageURLs = [super.Utils.skyline,super.Utils.Fireball,super.Utils.star,super.Utils.boxOfFireworks];
@@ -216,9 +216,9 @@ export default class ButtonPressWindow extends Base {
       target_position: TARGETX
 
     };
-
-    super.storeData(exportData);
-
+    if(ball.state === 'hit' || ball.state === 'fall') {
+      super.storeData(exportData);
+    }
   }
 
 

@@ -78,7 +78,7 @@ export default class DiscreteButtonSpatial extends Base {
    */
   constructor(context, document) {
     super(context, document);
-    super.setMaxRounds(TOTAL_ROUNDS);
+    super.setMaxTrials(TOTAL_ROUNDS);
     imageURls = [super.Utils.slimeMonster, super.Utils.slimeBall, super.Utils.splat];
     windowImageURLS = [super.Utils.openWindowYellow, super.Utils.openWindowGreen, super.Utils.openWindowViolet];
     obstrImageURLS = [super.Utils.shuttleNarrow, super.Utils.shuttle, super.Utils.shuttleWide];
@@ -483,9 +483,9 @@ export default class DiscreteButtonSpatial extends Base {
       timestamp: new Date().getTime()
 
     };
-
-    super.storeData(exportData);
-
+    if(ball.state === 'hit' || ball.state === 'fall') {
+      super.storeData(exportData);
+    }
   }
 
 }
