@@ -166,4 +166,53 @@ export default class Utils{
   static  get blueColor() {return '#1931dd';}
   static  get greenColor() {return '#3CB371';}
   static  get scoreColor() {return '#09b4dd';}
+
+
+
+
+  static getArraysum(a) {
+
+    return a.reduce((t, n) => t + n);
+
+  }
+
+  static getArrayMean(a) {
+
+    return Utils.getArraysum(a) / a.length;
+
+  }
+
+  static subtractFromEachElement(a, val) {
+
+    return a.map((v, index) => v - val);
+
+  }
+
+  static arrayProduct(a1, a2) {
+
+    return a1.map((value, index) => value * a2[index]);
+
+  }
+
+  static vectorCalculation(a) {
+
+    return Utils.subtractFromEachElement(a, Utils.getArrayMean(a));
+
+  }
+
+  /**
+   * Calculates paddle velocity from past n values in paddle vector of y coordinates
+   * @method getPaddleVelocity
+   * @param time {int} timestamp in Unixtime of paddle position
+   * @param position {Object} {position: {x: number, y: number}, dimensions: {width: number, height: number}}
+   * @return {number}  sum((time-mean(time)).*(position-mean(position)))/sum((time-mean(time)).*(time-mean(time)))
+   */
+  static getPaddleVelocity(time, position) {
+
+    let timeVector = this.vectorCalculation(time.slice(time.length - 15, time.length));
+    let positionVector = this.vectorCalculation(position.slice(position.length - 15, position.length));
+
+    return Utils.getArraysum(Utils.arrayProduct(timeVector, positionVector)) / Utils.getArraysum(Utils.arrayProduct(timeVector, timeVector));
+  }
+
 }

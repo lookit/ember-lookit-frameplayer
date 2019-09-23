@@ -123,6 +123,18 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                 },
 
                 /**
+                 * Whether to show in full screen
+                 *
+                 * @property {Boolean} fullscreen
+                 * @default false
+                 */
+                fullscreen: {
+                  type: 'boolean',
+                  default: false
+
+                },
+
+                /**
                  * Media resource location (image, sound,video)
                  * @property {String} source
                  * @default 'empty'
@@ -293,6 +305,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
             this.hideRecorder();
             new Game(this, document, this.gameType);
         }
+
     },
     // Other functions that are just called from within your frame can be defined here, on
     // the same level as actions and meta. You'll be able to call them as this.functionName(arguments)
@@ -304,6 +317,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     // anything additional.
     didInsertElement() {
         this._super(...arguments);
+
+        if(this.get('fullscreen') === true){
+          this.send('showFullscreen');
+        }
         if (this.get('showProgress') === true) {
             let current_game = this.get('gameType') + 1;
             switch (current_game){

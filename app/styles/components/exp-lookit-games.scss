@@ -4,18 +4,26 @@
   width: 20%;
   left: 2%;
   bottom: 5%;
+  cursor: default !important;
 }
 
 .box-set {
   background: #000000;
-  height: 100vh;
+  height: 100vh !important;
   width:100%;
-  position: absolute;
+  position: relative;
+  cursor: default !important;
 }
+
+
+
+
+
 .box {
   height: 30%;
   position: absolute;
   width: 8%;
+  cursor: default !important;
 }
 .box-1 {
   left: 20%;
@@ -43,6 +51,7 @@
   height: 8%;
   position: absolute;
   width: 20%;
+  cursor: default !important;
 }
 
 .arrow-1 {
@@ -87,6 +96,7 @@
   display: inline-block;
   font-size: 13px;
   position: absolute;
+  cursor: default !important;
 }
 
 .button-1 {
@@ -126,10 +136,19 @@
 }
 
 
+
 .intro {
   position: relative;
+  height: 100vh !important;
+  width: auto;
+
+}
+
+.intro:fullscreen {
+  position: relative;
   height: 100vh;
-  width:100%;
+  width:100vw;
+  cursor: default !important;
 }
 
 .button-img {
@@ -137,6 +156,7 @@
   left: 41%;
   height: 5vh;
   z-index: 1;
+  cursor: default !important;
 
 }
 
@@ -157,6 +177,7 @@
   left: 40%;
   position: absolute;
   z-index: 1;
+  cursor: default !important;
 }
 
 .intro-button:hover {
