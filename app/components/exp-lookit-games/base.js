@@ -117,21 +117,21 @@ export default class Base {
     //
     // this.Utils.SCALE  =  this.context.scale_factor * (this.canvas.height/height);
 
-    this.canvas.height = 768 ;
-    this.canvas.width =  1024;
-    this.Utils.SCALE  =  420;
+    // this.canvas.height = 768 ;
+    // this.canvas.width =  1024;
+    // this.Utils.SCALE  =  420;
 
-    // if(screen.height < screen.width) {
-    //   this.canvas.height = screen.height;
-    //   let coefficient = screen.height/768;
-    //   this.canvas.width = coefficient * 1024;
-    //   this.Utils.SCALE  =  420 * coefficient;
-    // }else{
-    //   this.canvas.width = screen.width;
-    //   let coefficient = screen.width/768;
-    //   this.canvas.height = coefficient * 768;
-    //   this.Utils.SCALE  =  420 * coefficient;
-    // }
+    if(screen.height < screen.width) {
+      this.canvas.height = screen.height;
+      let coefficient = screen.height/768;
+      this.canvas.width = coefficient * 1024;
+      this.Utils.SCALE  =  420 * coefficient;
+    }else{
+      this.canvas.width = screen.width;
+      let coefficient = screen.width/768;
+      this.canvas.height = coefficient * 768;
+      this.Utils.SCALE  =  420 * coefficient;
+    }
 
 
   }
