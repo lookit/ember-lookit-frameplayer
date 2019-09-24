@@ -246,33 +246,8 @@ export default class Base {
 
     });
 
-    return this.shuffle(arr);
+    return Utils.shuffle(arr);
 
-  }
-
-  /**
-   * Fisher-Yates shuffle for uniform distribution
-   * @method shuffle
-   * @param {array} initial array
-   * @return {array} shuffled array
-   */
-  shuffle(array) {
-    let currentIndex = array.length, temporaryValue, randomIndex;
-
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-
-    return array;
   }
 
 
@@ -680,7 +655,7 @@ export default class Base {
    */
   ballIsOnFloor(ball){
 
-    return ball.position.y > paddleBox.position.y + paddleBox.dimensions.height - 20;
+    return ball.position.y > paddleBox.position.y + paddleBox.dimensions.height - 0.048 * Utils.SCALE;
   }
 
   /**
