@@ -150,7 +150,7 @@ export default class Base {
 
   generateHeights() {
 
-    return this.uniformArr([1,3,6]);
+    return this.uniformArr([1,2,3]);
   }
 
 
@@ -164,11 +164,14 @@ export default class Base {
   generateTrajectoryParams(hArr, height, Tf) {
     let currentHeight = hArr[currentRounds] * 0.05 + height;
     initX = 0.52;
+    let val = hArr[currentRounds] - 1;
+    Tf = Tf + val * 0.144;
     gravity = 2 * currentHeight / Math.pow(Tf, 2);
     ballvx = (1.051) / Tf;
     initV = 0.5 * gravity * Tf;
 
   }
+
 
   /**
    * Generate Trajectory  parameters for discrete games (using Time Flight array)

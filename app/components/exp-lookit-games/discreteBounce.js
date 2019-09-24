@@ -20,7 +20,7 @@ let alpha = 0.7; // Restitute factor
 let hArray = []; // Actual height parameters are calculated from the Initial height by multiplying the  uniformly randomized  values in  vector
 let targetLocV = 0.69;
 let jitterT = 0; // Time jitter (variates from 500 ms to 1500 ms), time between sound start and ball starting to fly
-let Tf = 0.75; // Time Flight for trajectory
+let Tf = 0.6; // Time Flight for trajectory
 let Height = 0.65; // Current trajectory height
 let token = {}; // Token parameters object
 let tokenReached = {}; // Token parameters object when target is reached
@@ -199,7 +199,7 @@ export default class DiscreteBounce extends Base {
 
 
     if (ball.state === 'fall') {
-      if (initialTime > 0 && super.getElapsedTime(initialTime) < 0.95) {
+      if (initialTime > 0 && super.getElapsedTime(initialTime) < 1.2) {
         super.trajectory(ball, initialTime);
       }
 

@@ -456,9 +456,7 @@ export default class DiscreteButtonSpatial extends Base {
    */
   dataCollection() {
     super.dataCollection();
-    //Set  0,1,2,3,4,5,6  as buttons pressed values (0:  no buttons pressed, 1 : upper button pressed  , 2: middle
-    // button pressed , 3 : down button pressed, 4 : upper button correct , 5 : middle button correct , 6 : down
-    // button correct
+
 
     let target_state =  0;
     let index = pressed.findIndex(item => item !== false);
@@ -476,9 +474,8 @@ export default class DiscreteButtonSpatial extends Base {
       slime: currentTargetIndex,
       window: target_state,
       obstruction_number: obstructions[super.currentRounds],
-      ball_position_x: ball.position.x,
-      ball_position_y: ball.position.y,
-      key_pressed: target_state,
+      ball_position_x: ball.position.x / this.canvas.width,
+      ball_position_y:(this.canvas.height - ball.position.y)/this.canvas.height,
       trial: super.currentRounds,
       timestamp: super.getElapsedTime(initialTime)
 
