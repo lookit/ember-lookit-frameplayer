@@ -199,18 +199,19 @@ export default class ButtonPressWindow extends Base {
   }
 
   /**
+   * trajectory  : 1,2,3 ( Time when ball hits the basket at 500,600,700 ms )
    * @method dataCollection
    */
   dataCollection() {
     super.dataCollection();
     //Set  0,1,2,3 as button pressed values (0:  no button pressed, 1 : pressed , missed target, 2 : pressed, within
     // window, 3 : hit the target)
-
+    let currentTrajectory = TfArrIndex.indexOf(TfArr[this.currentRounds]) + 1;
     let exportData = {
 
       game_type: 'buttonPressWindow',
-      trajectory: TfArrIndex.indexOf(TfArr[this.currentRounds]),
-      ball_position_x: ball.position.x,
+      trajectory: currentTrajectory,
+      ball_position_x: ball.position.x/this.canvas.width,
       ball_position_y: (this.canvas.height - ball.position.y) / this.canvas.height,
       button_pressed: keyPressed.value,
       trial: super.currentRounds,

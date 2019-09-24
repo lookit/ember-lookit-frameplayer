@@ -157,13 +157,16 @@ export default class DiscreteCatch extends Base {
 
   }
 
-
+  /**
+   * trajectory  : 1,2,3 ( Time when ball hits the basket at 500,600,700 ms )
+   * @method dataCollection
+   */
   dataCollection() {
     super.dataCollection();
     let exportData = {
       game_type: 'discreteCatch',
       trajectory: hArray[super.currentRounds],
-      ball_position_x: ball.position.x,
+      ball_position_x: ball.position.x / this.canvas.width ,
       ball_position_y:  (this.canvas.height - ball.position.y)/this.canvas.height,
       paddle_position_x: basket.position.x/this.canvas.width,
       paddle_position_y: (this.canvas.height - basket.position.y)/this.canvas.height,
