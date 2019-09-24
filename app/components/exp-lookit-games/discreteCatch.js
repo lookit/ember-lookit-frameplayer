@@ -11,14 +11,14 @@ import Base from './base';
  * @submodule games
  *
  */
-const TOTAL_ROUNDS = 12;
+const TOTAL_ROUNDS = 48;
 let basket = {};
 let ball = {};
 let obstructions = []; // Possible obstructions array
 let targetStars = {}; // Start location (shows upon reaching the rim on basket )
 let initialTime = 0; // initial time for current game trial
 let hArray = [];
-let Tf = 0.8; // Time Flight for trajectory
+let Tf = 0.72; // Time Flight for trajectory
 let Height = 0.8; // Current trajectory height
 let obstrArr = []; // Current obstructions  array
 let jitterT = 0;

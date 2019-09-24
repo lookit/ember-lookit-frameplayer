@@ -19,6 +19,7 @@ let keyPressed = {}; // Current key pressed status
 let initialTime = 0;  // initial time for current game trial
 let randomNumber = 0; // Current random number for fireworks (decide which color to display)
 let TfArr = []; // Time Flight array
+let TfArrIndex = [0.85,1,1.15];
 const TARGETX = 1.3310; // Current X position
 let jitterT = 0; // Time jitter (variates from 500 ms to 1500 ms), time between sound start and ball starting to fly
 const WINDOW_SIZE = 0.056; //Current window size
@@ -131,7 +132,7 @@ export default class ButtonPressWindow extends Base {
    */
   init() {
     startTime = new Date().getTime();
-    TfArr = super.uniformArr([0.8, 0.9, 1]); // Fill out uniform the Time Flight array
+    TfArr = super.uniformArr(TfArrIndex); // Fill out uniform the Time Flight array
     this.setTargetBackground();
     super.fillAudioArray(soundURLs,sounds);
     super.fillImageArray(fireworksURLs,targetImgs);
@@ -208,6 +209,7 @@ export default class ButtonPressWindow extends Base {
     let exportData = {
 
       game_type: 'buttonPressWindow',
+      trajectory: TfArrIndex.indexOf(TfArr[this.currentRounds]),
       ball_position_x: ball.position.x,
       ball_position_y: (this.canvas.height - ball.position.y) / this.canvas.height,
       button_pressed: keyPressed.value,
