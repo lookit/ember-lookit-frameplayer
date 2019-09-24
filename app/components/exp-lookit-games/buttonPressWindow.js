@@ -351,12 +351,12 @@ export default class ButtonPressWindow extends Base {
 
       let difference = ball.position.x - CENTER * super.Utils.SCALE;
       if (ball.hitstate === 'great') {
-        let explosion = this.setExplosionPosition(4, 0.03572 * super.Utils.SCALE);
+        let explosion = this.setExplosionPosition(8, 0.03572 * super.Utils.SCALE);
         super.drawImageObject(explosion, targetImgs[randomNumber]);
       }
 
       if (ball.hitstate === 'good') {
-        let explosion = this.setExplosionPosition(2, difference);
+        let explosion = this.setExplosionPosition(5, difference);
         super.drawImageObject(explosion, targetImgs[3]);
       }
 
