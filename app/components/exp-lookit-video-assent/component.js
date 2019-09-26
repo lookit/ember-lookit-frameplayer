@@ -520,7 +520,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
         this.set('pageIndex', -1);
         this.send('nextVideo');
 
-        if (this.get('session').get('child')) { // always show frame in preview mode
+        if (this.get('session').get('child') && this.get('session').get('child').get('birthday')) { // always show frame in preview mode
             var dob = this.get('session').get('child').get('birthday');
 
             // var ageInDays = ((new Date()) - dob)/(1000*60*60*24);
