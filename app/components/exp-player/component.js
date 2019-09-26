@@ -219,7 +219,7 @@ export default Ember.Component.extend(FullScreen, {
                 this.get('session.sequence').push(frameId);
             }
             this.get('session.expData')[frameId] = frameData;
-            if (this.get('session').child.content.id === 'TEST_CHILD_DISREGARD') {
+            if (!this.get('session').child.content || this.get('session').child.content.id === 'TEST_CHILD_DISREGARD') {
                 return Ember.RSVP.Promise.resolve();
             } else {
                 return this.get('session').save();
