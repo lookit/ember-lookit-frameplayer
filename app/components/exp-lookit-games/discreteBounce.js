@@ -101,7 +101,7 @@ export default class DiscreteBounce extends Base {
       times: [],
 
     };
-    hArray = super.generateHeights();
+    hArray = super.uniformArr([1,4,8]);
 
 
     let leftBorder = (1.48) * super.Utils.SCALE;
