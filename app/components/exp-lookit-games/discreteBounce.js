@@ -20,7 +20,6 @@ let alpha = 0.7; // Restitute factor
 let hArray = []; // Actual height parameters are calculated from the Initial height by multiplying the  uniformly randomized  values in  vector
 let targetLocV = 0.69;
 let jitterT = 0; // Time jitter (variates from 500 ms to 1500 ms), time between sound start and ball starting to fly
-let Tf = 0.6; // Time Flight for trajectory
 let Height = 0.65; // Current trajectory height
 let token = {}; // Token parameters object
 let tokenReached = {}; // Token parameters object when target is reached
@@ -101,7 +100,7 @@ export default class DiscreteBounce extends Base {
       times: [],
 
     };
-    hArray = super.uniformArr([1,4,8]);
+    hArray = super.generateHeights();
 
 
     let leftBorder = (1.48) * super.Utils.SCALE;
@@ -166,7 +165,7 @@ export default class DiscreteBounce extends Base {
     paddle = super.paddleObject(paddle);
     let paddleBoxColor = super.Utils.blueColor;
     super.createPaddleBox(paddleBoxColor);
-    super.generateTrajectoryParams2(hArray, Height, Tf);
+    super.generateTrajectoryParams(hArray, Height);
     super.createLauncher(images[gameImage.BALLBOX]);
     super.drawImageObject(paddle, images[gameImage.PADDLE]);
     super.paddleMove(paddle, initialTime, ball);
@@ -286,6 +285,7 @@ export default class DiscreteBounce extends Base {
     let positionY = ball.impactPosition + paddle.releaseVelocity * (Yiterator) + 0.5 * -super.TrajectoryVars.gravity * Math.pow(Yiterator, 2);
     let positionX = super.TrajectoryVars.initX + super.TrajectoryVars.ballvx * (Xiterator);
     let leftBorder = (positionX - 0.0175) * super.Utils.SCALE;
+    // CLear past ball  positions
     if(ball.positions.length > 80){
       ball.positions = ball.positions.slice(-80);
     }
@@ -365,7 +365,7 @@ export default class DiscreteBounce extends Base {
     let YL = (targetLocV - 0.34) * super.Utils.SCALE;
     let YH = (targetLocV + 0.22) * super.Utils.SCALE;
 
-    let targetx  = (ball.position.y + 1.2852 * 420) / 1.12;
+    let targetx  = (ball.position.y + 1.2852 * super.Utils.SCALE) / 1.12;
     if (ball.state !== 'done' && ball.position.y > YL && ball.position.y < YH && ball.position.x > targetx) {
       let currenImpactCoord = Math.abs(ball.position.y - (targetLocV - 0.05) * super.Utils.SCALE);
 
