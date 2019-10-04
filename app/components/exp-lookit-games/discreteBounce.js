@@ -166,7 +166,7 @@ export default class DiscreteBounce extends Base {
     paddle = super.paddleObject(paddle);
     let paddleBoxColor = super.Utils.blueColor;
     super.createPaddleBox(paddleBoxColor);
-    super.generateTrajectoryParams(hArray, Height, Tf);
+    super.generateTrajectoryParams2(hArray, Height, Tf);
     super.createLauncher(images[gameImage.BALLBOX]);
     super.drawImageObject(paddle, images[gameImage.PADDLE]);
     super.paddleMove(paddle, initialTime, ball);
