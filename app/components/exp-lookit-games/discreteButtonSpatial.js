@@ -134,7 +134,7 @@ export default class DiscreteButtonSpatial extends Base {
 
   /**
    * Draw target  according to coordinates
-   * @method createShuttle
+   * @method createBackground
    */
   createShuttle() {
 
