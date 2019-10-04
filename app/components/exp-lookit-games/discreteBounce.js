@@ -436,7 +436,7 @@ export default class DiscreteBounce extends Base {
 
     };
 
-    if(ball.state === 'hit' || ball.state === 'fall') {
+    if(ball.state === 'hit' || ball.state === 'bounce' || ball.state === 'fall') {
       super.storeData(exportData);
     }
 
