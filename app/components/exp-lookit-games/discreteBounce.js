@@ -324,13 +324,11 @@ export default class DiscreteBounce extends Base {
         this.releaseVelocity(paddleDelta);
 
         //Fix for abrupt trajectory, make sure the trajectory is not negative
-        if (paddle.releaseVelocity > 1.4) {
-          paddle.releaseVelocity = 1.4;
+        if (paddle.releaseVelocity > 2.5) {
+          paddle.releaseVelocity = 2.5;
         }
 
-        if (isNaN(paddle.releaseVelocity)) {
-          paddle.releaseVelocity = 1.56;
-        }
+
         ball.state = 'bounce';
         // Update initial position of ball according to trajectory to prevent possible gap
         this.bounceTrajectory();
@@ -436,7 +434,7 @@ export default class DiscreteBounce extends Base {
 
     };
 
-    if(ball.state === 'hit' || ball.state === 'fall') {
+    if(ball.state === 'hit' || ball.state === 'bounce' || ball.state === 'fall') {
       super.storeData(exportData);
     }
 

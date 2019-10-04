@@ -82,7 +82,7 @@ export default class DiscreteCatch extends Base {
    * @method init
    */
   init() {
-    hArray = super.generateHeights();
+    hArray = super.uniformArr([1,2,4]);
     obstrArr  = super.uniformArr([0,1,2,3]);
     super.fillAudioArray(soundURLs,sounds);
     super.fillImageArray(imageURls,images);
@@ -252,7 +252,7 @@ export default class DiscreteCatch extends Base {
    */
   loop() {
     super.loop();
-    super.generateTrajectoryParams(hArray,Height,Tf);
+    super.generateTrajectoryParams2(hArray,Height,Tf);
     this.createLauncher(images[gameImage.BALLBOX]);
     let paddleBoxColor = super.Utils.blueColor;
     if(ball.state === 'start'){

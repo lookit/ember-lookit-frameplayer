@@ -111,7 +111,7 @@ export default class Utils{
   // Fireworks Images
 
 
-  static get skyline() {return this.bucketImageResource + 'skyline_clipped.png';}
+  static get skyline() {return this.bucketImageResource + 'skyline_clouds_final.png';}
   static get Explosion_big_blue() {return this.bucketImageResource + 'Explosion_big_blue.png';}
   static get Explosion_big_green() {return this.bucketImageResource + 'Explosion_big_green.png';}
   static get Explosion_big_red() {return this.bucketImageResource + 'Explosion_big_red.png';}

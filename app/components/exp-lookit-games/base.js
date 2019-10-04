@@ -173,6 +173,16 @@ export default class Base {
   }
 
 
+  generateTrajectoryParams2(hArr, height, Tf) {
+    let currentHeight = hArr[currentRounds] * 0.05 + height;
+    initX = 0.52;
+    gravity = 2 * currentHeight / Math.pow(Tf, 2);
+    ballvx = (1.051) / Tf;
+    initV = 0.5 * gravity * Tf;
+
+  }
+
+
   /**
    * Generate Trajectory  parameters for discrete games (using Time Flight array)
    * @method generateTrajectoryParamsDiscrete
