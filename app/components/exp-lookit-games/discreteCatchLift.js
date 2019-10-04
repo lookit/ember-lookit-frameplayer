@@ -255,9 +255,9 @@ export default class DiscreteCatchLift extends Base {
   loop() {
     super.loop();
     let paddleBoxColor = super.Utils.blueColor;
-    super.createPaddleBox(paddleBoxColor);
     basket = super.basketObject(basket);
     super.paddleMove(basket, initialTime, target);
+    super.createPaddleBox(paddleBoxColor);
     super.drawImageObject(clockObject, images[gameImage.CLOCK]);
 
     if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMoved(basket)) {
