@@ -85,21 +85,21 @@ export default class ButtonPressWindow extends Base {
 
   /**
    * Draw house with roof according to coordinates
-   * @method createShuttle
+   * @method createBackground
    */
-  createShuttle() {
+  createBackground() {
 
-    let leftBorder = (TARGETX - 0.75) * super.Utils.SCALE;
+    let leftBorder = (TARGETX - 0.74) * super.Utils.SCALE;
     let topBorder = (0.8) * super.Utils.SCALE;
 
-    let houseObj = {
+    let backgroundObj = {
 
       dimensions: {width: 1.54 * super.Utils.SCALE, height: 0.9 * super.Utils.SCALE},
       position: {x: leftBorder, y: topBorder}
 
     };
 
-    super.drawImageObject(houseObj, images[gameImage.BACKGROUND]);
+    super.drawImageObject(backgroundObj, images[gameImage.BACKGROUND]);
 
   }
 
@@ -276,7 +276,7 @@ export default class ButtonPressWindow extends Base {
 
     super.loop();
     super.generateTrajectoryParamsDiscrete(TfArr);
-    this.createShuttle();
+    this.createBackground();
     this.createTargetWindow();
     // Delay before music start
     if(initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(startTime) >= INITIAL_DELAY) {
@@ -314,7 +314,7 @@ export default class ButtonPressWindow extends Base {
 
 
       super.drawBall(ball, images[gameImage.BALL]);
-      this.createShuttle();
+      this.createBackground();
       this.createTargetWindow();
 
 
