@@ -313,7 +313,7 @@ export default class DiscreteBounce extends Base {
     if (ball.position.x >= (1.256) * super.Utils.SCALE - 0.04 * super.Utils.SCALE && ball.position.x <= (1.406) * super.Utils.SCALE) {
 
       //Check if paddle actually moved on Y axis and delta is significant enough
-      let paddleDelta = paddle.positions[paddle.positions.length - 1] - paddle.positions[paddle.positions.length - 20];
+      let paddleDelta = paddle.positions[paddle.positions.length - 1] - paddle.positions[paddle.positions.length - 8];
       if (paddleDelta < 0.1) {
         paddleDelta = 0.1;
       }
@@ -324,9 +324,9 @@ export default class DiscreteBounce extends Base {
         this.releaseVelocity(paddleDelta);
 
         //Fix for abrupt trajectory, make sure the trajectory is not negative
-        if (paddle.releaseVelocity > 2.5) {
-          paddle.releaseVelocity = 2.5;
-        }
+        // if (paddle.releaseVelocity > 2.5) {
+        //   paddle.releaseVelocity = 2.5;
+        // }
 
 
         ball.state = 'bounce';
