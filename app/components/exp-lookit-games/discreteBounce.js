@@ -18,7 +18,7 @@ let target = {}; // Target parameters object
 let initialTime = 0; // Initial time for current game trial
 let alpha = 0.7; // Restitute factor
 let hArray = []; // Actual height parameters are calculated from the Initial height by multiplying the  uniformly randomized  values in  vector
-let targetLocV = 0.69;
+let targetLocV = 0.8;
 let jitterT = 0; // Time jitter (variates from 500 ms to 1500 ms), time between sound start and ball starting to fly
 let Height = 0.65; // Current trajectory height
 let token = {}; // Token parameters object
@@ -103,12 +103,12 @@ export default class DiscreteBounce extends Base {
     hArray = super.generateHeights();
 
 
-    let leftBorder = (1.48) * super.Utils.SCALE;
-    let downBorder = (0.43) * super.Utils.SCALE;
+    let leftBorder = (1.75) * super.Utils.SCALE;
+    let downBorder = (0.35) * super.Utils.SCALE;
 
     target = {
 
-      dimensions: {width: 0.5 * super.Utils.SCALE, height: 0.5 * super.Utils.SCALE},
+      dimensions: {width: 0.4 * super.Utils.SCALE, height: 0.4 * super.Utils.SCALE},
       position: {x: leftBorder, y: downBorder}
     };
 
@@ -124,7 +124,7 @@ export default class DiscreteBounce extends Base {
     token = {
 
       dimensions: {width: 0.21 * super.Utils.SCALE, height: 0.2 * super.Utils.SCALE},
-      position: {x: 1.85 * super.Utils.SCALE, y: 0.34 * super.Utils.SCALE}
+      position: {x: 2.05 * super.Utils.SCALE, y: 0.28 * super.Utils.SCALE}
 
     };
 
@@ -313,7 +313,7 @@ export default class DiscreteBounce extends Base {
     if (ball.position.x >= (1.256) * super.Utils.SCALE - 0.04 * super.Utils.SCALE && ball.position.x <= (1.406) * super.Utils.SCALE) {
 
       //Check if paddle actually moved on Y axis and delta is significant enough
-      let paddleDelta = paddle.positions[paddle.positions.length - 1] - paddle.positions[paddle.positions.length - 8];
+      let paddleDelta = paddle.positions[paddle.positions.length - 1] - paddle.positions[paddle.positions.length - 20];
       if (paddleDelta < 0.1) {
         paddleDelta = 0.1;
       }
@@ -324,9 +324,9 @@ export default class DiscreteBounce extends Base {
         this.releaseVelocity(paddleDelta);
 
         //Fix for abrupt trajectory, make sure the trajectory is not negative
-        // if (paddle.releaseVelocity > 2.5) {
-        //   paddle.releaseVelocity = 2.5;
-        // }
+        if (paddle.releaseVelocity > 2.5) {
+          paddle.releaseVelocity = 2.5;
+        }
 
 
         ball.state = 'bounce';
@@ -362,12 +362,12 @@ export default class DiscreteBounce extends Base {
 
 
 
-    let YL = (targetLocV - 0.34) * super.Utils.SCALE;
-    let YH = (targetLocV + 0.22) * super.Utils.SCALE;
+    let YL = (0.42 ) * super.Utils.SCALE;
+    let YH = (0.4 + 0.35) * super.Utils.SCALE;
 
-    let targetx  = (ball.position.y + 1.2852 * super.Utils.SCALE) / 1.12;
+    let targetx  = (ball.position.y + 1.44 * super.Utils.SCALE) / 1.1;
     if (ball.state !== 'done' && ball.position.y > YL && ball.position.y < YH && ball.position.x > targetx) {
-      let currenImpactCoord = Math.abs(ball.position.y - (targetLocV - 0.05) * super.Utils.SCALE);
+      let currenImpactCoord = Math.abs(ball.position.y - 0.6 * super.Utils.SCALE);
 
       if (currenImpactCoord < 0.27 * super.Utils.SCALE) {
 
@@ -435,7 +435,7 @@ export default class DiscreteBounce extends Base {
     };
 
     if(ball.state === 'hit' || ball.state === 'bounce' || ball.state === 'fall') {
-      super.storeData(exportData);
+        super.storeData(exportData);
     }
 
   }
