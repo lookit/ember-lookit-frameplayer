@@ -458,10 +458,8 @@ export default class DiscreteButtonSpatial extends Base {
     super.dataCollection();
 
 
-    let target_state =  0;
-    let index = pressed.findIndex(item => item !== false);
-
-    if(keys[index] === undefined){
+    let target_state = pressed.findIndex(item => item !== false);
+      if(keys[target_state] === undefined){
       target_state = 3;
     }
 
