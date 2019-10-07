@@ -18,7 +18,6 @@ let obstructions = []; // Possible obstructions array
 let targetStars = {}; // Start location (shows upon reaching the rim on basket )
 let initialTime = 0; // initial time for current game trial
 let hArray = [];
-let Tf = 0.6; // Time Flight for trajectory
 let Height = 0.8; // Current trajectory height
 let obstrArr = []; // Current obstructions  array
 let jitterT = 0;
@@ -82,7 +81,7 @@ export default class DiscreteCatch extends Base {
    * @method init
    */
   init() {
-    hArray = super.uniformArr([1,4,8]);
+    hArray = super.generateHeights();
     obstrArr  = super.uniformArr([0,1,2,3]);
     super.fillAudioArray(soundURLs,sounds);
     super.fillImageArray(imageURls,images);
@@ -252,7 +251,7 @@ export default class DiscreteCatch extends Base {
    */
   loop() {
     super.loop();
-    super.generateTrajectoryParams2(hArray,Height,Tf);
+    super.generateTrajectoryParams(hArray,Height);
     this.createLauncher(images[gameImage.BALLBOX]);
     let paddleBoxColor = super.Utils.blueColor;
     if(ball.state === 'start'){

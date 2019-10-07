@@ -37,26 +37,26 @@ let images = [];
 
 // Media mapping as Enum
 const gameSound = {
-    START: 0,
-    LAUNCH: 1,
-    CATCH: 2,
-    FAIL: 3
+  START: 0,
+  LAUNCH: 1,
+  CATCH: 2,
+  FAIL: 3
 };
 
 const gameImage = {
-    LAUNCHER: 0,
-    BALL: 1,
-    TARGET: 2,
-    window: {
-      WINDOW1: 0,
-      WINDOW2: 1,
-      WINDOW3: 2
-    },
-    shuttle: {
-      SMALL: 0,
-      MIDDLE: 1,
-      LARGE: 2
-    }
+  LAUNCHER: 0,
+  BALL: 1,
+  TARGET: 2,
+  window: {
+    WINDOW1: 0,
+    WINDOW2: 1,
+    WINDOW3: 2
+  },
+  shuttle: {
+    SMALL: 0,
+    MIDDLE: 1,
+    LARGE: 2
+  }
 };
 
 
@@ -134,7 +134,7 @@ export default class DiscreteButtonSpatial extends Base {
 
   /**
    * Draw target  according to coordinates
-   * @method createShuttle
+   * @method createBackground
    */
   createShuttle() {
 
@@ -438,7 +438,7 @@ export default class DiscreteButtonSpatial extends Base {
 
     }
 
-    let indexArr = [2, 1, 0];
+    let indexArr = [2, 1, 0]; //reverse index to get value
     currentTargetIndex = indexArr[initVmatrix[super.currentRounds] - 1];
 
     //Show ball only on button press
@@ -450,8 +450,8 @@ export default class DiscreteButtonSpatial extends Base {
   /**
    * Columns structure
    * window: 1,2,3 indicating correct location of where the slime will land - top, middle or bottom
-   * selected_button : 0,1,2,3 indicating no button or which button was clicked
-   * ship : 1,2,3 indicating size of spaceship
+   * selected_button : 0,1,2,3 indicating no button or which button was clicked.  0 : Y ,1:G , 2: V, 3 : no button
+   * ship : 1,2,3 indicating size of spaceship (from small to bigger)
    * @method dataCollection
    */
   dataCollection() {
@@ -460,18 +460,15 @@ export default class DiscreteButtonSpatial extends Base {
 
     let target_state =  0;
     let index = pressed.findIndex(item => item !== false);
-    if(keys[index] !== undefined){
-      target_state = index + 1;
 
-      if(index === currentTargetIndex){
-        target_state = target_state +3;
-      }
+    if(keys[index] === undefined){
+      target_state = 3;
     }
 
 
     let exportData = {
       game_type: 'discreteButtonSpatial',
-      window: currentTargetIndex,
+      window: currentTargetIndex+1,
       selected_button: target_state,
       obstruction_number: obstructions[super.currentRounds],
       ball_position_x: ball.position.x / this.canvas.width,
@@ -481,7 +478,7 @@ export default class DiscreteButtonSpatial extends Base {
 
     };
     if(ball.state === 'hit' || ball.state === 'fall') {
-      super.storeData(exportData);
+        super.storeData(exportData);
     }
   }
 

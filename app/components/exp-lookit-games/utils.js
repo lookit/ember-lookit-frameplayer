@@ -95,8 +95,8 @@ export default class Utils{
 
   // Brick smasher Images
   static get paddleImage() {return this.bucketImageResource + 'Paddle1.png';}
-  static get wallInitial() {return this.bucketImageResource + 'wall_hor.png';}
-  static get wallMissed() {return this.bucketImageResource + 'wall_hor_clip.png';}
+  static get wallInitial() {return this.bucketImageResource + 'BricksWall_button.png';}
+  static get wallMissed() {return this.bucketImageResource + 'BricksWall_button_fallen.png';}
   static get basketBalls() {return this.bucketImageResource + 'BasketballsPile2.png';}
   static get basketBall() {return this.bucketImageResource + 'basketball.png';}
   static get tokenImage() {return this.bucketImageResource + 'coin.png';}
