@@ -1,15 +1,24 @@
-<div>
+<div class="exp-lookit-games" id="exp-lookit-games-container">
      <div class="row recorder-container video-recorder-hidden">
       <div id="recorder" class="col-xs-12">
       </div>
     </div>
 
     {{#if showIntro}}
-
-      <div id="intro" class="col-xs-12">
-        <button class="intro-button" {{ action 'next' }}/>
+      <div id="intro" class="instr-page-container">
+        <p>{{instructions}}</p>
         <img src={{source}} class="intro"
                 alt="background"/>
+        <button class="intro-button" {{ action 'next' }}/>
+      </div>
+
+    {{/if}}
+
+    {{#if showInstructions}}
+      <div class="instr-page-container">
+        <p>{{instructions}}</p>
+        <img src={{source}} alt="" />
+        <button class="btn btn-success pull-right" {{ action 'next' }} >Next</button>
       </div>
 
     {{/if}}
@@ -17,6 +26,7 @@
     {{#if showProgress}}
 
         <div class="box-set">
+          <p>{{instructions}}</p>
             <input type="image" src={{source_button}} class={{button_position}} {{ action 'play' }}  alt="Submit"/>
             <img src={{machine1_url}} class="box box-1" alt="Submit">
             <img src={{machine2_url}}  class="box box-2" alt="Submit">
@@ -33,14 +43,7 @@
 
     {{/if}}
 
-    {{#if showInstructions}}
-        <h1> {{gameDescription}} </h1>
-        <hr>
-        <p> {{instructions}}</p>
-        <hr >
-        <button class="btn btn-success" {{ action 'play' }} >Play</button>
 
-    {{/if}}
     <canvas  id="gamesCanvas"  height="0" width="0"></canvas>
 </div>
 
