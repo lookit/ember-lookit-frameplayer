@@ -16,6 +16,42 @@
 }
 
 
+.box-set p{
+
+  margin-top: 20px;
+  padding: 8%;
+  margin-right: 85% !important;
+  font-family: "Courier New", Courier, monospace;
+  overflow-wrap: normal;
+  position: relative;
+  color: white;
+  font-size: large;
+  display: block;
+  width: 25%;
+  margin-left: 1%;
+
+
+}
+
+
+.exp-lookit-games, .exp-lookit-games *
+{
+  margin:0;
+}
+
+.exp-lookit-games * {
+  cursor: auto !important;
+}
+
+
+#exp-lookit-games-container, #experiment-player.player-fullscreen #exp-lookit-games-container {
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+}
 
 
 
@@ -139,7 +175,6 @@
 
 .intro {
   position: relative;
-  height: 100vh !important;
   width: auto;
 
 }
@@ -160,7 +195,38 @@
 
 }
 
-.intro-button {
+
+.instr-page-container{
+  position: absolute;
+
+}
+.instr-page-container p{
+  margin-top: 20px;
+  font-family: "Courier New", Courier, monospace;
+  overflow-wrap: normal;
+  position: relative;
+  color: yellow;
+  font-size: large;
+  display: block;
+  width: 66%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.pull-right{
+
+  margin-right: 4% !important;
+}
+.instr-page-container img{
+  margin-top: 40px;
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 55%;
+}
+
+.instr-page-container  .intro-button {
   background: #FFFFF000;
   border: 4px solid #FF7F00;
   color: #FF7F00;

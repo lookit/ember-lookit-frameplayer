@@ -321,6 +321,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     // hooks you can use and when they're all called). You can delete this if not doing
     // anything additional.
     didInsertElement() {
+
         this._super(...arguments);
 
         if(this.get('fullscreen') === true){
