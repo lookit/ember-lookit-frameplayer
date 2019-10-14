@@ -158,6 +158,7 @@ export default class DiscreteCatch extends Base {
 
   /**
    * trajectory  : 1,2,3 ( Time when ball hits the basket at 500,600,700 ms )
+   * obstruction : 0,1,2,3 (number of obstructions displayed)
    * @method dataCollection
    */
   dataCollection() {
@@ -169,6 +170,7 @@ export default class DiscreteCatch extends Base {
       ball_position_y:  (this.canvas.height - ball.position.y)/this.canvas.height,
       paddle_position_x: basket.position.x/this.canvas.width,
       paddle_position_y: (this.canvas.height - basket.position.y)/this.canvas.height,
+      obstruction: obstructions.size,
       trial: super.currentRounds,
       timestamp: super.getElapsedTime(initialTime)
 
