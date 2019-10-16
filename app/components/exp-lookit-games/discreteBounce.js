@@ -108,7 +108,7 @@ export default class DiscreteBounce extends Base {
 
     target = {
 
-      dimensions: {width: 0.4 * super.Utils.SCALE, height: 0.4 * super.Utils.SCALE},
+      dimensions: {width: 0.4 * super.Utils.SCALE, height: 0.43 * super.Utils.SCALE},
       position: {x: leftBorder, y: downBorder}
     };
 
@@ -368,10 +368,9 @@ export default class DiscreteBounce extends Base {
     let targetx  = (ball.position.y + 1.44 * super.Utils.SCALE) / 1.1;
     if (ball.state !== 'done' && ball.position.y > YL && ball.position.y < YH && ball.position.x > targetx) {
       let currenImpactCoord = Math.abs(ball.position.y - 0.6 * super.Utils.SCALE);
-
       if (currenImpactCoord < 0.27 * super.Utils.SCALE) {
 
-        ball.hitstate  = (currenImpactCoord < 0.03 * super.Utils.SCALE)?'very good':'good';
+        ball.hitstate  = (currenImpactCoord < 0.015 * super.Utils.SCALE)?'very good':'good';
 
       } else {
 
@@ -426,8 +425,8 @@ export default class DiscreteBounce extends Base {
       trajectory: hArray[super.currentRounds],
       ball_position_x: ball.position.x / this.canvas.width,
       ball_position_y: (this.canvas.height - ball.position.y) / this.canvas.height,
-      paddle_center_x: paddle.position.x + paddle.dimensions.width / 2,
-      paddle_width: paddle.dimensions.width,
+      paddle_center_x: paddle.position.x / this.canvas.width  +  (paddle.dimensions.width / this.canvas.width) / 2,
+      paddle_width: paddle.dimensions.width / this.canvas.width,
       paddle_position_y: (this.canvas.height - paddle.position.y) / this.canvas.height,
       trial: super.currentRounds,
       timestamp: super.getElapsedTime(initialTime)

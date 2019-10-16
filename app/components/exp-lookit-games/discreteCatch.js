@@ -6,6 +6,7 @@
  */
 
 import Base from './base';
+import Utils from "./utils";
 /**
  *
  * @submodule games
@@ -25,7 +26,7 @@ let radiusRim = 0.1; //Rim size on basket
 let obstructionsNum = 0; // Current number of obstructions (randomized each trial)
 let consecutiveCounts = 0;  // Calculate number of consecutive successful attempts
 let startTime = 0;
-
+const GEAR_RADIUS = 0.05;
 const TRAVEL_TIME = 1.5;
 
 // Media arrays for loading
@@ -38,15 +39,15 @@ let obstructionImages = [];
 
 // Media mapping as Enum
 const gameSound = {
-    START:0,
-    CATCH:1,
-    FAIL:2
+  START:0,
+  CATCH:1,
+  FAIL:2
 };
 const gameImage = {
-    PADDLE: 0,
-    BALL: 1,
-    STARS: 2,
-    BALLBOX: 3
+  PADDLE: 0,
+  BALL: 1,
+  STARS: 2,
+  BALLBOX: 3
 
 };
 
@@ -158,6 +159,7 @@ export default class DiscreteCatch extends Base {
 
   /**
    * trajectory  : 1,2,3 ( Time when ball hits the basket at 500,600,700 ms )
+   * obstruction : 0,1,2,3 (number of obstructions displayed)
    * @method dataCollection
    */
   dataCollection() {
@@ -169,6 +171,7 @@ export default class DiscreteCatch extends Base {
       ball_position_y:  (this.canvas.height - ball.position.y)/this.canvas.height,
       paddle_position_x: basket.position.x/this.canvas.width,
       paddle_position_y: (this.canvas.height - basket.position.y)/this.canvas.height,
+      obstruction: obstructions.size,
       trial: super.currentRounds,
       timestamp: super.getElapsedTime(initialTime)
 
@@ -241,6 +244,13 @@ export default class DiscreteCatch extends Base {
   }
 
 
+  drawBall(ball,images) {
+
+    this.ctx.drawImage(images, ball.position.x, ball.position.y, GEAR_RADIUS * super.Utils.SCALE , GEAR_RADIUS * super.Utils.SCALE);
+
+  }
+
+
   /**
    * Main loop of the game.
    * Set initial position of the ball in a box and starting  sound .
@@ -286,8 +296,6 @@ export default class DiscreteCatch extends Base {
         ball.state = 'hit';
       }
 
-
-     // super.drawBall(ball,images[gameImage.BALL]);
     }
 
 
@@ -335,8 +343,9 @@ export default class DiscreteCatch extends Base {
       super.paddleAtZero(basket,false);
 
     }
-
-    super.drawBall(ball,images[gameImage.BALL]);
+    if(ball.state !== 'done') {
+      this.drawBall(ball, images[gameImage.BALL]);
+    }
     obstructions.forEach(obstruction => super.drawImage(obstruction, obstruction.image));
     this.basketObject(basket);
     super.createPaddleBox(paddleBoxColor,true);

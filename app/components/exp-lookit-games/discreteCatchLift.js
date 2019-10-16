@@ -153,7 +153,7 @@ export default class DiscreteCatchLift extends Base {
     jitterT = super.trialStartTime();
     target.state = 'start';
     target.lastTime = new Date().getTime();
-
+    target.pizzaTimeDelay =0;
     this.setClockObject();
     super.createPaddleBox();
     basket = super.basketObject(basket);
@@ -274,13 +274,25 @@ export default class DiscreteCatchLift extends Base {
 
     //Randomize initial wait time here
     if (target.state === 'start' && initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
-      sounds[gameSound.START].pause();
-      sounds[gameSound.START].currentTime = 0;
-      target.state = 'show';
-      target.showTime = new Date().getTime();
+        sounds[gameSound.START].pause();
+        sounds[gameSound.START].currentTime = 0;
+        target.state = 'showTarget';
+        target.showTime = new Date().getTime();
     }
 
-    if (target.state === 'show') {
+    // Add delay between showing the target (rat) and pizza (clock)
+    if(target.state === 'showTarget') {
+        if(target.pizzaTimeDelay === 0 ) {
+            target.pizzaTimeDelay = new Date().getTime();
+        }
+        if(target.pizzaTimeDelay >0 && super.getElapsedTime(target.pizzaTimeDelay) > 0.2){
+            target.state = 'showClock';
+        }
+
+    }
+
+
+    if (target.state === 'showClock') {
       this.clockState();
       super.drawImageObject(target, images[gameImage.TARGET]);
 
@@ -294,7 +306,7 @@ export default class DiscreteCatchLift extends Base {
 
     }
 
-    if (target.state === 'show') {
+    if (target.state === 'showClock') {
 
 
       if (target.showTime > 0 && super.getElapsedTime(target.showTime) > 1) {
