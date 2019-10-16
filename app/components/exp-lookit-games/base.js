@@ -65,7 +65,7 @@ export default class Base {
     // this.canvas.requestPointerLock()
     this.calculateCanvas();
     this.paddleBoxParameters();
-
+    this.currentRounds = context.trials_number;
     this.loopTimer = function () {
       let inst = this;
       gameLoop = window.requestAnimationFrame(function () {
@@ -334,17 +334,6 @@ export default class Base {
 
     this.ctx.drawImage(image, leftBorder, topBorder, rightBorder - leftBorder, downBorder - topBorder);
 
-  }
-
-
-  get currentRounds() {
-
-    return currentRounds;
-  }
-
-  set currentRounds(val) {
-
-    currentRounds = val;
   }
 
   /**

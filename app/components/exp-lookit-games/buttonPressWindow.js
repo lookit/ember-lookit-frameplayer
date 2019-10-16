@@ -77,7 +77,6 @@ export default class ButtonPressWindow extends Base {
   constructor(context, document) {
 
     super(context, document);
-    super.setMaxTrials(TOTAL_ROUNDS);
     fireworksURLs = [super.Utils.Explosion_big_blue, super.Utils.Explosion_big_green, super.Utils.Explosion_big_red, super.Utils.Explosion_small];
     soundURLs = [super.Utils.fuse, super.Utils.firework_big, super.Utils.firework_small, super.Utils.ballcatchFailSound];
     imageURLs = [super.Utils.skyline,super.Utils.Fireball,super.Utils.star,super.Utils.boxOfFireworks];
@@ -217,6 +216,7 @@ export default class ButtonPressWindow extends Base {
       ball_position_y: (this.canvas.height - ball.position.y) / this.canvas.height,
       button_pressed: keyPressed.value,
       trial: super.currentRounds,
+      trial_type: this.context.trial_type,
       timestamp: super.getElapsedTime(initialTime),
       target_position: TARGETX
 

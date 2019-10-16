@@ -102,6 +102,29 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                 },
 
                 /**
+                 *  Maximum number of trials per game
+                 * @property {integer} type
+                 * @default 0
+                 */
+                trials_number: {
+                    type: 'integer',
+                    default: 24,
+                    description: 'Maximum number of trials per game '
+
+                  },
+
+                /**
+                 * Current trial type : demo or intervention
+                 * @property {String} trial_type
+                 * @default 'intervention'
+                 */
+                trial_type: {
+                    type: 'string',
+                    default: 'intervention',
+                    description: 'Current trial type : demo or intervention '
+                },
+
+                /**
                  * Text to display for game description
                  *
                  * @property {String} gameDescription

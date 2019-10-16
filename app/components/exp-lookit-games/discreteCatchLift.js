@@ -62,7 +62,6 @@ export default class DiscreteCatchLift extends Base {
   constructor(context, document) {
 
     super(context, document);
-    super.setMaxTrials(TOTAL_ROUNDS);
     soundURLs = [super.Utils.drumRollSound, super.Utils.cheese_ser1Sound, super.Utils.cheese_ser2Sound, super.Utils.cheese_ser3Sound, super.Utils.swooshSound, super.Utils.ballcatchFailSound] ;
     imageURLs = [super.Utils.rectangleCage, super.Utils.rat, super.Utils.pizza,super.Utils.cheeseMissedImage];
   }
@@ -177,6 +176,7 @@ export default class DiscreteCatchLift extends Base {
       mice_x: target.position.x / this.canvas.width,
       mice_y: (this.canvas.height - target.position.y) / this.canvas.height,
       trial: super.currentRounds,
+      trial_type: this.context.trial_type,
       mice_state: target.state,
       timestamp: super.getElapsedTime(initialTime)
 

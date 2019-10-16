@@ -6,7 +6,6 @@
  */
 
 import Base from './base';
-import Utils from "./utils";
 /**
  *
  * @submodule games
@@ -68,7 +67,6 @@ export default class DiscreteCatch extends Base {
    */
   constructor(context, document) {
     super(context, document);
-    super.setMaxTrials(TOTAL_ROUNDS);
     soundURLs = [super.Utils.rattleSound,super.Utils.goodCatchSound,super.Utils.failcatchSound];
     imageURls = [super.Utils.ironBasket,super.Utils.gear,super.Utils.basketStarsImage,super.Utils.robotImage];
     obstructionsURLs = [super.Utils.obstruction1, super.Utils.obstruction2, super.Utils.obstruction3];
@@ -173,6 +171,7 @@ export default class DiscreteCatch extends Base {
       paddle_position_y: (this.canvas.height - basket.position.y)/this.canvas.height,
       obstruction: obstructions.size,
       trial: super.currentRounds,
+      trial_type: this.context.trial_type,
       timestamp: super.getElapsedTime(initialTime)
 
     };
@@ -243,7 +242,11 @@ export default class DiscreteCatch extends Base {
 
   }
 
-
+  /**
+   * Override base  method to increase ball size
+   * @param ball {object}
+   * @param images {object}
+   */
   drawBall(ball,images) {
 
     this.ctx.drawImage(images, ball.position.x, ball.position.y, GEAR_RADIUS * super.Utils.SCALE , GEAR_RADIUS * super.Utils.SCALE);
