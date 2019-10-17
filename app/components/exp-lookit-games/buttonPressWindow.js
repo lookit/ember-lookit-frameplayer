@@ -13,7 +13,6 @@ import Base from './base';
  *
  */
 let target = {};
-const TOTAL_ROUNDS = 30;
 let ball = {};
 let keyPressed = {}; // Current key pressed status
 let initialTime = 0;  // initial time for current game trial
@@ -216,7 +215,7 @@ export default class ButtonPressWindow extends Base {
       ball_position_y: (this.canvas.height - ball.position.y) / this.canvas.height,
       button_pressed: keyPressed.value,
       trial: super.currentRounds,
-      trial_type: this.context.trial_type,
+      trialType: this.context.trialType,
       timestamp: super.getElapsedTime(initialTime),
       target_position: TARGETX
 

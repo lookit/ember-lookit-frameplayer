@@ -11,7 +11,7 @@ import Base from './base';
  * @submodule games
  *
  */
-const TOTAL_ROUNDS = 36;
+
 let basket = {};
 let ball = {};
 let obstructions = []; // Possible obstructions array
@@ -171,7 +171,7 @@ export default class DiscreteCatch extends Base {
       paddle_position_y: (this.canvas.height - basket.position.y)/this.canvas.height,
       obstruction: obstructions.size,
       trial: super.currentRounds,
-      trial_type: this.context.trial_type,
+      trialType: this.context.trialType,
       timestamp: super.getElapsedTime(initialTime)
 
     };

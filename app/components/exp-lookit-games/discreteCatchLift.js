@@ -13,7 +13,6 @@ import Base from './base';
  * @submodule games
  *
  */
-const TOTAL_ROUNDS = 20;
 let target = {}; // Current target (rat)  position parameters
 let clockObject = {}; //  Object symbolizes clock (pizza) location parameters
 let basket = {}; // Paddle (basket) position parameters
@@ -176,7 +175,7 @@ export default class DiscreteCatchLift extends Base {
       mice_x: target.position.x / this.canvas.width,
       mice_y: (this.canvas.height - target.position.y) / this.canvas.height,
       trial: super.currentRounds,
-      trial_type: this.context.trial_type,
+      trialType: this.context.trialType,
       mice_state: target.state,
       timestamp: super.getElapsedTime(initialTime)
 
