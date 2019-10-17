@@ -346,7 +346,7 @@ export default class DiscreteCatch extends Base {
       super.paddleAtZero(basket,false);
 
     }
-    if(ball.state !== 'done') {
+    if( ball.hitstate !== 'good' &&  ball.hitstate !== 'very good'  ) {
       this.drawBall(ball, images[gameImage.BALL]);
     }
     obstructions.forEach(obstruction => super.drawImage(obstruction, obstruction.image));
