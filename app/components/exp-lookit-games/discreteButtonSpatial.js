@@ -12,7 +12,6 @@ import Base from './base';
  * @submodule games
  *
  */
-const TOTAL_ROUNDS = 36;
 const INITIAL_DELAY = 2.5;
 let ball = {};
 let targets = [];
@@ -78,7 +77,6 @@ export default class DiscreteButtonSpatial extends Base {
    */
   constructor(context, document) {
     super(context, document);
-    super.setMaxTrials(TOTAL_ROUNDS);
     imageURls = [super.Utils.slimeMonster, super.Utils.slimeBall, super.Utils.splat];
     windowImageURLS = [super.Utils.openWindowYellow, super.Utils.openWindowGreen, super.Utils.openWindowViolet];
     obstrImageURLS = [super.Utils.shuttleNarrow, super.Utils.shuttle, super.Utils.shuttleWide];
@@ -487,6 +485,7 @@ export default class DiscreteButtonSpatial extends Base {
       ball_position_x: ball.position.x / this.canvas.width,
       ball_position_y:(this.canvas.height - ball.position.y)/this.canvas.height,
       trial: super.currentRounds,
+      trialType: this.context.trialType,
       timestamp: super.getElapsedTime(initialTime)
 
     };

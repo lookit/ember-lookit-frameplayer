@@ -65,7 +65,7 @@ export default class Base {
     // this.canvas.requestPointerLock()
     this.calculateCanvas();
     this.paddleBoxParameters();
-
+    maxRounds = this.context.trialsNumber;
     this.loopTimer = function () {
       let inst = this;
       gameLoop = window.requestAnimationFrame(function () {
@@ -232,6 +232,16 @@ export default class Base {
   }
 
 
+  get currentRounds() {
+
+    return currentRounds;
+  }
+
+  set currentRounds(val) {
+
+    currentRounds = val;
+  }
+
 
   /**
    * Create Uniform array of values
@@ -334,17 +344,6 @@ export default class Base {
 
     this.ctx.drawImage(image, leftBorder, topBorder, rightBorder - leftBorder, downBorder - topBorder);
 
-  }
-
-
-  get currentRounds() {
-
-    return currentRounds;
-  }
-
-  set currentRounds(val) {
-
-    currentRounds = val;
   }
 
   /**

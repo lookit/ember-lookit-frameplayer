@@ -36,27 +36,23 @@ import Game from './Game';
         "intro": {
             "kind": "exp-lookit-games",
             "source": "https://piproject.s3.us-east-2.amazonaws.com/Resources/images/intro.png",
-            "showIntro": true,
-            "showProgress": false,
+            "instructions": "You come across an abandoned arcade and you decide to enter. ",
             "showInstructions": true
         },
 
-        "progress-1": {
+        "map": {
             "kind": "exp-lookit-games",
-            "gameType": 0,
+            "instructions": "Click on the START button to play the first game.",
             "showProgress": true,
-            "showIntro": false,
-            "showInstructions": false,
-            "source_button": "https://piproject.s3.us-east-2.amazonaws.com/Resources/images/start_button.png"
+            "gameType": 0,
+            "sourceButton": "https://piproject.s3.us-east-2.amazonaws.com/Resources/images/start_button.png"
         },
         "game": {
             "kind": "exp-lookit-games",
-            "gameType": 0,
-            "gameDescription": "Light the night game",
-            "instructions" : "Use mouse to move paddle up and down",
-            "showIntro" : false,
-            "showProgress": false,
-            "showInstructions": true
+            "playGame": true,
+            "gameType": 1,
+            "trialType" : "demo",
+            "trialsNumber": 24
         }
     }
  ```
@@ -91,6 +87,17 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                 },
 
                 /**
+                 * Show canvas with game
+                 * @property {boolean} type
+                 * @default false
+                 */
+                playGame: {
+                   type: 'boolean',
+                   default: false
+
+                  },
+
+                /**
                  * Text to display for game instructions
                  *
                  * @property {String} instructions
@@ -99,6 +106,29 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                 instructions: {
                     type: 'string',
                     default: ''
+                },
+
+                /**
+                 *  Maximum number of trials per game
+                 * @property {integer} type
+                 * @default 0
+                 */
+                trialsNumber: {
+                    type: 'integer',
+                    default: 24,
+                    description: 'Maximum number of trials per game '
+
+                  },
+
+                /**
+                 * Current trial type : demo or intervention
+                 * @property {String} trialType
+                 * @default 'intervention'
+                 */
+                trialType: {
+                    type: 'string',
+                    default: 'intervention',
+                    description: 'Current trial type : demo or intervention '
                 },
 
                 /**
@@ -147,10 +177,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                   },
                 /**
                  * Media resource location for button
-                 * @property {String} source_button
+                 * @property {String} sourceButton
                  * @default 'empty'
                  */
-                source_button: {
+                sourceButton: {
                   type: 'string',
                   default: ''
 
@@ -327,11 +357,15 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
         if(this.get('fullscreen') === true){
           this.send('showFullscreen');
         }
+        if (this.get('playGame') === true) {
+
+          this.send('play');
+        }
         if (this.get('showProgress') === true) {
             let current_game = this.get('gameType') + 1;
             switch (current_game){
               case 1:
-                  this.set('button_position','button button-1');
+                  this.set('buttonPosition','button button-1');
                   this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
                   this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2_off.png');
                   this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3_off.png');
@@ -345,7 +379,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                   this.set('exit_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/exit_off.png');
                   break;
               case 2:
-                  this.set('button_position','button button-2');
+                  this.set('buttonPosition','button button-2');
                   this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
                   this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2.png');
                   this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3_off.png');
@@ -360,7 +394,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                   break;
 
               case 3:
-                  this.set('button_position','button button-3');
+                  this.set('buttonPosition','button button-3');
                   this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
                   this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2.png');
                   this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3.png');
@@ -375,7 +409,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                   break;
 
               case 4:
-                  this.set('button_position','button button-4');
+                  this.set('buttonPosition','button button-4');
                   this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
                   this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2.png');
                   this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3.png');
@@ -390,7 +424,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                   break;
 
               case 5:
-                  this.set('button_position','button button-5');
+                  this.set('buttonPosition','button button-5');
                   this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
                   this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2.png');
                   this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3.png');
