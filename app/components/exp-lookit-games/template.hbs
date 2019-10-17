@@ -27,7 +27,7 @@
 
         <div class="box-set">
           <p>{{instructions}}</p>
-            <input type="image" src={{source_button}} class={{button_position}} {{ action 'play' }}  alt="Submit"/>
+            <input type="image" src={{sourceButton}} class={{buttonPosition}} {{ action 'next' }}  alt="Submit"/>
             <img src={{machine1_url}} class="box box-1" alt="Submit">
             <img src={{machine2_url}}  class="box box-2" alt="Submit">
             <img src={{machine3_url}}  class="box box-3" alt="Submit">
@@ -43,8 +43,9 @@
 
     {{/if}}
 
-
-    <canvas  id="gamesCanvas"  height="0" width="0"></canvas>
+    {{#if playGame}}
+      <canvas  id="gamesCanvas"  height="0" width="0"></canvas>
+    {{/if}}
 </div>
 
 

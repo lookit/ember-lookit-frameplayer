@@ -65,7 +65,7 @@ export default class Base {
     // this.canvas.requestPointerLock()
     this.calculateCanvas();
     this.paddleBoxParameters();
-    this.currentRounds = context.trials_number;
+    maxRounds = this.context.trialsNumber;
     this.loopTimer = function () {
       let inst = this;
       gameLoop = window.requestAnimationFrame(function () {
@@ -231,6 +231,16 @@ export default class Base {
 
   }
 
+
+  get currentRounds() {
+
+    return currentRounds;
+  }
+
+  set currentRounds(val) {
+
+    currentRounds = val;
+  }
 
 
   /**
