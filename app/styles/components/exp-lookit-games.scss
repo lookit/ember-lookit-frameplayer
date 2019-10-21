@@ -33,15 +33,17 @@
 
 }
 
+.instr-page-container, .intro, .box-set {
+
+  cursor: auto !important;
+}
+
 
 .exp-lookit-games, .exp-lookit-games *
 {
   margin:0;
 }
 
-.exp-lookit-games * {
-  cursor: auto !important;
-}
 
 
 #exp-lookit-games-container, #experiment-player.player-fullscreen #exp-lookit-games-container {
