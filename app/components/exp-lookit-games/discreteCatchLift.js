@@ -287,13 +287,12 @@ export default class DiscreteCatchLift extends Base {
         if(target.pizzaTimeDelay >0 && super.getElapsedTime(target.pizzaTimeDelay) > 0.2){
             target.state = 'showClock';
         }
-
+        super.drawImageObject(target, images[gameImage.TARGET]);
     }
 
 
     if (target.state === 'showClock') {
       this.clockState();
-      super.drawImageObject(target, images[gameImage.TARGET]);
 
     }
 
