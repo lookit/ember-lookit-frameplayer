@@ -359,7 +359,7 @@ export default class DiscreteBounce extends Base {
 
 
 
-    let YL = (0.42 ) * super.Utils.SCALE;
+    let YL = (0.46 ) * super.Utils.SCALE;
     let YH = (0.4 + 0.35) * super.Utils.SCALE;
 
     let targetx  = (ball.position.y + 1.44 * super.Utils.SCALE) / 1.1;
