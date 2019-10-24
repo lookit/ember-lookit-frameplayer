@@ -61,8 +61,8 @@ export default class Base {
     // Event listener for mouse and keyboard here
     document.addEventListener('keydown', this.keyDownHandler, false);
     document.addEventListener('keyup', this.keyUpHandler, false);
-    // this.canvas.requestPointerLock =  this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock || this.canvas.webkitRequestPointerLock;
-    // this.canvas.requestPointerLock()
+    this.canvas.requestPointerLock =  this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock || this.canvas.webkitRequestPointerLock;
+    this.canvas.requestPointerLock()
     this.calculateCanvas();
     this.paddleBoxParameters();
     maxRounds = this.context.trialsNumber;
@@ -815,9 +815,9 @@ export default class Base {
 
     mouseY += e.movementY;
 
-    if(e.movementY === 0){
-      mouseY -= 1;
-    }
+    // if(e.movementY === 0){
+    //   mouseY -= 1;
+    // }
 
     if(mouseY  > border && e.movementY >0){
       mouseY =  border;
