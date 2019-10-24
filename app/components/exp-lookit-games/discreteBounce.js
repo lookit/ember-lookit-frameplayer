@@ -362,7 +362,13 @@ export default class DiscreteBounce extends Base {
     let YL = (0.46 ) * super.Utils.SCALE;
     let YH = (0.4 + 0.35) * super.Utils.SCALE;
 
-    let targetx  = (ball.position.y + 1.44 * super.Utils.SCALE) / 1.1;
+    let targetx  = this.getXBoundValues(ball.position.y);
+
+    if((ball.position.y < YL && ball.position.x > this.getXBoundValues(YL) )|| (ball.position.y > YH && ball.position.x > this.getXBoundValues(YH))){
+
+      return true;
+    }
+
     if (ball.state !== 'done' && ball.position.y > YL && ball.position.y < YH && ball.position.x > targetx) {
       let currenImpactCoord = Math.abs(ball.position.y - 0.6 * super.Utils.SCALE);
       if (currenImpactCoord < 0.27 * super.Utils.SCALE) {
@@ -384,6 +390,14 @@ export default class DiscreteBounce extends Base {
     return false;
   }
 
+  /**
+   * Get target  bounds for x coordinate according to slope equation
+   * @param y position
+   * @returns {number} x position
+   */
+  getXBoundValues(y) {
+    return (y + 1.44 * super.Utils.SCALE) / 1.1;
+  }
 
   /**
    *
