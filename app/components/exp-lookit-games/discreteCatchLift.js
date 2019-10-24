@@ -273,39 +273,27 @@ export default class DiscreteCatchLift extends Base {
 
     //Randomize initial wait time here
     if (target.state === 'start' && initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
-        sounds[gameSound.START].pause();
-        sounds[gameSound.START].currentTime = 0;
-        target.state = 'showTarget';
-        target.showTime = new Date().getTime();
+      sounds[gameSound.START].pause();
+      sounds[gameSound.START].currentTime = 0;
+      target.state = 'showTarget';
     }
 
     // Add delay between showing the target (rat) and pizza (clock)
     if(target.state === 'showTarget') {
-        if(target.pizzaTimeDelay === 0 ) {
-            target.pizzaTimeDelay = new Date().getTime();
-        }
-        if(target.pizzaTimeDelay >0 && super.getElapsedTime(target.pizzaTimeDelay) > 0.2){
-            target.state = 'showClock';
-        }
-        super.drawImageObject(target, images[gameImage.TARGET]);
+      if(target.pizzaTimeDelay === 0 ) {
+        target.pizzaTimeDelay = new Date().getTime();
+      }
+      if(target.pizzaTimeDelay >0 && super.getElapsedTime(target.pizzaTimeDelay) > 0.5){
+        target.state = 'showClock';
+        target.showTime = new Date().getTime();
+      }
+      super.drawImageObject(target, images[gameImage.TARGET]);
     }
+
+
 
 
     if (target.state === 'showClock') {
-      this.clockState();
-
-    }
-
-    if (target.state === 'done') {
-
-
-      super.paddleAtZero(basket, false);
-
-
-    }
-
-    if (target.state === 'showClock') {
-
 
       if (target.showTime > 0 && super.getElapsedTime(target.showTime) > 1) {
 
@@ -321,7 +309,7 @@ export default class DiscreteCatchLift extends Base {
 
       }
 
-
+      //Collision detection is here
       if ((target.position.y + 0.0476 * super.Utils.SCALE) - basket.position.y >= 0) {
         target.state = 'done';
         if (clockObject.state > 0) {
@@ -333,12 +321,21 @@ export default class DiscreteCatchLift extends Base {
             sounds[gameSound.SERIES3].play();
           }
           super.increaseScore();
-          this.showClock();
+          //this.showClock();
 
         }
 
 
       }
+
+      super.drawImageObject(target, images[gameImage.TARGET]);
+      this.clockState();
+    }
+
+
+    if (target.state === 'done') {
+
+      super.paddleAtZero(basket, false);
 
 
     }
