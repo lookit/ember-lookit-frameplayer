@@ -249,10 +249,10 @@ export default class Base {
    * @param vals {array} Array of values that  needed to be equally distributed
    * @return {array} array
    */
-  uniformArr(vals) {
+  uniformArr(vals, arrLength = maxRounds) {
     let arr = [];
     vals.forEach((v) => {
-      arr = arr.concat(Array(maxRounds / vals.length).fill(v));
+      arr = arr.concat(Array(arrLength / vals.length).fill(v));
 
     });
 
