@@ -264,7 +264,7 @@ export default class DiscreteBounce extends Base {
     }
 
     super.paddleMove(paddle, initialTime, ball);
-
+    this.createwallBoarders();
 
   }
 
@@ -347,6 +347,33 @@ export default class DiscreteBounce extends Base {
     let iterator = super.getElapsedTime(initialTime);
     ball.velocity = super.TrajectoryVars.initV - super.TrajectoryVars.gravity * iterator;
     paddle.releaseVelocity = -alpha * (ball.velocity - paddleVelocity) + paddleVelocity;
+  }
+
+
+  createwallBoarders(){
+
+    this.ctx.beginPath();
+
+    //Upper bound
+    this.ctx.moveTo(this.getXBoundValues(0.1 ), 0.1)
+    this.ctx.lineTo(this.getXBoundValues(0.49 * super.Utils.SCALE), 0.49 * super.Utils.SCALE);
+    this.ctx.lineTo(this.getXBoundValues(0.367 * super.Utils.SCALE) + 0.248 * super.Utils.SCALE, 0.367 * super.Utils.SCALE);
+    this.ctx.lineTo(this.getXBoundValues(0 ) + 0.248 * super.Utils.SCALE, 0);
+    this.ctx.fillStyle = super.Utils.grayColor;
+    this.ctx.fill();
+
+
+
+    //Lower bound
+    this.ctx.moveTo(this.getXBoundValues(0.768 * super.Utils.SCALE ), 0.768 * super.Utils.SCALE)
+    this.ctx.lineTo(this.getXBoundValues(screen.height), screen.height);
+    this.ctx.lineTo(this.getXBoundValues(screen.height ) + 0.248 * super.Utils.SCALE, screen.height);
+    this.ctx.lineTo(this.getXBoundValues(0.645 * super.Utils.SCALE ) + 0.248 * super.Utils.SCALE, 0.645 * super.Utils.SCALE);
+
+    this.ctx.fillStyle = super.Utils.grayColor;
+    this.ctx.fill();
+
+
   }
 
   /**
