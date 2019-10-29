@@ -464,7 +464,7 @@ export default class DiscreteBounce extends Base {
       ball_position_x: ball.position.x / this.canvas.width,
       ball_position_y: (this.canvas.height - ball.position.y) / this.canvas.height,
       paddle_center_x: paddle.position.x / this.canvas.width  +  (paddle.dimensions.width / this.canvas.width) / 2,
-      paddle_width: paddle.dimensions.width / this.canvas.width,
+      paddle_x: paddle.position.x / this.canvas.width,
       paddle_position_y: (this.canvas.height - paddle.position.y) / this.canvas.height,
       trial: super.currentRounds,
       trialType: this.context.trialType,
