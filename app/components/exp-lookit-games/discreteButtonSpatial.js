@@ -197,6 +197,9 @@ export default class DiscreteButtonSpatial extends Base {
 
   }
 
+
+
+
   /**
    * Main point to start the game.
    * Initialize static parameters and preload sounds here
@@ -204,9 +207,9 @@ export default class DiscreteButtonSpatial extends Base {
    */
   init() {
     startTime = new Date().getTime();
-    initVmatrix = super.uniformArr([1, 2, 3]);
     obstructions = super.uniformArr([1, 2, 3]);
-
+    // Randomize trajectory for each obstruction
+    initVmatrix = [1,2,3].flatMap(  () => super.uniformArr([1, 2, 3], obstructions.length/3));
     super.fillAudioArray(soundURLs,sounds);
     super.fillImageArray(imageURls,images);
     super.fillImageArray(windowImageURLS,windowImgs);
@@ -400,11 +403,15 @@ export default class DiscreteButtonSpatial extends Base {
     this.createShuttle();
 
     if (ball.state === 'hit target') {
+
       if (index >= 0) {
         let target = targets[index];
         this.createWindow(target);
         this.showWindow(index);
+      }else{
+        this.showCorrectWindow();
       }
+
       if (super.getElapsedTime(initialTime) >= 3) {
         super.finishGame(false);
       }
@@ -420,11 +427,14 @@ export default class DiscreteButtonSpatial extends Base {
    * @param index index of the selected button
    */
   checkHitState(index) {
+
+
     if (index >= 0) {
       let target = targets[index];
       this.createWindow(target);
       this.showWindow(index);
     }
+
     // Check if current index of the pressed item corresponds to the actual target index
     if (index === currentTargetIndex) {
 
@@ -436,6 +446,25 @@ export default class DiscreteButtonSpatial extends Base {
 
 
     ball.state = 'hit target';
+  }
+
+  /**
+   *  Show current trajectory window
+   */
+  showCorrectWindow(){
+
+    let target = targets[this.getCorrectIndex()];
+    this.createWindow(target);
+  }
+
+
+  /**
+   * Show correct index for current trajectory
+   * @returns {number} index of trajectory
+   */
+  getCorrectIndex() {
+    let indexArr = [2, 1, 0]; //reverse index to get value
+    return  indexArr[initVmatrix[super.currentRounds] - 1];
   }
 
   /**
@@ -451,19 +480,16 @@ export default class DiscreteButtonSpatial extends Base {
 
     }
 
-    let indexArr = [2, 1, 0]; //reverse index to get value
-    currentTargetIndex = indexArr[initVmatrix[super.currentRounds] - 1];
-
     //Show ball only on button press
-    if (index >= 0) {
-      this.showBallLocation(currentTargetIndex);
+    if ( index >= 0) {
+      this.showBallLocation(this.getCorrectIndex());
     }
   }
 
   /**
    * Columns structure
    * window: 1,2,3 indicating correct location of where the slime will land - top, middle or bottom
-   * selected_button : 0,1,2,3 indicating no button or which button was clicked.  0 : Y ,1:G , 2: V, 3 : no button
+   * selected_button : 1,2,3,4 indicating no button or which button was clicked.  0 : Y ,1:G , 2: V, 3 : no button
    * ship : 1,2,3 indicating size of spaceship (from small to bigger)
    * @method dataCollection
    */
@@ -472,7 +498,7 @@ export default class DiscreteButtonSpatial extends Base {
 
 
     let target_state = pressed.findIndex(item => item !== false);
-      if(keys[target_state] === undefined){
+    if(keys[target_state] === undefined){
       target_state = 3;
     }
 
@@ -480,7 +506,7 @@ export default class DiscreteButtonSpatial extends Base {
     let exportData = {
       game_type: 'discreteButtonSpatial',
       window: currentTargetIndex+1,
-      selected_button: target_state,
+      selected_button: target_state + 1  ,
       obstruction_number: obstructions[super.currentRounds],
       ball_position_x: ball.position.x / this.canvas.width,
       ball_position_y:(this.canvas.height - ball.position.y)/this.canvas.height,
