@@ -96,6 +96,33 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                    default: false
 
                   },
+                /**
+                 * List of possible heights for demo trial
+                 * @property {array}  demoTrajectories
+                 * @default []
+                 */
+                demoTrajectories: {
+                    type: 'array',
+                    description: 'list of possible heights for demo trial',
+                    default: [],
+                    items: {
+                      type: 'number'
+                    }
+                  },
+                /**
+                 * List of possible obstructions for demo trial
+                 * @property {array}  demoObstructions
+                 * @default []
+                 */
+                demoObstructions: {
+                  type: 'array',
+                  description: 'list of possible obstructions for demo trial',
+                  default: [],
+                  items: {
+                    type: 'number'
+                  }
+                },
+
 
                 /**
                  * Text to display for game instructions

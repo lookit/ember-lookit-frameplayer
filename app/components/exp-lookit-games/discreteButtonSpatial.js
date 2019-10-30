@@ -207,9 +207,16 @@ export default class DiscreteButtonSpatial extends Base {
    */
   init() {
     startTime = new Date().getTime();
-    obstructions = super.uniformArr([1, 2, 3]);
-    // Randomize trajectory for each obstruction
-    initVmatrix = [1,2,3].flatMap(  () => super.uniformArr([1, 2, 3], obstructions.length/3));
+
+    if(this.context.trialType === 'demo'){
+      obstructions = this.context.demoObstructions;
+      initVmatrix =   this.context.demoTrajectories;
+    }else{
+      obstructions = super.uniformArr([1, 2, 3]);
+      // Randomize trajectory for each obstruction
+      initVmatrix = [1,2,3].flatMap(  () => super.uniformArr([1, 2, 3], obstructions.length/3));
+    }
+
     super.fillAudioArray(soundURLs,sounds);
     super.fillImageArray(imageURls,images);
     super.fillImageArray(windowImageURLS,windowImgs);

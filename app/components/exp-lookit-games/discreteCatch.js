@@ -81,9 +81,13 @@ export default class DiscreteCatch extends Base {
    */
   init() {
 
-    obstrArr  = super.uniformArr(OBSTRUCTIONS);
-    hArray = OBSTRUCTIONS.flatMap(  () => super.uniformArr([1, 5, 9], obstrArr.length/3));
-
+    if(this.context.trialType === 'demo'){
+      obstrArr = this.context.demoObstructions;
+      hArray =   this.context.demoTrajectories;
+    }else{
+      obstrArr  = super.uniformArr(OBSTRUCTIONS);
+      hArray = OBSTRUCTIONS.flatMap(() => super.uniformArr([1, 5, 9], obstrArr.length / 3));
+    }
     super.fillAudioArray(soundURLs,sounds);
     super.fillImageArray(imageURls,images);
     super.fillImageArray(obstructionsURLs,obstructionImages);

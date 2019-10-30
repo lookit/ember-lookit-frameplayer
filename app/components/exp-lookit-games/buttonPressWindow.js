@@ -132,7 +132,13 @@ export default class ButtonPressWindow extends Base {
    */
   init() {
     startTime = new Date().getTime();
-    TfArr = super.uniformArr(TfArrIndex); // Fill out uniform the Time Flight array
+
+    if(this.context.trialType === 'demo'){
+      TfArr =   this.context.demoTrajectories;
+    }else{
+      TfArr = super.uniformArr(TfArrIndex); // Fill out uniform the Time Flight array
+    }
+
     this.setTargetBackground();
     super.fillAudioArray(soundURLs,sounds);
     super.fillImageArray(fireworksURLs,targetImgs);

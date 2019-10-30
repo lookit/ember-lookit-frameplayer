@@ -97,7 +97,14 @@ export default class DiscreteBounce extends Base {
       times: [],
 
     };
-    hArray = super.generateHeights();
+
+
+    if(this.context.trialType === 'demo'){
+      hArray =   this.context.demoTrajectories;
+    }else{
+      hArray = super.generateHeights();
+    }
+
 
 
     let leftBorder = (1.75) * super.Utils.SCALE;
