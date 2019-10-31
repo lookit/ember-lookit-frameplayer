@@ -512,7 +512,7 @@ export default class DiscreteButtonSpatial extends Base {
 
     let exportData = {
       game_type: 'discreteButtonSpatial',
-      window: currentTargetIndex+1,
+      window: this.getCorrectIndex(),
       selected_button: target_state + 1  ,
       obstruction_number: obstructions[super.currentRounds],
       ball_position_x: ball.position.x / this.canvas.width,
