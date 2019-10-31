@@ -17,7 +17,6 @@ let ball = {};
 let targets = [];
 let pressed = {};
 let keys = ['y', 'g', 'v']; //Keyboard keys for upper,middle and lower windows
-let currentTargetIndex = 0;
 let initialTime = 0; // initial time for current game trial
 let initVmatrix = []; //Initial velocity matrix uniformly distributed and randomized
 let obstructions = []; // Array of possible obstructions parameters
@@ -443,7 +442,7 @@ export default class DiscreteButtonSpatial extends Base {
     }
 
     // Check if current index of the pressed item corresponds to the actual target index
-    if (index === currentTargetIndex) {
+    if (index === this.getCorrectIndex()) {
 
       sounds[gameSound.CATCH].play();
 
