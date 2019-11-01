@@ -17,9 +17,7 @@ let ball = {};
 let obstructions = []; // Possible obstructions array
 let targetStars = {}; // Start location (shows upon reaching the rim on basket )
 let initialTime = 0; // initial time for current game trial
-let hArray = [];
 let Height = 0.8; // Current trajectory height
-let obstrArr = []; // Current obstructions  array
 let jitterT = 0;
 let radiusRim = 0.1; //Rim size on basket
 let obstructionsNum = 0; // Current number of obstructions (randomized each trial)
@@ -27,7 +25,6 @@ let consecutiveCounts = 0;  // Calculate number of consecutive successful attemp
 let startTime = 0;
 const GEAR_RADIUS = 0.05;
 const TRAVEL_TIME = 1.3;
-const OBSTRUCTIONS = [0,1,2,3];
 // Media arrays for loading
 let sounds = [];
 let soundURLs = [];
@@ -35,7 +32,7 @@ let imageURls = [];
 let images = [];
 let obstructionsURLs = [];
 let obstructionImages = [];
-
+let trajectoryParameters = [];
 // Media mapping as Enum
 const gameSound = {
   START:0,
@@ -47,6 +44,20 @@ const gameImage = {
   BALL: 1,
   STARS: 2,
   BALLBOX: 3
+
+};
+
+const gameRandomization = {
+
+  HEIGHT:0,
+  OBSTRUCTION:1
+
+};
+
+const gameArrayValues = {
+
+  OBSTRUCTIONS: [0,1,2,3],
+  HEIGHTS:[1, 5, 9]
 
 };
 
@@ -81,13 +92,8 @@ export default class DiscreteCatch extends Base {
    */
   init() {
 
-    if(this.context.trialType === 'demo'){
-      obstrArr = this.context.demoObstructions;
-      hArray =   this.context.demoTrajectories;
-    }else{
-      obstrArr  = super.uniformArr(OBSTRUCTIONS);
-      hArray = OBSTRUCTIONS.flatMap(() => super.uniformArr([1, 5, 9], obstrArr.length / 3));
-    }
+    trajectoryParameters = super.getTrajectoriesObstacles(gameArrayValues.OBSTRUCTIONS,gameArrayValues.HEIGHTS);
+
     super.fillAudioArray(soundURLs,sounds);
     super.fillImageArray(imageURls,images);
     super.fillImageArray(obstructionsURLs,obstructionImages);
@@ -122,7 +128,7 @@ export default class DiscreteCatch extends Base {
     initialTime =0;
     super.createPaddleBox();
     basket = super.basketObject(basket);
-    obstructionsNum = obstrArr[super.currentRounds];
+    obstructionsNum = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];
     ball = super.ballObject();
 
     // Generate array of obstruction objects
@@ -166,7 +172,7 @@ export default class DiscreteCatch extends Base {
     super.dataCollection();
     let exportData = {
       game_type: 'discreteCatch',
-      trajectory: hArray[super.currentRounds],
+      trajectory: trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT],
       ball_position_x: ball.position.x / this.canvas.width ,
       ball_position_y:  (this.canvas.height - ball.position.y)/this.canvas.height,
       paddle_center_x: basket.position.x / this.canvas.width  +  (basket.dimensions.width / this.canvas.width) / 2,
@@ -174,7 +180,7 @@ export default class DiscreteCatch extends Base {
       paddle_position_y: (this.canvas.height - basket.position.y)/this.canvas.height,
       red_dot_start_position: (1.3310 - radiusRim),
       red_dot_width: radiusRim*2,
-      obstruction: obstructions[super.currentRounds],
+      obstruction: trajectoryParameters[super.currentRounds][trajectoryParameters.OBSTRUCTION],
       trial: super.currentRounds,
       trialType: this.context.trialType,
       timestamp: super.getElapsedTime(initialTime)
@@ -269,7 +275,7 @@ export default class DiscreteCatch extends Base {
    */
   loop() {
     super.loop();
-    super.generateTrajectoryParams(hArray,Height);
+    super.generateTrajectoryParams(trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT],Height);
     this.createLauncher(images[gameImage.BALLBOX]);
     let paddleBoxColor = super.Utils.blueColor;
     if(ball.state === 'start'){

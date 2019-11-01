@@ -18,8 +18,6 @@ let targets = [];
 let pressed = {};
 let keys = ['y', 'g', 'v']; //Keyboard keys for upper,middle and lower windows
 let initialTime = 0; // initial time for current game trial
-let initVmatrix = []; //Initial velocity matrix uniformly distributed and randomized
-let obstructions = []; // Array of possible obstructions parameters
 let jitterT = 0; // Time jitter (variates from 500 ms to 1500 ms), time between sound start and ball starting to fly
 let startTime = 0; // start of the game to wait before music playing
 let buttonPressDelay = 0;
@@ -32,6 +30,14 @@ let sounds = [];
 let soundURLs = [];
 let imageURls = [];
 let images = [];
+let trajectoryParameters = [];
+
+const gameArrayValues = {
+
+  OBSTRUCTIONS: [1,2,3],
+  VELOCITIES:[1,2,3]
+
+};
 
 // Media mapping as Enum
 const gameSound = {
@@ -55,6 +61,11 @@ const gameImage = {
     MIDDLE: 1,
     LARGE: 2
   }
+};
+
+const gameRandomization = {
+  OBSTRUCTION:0,
+  VELOCITY:1
 };
 
 
@@ -158,7 +169,7 @@ export default class DiscreteButtonSpatial extends Base {
    */
   getShuttle(targetParams) {
 
-    let index = obstructions[super.currentRounds]; // Get current shuttle case
+    let index = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];// Get current shuttle case
     let shuttle = {};
     targetParams.position.x = {};
 
@@ -206,16 +217,8 @@ export default class DiscreteButtonSpatial extends Base {
    */
   init() {
     startTime = new Date().getTime();
-
-    if(this.context.trialType === 'demo'){
-      obstructions = this.context.demoObstructions;
-      initVmatrix =   this.context.demoTrajectories;
-    }else{
-      obstructions = super.uniformArr([1, 2, 3]);
-      // Randomize trajectory for each obstruction
-      initVmatrix = [1,2,3].flatMap(  () => super.uniformArr([1, 2, 3], obstructions.length/3));
-    }
-
+    trajectoryParameters = super.getTrajectoriesObstacles(gameArrayValues.OBSTRUCTIONS,gameArrayValues.VELOCITIES);
+    // Randomize trajectory for each obstruction
     super.fillAudioArray(soundURLs,sounds);
     super.fillImageArray(imageURls,images);
     super.fillImageArray(windowImageURLS,windowImgs);
@@ -341,7 +344,7 @@ export default class DiscreteButtonSpatial extends Base {
    */
   loop() {
     super.loop();
-    super.generateTrajectoryParamsDiscreteSpatial(initVmatrix);
+    super.generateTrajectoryParamsDiscreteSpatial(trajectoryParameters[super.currentRounds][gameRandomization.VELOCITY]);
     this.discreteLauncher(images[gameImage.LAUNCHER]);
 
     let index = pressed.findIndex(item => item !== false);
@@ -413,11 +416,9 @@ export default class DiscreteButtonSpatial extends Base {
       if (index >= 0) {
         let target = targets[index];
         this.createWindow(target);
-        this.showWindow(index);
-      }else{
-        this.showCorrectWindow();
-      }
 
+      }
+      this.showWindow(index);
       if (super.getElapsedTime(initialTime) >= 3) {
         super.finishGame(false);
       }
@@ -454,15 +455,6 @@ export default class DiscreteButtonSpatial extends Base {
     ball.state = 'hit target';
   }
 
-  /**
-   *  Show current trajectory window
-   */
-  showCorrectWindow(){
-
-    let target = targets[this.getCorrectIndex()];
-    this.createWindow(target);
-  }
-
 
   /**
    * Show correct index for current trajectory
@@ -470,7 +462,7 @@ export default class DiscreteButtonSpatial extends Base {
    */
   getCorrectIndex() {
     let indexArr = [2, 1, 0]; //reverse index to get value
-    return  indexArr[initVmatrix[super.currentRounds] - 1];
+    return  indexArr[trajectoryParameters[super.currentRounds][gameRandomization.VELOCITY] - 1];
   }
 
   /**
@@ -486,17 +478,15 @@ export default class DiscreteButtonSpatial extends Base {
 
     }
 
-    //Show ball only on button press
-    if ( index >= 0) {
-      this.showBallLocation(this.getCorrectIndex());
-    }
+    this.showBallLocation(this.getCorrectIndex());
+
   }
 
   /**
    * Columns structure
    * window: 1,2,3 indicating correct location of where the slime will land - top, middle or bottom
-   * selected_button : 1,2,3,4 indicating no button or which button was clicked.  0 : Y ,1:G , 2: V, 3 : no button
-   * ship : 1,2,3 indicating size of spaceship (from small to bigger)
+   * selected_button: 1,2,3,4 indicating no button or which button was clicked.  0 : Y ,1:G , 2: V, 3 : no button
+   * ship: 1,2,3 indicating size of spaceship (from small to bigger)
    * @method dataCollection
    */
   dataCollection() {
@@ -511,9 +501,9 @@ export default class DiscreteButtonSpatial extends Base {
 
     let exportData = {
       game_type: 'discreteButtonSpatial',
-      window: this.getCorrectIndex() + 1 ,
+      window: this.getCorrectIndex()+1,
       selected_button: target_state + 1  ,
-      obstruction_number: obstructions[super.currentRounds],
+      obstruction_number: trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION],
       ball_position_x: ball.position.x / this.canvas.width,
       ball_position_y:(this.canvas.height - ball.position.y)/this.canvas.height,
       trial: super.currentRounds,
@@ -522,7 +512,7 @@ export default class DiscreteButtonSpatial extends Base {
 
     };
     if(ball.state === 'hit' || ball.state === 'fall') {
-        super.storeData(exportData);
+      super.storeData(exportData);
     }
   }
 

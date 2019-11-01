@@ -158,12 +158,12 @@ export default class Base {
   /**
    * Generate main trajectory parameters per trial
    * @method generateTrajectoryParams
-   * @param hArr array of equally distributed height
-   * @param height height correction coefficient
+   * @param current trial  height
+   * @param heightAdjuster height correction coefficient
    * @param Tf Flight time coefficient
    */
-  generateTrajectoryParams(hArr, height) {
-    let currentHeight = hArr[currentRounds] * 0.05 + height;
+  generateTrajectoryParams(trialHeight, heightAdjuster) {
+    let currentHeight = trialHeight * 0.05 + heightAdjuster;
     let Tf = 0.75; // Time Flight for trajectory
     initX = 0.52;
     gravity = 2 * currentHeight / Math.pow(Tf, 2);
@@ -191,13 +191,13 @@ export default class Base {
   /**
    * Generate Trajectory  parameters for spatial discrete games  (using init velocity matrix )
    * @method generateTrajectoryParamsDiscreteSpatial
-   * @param initVmatrix  init velocity matrix
+   * @param initVelocity  init velocity for trial
    */
-  generateTrajectoryParamsDiscreteSpatial(initVmatrix) {
+  generateTrajectoryParamsDiscreteSpatial(initVelocity) {
     let Tf = 0.9;
     gravity = 1.8;
     ballvx = (1.051) / Tf;
-    initV = 0.15 * initVmatrix[currentRounds] + 0.45;
+    initV = 0.15 * initVelocity + 0.45;
     initX = 0.7510;
     initBallY = -0.02;
   }
@@ -260,6 +260,20 @@ export default class Base {
 
   }
 
+  /**
+   * Create uniform array of trajectory parameters(height,velocity) for each obstacle
+   * @method getTrajectoriesObstacles
+   * @param {Array} obstructions array of obstructions,  all possible ex. [1,2,3]
+   * @param  {Array} trajectoryParams array of all possible  trajectory parameters ex. heights : [1,4,5]
+   * @returns {Array} shuffled 2d array [[obstruction, trajectoryParam]]
+   */
+  getTrajectoriesObstacles(obstructions,trajectoryParams){
+
+    let array =  obstructions.flatMap(  (obstruction) =>  this.uniformArr(trajectoryParams, maxRounds/obstructions.length).map((trajectory) => [trajectory,obstruction]));
+
+    return Utils.shuffle(array);
+
+  }
 
 
   stop() {

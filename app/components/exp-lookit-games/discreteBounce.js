@@ -362,7 +362,7 @@ export default class DiscreteBounce extends Base {
     this.ctx.beginPath();
 
     //Upper bound
-    this.ctx.moveTo(this.getXBoundValues(0.1 ), 0.1)
+    this.ctx.moveTo(this.getXBoundValues(0.1 ), 0.1);
     this.ctx.lineTo(this.getXBoundValues(0.49 * super.Utils.SCALE), 0.49 * super.Utils.SCALE);
     this.ctx.lineTo(this.getXBoundValues(0.367 * super.Utils.SCALE) + 0.248 * super.Utils.SCALE, 0.367 * super.Utils.SCALE);
     this.ctx.lineTo(this.getXBoundValues(0 ) + 0.248 * super.Utils.SCALE, 0);
@@ -372,7 +372,7 @@ export default class DiscreteBounce extends Base {
 
 
     //Lower bound
-    this.ctx.moveTo(this.getXBoundValues(0.768 * super.Utils.SCALE ), 0.768 * super.Utils.SCALE)
+    this.ctx.moveTo(this.getXBoundValues(0.768 * super.Utils.SCALE ), 0.768 * super.Utils.SCALE);
     this.ctx.lineTo(this.getXBoundValues(screen.height), screen.height);
     this.ctx.lineTo(this.getXBoundValues(screen.height ) + 0.248 * super.Utils.SCALE, screen.height);
     this.ctx.lineTo(this.getXBoundValues(0.645 * super.Utils.SCALE ) + 0.248 * super.Utils.SCALE, 0.645 * super.Utils.SCALE);
