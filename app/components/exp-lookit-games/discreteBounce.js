@@ -173,7 +173,6 @@ export default class DiscreteBounce extends Base {
     super.drawImageObject(paddle, images[gameImage.PADDLE]);
     super.paddleMove(paddle, initialTime, ball);
     this.paddleBallCollision();
-    super.drawImageObject(token, images[gameImage.TOKEN]);
     let hitTheTarget = this.collisionDetection();
     let hitTheWall = super.wallCollision(ball);
 
@@ -199,6 +198,11 @@ export default class DiscreteBounce extends Base {
 
     }
 
+    if ((hitTheTarget || hitTheWall) && ball.state !== 'done') {
+
+      ball.state = 'hit';
+    }
+
 
     if (ball.state === 'fall') {
       if (initialTime > 0 && super.getElapsedTime(initialTime) < 1.2) {
@@ -216,12 +220,9 @@ export default class DiscreteBounce extends Base {
       super.drawBall(ball, images[gameImage.BALL]);
 
     }
+    this.createBackTriangle();
+    super.drawImageObject(token, images[gameImage.TOKEN]);
 
-
-    if ((hitTheTarget || hitTheWall) && ball.state !== 'done') {
-
-      ball.state = 'hit';
-    }
 
 
     if (ball.state === 'hit') {
@@ -256,7 +257,6 @@ export default class DiscreteBounce extends Base {
         super.drawImageObject(bricks, images[gameImage.BRICKS_SMALL]);
       } else {
         super.drawImageObject(target, images[gameImage.WALL_INITIAL]);
-        super.drawBall(ball, images[gameImage.BALL]);
       }
 
       super.paddleAtZero(paddle, false);
@@ -383,6 +383,22 @@ export default class DiscreteBounce extends Base {
   }
 
   /**
+   *  Triangle behind the wall to make sure the ball is not visible
+   */
+  createBackTriangle(){
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.getXBoundValues(screen.height ) + 0.248 * super.Utils.SCALE, screen.height);
+    this.ctx.lineTo(screen.width, 0);
+    this.ctx.lineTo(this.getXBoundValues(0 ) + 0.248 * super.Utils.SCALE, 0);
+    this.ctx.fillStyle = super.Utils.blackColor;
+    this.ctx.fill();
+
+
+
+  }
+
+
+  /**
    *
    * Check if ball reached the target
    * @method collisionDetection
@@ -479,7 +495,7 @@ export default class DiscreteBounce extends Base {
     };
 
     if(ball.state === 'hit' || ball.state === 'bounce' || ball.state === 'fall') {
-        super.storeData(exportData);
+         super.storeData(exportData);
     }
 
   }
