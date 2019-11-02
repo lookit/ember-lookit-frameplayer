@@ -44,14 +44,10 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
     type: 'exp-exit-survey',
     frameType: 'EXIT',
     fullScreenElementId: 'experiment-player',
+    frameSchemaProperties: {},
     meta: {
         name: 'ExpExitSurvey',
         description: 'Exit survey for Lookit.',
-        parameters: {
-            type: 'object',
-            properties: {
-            }
-        },
         data: {
             type: 'object',
             properties: {

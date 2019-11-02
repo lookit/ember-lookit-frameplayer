@@ -107,39 +107,39 @@ export default Ember.Mixin.create({
          */
         showFullscreen: function () {
 
-            var elementId = this.get('fullScreenElementId');
-            if (!elementId) {
-                throw Error('Must specify element Id to make fullscreen');
+            if (!this.checkFullscreen()) {
+                var elementId = this.get('fullScreenElementId');
+                if (!elementId) {
+                    throw Error('Must specify element Id to make fullscreen');
+                }
+
+                var buttonId = this.get('fsButtonID');
+                var buttonSel = Ember.$(`#${buttonId}`);
+
+                var selector = Ember.$(`#${elementId}`);
+                var elem = selector[0];
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.msRequestFullscreen) {
+                    elem.msRequestFullscreen();
+                } else if (elem.mozRequestFullScreen) {
+                    elem.mozRequestFullScreen();
+                } else if (elem.webkitRequestFullscreen) {
+                    elem.webkitRequestFullscreen();
+                } else {
+                    console.warn('Your browser does not appear to support fullscreen rendering.');
+                }
+
+                Ember.$(document).off('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange');
+                Ember.$(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this.onFullscreen.bind(this, selector, buttonSel));
             }
-
-            var buttonId = this.get('fsButtonID');
-            var buttonSel = Ember.$(`#${buttonId}`);
-
-            var selector = Ember.$(`#${elementId}`);
-            var elem = selector[0];
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-            } else if (elem.msRequestFullscreen) {
-                elem.msRequestFullscreen();
-            } else if (elem.mozRequestFullScreen) {
-                elem.mozRequestFullScreen();
-            } else if (elem.webkitRequestFullscreen) {
-                elem.webkitRequestFullscreen();
-            } else {
-                console.log('Your browser does not appear to support fullscreen rendering.');
-            }
-
-            //this.checkFullscreen();
-
-            Ember.$(document).off('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange');
-            Ember.$(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this.onFullscreen.bind(this, selector, buttonSel));
         },
         /**
          * Exit fullscreen mode
          * @method exitFullscreen
          */
         exitFullscreen: function () {
-            if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement) {
+            if (this.checkFullscreen()) {
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
                 } else if (document.msExitFullscreen) {
@@ -159,22 +159,18 @@ export default Ember.Mixin.create({
         }
     },
 
-    meta: {
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                 * Whether to display this frame as fullscreen, even though it is not
-                 * generally used that way.
-                 *
-                 * @property {String} displayFullscreenOverride
-                 */
-                displayFullscreenOverride: {
-                    type: 'boolean',
-                    description: 'Whether to override default and display this frame as fullscreen',
-                    default: false
-                }
-            }
+    frameSchemaProperties: {
+        /**
+         * Whether to display this frame as fullscreen, even though it is not
+         * generally used that way.
+         *
+         * @property {String} displayFullscreenOverride
+         */
+        displayFullscreenOverride: {
+            type: 'boolean',
+            description: 'Whether to override default and display this frame as fullscreen',
+            default: false
         }
-    },
+    }
+
 });

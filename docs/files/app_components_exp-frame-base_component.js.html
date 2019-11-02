@@ -338,6 +338,58 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
     selectNextFrame: null,
     _selectNextFrameFn: null,
 
+    /**
+     * An object containing values for any parameters (variables) to use in this frame.
+     * Any property VALUES in this frame that match any of the property NAMES in &#x60;parameters&#x60;
+     * will be replaced by the corresponding parameter value. For example, suppose your frame
+     * is:
+     *
+&#x60;&#x60;&#x60;
+{
+    &#x27;kind&#x27;: &#x27;FRAME_KIND&#x27;,
+    &#x27;parameters&#x27;: {
+        &#x27;FRAME_KIND&#x27;: &#x27;exp-lookit-text&#x27;
+    }
+}
+&#x60;&#x60;&#x60;
+     *
+     * Then the frame &#x60;kind&#x60; will be &#x60;exp-lookit-text&#x60;. This may be useful if you need
+     * to repeat values for different frame properties, especially if your frame is actually
+     * a randomizer or group. You may use parameters nested within objects (at any depth) or
+     * within lists.
+     *
+     * You can also use selectors to randomly sample from or permute
+     * a list defined in &#x60;parameters&#x60;. Suppose &#x60;STIMLIST&#x60; is defined in
+     * &#x60;parameters&#x60;, e.g. a list of potential stimuli. Rather than just using &#x60;STIMLIST&#x60;
+     * as a value in your frames, you can also:
+     *
+     * * Select the Nth element (0-indexed) of the value of &#x60;STIMLIST&#x60;: (Will cause error if &#x60;N &gt;= THELIST.length&#x60;)
+&#x60;&#x60;&#x60;
+    &#x27;parameterName&#x27;: &#x27;STIMLIST#N&#x27;
+&#x60;&#x60;&#x60;
+     * * Select (uniformly) a random element of the value of &#x60;STIMLIST&#x60;:
+&#x60;&#x60;&#x60;
+    &#x27;parameterName&#x27;: &#x27;STIMLIST#RAND&#x27;
+&#x60;&#x60;&#x60;
+    * * Set &#x60;parameterName&#x60; to a random permutation of the value of &#x60;STIMLIST&#x60;:
+&#x60;&#x60;&#x60;
+    &#x27;parameterName&#x27;: &#x27;STIMLIST#PERM&#x27;
+&#x60;&#x60;&#x60;
+    * * Select the next element in a random permutation of the value of &#x60;STIMLIST&#x60;, which is used across all
+    * substitutions in this randomizer. This allows you, for instance, to provide a list
+    * of possible images in your &#x60;parameterSet&#x60;, and use a different one each frame with the
+    * subset/order randomized per participant. If more &#x60;STIMLIST#UNIQ&#x60; parameters than
+    * elements of &#x60;STIMLIST&#x60; are used, we loop back around to the start of the permutation
+    * generated for this randomizer.
+&#x60;&#x60;&#x60;
+    &#x27;parameterName&#x27;: &#x27;STIMLIST#UNIQ&#x27;
+&#x60;&#x60;&#x60;
+     *
+     * @property {Object[]} parameters
+     * @default {}
+     */
+    parameters: {},
+
     session: null,
 
     // see https://github.com/emberjs/ember.js/issues/3908. Moved
@@ -456,6 +508,9 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
     setupParams(clean) {
         // Add config properties and data to be serialized as instance parameters (overriding with values explicitly passed in)
         var params = this.get(&#x27;frameConfig&#x27;);
+
+        // TODO: check all required parameters are set
+        // TODO: use JSON schema validator to check
 
         var defaultParams = {};
         Object.keys(this.get(&#x27;meta.parameters&#x27;).properties || {}).forEach((key) =&gt; {

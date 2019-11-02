@@ -2,6 +2,7 @@
 /* jshint node:true */
 /* global require, module */
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+
 var nodeSass = require('node-sass'); // yarn install sometimes fails to create the 'vendor'
 // directory in node_modules/node-sass; using yarn install --force makes it work if you're
 // seeing Could not require 'ember-cli-build.js': ENOENT: no such file or directory,
@@ -43,6 +44,12 @@ module.exports = function(defaults) {
           'ember-cli-template-lint': {
               testGenerator: 'qunit' // or 'mocha', etc.
           }
+  });
+
+  app.import('node_modules/ajv/dist/ajv.min.js', {
+    using: [
+      { transformation: 'amd', as: 'ajv' }
+    ]
   });
 
   // Use `app.import` to add additional libraries to the generated

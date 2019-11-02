@@ -70,133 +70,131 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     hidden: false,
     recorderElement: '#recorder',
 
-    meta: {
-        name: 'ExpLookitObservation',
-        description: 'This frame allows the participant to record an event, intended for observational studies.',
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                 * Array of blocks for {{#crossLink "Exp-text-block"}}{{/crossLink}}, specifying text/images of instructions to display
-                 *
-                 * @property {Object[]} blocks
-                 *   @param {String} title Title of this section
-                 *   @param {String} text Paragraph text of this section
-                 *   @param {Object[]} listblocks Object specifying bulleted points for this section. Each object is of the form:
-                 *   {text: 'text of bullet point', image: {src: 'url', alt: 'alt-text'}}. Images are optional.
-                 */
-                blocks: {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            title: {
-                                type: 'string'
-                            },
-                            text: {
-                                type: 'string'
-                            },
-                            listblocks: {
-                                type: 'array',
-                                items: {
+    frameSchemaProperties: {
+        /**
+         * Array of blocks for {{#crossLink "Exp-text-block"}}{{/crossLink}}, specifying text/images of instructions to display
+         *
+         * @property {Object[]} blocks
+         *   @param {String} title Title of this section
+         *   @param {String} text Paragraph text of this section
+         *   @param {Object[]} listblocks Object specifying bulleted points for this section. Each object is of the form:
+         *   {text: 'text of bullet point', image: {src: 'url', alt: 'alt-text'}}. Images are optional.
+         */
+        blocks: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    title: {
+                        type: 'string'
+                    },
+                    text: {
+                        type: 'string'
+                    },
+                    listblocks: {
+                        type: 'array',
+                        items: {
+                            type: 'object',
+                            properties: {
+                                text: {
+                                    type: 'string'
+                                },
+                                image: {
                                     type: 'object',
                                     properties: {
-                                        text: {
+                                        src: {
                                             type: 'string'
                                         },
-                                        image: {
-                                            type: 'object',
-                                            properties: {
-                                                src: {
-                                                    type: 'string'
-                                                },
-                                                alt: {
-                                                    type: 'string'
-                                                }
-                                            }
+                                        alt: {
+                                            type: 'string'
                                         }
                                     }
                                 }
                             }
                         }
-                    },
-                    default: []
-                },
-                /**
-                 * Number of seconds to record for before automatically pausing. Use
-                 * 0 for no limit.
-                 *
-                 * @property {String} recordSegmentLength
-                 * @default 300
-                 */
-                recordSegmentLength: {
-                    type: 'number',
-                    default: 300
-                },
-                /**
-                 * Whether to automatically begin recording upon frame load
-                 *
-                 * @property {Boolean} startRecordingAutomatically
-                 * @default false
-                 */
-                startRecordingAutomatically: {
-                    type: 'boolean',
-                    default: false
-                },
-                /**
-                 * Whether a recording must be made to proceed to next frame. 'Next' button
-                 * will be disabled until recording is made if so. 0 to not require recording;
-                 * any positive number to require that many seconds of recording
-                 *
-                 * @property {Boolean} startRecordingAutomatically
-                 * @default false
-                 */
-                recordingRequired: {
-                    type: 'number',
-                    default: 0
-                },
-                /**
-                 * Whether to hide video recording controls (only use with startRecordingAutomatically)
-                 *
-                 * @property {Boolean} hideControls
-                 * @default false
-                 */
-                hideControls: {
-                    type: 'boolean',
-                    default: false
-                },
-                /**
-                 * Whether to hide webcam view when frame loads (participant will still be able to show manually)
-                 *
-                 * @property {Boolean} hideWebcam
-                 * @default false
-                 */
-                hideWebcam: {
-                    type: 'boolean',
-                    default: false
-                },
-                /**
-                 * Text to display on the 'next frame' button
-                 *
-                 * @property {String} nextButtonText
-                 * @default 'Next'
-                 */
-                nextButtonText: {
-                    type: 'string',
-                    default: 'Next'
-                },
-                /**
-                 * Whether to show a 'previous' button
-                 *
-                 * @property {Boolean} showPreviousButton
-                 * @default true
-                 */
-                showPreviousButton: {
-                    type: 'boolean',
-                    default: true
+                    }
                 }
-            }
+            },
+            default: []
         },
+        /**
+         * Number of seconds to record for before automatically pausing. Use
+         * 0 for no limit.
+         *
+         * @property {String} recordSegmentLength
+         * @default 300
+         */
+        recordSegmentLength: {
+            type: 'number',
+            default: 300
+        },
+        /**
+         * Whether to automatically begin recording upon frame load
+         *
+         * @property {Boolean} startRecordingAutomatically
+         * @default false
+         */
+        startRecordingAutomatically: {
+            type: 'boolean',
+            default: false
+        },
+        /**
+         * Whether a recording must be made to proceed to next frame. 'Next' button
+         * will be disabled until recording is made if so. 0 to not require recording;
+         * any positive number to require that many seconds of recording
+         *
+         * @property {Boolean} startRecordingAutomatically
+         * @default false
+         */
+        recordingRequired: {
+            type: 'number',
+            default: 0
+        },
+        /**
+         * Whether to hide video recording controls (only use with startRecordingAutomatically)
+         *
+         * @property {Boolean} hideControls
+         * @default false
+         */
+        hideControls: {
+            type: 'boolean',
+            default: false
+        },
+        /**
+         * Whether to hide webcam view when frame loads (participant will still be able to show manually)
+         *
+         * @property {Boolean} hideWebcam
+         * @default false
+         */
+        hideWebcam: {
+            type: 'boolean',
+            default: false
+        },
+        /**
+         * Text to display on the 'next frame' button
+         *
+         * @property {String} nextButtonText
+         * @default 'Next'
+         */
+        nextButtonText: {
+            type: 'string',
+            default: 'Next'
+        },
+        /**
+         * Whether to show a 'previous' button
+         *
+         * @property {Boolean} showPreviousButton
+         * @default true
+         */
+        showPreviousButton: {
+            type: 'boolean',
+            default: true
+        }
+    },
+
+    meta: {
+        name: 'ExpLookitObservation',
+        description: 'This frame allows the participant to record an event, intended for observational studies.',
         data: {
             /**
              * Parameters captured and sent to the server

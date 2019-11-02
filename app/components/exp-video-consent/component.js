@@ -55,56 +55,54 @@ Consent document can be downloaded as PDF document by participant.
 export default ExpLookitVideoConsent.extend(VideoRecord, {
     layout,
 
+    frameSchemaProperties: {
+        /**
+        Title of the consent document
+        @property {String} title
+        @default 'Consent to participate in behavioral research: <br> Inference and induction study'
+        */
+        title: {
+            type: 'string',
+            default: 'Consent to participate in behavioral research: <br> Inference and induction study'
+        },
+
+        /**
+        Array of paragraphs of the consent document, each with title and text.
+        @property {Array} blocks
+            @param {String} title
+            @param {String} text
+        @default []
+        */
+        blocks: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    title: {
+                        type: 'string'
+                    },
+                    text: {
+                        type: 'string'
+                    }
+                }
+            },
+            default: []
+        },
+
+        /**
+        Text the user is asked to read aloud to consent
+        @property {String} prompt
+        @default 'I consent to participate in this study'
+        */
+        prompt: {
+            type: 'string',
+            default: 'I consent to participate in this study'
+        }
+    },
+
     meta: {
         name: 'Video Consent Form',
         description: 'A video consent form.',
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                Title of the consent document
-                @property {String} title
-                @default 'Consent to participate in behavioral research: <br> Inference and induction study'
-                */
-                title: {
-                    type: 'string',
-                    default: 'Consent to participate in behavioral research: <br> Inference and induction study'
-                },
-
-                /**
-                Array of paragraphs of the consent document, each with title and text.
-                @property {Array} blocks
-                    @param {String} title
-                    @param {String} text
-                @default []
-                */
-                blocks: {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            title: {
-                                type: 'string'
-                            },
-                            text: {
-                                type: 'string'
-                            }
-                        }
-                    },
-                    default: []
-                },
-
-                /**
-                Text the user is asked to read aloud to consent
-                @property {String} prompt
-                @default 'I consent to participate in this study'
-                */
-                prompt: {
-                    type: 'string',
-                    default: 'I consent to participate in this study'
-                }
-            }
-        },
         data: {
             /**
              * Parameters captured and sent to the server
