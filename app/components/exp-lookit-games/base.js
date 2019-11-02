@@ -420,7 +420,7 @@ export default class Base {
     urlArr.forEach(
       url =>{
         let img = new Image();
-        img.src = url;
+        img.src = this.context.baseDir+url;
         imgArr.push(img);
       }
 
@@ -439,7 +439,7 @@ export default class Base {
     urlArr.forEach(
       url =>{
         let audio = new Audio();
-        audio.src = url;
+        audio.src = this.context.baseDir+url;
         audio.load();
         audioArr.push(audio);
       }
@@ -447,7 +447,6 @@ export default class Base {
     );
 
   }
-
   /**
    * Store data and pass to  Lookit platform variable
    * @method storeData
@@ -829,10 +828,6 @@ export default class Base {
     let border = paddleBox.position.y+paddleBox.dimensions.height/2;
 
     mouseY += e.movementY;
-
-    // if(e.movementY === 0){
-    //   mouseY -= 1;
-    // }
 
     if(mouseY  > border && e.movementY >0){
       mouseY =  border;

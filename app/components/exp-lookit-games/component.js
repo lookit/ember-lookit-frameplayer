@@ -179,6 +179,17 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                     default: false
                 },
 
+              /**
+               * Whether to show the video for the Game instructions
+               *
+               * @property {Boolean} showVideo
+               * @default false
+               */
+                showVideo:{
+                  type: 'boolean',
+                  default: false
+
+                },
                 /**
                  * Whether to show in full screen
                  *
@@ -188,6 +199,18 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                 fullscreen: {
                   type: 'boolean',
                   default: false
+
+                },
+
+                /**
+                 * Resource root location
+                 * @property {String} source
+                 * @default 'empty'
+                 *
+                 */
+                baseDir: {
+                  type: 'string',
+                  default: ''
 
                 },
 
@@ -234,6 +257,18 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                     type: 'boolean',
                     default: false
                 },
+
+                mediaSource: {
+                    type: 'object',
+                    properties: {
+                        src: {
+                          type: 'string'
+                        },
+                        type: {
+                          type: 'string'
+                        }
+                      }
+                  },
 
                 export_arr: {
                     type: 'array',
@@ -362,6 +397,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
             this.hideRecorder();
             new Game(this, document, this.gameType);
         },
+
         export(){
 
           this.jsonToCSVConvertor(this.export_arr,"Data",true);
@@ -381,6 +417,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
 
         this._super(...arguments);
 
+
         if(this.get('fullscreen') === true){
           this.send('showFullscreen');
         }
@@ -390,94 +427,95 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
         }
         if (this.get('showProgress') === true) {
             let current_game = this.get('gameType') + 1;
+            let baseDir = this.get('baseDir');
             switch (current_game){
               case 1:
                   this.set('buttonPosition','button button-1');
-                  this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
-                  this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2_off.png');
-                  this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3_off.png');
-                  this.set('machine4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine4_off.png');
-                  this.set('machine5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine5_off.png');
-                  this.set('arrow1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow1_off.png');
-                  this.set('arrow2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow2_off.png');
-                  this.set('arrow3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow3_off.png');
-                  this.set('arrow4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow4_off.png');
-                  this.set('arrow5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow5_off.png');
-                  this.set('exit_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/exit_off.png');
+                  this.set('machine1_url', baseDir + '/Resources/images/arcade_machine1.png');
+                  this.set('machine2_url', baseDir + '/Resources/images/arcade_machine2_off.png');
+                  this.set('machine3_url', baseDir + '/Resources/images/arcade_machine3_off.png');
+                  this.set('machine4_url', baseDir + '/Resources/images/arcade_machine4_off.png');
+                  this.set('machine5_url',baseDir +  '/Resources/images/arcade_machine5_off.png');
+                  this.set('arrow1_url',baseDir +  '/Resources/images/arrow1_off.png');
+                  this.set('arrow2_url',baseDir + '/Resources/images/arrow2_off.png');
+                  this.set('arrow3_url', baseDir + '/Resources/images/arrow3_off.png');
+                  this.set('arrow4_url', baseDir + '/Resources/images/arrow4_off.png');
+                  this.set('arrow5_url',baseDir +  '/Resources/images/arrow5_off.png');
+                  this.set('exit_url', baseDir + '/Resources/images/exit_off.png');
                   break;
               case 2:
                   this.set('buttonPosition','button button-2');
-                  this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
-                  this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2.png');
-                  this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3_off.png');
-                  this.set('machine4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine4_off.png');
-                  this.set('machine5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine5_off.png');
-                  this.set('arrow1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow1_on.png');
-                  this.set('arrow2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow2_off.png');
-                  this.set('arrow3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow3_off.png');
-                  this.set('arrow4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow4_off.png');
-                  this.set('arrow5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow5_off.png');
-                  this.set('exit_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/exit_off.png');
+                  this.set('machine1_url', baseDir + 'Resources/images/arcade_machine1.png');
+                  this.set('machine2_url', baseDir + 'Resources/images/arcade_machine2.png');
+                  this.set('machine3_url', baseDir + 'Resources/images/arcade_machine3_off.png');
+                  this.set('machine4_url', baseDir + 'Resources/images/arcade_machine4_off.png');
+                  this.set('machine5_url', baseDir + 'Resources/images/arcade_machine5_off.png');
+                  this.set('arrow1_url', baseDir + 'Resources/images/arrow1_on.png');
+                  this.set('arrow2_url', baseDir + 'Resources/images/arrow2_off.png');
+                  this.set('arrow3_url', baseDir + 'Resources/images/arrow3_off.png');
+                  this.set('arrow4_url', baseDir + 'Resources/images/arrow4_off.png');
+                  this.set('arrow5_url', baseDir + 'Resources/images/arrow5_off.png');
+                  this.set('exit_url', baseDir + 'Resources/images/exit_off.png');
                   break;
 
               case 3:
                   this.set('buttonPosition','button button-3');
-                  this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
-                  this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2.png');
-                  this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3.png');
-                  this.set('machine4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine4_off.png');
-                  this.set('machine5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine5_off.png');
-                  this.set('arrow1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow1_on.png');
-                  this.set('arrow2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow2_on.png');
-                  this.set('arrow3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow3_off.png');
-                  this.set('arrow4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow4_off.png');
-                  this.set('arrow5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow5_off.png');
-                  this.set('exit_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/exit_off.png');
+                  this.set('machine1_url', baseDir + 'Resources/images/arcade_machine1.png');
+                  this.set('machine2_url', baseDir + 'Resources/images/arcade_machine2.png');
+                  this.set('machine3_url', baseDir + 'Resources/images/arcade_machine3.png');
+                  this.set('machine4_url', baseDir + 'Resources/images/arcade_machine4_off.png');
+                  this.set('machine5_url', baseDir + 'Resources/images/arcade_machine5_off.png');
+                  this.set('arrow1_url', baseDir + 'Resources/images/arrow1_on.png');
+                  this.set('arrow2_url', baseDir + 'Resources/images/arrow2_on.png');
+                  this.set('arrow3_url', baseDir + 'Resources/images/arrow3_off.png');
+                  this.set('arrow4_url', baseDir + 'Resources/images/arrow4_off.png');
+                  this.set('arrow5_url', baseDir + 'Resources/images/arrow5_off.png');
+                  this.set('exit_url', baseDir + 'Resources/images/exit_off.png');
                   break;
 
               case 4:
                   this.set('buttonPosition','button button-4');
-                  this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
-                  this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2.png');
-                  this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3.png');
-                  this.set('machine4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine4.png');
-                  this.set('machine5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine5_off.png');
-                  this.set('arrow1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow1_on.png');
-                  this.set('arrow2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow2_on.png');
-                  this.set('arrow3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow3_on.png');
-                  this.set('arrow4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow4_off.png');
-                  this.set('arrow5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow5_off.png');
-                  this.set('exit_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/exit_off.png');
+                  this.set('machine1_url', baseDir + 'Resources/images/arcade_machine1.png');
+                  this.set('machine2_url', baseDir + 'Resources/images/arcade_machine2.png');
+                  this.set('machine3_url', baseDir + 'Resources/images/arcade_machine3.png');
+                  this.set('machine4_url', baseDir + 'Resources/images/arcade_machine4.png');
+                  this.set('machine5_url', baseDir + 'Resources/images/arcade_machine5_off.png');
+                  this.set('arrow1_url', baseDir + 'Resources/images/arrow1_on.png');
+                  this.set('arrow2_url', baseDir + 'Resources/images/arrow2_on.png');
+                  this.set('arrow3_url', baseDir + 'Resources/images/arrow3_on.png');
+                  this.set('arrow4_url', baseDir + 'Resources/images/arrow4_off.png');
+                  this.set('arrow5_url', baseDir + 'Resources/images/arrow5_off.png');
+                  this.set('exit_url', baseDir + 'Resources/images/exit_off.png');
                   break;
 
               case 5:
                   this.set('buttonPosition','button button-5');
-                  this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
-                  this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2.png');
-                  this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3.png');
-                  this.set('machine4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine4.png');
-                  this.set('machine5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine5.png');
-                  this.set('arrow1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow1_on.png');
-                  this.set('arrow2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow2_on.png');
-                  this.set('arrow3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow3_on.png');
-                  this.set('arrow4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow4_on.png');
-                  this.set('arrow5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow5_off.png');
-                  this.set('exit_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/exit_off.png');
+                  this.set('machine1_url', baseDir + 'Resources/images/arcade_machine1.png');
+                  this.set('machine2_url', baseDir + 'Resources/images/arcade_machine2.png');
+                  this.set('machine3_url', baseDir + 'Resources/images/arcade_machine3.png');
+                  this.set('machine4_url', baseDir + 'Resources/images/arcade_machine4.png');
+                  this.set('machine5_url', baseDir + 'Resources/images/arcade_machine5.png');
+                  this.set('arrow1_url', baseDir + 'Resources/images/arrow1_on.png');
+                  this.set('arrow2_url', baseDir + 'Resources/images/arrow2_on.png');
+                  this.set('arrow3_url', baseDir + 'Resources/images/arrow3_on.png');
+                  this.set('arrow4_url', baseDir + 'Resources/images/arrow4_on.png');
+                  this.set('arrow5_url', baseDir + 'Resources/images/arrow5_off.png');
+                  this.set('exit_url', baseDir + 'Resources/images/exit_off.png');
                   break;
 
               case 6:
                   this.set('button_position','button button-6');
-                  this.set('machine1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine1.png');
-                  this.set('machine2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine2.png');
-                  this.set('machine3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine3.png');
-                  this.set('machine4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine4.png');
-                  this.set('machine5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arcade_machine5.png');
-                  this.set('arrow1_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow1_on.png');
-                  this.set('arrow2_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow2_on.png');
-                  this.set('arrow3_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow3_on.png');
-                  this.set('arrow4_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow4_on.png');
-                  this.set('arrow5_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/arrow5_on.png');
-                  this.set('exit_url', 'https://piproject.s3.us-east-2.amazonaws.com/Resources/images/exit_on.png');
+                  this.set('machine1_url', baseDir + 'Resources/images/arcade_machine1.png');
+                  this.set('machine2_url', baseDir + 'Resources/images/arcade_machine2.png');
+                  this.set('machine3_url', baseDir + 'Resources/images/arcade_machine3.png');
+                  this.set('machine4_url', baseDir + 'Resources/images/arcade_machine4.png');
+                  this.set('machine5_url', baseDir + 'Resources/images/arcade_machine5.png');
+                  this.set('arrow1_url', baseDir + 'Resources/images/arrow1_on.png');
+                  this.set('arrow2_url', baseDir + 'Resources/images/arrow2_on.png');
+                  this.set('arrow3_url', baseDir + 'Resources/images/arrow3_on.png');
+                  this.set('arrow4_url', baseDir + 'Resources/images/arrow4_on.png');
+                  this.set('arrow5_url', baseDir + 'Resources/images/arrow5_on.png');
+                  this.set('exit_url', baseDir + 'Resources/images/exit_on.png');
                 break;
 
         }
