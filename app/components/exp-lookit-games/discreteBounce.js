@@ -85,7 +85,6 @@ export default class DiscreteBounce extends Base {
    * @method init
    */
   init() {
-
     document.addEventListener("mousemove", super.onMouseMove);
     paddle = {
 
@@ -169,7 +168,7 @@ export default class DiscreteBounce extends Base {
     paddle = super.paddleObject(paddle);
     let paddleBoxColor = super.Utils.blueColor;
     super.createPaddleBox(paddleBoxColor);
-    super.generateTrajectoryParams(hArray, Height);
+    super.generateTrajectoryParams(hArray[super.currentRounds], Height);
     super.createLauncher(images[gameImage.BALLBOX]);
     super.drawImageObject(paddle, images[gameImage.PADDLE]);
     super.paddleMove(paddle, initialTime, ball);

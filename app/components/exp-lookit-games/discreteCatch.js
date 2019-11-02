@@ -49,8 +49,9 @@ const gameImage = {
 
 const gameRandomization = {
 
-  HEIGHT:0,
-  OBSTRUCTION:1
+  OBSTRUCTION:0,
+  HEIGHT:1
+
 
 };
 
@@ -92,7 +93,13 @@ export default class DiscreteCatch extends Base {
    */
   init() {
 
-    trajectoryParameters = super.getTrajectoriesObstacles(gameArrayValues.OBSTRUCTIONS,gameArrayValues.HEIGHTS);
+    if(this.context.trialType === 'demo'){
+      trajectoryParameters = this.context.demoObstructions.map((obstruction,index)=> [obstruction,this.context.demoTrajectories[index]]);
+    }else {
+      trajectoryParameters = super.getTrajectoriesObstacles(gameArrayValues.OBSTRUCTIONS,gameArrayValues.HEIGHTS);
+    }
+
+
 
     super.fillAudioArray(soundURLs,sounds);
     super.fillImageArray(imageURls,images);

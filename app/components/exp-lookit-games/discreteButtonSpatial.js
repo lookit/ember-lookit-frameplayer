@@ -217,7 +217,11 @@ export default class DiscreteButtonSpatial extends Base {
    */
   init() {
     startTime = new Date().getTime();
-    trajectoryParameters = super.getTrajectoriesObstacles(gameArrayValues.OBSTRUCTIONS,gameArrayValues.VELOCITIES);
+    if(this.context.trialType === 'demo'){
+      trajectoryParameters = this.context.demoObstructions.map((obstruction,index)=> [obstruction,this.context.demoTrajectories[index]]);
+    }else {
+      trajectoryParameters = super.getTrajectoriesObstacles(gameArrayValues.OBSTRUCTIONS, gameArrayValues.VELOCITIES);
+    }
     // Randomize trajectory for each obstruction
     super.fillAudioArray(soundURLs,sounds);
     super.fillImageArray(imageURls,images);
