@@ -445,42 +445,42 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                   break;
               case 2:
                   this.set('buttonPosition','button button-2');
-                  this.set('machine1_url', baseDir + 'Resources/images/arcade_machine1.png');
-                  this.set('machine2_url', baseDir + 'Resources/images/arcade_machine2.png');
-                  this.set('machine3_url', baseDir + 'Resources/images/arcade_machine3_off.png');
-                  this.set('machine4_url', baseDir + 'Resources/images/arcade_machine4_off.png');
-                  this.set('machine5_url', baseDir + 'Resources/images/arcade_machine5_off.png');
-                  this.set('arrow1_url', baseDir + 'Resources/images/arrow1_on.png');
-                  this.set('arrow2_url', baseDir + 'Resources/images/arrow2_off.png');
-                  this.set('arrow3_url', baseDir + 'Resources/images/arrow3_off.png');
-                  this.set('arrow4_url', baseDir + 'Resources/images/arrow4_off.png');
-                  this.set('arrow5_url', baseDir + 'Resources/images/arrow5_off.png');
-                  this.set('exit_url', baseDir + 'Resources/images/exit_off.png');
+                  this.set('machine1_url', baseDir + '/Resourcesimages/arcade_machine1.png');
+                  this.set('machine2_url', baseDir + '/Resourcesimages/arcade_machine2.png');
+                  this.set('machine3_url', baseDir + '/Resourcesimages/arcade_machine3_off.png');
+                  this.set('machine4_url', baseDir + '/Resourcesimages/arcade_machine4_off.png');
+                  this.set('machine5_url', baseDir + '/Resourcesimages/arcade_machine5_off.png');
+                  this.set('arrow1_url', baseDir + '/Resourcesimages/arrow1_on.png');
+                  this.set('arrow2_url', baseDir + '/Resourcesimages/arrow2_off.png');
+                  this.set('arrow3_url', baseDir + '/Resourcesimages/arrow3_off.png');
+                  this.set('arrow4_url', baseDir + '/Resourcesimages/arrow4_off.png');
+                  this.set('arrow5_url', baseDir + '/Resourcesimages/arrow5_off.png');
+                  this.set('exit_url', baseDir + '/Resourcesimages/exit_off.png');
                   break;
 
               case 3:
                   this.set('buttonPosition','button button-3');
-                  this.set('machine1_url', baseDir + 'Resources/images/arcade_machine1.png');
-                  this.set('machine2_url', baseDir + 'Resources/images/arcade_machine2.png');
-                  this.set('machine3_url', baseDir + 'Resources/images/arcade_machine3.png');
-                  this.set('machine4_url', baseDir + 'Resources/images/arcade_machine4_off.png');
-                  this.set('machine5_url', baseDir + 'Resources/images/arcade_machine5_off.png');
-                  this.set('arrow1_url', baseDir + 'Resources/images/arrow1_on.png');
-                  this.set('arrow2_url', baseDir + 'Resources/images/arrow2_on.png');
-                  this.set('arrow3_url', baseDir + 'Resources/images/arrow3_off.png');
-                  this.set('arrow4_url', baseDir + 'Resources/images/arrow4_off.png');
-                  this.set('arrow5_url', baseDir + 'Resources/images/arrow5_off.png');
-                  this.set('exit_url', baseDir + 'Resources/images/exit_off.png');
+                  this.set('machine1_url', baseDir + '/Resourcesimages/arcade_machine1.png');
+                  this.set('machine2_url', baseDir + '/Resourcesimages/arcade_machine2.png');
+                  this.set('machine3_url', baseDir + '/Resourcesimages/arcade_machine3.png');
+                  this.set('machine4_url', baseDir + '/Resourcesimages/arcade_machine4_off.png');
+                  this.set('machine5_url', baseDir + '/Resourcesimages/arcade_machine5_off.png');
+                  this.set('arrow1_url', baseDir + '/Resourcesimages/arrow1_on.png');
+                  this.set('arrow2_url', baseDir + '/Resourcesimages/arrow2_on.png');
+                  this.set('arrow3_url', baseDir + '/Resourcesimages/arrow3_off.png');
+                  this.set('arrow4_url', baseDir + '/Resourcesimages/arrow4_off.png');
+                  this.set('arrow5_url', baseDir + '/Resourcesimages/arrow5_off.png');
+                  this.set('exit_url', baseDir + '/Resourcesimages/exit_off.png');
                   break;
 
               case 4:
                   this.set('buttonPosition','button button-4');
-                  this.set('machine1_url', baseDir + 'Resources/images/arcade_machine1.png');
-                  this.set('machine2_url', baseDir + 'Resources/images/arcade_machine2.png');
-                  this.set('machine3_url', baseDir + 'Resources/images/arcade_machine3.png');
-                  this.set('machine4_url', baseDir + 'Resources/images/arcade_machine4.png');
-                  this.set('machine5_url', baseDir + 'Resources/images/arcade_machine5_off.png');
-                  this.set('arrow1_url', baseDir + 'Resources/images/arrow1_on.png');
+                  this.set('machine1_url', baseDir + '/Resourcesimages/arcade_machine1.png');
+                  this.set('machine2_url', baseDir + '/Resourcesimages/arcade_machine2.png');
+                  this.set('machine3_url', baseDir + '/Resourcesimages/arcade_machine3.png');
+                  this.set('machine4_url', baseDir + '/Resourcesimages/arcade_machine4.png');
+                  this.set('machine5_url', baseDir + '/Resourcesimages/arcade_machine5_off.png');
+                  this.set('arrow1_url', baseDir + '/Resourcesimages/arrow1_on.png');
                   this.set('arrow2_url', baseDir + 'Resources/images/arrow2_on.png');
                   this.set('arrow3_url', baseDir + 'Resources/images/arrow3_on.png');
                   this.set('arrow4_url', baseDir + 'Resources/images/arrow4_off.png');
@@ -517,8 +517,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                   this.set('arrow5_url', baseDir + 'Resources/images/arrow5_on.png');
                   this.set('exit_url', baseDir + 'Resources/images/exit_on.png');
                 break;
+              default:
+                break;
 
-        }
+            }
         }
 
     },
