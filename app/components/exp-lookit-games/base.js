@@ -65,6 +65,7 @@ export default class Base {
     this.canvas.requestPointerLock()
     this.calculateCanvas();
     this.paddleBoxParameters();
+    this.currentRounds = 0;
     maxRounds = this.context.trialsNumber;
     this.loopTimer = function () {
       let inst = this;
@@ -142,8 +143,6 @@ export default class Base {
    * @method init
    */
   init() {
-    this.currentScore = 0;
-    this.currentRounds = 0;
     clearInterval(dataLoop);
     this.dataTimer();
   }
