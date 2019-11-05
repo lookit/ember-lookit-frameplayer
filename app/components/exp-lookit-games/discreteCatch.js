@@ -177,24 +177,25 @@ export default class DiscreteCatch extends Base {
    */
   dataCollection() {
     super.dataCollection();
-    let exportData = {
-      game_type: 'discreteCatch',
-      trajectory: trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT],
-      ball_position_x: ball.position.x / this.canvas.width ,
-      ball_position_y:  (this.canvas.height - ball.position.y)/this.canvas.height,
-      paddle_center_x: basket.position.x / this.canvas.width  +  (basket.dimensions.width / this.canvas.width) / 2,
-      paddle_width: basket.dimensions.width / this.canvas.width,
-      paddle_position_y: (this.canvas.height - basket.position.y)/this.canvas.height,
-      red_dot_start_position: (1.3310 - radiusRim),
-      red_dot_width: radiusRim*2,
-      obstruction: trajectoryParameters[super.currentRounds][trajectoryParameters.OBSTRUCTION],
-      trial: super.currentRounds,
-      trialType: this.context.trialType,
-      timestamp: super.getElapsedTime(initialTime)
-
-    };
     if(ball.state === 'hit' || ball.state === 'fall') {
-      super.storeData(exportData);
+      let exportData = {
+        game_type: 'discreteCatch',
+        trajectory: trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT],
+        ball_position_x: ball.position.x / this.canvas.width ,
+        ball_position_y:  (this.canvas.height - ball.position.y)/this.canvas.height,
+        paddle_center_x: basket.position.x / this.canvas.width  +  (basket.dimensions.width / this.canvas.width) / 2,
+        paddle_x: basket.position.x / this.canvas.width,
+        paddle_position_y: (this.canvas.height - basket.position.y)/this.canvas.height,
+        red_dot_start_position: (1.3310 - radiusRim),
+        red_dot_width: radiusRim*2,
+        obstruction: trajectoryParameters[super.currentRounds][trajectoryParameters.OBSTRUCTION],
+        trial: super.currentRounds,
+        trialType: this.context.trialType,
+        timestamp: super.getElapsedTime(initialTime)
+
+      };
+
+        super.storeData(exportData);
     }
   }
 

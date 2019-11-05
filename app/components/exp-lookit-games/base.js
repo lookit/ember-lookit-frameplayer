@@ -268,7 +268,7 @@ export default class Base {
    */
   getTrajectoriesObstacles(obstructions,trajectoryParams){
 
-    let array =  obstructions.flatMap(  (obstruction) =>  this.uniformArr(trajectoryParams, maxRounds/obstructions.length).map((trajectory) => [trajectory,obstruction]));
+    let array =  obstructions.flatMap(  (obstruction) =>  this.uniformArr(trajectoryParams, maxRounds/obstructions.length).map((trajectory) => [obstruction,trajectory]));
 
     return Utils.shuffle(array);
 
