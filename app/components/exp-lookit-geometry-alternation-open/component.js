@@ -421,11 +421,11 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     }),
 
     didRender() {
-      this._super(...arguments);
-      if (this.get('doingCalibration') && !this.get('alreadyStartedCalibration')) {
-          this.set('alreadyStartedCalibration', true);
-          this.startCalibration();
-      }
+        this._super(...arguments);
+        if (this.get('doingCalibration') && !this.get('alreadyStartedCalibration')) {
+            this.set('alreadyStartedCalibration', true);
+            this.startCalibration();
+        }
     },
 
     actions: {
@@ -490,13 +490,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         // Don't allow pausing during calibration/test.
         $(document).off('keyup.pauser');
 
-// what if this part is happening before it becoming non-intro
         var calAudio = $('#player-calibration-audio')[0];
         var calVideo = $('#player-calibration-video')[0];
         $('#player-calibration-video').show();
-
-        console.log(calVideo);
-        console.log($('#player-calibration-video'));
 
         // Show the calibration segment at center, left, right, center, each
         // time recording an event and playing the calibration audio.
