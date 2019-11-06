@@ -490,6 +490,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         // Don't allow pausing during calibration/test.
         $(document).off('keyup.pauser');
 
+        // Attempt to fix calibration display similar to exit-fullscreen-and-return fix
+        $('#allstimuli').css("background-color", "white");
+
         var calAudio = $('#player-calibration-audio')[0];
         var calVideo = $('#player-calibration-video')[0];
         $('#player-calibration-video').show();
