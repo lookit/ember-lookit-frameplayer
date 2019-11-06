@@ -11,6 +11,11 @@ $exp-alternation-right-rect: 81.25%;
     margin: auto;
     top:0;bottom:0; /* vertical center */
     left:0;right:0; /* horizontal center */
+    // Trying for calibration display bug..
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    position:absolute;
+    z-index: -1;
 }
 
 
