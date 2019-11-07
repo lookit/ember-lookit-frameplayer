@@ -116,6 +116,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     completedAudio: false,
     completedAttn: false,
     currentSegment: 'intro', // 'calibration', 'test' (mutually exclusive)
+    alreadyStartedCalibration: false,
 
     // Override setting in VideoRecord mixin - only use camera if doing recording
     doUseCamera: Ember.computed.alias('doRecording'),
@@ -143,12 +144,13 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
     readyToStartCalibration: Ember.computed('recordingStarted', 'completedAudio', 'completedAttn',
         function() {
+            var recordingStarted = false;
             if (this.get('session').get('recorder')) {
-                if (this.get('session').get('recorder').get('recording')) {
-                    return true;
-                }
+                recordingStarted = this.get('session').get('recorder').get('recording');
+            } else {
+                recordingStarted = this.get('recordingStarted');
             }
-            return (this.get('recordingStarted') && this.get('completedAudio') && this.get('completedAttn'));
+            return (recordingStarted && this.get('completedAudio') && this.get('completedAttn'));
         }),
 
     // used only by template
@@ -407,11 +409,24 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     segmentObserver: observer('currentSegment', function(frame) {
         // Don't trigger starting intro; that'll be done manually.
         if (frame.get('currentSegment') === 'calibration') {
-            frame.startCalibration();
+            frame.notifyPropertyChange('doingCalibration');
+            frame.set('alreadyStartedCalibration', false);
+            frame.rerender(); // Defer starting calibration until re-render completes, to
+            // wait for video to be available. Forcing rerender due to idiosyncratic
+            // calibration display problem
+
         } else if (frame.get('currentSegment') === 'test') {
             frame.startTrial();
         }
     }),
+
+    didRender() {
+        this._super(...arguments);
+        if (this.get('doingCalibration') && !this.get('alreadyStartedCalibration')) {
+            this.set('alreadyStartedCalibration', true);
+            this.startCalibration();
+        }
+    },
 
     actions: {
         // When intro audio is complete
@@ -474,6 +489,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         // Don't allow pausing during calibration/test.
         $(document).off('keyup.pauser');
+
+        // Attempt to fix calibration display similar to exit-fullscreen-and-return fix
+        $('#allstimuli').css('background-color', 'white');
 
         var calAudio = $('#player-calibration-audio')[0];
         var calVideo = $('#player-calibration-video')[0];
@@ -808,6 +826,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 this.startRecorder().then(() => {
                     _this.set('recorderReady', false);
                     _this.set('recordingStarted', true);
+                    _this.notifyPropertyChange('readyToStartCalibration');
                 });
             }
         }
@@ -824,8 +843,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 this.startSessionRecorder().then(() => {
                     _this.set('sessionRecorderReady', false);
                     _this.set('recordingStarted', true);
+                    _this.notifyPropertyChange('readyToStartCalibration');
                 });
             }
         }
     }),
+
 });
