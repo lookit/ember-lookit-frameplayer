@@ -3,15 +3,16 @@
 
 <div class="row exp-lookit-geometry-alternation" id="alternation-container">
 
-    <video id="player-calibration-video"
-           class="calibration center"
-           autoplay
-           style="display:none;">
-        {{#each calibrationVideoSources_parsed as |stream|}}
-            <source src="{{stream.src}}" type="{{stream.type}}">
-        {{/each}}
-    </video>
-
+    {{#if doingCalibration}}
+        <video id="player-calibration-video"
+               class="calibration center"
+               autoplay
+               style="display:none;">
+            {{#each calibrationVideoSources_parsed as |stream|}}
+                <source src="{{stream.src}}" type="{{stream.type}}">
+            {{/each}}
+        </video>
+    {{/if}}
 
     {{#if doingIntro}}
 
@@ -70,6 +71,7 @@
     {{/unless}}
 
     {{#unless doingIntro}}
+
         <svg viewBox="0 0 200 112" id="allstimuli">
 
             {{!-- Box for left image stream --}}

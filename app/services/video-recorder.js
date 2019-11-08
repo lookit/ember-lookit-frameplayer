@@ -104,7 +104,7 @@ const VideoRecorder = Ember.Object.extend({
         return new RSVP.Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
 
             var pipeConfig = {
-                qualityurl: 'avq/480p.xml',
+                qualityurl: 'https://d3l7d0ho3mojk5.cloudfront.net/pipe/720p.xml',
                 showMenu: 0, // hide recording button menu
                 sis: 1, // skip initial screen
                 asv: autosave, // autosave recordings
