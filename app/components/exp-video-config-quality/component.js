@@ -333,6 +333,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 _this.set('hasPlayedBack', true);
                 _this.checkIfDone();
             });
+
+            this.get('recorder').on('btStopRecordingPressed', (recId) => {   // eslint-disable-line no-unused-vars
+                _this.get('recorder').set('_recording', false); // so we don't also call stop when leaving page unless needed
+                _this.set('stoppedRecording', true);
+            });
+
         }
     }),
 
