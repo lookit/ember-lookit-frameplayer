@@ -126,7 +126,7 @@ export default class DiscreteBounce extends Base {
 
     token = {
 
-      dimensions: {width: 0.21 * super.Utils.SCALE, height: 0.2 * super.Utils.SCALE},
+      dimensions: {width: 0.147 * super.Utils.SCALE, height: 0.14 * super.Utils.SCALE},
       position: {x: 2.05 * super.Utils.SCALE, y: 0.28 * super.Utils.SCALE}
 
     };
