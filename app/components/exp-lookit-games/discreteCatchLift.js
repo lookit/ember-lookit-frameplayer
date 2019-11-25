@@ -283,7 +283,7 @@ export default class DiscreteCatchLift extends Base {
       if(target.pizzaTimeDelay === 0 ) {
         target.pizzaTimeDelay = new Date().getTime();
       }
-      if(target.pizzaTimeDelay >0 && super.getElapsedTime(target.pizzaTimeDelay) > 0.4){
+      if(target.pizzaTimeDelay >0 && super.getElapsedTime(target.pizzaTimeDelay) > 0.2){
         target.state = 'showClock';
         target.showTime = new Date().getTime();
       }

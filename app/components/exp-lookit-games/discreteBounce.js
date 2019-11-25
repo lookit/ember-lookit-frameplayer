@@ -126,7 +126,7 @@ export default class DiscreteBounce extends Base {
 
     token = {
 
-      dimensions: {width: 0.21 * super.Utils.SCALE, height: 0.2 * super.Utils.SCALE},
+      dimensions: {width: 0.147 * super.Utils.SCALE, height: 0.14 * super.Utils.SCALE},
       position: {x: 2.05 * super.Utils.SCALE, y: 0.28 * super.Utils.SCALE}
 
     };
@@ -150,6 +150,23 @@ export default class DiscreteBounce extends Base {
     super.init();
   }
 
+
+  paddleBoxParameters() {
+    let leftBorder = (1.2035) * super.Utils.SCALE;
+    let topBorder = (1.42) * super.Utils.SCALE;
+    let rightBorder = (1.4585) * super.Utils.SCALE;
+    let downBorder = (1.5671) * super.Utils.SCALE;
+    let paddleBox = {
+      position: {x: 0, y: 0},
+      dimensions: {width: 0, height: 0}
+    };
+
+    paddleBox.position.x = leftBorder;
+    paddleBox.position.y = topBorder;
+    paddleBox.dimensions.width = rightBorder - leftBorder;
+    paddleBox.dimensions.height = downBorder - topBorder;
+    super.paddleBox = paddleBox;
+  }
 
   /**
    *
@@ -183,11 +200,6 @@ export default class DiscreteBounce extends Base {
 
     if (ball.state === 'start') {
       super.moveBallToStart(ball, images[gameImage.BALL]);
-      if (initialTime > 0 && super.paddleIsMoved(paddle,true)) {
-        initialTime = new Date().getTime();
-        paddleBoxColor = super.Utils.redColor;
-        super.createPaddleBox(paddleBoxColor);
-      }
 
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         sounds[gameSound.START].pause();
@@ -270,7 +282,7 @@ export default class DiscreteBounce extends Base {
     }
 
     super.paddleMove(paddle, initialTime, ball);
-    this.createwallBoarders();
+    this.createWallBoarders();
 
   }
 
@@ -355,8 +367,10 @@ export default class DiscreteBounce extends Base {
     paddle.releaseVelocity = -alpha * (ball.velocity - paddleVelocity) + paddleVelocity;
   }
 
-
-  createwallBoarders(){
+  /**
+   * Set gray boarders to symbolize upper and lower bounds for wall targets
+   */
+  createWallBoarders(){
 
     this.ctx.beginPath();
 
@@ -456,7 +470,9 @@ export default class DiscreteBounce extends Base {
    */
   initGame() {
 
-
+    super.initX = 0.52;
+    super.initBallY = 0;
+    this.paddleBoxParameters();
     jitterT = super.trialStartTime();
     ball = super.ballObject();
     initialTime = 0;
@@ -483,10 +499,10 @@ export default class DiscreteBounce extends Base {
     let exportData = {
       game_type: 'BounceGame',
       trajectory: hArray[super.currentRounds],
-      ball_position_x: ball.position.x / this.canvas.width,
+      ball_position_x: ball.position.x /  super.Utils.SCALE,
       ball_position_y: (this.canvas.height - ball.position.y) / this.canvas.height,
-      paddle_center_x: paddle.position.x / this.canvas.width  +  (paddle.dimensions.width / this.canvas.width) / 2,
-      paddle_x: paddle.position.x / this.canvas.width,
+      paddle_center_x: (paddle.position.x   +  paddle.dimensions.width / 2) / super.Utils.SCALE,
+      paddle_x: paddle.position.x / super.Utils.SCALE,
       paddle_position_y: (this.canvas.height - paddle.position.y) / this.canvas.height,
       trial: super.currentRounds,
       trialType: this.context.trialType,
@@ -495,7 +511,7 @@ export default class DiscreteBounce extends Base {
     };
 
     if(ball.state === 'hit' || ball.state === 'bounce' || ball.state === 'fall') {
-         super.storeData(exportData);
+      super.storeData(exportData);
     }
 
   }

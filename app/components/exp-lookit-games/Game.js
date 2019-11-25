@@ -50,19 +50,18 @@ export default class Game {
 
         case 2:
 
-            game = new DiscreteCatchLift(context, document);
+            game =   new DiscreteCatch(context, document);
 
         break;
 
         case 3:
 
-            game =   new DiscreteCatch(context, document);
+            game =  new DiscreteBounce(context, document);
 
         break;
 
         case 4:
-
-            game =  new DiscreteBounce(context, document);
+            game = new DiscreteCatchLift(context, document);
 
         break;
 

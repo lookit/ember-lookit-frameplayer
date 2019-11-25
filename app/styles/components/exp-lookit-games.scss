@@ -64,6 +64,10 @@
   left: 0; right: 0;
 }
 
+.assent-info {
+  min-height: 55vh !important;
+  height: 55vh !important;
+}
 
 
 .box {
@@ -220,10 +224,9 @@
   margin-left: auto;
 }
 
-.pull-right{
-
-  margin-right: 4% !important;
+.pull-right-games{
   position: fixed !important;
+  margin-right: 4% !important;
   bottom: 10% !important;
   right: 5% !important;
 }

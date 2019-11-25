@@ -65,6 +65,7 @@ export default class Base {
     this.canvas.requestPointerLock()
     this.calculateCanvas();
     this.paddleBoxParameters();
+    this.currentRounds = 0;
     maxRounds = this.context.trialsNumber;
     this.loopTimer = function () {
       let inst = this;
@@ -142,8 +143,6 @@ export default class Base {
    * @method init
    */
   init() {
-    this.currentScore = 0;
-    this.currentRounds = 0;
     clearInterval(dataLoop);
     this.dataTimer();
   }
@@ -165,7 +164,6 @@ export default class Base {
   generateTrajectoryParams(trialHeight, heightAdjuster) {
     let currentHeight = trialHeight * 0.05 + heightAdjuster;
     let Tf = 0.75; // Time Flight for trajectory
-    initX = 0.52;
     gravity = 2 * currentHeight / Math.pow(Tf, 2);
     ballvx = (1.051) / Tf;
     initV = 0.5 * gravity * Tf;
@@ -243,6 +241,38 @@ export default class Base {
   }
 
 
+  get initX(){
+
+    return initX;
+  }
+
+  get initBallY(){
+
+    return initBallY;
+  }
+
+
+  set initX(val){
+
+    initX = val;
+  }
+
+  set initBallY(val){
+
+    initBallY = val;
+  }
+
+  set paddleBox(val){
+
+    paddleBox = val;
+  }
+
+  get paddleBox(){
+
+    return paddleBox;
+  }
+
+
   /**
    * Create Uniform array of values
    * @method uniformArr
@@ -269,7 +299,7 @@ export default class Base {
    */
   getTrajectoriesObstacles(obstructions,trajectoryParams){
 
-    let array =  obstructions.flatMap(  (obstruction) =>  this.uniformArr(trajectoryParams, maxRounds/obstructions.length).map((trajectory) => [trajectory,obstruction]));
+    let array =  obstructions.flatMap(  (obstruction) =>  this.uniformArr(trajectoryParams, maxRounds/obstructions.length).map((trajectory) => [obstruction,trajectory]));
 
     return Utils.shuffle(array);
 
@@ -488,7 +518,6 @@ export default class Base {
 
     } else {
       this.context.set('showInstructions', true);
-      this.context.send('export');
       this.context.stopRecorder().finally(() => {
         this.context.destroyRecorder();
         this.context.send('next');

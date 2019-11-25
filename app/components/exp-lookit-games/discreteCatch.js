@@ -131,13 +131,15 @@ export default class DiscreteCatch extends Base {
    * @method initGame
    */
   initGame() {
+    super.initX = 0.51;
+    super.initBallY = 0.08;
     jitterT = super.trialStartTime();
     initialTime =0;
     super.createPaddleBox();
     basket = super.basketObject(basket);
     obstructionsNum = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];
     ball = super.ballObject();
-
+    ball.position.y = (1.1471 )* super.Utils.SCALE;
     // Generate array of obstruction objects
     obstructions = Array(obstructionsNum).fill({}).map((value, index) =>
 
@@ -159,9 +161,9 @@ export default class DiscreteCatch extends Base {
   getObstruction(obstructionIndex = 1) {
 
     let leftBorder = (1 - 0.105 * obstructionIndex) * super.Utils.SCALE ;
-    let topBorder = (0.964) * super.Utils.SCALE;
+    let topBorder = (0.994) * super.Utils.SCALE;
     let rightBorder = 1.18  * super.Utils.SCALE;
-    let downBorder = (1.592) * super.Utils.SCALE;
+    let downBorder = (1.622) * super.Utils.SCALE;
     return {
       position: {x: leftBorder, y: topBorder},
       dimensions: {width: rightBorder - leftBorder, height: downBorder - topBorder},
@@ -177,24 +179,25 @@ export default class DiscreteCatch extends Base {
    */
   dataCollection() {
     super.dataCollection();
-    let exportData = {
-      game_type: 'discreteCatch',
-      trajectory: trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT],
-      ball_position_x: ball.position.x / this.canvas.width ,
-      ball_position_y:  (this.canvas.height - ball.position.y)/this.canvas.height,
-      paddle_center_x: basket.position.x / this.canvas.width  +  (basket.dimensions.width / this.canvas.width) / 2,
-      paddle_width: basket.dimensions.width / this.canvas.width,
-      paddle_position_y: (this.canvas.height - basket.position.y)/this.canvas.height,
-      red_dot_start_position: (1.3310 - radiusRim),
-      red_dot_width: radiusRim*2,
-      obstruction: trajectoryParameters[super.currentRounds][trajectoryParameters.OBSTRUCTION],
-      trial: super.currentRounds,
-      trialType: this.context.trialType,
-      timestamp: super.getElapsedTime(initialTime)
-
-    };
     if(ball.state === 'hit' || ball.state === 'fall') {
-      super.storeData(exportData);
+      let exportData = {
+        game_type: 'discreteCatch',
+        trajectory: trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT],
+        ball_position_x: ball.position.x / super.Utils.SCALE,
+        ball_position_y:  (this.canvas.height - ball.position.y)/this.canvas.height,
+        paddle_center_x: (basket.position.x   + basket.dimensions.width / 2 ) / super.Utils.SCALE,
+        paddle_x: basket.position.x / super.Utils.SCALE,
+        paddle_position_y: (this.canvas.height - basket.position.y)/this.canvas.height,
+        red_dot_start_position: (1.3310 - radiusRim),
+        red_dot_width: radiusRim*2,
+        obstruction: trajectoryParameters[super.currentRounds][trajectoryParameters.OBSTRUCTION],
+        trial: super.currentRounds,
+        trialType: this.context.trialType,
+        timestamp: super.getElapsedTime(initialTime)
+
+      };
+
+         super.storeData(exportData);
     }
   }
 
@@ -253,9 +256,9 @@ export default class DiscreteCatch extends Base {
    */
   createLauncher(image) {
 
-    let leftBorder = (0.05) * super.Utils.SCALE;
+    let leftBorder = (0.075) * super.Utils.SCALE;
     let topBorder = (1.1471 )* super.Utils.SCALE;
-    this.ctx.drawImage(image, leftBorder, topBorder, basket.dimensions.height*3, basket.dimensions.height*3);
+    this.ctx.drawImage(image, leftBorder, topBorder, basket.dimensions.height*2.7, basket.dimensions.height*2.7);
 
 
   }
@@ -287,7 +290,7 @@ export default class DiscreteCatch extends Base {
     let paddleBoxColor = super.Utils.blueColor;
     if(ball.state === 'start'){
       ball = this.ballObject();
-
+      ball.position.y = (1.291 )* super.Utils.SCALE;
       if (startTime > 0 &&  !super.paddleIsMoved(basket) && super.getElapsedTime(startTime) > TRAVEL_TIME ){
         sounds[gameSound.START].play();
       }
