@@ -456,7 +456,8 @@ export default class DiscreteBounce extends Base {
    */
   initGame() {
 
-
+    super.initX = 0.52;
+    super.initBallY = 0;
     jitterT = super.trialStartTime();
     ball = super.ballObject();
     initialTime = 0;

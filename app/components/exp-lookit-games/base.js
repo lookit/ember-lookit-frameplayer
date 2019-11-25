@@ -164,7 +164,6 @@ export default class Base {
   generateTrajectoryParams(trialHeight, heightAdjuster) {
     let currentHeight = trialHeight * 0.05 + heightAdjuster;
     let Tf = 0.75; // Time Flight for trajectory
-    initX = 0.52;
     gravity = 2 * currentHeight / Math.pow(Tf, 2);
     ballvx = (1.051) / Tf;
     initV = 0.5 * gravity * Tf;
@@ -239,6 +238,28 @@ export default class Base {
   set currentRounds(val) {
 
     currentRounds = val;
+  }
+
+
+  get initX(){
+
+    return initX;
+  }
+
+  get initBallY(){
+
+    return initBallY;
+  }
+
+
+  set initX(val){
+
+    initX = val;
+  }
+
+  set initBallY(val){
+
+    initBallY = val;
   }
 
 
