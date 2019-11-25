@@ -499,10 +499,10 @@ export default class DiscreteBounce extends Base {
     let exportData = {
       game_type: 'BounceGame',
       trajectory: hArray[super.currentRounds],
-      ball_position_x: ball.position.x / this.canvas.width,
+      ball_position_x: ball.position.x /  super.Utils.SCALE,
       ball_position_y: (this.canvas.height - ball.position.y) / this.canvas.height,
-      paddle_center_x: paddle.position.x / this.canvas.width  +  (paddle.dimensions.width / this.canvas.width) / 2,
-      paddle_x: paddle.position.x / this.canvas.width,
+      paddle_center_x: (paddle.position.x   +  paddle.dimensions.width / 2) / super.Utils.SCALE,
+      paddle_x: paddle.position.x / super.Utils.SCALE,
       paddle_position_y: (this.canvas.height - paddle.position.y) / this.canvas.height,
       trial: super.currentRounds,
       trialType: this.context.trialType,
