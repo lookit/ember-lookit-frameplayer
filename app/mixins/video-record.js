@@ -319,7 +319,9 @@ export default Ember.Mixin.create({
 
     willDestroyElement() {
         var _this = this;
+
         if (_this.get('recorder')) {
+            window.clearTimeout(_this.get('recorder').get('uploadTimeout'));
             if (_this.get('stoppedRecording', true)) {
                 _this.destroyRecorder();
             } else {
