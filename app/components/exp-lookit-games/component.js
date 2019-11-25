@@ -396,6 +396,11 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
             this.startRecorder();
             this.hideRecorder();
             new Game(this, document, this.gameType);
+        },
+        export(){
+
+          this.jsonToCSVConvertor(this.export_arr,"Data",true);
+
         }
 
     },
