@@ -262,6 +262,16 @@ export default class Base {
     initBallY = val;
   }
 
+  set paddleBox(val){
+
+    paddleBox = val;
+  }
+
+  get paddleBox(){
+
+    return paddleBox;
+  }
+
 
   /**
    * Create Uniform array of values

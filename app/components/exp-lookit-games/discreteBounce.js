@@ -151,6 +151,23 @@ export default class DiscreteBounce extends Base {
   }
 
 
+  paddleBoxParameters() {
+    let leftBorder = (1.2035) * super.Utils.SCALE;
+    let topBorder = (1.42) * super.Utils.SCALE;
+    let rightBorder = (1.4585) * super.Utils.SCALE;
+    let downBorder = (1.5671) * super.Utils.SCALE;
+    let paddleBox = {
+      position: {x: 0, y: 0},
+      dimensions: {width: 0, height: 0}
+    };
+
+    paddleBox.position.x = leftBorder;
+    paddleBox.position.y = topBorder;
+    paddleBox.dimensions.width = rightBorder - leftBorder;
+    paddleBox.dimensions.height = downBorder - topBorder;
+    super.paddleBox = paddleBox;
+  }
+
   /**
    *
    * Main loop of the game.
@@ -183,11 +200,6 @@ export default class DiscreteBounce extends Base {
 
     if (ball.state === 'start') {
       super.moveBallToStart(ball, images[gameImage.BALL]);
-      if (initialTime > 0 && super.paddleIsMoved(paddle,true)) {
-        initialTime = new Date().getTime();
-        paddleBoxColor = super.Utils.redColor;
-        super.createPaddleBox(paddleBoxColor);
-      }
 
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         sounds[gameSound.START].pause();
@@ -270,7 +282,7 @@ export default class DiscreteBounce extends Base {
     }
 
     super.paddleMove(paddle, initialTime, ball);
-    this.createwallBoarders();
+    this.createWallBoarders();
 
   }
 
@@ -355,8 +367,10 @@ export default class DiscreteBounce extends Base {
     paddle.releaseVelocity = -alpha * (ball.velocity - paddleVelocity) + paddleVelocity;
   }
 
-
-  createwallBoarders(){
+  /**
+   * Set gray boarders to symbolize upper and lower bounds for wall targets
+   */
+  createWallBoarders(){
 
     this.ctx.beginPath();
 
@@ -458,6 +472,7 @@ export default class DiscreteBounce extends Base {
 
     super.initX = 0.52;
     super.initBallY = 0;
+    this.paddleBoxParameters();
     jitterT = super.trialStartTime();
     ball = super.ballObject();
     initialTime = 0;
@@ -496,7 +511,7 @@ export default class DiscreteBounce extends Base {
     };
 
     if(ball.state === 'hit' || ball.state === 'bounce' || ball.state === 'fall') {
-         super.storeData(exportData);
+      super.storeData(exportData);
     }
 
   }
