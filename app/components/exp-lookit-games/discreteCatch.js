@@ -183,10 +183,10 @@ export default class DiscreteCatch extends Base {
       let exportData = {
         game_type: 'discreteCatch',
         trajectory: trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT],
-        ball_position_x: ball.position.x / this.canvas.width ,
+        ball_position_x: ball.position.x / super.Utils.SCALE,
         ball_position_y:  (this.canvas.height - ball.position.y)/this.canvas.height,
-        paddle_center_x: basket.position.x / this.canvas.width  +  (basket.dimensions.width / this.canvas.width) / 2,
-        paddle_x: basket.position.x / this.canvas.width,
+        paddle_center_x: (basket.position.x   + basket.dimensions.width / 2 ) / super.Utils.SCALE,
+        paddle_x: basket.position.x / super.Utils.SCALE,
         paddle_position_y: (this.canvas.height - basket.position.y)/this.canvas.height,
         red_dot_start_position: (1.3310 - radiusRim),
         red_dot_width: radiusRim*2,
