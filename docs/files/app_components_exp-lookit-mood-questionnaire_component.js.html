@@ -227,26 +227,22 @@ const Validations = buildValidations({
 export default ExpFrameBaseComponent.extend(Validations, {
     layout: layout,
     type: &#x27;exp-lookit-mood-questionnaire&#x27;,
+    frameSchemaProperties: {
+        /**
+         * Intro paragraph describing why we want mood info
+         *
+         * @property {String} introText
+         * @default &#x27;How are you two doing? We really want to know: we’re interested in how your child’s mood affects his or her looking preferences.&#x27;
+         */
+        introText: {
+            type: &#x27;string&#x27;,
+            description: &#x27;Intro paragraph describing why we want mood info&#x27;,
+            default: &#x27;How are you two doing? We really want to know: we’re interested in how your child’s mood affects his or her looking preferences.&#x27;
+        }
+    },
     meta: {
         name: &#x27;ExpLookitMoodQuestionnaire&#x27;,
         description: &#x27;Mood questionnaire for Lookit studies, very slightly generalized from physics version exp-mood-questionnaire&#x27;,
-        parameters: {
-            type: &#x27;object&#x27;,
-            properties: {
-                /**
-                 * Intro paragraph describing why we want mood info
-                 *
-                 * @property {String} introText
-                 * @default &#x27;How are you two doing? We really want to know: we’re interested in how your child’s mood affects his or her looking preferences.&#x27;
-                 */
-                introText: {
-                    type: &#x27;string&#x27;,
-                    description: &#x27;Intro paragraph describing why we want mood info&#x27;,
-                    default: &#x27;How are you two doing? We really want to know: we’re interested in how your child’s mood affects his or her looking preferences.&#x27;
-                }
-            },
-            required: []
-        },
         data: {
             /**
              * Parameters captured and sent to the server

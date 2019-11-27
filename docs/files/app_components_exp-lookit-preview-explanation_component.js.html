@@ -155,112 +155,110 @@ import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
 export default ExpFrameBaseComponent.extend({
     type: &#x27;exp-lookit-preview-explanation&#x27;,
     layout: layout,
-    meta: {
-        name: &#x27;ExpLookitPreviewExplanation&#x27;,
-        description: &#x27;Let parents know about blinding, give option to preview videos.&#x27;,
-        parameters: {
+    frameSchemaProperties: {
+        /**
+         * Whether to show a &#x27;previous&#x27; button
+         *
+         * @property {Boolean} showPreviousButton
+         * @default true
+         */
+        showPreviousButton: {
+            type: &#x27;boolean&#x27;,
+            default: true
+        },
+        /**
+         * Array of text blocks (paragraphs) to display after the image.
+         *
+         * @property {Object} blocks
+         *   @param {String} title title to display
+         *   @param {String} text paragraph of text
+         *   @param {Boolean} emph whether to bold this paragraph
+         */
+        blocks: {
+            type: &#x27;array&#x27;,
+            items: {
+                type: &#x27;object&#x27;,
+                properties: {
+                    title: {
+                        type: &#x27;string&#x27;
+                    },
+                    text: {
+                        type: &#x27;string&#x27;
+                    },
+                    emph: {
+                        type: &#x27;boolean&#x27;
+                    }
+                }
+            },
+            default: []
+        },
+        /**
+         * Object specifying first block of text (pre-image) to display.
+         *
+         * @property {Object} introBlock
+         *   @param {String} title title to display
+         *   @param {String} text paragraph of text
+         *   @param {Boolean} emph whether to bold this paragraph
+         */
+        introBlock: {
             type: &#x27;object&#x27;,
             properties: {
-                /**
-                 * Whether to show a &#x27;previous&#x27; button
-                 *
-                 * @property {Boolean} showPreviousButton
-                 * @default true
-                 */
-                showPreviousButton: {
-                    type: &#x27;boolean&#x27;,
-                    default: true
+                title: {
+                    type: &#x27;string&#x27;
                 },
-                /**
-                 * Array of text blocks (paragraphs) to display after the image.
-                 *
-                 * @property {Object} blocks
-                 *   @param {String} title title to display
-                 *   @param {String} text paragraph of text
-                 *   @param {Boolean} emph whether to bold this paragraph
-                 */
-                blocks: {
-                    type: &#x27;array&#x27;,
-                    items: {
-                        type: &#x27;object&#x27;,
-                        properties: {
-                            title: {
-                                type: &#x27;string&#x27;
-                            },
-                            text: {
-                                type: &#x27;string&#x27;
-                            },
-                            emph: {
-                                type: &#x27;boolean&#x27;
-                            }
-                        }
-                    },
-                    default: []
+                text: {
+                    type: &#x27;string&#x27;
                 },
-                /**
-                 * Object specifying first block of text (pre-image) to display.
-                 *
-                 * @property {Object} introBlock
-                 *   @param {String} title title to display
-                 *   @param {String} text paragraph of text
-                 *   @param {Boolean} emph whether to bold this paragraph
-                 */
-                introBlock: {
-                    type: &#x27;object&#x27;,
-                    properties: {
-                        title: {
-                            type: &#x27;string&#x27;
-                        },
-                        text: {
-                            type: &#x27;string&#x27;
-                        },
-                        emph: {
-                            type: &#x27;boolean&#x27;
-                        }
-                    }
-                },
-                /**
-                 * Image to display after the intro block. (Displayed centered,
-                 * with border, max height 220px.) E.g., a picture of a parent
-                 * holding a child looking over their shoulder.
-                 *
-                 * @property {Object} image
-                 *   @param {String} src URL of image
-                 *   @param {String} alt alt-text
-                 */
-                image: {
-                    type: &#x27;object&#x27;,
-                    properties: {
-                        src: {
-                            type: &#x27;string&#x27;
-                        },
-                        alt: {
-                            type: &#x27;string&#x27;
-                        }
-                    }
-                },
-                /**
-                 * Text to display on the button to go to the next frame
-                 *
-                 * @property {String} previewButtonText
-                 * @default &#x27;I\&#x27;d like to preview the videos&#x27;
-                 */
-                previewButtonText: {
-                    type: &#x27;string&#x27;,
-                    default: &#x27;I\&#x27;d like to preview the videos&#x27;
-                },
-                /**
-                 * Text to display on the button to skip the next frame
-                 *
-                 * @property {String} skipButtonText
-                 * @default &#x27;Skip preview&#x27;
-                 */
-                skipButtonText: {
-                    type: &#x27;string&#x27;,
-                    default: &#x27;Skip preview&#x27;
+                emph: {
+                    type: &#x27;boolean&#x27;
                 }
             }
         },
+        /**
+         * Image to display after the intro block. (Displayed centered,
+         * with border, max height 220px.) E.g., a picture of a parent
+         * holding a child looking over their shoulder.
+         *
+         * @property {Object} image
+         *   @param {String} src URL of image
+         *   @param {String} alt alt-text
+         */
+        image: {
+            type: &#x27;object&#x27;,
+            properties: {
+                src: {
+                    type: &#x27;string&#x27;
+                },
+                alt: {
+                    type: &#x27;string&#x27;
+                }
+            },
+            required: [&#x27;src&#x27;, &#x27;alt&#x27;]
+        },
+        /**
+         * Text to display on the button to go to the next frame
+         *
+         * @property {String} previewButtonText
+         * @default &#x27;I\&#x27;d like to preview the videos&#x27;
+         */
+        previewButtonText: {
+            type: &#x27;string&#x27;,
+            default: &#x27;I\&#x27;d like to preview the videos&#x27;
+        },
+        /**
+         * Text to display on the button to skip the next frame
+         *
+         * @property {String} skipButtonText
+         * @default &#x27;Skip preview&#x27;
+         */
+        skipButtonText: {
+            type: &#x27;string&#x27;,
+            default: &#x27;Skip preview&#x27;
+        }
+    },
+    meta: {
+        name: &#x27;ExpLookitPreviewExplanation&#x27;,
+        description: &#x27;Let parents know about blinding, give option to preview videos.&#x27;,
         data: {
             type: &#x27;object&#x27;,
             properties: {

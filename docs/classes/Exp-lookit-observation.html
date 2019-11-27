@@ -284,15 +284,15 @@ interview and allow the parent to control recording.</p>
 
                             </li>
                             <li class="index-item property">
+                                <a href="#property_recordingRequired">recordingRequired</a>
+
+                            </li>
+                            <li class="index-item property">
                                 <a href="#property_recordSegmentLength">recordSegmentLength</a>
 
                             </li>
                             <li class="index-item property">
                                 <a href="#property_showPreviousButton">showPreviousButton</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_startRecordingAutomatically">startRecordingAutomatically</a>
 
                             </li>
                             <li class="index-item property">
@@ -411,7 +411,7 @@ interview and allow the parent to control recording.</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_hideRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l371"><code>app&#x2F;mixins&#x2F;video-record.js:371</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l373"><code>app&#x2F;mixins&#x2F;video-record.js:373</code></a>
         </p>
 
 
@@ -625,7 +625,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-lookit-observation_component.js.html#l201"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:201</code></a>
+        <a href="../files/app_components_exp-lookit-observation_component.js.html#l199"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:199</code></a>
         </p>
 
 
@@ -766,7 +766,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_showRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l380"><code>app&#x2F;mixins&#x2F;video-record.js:380</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l382"><code>app&#x2F;mixins&#x2F;video-record.js:382</code></a>
         </p>
 
 
@@ -877,7 +877,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_whenPossibleToRecord">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l355"><code>app&#x2F;mixins&#x2F;video-record.js:355</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l357"><code>app&#x2F;mixins&#x2F;video-record.js:357</code></a>
         </p>
 
 
@@ -1033,7 +1033,7 @@ should set to override if needed.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-observation_component.js.html#l79"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:79</code></a>
+        <a href="../files/app_components_exp-lookit-observation_component.js.html#l74"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:74</code></a>
         </p>
 
 
@@ -1093,7 +1093,7 @@ should set to override if needed.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-observation_component.js.html#l158"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:158</code></a>
+        <a href="../files/app_components_exp-lookit-observation_component.js.html#l153"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:153</code></a>
         </p>
 
 
@@ -1119,7 +1119,7 @@ should set to override if needed.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-observation_component.js.html#l168"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:168</code></a>
+        <a href="../files/app_components_exp-lookit-observation_component.js.html#l163"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:163</code></a>
         </p>
 
 
@@ -1170,7 +1170,7 @@ should set to override if needed.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-observation_component.js.html#l178"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:178</code></a>
+        <a href="../files/app_components_exp-lookit-observation_component.js.html#l173"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:173</code></a>
         </p>
 
 
@@ -1235,6 +1235,34 @@ Accessible to consuming frame.
 
 
 </div>
+<div id="property_recordingRequired" class="property item">
+    <h3 class="name"><code>recordingRequired</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-observation_component.js.html#l141"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:141</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Whether a recording must be made to proceed to next frame. 'Next' button
+will be disabled until recording is made if so. 0 to not require recording;
+any positive number to require that many seconds of recording</p>
+
+    </div>
+
+        <p><strong>Default:</strong> false</p>
+
+
+</div>
 <div id="property_recordSegmentLength" class="property item">
     <h3 class="name"><code>recordSegmentLength</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
@@ -1246,7 +1274,7 @@ Accessible to consuming frame.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-observation_component.js.html#l125"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:125</code></a>
+        <a href="../files/app_components_exp-lookit-observation_component.js.html#l120"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:120</code></a>
         </p>
 
 
@@ -1273,7 +1301,7 @@ Accessible to consuming frame.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-observation_component.js.html#l188"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:188</code></a>
+        <a href="../files/app_components_exp-lookit-observation_component.js.html#l183"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:183</code></a>
         </p>
 
 
@@ -1299,7 +1327,7 @@ Accessible to consuming frame.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-observation_component.js.html#l136"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:136</code></a>
+        <a href="../files/app_components_exp-lookit-observation_component.js.html#l131"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:131</code></a>
         </p>
 
 
@@ -1307,34 +1335,6 @@ Accessible to consuming frame.
 
     <div class="description">
         <p>Whether to automatically begin recording upon frame load</p>
-
-    </div>
-
-        <p><strong>Default:</strong> false</p>
-
-
-</div>
-<div id="property_startRecordingAutomatically" class="property item">
-    <h3 class="name"><code>startRecordingAutomatically</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-observation_component.js.html#l146"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:146</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Whether a recording must be made to proceed to next frame. 'Next' button
-will be disabled until recording is made if so. 0 to not require recording;
-any positive number to require that many seconds of recording</p>
 
     </div>
 
@@ -1476,7 +1476,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-observation_component.js.html#l240"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:240</code></a>
+                            <a href="../files/app_components_exp-lookit-observation_component.js.html#l238"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:238</code></a>
                             </p>
                     
                     
@@ -1501,7 +1501,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-observation_component.js.html#l338"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:338</code></a>
+                            <a href="../files/app_components_exp-lookit-observation_component.js.html#l336"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:336</code></a>
                             </p>
                     
                     
@@ -1550,7 +1550,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Video-record.html#event_recorderReady">Video-record</a>:
-                            <a href="../files/app_mixins_video-record.js.html#l342"><code>app&#x2F;mixins&#x2F;video-record.js:342</code></a>
+                            <a href="../files/app_mixins_video-record.js.html#l344"><code>app&#x2F;mixins&#x2F;video-record.js:344</code></a>
                             </p>
                     
                     
@@ -1574,7 +1574,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-observation_component.js.html#l280"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:280</code></a>
+                            <a href="../files/app_components_exp-lookit-observation_component.js.html#l278"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:278</code></a>
                             </p>
                     
                     
@@ -1599,7 +1599,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-observation_component.js.html#l349"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:349</code></a>
+                            <a href="../files/app_components_exp-lookit-observation_component.js.html#l347"><code>app&#x2F;components&#x2F;exp-lookit-observation&#x2F;component.js:347</code></a>
                             </p>
                     
                     

@@ -217,7 +217,7 @@ const VideoRecorder = Ember.Object.extend({
         return new RSVP.Promise((resolve, reject) =&gt; { // eslint-disable-line no-unused-vars
 
             var pipeConfig = {
-                qualityurl: &#x27;avq/480p.xml&#x27;,
+                qualityurl: &#x27;https://d3l7d0ho3mojk5.cloudfront.net/pipe/720p.xml&#x27;,
                 showMenu: 0, // hide recording button menu
                 sis: 1, // skip initial screen
                 asv: autosave, // autosave recordings
@@ -308,7 +308,6 @@ const VideoRecorder = Ember.Object.extend({
     getTime() {
         let recorder = this.get(&#x27;recorder&#x27;);
         if (recorder &amp;&amp; recorder.getStreamTime) {
-            console.log(recorder.getStreamTime());
             return parseFloat(recorder.getStreamTime());
         }
         return null;
@@ -319,49 +318,35 @@ const VideoRecorder = Ember.Object.extend({
      * @method stop
      */
     stop() {
-        function sleep(time) {
-            return new Promise((resolve) =&gt; setTimeout(resolve, time));
-        }
-
-        // Force at least 3 seconds of video to be recorded to ensure upload is called.
-        // Not thoroughly tested that this is still necessary w webRTC recorder.
-        var timeLeft = 3 - this.getTime();
-        if (this.get(&#x27;hasCamAccess&#x27;) &amp;&amp; (timeLeft &gt; 0)) {
-            // sleep time expects milliseconds
-            console.log(&#x27;Not stopping recording yet because minimum duration not reached&#x27;);
-            return sleep(timeLeft * 1000).then(() =&gt; this.stop());
-        } else {
-            var recorder = this.get(&#x27;recorder&#x27;);
-            if (recorder) {
-                try {
-                    recorder.stopVideo();
-                } catch (e) {
-                    console.log(&#x27;error stopping video&#x27;);
-                    // TODO: Under some conditions there is no stopVideo method- can we do a better job of
-                    //  identifying genuine errors?
-                }
-                this.set(&#x27;_recording&#x27;, false);
+        var recorder = this.get(&#x27;recorder&#x27;);
+        if (recorder) {
+            try {
+                recorder.stopVideo();
+            } catch (e) {
+                console.log(&#x27;error stopping video&#x27;);
             }
-
-            var _this = this;
-            var _stopPromise = new Ember.RSVP.Promise((resolve, reject) =&gt; {
-                // If we don&#x27;t end up uploading within 5 seconds, call reject
-                _this.set(&#x27;uploadTimeout&#x27;, window.setTimeout(function() {
-                        console.warn(&#x27;waiting for upload timed out&#x27;);
-                        window.clearTimeout(_this.get(&#x27;uploadTimeout&#x27;));
-                        reject();
-                    }, 5000));
-                if (_this.get(&#x27;_isuploaded&#x27;)) {
-                    resolve(this);
-                } else {
-                    _this.set(&#x27;_stopPromise&#x27;, {
-                        resolve: resolve,
-                        reject: reject
-                    });
-                }
-            });
-            return _stopPromise;
         }
+        this.set(&#x27;_recording&#x27;, false);
+
+        var _this = this;
+        var _stopPromise = new Ember.RSVP.Promise((resolve, reject) =&gt; {
+            // If we don&#x27;t end up uploading within 5 seconds, call reject
+            _this.set(&#x27;uploadTimeout&#x27;, window.setTimeout(function() {
+                    console.warn(&#x27;waiting for upload timed out&#x27;);
+                    window.clearTimeout(_this.get(&#x27;uploadTimeout&#x27;));
+                    reject();
+                }, 5000));
+            if (_this.get(&#x27;_isuploaded&#x27;)) {
+                window.clearTimeout(_this.get(&#x27;uploadTimeout&#x27;));
+                resolve(_this);
+            } else {
+                _this.set(&#x27;_stopPromise&#x27;, {
+                    resolve: resolve,
+                    reject: reject
+                });
+            }
+        });
+        return _stopPromise;
     },
 
     /**
@@ -420,7 +405,6 @@ const VideoRecorder = Ember.Object.extend({
     },
 
     _onConnectionStatus(recorderId, status) { // eslint-disable-line no-unused-vars
-        console.log(&#x27;onConnectionStatus&#x27;);
         this.set(&#x27;connected&#x27;, status === &#x27;connected&#x27;);
     },
 
