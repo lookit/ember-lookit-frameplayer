@@ -16,141 +16,141 @@ import Substituter from '../utils/replace-values';
 * For a more detailed walkthrough, please see
 * https://lookit.readthedocs.io/en/develop/experiments.html#randomizer-frames
 *
-* To use, define a frame with "kind": "choice" and "sampler": "random-parameter-set",
+* To use, define a frame with 'kind': 'choice' and 'sampler': 'random-parameter-set',
 * as shown below, in addition to the parameters described under 'properties'.
 *
 * This
 *
 ```json
-"frames": {
-    "test-trials": {
-        "sampler": "random-parameter-set",
-        "kind": "choice",
-        "commonFrameProperties": {
-            "kind": "exp-lookit-story-page",
-            "baseDir": "https://s3.amazonaws.com/lookitcontents/ingroupobligations/",
-            "audioTypes": ["mp3", "ogg"],
-            "doRecording": true,
-            "autoProceed": false,
-            "parentTextBlock": {
-                "title": "Parents!",
-                "text": "Common instructions across test trials here",
-                "emph": true
+'frames': {
+    'test-trials': {
+        'sampler': 'random-parameter-set',
+        'kind': 'choice',
+        'commonFrameProperties': {
+            'kind': 'exp-lookit-story-page',
+            'baseDir': 'https://s3.amazonaws.com/lookitcontents/ingroupobligations/',
+            'audioTypes': ['mp3', 'ogg'],
+            'doRecording': true,
+            'autoProceed': false,
+            'parentTextBlock': {
+                'title': 'Parents!',
+                'text': 'Common instructions across test trials here',
+                'emph': true
             }
         },
-        "frameList": [
+        'frameList': [
             {
-                "images": [
+                'images': [
                     {
-                        "id": "agent",
-                        "src": "AGENTIMG1",
-                        "left": "40",
-                        "width": "20",
-                        "top": "10"
+                        'id': 'agent',
+                        'src': 'AGENTIMG1',
+                        'left': '40',
+                        'width': '20',
+                        'top': '10'
                     },
                     {
-                        "id": "left",
-                        "src": "LEFTIMG1",
-                        "left": "10",
-                        "width": "20",
-                        "top": "50"
+                        'id': 'left',
+                        'src': 'LEFTIMG1',
+                        'left': '10',
+                        'width': '20',
+                        'top': '50'
                     },
                     {
-                        "id": "right",
-                        "src": "RIGHTIMG1",
-                        "left": "70",
-                        "width": "20",
-                        "top": "50"
+                        'id': 'right',
+                        'src': 'RIGHTIMG1',
+                        'left': '70',
+                        'width': '20',
+                        'top': '50'
                     }
                 ],
-                "audioSources": [
+                'audioSources': [
                     {
-                        "audioId": "questionaudio",
-                        "sources": [{"stub": "QUESTION1AUDIO"}],
-                        "highlights": "QUESTION1HIGHLIGHTS"
+                        'audioId': 'questionaudio',
+                        'sources': [{'stub': 'QUESTION1AUDIO'}],
+                        'highlights': 'QUESTION1HIGHLIGHTS'
                     }
                 ]
             },
             {
-                "images": [
+                'images': [
                     {
-                        "id": "agent",
-                        "src": "AGENTIMG2",
-                        "left": "40",
-                        "width": "20",
-                        "top": "10"
+                        'id': 'agent',
+                        'src': 'AGENTIMG2',
+                        'left': '40',
+                        'width': '20',
+                        'top': '10'
                     },
                     {
-                        "id": "left",
-                        "src": "LEFTIMG2",
-                        "left": "10",
-                        "width": "20",
-                        "top": "50"
+                        'id': 'left',
+                        'src': 'LEFTIMG2',
+                        'left': '10',
+                        'width': '20',
+                        'top': '50'
                     },
                     {
-                        "id": "right",
-                        "src": "RIGHTIMG2",
-                        "left": "70",
-                        "width": "20",
-                        "top": "50"
+                        'id': 'right',
+                        'src': 'RIGHTIMG2',
+                        'left': '70',
+                        'width': '20',
+                        'top': '50'
                     }
                 ],
-                "audioSources": [
+                'audioSources': [
                     {
-                        "audioId": "questionaudio",
-                        "sources": [{"stub": "QUESTION2AUDIO"}],
-                        "highlights": "QUESTION2HIGHLIGHTS"
+                        'audioId': 'questionaudio',
+                        'sources': [{'stub': 'QUESTION2AUDIO'}],
+                        'highlights': 'QUESTION2HIGHLIGHTS'
                     }
                 ]
             }
         ],
-        "parameterSets": [
+        'parameterSets': [
             {
-                "AGENTIMG1": "flurpagent1.jpg",
-                "LEFTIMG1": "flurpvictim1.jpg",
-                "RIGHTIMG1": "zazzvictim1.jpg",
-                "QUESTION1AUDIO": "flurpleftmean1",
-                "QUESTION1HIGHLIGHTS": [
-                    {"range": [0.399293,	3.617124], "image": "agent"},
-                    {"range": [5.085112,	6.811467], "image": "left"},
-                    {"range": [6.905418,	8.702236], "image": "right"}
+                'AGENTIMG1': 'flurpagent1.jpg',
+                'LEFTIMG1': 'flurpvictim1.jpg',
+                'RIGHTIMG1': 'zazzvictim1.jpg',
+                'QUESTION1AUDIO': 'flurpleftmean1',
+                'QUESTION1HIGHLIGHTS': [
+                    {'range': [0.399293,	3.617124], 'image': 'agent'},
+                    {'range': [5.085112,	6.811467], 'image': 'left'},
+                    {'range': [6.905418,	8.702236], 'image': 'right'}
                 ],
-                "AGENTIMG2": "flurpagent2.jpg",
-                "LEFTIMG2": "flurpvictim2.jpg",
-                "RIGHTIMG2": "zazzvictim2.jpg",
-                "QUESTION2AUDIO": "flurpleftinduct1",
-                "QUESTION2HIGHLIGHTS": [
-                    {"range": [0.372569,	5.309110], "image": "agent"},
-                    {"range": [5.495395,	7.209213], "image": "left"},
-                    {"range": [5.495395,	7.209213], "image": "right"},
-                    {"range": [9.966225,	11.922212], "image": "left"},
-                    {"range": [12.052612,	14.008600], "image": "right"}
+                'AGENTIMG2': 'flurpagent2.jpg',
+                'LEFTIMG2': 'flurpvictim2.jpg',
+                'RIGHTIMG2': 'zazzvictim2.jpg',
+                'QUESTION2AUDIO': 'flurpleftinduct1',
+                'QUESTION2HIGHLIGHTS': [
+                    {'range': [0.372569,	5.309110], 'image': 'agent'},
+                    {'range': [5.495395,	7.209213], 'image': 'left'},
+                    {'range': [5.495395,	7.209213], 'image': 'right'},
+                    {'range': [9.966225,	11.922212], 'image': 'left'},
+                    {'range': [12.052612,	14.008600], 'image': 'right'}
                 ]
             },
             {
-                "AGENTIMG1": "zazzagent1.jpg",
-                "LEFTIMG1": "flurpvictim1.jpg",
-                "RIGHTIMG1": "zazzvictim1.jpg",
-                "QUESTION1AUDIO": "zazzrightnice1",
-                "QUESTION1HIGHLIGHTS": [
-                    {"range": [0.348454,	3.736871], "image": "agent"},
-                    {"range": [5.395033,	6.884975], "image": "left"},
-                    {"range": [6.969085,	8.975701], "image": "right"}
+                'AGENTIMG1': 'zazzagent1.jpg',
+                'LEFTIMG1': 'flurpvictim1.jpg',
+                'RIGHTIMG1': 'zazzvictim1.jpg',
+                'QUESTION1AUDIO': 'zazzrightnice1',
+                'QUESTION1HIGHLIGHTS': [
+                    {'range': [0.348454,	3.736871], 'image': 'agent'},
+                    {'range': [5.395033,	6.884975], 'image': 'left'},
+                    {'range': [6.969085,	8.975701], 'image': 'right'}
                 ],
-                "AGENTIMG2": "zazzagent2.jpg",
-                "LEFTIMG2": "flurpvictim2.jpg",
-                "RIGHTIMG2": "zazzvictim2.jpg",
-                "QUESTION2AUDIO": "zazzrightinduct1",
-                "QUESTION2HIGHLIGHTS": [
-                    {"range": [0.572920,	5.138376], "image": "agent"},
-                    {"range": [5.335317,	7.089884], "image": "left"},
-                    {"range": [5.335317,	7.089884], "image": "right"},
-                    {"range": [9.721735,	11.565821], "image": "left"},
-                    {"range": [11.655340,	13.535233], "image": "right"}
+                'AGENTIMG2': 'zazzagent2.jpg',
+                'LEFTIMG2': 'flurpvictim2.jpg',
+                'RIGHTIMG2': 'zazzvictim2.jpg',
+                'QUESTION2AUDIO': 'zazzrightinduct1',
+                'QUESTION2HIGHLIGHTS': [
+                    {'range': [0.572920,	5.138376], 'image': 'agent'},
+                    {'range': [5.335317,	7.089884], 'image': 'left'},
+                    {'range': [5.335317,	7.089884], 'image': 'right'},
+                    {'range': [9.721735,	11.565821], 'image': 'left'},
+                    {'range': [11.655340,	13.535233], 'image': 'right'}
                 ]
             }
         ],
-        "parameterSetWeights": [1, 1]
+        'parameterSetWeights': [1, 1]
     }
 }
 
@@ -308,6 +308,46 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame, chil
      */
 
     /**
+     * [Optional] How to select a parameterSet for a participant who has previously
+     * participated in this study. Must be one of 'random' (default), 'persist', or
+     * 'rotate'. Meanings:
+     *
+     * * `"random"`: regardless of any previous sessions from this participant, select a
+     *    parameterSet for this participant as usual (including using parameterSetWeights if
+     *    provided). Default behavior.
+     *
+     * * `"persist"`: Continue assigning the same participant to the same parameterSet for all
+     *    sessions.
+     *
+     * * `"rotate"`: The first time, assign parameterSet randomly (per parameterSetWeights if
+     *    given); after that, each time the participant participates assign them to the next
+     *    parameterSet in the list. Subtracts length of parameterSets until the 'next' index
+     *    is in range.
+     *
+     * The most recent session in which the `conditions` data includes an element that looks
+     * like it was generated by this same randomizer (i.e., with key ending in `-frameId`,
+     * like `-test-trials`) will always be used for assignment. **Only sessions with a
+     * completed consent frame are considered, so that participants are not rotated through
+     * conditions simply due to refreshing the setup page.**
+     *
+     * Note: The "same" or "next" parameterSets are determined by the **index** of the
+     *    previously-selected parameterSet. That is, if you were assigned to conditionNum 0
+     *    (index 0 in parameterSets) last time, you will be assigned to conditionNum 0 again
+     *    this time if `conditionForAdditionalSessions` is `"persist"` and conditionNum 1 if
+     *    `conditionForAdditionalSessions` is `"rotate"`. So if you update the list of parameterSets
+     *    in your study - e.g. to fix a bug or clarify wording - the new values will be used
+     *    even for repeat participants. But be careful that you do not reorder them unless you
+     *    intend to, say, swap all participants to the opposite condition on a specified date!
+     *
+     *    If the previous index is now outside the range of the parameterSets list (e.g., you
+     *    used to have 6 conditions, and the participant was previously in conditionNum 5,
+     *    but then you changed parameterSets to have only 3 elements) and conditionForAdditionalSessions is
+     *    `"persist"`, then the participant is assigned to the last element of parameterSets.
+     *
+     * @property {String} conditionForAdditionalSessions
+     */
+
+    /**
      * [Optional] Array of weights for parameter sets; elements correspond to
      * elements of parameterSets. The probability of selecting an element
      * `parameterSets[i]` is `parameterSetWeights[i]/sum(parameterSetWeights)`.
@@ -315,7 +355,7 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame, chil
      * If not provided, all `parameterSets` are weighted equally.
      *
      * This is intended to allow manual control of counterbalancing during
-     * data collection, e.g. to allow one condition to "catch up" if it was
+     * data collection, e.g. to allow one condition to 'catch up' if it was
      * randomly selected less often.
      *
      * Instead of providing a single list of the same length as parameterSets,
@@ -323,16 +363,16 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame, chil
      * various age ranges, like this:
      *
 ```
-    "parameterSetWeights": [
+    'parameterSetWeights': [
         {
-            "minAge": 0,
-            "maxAge": 365,
-            "weights": [1, 0, 1]
+            'minAge': 0,
+            'maxAge': 365,
+            'weights': [1, 0, 1]
         },
         {
-            "minAge": 365,
-            "maxAge": 10000,
-            "weights": [0, 1, 0]
+            'minAge': 365,
+            'maxAge': 10000,
+            'weights': [0, 1, 0]
         },
     ]
 ```
@@ -348,43 +388,76 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame, chil
      */
 
     // Select a parameter set to use for this trial.
+    var parameterSet;
+    var parameterSetIndex;
 
-    var equalWeights = new Array(frameConfig.parameterSets.length).fill(1);
-    if (!(frameConfig.hasOwnProperty('parameterSetWeights'))) {
-        frameConfig.parameterSetWeights = equalWeights;
-    } else {
-        if (typeof frameConfig.parameterSetWeights[0] === 'object') {
-            // Get child's age in days
-            var childDOB;
-            try {
-                childDOB = child.get('birthday');
-                if (isNaN(childDOB)) {
-                    console.warn('No child birthday available for randomization. Using today\'s date.');
-                    childDOB = new Date().getTime();
+    // Assign based on previous sessions, if appropriate.
+    var selectedBasedOnPreviousSession = false;
+    if (frameConfig.hasOwnProperty('conditionForAdditionalSessions') && frameConfig.conditionForAdditionalSessions != 'random') {
+        // if there are any previous sessions with the appropriate info
+        var mostRecentSession = pastSessions.find(sess => sess.get('completedConsentFrame') && Object.keys(sess.get('conditions', {})).some(frId => frId.endsWith('-' + frameId)));
+        if (mostRecentSession) {
+            let conditions = mostRecentSession.get('conditions');
+            let conditionKey = Object.keys(conditions).find(frId => frId.endsWith('-' + frameId));
+            let prevCondition = conditions[conditionKey];
+            if (frameConfig.conditionForAdditionalSessions == 'persist') {
+                parameterSetIndex = prevCondition.conditionNum;
+                if (parameterSetIndex >= frameConfig.parameterSets.length) {
+                    parameterSetIndex = frameConfig.parameterSets.length - 1;
                 }
-            } catch (error) {
-                console.warn('No child birthday available for randomization. Using today\'s date.');
-                childDOB = new Date().getTime();
+            } else if (frameConfig.conditionForAdditionalSessions == 'rotate') {
+                parameterSetIndex = prevCondition.conditionNum + 1;
+                while (parameterSetIndex >= frameConfig.parameterSets.length) {
+                    parameterSetIndex = parameterSetIndex - frameConfig.parameterSets.length;
+                }
+            } else {
+                throw `Unrecognized conditionForAdditionalSessions option. Should be one of 'persist', 'random', or 'rotate'.`;
             }
-            var childAgeDays = (new Date().getTime() - childDOB) / (1000 * 60 * 60 * 24);
-
-            // Find the age range this child fits in
-            var ageBasedWeightObj = frameConfig.parameterSetWeights.find(function(element) {
-                return (element.minAge <= childAgeDays && childAgeDays <= element.maxAge);
-            });
-            if (ageBasedWeightObj) {
-                frameConfig.parameterSetWeights = ageBasedWeightObj.weights;
-                console.log('Using age-based randomization parameters');
-            } else { // Set to equal weights if child doesn't fall in any range given
-                console.warn('Child does not fall into any designated age range for randomization. Weighting parameter sets equally.');
-                frameConfig.parameterSetWeights = equalWeights;
-            }
+            parameterSet =  frameConfig.parameterSets[parameterSetIndex];
+            selectedBasedOnPreviousSession = true;
         }
     }
 
-    var parameterData = getRandomElement(frameConfig.parameterSets, frameConfig.parameterSetWeights);
-    var parameterSetIndex = parameterData[0];
-    var parameterSet = parameterData[1];
+    // Otherwise... (not assigning based on previous sessions)
+    if (!selectedBasedOnPreviousSession) {
+
+        var equalWeights = new Array(frameConfig.parameterSets.length).fill(1);
+        if (!(frameConfig.hasOwnProperty('parameterSetWeights'))) {
+            frameConfig.parameterSetWeights = equalWeights;
+        } else {
+            if (typeof frameConfig.parameterSetWeights[0] === 'object') {
+                // Get child's age in days
+                var childDOB;
+                try {
+                    childDOB = child.get('birthday');
+                    if (isNaN(childDOB)) {
+                        console.warn('No child birthday available for randomization. Using today\'s date.');
+                        childDOB = new Date().getTime();
+                    }
+                } catch (error) {
+                    console.warn('No child birthday available for randomization. Using today\'s date.');
+                    childDOB = new Date().getTime();
+                }
+                var childAgeDays = (new Date().getTime() - childDOB) / (1000 * 60 * 60 * 24);
+
+                // Find the age range this child fits in
+                var ageBasedWeightObj = frameConfig.parameterSetWeights.find(function(element) {
+                    return (element.minAge <= childAgeDays && childAgeDays <= element.maxAge);
+                });
+                if (ageBasedWeightObj) {
+                    frameConfig.parameterSetWeights = ageBasedWeightObj.weights;
+                    console.log('Using age-based randomization parameters');
+                } else { // Set to equal weights if child doesn't fall in any range given
+                    console.warn('Child does not fall into any designated age range for randomization. Weighting parameter sets equally.');
+                    frameConfig.parameterSetWeights = equalWeights;
+                }
+            }
+        }
+
+        var parameterData = getRandomElement(frameConfig.parameterSets, frameConfig.parameterSetWeights);
+        parameterSetIndex = parameterData[0];
+        parameterSet = parameterData[1];
+    }
 
     var frames = [];
     var thisFrame = {};
