@@ -134,138 +134,138 @@ and these parameters are substituted in to the parameters specified in the
 list of frames.</p>
 <p>For a more detailed walkthrough, please see
 <a href="https://lookit.readthedocs.io/en/develop/experiments.html#randomizer-frames">https://lookit.readthedocs.io/en/develop/experiments.html#randomizer-frames</a></p>
-<p>To use, define a frame with &quot;kind&quot;: &quot;choice&quot; and &quot;sampler&quot;: &quot;random-parameter-set&quot;,
+<p>To use, define a frame with 'kind': 'choice' and 'sampler': 'random-parameter-set',
 as shown below, in addition to the parameters described under 'properties'.</p>
 <p>This</p>
-<pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
-   &quot;test-trials&quot;: {
-       &quot;sampler&quot;: &quot;random-parameter-set&quot;,
-       &quot;kind&quot;: &quot;choice&quot;,
-       &quot;commonFrameProperties&quot;: {
-           &quot;kind&quot;: &quot;exp-lookit-story-page&quot;,
-           &quot;baseDir&quot;: &quot;https://s3.amazonaws.com/lookitcontents/ingroupobligations/&quot;,
-           &quot;audioTypes&quot;: [&quot;mp3&quot;, &quot;ogg&quot;],
-           &quot;doRecording&quot;: true,
-           &quot;autoProceed&quot;: false,
-           &quot;parentTextBlock&quot;: {
-               &quot;title&quot;: &quot;Parents!&quot;,
-               &quot;text&quot;: &quot;Common instructions across test trials here&quot;,
-               &quot;emph&quot;: true
+<pre class="code prettyprint"><code class="language-json">'frames': {
+   'test-trials': {
+       'sampler': 'random-parameter-set',
+       'kind': 'choice',
+       'commonFrameProperties': {
+           'kind': 'exp-lookit-story-page',
+           'baseDir': 'https://s3.amazonaws.com/lookitcontents/ingroupobligations/',
+           'audioTypes': ['mp3', 'ogg'],
+           'doRecording': true,
+           'autoProceed': false,
+           'parentTextBlock': {
+               'title': 'Parents!',
+               'text': 'Common instructions across test trials here',
+               'emph': true
            }
        },
-       &quot;frameList&quot;: [
+       'frameList': [
            {
-               &quot;images&quot;: [
+               'images': [
                    {
-                       &quot;id&quot;: &quot;agent&quot;,
-                       &quot;src&quot;: &quot;AGENTIMG1&quot;,
-                       &quot;left&quot;: &quot;40&quot;,
-                       &quot;width&quot;: &quot;20&quot;,
-                       &quot;top&quot;: &quot;10&quot;
+                       'id': 'agent',
+                       'src': 'AGENTIMG1',
+                       'left': '40',
+                       'width': '20',
+                       'top': '10'
                    },
                    {
-                       &quot;id&quot;: &quot;left&quot;,
-                       &quot;src&quot;: &quot;LEFTIMG1&quot;,
-                       &quot;left&quot;: &quot;10&quot;,
-                       &quot;width&quot;: &quot;20&quot;,
-                       &quot;top&quot;: &quot;50&quot;
+                       'id': 'left',
+                       'src': 'LEFTIMG1',
+                       'left': '10',
+                       'width': '20',
+                       'top': '50'
                    },
                    {
-                       &quot;id&quot;: &quot;right&quot;,
-                       &quot;src&quot;: &quot;RIGHTIMG1&quot;,
-                       &quot;left&quot;: &quot;70&quot;,
-                       &quot;width&quot;: &quot;20&quot;,
-                       &quot;top&quot;: &quot;50&quot;
+                       'id': 'right',
+                       'src': 'RIGHTIMG1',
+                       'left': '70',
+                       'width': '20',
+                       'top': '50'
                    }
                ],
-               &quot;audioSources&quot;: [
+               'audioSources': [
                    {
-                       &quot;audioId&quot;: &quot;questionaudio&quot;,
-                       &quot;sources&quot;: [{&quot;stub&quot;: &quot;QUESTION1AUDIO&quot;}],
-                       &quot;highlights&quot;: &quot;QUESTION1HIGHLIGHTS&quot;
+                       'audioId': 'questionaudio',
+                       'sources': [{'stub': 'QUESTION1AUDIO'}],
+                       'highlights': 'QUESTION1HIGHLIGHTS'
                    }
                ]
            },
            {
-               &quot;images&quot;: [
+               'images': [
                    {
-                       &quot;id&quot;: &quot;agent&quot;,
-                       &quot;src&quot;: &quot;AGENTIMG2&quot;,
-                       &quot;left&quot;: &quot;40&quot;,
-                       &quot;width&quot;: &quot;20&quot;,
-                       &quot;top&quot;: &quot;10&quot;
+                       'id': 'agent',
+                       'src': 'AGENTIMG2',
+                       'left': '40',
+                       'width': '20',
+                       'top': '10'
                    },
                    {
-                       &quot;id&quot;: &quot;left&quot;,
-                       &quot;src&quot;: &quot;LEFTIMG2&quot;,
-                       &quot;left&quot;: &quot;10&quot;,
-                       &quot;width&quot;: &quot;20&quot;,
-                       &quot;top&quot;: &quot;50&quot;
+                       'id': 'left',
+                       'src': 'LEFTIMG2',
+                       'left': '10',
+                       'width': '20',
+                       'top': '50'
                    },
                    {
-                       &quot;id&quot;: &quot;right&quot;,
-                       &quot;src&quot;: &quot;RIGHTIMG2&quot;,
-                       &quot;left&quot;: &quot;70&quot;,
-                       &quot;width&quot;: &quot;20&quot;,
-                       &quot;top&quot;: &quot;50&quot;
+                       'id': 'right',
+                       'src': 'RIGHTIMG2',
+                       'left': '70',
+                       'width': '20',
+                       'top': '50'
                    }
                ],
-               &quot;audioSources&quot;: [
+               'audioSources': [
                    {
-                       &quot;audioId&quot;: &quot;questionaudio&quot;,
-                       &quot;sources&quot;: [{&quot;stub&quot;: &quot;QUESTION2AUDIO&quot;}],
-                       &quot;highlights&quot;: &quot;QUESTION2HIGHLIGHTS&quot;
+                       'audioId': 'questionaudio',
+                       'sources': [{'stub': 'QUESTION2AUDIO'}],
+                       'highlights': 'QUESTION2HIGHLIGHTS'
                    }
                ]
            }
        ],
-       &quot;parameterSets&quot;: [
+       'parameterSets': [
            {
-               &quot;AGENTIMG1&quot;: &quot;flurpagent1.jpg&quot;,
-               &quot;LEFTIMG1&quot;: &quot;flurpvictim1.jpg&quot;,
-               &quot;RIGHTIMG1&quot;: &quot;zazzvictim1.jpg&quot;,
-               &quot;QUESTION1AUDIO&quot;: &quot;flurpleftmean1&quot;,
-               &quot;QUESTION1HIGHLIGHTS&quot;: [
-                   {&quot;range&quot;: [0.399293, 3.617124], &quot;image&quot;: &quot;agent&quot;},
-                   {&quot;range&quot;: [5.085112, 6.811467], &quot;image&quot;: &quot;left&quot;},
-                   {&quot;range&quot;: [6.905418, 8.702236], &quot;image&quot;: &quot;right&quot;}
+               'AGENTIMG1': 'flurpagent1.jpg',
+               'LEFTIMG1': 'flurpvictim1.jpg',
+               'RIGHTIMG1': 'zazzvictim1.jpg',
+               'QUESTION1AUDIO': 'flurpleftmean1',
+               'QUESTION1HIGHLIGHTS': [
+                   {'range': [0.399293, 3.617124], 'image': 'agent'},
+                   {'range': [5.085112, 6.811467], 'image': 'left'},
+                   {'range': [6.905418, 8.702236], 'image': 'right'}
                ],
-               &quot;AGENTIMG2&quot;: &quot;flurpagent2.jpg&quot;,
-               &quot;LEFTIMG2&quot;: &quot;flurpvictim2.jpg&quot;,
-               &quot;RIGHTIMG2&quot;: &quot;zazzvictim2.jpg&quot;,
-               &quot;QUESTION2AUDIO&quot;: &quot;flurpleftinduct1&quot;,
-               &quot;QUESTION2HIGHLIGHTS&quot;: [
-                   {&quot;range&quot;: [0.372569, 5.309110], &quot;image&quot;: &quot;agent&quot;},
-                   {&quot;range&quot;: [5.495395, 7.209213], &quot;image&quot;: &quot;left&quot;},
-                   {&quot;range&quot;: [5.495395, 7.209213], &quot;image&quot;: &quot;right&quot;},
-                   {&quot;range&quot;: [9.966225, 11.922212], &quot;image&quot;: &quot;left&quot;},
-                   {&quot;range&quot;: [12.052612,    14.008600], &quot;image&quot;: &quot;right&quot;}
+               'AGENTIMG2': 'flurpagent2.jpg',
+               'LEFTIMG2': 'flurpvictim2.jpg',
+               'RIGHTIMG2': 'zazzvictim2.jpg',
+               'QUESTION2AUDIO': 'flurpleftinduct1',
+               'QUESTION2HIGHLIGHTS': [
+                   {'range': [0.372569, 5.309110], 'image': 'agent'},
+                   {'range': [5.495395, 7.209213], 'image': 'left'},
+                   {'range': [5.495395, 7.209213], 'image': 'right'},
+                   {'range': [9.966225, 11.922212], 'image': 'left'},
+                   {'range': [12.052612,    14.008600], 'image': 'right'}
                ]
            },
            {
-               &quot;AGENTIMG1&quot;: &quot;zazzagent1.jpg&quot;,
-               &quot;LEFTIMG1&quot;: &quot;flurpvictim1.jpg&quot;,
-               &quot;RIGHTIMG1&quot;: &quot;zazzvictim1.jpg&quot;,
-               &quot;QUESTION1AUDIO&quot;: &quot;zazzrightnice1&quot;,
-               &quot;QUESTION1HIGHLIGHTS&quot;: [
-                   {&quot;range&quot;: [0.348454, 3.736871], &quot;image&quot;: &quot;agent&quot;},
-                   {&quot;range&quot;: [5.395033, 6.884975], &quot;image&quot;: &quot;left&quot;},
-                   {&quot;range&quot;: [6.969085, 8.975701], &quot;image&quot;: &quot;right&quot;}
+               'AGENTIMG1': 'zazzagent1.jpg',
+               'LEFTIMG1': 'flurpvictim1.jpg',
+               'RIGHTIMG1': 'zazzvictim1.jpg',
+               'QUESTION1AUDIO': 'zazzrightnice1',
+               'QUESTION1HIGHLIGHTS': [
+                   {'range': [0.348454, 3.736871], 'image': 'agent'},
+                   {'range': [5.395033, 6.884975], 'image': 'left'},
+                   {'range': [6.969085, 8.975701], 'image': 'right'}
                ],
-               &quot;AGENTIMG2&quot;: &quot;zazzagent2.jpg&quot;,
-               &quot;LEFTIMG2&quot;: &quot;flurpvictim2.jpg&quot;,
-               &quot;RIGHTIMG2&quot;: &quot;zazzvictim2.jpg&quot;,
-               &quot;QUESTION2AUDIO&quot;: &quot;zazzrightinduct1&quot;,
-               &quot;QUESTION2HIGHLIGHTS&quot;: [
-                   {&quot;range&quot;: [0.572920, 5.138376], &quot;image&quot;: &quot;agent&quot;},
-                   {&quot;range&quot;: [5.335317, 7.089884], &quot;image&quot;: &quot;left&quot;},
-                   {&quot;range&quot;: [5.335317, 7.089884], &quot;image&quot;: &quot;right&quot;},
-                   {&quot;range&quot;: [9.721735, 11.565821], &quot;image&quot;: &quot;left&quot;},
-                   {&quot;range&quot;: [11.655340,    13.535233], &quot;image&quot;: &quot;right&quot;}
+               'AGENTIMG2': 'zazzagent2.jpg',
+               'LEFTIMG2': 'flurpvictim2.jpg',
+               'RIGHTIMG2': 'zazzvictim2.jpg',
+               'QUESTION2AUDIO': 'zazzrightinduct1',
+               'QUESTION2HIGHLIGHTS': [
+                   {'range': [0.572920, 5.138376], 'image': 'agent'},
+                   {'range': [5.335317, 7.089884], 'image': 'left'},
+                   {'range': [5.335317, 7.089884], 'image': 'right'},
+                   {'range': [9.721735, 11.565821], 'image': 'left'},
+                   {'range': [11.655340,    13.535233], 'image': 'right'}
                ]
            }
        ],
-       &quot;parameterSetWeights&quot;: [1, 1]
+       'parameterSetWeights': [1, 1]
    }
 }
 
@@ -307,6 +307,10 @@ as shown below, in addition to the parameters described under 'properties'.</p>
                     <ul class="index-list properties">
                             <li class="index-item property">
                                 <a href="#property_commonFrameProperties">commonFrameProperties</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_conditionForAdditionalSessions">conditionForAdditionalSessions</a>
 
                             </li>
                             <li class="index-item property">
@@ -354,7 +358,7 @@ as shown below, in addition to the parameters described under 'properties'.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_randomizers_random-parameter-set.js.html#l418"><code>app&#x2F;randomizers&#x2F;random-parameter-set.js:418</code></a>
+        <a href="../files/app_randomizers_random-parameter-set.js.html#l488"><code>app&#x2F;randomizers&#x2F;random-parameter-set.js:488</code></a>
         </p>
 
 
@@ -491,6 +495,57 @@ as shown below, in addition to the parameters described under 'properties'.</p>
         <p>Object describing common parameters to use in EVERY frame created
 by this randomizer. Parameter names and values are as described in
 the documentation for the frameType used.</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_conditionForAdditionalSessions" class="property item">
+    <h3 class="name"><code>conditionForAdditionalSessions</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_randomizers_random-parameter-set.js.html#l310"><code>app&#x2F;randomizers&#x2F;random-parameter-set.js:310</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>[Optional] How to select a parameterSet for a participant who has previously
+participated in this study. Must be one of 'random' (default), 'persist', or
+'rotate'. Meanings:</p>
+<p>'random': regardless of any previous sessions from this participant, select a
+parameterSet for this participant as usual (including using parameterSetWeights if
+provided). Default behavior.</p>
+<p>'persist': Continue assigning the same participant to the same parameterSet for all
+sessions.</p>
+<p>'rotate': The first time, assign parameterSet randomly (per parameterSetWeights if
+given); after that, each time the participant participates assign them to the next
+parameterSet in the list. Subtracts length of parameterSets until the 'next' index
+is in range.</p>
+<p>The most recent session in which the <code>conditions</code> data includes an element that looks
+like it was generated by this same randomizer (i.e., with key ending in <code>-frameId</code>,
+like <code>-test-trials</code>) will always be used for assignment.</p>
+<p>Note: The 'same' or 'next' parameterSets are determined by the <strong>index</strong> of the
+previously-selected parameterSet. That is, if you were assigned to conditionNum 0
+(index 0 in parameterSets) last time, you will be assigned to conditionNum 0 again
+this time if conditionForAdditionalSessions is <code>persist</code> and conditionNum 1 if
+conditionForAdditionalSessions is <code>rotate</code>. So if you update the list of parameterSets
+in your study - e.g. to fix a bug or clarify wording - the new values will be used
+even for repeat participants. But be careful that you do not reorder them unless you
+intend to, say, swap all participants to the opposite condition on a specified date.
+If the previous index is now outside the range of the parameterSets list (e.g., you
+used to have 6 conditions, and the participant was previously in conditionNum 5,
+but then you changed parameterSets to have only 3 elements) and conditionForAdditionalSessions is
+<code>persist</code> then the participant is assigned to the last element of parameterSets.</p>
 
     </div>
 
@@ -652,7 +707,7 @@ the parameters for each frame in this session.</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_randomizers_random-parameter-set.js.html#l310"><code>app&#x2F;randomizers&#x2F;random-parameter-set.js:310</code></a>
+        <a href="../files/app_randomizers_random-parameter-set.js.html#l347"><code>app&#x2F;randomizers&#x2F;random-parameter-set.js:347</code></a>
         </p>
 
 
@@ -664,21 +719,21 @@ elements of parameterSets. The probability of selecting an element
 <code>parameterSets[i]</code> is <code>parameterSetWeights[i]/sum(parameterSetWeights)</code>.</p>
 <p>If not provided, all <code>parameterSets</code> are weighted equally.</p>
 <p>This is intended to allow manual control of counterbalancing during
-data collection, e.g. to allow one condition to &quot;catch up&quot; if it was
+data collection, e.g. to allow one condition to 'catch up' if it was
 randomly selected less often.</p>
 <p>Instead of providing a single list of the same length as parameterSets,
 you may instead provide a list of objects specifying the weights to use within
 various age ranges, like this:</p>
-<pre class="code prettyprint"><code>   &quot;parameterSetWeights&quot;: [
+<pre class="code prettyprint"><code>   'parameterSetWeights': [
        {
-           &quot;minAge&quot;: 0,
-           &quot;maxAge&quot;: 365,
-           &quot;weights&quot;: [1, 0, 1]
+           'minAge': 0,
+           'maxAge': 365,
+           'weights': [1, 0, 1]
        },
        {
-           &quot;minAge&quot;: 365,
-           &quot;maxAge&quot;: 10000,
-           &quot;weights&quot;: [0, 1, 0]
+           'minAge': 365,
+           'maxAge': 10000,
+           'weights': [0, 1, 0]
        },
    ]
 </code></pre>

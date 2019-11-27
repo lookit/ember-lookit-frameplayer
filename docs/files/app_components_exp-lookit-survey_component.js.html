@@ -624,67 +624,66 @@ let {
 export default ExpFrameBaseComponent.extend({
     type: &#x27;exp-lookit-survey&#x27;,
     layout: layout,
+
+    frameSchemaProperties: {
+        /**
+         * Whether to show a &#x27;previous&#x27; button
+         *
+         * @property {Boolean} showPreviousButton
+         * @default true
+         */
+        showPreviousButton: {
+            type: &#x27;boolean&#x27;,
+            default: true
+        },
+        /**
+         * Text to display on the &#x27;next frame&#x27; button
+         *
+         * @property {String} nextButtonText
+         * @default &#x27;Next&#x27;
+         */
+        nextButtonText: {
+            type: &#x27;string&#x27;,
+            default: &#x27;Next&#x27;
+        },
+        /**
+        Object specifying the content of the form. This is in the same format as
+        the example definition of the const &#x27;schema&#x27; at http://toddjordan.github.io/ember-cli-dynamic-forms/#/demos/data:
+        a schema and options are designated separately. Each field of the form
+        must be defined in schema. Options may additionally be specified in options.
+
+        @property {Object} formSchema
+            @param {Object} schema The schema defines the fields in this form. It has the following properties:
+            &#x27;type&#x27; (which MUST BE THE STRING &#x27;object&#x27;),
+            &#x27;title&#x27; (a form title for display), and
+            &#x27;properties&#x27;. &#x27;properties&#x27; is an object defining the set of fields in this form and
+                their associated data types, at minimum. Each key:value pair in this object is of
+                the form FIELDNAME:object. The FIELDNAME is something you select; it should be
+                unique within this form. The object contains at least &#x27;type&#x27; and &#x27;title&#x27; values,
+                as well as any additional desired parameters that belong to the &#x27;Schema&#x27; for the
+                desired field described at http://www.alpacajs.org/documentation.html.
+            @param {Object} options The options allow additional customization of the forms specified in the schema. This
+                object should have a single key &#x27;fields&#x27; mapping to an object. Each key:value pair in this object is of
+                the form FIELDNAME:object, with FIELDNAMEs the same as in the schema.
+                The potential parameters to use are those that belong to the &#x27;Options&#x27; for the
+                desired field described at  http://www.alpacajs.org/documentation.html.
+        */
+        formSchema: {
+            type: &#x27;object&#x27;,
+            properties: {
+                schema: {
+                    type: &#x27;object&#x27;
+                },
+                options: {
+                    type: &#x27;object&#x27;
+                }
+            }
+        }
+    },
+
     meta: {
         name: &#x27;ExpLookitSurvey&#x27;,
         description: &#x27;A basic survey frame.&#x27;,
-        parameters: {
-            type: &#x27;object&#x27;,
-            properties: {
-                /**
-                 * Whether to show a &#x27;previous&#x27; button
-                 *
-                 * @property {Boolean} showPreviousButton
-                 * @default true
-                 */
-                showPreviousButton: {
-                    type: &#x27;boolean&#x27;,
-                    default: true
-                },
-                /**
-                 * Text to display on the &#x27;next frame&#x27; button
-                 *
-                 * @property {String} nextButtonText
-                 * @default &#x27;Next&#x27;
-                 */
-                nextButtonText: {
-                    type: &#x27;string&#x27;,
-                    default: &#x27;Next&#x27;
-                },
-                /**
-                Object specifying the content of the form. This is in the same format as
-                the example definition of the const &#x27;schema&#x27; at http://toddjordan.github.io/ember-cli-dynamic-forms/#/demos/data:
-                a schema and options are designated separately. Each field of the form
-                must be defined in schema. Options may additionally be specified in options.
-
-                @property {Object} formSchema
-                    @param {Object} schema The schema defines the fields in this form. It has the following properties:
-                    &#x27;type&#x27; (which MUST BE THE STRING &#x27;object&#x27;),
-                    &#x27;title&#x27; (a form title for display), and
-                    &#x27;properties&#x27;. &#x27;properties&#x27; is an object defining the set of fields in this form and
-                        their associated data types, at minimum. Each key:value pair in this object is of
-                        the form FIELDNAME:object. The FIELDNAME is something you select; it should be
-                        unique within this form. The object contains at least &#x27;type&#x27; and &#x27;title&#x27; values,
-                        as well as any additional desired parameters that belong to the &#x27;Schema&#x27; for the
-                        desired field described at http://www.alpacajs.org/documentation.html.
-                    @param {Object} options The options allow additional customization of the forms specified in the schema. This
-                        object should have a single key &#x27;fields&#x27; mapping to an object. Each key:value pair in this object is of
-                        the form FIELDNAME:object, with FIELDNAMEs the same as in the schema.
-                        The potential parameters to use are those that belong to the &#x27;Options&#x27; for the
-                        desired field described at  http://www.alpacajs.org/documentation.html.
-                */
-                formSchema: {
-                    type: &#x27;object&#x27;,
-                    properties: {
-                        schema: {
-                            type: &#x27;object&#x27;
-                        },
-                        options: {
-                            type: &#x27;object&#x27;
-                        }
-                    }
-                }
-            }
-        },
         data: {
             /**
              * Parameters captured and sent to the server

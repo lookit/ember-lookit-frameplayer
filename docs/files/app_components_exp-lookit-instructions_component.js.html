@@ -225,179 +225,175 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     layout: layout,
     type: &#x27;exp-lookit-instructions&#x27;,
     doUseCamera: Em.computed.alias(&#x27;showWebcam&#x27;),
+    frameSchemaProperties: {
+        /**
+         * Whether to display the user&#x27;s webcam
+         *
+         * @property {Boolean} showWebcam
+         * @default false
+         */
+        showWebcam: {
+            type: &#x27;boolean&#x27;,
+            description: &#x27;Whether to display the user\&#x27;s webcam&#x27;,
+            default: false
+        },
+
+        /**
+         * Array of blocks for {{#crossLink &quot;Exp-text-block&quot;}}{{/crossLink}}, specifying text/images of instructions to display
+         *
+         * @property {Object[]} blocks
+         *   @param {String} title Title of this section
+         *   @param {String} text Paragraph text of this section
+         *   @param {Object[]} listblocks Object specifying bulleted points for this section. Each object is of the form:
+         *   {text: &#x27;text of bullet point&#x27;, image: {src: &#x27;url&#x27;, alt: &#x27;alt-text&#x27;}}. Images are optional.
+         *   @param {Object} mediaBlock Object specifying audio or video clip to include (optional). mediaBlock should be of form:
+         *   {title: &#x27;title text to show above audio&#x27;, text: &#x27;text to show below controls&#x27;, warningText: &#x27;Text to show in red if user tries to proceed but hasn&#x27;t played; only used if mustPlay is true&#x27;, sources: &#x27;sources Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects specifying audio sources&#x27;, isVideo: &#x27;boolean, whether video or audio&#x27;, mustPlay: &#x27;boolean, whether clip has to be played to proceed&#x27;}
+         *
+         */
+        blocks: {
+            type: &#x27;array&#x27;,
+            items: {
+                type: &#x27;object&#x27;,
+                properties: {
+                    title: {
+                        type: &#x27;string&#x27;
+                    },
+                    text: {
+                        type: &#x27;string&#x27;
+                    },
+                    listblocks: {
+                        type: &#x27;array&#x27;,
+                        items: {
+                            type: &#x27;object&#x27;,
+                            properties: {
+                                text: {
+                                    type: &#x27;string&#x27;
+                                },
+                                image: {
+                                    type: &#x27;object&#x27;,
+                                    properties: {
+                                        src: {
+                                            type: &#x27;string&#x27;
+                                        },
+                                        alt: {
+                                            type: &#x27;string&#x27;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    mediaBlock: {
+                        type: &#x27;object&#x27;,
+                        default: {},
+                        properties: {
+                            title: {
+                                type: &#x27;string&#x27;
+                            },
+                            text: {
+                                type: &#x27;string&#x27;
+                            },
+                            warningText: {
+                                type: &#x27;string&#x27;
+                            },
+                            sources: {
+                                type: &#x27;array&#x27;,
+                                items: {
+                                    type: &#x27;object&#x27;,
+                                    properties: {
+                                        src: {
+                                            type: &#x27;string&#x27;
+                                        },
+                                        type: {
+                                            type: &#x27;string&#x27;
+                                        }
+                                    }
+                                }
+                            },
+                            isVideo: {
+                                type: &#x27;boolean&#x27;,
+                                default: false
+                            },
+                            mustPlay: {
+                                type: &#x27;boolean&#x27;,
+                                default: false
+                            }
+                        }
+                    }
+                }
+            },
+            default: []
+        },
+        /**
+         * Array of objects specifying text/images of instructions to display under webcam view (if webcam is shown)
+         *
+         * @property {Object[]} blocks
+         *   @param {String} title Title of this section
+         *   @param {String} text Paragraph text of this section
+         *   @param {Object[]} listblocks Object specifying bulleted points for this section. Each object is of the form:
+         *   {text: &#x27;text of bullet point&#x27;, image: {src: &#x27;url&#x27;, alt: &#x27;alt-text&#x27;}}. Images are optional.
+         */
+        webcamBlocks: {
+            type: &#x27;array&#x27;,
+            items: {
+                type: &#x27;object&#x27;,
+                properties: {
+                    title: {
+                        type: &#x27;string&#x27;
+                    },
+                    text: {
+                        type: &#x27;string&#x27;
+                    },
+                    listblocks: {
+                        type: &#x27;array&#x27;,
+                        items: {
+                            type: &#x27;object&#x27;,
+                            properties: {
+                                text: {
+                                    type: &#x27;string&#x27;
+                                },
+                                image: {
+                                    type: &#x27;object&#x27;,
+                                    properties: {
+                                        src: {
+                                            type: &#x27;string&#x27;
+                                        },
+                                        alt: {
+                                            type: &#x27;string&#x27;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            default: []
+        },
+        /**
+         * Whether to show a &#x27;previous&#x27; button
+         *
+         * @property {Boolean} showPreviousButton
+         * @default true
+         */
+        showPreviousButton: {
+            type: &#x27;boolean&#x27;,
+            default: true
+        },
+        /**
+         * Text to display on the &#x27;next frame&#x27; button
+         *
+         * @property {String} nextButtonText
+         * @default &#x27;Start the videos! \n (You\&#x27;ll have a moment to turn around.)&#x27;
+         */
+        nextButtonText: {
+            type: &#x27;string&#x27;,
+            default: &#x27;Start the videos! \n (You\&#x27;ll have a moment to turn around.)&#x27;
+        }
+    },
     meta: {
         name: &#x27;ExpLookitInstructions&#x27;,
         description: &#x27;A frame to display bulleted instructions to the user, along with an audio clip to make sure sound playback is working.&#x27;,
-        parameters: {
-            type: &#x27;object&#x27;,
-            properties: {
-                /**
-                 * Whether to display the user&#x27;s webcam
-                 *
-                 * @property {Boolean} showWebcam
-                 * @default false
-                 */
-                showWebcam: {
-                    type: &#x27;boolean&#x27;,
-                    description: &#x27;Whether to display the user\&#x27;s webcam&#x27;,
-                    default: false
-                },
-
-                /**
-                 * Array of blocks for {{#crossLink &quot;Exp-text-block&quot;}}{{/crossLink}}, specifying text/images of instructions to display
-                 *
-                 * @property {Object[]} blocks
-                 *   @param {String} title Title of this section
-                 *   @param {String} text Paragraph text of this section
-                 *   @param {Object[]} listblocks Object specifying bulleted points for this section. Each object is of the form:
-                 *   {text: &#x27;text of bullet point&#x27;, image: {src: &#x27;url&#x27;, alt: &#x27;alt-text&#x27;}}. Images are optional.
-                 *   @param {Object} mediaBlock Object specifying audio or video clip to include (optional). mediaBlock should be of form:
-                 *   {title: &#x27;title text to show above audio&#x27;, text: &#x27;text to show below controls&#x27;, warningText: &#x27;Text to show in red if user tries to proceed but hasn&#x27;t played; only used if mustPlay is true&#x27;, sources: &#x27;sources Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects specifying audio sources&#x27;, isVideo: &#x27;boolean, whether video or audio&#x27;, mustPlay: &#x27;boolean, whether clip has to be played to proceed&#x27;}
-                 *
-                 */
-                blocks: {
-                    type: &#x27;array&#x27;,
-                    items: {
-                        type: &#x27;object&#x27;,
-                        properties: {
-                            title: {
-                                type: &#x27;string&#x27;
-                            },
-                            text: {
-                                type: &#x27;string&#x27;
-                            },
-                            listblocks: {
-                                type: &#x27;array&#x27;,
-                                items: {
-                                    type: &#x27;object&#x27;,
-                                    properties: {
-                                        text: {
-                                            type: &#x27;string&#x27;
-                                        },
-                                        image: {
-                                            type: &#x27;object&#x27;,
-                                            properties: {
-                                                src: {
-                                                    type: &#x27;string&#x27;
-                                                },
-                                                alt: {
-                                                    type: &#x27;string&#x27;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            mediaBlock: {
-                                type: &#x27;object&#x27;,
-                                default: {},
-                                properties: {
-                                    title: {
-                                        type: &#x27;string&#x27;
-                                    },
-                                    text: {
-                                        type: &#x27;string&#x27;
-                                    },
-                                    warningText: {
-                                        type: &#x27;string&#x27;
-                                    },
-                                    sources: {
-                                        type: &#x27;array&#x27;,
-                                        items: {
-                                            type: &#x27;object&#x27;,
-                                            properties: {
-                                                src: {
-                                                    type: &#x27;string&#x27;
-                                                },
-                                                type: {
-                                                    type: &#x27;string&#x27;
-                                                }
-                                            }
-                                        }
-                                    },
-                                    isVideo: {
-                                        type: &#x27;boolean&#x27;,
-                                        default: false
-                                    },
-                                    mustPlay: {
-                                        type: &#x27;boolean&#x27;,
-                                        default: false
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    default: []
-                },
-                /**
-                 * Array of objects specifying text/images of instructions to display under webcam view (if webcam is shown)
-                 *
-                 * @property {Object[]} blocks
-                 *   @param {String} title Title of this section
-                 *   @param {String} text Paragraph text of this section
-                 *   @param {Object[]} listblocks Object specifying bulleted points for this section. Each object is of the form:
-                 *   {text: &#x27;text of bullet point&#x27;, image: {src: &#x27;url&#x27;, alt: &#x27;alt-text&#x27;}}. Images are optional.
-                 */
-                webcamBlocks: {
-                    type: &#x27;array&#x27;,
-                    items: {
-                        type: &#x27;object&#x27;,
-                        properties: {
-                            title: {
-                                type: &#x27;string&#x27;
-                            },
-                            text: {
-                                type: &#x27;string&#x27;
-                            },
-                            listblocks: {
-                                type: &#x27;array&#x27;,
-                                items: {
-                                    type: &#x27;object&#x27;,
-                                    properties: {
-                                        text: {
-                                            type: &#x27;string&#x27;
-                                        },
-                                        image: {
-                                            type: &#x27;object&#x27;,
-                                            properties: {
-                                                src: {
-                                                    type: &#x27;string&#x27;
-                                                },
-                                                alt: {
-                                                    type: &#x27;string&#x27;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    default: []
-                },
-                /**
-                 * Whether to show a &#x27;previous&#x27; button
-                 *
-                 * @property {Boolean} showPreviousButton
-                 * @default true
-                 */
-                showPreviousButton: {
-                    type: &#x27;boolean&#x27;,
-                    default: true
-                },
-                /**
-                 * Text to display on the &#x27;next frame&#x27; button
-                 *
-                 * @property {String} nextButtonText
-                 * @default &#x27;Start the videos! \n (You\&#x27;ll have a moment to turn around.)&#x27;
-                 */
-                nextButtonText: {
-                    type: &#x27;string&#x27;,
-                    default: &#x27;Start the videos! \n (You\&#x27;ll have a moment to turn around.)&#x27;
-                }
-            },
-            required: []
-        },
         data: {
             /**
              * Parameters captured and sent to the server
