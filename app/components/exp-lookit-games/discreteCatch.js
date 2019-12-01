@@ -20,6 +20,7 @@ let initialTime = 0; // initial time for current game trial
 let Height = 0.8; // Current trajectory height
 let jitterT = 0;
 let radiusRim = 0.1; //Rim size on basket
+let redDotMargin = radiusRim / 4;
 let obstructionsNum = 0; // Current number of obstructions (randomized each trial)
 let consecutiveCounts = 0;  // Calculate number of consecutive successful attempts
 let startTime = 0;
@@ -183,14 +184,14 @@ export default class DiscreteCatch extends Base {
       let exportData = {
         game_type: 'discreteCatch',
         trajectory: trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT],
-        ball_position_x: ball.position.x / super.Utils.SCALE,
-        ball_position_y:  (this.canvas.height - ball.position.y)/this.canvas.height,
-        paddle_center_x: (basket.position.x   + basket.dimensions.width / 2 ) / super.Utils.SCALE,
-        paddle_x: basket.position.x / super.Utils.SCALE,
-        paddle_position_y: (this.canvas.height - basket.position.y)/this.canvas.height,
-        red_dot_start_position: (1.3310 - radiusRim),
-        red_dot_width: radiusRim*2,
-        obstruction: trajectoryParameters[super.currentRounds][trajectoryParameters.OBSTRUCTION],
+        ball_position_x: super.convertXvalue(ball.position.x),
+        ball_position_y:  this.convertYvalue(ball.position.y),
+        paddle_center_x: super.convertXvalue(basket.position.x   + (basket.dimensions.width / 2) ),
+        paddle_x: super.convertXvalue(basket.position.x),
+        paddle_position_y: this.convertYvalue(basket.position.y),
+        red_dot_start_position: 1.3301 - redDotMargin,
+        red_dot_width: redDotMargin*2,
+        obstruction_number: trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION],
         trial: super.currentRounds,
         trialType: this.context.trialType,
         timestamp: super.getElapsedTime(initialTime)
@@ -214,15 +215,14 @@ export default class DiscreteCatch extends Base {
     let basketPrevPosition = 0;
     if(basket.positions.length >2){
 
-      basketPrevPosition = this.canvas.height - (basket.positions[basket.positions.length-2])*this.canvas.height;
+      basketPrevPosition = this.canvas.height - (basket.positions[basket.positions.length-2])*super.Utils.SCALE;
     }
 
     if(ball.positions.length >2 && ball.positions[ball.positions.length-2] <= basketPrevPosition && ball.position.y > basket.position.y){
       if (ball.position.x >= basket.position.x && ball.position.x <=  basket.position.x +  basket.dimensions.width ) {
-        let margin = radiusRim / 4;
         ball.hitstate = 'good';
 
-        if (ball.position.x > (1.3301 - margin) * super.Utils.SCALE && ball.position.x < (1.3301 + margin) * super.Utils.SCALE) {
+        if (ball.position.x > (1.3301 - redDotMargin) * super.Utils.SCALE && ball.position.x < (1.3301 + redDotMargin) * super.Utils.SCALE) {
 
           ball.hitstate = 'very good';
         }

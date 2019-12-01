@@ -217,8 +217,8 @@ export default class ButtonPressWindow extends Base {
 
       game_type: 'buttonPressWindow',
       trajectory: currentTrajectory,
-      ball_position_x: ball.position.x/ super.Utils.SCALE,
-      ball_position_y: (this.canvas.height - ball.position.y) / this.canvas.height,
+      ball_position_x: super.convertXvalue(ball.position.x),
+      ball_position_y: super.convertYvalue(ball.position.y),
       button_pressed: keyPressed.value,
       trial: super.currentRounds,
       trialType: this.context.trialType,

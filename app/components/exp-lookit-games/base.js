@@ -106,21 +106,6 @@ export default class Base {
    */
   calculateCanvas(){
 
-    //  this.canvas.height =  screen.height ;
-    //  this.canvas.width = screen.width;
-    //  let ratio = this.canvas.height/this.canvas.width;
-    //  let height = this.Utils.SCREEN_HEIGHT;
-    //  if(ratio >= 0.6 && ratio < 0.7 ){
-    //    height = 800;
-    //  }else if(ratio >= 0.7){
-    //    height = 900;
-    //  }
-    //
-    // this.Utils.SCALE  =  this.context.scale_factor * (this.canvas.height/height);
-
-    // this.canvas.height = 768 ;
-    // this.canvas.width =  1024;
-    // this.Utils.SCALE  =  420;
 
     if(screen.height < screen.width) {
       this.canvas.height = screen.height;
@@ -547,7 +532,7 @@ export default class Base {
    */
   basketObject(basket) {
 
-    let position = (this.canvas.height - mouseY)/this.canvas.height ;
+    let position = (this.canvas.height - mouseY)/Utils.SCALE;
     let radiusRim = 0.1;
     let leftBorder = (1.3310 - radiusRim) * Utils.SCALE;
     let topBorder = (1.3671 - position) * Utils.SCALE;
@@ -576,7 +561,7 @@ export default class Base {
     if(paddle.positions.length > 80){
       paddle.positions = paddle.positions.slice(-80);
     }
-    paddle.positions.push((this.canvas.height - paddle.position.y) / this.canvas.height);
+    paddle.positions.push((this.canvas.height - paddle.position.y) / Utils.SCALE);
 
   }
 
@@ -587,7 +572,7 @@ export default class Base {
    * @return {object} paddle {position: {x: number, y: number}, dimensions: {width: number, height: number}}
    */
   paddleObject(paddle){
-    let position = (this.canvas.height - mouseY)/this.canvas.height ;
+    let position = (this.canvas.height - mouseY)/Utils.SCALE ;
     let leftBorder = (1.256)*Utils.SCALE ;
     let topBorder = (1.3671-position)*Utils.SCALE;
     let rightBorder = (1.406)*Utils.SCALE;
@@ -631,6 +616,21 @@ export default class Base {
 
     };
   }
+
+
+  convertYvalue(val){
+
+    return (this.canvas.height - val)/Utils.SCALE;
+
+  }
+
+  convertXvalue(val){
+
+    return val/Utils.SCALE;
+
+  }
+
+
 
   /**
    * Get elapsed time as iterator in seconds
@@ -741,7 +741,7 @@ export default class Base {
     if (paddle.position.y >= topBorder) {
       // Check if paddle is not moving inside the box
       let paddleTimeArrSize = paddle.positions.length;
-      if (paddle.paddleLastMovedMillis === 0 || (paddle.position.y !== (this.canvas.height - paddle.positions[paddleTimeArrSize - 1] * this.canvas.height))) {
+      if (paddle.paddleLastMovedMillis === 0 || (paddle.position.y !== (this.canvas.height - paddle.positions[paddleTimeArrSize - 1] * Utils.SCALE))) {
         paddle.paddleLastMovedMillis = new Date().getTime();
 
       } else if (new Date().getTime() - paddle.paddleLastMovedMillis >= PADDLE_REST_TIME_MS) {
@@ -765,7 +765,7 @@ export default class Base {
    */
   paddleIsMoved(paddle,checkPaddleHeight = false){
 
-    if( paddle.positions.length > 2 && paddle.position.y !== (this.canvas.height - paddle.positions[paddle.positions.length-3]*this.canvas.height)){
+    if( paddle.positions.length > 2 && paddle.position.y !== (this.canvas.height - paddle.positions[paddle.positions.length-3]*Utils.SCALE)){
 
       return true;
     }

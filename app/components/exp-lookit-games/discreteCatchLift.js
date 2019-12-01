@@ -170,10 +170,10 @@ export default class DiscreteCatchLift extends Base {
     super.dataCollection();
     let exportData = {
       game_type: 'discreteCatchLift',
-      basket_x: basket.position.x / this.canvas.width,
-      basket_y: (this.canvas.height - basket.position.y) / this.canvas.height,
-      mice_x: target.position.x / this.canvas.width,
-      mice_y: (this.canvas.height - target.position.y) / this.canvas.height,
+      basket_x: super.convertXvalue(basket.position.x),
+      basket_y: super.convertYvalue(basket.position.y),
+      mice_x:   super.convertXvalue(target.position.x),
+      mice_y:   super.convertYvalue(target.position.y),
       trial: super.currentRounds,
       trialType: this.context.trialType,
       mice_state: target.state,
