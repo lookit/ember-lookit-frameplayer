@@ -306,7 +306,7 @@ export default class DiscreteBounce extends Base {
     }
     ball.positions.push(ball.position);
     ball.position.x = leftBorder;
-    ball.position.y = this.canvas.height - positionY * this.canvas.height ;
+    ball.position.y = this.canvas.height - positionY * super.Utils.SCALE ;
 
 
   }
@@ -361,7 +361,7 @@ export default class DiscreteBounce extends Base {
     let paddleVelocity = super.Utils.getPaddleVelocity(paddle.times, paddle.positions);
     paddle.paddleLastMovedMillis = new Date().getTime();
     ball.impactTime = new Date().getTime();
-    ball.impactPosition = (this.canvas.height - (paddle.position.y - paddle.dimensions.height - paddleDelta)) / this.canvas.height;
+    ball.impactPosition = (this.canvas.height - (paddle.position.y - paddle.dimensions.height - paddleDelta)) / super.Utils.SCALE;
     let iterator = super.getElapsedTime(initialTime);
     ball.velocity = super.TrajectoryVars.initV - super.TrajectoryVars.gravity * iterator;
     paddle.releaseVelocity = -alpha * (ball.velocity - paddleVelocity) + paddleVelocity;
@@ -499,11 +499,11 @@ export default class DiscreteBounce extends Base {
     let exportData = {
       game_type: 'BounceGame',
       trajectory: hArray[super.currentRounds],
-      ball_position_x: ball.position.x /  super.Utils.SCALE,
-      ball_position_y: (this.canvas.height - ball.position.y) / this.canvas.height,
-      paddle_center_x: (paddle.position.x   +  paddle.dimensions.width / 2) / super.Utils.SCALE,
-      paddle_x: paddle.position.x / super.Utils.SCALE,
-      paddle_position_y: (this.canvas.height - paddle.position.y) / this.canvas.height,
+      ball_position_x: super.convertXvalue(ball.position.x),
+      ball_position_y: super.convertYvalue(ball.position.y),
+      paddle_center_x: super.convertXvalue(paddle.position.x   +  (paddle.dimensions.width / 2)) ,
+      paddle_x: super.convertXvalue(paddle.position.x),
+      paddle_position_y: super.convertYvalue(paddle.position.y),
       trial: super.currentRounds,
       trialType: this.context.trialType,
       timestamp: super.getElapsedTime(initialTime)

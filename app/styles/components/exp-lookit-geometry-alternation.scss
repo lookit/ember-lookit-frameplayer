@@ -8,9 +8,12 @@ $exp-alternation-right-rect: 81.25%;
     height: 56.25vw; /* 100/56.25 = 1.778 */
     max-height: 100vh;
     max-width: 177.78vh; /* 16/9 = 1.778 */
-    margin: auto;
+    margin: auto !important;
     top:0;bottom:0; /* vertical center */
     left:0;right:0; /* horizontal center */
+    // Trying for calibration display bug..
+    position:absolute;
+    z-index: -1;
 }
 
 

@@ -383,6 +383,10 @@ specified using stubs MUST be organized as expected under baseDir/MEDIATYPE/file
                                 <a href="#property_pages">pages</a>
 
                             </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_parameters">parameters</a>
+
+                            </li>
                             <li class="index-item property">
                                 <a href="#property_participationQuestion">participationQuestion</a>
 
@@ -661,7 +665,7 @@ specified using stubs MUST be organized as expected under baseDir/MEDIATYPE/file
                 Video-record
             </a>
             but overwritten in
-        <a href="../files/app_components_exp-frame-base_component.js.html#l402"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:402</code></a>
+        <a href="../files/app_components_exp-frame-base_component.js.html#l457"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:457</code></a>
         </p>
 
 
@@ -845,7 +849,7 @@ instead stop/start and make separate clips if needed.
                 Exp-frame-base
             </a>
             but overwritten in
-        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l503"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:503</code></a>
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l502"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:502</code></a>
         </p>
 
 
@@ -1562,7 +1566,7 @@ to be on one line.)</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l485"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:485</code></a>
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l484"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:484</code></a>
         </p>
 
 
@@ -1590,7 +1594,7 @@ regardless of leap years etc.</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l435"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:435</code></a>
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l434"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:434</code></a>
         </p>
 
 
@@ -1615,7 +1619,7 @@ regardless of leap years etc.</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l365"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:365</code></a>
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l364"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:364</code></a>
         </p>
 
 
@@ -1693,6 +1697,75 @@ regardless of leap years etc.</p>
             </li>
         </ul>
 </div>
+<div id="property_parameters" class="property item inherited">
+    <h3 class="name"><code>parameters</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Exp-frame-base.html#property_parameters">Exp-frame-base </a> (click for formatted description):
+        <a href="../files/app_components_exp-frame-base_component.js.html#l228"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:228</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>An object containing values for any parameters (variables) to use in this frame.
+Any property VALUES in this frame that match any of the property NAMES in <code>parameters</code>
+will be replaced by the corresponding parameter value. For example, suppose your frame
+is:</p>
+<pre class="code prettyprint"><code>{
+   'kind': 'FRAME_KIND',
+   'parameters': {
+       'FRAME_KIND': 'exp-lookit-text'
+   }
+}
+</code></pre>
+<p>Then the frame <code>kind</code> will be <code>exp-lookit-text</code>. This may be useful if you need
+to repeat values for different frame properties, especially if your frame is actually
+a randomizer or group. You may use parameters nested within objects (at any depth) or
+within lists.</p>
+<p>You can also use selectors to randomly sample from or permute
+a list defined in <code>parameters</code>. Suppose <code>STIMLIST</code> is defined in
+<code>parameters</code>, e.g. a list of potential stimuli. Rather than just using <code>STIMLIST</code>
+as a value in your frames, you can also:</p>
+<ul>
+<li>Select the Nth element (0-indexed) of the value of <code>STIMLIST</code>: (Will cause error if <code>N &gt;= THELIST.length</code>)</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#N'
+</code></pre>
+<ul>
+<li>Select (uniformly) a random element of the value of <code>STIMLIST</code>:</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#RAND'
+</code></pre>
+<ul>
+<li>Set <code>parameterName</code> to a random permutation of the value of <code>STIMLIST</code>:</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#PERM'
+</code></pre>
+<ul>
+<li>Select the next element in a random permutation of the value of <code>STIMLIST</code>, which is used across all
+substitutions in this randomizer. This allows you, for instance, to provide a list
+of possible images in your <code>parameterSet</code>, and use a different one each frame with the
+subset/order randomized per participant. If more <code>STIMLIST#UNIQ</code> parameters than
+elements of <code>STIMLIST</code> are used, we loop back around to the start of the permutation
+generated for this randomizer.</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#UNIQ'
+</code></pre>
+
+    </div>
+
+        <p><strong>Default:</strong> {}</p>
+
+
+</div>
 <div id="property_participationQuestion" class="property item">
     <h3 class="name"><code>participationQuestion</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
@@ -1704,7 +1777,7 @@ regardless of leap years etc.</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l475"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:475</code></a>
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l474"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:474</code></a>
         </p>
 
 
@@ -1729,7 +1802,7 @@ regardless of leap years etc.</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l465"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:465</code></a>
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l464"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:464</code></a>
         </p>
 
 
@@ -1804,7 +1877,7 @@ Accessible to consuming frame.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l445"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:445</code></a>
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l444"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:444</code></a>
         </p>
 
 
@@ -1829,7 +1902,7 @@ Accessible to consuming frame.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l455"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:455</code></a>
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l454"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:454</code></a>
         </p>
 
 
@@ -2096,7 +2169,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l350"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:350</code></a>
+                            <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l349"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:349</code></a>
                             </p>
                     
                     
@@ -2254,7 +2327,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Exp-frame-base.html#event_nextFrame">Exp-frame-base</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l449"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:449</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l504"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:504</code></a>
                             </p>
                     
                     
@@ -2345,7 +2418,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Exp-frame-base.html#event_previousFrame">Exp-frame-base</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l504"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:504</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l559"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:559</code></a>
                             </p>
                     
                     
@@ -2418,7 +2491,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l567"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:567</code></a>
+                            <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l566"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:566</code></a>
                             </p>
                     
                     

@@ -104,7 +104,7 @@ const VideoRecorder = Ember.Object.extend({
         return new RSVP.Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
 
             var pipeConfig = {
-                qualityurl: 'avq/480p.xml',
+                qualityurl: 'https://d3l7d0ho3mojk5.cloudfront.net/pipe/720p.xml',
                 showMenu: 0, // hide recording button menu
                 sis: 1, // skip initial screen
                 asv: autosave, // autosave recordings
@@ -195,7 +195,6 @@ const VideoRecorder = Ember.Object.extend({
     getTime() {
         let recorder = this.get('recorder');
         if (recorder && recorder.getStreamTime) {
-            console.log(recorder.getStreamTime());
             return parseFloat(recorder.getStreamTime());
         }
         return null;
@@ -206,49 +205,35 @@ const VideoRecorder = Ember.Object.extend({
      * @method stop
      */
     stop() {
-        function sleep(time) {
-            return new Promise((resolve) => setTimeout(resolve, time));
-        }
-
-        // Force at least 3 seconds of video to be recorded to ensure upload is called.
-        // Not thoroughly tested that this is still necessary w webRTC recorder.
-        var timeLeft = 3 - this.getTime();
-        if (this.get('hasCamAccess') && (timeLeft > 0)) {
-            // sleep time expects milliseconds
-            console.log('Not stopping recording yet because minimum duration not reached');
-            return sleep(timeLeft * 1000).then(() => this.stop());
-        } else {
-            var recorder = this.get('recorder');
-            if (recorder) {
-                try {
-                    recorder.stopVideo();
-                } catch (e) {
-                    console.log('error stopping video');
-                    // TODO: Under some conditions there is no stopVideo method- can we do a better job of
-                    //  identifying genuine errors?
-                }
-                this.set('_recording', false);
+        var recorder = this.get('recorder');
+        if (recorder) {
+            try {
+                recorder.stopVideo();
+            } catch (e) {
+                console.log('error stopping video');
             }
-
-            var _this = this;
-            var _stopPromise = new Ember.RSVP.Promise((resolve, reject) => {
-                // If we don't end up uploading within 5 seconds, call reject
-                _this.set('uploadTimeout', window.setTimeout(function() {
-                        console.warn('waiting for upload timed out');
-                        window.clearTimeout(_this.get('uploadTimeout'));
-                        reject();
-                    }, 5000));
-                if (_this.get('_isuploaded')) {
-                    resolve(this);
-                } else {
-                    _this.set('_stopPromise', {
-                        resolve: resolve,
-                        reject: reject
-                    });
-                }
-            });
-            return _stopPromise;
         }
+        this.set('_recording', false);
+
+        var _this = this;
+        var _stopPromise = new Ember.RSVP.Promise((resolve, reject) => {
+            // If we don't end up uploading within 5 seconds, call reject
+            _this.set('uploadTimeout', window.setTimeout(function() {
+                    console.warn('waiting for upload timed out');
+                    window.clearTimeout(_this.get('uploadTimeout'));
+                    reject();
+                }, 5000));
+            if (_this.get('_isuploaded')) {
+                window.clearTimeout(_this.get('uploadTimeout'));
+                resolve(_this);
+            } else {
+                _this.set('_stopPromise', {
+                    resolve: resolve,
+                    reject: reject
+                });
+            }
+        });
+        return _stopPromise;
     },
 
     /**
@@ -307,7 +292,6 @@ const VideoRecorder = Ember.Object.extend({
     },
 
     _onConnectionStatus(recorderId, status) { // eslint-disable-line no-unused-vars
-        console.log('onConnectionStatus');
         this.set('connected', status === 'connected');
     },
 

@@ -508,8 +508,8 @@ export default class DiscreteButtonSpatial extends Base {
       window: this.getCorrectIndex()+1,
       selected_button: target_state + 1  ,
       obstruction_number: trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION],
-      ball_position_x: ball.position.x / this.canvas.width,
-      ball_position_y:(this.canvas.height - ball.position.y)/this.canvas.height,
+      ball_position_x: super.convertXvalue(ball.position.x),
+      ball_position_y: super.convertYvalue(ball.position.y),
       trial: super.currentRounds,
       trialType: this.context.trialType,
       timestamp: super.getElapsedTime(initialTime)

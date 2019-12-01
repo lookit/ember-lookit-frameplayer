@@ -38,7 +38,7 @@ ExperimentParser.prototype._reformatFrame = function (frame, index, prependFrame
 ExperimentParser.prototype._resolveRandom = function (frame, frameId) {
     var randomizer = frame.sampler;
     if (!randomizers[randomizer]) {
-        throw `Randomizer ${randomizer} not recognized`;
+        throw `Parse error: Randomizer ${randomizer} not recognized in frame ${frameId}. In any 'choice' frame, the 'sampler' property must be set to one of the available randomizers: ${Object.keys(randomizers)}`;
     } else {
         return randomizers[randomizer](
             frameId,
@@ -74,14 +74,22 @@ ExperimentParser.prototype._resolveDependencies = function (frame) {
 
 /* Convert any frame to a list of constituent frame config objects.
  * Centrally dispatches logic for all other frame types
+ * Provide EITHER frameId (index into this.frames) or frame object (with frameId null)
  */
 ExperimentParser.prototype._resolveFrame = function (frameId, frame) {
     try {
+        if (frameId && !frame) {
+            if (!this.frames.hasOwnProperty(frameId)) {
+                console.error(`Parse error: Experiment sequence includes an undefined frame '${frameId}'. Each element of the 'sequence' in your study JSON must also be a key in the 'frames'. The frames you can use are: ${Object.keys(this.frames)}`);
+            }
+        }
+
         frame = frame || this.frames[frameId];
-        if (frame.parameters) {
+        if (frame && frame.parameters) { // Allow use of parameters to set kind
             var substituter = new Substituter();
             frame = substituter.replaceValues(frame, frame.parameters);
         }
+
         if (frameNamePattern.test(frame.kind)) {
             // Base case: this is a plain experiment frame
             frame.id = frame.id || frameId;
@@ -107,8 +115,7 @@ ExperimentParser.prototype._resolveFrame = function (frameId, frame) {
         } else if (frame.kind === 'choice') {
             return this._resolveRandom(frame, frameId);
         } else {
-            console.log(`Experiment definition specifies an unknown kind of frame: ${frame.kind}`);
-            throw `Experiment definition specifies an unknown kind of frame: ${frame.kind}`;
+            throw `Parse error: Experiment definition specifies an unknown kind of frame: ${frame.kind}. Frame kind should be one of 'group', 'choice', or 'exp-<specific-frame-name>'.`;
         }
     } catch (error) {
         console.error(error);
@@ -124,6 +131,20 @@ ExperimentParser.prototype.parse = function (prependFrameInds = true) {
             choices[`${index}-${frameId}`] = choice;
         }
     });
+
+    // Basic checks to warn about unusual sequences
+    var frameKinds = expFrames.map(frame => frame.kind);
+    var nFrames = expFrames.length;
+    if (nFrames > 0 && frameKinds[0] != 'exp-video-config') {
+        console.warn('Parse warning: First frame is not an exp-video-config frame. Lookit recommends starting with an exp-video-config frame to help participants set up their webcams. If you are testing out a subset of your study, or using a custom replacement for exp-video-config, you can disregard this warning.');
+    }
+    if (!(frameKinds.includes('exp-lookit-video-consent') || frameKinds.includes('exp-video-consent'))) {
+        console.warn('Parse warning: No consent frame detected. All studies must include a consent frame such as exp-lookit-video-consent. If you are testing out a subset of your study or have received approval to use a custom replacement for exp-lookit-video-consent, you can disregard this warning.');
+    }
+    if (frameKinds[nFrames - 1] != 'exp-lookit-exit-survey') {
+        console.warn('Parse warning: Last frame of study is not an exp-lookit-exit-survey frame. All studies must end with an exit survey including video permission level and an option to withdraw video. If you are testing out a subset of your study or have received approval to use a custom replacement for exp-lookit-exit-survey, you can disregard this warning.');
+    }
+
     return [
         expFrames.map((frame, index) => this._reformatFrame(frame, index, prependFrameInds)),
         choices
