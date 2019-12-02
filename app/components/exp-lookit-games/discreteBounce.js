@@ -200,7 +200,9 @@ export default class DiscreteBounce extends Base {
 
     if (ball.state === 'start') {
       super.moveBallToStart(ball, images[gameImage.BALL]);
-
+      if (initialTime > 0 && super.isOutsideBox(paddle,paddle.dimensions.height)) {
+         initialTime = new Date().getTime();
+      }
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         sounds[gameSound.START].pause();
         sounds[gameSound.START].currentTime = 0;

@@ -776,11 +776,14 @@ export default class Base {
     }
 
     // Check if paddle is moved outside the box limits
-    return paddle.position.y < paddleBox.position.y - paddleBox.dimensions.height + paddleHeight;
+    return this.isOutsideBox(paddle, paddleHeight);
 
   }
 
 
+  isOutsideBox(paddle, paddleHeight) {
+    return paddle.position.y < paddleBox.position.y - paddleBox.dimensions.height + paddleHeight;
+  }
 
   /**
    * Draw image object according to object parameters
