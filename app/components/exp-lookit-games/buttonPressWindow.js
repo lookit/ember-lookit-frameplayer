@@ -42,7 +42,8 @@ const gameSound = {
   START: 0,
   CATCH_GREAT: 1,
   CATCH_GOOD: 2,
-  FAIL:3
+  FAIL:3,
+  WHISTLE:4
 };
 const gameImage = {
   BACKGROUND: 0,
@@ -77,7 +78,7 @@ export default class ButtonPressWindow extends Base {
 
     super(context, document);
     fireworksURLs = [super.Utils.Explosion_big_blue, super.Utils.Explosion_big_green, super.Utils.Explosion_big_red, super.Utils.Explosion_small];
-    soundURLs = [super.Utils.fuse, super.Utils.firework_big, super.Utils.firework_small, super.Utils.ballcatchFailSound];
+    soundURLs = [super.Utils.fuse, super.Utils.firework_big, super.Utils.firework_small, super.Utils.ballcatchFailSound, super.Utils.firework_whistle];
     imageURLs = [super.Utils.skyline,super.Utils.Fireball,super.Utils.star,super.Utils.boxOfFireworks];
 
   }
@@ -300,6 +301,7 @@ export default class ButtonPressWindow extends Base {
         sounds[gameSound.START].pause();
         sounds[gameSound.START].currentTime = 0;
         ball.state = 'fall';
+        sounds[gameSound.WHISTLE].play();
         initialTime = new Date().getTime();
 
 
