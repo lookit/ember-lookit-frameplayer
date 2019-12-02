@@ -74,7 +74,8 @@ export default class Utils{
   static get  monsterGrowl(){return this.bucketSoundResources + 'Monster_growl.mp3';}
 
 
-
+  //Space Junk Sounds
+  static get  catchSeries(){return this.bucketSoundResources + 'catch_series.mp3';}
 
 
   //Image Resources

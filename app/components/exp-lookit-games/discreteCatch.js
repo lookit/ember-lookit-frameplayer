@@ -80,7 +80,7 @@ export default class DiscreteCatch extends Base {
    */
   constructor(context, document) {
     super(context, document);
-    soundURLs = [super.Utils.rattleSound,super.Utils.goodCatchSound,super.Utils.failcatchSound];
+    soundURLs = [super.Utils.rattleSound,super.Utils.catchSeries,super.Utils.failcatchSound];
     imageURls = [super.Utils.ironBasket,super.Utils.gear,super.Utils.basketStarsImage,super.Utils.robotImage];
     obstructionsURLs = [super.Utils.obstruction1, super.Utils.obstruction2, super.Utils.obstruction3];
 
@@ -100,7 +100,11 @@ export default class DiscreteCatch extends Base {
       trajectoryParameters = super.getTrajectoriesObstacles(gameArrayValues.OBSTRUCTIONS,gameArrayValues.HEIGHTS);
     }
 
-
+    sounds[gameSound.CATCH].addEventListener('timeupdate', function (){
+      if (this.currentTime >= (consecutiveCounts+1)*0.19) {
+        this.pause();
+      }
+    }, false);
 
     super.fillAudioArray(soundURLs,sounds);
     super.fillImageArray(imageURls,images);
@@ -337,8 +341,9 @@ export default class DiscreteCatch extends Base {
 
       if (ball.hitstate === 'very good' || ball.hitstate === 'good') {
         super.increaseScore();
-        consecutiveCounts++;
+        sounds[gameSound.CATCH].currentTime = 0.19 * consecutiveCounts;
         sounds[gameSound.CATCH].play();
+        consecutiveCounts++;
         ball.radius = 0;
 
       }else{
