@@ -26,6 +26,7 @@ let consecutiveCounts = 0;  // Calculate number of consecutive successful attemp
 let startTime = 0;
 const GEAR_RADIUS = 0.05;
 const TRAVEL_TIME = 1.3;
+const SOUND_DELAY = 1.73;
 // Media arrays for loading
 let sounds = [];
 let soundURLs = [];
@@ -104,12 +105,7 @@ export default class DiscreteCatch extends Base {
     super.fillImageArray(imageURls,images);
     super.fillImageArray(obstructionsURLs,obstructionImages);
 
-    //Listener for catch events, make sounds play in sections of 19 milisecondsfor consecutive successful catches
-    sounds[gameSound.CATCH].addEventListener('timeupdate', function (){
-      if (this.currentTime >= (consecutiveCounts+1)*0.19) {
-        this.pause();
-      }
-    }, false);
+
 
 
     basket = {
@@ -120,6 +116,14 @@ export default class DiscreteCatch extends Base {
     };
 
     document.addEventListener("mousemove",  super.onMouseMove);
+
+    //Listener for catch events, make sounds play in sections of 19 milisecondsfor consecutive successful catches
+    sounds[gameSound.CATCH].addEventListener('timeupdate', function (){
+      if (this.currentTime >= consecutiveCounts*SOUND_DELAY) {
+        this.pause();
+      }
+    }, false);
+
     sounds[gameSound.START].addEventListener('playing', function () {
       startTime = 0;
       initialTime = new Date().getTime();
@@ -224,17 +228,35 @@ export default class DiscreteCatch extends Base {
       basketPrevPosition = this.canvas.height - (basket.positions[basket.positions.length-2])*super.Utils.SCALE;
     }
 
-    if(ball.positions.length >2 && ball.positions[ball.positions.length-2] <= basketPrevPosition && ball.position.y > basket.position.y){
-      if (ball.position.x >= basket.position.x && ball.position.x <=  basket.position.x +  basket.dimensions.width ) {
+    let xballWithinPaddle = ball.position.x >= basket.position.x && ball.position.x <=  basket.position.x +  basket.dimensions.width;
+    let yballWithinPaddle = ball.positions.length >2 && ball.positions[ball.positions.length-2] <= basketPrevPosition && ball.position.y > basket.position.y;
+
+    if(xballWithinPaddle){
+      // Prevent catching by side of the paddle
+      if(ball.positions.length > 2 && (ball.positions[ball.positions.length - 2] > basket.position.y) ){
+
+        return  false;
+      }
+
+      if (yballWithinPaddle) {
+
+
+
         ball.hitstate = 'good';
 
         if (ball.position.x > (1.3301 - redDotMargin) * super.Utils.SCALE && ball.position.x < (1.3301 + redDotMargin) * super.Utils.SCALE) {
 
           ball.hitstate = 'very good';
         }
+
+
+
+
         return true;
       }
     }
+
+
 
     return false;
 
@@ -343,7 +365,7 @@ export default class DiscreteCatch extends Base {
 
       if (ball.hitstate === 'very good' || ball.hitstate === 'good') {
         super.increaseScore();
-        sounds[gameSound.CATCH].currentTime = 0.19 * consecutiveCounts;
+        sounds[gameSound.CATCH].currentTime = (SOUND_DELAY > 0?SOUND_DELAY+0.2:0)  * consecutiveCounts;
         sounds[gameSound.CATCH].play();
         consecutiveCounts++;
         ball.radius = 0;
