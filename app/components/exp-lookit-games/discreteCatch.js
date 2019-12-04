@@ -100,15 +100,17 @@ export default class DiscreteCatch extends Base {
       trajectoryParameters = super.getTrajectoriesObstacles(gameArrayValues.OBSTRUCTIONS,gameArrayValues.HEIGHTS);
     }
 
+    super.fillAudioArray(soundURLs,sounds);
+    super.fillImageArray(imageURls,images);
+    super.fillImageArray(obstructionsURLs,obstructionImages);
+
+    //Listener for catch events, make sounds play in sections of 19 milisecondsfor consecutive successful catches
     sounds[gameSound.CATCH].addEventListener('timeupdate', function (){
       if (this.currentTime >= (consecutiveCounts+1)*0.19) {
         this.pause();
       }
     }, false);
 
-    super.fillAudioArray(soundURLs,sounds);
-    super.fillImageArray(imageURls,images);
-    super.fillImageArray(obstructionsURLs,obstructionImages);
 
     basket = {
       positions:[],
