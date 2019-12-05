@@ -92,6 +92,17 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
                     }
                 }
             }
+        },
+        /**
+         * Whether to show a 'share this study on Facebook' button
+         *
+         * @property {Boolean} showShareButton
+         * @default true
+         */
+        showShareButton: {
+            type: 'boolean',
+            description: 'Whether to show a \'share this study on Facebook\' button',
+            default: true
         }
     },
     frameSchemaRequired: ['debriefing'],
@@ -173,5 +184,12 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
         finish() {
             this.send('next');
         }
+    },
+
+    didInsertElement() {
+        this._super(...arguments);
+        // Alternate study ID method
+        // let studyID = window.location.href.split('/').filter(piece => !!piece).slice(-2)[0];
+        this.set('sharelink', 'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flookit.mit.edu%2Fstudies%2F' + this.get('experiment').get('id') + '%2F');
     }
 });
