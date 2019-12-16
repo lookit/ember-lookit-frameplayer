@@ -871,9 +871,9 @@ export default class Base {
    */
   ballState() {
     let ballState = 0;
-    if (super.ball.hitstate === 'good') {
+    if (ball.hitstate === 'good') {
       ballState = 2;
-    } else if (super.ball.hitstate === 'very good') {
+    } else if (ball.hitstate === 'very good') {
       ballState = 1;
     }
     return ballState;

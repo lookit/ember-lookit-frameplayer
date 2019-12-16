@@ -359,7 +359,7 @@ export default class DiscreteButtonSpatial extends Base {
     }
 
     if (super.ball.state === 'start') {
-      super.moveBallToStart(super.ball, images[gameImage.BALL]);
+      super.moveBallToStart(images[gameImage.BALL]);
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         sounds[gameSound.START].pause();
         sounds[gameSound.LAUNCH].play();
@@ -375,7 +375,7 @@ export default class DiscreteButtonSpatial extends Base {
     if (super.ball.state === 'fall') {
 
       super.trajectory(initialTime);
-      super.drawBall(super.ball, images[gameImage.BALL]);
+      super.drawBall(images[gameImage.BALL]);
       if (super.getElapsedTime(initialTime) >= 0.5) {
 
         super.ball.state = 'hit house';

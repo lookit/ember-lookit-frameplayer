@@ -120,7 +120,7 @@ export default class ButtonPressWindow extends Base {
    */
   showBallLocation(){
 
-    super.drawBall(super.ball, images[gameImage.BALL]);
+    super.drawBall(images[gameImage.BALL]);
 
   }
 
@@ -229,7 +229,7 @@ export default class ButtonPressWindow extends Base {
 
     };
     if(super.ball.state === 'hit' || super.ball.state === 'fall') {
-        super.storeData(exportData);
+      super.storeData(exportData);
     }
   }
 
@@ -297,7 +297,7 @@ export default class ButtonPressWindow extends Base {
 
     if (super.ball.state === 'start') {
 
-      super.moveBallToStart(super.ball, images[gameImage.BALL]);
+      super.moveBallToStart(images[gameImage.BALL]);
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         sounds[gameSound.START].pause();
         sounds[gameSound.START].currentTime = 0;
@@ -323,7 +323,7 @@ export default class ButtonPressWindow extends Base {
       }
 
 
-      super.drawBall(super.ball, images[gameImage.BALL]);
+      super.drawBall(images[gameImage.BALL]);
       this.createBackground();
       this.createTargetWindow();
 
@@ -336,7 +336,7 @@ export default class ButtonPressWindow extends Base {
 
         if (position < TARGET_SIZE * super.Utils.SCALE) {
           super.increaseScore();
-          super.ball.hitstate = 'great';
+          super.ball.hitstate = 'very good';
           keyPressed.value = 3;
           sounds[gameSound.CATCH_GREAT].play();
 
@@ -361,7 +361,7 @@ export default class ButtonPressWindow extends Base {
     if (super.ball.state === 'hit') {
 
       let difference = super.ball.position.x - CENTER * super.Utils.SCALE;
-      if (super.ball.hitstate === 'great') {
+      if (super.ball.hitstate === 'very good') {
         let explosion = this.setExplosionPosition(10, 0.03572 * super.Utils.SCALE);
         super.drawImageObject(explosion, targetImgs[randomNumber]);
       }
@@ -376,7 +376,7 @@ export default class ButtonPressWindow extends Base {
         super.finishGame(false);
       }
 
-      if(super.ball.hitstate !== 'good' && super.ball.hitstate !== 'great' ){
+      if(super.ball.hitstate !== 'good' && super.ball.hitstate !== 'very good' ){
 
         this.showBallLocation();
       }
