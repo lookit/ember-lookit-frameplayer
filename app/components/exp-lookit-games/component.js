@@ -72,7 +72,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     displayFullscreen: false,
     doUseCamera: false,
     currentGame: null,
-    isPlaying: true,
     layout: layout,
     meta: {
         name: 'ExpLookitGames',
@@ -91,7 +90,15 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                     default: 0,
                     description: 'Game type  to display '
                 },
-
+                /**
+                 * Check if media is playing
+                 * @property {boolean} type
+                 * @default true
+                 */
+                isPlaying: {
+                  type: 'boolean',
+                  default: true
+                },
                 /**
                  * Show canvas with game
                  * @property {boolean} type

@@ -19,8 +19,8 @@
 
         <p>{{instructions}}
           <audio  class="player-media player-center" id="notation"
-                  autoplay="autoplay" controls="controls" >
-            <source src={{concat baseDir mediaSource.src}} type={{mediaSource.type}} onended={{action 'mediaPlayed'}}>
+                  autoplay="autoplay" controls="controls" onended={{action 'mediaPlayed'}}>
+            <source src={{concat baseDir mediaSource.src}} type={{mediaSource.type}} >
           </audio>
         </p>
 
@@ -37,7 +37,7 @@
              autoplay="autoplay" controls="controls"
              onended={{action 'next'}}>
 
-          <source src={{concat baseDir  mediaSource.src}} type={{mediaSource.type}} onended={{action 'mediaPlayed'}}>
+          <source src={{concat baseDir  mediaSource.src}} type={{mediaSource.type}}>
       </video>
   {{/if}}
 
