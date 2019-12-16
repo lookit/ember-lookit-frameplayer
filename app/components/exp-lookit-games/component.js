@@ -9,10 +9,9 @@ import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import Ember from 'ember';
 import Game from './Game';
-import Em from "ember-source/dist/ember-testing";
 let {
   $
-} = Em;
+} = Ember;
 
 
 /**
