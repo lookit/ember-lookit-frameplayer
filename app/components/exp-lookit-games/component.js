@@ -9,6 +9,11 @@ import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import Ember from 'ember';
 import Game from './Game';
+import Em from "ember-source/dist/ember-testing";
+let {
+  $
+} = Em;
+
 
 /**
  * Frame to implement various games interventions.
@@ -67,6 +72,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     displayFullscreen: false,
     doUseCamera: false,
     currentGame: null,
+    isPlaying: true,
     layout: layout,
     meta: {
         name: 'ExpLookitGames',
@@ -386,7 +392,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
 
     actions: {
         // Define any actions that you need to be able to trigger from within the template here
-
+        mediaPlayed(e) {
+          $(e.srcElement).attr('isPlaying', false);
+        },
         play() {
             this.send('showFullscreen');
             this.set('showInstructions', false);
