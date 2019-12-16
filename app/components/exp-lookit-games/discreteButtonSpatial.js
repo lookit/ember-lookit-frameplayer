@@ -13,7 +13,6 @@ import Base from './base';
  *
  */
 const INITIAL_DELAY = 2.5;
-let ball = {};
 let targets = [];
 let pressed = {};
 let keys = ['y', 'g', 'v']; //Keyboard keys for upper,middle and lower windows
@@ -249,7 +248,7 @@ export default class DiscreteButtonSpatial extends Base {
     pressed = Array(3).fill(false);
     jitterT = super.trialStartTime();
     buttonPressDelay = 0;
-    ball = {
+    super.ball = {
       position: {x: 0, y: 0},
       radius: 0.02385 * super.Utils.SCALE,
       restitution: super.Utils.restitution,
@@ -257,7 +256,7 @@ export default class DiscreteButtonSpatial extends Base {
 
     };
 
-    ball = super.ballObject();
+    super.ballObject();
 
     if(super.currentRounds > 0 ){
       sounds[gameSound.START].play();
@@ -306,7 +305,7 @@ export default class DiscreteButtonSpatial extends Base {
    */
   keyDownHandler(e) {
 
-    if (ball.state !== 'hit' && ball.state !== 'hit target') {
+    if (super.ball.state !== 'hit' && super.ball.state !== 'hit target') {
       pressed = pressed.fill(false);
       pressed = pressed.map((val, index) => keys[index] === e.key );
     }
@@ -359,13 +358,13 @@ export default class DiscreteButtonSpatial extends Base {
 
     }
 
-    if (ball.state === 'start') {
-      super.moveBallToStart(ball, images[gameImage.BALL]);
+    if (super.ball.state === 'start') {
+      super.moveBallToStart(super.ball, images[gameImage.BALL]);
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         sounds[gameSound.START].pause();
         sounds[gameSound.LAUNCH].play();
         initialTime = new Date().getTime();
-        ball.state = 'fall';
+        super.ball.state = 'fall';
 
       }
 
@@ -373,35 +372,35 @@ export default class DiscreteButtonSpatial extends Base {
     }
 
 
-    if (ball.state === 'fall') {
+    if (super.ball.state === 'fall') {
 
-      super.trajectory(ball, initialTime);
-      super.drawBall(ball, images[gameImage.BALL]);
+      super.trajectory(initialTime);
+      super.drawBall(super.ball, images[gameImage.BALL]);
       if (super.getElapsedTime(initialTime) >= 0.5) {
 
-        ball.state = 'hit house';
+        super.ball.state = 'hit house';
       }
 
 
     }
 
-    if ((ball.state === 'fall' || ball.state === 'hit house') && index >= 0) {
+    if ((super.ball.state === 'fall' || super.ball.state === 'hit house') && index >= 0) {
 
-      ball.state = 'hit';
+      super.ball.state = 'hit';
 
     }
 
 
-    if (ball.state === 'hit house') {
+    if (super.ball.state === 'hit house') {
       if (super.getElapsedTime(initialTime) >= 2.5) {
         initialTime = new Date().getTime();
-        ball.state = 'hit';
+        super.ball.state = 'hit';
       }
 
     }
 
 
-    if (ball.state === 'hit') {
+    if (super.ball.state === 'hit') {
 
       if(buttonPressDelay === 0){
         buttonPressDelay = new Date().getTime();
@@ -415,7 +414,7 @@ export default class DiscreteButtonSpatial extends Base {
 
     this.createShuttle();
 
-    if (ball.state === 'hit target') {
+    if (super.ball.state === 'hit target') {
 
       if (index >= 0) {
         let target = targets[index];
@@ -439,13 +438,6 @@ export default class DiscreteButtonSpatial extends Base {
    */
   checkHitState(index) {
 
-
-    if (index >= 0) {
-      let target = targets[index];
-      this.createWindow(target);
-      this.showWindow(index);
-    }
-
     // Check if current index of the pressed item corresponds to the actual target index
     if (index === this.getCorrectIndex()) {
 
@@ -456,7 +448,7 @@ export default class DiscreteButtonSpatial extends Base {
     }
 
 
-    ball.state = 'hit target';
+    super.ball.state = 'hit target';
   }
 
 
@@ -508,14 +500,14 @@ export default class DiscreteButtonSpatial extends Base {
       window: this.getCorrectIndex()+1,
       selected_button: target_state + 1  ,
       obstruction_number: trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION],
-      ball_position_x: super.convertXvalue(ball.position.x),
-      ball_position_y: super.convertYvalue(ball.position.y),
+      ball_position_x: super.convertXvalue(super.ball.position.x),
+      ball_position_y: super.convertYvalue(super.ball.position.y),
       trial: super.currentRounds,
       trialType: this.context.trialType,
       timestamp: super.getElapsedTime(initialTime)
 
     };
-    if(ball.state === 'hit' || ball.state === 'fall') {
+    if(super.ball.state === 'hit' || super.ball.state === 'fall') {
       super.storeData(exportData);
     }
   }
