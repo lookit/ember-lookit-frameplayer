@@ -866,6 +866,20 @@ export default class Base {
   }
 
   /**
+   * Get ball state as number
+   * @returns {number}
+   */
+  ballState() {
+    let ballState = 0;
+    if (super.ball.hitstate === 'good') {
+      ballState = 2;
+    } else if (super.ball.hitstate === 'very good') {
+      ballState = 1;
+    }
+    return ballState;
+  }
+
+  /**
    * Increment current position cursor by movementY value (difference in y coordinate between the given event and the
    * previous mousemove event )
    * Check initial cursor position, if the positio is lower then low paddle box border, stop t\

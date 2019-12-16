@@ -190,11 +190,6 @@ export default class DiscreteCatch extends Base {
     super.dataCollection();
     if(super.ball.state === 'hit' || super.ball.state === 'fall') {
 
-      let ballState = 0;
-      if(super.ball.hitstate === 'good'){
-        ballState = 2;
-      }else if (super.ball.hitstate === 'very good'){ballState = 1;}
-
       let exportData = {
         game_type: 'discreteCatch',
         trajectory: trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT],
@@ -209,7 +204,7 @@ export default class DiscreteCatch extends Base {
         obstruction_number: trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION],
         trial: super.currentRounds,
         trialType: this.context.trialType,
-        feedback: ballState,
+        feedback: super.ballState(),
         timestamp: super.getElapsedTime(initialTime)
 
       };
