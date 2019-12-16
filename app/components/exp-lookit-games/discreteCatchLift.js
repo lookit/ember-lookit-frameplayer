@@ -15,7 +15,6 @@ import Base from './base';
  */
 let target = {}; // Current target (rat)  position parameters
 let clockObject = {}; //  Object symbolizes clock (pizza) location parameters
-let basket = {}; // Paddle (basket) position parameters
 let initBallY = 0.27; // Initial Y ball location
 let initX = 1.33; // Initial X ball location
 let initialTime = 0; // Initial time for current game trial
@@ -93,7 +92,7 @@ export default class DiscreteCatchLift extends Base {
     };
 
 
-    basket = {
+    super.paddle = {
       dimensions: {width: 0, height: 0},
       position: {
         x: 0,
@@ -154,8 +153,8 @@ export default class DiscreteCatchLift extends Base {
     target.pizzaTimeDelay =0;
     this.setClockObject();
     super.createPaddleBox();
-    basket = super.basketObject(basket);
-    if (super.currentRounds > 0 || (super.currentRounds === 0 && !super.paddleIsMoved(basket))) {
+    super.basketObject();
+    if (super.currentRounds > 0 || (super.currentRounds === 0 && !super.paddleIsMoved())) {
       sounds[gameSound.START].play();
     }
 
@@ -170,8 +169,8 @@ export default class DiscreteCatchLift extends Base {
     super.dataCollection();
     let exportData = {
       game_type: 'discreteCatchLift',
-      basket_x: super.convertXvalue(basket.position.x),
-      basket_y: super.convertYvalue(basket.position.y),
+      basket_x: super.convertXvalue(super.paddle.position.x),
+      basket_y: super.convertYvalue(super.paddle.position.y),
       mice_x:   super.convertXvalue(target.position.x),
       mice_y:   super.convertYvalue(target.position.y),
       trial: super.currentRounds,
@@ -254,19 +253,21 @@ export default class DiscreteCatchLift extends Base {
   loop() {
     super.loop();
     let paddleBoxColor = super.Utils.blueColor;
-    basket = super.basketObject(basket);
-    super.paddleMove(basket, initialTime, target);
+    super.paddle = super.basketObject();
+    super.paddleMove(initialTime);
     super.createPaddleBox(paddleBoxColor);
     super.drawImageObject(clockObject, images[gameImage.CLOCK]);
 
-    if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMoved(basket)) {
+    if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMoved()) {
 
       sounds[gameSound.START].play();
     }
 
 
-    if (initialTime > 0 && super.paddleIsMoved(basket) && target.state === 'start') {
+    if (initialTime > 0 && super.paddleIsMoved() && target.state === 'start') {
       initialTime = new Date().getTime();
+      sounds[gameSound.START].pause();
+      sounds[gameSound.START].currentTime = 0;
       paddleBoxColor = super.Utils.redColor;
       super.createPaddleBox(paddleBoxColor);
     }
@@ -302,10 +303,10 @@ export default class DiscreteCatchLift extends Base {
       }
 
 
-      if (basket.moved === 0 && basket.positions.length > 5 && basket.position.y - target.position.y <= 100) {
+      if (super.paddle.moved === 0 && super.paddle.positions.length > 5 && super.paddle.position.y - target.position.y <= 100) {
 
         sounds[gameSound.SWOOSH].play();
-        basket.moved = 1;
+        super.paddle.moved = 1;
 
       }
 
@@ -322,20 +323,20 @@ export default class DiscreteCatchLift extends Base {
 
     if (target.state === 'done') {
 
-      super.paddleAtZero(basket, false);
+      super.paddleAtZero( false);
 
 
     }
 
     this.showClock();
-    this.drawImage(basket, images[gameImage.PADDLE]);
+    this.drawImage(super.paddle, images[gameImage.PADDLE]);
   }
 
 
 
   collisionDetection() {
 
-    if ((target.position.y + 0.0476 * super.Utils.SCALE) - basket.position.y >= 0) {
+    if ((target.position.y + 0.0476 * super.Utils.SCALE) - super.paddle.position.y >= 0) {
       target.state = 'done';
       if (clockObject.state > 0) {
         if (clockObject.state < 4) {

@@ -17,16 +17,17 @@
     {{#if showInstructions}}
       <div class="instr-page-container">
 
-        <p>{{instructions}} </p>
-        <audio  class="player-media player-center" id="notation"
+        <p>{{instructions}}
+          <audio  class="player-media player-center" id="notation"
                   autoplay="autoplay" controls="controls" >
-            <source src={{concat baseDir mediaSource.src}} type={{mediaSource.type}}>
+            <source src={{concat baseDir mediaSource.src}} type={{mediaSource.type}} onended={{action 'mediaPlayed'}}>
           </audio>
+        </p>
 
       {{#if source}}
         <img src={{concat baseDir source}} alt="" />
       {{/if}}
-        <button class="btn btn-success pull-right-games" {{ action 'next' }} >Next</button>
+        <button class="btn btn-success pull-right-games" {{ action 'next' }}  disabled={{isPlaying}}>Next</button>
       </div>
 
     {{/if}}
@@ -36,7 +37,7 @@
              autoplay="autoplay" controls="controls"
              onended={{action 'next'}}>
 
-          <source src={{concat baseDir  mediaSource.src}} type={{mediaSource.type}}>
+          <source src={{concat baseDir  mediaSource.src}} type={{mediaSource.type}} onended={{action 'mediaPlayed'}}>
       </video>
   {{/if}}
 
@@ -46,7 +47,7 @@
         <div class="box-set">
           <p>{{instructions}}</p>
             <input type="image" src={{concat baseDir sourceButton}} class={{buttonPosition}} {{ action 'next' }}
-                   alt="Submit"/>
+                   alt="Submit" />
             <img src={{machine1_url}} class="box box-1" alt="Submit">
             <img src={{machine2_url}}  class="box box-2" alt="Submit">
             <img src={{machine3_url}}  class="box box-3" alt="Submit">

@@ -11,8 +11,6 @@ import Base from './base';
  * @submodule games
  *
  */
-let paddle = {}; // Paddle parameters object
-let ball = {}; // Ball parameters object
 let target = {}; // Target parameters object
 let initialTime = 0; // Initial time for current game trial
 let alpha = 0.7; // Restitute factor
@@ -86,14 +84,14 @@ export default class DiscreteBounce extends Base {
    */
   init() {
     document.addEventListener("mousemove", super.onMouseMove);
-    paddle = {
+    super.paddle = {
 
       position: {x: 0, y: 0},
       dimensions: {width: 0, height: 0},
       paddleLastMovedMillis: 100,
       releaseVelocity: 1,
       positions: [],
-      times: [],
+      times: []
 
     };
 
@@ -182,56 +180,60 @@ export default class DiscreteBounce extends Base {
    */
   loop() {
     super.loop();
-    paddle = super.paddleObject(paddle);
+     super.paddleObject();
     let paddleBoxColor = super.Utils.blueColor;
     super.createPaddleBox(paddleBoxColor);
     super.generateTrajectoryParams(hArray[super.currentRounds], Height);
     super.createLauncher(images[gameImage.BALLBOX]);
-    super.drawImageObject(paddle, images[gameImage.PADDLE]);
-    super.paddleMove(paddle, initialTime, ball);
+    super.drawImageObject(super.paddle,images[gameImage.PADDLE]);
+    super.paddleMove(initialTime);
     this.paddleBallCollision();
     let hitTheTarget = this.collisionDetection();
-    let hitTheWall = super.wallCollision(ball);
+    let hitTheWall = super.wallCollision();
 
-    if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMoved(paddle,true)) {
+    if (initialTime === 0 && super.currentRounds === 0 ) {
 
       sounds[gameSound.START].play();
     }
 
-    if (ball.state === 'start') {
-      super.moveBallToStart(ball, images[gameImage.BALL]);
-      if (initialTime > 0 && super.isOutsideBox(paddle,paddle.dimensions.height)) {
-         initialTime = new Date().getTime();
+    if (super.ball.state === 'start') {
+      super.moveBallToStart( images[gameImage.BALL]);
+      if (initialTime > 0 && super.isOutsideBox()) {
+          initialTime = new Date().getTime();
+          sounds[gameSound.START].pause();
+          sounds[gameSound.START].currentTime = 0;
+          paddleBoxColor = super.Utils.redColor;
+          super.createPaddleBox(paddleBoxColor);
       }
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
-        sounds[gameSound.START].pause();
-        sounds[gameSound.START].currentTime = 0;
-        ball.state = 'fall';
-        initialTime = new Date().getTime();
+          sounds[gameSound.START].pause();
+          sounds[gameSound.START].currentTime = 0;
+          super.ball.state = 'fall';
+          initialTime = new Date().getTime();
       }
 
     }
 
-    if ((hitTheTarget || hitTheWall) && ball.state !== 'done') {
+    if ((hitTheTarget || hitTheWall) && super.ball.state !== 'done') {
 
-      ball.state = 'hit';
+      super.ball.state = 'hit';
     }
 
 
-    if (ball.state === 'fall') {
+    if (super.ball.state === 'fall') {
       if (initialTime > 0 && super.getElapsedTime(initialTime) < 1.2) {
-        super.trajectory(ball, initialTime);
+        super.trajectory(initialTime);
       }
 
-      if (initialTime > 0 && super.ballIsOnFloor(ball)) {
-        ball.state = 'hit';
+      if (initialTime > 0 && super.ballIsOnFloor()) {
+        super.ball.state = 'hit';
       }
-      super.drawBall(ball, images[gameImage.BALL]);
+      super.drawBall(images[gameImage.BALL]);
     }
 
-    if (ball.state === 'bounce') {
+    if (super.ball.state === 'bounce') {
       this.bounceTrajectory();
-      super.drawBall(ball, images[gameImage.BALL]);
+      super.drawBall(images[gameImage.BALL]);
 
     }
     this.createBackTriangle();
@@ -239,15 +241,15 @@ export default class DiscreteBounce extends Base {
 
 
 
-    if (ball.state === 'hit') {
+    if (super.ball.state === 'hit') {
       // Remove ball and show in the starting point,
       //User should set the paddle to initial position , call stop after that
       super.drawImageObject(token, images[gameImage.TOKEN]);
-      if (ball.hitstate === 'very good') {
+      if (super.ball.hitstate === 'very good') {
         sounds[gameSound.CATCH_GREAT].play();
         super.increaseScore();
 
-      } else if (ball.hitstate === 'good') {
+      } else if (super.ball.hitstate === 'good') {
         sounds[gameSound.CATCH_GOOD].play();
         super.increaseScore();
 
@@ -256,34 +258,34 @@ export default class DiscreteBounce extends Base {
       }
 
 
-      ball.state = 'done';
+      super.ball.state = 'done';
 
     }
 
 
-    if (ball.state === 'done') {
+    if (super.ball.state === 'done') {
 
-      if (ball.hitstate === 'very good') {
+      if (super.ball.hitstate === 'very good') {
         super.drawImageObject(bricks, images[gameImage.BRICKS_LARGE]);
         super.drawImageObject(tokenReached, images[gameImage.TOKEN]);
-      } else if (ball.hitstate === 'good') {
+      } else if (super.ball.hitstate === 'good') {
         super.drawImageObject(target, images[gameImage.WALL_MISSED]);
         super.drawImageObject(bricks, images[gameImage.BRICKS_SMALL]);
       } else {
         super.drawImageObject(target, images[gameImage.WALL_INITIAL]);
       }
 
-      super.paddleAtZero(paddle, false);
+      super.paddleAtZero( false);
 
 
     }
 
-    if (ball.state !== 'done') {
+    if (super.ball.state !== 'done') {
 
       super.drawImageObject(target, images[gameImage.WALL_INITIAL]);
     }
 
-    super.paddleMove(paddle, initialTime, ball);
+    super.paddleMove(initialTime);
     this.createWallBoarders();
 
   }
@@ -296,19 +298,19 @@ export default class DiscreteBounce extends Base {
    */
   bounceTrajectory() {
     let Xiterator = super.getElapsedTime(initialTime);
-    let Yiterator = super.getElapsedTime(ball.impactTime);
+    let Yiterator = super.getElapsedTime(super.ball.impactTime);
 
     this.ctx.beginPath();
-    let positionY = ball.impactPosition + paddle.releaseVelocity * (Yiterator) + 0.5 * -super.TrajectoryVars.gravity * Math.pow(Yiterator, 2);
+    let positionY = super.ball.impactPosition + super.paddle.releaseVelocity * (Yiterator) + 0.5 * -super.TrajectoryVars.gravity * Math.pow(Yiterator, 2);
     let positionX = super.TrajectoryVars.initX + super.TrajectoryVars.ballvx * (Xiterator);
     let leftBorder = (positionX - 0.0175) * super.Utils.SCALE;
     // CLear past ball  positions
-    if(ball.positions.length > 80){
-      ball.positions = ball.positions.slice(-80);
+    if(super.ball.positions.length > 80){
+      super.ball.positions = super.ball.positions.slice(-80);
     }
-    ball.positions.push(ball.position);
-    ball.position.x = leftBorder;
-    ball.position.y = this.canvas.height - positionY * super.Utils.SCALE ;
+    super.ball.positions.push(super.ball.position);
+    super.ball.position.x = leftBorder;
+    super.ball.position.y = this.canvas.height - positionY * super.Utils.SCALE ;
 
 
   }
@@ -327,26 +329,26 @@ export default class DiscreteBounce extends Base {
   paddleBallCollision() {
 
     //Detect the ball position on X axis , if the ball is between paddle edges
-    if (ball.position.x >= (1.256) * super.Utils.SCALE - 0.04 * super.Utils.SCALE && ball.position.x <= (1.406) * super.Utils.SCALE) {
+    if (super.ball.position.x >= (1.256) * super.Utils.SCALE - 0.04 * super.Utils.SCALE && super.ball.position.x <= (1.406) * super.Utils.SCALE) {
 
       //Check if paddle actually moved on Y axis and delta is significant enough
-      let paddleDelta = paddle.positions[paddle.positions.length - 1] - paddle.positions[paddle.positions.length - 20];
+      let paddleDelta = super.paddle.positions[super.paddle.positions.length - 1] - super.paddle.positions[super.paddle.positions.length - 20];
       if (paddleDelta < 0.1) {
         paddleDelta = 0.1;
       }
       //Detect the ball position on Y axes, if the ball is within range  on Y axis
-      if (Math.abs(ball.position.y - paddle.position.y) <= paddleDelta * super.Utils.SCALE && ball.position.y - paddle.position.y >= 0) {
+      if (Math.abs(super.ball.position.y - super.paddle.position.y) <= paddleDelta * super.Utils.SCALE && super.ball.position.y - super.paddle.position.y >= 0) {
         sounds[gameSound.BOUNCING].play();
 
         this.releaseVelocity(paddleDelta);
 
         //Fix for abrupt trajectory, make sure the trajectory is not negative
-        if (paddle.releaseVelocity > 2.5) {
-          paddle.releaseVelocity = 2.5;
+        if (super.paddle.releaseVelocity > 2.5) {
+          super.paddle.releaseVelocity = 2.5;
         }
 
 
-        ball.state = 'bounce';
+        super.ball.state = 'bounce';
         // Update initial position of ball according to trajectory to prevent possible gap
         this.bounceTrajectory();
       }
@@ -360,13 +362,13 @@ export default class DiscreteBounce extends Base {
    * @param {int} paddleDelta  Check if paddle actually moved on Y axis
    */
   releaseVelocity(paddleDelta) {
-    let paddleVelocity = super.Utils.getPaddleVelocity(paddle.times, paddle.positions);
-    paddle.paddleLastMovedMillis = new Date().getTime();
-    ball.impactTime = new Date().getTime();
-    ball.impactPosition = (this.canvas.height - (paddle.position.y - paddle.dimensions.height - paddleDelta)) / super.Utils.SCALE;
+    let paddleVelocity = super.Utils.getPaddleVelocity(super.paddle.times, super.paddle.positions);
+    super.paddle.paddleLastMovedMillis = new Date().getTime();
+    super.ball.impactTime = new Date().getTime();
+    super.ball.impactPosition = (this.canvas.height - (super.paddle.position.y - super.paddle.dimensions.height - paddleDelta)) / super.Utils.SCALE;
     let iterator = super.getElapsedTime(initialTime);
-    ball.velocity = super.TrajectoryVars.initV - super.TrajectoryVars.gravity * iterator;
-    paddle.releaseVelocity = -alpha * (ball.velocity - paddleVelocity) + paddleVelocity;
+    super.ball.velocity = super.TrajectoryVars.initV - super.TrajectoryVars.gravity * iterator;
+    super.paddle.releaseVelocity = -alpha * (super.ball.velocity - paddleVelocity) + paddleVelocity;
   }
 
   /**
@@ -427,22 +429,22 @@ export default class DiscreteBounce extends Base {
     let YL = (0.46 ) * super.Utils.SCALE;
     let YH = (0.4 + 0.35) * super.Utils.SCALE;
 
-    let targetx  = this.getXBoundValues(ball.position.y);
+    let targetx  = this.getXBoundValues(super.ball.position.y);
 
-    if((ball.position.y < YL && ball.position.x > this.getXBoundValues(YL) )|| (ball.position.y > YH && ball.position.x > this.getXBoundValues(YH))){
+    if((super.ball.position.y < YL && super.ball.position.x > this.getXBoundValues(YL) )|| (super.ball.position.y > YH && super.ball.position.x > this.getXBoundValues(YH))){
 
       return true;
     }
 
-    if (ball.state !== 'done' && ball.position.y > YL && ball.position.y < YH && ball.position.x > targetx) {
-      let currenImpactCoord = Math.abs(ball.position.y - 0.6 * super.Utils.SCALE);
+    if (super.ball.state !== 'done' && super.ball.position.y > YL && super.ball.position.y < YH && super.ball.position.x > targetx) {
+      let currenImpactCoord = Math.abs(super.ball.position.y - 0.6 * super.Utils.SCALE);
       if (currenImpactCoord < 0.27 * super.Utils.SCALE) {
 
-        ball.hitstate  = (currenImpactCoord < 0.015 * super.Utils.SCALE)?'very good':'good';
+        super.ball.hitstate  = (currenImpactCoord < 0.015 * super.Utils.SCALE)?'very good':'good';
 
       } else {
 
-        ball.hitstate = 'hit';
+        super.ball.hitstate = 'hit';
 
       }
 
@@ -476,18 +478,19 @@ export default class DiscreteBounce extends Base {
     super.initBallY = 0;
     this.paddleBoxParameters();
     jitterT = super.trialStartTime();
-    ball = super.ballObject();
+    super.ballObject();
     initialTime = 0;
 
     token.dimensions = {width: 0.21 * super.Utils.SCALE, height: 0.2 * super.Utils.SCALE};
     //For first trial wait for paddle to start in Box position, make sure the paddle is not moved
-    if (super.currentRounds > 0 || (super.currentRounds === 0 && !super.paddleIsMoved(paddle,true))) {
+    if (super.currentRounds > 0 || (super.currentRounds === 0 && !super.paddleIsMoved(true))) {
       sounds[gameSound.START].play();
     }
 
     super.initGame();
 
   }
+
 
   /**
    *
@@ -501,18 +504,20 @@ export default class DiscreteBounce extends Base {
     let exportData = {
       game_type: 'BounceGame',
       trajectory: hArray[super.currentRounds],
-      ball_position_x: super.convertXvalue(ball.position.x),
-      ball_position_y: super.convertYvalue(ball.position.y),
-      paddle_center_x: super.convertXvalue(paddle.position.x   +  (paddle.dimensions.width / 2)) ,
-      paddle_x: super.convertXvalue(paddle.position.x),
-      paddle_position_y: super.convertYvalue(paddle.position.y),
+      ball_position_x: super.convertXvalue(super.ball.position.x),
+      ball_position_y: super.convertYvalue(super.ball.position.y),
+      ball_timestamp: super.ball.timestamp,
+      paddle_center_x: super.convertXvalue(super.paddle.position.x   +  (super.paddle.dimensions.width / 2)) ,
+      paddle_x: super.convertXvalue(super.paddle.position.x),
+      paddle_position_y: super.convertYvalue(super.paddle.position.y),
       trial: super.currentRounds,
       trialType: this.context.trialType,
+      feedback: super.ballState(),
       timestamp: super.getElapsedTime(initialTime)
 
     };
 
-    if(ball.state === 'hit' || ball.state === 'bounce' || ball.state === 'fall') {
+    if(super.ball.state === 'hit' || super.ball.state === 'bounce' || super.ball.state === 'fall') {
       super.storeData(exportData);
     }
 

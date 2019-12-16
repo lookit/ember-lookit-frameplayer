@@ -26,6 +26,8 @@ let initX = 0.52; // Initial ball X position
 let initV = 0; //  Initial velocity
 let gravity = 0;
 let ballvx = 0;  // current ball velocity on X axis
+let paddle = {};
+let ball = {};
 let paddleBox = {
   position: {x: 0, y: 0},
   dimensions: {width: 0, height: 0}
@@ -62,7 +64,7 @@ export default class Base {
     document.addEventListener('keydown', this.keyDownHandler, false);
     document.addEventListener('keyup', this.keyUpHandler, false);
     this.canvas.requestPointerLock =  this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock || this.canvas.webkitRequestPointerLock;
-    this.canvas.requestPointerLock()
+    this.canvas.requestPointerLock();
     this.calculateCanvas();
     this.paddleBoxParameters();
     this.currentRounds = 0;
@@ -255,6 +257,26 @@ export default class Base {
   get paddleBox(){
 
     return paddleBox;
+  }
+
+  set paddle(val){
+
+    paddle = val;
+  }
+
+  get paddle(){
+
+    return paddle;
+  }
+
+
+  set ball(val){
+    ball = val;
+  }
+
+  get ball(){
+
+    return ball;
   }
 
 
@@ -531,7 +553,7 @@ export default class Base {
    * @param basket paddle parameters
    * @return {object} basket parameters
    */
-  basketObject(basket) {
+  basketObject() {
 
     let position = (this.canvas.height - mouseY)/Utils.SCALE;
     let radiusRim = 0.1;
@@ -540,11 +562,8 @@ export default class Base {
     let rightBorder = (1.3310 + radiusRim) * Utils.SCALE;
     let downBorder = (1.5371 - position) * Utils.SCALE;
 
-    basket.position = {x: leftBorder, y: mouseY};
-    basket.dimensions = {width: rightBorder - leftBorder, height: downBorder - topBorder};
-
-
-    return basket;
+    paddle.position = {x: leftBorder, y: mouseY};
+    paddle.dimensions = {width: rightBorder - leftBorder, height: downBorder - topBorder};
 
   }
 
@@ -555,7 +574,7 @@ export default class Base {
    * @param {object} paddle
    * @param {int} trial initial Time in Unixtime
    */
-  paddleHistory(paddle, initialTime) {
+  paddleHistory(initialTime) {
 
 
     paddle.times.push(this.getElapsedTime(initialTime));
@@ -572,7 +591,7 @@ export default class Base {
    * @param {object} paddle
    * @return {object} paddle {position: {x: number, y: number}, dimensions: {width: number, height: number}}
    */
-  paddleObject(paddle){
+  paddleObject(){
     let position = (this.canvas.height - mouseY)/Utils.SCALE ;
     let leftBorder = (1.256)*Utils.SCALE ;
     let topBorder = (1.3671-position)*Utils.SCALE;
@@ -582,7 +601,6 @@ export default class Base {
     paddle.position = {x: leftBorder,y:mouseY};
     paddle.dimensions = {width: rightBorder - leftBorder, height: downBorder-topBorder};
 
-    return paddle;
 
   }
 
@@ -602,10 +620,11 @@ export default class Base {
     let leftBorder =  (positionX- 0.0175) * Utils.SCALE;
     let downBorder =  (1.3746-positionY) * Utils.SCALE ;
 
-    return {
+    this.ball = {
 
       position: {x: leftBorder, y: downBorder},
       velocity: 0,
+      timestamp: 0,
       radius: (0.037) * Utils.SCALE,
       state: 'start',
       impactTime: 0,
@@ -651,7 +670,7 @@ export default class Base {
    * number}}
    * @param initialTime {int}
    */
-  trajectory(ball, initialTime) {
+  trajectory(initialTime) {
 
     let  iterator =  this.getElapsedTime(initialTime);
     this.ctx.beginPath();
@@ -695,7 +714,7 @@ export default class Base {
    * number}}
    * @return {boolean}
    */
-  ballIsOnFloor(ball){
+  ballIsOnFloor(){
 
     return ball.position.y > paddleBox.position.y + paddleBox.dimensions.height - 0.048 * Utils.SCALE;
   }
@@ -706,7 +725,7 @@ export default class Base {
    * @param ball {Object} {position: {x: number, y: number}, radius: number, dimensions: {width: number, height:
    * number}}
    */
-  drawBall(ball,image) {
+  drawBall(image) {
 
     this.ctx.drawImage(image, ball.position.x, ball.position.y, ball.radius, ball.radius);
 
@@ -719,10 +738,10 @@ export default class Base {
    * @param {object} ball {position: {x: number, y: number}, radius: number, dimensions: {width: number, height: number}} object parameters set game to be over
    * @param {object} Image object
    */
-  moveBallToStart(ball,image) {
+  moveBallToStart(image) {
 
     ball = this.ballObject();
-    this.drawBall(ball,image);
+    this.drawBall(image);
 
   }
 
@@ -734,7 +753,7 @@ export default class Base {
    * @param {object} paddle {position: {x: number, y: number}, dimensions: {width: number, height: number}}
    * @param {boolean} score should increase score
    */
-  paddleAtZero(paddle, score) {
+  paddleAtZero(score) {
 
 
     let topBorder = 1.3671 * Utils.SCALE;
@@ -764,7 +783,7 @@ export default class Base {
    * @param {boolean} checkPaddleHeight if height needed for reference (bounce game)
    * @return {boolean}
    */
-  paddleIsMoved(paddle,checkPaddleHeight = false){
+  paddleIsMoved(checkPaddleHeight = false){
 
     if( paddle.positions.length > 2 && paddle.position.y !== (this.canvas.height - paddle.positions[paddle.positions.length-3]*Utils.SCALE)){
 
@@ -782,7 +801,7 @@ export default class Base {
   }
 
 
-  isOutsideBox(paddle, paddleHeight) {
+  isOutsideBox(paddleHeight) {
     return paddle.position.y < paddleBox.position.y - paddleBox.dimensions.height + paddleHeight;
   }
 
@@ -808,7 +827,7 @@ export default class Base {
    * @param {int} initialTime,  Initial time (Unixtime) for current game round
    * @param {object} ball {position: {x: number, y: number}, radius: number, dimensions: {width: number, height: number}}
    */
-  paddleMove(paddle,initialTime,ball) {
+  paddleMove(initialTime) {
 
 
     //Do not go over the bottom border
@@ -835,7 +854,7 @@ export default class Base {
    * @param {object} ball
    * @return {boolean} if hit any edge of the screen
    */
-  wallCollision(ball) {
+  wallCollision() {
 
     if (ball.position.y > this.canvas.height + ball.radius || ball.position.x > this.canvas.width + ball.radius || ball.position.x < ball.radius) {
 
@@ -845,6 +864,20 @@ export default class Base {
 
     return false;
 
+  }
+
+  /**
+   * Get ball state as number
+   * @returns {number}
+   */
+  ballState() {
+    let ballState = 0;
+    if (super.ball.hitstate === 'good') {
+      ballState = 2;
+    } else if (super.ball.hitstate === 'very good') {
+      ballState = 1;
+    }
+    return ballState;
   }
 
   /**
@@ -858,7 +891,7 @@ export default class Base {
   onMouseMove(e){
 
 
-    let border = paddleBox.position.y+paddleBox.dimensions.height/2;
+    let border = paddleBox.position.y+paddleBox.dimensions.height - paddle.dimensions.height;
 
     mouseY += e.movementY;
 
