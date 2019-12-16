@@ -13,7 +13,6 @@ import Base from './base';
  *
  */
 let target = {};
-let ball = {};
 let keyPressed = {}; // Current key pressed status
 let initialTime = 0;  // initial time for current game trial
 let randomNumber = 0; // Current random number for fireworks (decide which color to display)
@@ -121,7 +120,7 @@ export default class ButtonPressWindow extends Base {
    */
   showBallLocation(){
 
-    super.drawBall(ball, images[gameImage.BALL]);
+    super.drawBall(super.ball, images[gameImage.BALL]);
 
   }
 
@@ -163,12 +162,12 @@ export default class ButtonPressWindow extends Base {
    */
   initGame() {
     initialTime = 0;
-    ball.startTime = 0;
+    super.ball.startTime = 0;
     jitterT = super.trialStartTime();
     keyPressed.value = 0;
     this.setTargetBackground();
 
-    ball = {
+    super.ball = {
       position: {x: 0, y: 0},
       velocity: 0,
       radius: 0.02381 * super.Utils.SCALE,
@@ -178,7 +177,7 @@ export default class ButtonPressWindow extends Base {
     };
 
     randomNumber = Math.floor(Math.random() * 3); // Get random value from 0 to 2
-    ball = super.ballObject();
+    super.ballObject();
 
     if(super.currentRounds > 0 ) {
       sounds[gameSound.START].play();
@@ -214,20 +213,26 @@ export default class ButtonPressWindow extends Base {
     //Set  0,1,2,3 as button pressed values (0:  no button pressed, 1 : pressed , missed target, 2 : pressed, within
     // window, 3 : hit the target)
     let currentTrajectory = TfArrIndex.indexOf(TfArr[this.currentRounds]) + 1;
+    let ballState = 0;
+    if(super.ball.hitstate === 'good'){
+      ballState = 2;
+    }else if (super.ball.hitstate === 'very good'){ballState = 1;}
     let exportData = {
 
       game_type: 'buttonPressWindow',
       trajectory: currentTrajectory,
-      ball_position_x: super.convertXvalue(ball.position.x),
-      ball_position_y: super.convertYvalue(ball.position.y),
+      ball_position_x: super.convertXvalue(super.ball.position.x),
+      ball_position_y: super.convertYvalue(super.ball.position.y),
+      ball_timestamp: super.ball.timestamp,
       button_pressed: keyPressed.value,
       trial: super.currentRounds,
       trialType: this.context.trialType,
       timestamp: super.getElapsedTime(initialTime),
+      feedback: ballState,
       target_position: TARGETX
 
     };
-    if(ball.state === 'hit' || ball.state === 'fall') {
+    if(super.ball.state === 'hit' || super.ball.state === 'fall') {
         super.storeData(exportData);
     }
   }
@@ -294,13 +299,13 @@ export default class ButtonPressWindow extends Base {
     }
 
 
-    if (ball.state === 'start') {
+    if (super.ball.state === 'start') {
 
-      super.moveBallToStart(ball, images[gameImage.BALL]);
+      super.moveBallToStart(super.ball, images[gameImage.BALL]);
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
         sounds[gameSound.START].pause();
         sounds[gameSound.START].currentTime = 0;
-        ball.state = 'fall';
+        super.ball.state = 'fall';
         sounds[gameSound.WHISTLE].play();
         initialTime = new Date().getTime();
 
@@ -310,38 +315,39 @@ export default class ButtonPressWindow extends Base {
     }
 
 
-    if (ball.state === 'fall') {
+    if (super.ball.state === 'fall') {
 
       if (initialTime > 0 && super.getElapsedTime(initialTime) < TOTAL_FLIGHT_TIME) {
-        super.trajectory(ball, initialTime);
+        super.trajectory(initialTime);
       }
 
-      if (initialTime > 0 && super.getElapsedTime(initialTime) > 0.1 && super.ballIsOnFloor(ball)) {
+      if (initialTime > 0 && super.getElapsedTime(initialTime) > 0.1 && super.ballIsOnFloor()) {
         sounds[gameSound.FAIL].play();
-        ball.state = 'hit';
+        super.ball.state = 'hit';
       }
 
 
-      super.drawBall(ball, images[gameImage.BALL]);
+      super.drawBall(super.ball, images[gameImage.BALL]);
       this.createBackground();
       this.createTargetWindow();
 
 
       //Check for target (star) position , if we are within the window size
       if (keyPressed.value === 1) {
-
-        let position = Math.abs(ball.position.x - CENTER * super.Utils.SCALE );
+        sounds[gameSound.WHISTLE].pause();
+        sounds[gameSound.WHISTLE].currentTime = 0;
+        let position = Math.abs(super.ball.position.x - CENTER * super.Utils.SCALE );
 
         if (position < TARGET_SIZE * super.Utils.SCALE) {
           super.increaseScore();
-          ball.hitstate = 'great';
+          super.ball.hitstate = 'great';
           keyPressed.value = 3;
           sounds[gameSound.CATCH_GREAT].play();
 
 
         } else if (position < (WINDOW_SIZE) * super.Utils.SCALE) {
           keyPressed.value = 2;
-          ball.hitstate = 'good';
+          super.ball.hitstate = 'good';
           sounds[gameSound.CATCH_GOOD].play();
 
         } else {
@@ -349,22 +355,22 @@ export default class ButtonPressWindow extends Base {
 
         }
 
-        ball.state = 'hit';
+        super.ball.state = 'hit';
 
       }
 
     }
 
 
-    if (ball.state === 'hit') {
+    if (super.ball.state === 'hit') {
 
-      let difference = ball.position.x - CENTER * super.Utils.SCALE;
-      if (ball.hitstate === 'great') {
+      let difference = super.ball.position.x - CENTER * super.Utils.SCALE;
+      if (super.ball.hitstate === 'great') {
         let explosion = this.setExplosionPosition(10, 0.03572 * super.Utils.SCALE);
         super.drawImageObject(explosion, targetImgs[randomNumber]);
       }
 
-      if (ball.hitstate === 'good') {
+      if (super.ball.hitstate === 'good') {
         let explosion = this.setExplosionPosition(6, difference);
         super.drawImageObject(explosion, targetImgs[3]);
       }
@@ -374,7 +380,7 @@ export default class ButtonPressWindow extends Base {
         super.finishGame(false);
       }
 
-      if(ball.hitstate !== 'good' && ball.hitstate !== 'great' ){
+      if(super.ball.hitstate !== 'good' && super.ball.hitstate !== 'great' ){
 
         this.showBallLocation();
       }
@@ -393,7 +399,7 @@ export default class ButtonPressWindow extends Base {
       dimensions: {width: target.dimensions.width * multiplier, height: target.dimensions.height * multiplier},
       position: {
         x: CENTER * super.Utils.SCALE - (target.dimensions.width * multiplier / 2) + difference,
-        y: ball.position.y - target.dimensions.height * multiplier / 2 + 0.02381 * super.Utils.SCALE
+        y: super.ball.position.y - target.dimensions.height * multiplier / 2 + 0.02381 * super.Utils.SCALE
       }
 
     };
