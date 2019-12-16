@@ -112,6 +112,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 import Ember from &#x27;ember&#x27;;
+import Ajv from &#x27;ajv&#x27;;
 
 //import config from &#x27;ember-get-config&#x27;;
 import FullScreen from &#x27;../../mixins/full-screen&#x27;;
@@ -171,13 +172,16 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
 
     extra: {},
 
+    mergedProperties: [&#x27;frameSchemaProperties&#x27;],
+    concatenatedProperties: [&#x27;frameSchemaRequired&#x27;],
+
+    frameSchemaRequired: [],
+    frameSchemaProperties: { // Configuration parameters, which can be auto-populated from the experiment structure JSON
+    },
+
     meta: { // Configuration for all fields available on the component/template
         name: &#x27;Base Experimenter Frame&#x27;,
         description: &#x27;The abstract base frame for Experimenter frames.&#x27;,
-        parameters: { // Configuration parameters, which can be auto-populated from the experiment structure JSON
-            type: &#x27;object&#x27;,
-            properties: {}
-        },
         data: { // Controls what and how parameters are serialized and sent to the server. Ideally there should be a validation mechanism.
             type: &#x27;object&#x27;,
             properties: {}
@@ -483,6 +487,34 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
                 }
             }
 
+            // After adding any generated properties, check that all required fields are set
+            if (this.get(&#x27;frameSchemaProperties&#x27;).hasOwnProperty(&#x27;required&#x27;)) {
+                var requiredFields = this.get(&#x27;frameSchemaProperties.required&#x27;, []);
+                requiredFields.forEach((key) =&gt; {
+                    if (!this.hasOwnProperty(key) || this.get(key) === undefined) {
+                        // Don&#x27;t actually throw an error here because the frame may actually still function and that&#x27;s probably good
+                        console.error(&#x60;Missing required parameter &#x27;${key}&#x27; for frame of kind &#x27;${this.get(&#x27;kind&#x27;)}&#x27;.&#x60;);
+                    }
+                });
+            }
+
+            // Use JSON schema validator to check that all values are within specified constraints
+            var ajv = new Ajv({
+                allErrors: true,
+                verbose: true
+            });
+            var frameSchema = {type: &#x27;object&#x27;, properties: this.get(&#x27;frameSchemaProperties&#x27;)};
+            try {
+                var validate = ajv.compile(frameSchema);
+                var valid = validate(this);
+                if (!valid) {
+                    console.warn(&#x27;Invalid: &#x27; + ajv.errorsText(validate.errors));
+                }
+            }
+            catch (error) {
+                console.error(&#x60;Failed to compile frameSchemaProperties to use for validating researcher usage of frame type &#x27;${this.get(&#x27;kind&#x27;)}.&#x60;);
+            }
+
         }
 
         this.set(&#x27;_oldFrameIndex&#x27;, currentFrameIndex);
@@ -509,12 +541,9 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         // Add config properties and data to be serialized as instance parameters (overriding with values explicitly passed in)
         var params = this.get(&#x27;frameConfig&#x27;);
 
-        // TODO: check all required parameters are set
-        // TODO: use JSON schema validator to check
-
         var defaultParams = {};
-        Object.keys(this.get(&#x27;meta.parameters&#x27;).properties || {}).forEach((key) =&gt; {
-            defaultParams[key] = this.get(&#x60;meta.parameters.properties.${key}.default&#x60;);
+        Object.keys(this.get(&#x27;frameSchemaProperties&#x27;) || {}).forEach((key) =&gt; {
+            defaultParams[key] = this.get(&#x60;frameSchemaProperties.${key}.default&#x60;);
         });
 
         Object.keys(this.get(&#x27;meta.data&#x27;).properties || {}).forEach((key) =&gt; {
@@ -524,7 +553,7 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
             var value = !clean ? this.get(key) : undefined;
             if (typeof value === &#x27;undefined&#x27;) {
                 // Make deep copy of the default value (to avoid subtle reference errors from reusing mutable containers)
-                defaultParams[key] = Ember.copy(this.get(&#x60;meta.data.properties.${key}.default&#x60;), true);
+                defaultParams[key] = Ember.copy(this.get(&#x60;frameSchemaProperties.${key}.default&#x60;), true);
             } else {
                 defaultParams[key] = value;
             }
@@ -537,6 +566,7 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         defaultParams.generatedProperties = null;
         defaultParams.selectNextFrame = null;
         Ember.assign(defaultParams, params);
+
         return defaultParams;
     },
 

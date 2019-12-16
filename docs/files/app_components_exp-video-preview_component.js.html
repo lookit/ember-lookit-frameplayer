@@ -119,6 +119,7 @@ import MediaReload from &#x27;../../mixins/media-reload&#x27;;
 import VideoRecord from &#x27;../../mixins/video-record&#x27;;
 import ExpandAssets from &#x27;../../mixins/expand-assets&#x27;;
 import { computed } from &#x27;@ember/object&#x27;;
+import { videoAssetOptions, imageAssetOptions } from &#x27;../../mixins/expand-assets&#x27;;
 
 /**
  * @module exp-player
@@ -214,97 +215,80 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
         }
     },
     type: &#x27;exp-video-preview&#x27;,
+    frameSchemaProperties: {
+        /**
+         * A series of preview videos to display within a single frame, defined as an array of objects.
+         *
+         * @property {Array} videos
+         *   @param {String} caption Some text to appear under this video
+         *   @param {Object[]} sources String indicating video path relative to baseDir (see baseDir), OR Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects.
+         *   @param {String} imgSrc URL of image to display (optional; each preview video should designate either sources or imgSrc). Can be full path or relative to baseDir.
+         */
+        videos: {
+            type: &#x27;array&#x27;,
+            description: &#x27;A list of videos to preview&#x27;,
+            items: {
+                type: &#x27;object&#x27;,
+                properties: {
+                    imgSrc: {
+                        anyOf: imageAssetOptions,
+                        default: &#x27;&#x27;
+                    },
+                    sources: {
+                        anyOf: videoAssetOptions
+                    },
+                    caption: {
+                        type: &#x27;string&#x27;
+                    }
+                },
+                required: [&#x27;caption&#x27;]
+            },
+            default: []
+        },
+        /**
+         * Text on the button prompt asking the user to continue to the videos
+         *
+         * @property {String} prompt
+         */
+        prompt: {
+            type: &#x27;string&#x27;,
+            description: &#x27;Text on the button prompt asking the user to continue to the videos&#x27;,
+            default: &#x27;Begin preview&#x27;
+        },
+        /**
+         * Informational text to display to the user before videos are shown, along with button to continue
+         *
+         * @property {String} text
+         */
+        text: {
+            type: &#x27;string&#x27;,
+            description: &#x27;Informational text to display to the user before videos are shown, along with button to continue&#x27;,
+            default: &#x27;&#x27;
+        },
+        /**
+         * Text on the button to proceed to the next example video/image
+         *
+         * @property {String} nextStimulusText
+         */
+        nextStimulusText: {
+            type: &#x27;string&#x27;,
+            description: &#x27;Text on the button to proceed to the next example video/image&#x27;,
+            default: &#x27;Next&#x27;
+        },
+        /**
+         * Text on the button to proceed to the previous example video/image
+         *
+         * @property {String} previousStimulusText
+         */
+        previousStimulusText: {
+            type: &#x27;string&#x27;,
+            description: &#x27;Text on the button to proceed to the previous example video/image&#x27;,
+            default: &#x27;Previous&#x27;
+        }
+    },
     meta: {
         name: &#x27;ExpVideoPreview&#x27;,
         description: &#x27;Frame that displays a series of preview videos, self-paced with controls.&#x27;,
-        parameters: {
-            type: &#x27;object&#x27;,
-            properties: {
-                /**
-                 * A series of preview videos to display within a single frame, defined as an array of objects.
-                 *
-                 * @property {Array} videos
-                 *   @param {String} caption Some text to appear under this video
-                 *   @param {Object[]} sources String indicating video path relative to baseDir (see baseDir), OR Array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects.
-                 *   @param {String} imgSrc URL of image to display (optional; each preview video should designate either sources or imgSrc)
-                 */
-                videos: {
-                    type: &#x27;array&#x27;,
-                    description: &#x27;A list of videos to preview&#x27;,
-                    items: {
-                        type: &#x27;object&#x27;,
-                        properties: {
-                            imgSrc: {
-                                type: &#x27;string&#x27;,
-                                default: &#x27;&#x27;
-                            },
-                            sources: {
-                                type: &#x27;array&#x27;,
-                                default: [],
-                                items: {
-                                    type: &#x27;object&#x27;,
-                                    properties: {
-                                        src: {
-                                            type: &#x27;string&#x27;
-                                        },
-                                        type: {
-                                            type: &#x27;string&#x27;
-                                        }
-                                    },
-                                    required: [&#x27;src&#x27;, &#x27;type&#x27;]
-                                }
-                            },
-                            caption: {
-                                type: &#x27;string&#x27;
-                            }
-                        },
-                        required: [&#x27;caption&#x27;]
-                    },
-                    default: []
-                },
-                /**
-                 * Text on the button prompt asking the user to continue to the videos
-                 *
-                 * @property {String} prompt
-                 */
-                prompt: {
-                    type: &#x27;string&#x27;,
-                    description: &#x27;Text on the button prompt asking the user to continue to the videos&#x27;,
-                    default: &#x27;Begin preview&#x27;
-                },
-                /**
-                 * Informational text to display to the user before videos are shown, along with button to continue
-                 *
-                 * @property {String} text
-                 */
-                text: {
-                    type: &#x27;string&#x27;,
-                    description: &#x27;Informational text to display to the user before videos are shown, along with button to continue&#x27;,
-                    default: &#x27;&#x27;
-                },
-                /**
-                 * Text on the button to proceed to the next example video/image
-                 *
-                 * @property {String} nextStimulusText
-                 */
-                nextStimulusText: {
-                    type: &#x27;string&#x27;,
-                    description: &#x27;Text on the button to proceed to the next example video/image&#x27;,
-                    default: &#x27;Next&#x27;
-                },
-                /**
-                 * Text on the button to proceed to the previous example video/image
-                 *
-                 * @property {String} previousStimulusText
-                 */
-                previousStimulusText: {
-                    type: &#x27;string&#x27;,
-                    description: &#x27;Text on the button to proceed to the previous example video/image&#x27;,
-                    default: &#x27;Previous&#x27;
-                }
-            },
-            required: [&#x27;videos&#x27;]
-        },
         data: {
             type: &#x27;object&#x27;,
             /**
