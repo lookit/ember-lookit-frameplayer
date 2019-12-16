@@ -143,7 +143,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
          * will be disabled until recording is made if so. 0 to not require recording;
          * any positive number to require that many seconds of recording
          *
-         * @property {Boolean} startRecordingAutomatically
+         * @property {Boolean} recordingRequired
          * @default false
          */
         recordingRequired: {
