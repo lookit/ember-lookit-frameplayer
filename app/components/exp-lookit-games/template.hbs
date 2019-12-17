@@ -17,12 +17,11 @@
     {{#if showInstructions}}
       <div class="instr-page-container">
 
-        <p>{{instructions}}
-          <audio  class="player-media player-center" id="notation"
-                  autoplay="autoplay" controls="controls" onended={{action 'mediaPlayed'}}>
-            <source src={{concat baseDir mediaSource.src}} type={{mediaSource.type}} >
-          </audio>
-        </p>
+        {{instructions}}
+        <audio  class="player-media player-center" id="notation"
+                autoplay="autoplay" controls="controls" onended={{action 'mediaPlayed'}}>
+          <source src={{concat baseDir mediaSource.src}} type={{mediaSource.type}} >
+        </audio>
 
       {{#if source}}
         <img src={{concat baseDir source}} alt="" />
