@@ -4,6 +4,7 @@
       </div>
     </div>
 
+
     {{#if showIntro}}
       <div id="intro" class="instr-page-container">
         <p>{{instructions}}</p>
@@ -23,11 +24,16 @@
           <source src={{concat baseDir mediaSource.src}} type={{mediaSource.type}} >
         </audio>
 
-      {{#if source}}
-        <img src={{concat baseDir source}} alt="" />
-      {{/if}}
-        <button class="btn btn-success pull-right-games" {{ action 'next' }}  disabled={{if isPlaying
-                                                                                            true false}}>Next</button>
+        {{#if source}}
+          <img src={{concat baseDir source}} alt="" />
+        {{/if}}
+
+        {{#if showWarning}}
+          <div class="media-warning">
+            * {{warningText}}
+          </div>
+        {{/if}}
+        <button class="btn btn-success pull-right-games" {{ action 'checkAudioThenNext' }}>Next</button>
       </div>
 
     {{/if}}
@@ -35,7 +41,7 @@
   {{#if showVideo}}
       <video class="player-media"
              autoplay="autoplay" controls="controls"
-             onended={{action 'next'}}>
+             onended={{action 'mediaPlayed'}}>
 
           <source src={{concat baseDir  mediaSource.src}} type={{mediaSource.type}}>
       </video>
