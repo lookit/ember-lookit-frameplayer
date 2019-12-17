@@ -163,20 +163,10 @@ export default class ButtonPressWindow extends Base {
   initGame() {
     initialTime = 0;
     jitterT = super.trialStartTime();
+    keyPressed.value = 0;
     this.setTargetBackground();
-
-    super.ball = {
-      position: {x: 0, y: 0},
-      velocity: 0,
-      radius: 0.02381 * super.Utils.SCALE,
-      restitution: super.Utils.restitution,
-      timeReached: 0
-
-    };
-
     randomNumber = Math.floor(Math.random() * 3); // Get random value from 0 to 2
     super.ballObject();
-
     if(super.currentRounds > 0 ) {
       sounds[gameSound.START].play();
     }
@@ -210,23 +200,24 @@ export default class ButtonPressWindow extends Base {
     super.dataCollection();
     //Set  0,1,2,3 as button pressed values (0:  no button pressed, 1 : pressed , missed target, 2 : pressed, within
     // window, 3 : hit the target)
-    let currentTrajectory = TfArrIndex.indexOf(TfArr[this.currentRounds]) + 1;
-    let exportData = {
-
-      game_type: 'buttonPressWindow',
-      trajectory: currentTrajectory,
-      ball_position_x: super.convertXvalue(super.ball.position.x),
-      ball_position_y: super.convertYvalue(super.ball.position.y),
-      ball_timestamp: super.ball.timestamp,
-      button_pressed: keyPressed.value,
-      trial: super.currentRounds,
-      trialType: this.context.trialType,
-      timestamp: super.getElapsedTime(initialTime),
-      feedback: super.ballState(),
-      target_position: TARGETX
-
-    };
     if(super.ball.state === 'hit' || super.ball.state === 'fall') {
+      let currentTrajectory = TfArrIndex.indexOf(TfArr[this.currentRounds]) + 1;
+      let exportData = {
+
+        game_type: 'buttonPressWindow',
+        trajectory: currentTrajectory,
+        ball_position_x: super.convertXvalue(super.ball.position.x),
+        ball_position_y: super.convertYvalue(super.ball.position.y),
+        ball_timestamp: super.ball.timestamp,
+        button_pressed: keyPressed.value,
+        trial: super.currentRounds,
+        trialType: this.context.trialType,
+        timestamp: super.getElapsedTime(initialTime),
+        feedback: super.ballState(),
+        target_position: TARGETX
+
+      };
+
       super.storeData(exportData);
     }
   }
