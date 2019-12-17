@@ -739,7 +739,7 @@ export default class Base {
    */
   moveBallToStart(image) {
 
-    ball = this.ballObject();
+    this.ballObject();
     this.drawBall(image);
 
   }

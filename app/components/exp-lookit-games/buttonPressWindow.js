@@ -162,9 +162,7 @@ export default class ButtonPressWindow extends Base {
    */
   initGame() {
     initialTime = 0;
-    super.ball.startTime = 0;
     jitterT = super.trialStartTime();
-    keyPressed.value = 0;
     this.setTargetBackground();
 
     super.ball = {
