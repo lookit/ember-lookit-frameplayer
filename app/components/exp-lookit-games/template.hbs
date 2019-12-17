@@ -28,7 +28,7 @@
           <img src={{concat baseDir source}} alt="" />
         {{/if}}
 
-        <button class="btn btn-success pull-right-games" {{ action 'checkAudioThenNext' }}>Next</button>
+        <button class="btn btn-success pull-right-games" {{ action 'next' }} disabled={{isPlaying}}>Next</button>
       </div>
 
     {{/if}}
