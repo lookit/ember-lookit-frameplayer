@@ -740,7 +740,7 @@ export default class Base {
    */
   moveBallToStart(image) {
 
-    ball = this.ballObject();
+    this.ballObject();
     this.drawBall(image);
 
   }
@@ -872,9 +872,9 @@ export default class Base {
    */
   ballState() {
     let ballState = 0;
-    if (super.ball.hitstate === 'good') {
+    if (ball.hitstate === 'good') {
       ballState = 2;
-    } else if (super.ball.hitstate === 'very good') {
+    } else if (ball.hitstate === 'very good') {
       ballState = 1;
     }
     return ballState;
@@ -894,9 +894,14 @@ export default class Base {
     let border = paddleBox.position.y+paddleBox.dimensions.height - paddle.dimensions.height;
 
     mouseY += e.movementY;
-
+    //Check for down border
     if(mouseY  > border && e.movementY >0){
       mouseY =  border;
+    }
+
+    //Check for upper border
+    if(mouseY < paddle.dimensions.height){
+      mouseY =  paddle.dimensions.height;
     }
 
 

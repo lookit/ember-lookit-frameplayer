@@ -9,10 +9,9 @@ import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import Ember from 'ember';
 import Game from './Game';
-import Em from "ember-source/dist/ember-testing";
 let {
   $
-} = Em;
+} = Ember;
 
 
 /**
@@ -72,7 +71,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     displayFullscreen: false,
     doUseCamera: false,
     currentGame: null,
-    isPlaying: true,
     layout: layout,
     meta: {
         name: 'ExpLookitGames',
@@ -91,7 +89,15 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                     default: 0,
                     description: 'Game type  to display '
                 },
-
+                /**
+                 * Check if media is playing
+                 * @property {boolean} type
+                 * @default true
+                 */
+                isPlaying: {
+                  type: 'boolean',
+                  default: true
+                },
                 /**
                  * Show canvas with game
                  * @property {boolean} type
@@ -393,7 +399,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     actions: {
         // Define any actions that you need to be able to trigger from within the template here
         mediaPlayed(e) {
-          $(e.srcElement).attr('isPlaying', false);
+          this.set('isPlaying', false);
+        },
+        checkAudioThenNext() {
+          if(this.get('isPlaying') === false){
+            this.send('next');
+          }
         },
         play() {
             this.send('showFullscreen');
