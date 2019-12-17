@@ -893,9 +893,14 @@ export default class Base {
     let border = paddleBox.position.y+paddleBox.dimensions.height - paddle.dimensions.height;
 
     mouseY += e.movementY;
-
+    //Check for down border
     if(mouseY  > border && e.movementY >0){
       mouseY =  border;
+    }
+
+    //Check for upper border
+    if(mouseY < paddle.dimensions.height){
+      mouseY =  paddle.dimensions.height;
     }
 
 
