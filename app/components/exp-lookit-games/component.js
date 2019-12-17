@@ -270,17 +270,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
                     default: false
                 },
 
-                /**
-                 * Warning text, when audio is not played
-                 *
-                 * @property {String} warningText
-                 * @default Please try playing instructions.
-                 */
-                warningText: {
-                  type: 'string',
-                  default: 'Please try playing instructions.'
-                },
-
                 mediaSource: {
                     type: 'object',
                     properties: {
@@ -410,13 +399,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     actions: {
         // Define any actions that you need to be able to trigger from within the template here
         mediaPlayed(e) {
-          $(e.srcElement).attr('completed', true);
-          $(e.srcElement).parent().attr('showWarning', false);
+          this.set('isPlaying', false);
         },
         checkAudioThenNext() {
-          if (this.shouldPreventNext()) {
-            this.set('showWarning', true);
-          } else {
+          if(this.get('isPlaying') === false){
             this.send('next');
           }
         },
