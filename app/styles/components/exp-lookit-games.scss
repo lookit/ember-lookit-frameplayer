@@ -212,7 +212,6 @@
 
 
 .instr-page-container p{
-  margin-top: 20px;
   font-family: "Courier New", Courier, monospace;
   overflow-wrap: normal;
   position: relative;
@@ -220,8 +219,7 @@
   font-size: large;
   display: block;
   width: 66%;
-  margin-right: auto;
-  margin-left: auto;
+  margin: 20px auto 0px;
 }
 
 .pull-right-games{

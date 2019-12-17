@@ -399,7 +399,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     actions: {
         // Define any actions that you need to be able to trigger from within the template here
         mediaPlayed(e) {
-          $(e.srcElement).attr('isPlaying', false);
+          $(e.srcElement).attr('isPlaying', true);
         },
         play() {
             this.send('showFullscreen');

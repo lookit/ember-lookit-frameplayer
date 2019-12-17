@@ -17,7 +17,7 @@
     {{#if showInstructions}}
       <div class="instr-page-container">
 
-        {{instructions}}
+        <p>{{instructions}}</p>
         <audio  class="player-media player-center" id="notation"
                 autoplay="autoplay" controls="controls" onended={{action 'mediaPlayed'}}>
           <source src={{concat baseDir mediaSource.src}} type={{mediaSource.type}} >
@@ -26,7 +26,8 @@
       {{#if source}}
         <img src={{concat baseDir source}} alt="" />
       {{/if}}
-        <button class="btn btn-success pull-right-games" {{ action 'next' }}  disabled={{isPlaying}}>Next</button>
+        <button class="btn btn-success pull-right-games" {{ action 'next' }}  disabled={{if isPlaying
+                                                                                            true false}}>Next</button>
       </div>
 
     {{/if}}
