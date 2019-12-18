@@ -36,7 +36,7 @@
   {{#if showVideo}}
       <video class="player-media"
              autoplay="autoplay" controls="controls"
-             onended={{action 'mediaPlayed'}}>
+             onended={{action 'next'}}>
 
           <source src={{concat baseDir  mediaSource.src}} type={{mediaSource.type}}>
       </video>
