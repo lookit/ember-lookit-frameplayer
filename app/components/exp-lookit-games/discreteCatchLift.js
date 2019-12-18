@@ -253,19 +253,19 @@ export default class DiscreteCatchLift extends Base {
   loop() {
     super.loop();
     let paddleBoxColor = super.Utils.blueColor;
-    super.paddle = super.basketObject();
+    super.basketObject();
     super.paddleMove(initialTime);
     super.createPaddleBox(paddleBoxColor);
     super.drawImageObject(clockObject, images[gameImage.CLOCK]);
 
-    if (initialTime === 0 && super.currentRounds === 0 && !super.paddleIsMoved()) {
+    if (initialTime === 0 ) {
 
       sounds[gameSound.START].play();
     }
 
 
     if (initialTime > 0 && super.paddleIsMoved() && target.state === 'start') {
-      initialTime = new Date().getTime();
+      initialTime = 0;
       sounds[gameSound.START].pause();
       sounds[gameSound.START].currentTime = 0;
       paddleBoxColor = super.Utils.redColor;
@@ -347,7 +347,7 @@ export default class DiscreteCatchLift extends Base {
           sounds[gameSound.SERIES3].play();
         }
         super.increaseScore();
-        //this.showClock();
+        this.showClock();
 
       }
 

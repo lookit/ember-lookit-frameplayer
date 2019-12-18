@@ -67,6 +67,7 @@ export default class Base {
     this.canvas.requestPointerLock();
     this.calculateCanvas();
     this.paddleBoxParameters();
+    this.ballObject();
     this.currentRounds = 0;
     maxRounds = this.context.trialsNumber;
     this.loopTimer = function () {
@@ -130,6 +131,7 @@ export default class Base {
    * @method init
    */
   init() {
+    mouseY =  paddleBox.position.y+paddleBox.dimensions.height/2;
     clearInterval(dataLoop);
     this.dataTimer();
   }
@@ -782,25 +784,21 @@ export default class Base {
    * @param {boolean} checkPaddleHeight if height needed for reference (bounce game)
    * @return {boolean}
    */
-  paddleIsMoved(checkPaddleHeight = false){
+  paddleIsMoved(){
 
     if( paddle.positions.length > 2 && paddle.position.y !== (this.canvas.height - paddle.positions[paddle.positions.length-3]*Utils.SCALE)){
 
       return true;
     }
 
-    let paddleHeight = 0;
-    if(checkPaddleHeight){
-      paddleHeight = paddle.dimensions.height;
-    }
 
     // Check if paddle is moved outside the box limits
-    return this.isOutsideBox(paddle, paddleHeight);
+    return this.isOutsideBox();
 
   }
 
 
-  isOutsideBox(paddleHeight) {
+  isOutsideBox(paddleHeight = paddle.dimensions.height) {
     return paddle.position.y < paddleBox.position.y - paddleBox.dimensions.height + paddleHeight;
   }
 
@@ -841,7 +839,7 @@ export default class Base {
       mouseY = paddle.position.y + 0.0238 * Utils.SCALE;
     }
 
-    this.paddleHistory(paddle,initialTime);
+    this.paddleHistory(initialTime);
 
 
   }
@@ -882,16 +880,14 @@ export default class Base {
   /**
    * Increment current position cursor by movementY value (difference in y coordinate between the given event and the
    * previous mousemove event )
-   * Check initial cursor position, if the positio is lower then low paddle box border, stop t\
+   * Check initial cursor position, if the position is lower then low paddle box border, stop t\
    * mouse pointer updates.
    * @method onMouseMove
-   * @param e {Event} currrent mouse event
+   * @param e {Event} current mouse event
    */
   onMouseMove(e){
 
-
     let border = paddleBox.position.y+paddleBox.dimensions.height - paddle.dimensions.height;
-
     mouseY += e.movementY;
     //Check for down border
     if(mouseY  > border && e.movementY >0){

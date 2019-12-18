@@ -84,17 +84,6 @@ export default class DiscreteBounce extends Base {
    */
   init() {
     document.addEventListener("mousemove", super.onMouseMove);
-    super.paddle = {
-
-      position: {x: 0, y: 0},
-      dimensions: {width: 0, height: 0},
-      paddleLastMovedMillis: 100,
-      releaseVelocity: 1,
-      positions: [],
-      times: []
-
-    };
-
 
     if(this.context.trialType === 'demo'){
       hArray =   this.context.demoTrajectories;
@@ -180,7 +169,7 @@ export default class DiscreteBounce extends Base {
    */
   loop() {
     super.loop();
-     super.paddleObject();
+    super.paddleObject();
     let paddleBoxColor = super.Utils.blueColor;
     super.createPaddleBox(paddleBoxColor);
     super.generateTrajectoryParams(hArray[super.currentRounds], Height);
@@ -191,25 +180,25 @@ export default class DiscreteBounce extends Base {
     let hitTheTarget = this.collisionDetection();
     let hitTheWall = super.wallCollision();
 
-    if (initialTime === 0 && super.currentRounds === 0 ) {
+    if (initialTime === 0  ) {
 
       sounds[gameSound.START].play();
     }
 
     if (super.ball.state === 'start') {
       super.moveBallToStart( images[gameImage.BALL]);
-      if (initialTime > 0 && super.isOutsideBox()) {
-          initialTime = new Date().getTime();
-          sounds[gameSound.START].pause();
-          sounds[gameSound.START].currentTime = 0;
-          paddleBoxColor = super.Utils.redColor;
-          super.createPaddleBox(paddleBoxColor);
+      if (initialTime > 0 && super.isOutsideBox(super.paddle.dimensions.height*7)) {
+        initialTime = 0;
+        sounds[gameSound.START].pause();
+        sounds[gameSound.START].currentTime = 0;
+        paddleBoxColor = super.Utils.redColor;
+        super.createPaddleBox(paddleBoxColor);
       }
       if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
-          sounds[gameSound.START].pause();
-          sounds[gameSound.START].currentTime = 0;
-          super.ball.state = 'fall';
-          initialTime = new Date().getTime();
+        sounds[gameSound.START].pause();
+        sounds[gameSound.START].currentTime = 0;
+        super.ball.state = 'fall';
+        initialTime = new Date().getTime();
       }
 
     }
@@ -479,6 +468,8 @@ export default class DiscreteBounce extends Base {
     this.paddleBoxParameters();
     jitterT = super.trialStartTime();
     super.ballObject();
+    super.paddle.times = [];
+    super.paddle.positions = [];
     initialTime = 0;
 
     token.dimensions = {width: 0.21 * super.Utils.SCALE, height: 0.2 * super.Utils.SCALE};
