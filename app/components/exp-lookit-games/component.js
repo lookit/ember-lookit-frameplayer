@@ -435,7 +435,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
 
         this._super(...arguments);
 
-
+        this.set('isPlaying', true);
         if(this.get('fullscreen') === true){
           this.send('showFullscreen');
         }
