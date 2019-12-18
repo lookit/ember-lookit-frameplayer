@@ -24,7 +24,7 @@ let consecutiveCounts = 0;  // Calculate number of consecutive successful attemp
 let startTime = 0;
 const GEAR_RADIUS = 0.05;
 const TRAVEL_TIME = 1.3;
-const SOUND_DELAY = 1.73;
+const SOUND_DELAY = 1.7;
 // Media arrays for loading
 let sounds = [];
 let soundURLs = [];
