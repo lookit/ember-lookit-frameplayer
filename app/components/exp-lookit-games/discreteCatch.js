@@ -392,7 +392,7 @@ export default class DiscreteCatch extends Base {
         consecutiveCounts = 0;
       }
 
-
+      this.dataCollection();
       super.ball.state = 'done';
 
     }

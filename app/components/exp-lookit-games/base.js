@@ -682,7 +682,7 @@ export default class Base {
     let downBorder =  (1.3746-positionY)*Utils.SCALE ;
     ball.position.x = leftBorder;
     ball.position.y = downBorder;
-
+    ball.timestamp = iterator;
   }
 
   /**

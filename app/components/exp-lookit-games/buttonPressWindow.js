@@ -340,6 +340,7 @@ export default class ButtonPressWindow extends Base {
 
         }
 
+        this.dataCollection();
         super.ball.state = 'hit';
 
       }
