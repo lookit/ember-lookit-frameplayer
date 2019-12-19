@@ -246,7 +246,7 @@ export default class DiscreteBounce extends Base {
         sounds[gameSound.FAIL].play();
       }
 
-
+      this.dataCollection();
       super.ball.state = 'done';
 
     }
@@ -491,25 +491,25 @@ export default class DiscreteBounce extends Base {
    */
   dataCollection() {
     super.dataCollection();
-
-    let exportData = {
-      game_type: 'BounceGame',
-      trajectory: hArray[super.currentRounds],
-      ball_position_x: super.convertXvalue(super.ball.position.x),
-      ball_position_y: super.convertYvalue(super.ball.position.y),
-      ball_timestamp: super.ball.timestamp,
-      paddle_center_x: super.convertXvalue(super.paddle.position.x   +  (super.paddle.dimensions.width / 2)) ,
-      paddle_x: super.convertXvalue(super.paddle.position.x),
-      paddle_position_y: super.convertYvalue(super.paddle.position.y),
-      trial: super.currentRounds,
-      trialType: this.context.trialType,
-      feedback: super.ballState(),
-      timestamp: super.getElapsedTime(initialTime)
-
-    };
-
     if(super.ball.state === 'hit' || super.ball.state === 'bounce' || super.ball.state === 'fall') {
-      super.storeData(exportData);
+      let exportData = {
+        game_type: 'BounceGame',
+        trajectory: hArray[super.currentRounds],
+        ball_position_x: super.convertXvalue(super.ball.position.x),
+        ball_position_y: super.convertYvalue(super.ball.position.y),
+        ball_timestamp: super.ball.timestamp,
+        paddle_center_x: super.convertXvalue(super.paddle.position.x   +  (super.paddle.dimensions.width / 2)) ,
+        paddle_x: super.convertXvalue(super.paddle.position.x),
+        paddle_position_y: super.convertYvalue(super.paddle.position.y),
+        trial: super.currentRounds,
+        trialType: this.context.trialType,
+        feedback: super.ballState(),
+        timestamp: super.getElapsedTime(initialTime)
+
+      };
+
+
+        super.storeData(exportData);
     }
 
   }

@@ -642,13 +642,13 @@ export default class Base {
 
   convertYvalue(val){
 
-    return (this.canvas.height - val)/Utils.SCALE;
+    return (this.canvas.height - val)/this.canvas.height;
 
   }
 
   convertXvalue(val){
 
-    return val/Utils.SCALE;
+    return val/this.canvas.width;
 
   }
 
@@ -683,7 +683,7 @@ export default class Base {
     let downBorder =  (1.3746-positionY)*Utils.SCALE ;
     ball.position.x = leftBorder;
     ball.position.y = downBorder;
-
+    ball.timestamp = iterator;
   }
 
   /**
