@@ -24,7 +24,7 @@ let consecutiveCounts = 0;  // Calculate number of consecutive successful attemp
 let startTime = 0;
 const GEAR_RADIUS = 0.05;
 const TRAVEL_TIME = 1.3;
-const SOUND_DELAY = 1.7;
+const SOUND_DELAY = 1.6;
 // Media arrays for loading
 let sounds = [];
 let soundURLs = [];
@@ -33,6 +33,7 @@ let images = [];
 let obstructionsURLs = [];
 let obstructionImages = [];
 let trajectoryParameters = [];
+let ball = {};
 // Media mapping as Enum
 const gameSound = {
   START:0,
@@ -117,8 +118,11 @@ export default class DiscreteCatch extends Base {
 
     //Listener for catch events, make sounds play in sections of 19 milisecondsfor consecutive successful catches
     sounds[gameSound.CATCH].addEventListener('timeupdate', function (){
-      if (this.currentTime >= consecutiveCounts*SOUND_DELAY) {
+      if (this.currentTime >= (consecutiveCounts+1)*SOUND_DELAY) {
         this.pause();
+        if(ball.hitstate === 'very good' ){
+          consecutiveCounts++;
+        }
       }
     }, false);
 
@@ -314,6 +318,7 @@ export default class DiscreteCatch extends Base {
    */
   loop() {
     super.loop();
+    ball = super.ball;
     super.generateTrajectoryParams(trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT],Height);
     this.createLauncher(images[gameImage.BALLBOX]);
     let paddleBoxColor = super.Utils.blueColor;
@@ -366,6 +371,7 @@ export default class DiscreteCatch extends Base {
     }
 
 
+
     if (super.ball.state === 'hit') {
 
 
@@ -376,20 +382,18 @@ export default class DiscreteCatch extends Base {
           consecutiveCounts = 10;
         }
         sounds[gameSound.CATCH].currentTime = (SOUND_DELAY > 0 ? SOUND_DELAY + 0.16 : 0) * consecutiveCounts;
-        consecutiveCounts++;
         sounds[gameSound.CATCH].play();
         super.ball.radius = 0;
 
       }else if(super.ball.hitstate === 'good'){
         super.ball.radius = 0;
         consecutiveCounts = 0;
-        sounds[gameSound.CATCH].currentTime =  consecutiveCounts;
+        sounds[gameSound.CATCH].currentTime = consecutiveCounts;
         sounds[gameSound.CATCH].play();
 
       }else{
-
-        sounds[gameSound.FAIL].play();
         consecutiveCounts = 0;
+        sounds[gameSound.FAIL].play();
       }
 
       this.dataCollection();
