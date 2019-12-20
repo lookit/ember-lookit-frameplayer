@@ -167,21 +167,22 @@ export default class DiscreteCatchLift extends Base {
    */
   dataCollection() {
     super.dataCollection();
-    let exportData = {
-      game_type: 'discreteCatchLift',
-      basket_x: super.convertXvalue(super.paddle.position.x),
-      basket_y: super.convertYvalue(super.paddle.position.y),
-      mice_x:   super.convertXvalue(target.position.x),
-      mice_y:   super.convertYvalue(target.position.y),
-      trial: super.currentRounds,
-      trialType: this.context.trialType,
-      mice_state: target.state,
-      timestamp: super.getElapsedTime(initialTime)
+    if(initialTime > 0) {
+      let exportData = {
+        game_type: 'discreteCatchLift',
+        basket_x: super.convertXvalue(super.paddle.position.x),
+        basket_y: super.convertYvalue(super.paddle.position.y),
+        mice_x: super.convertXvalue(target.position.x),
+        mice_y: super.convertYvalue(target.position.y),
+        trial: super.currentRounds,
+        trialType: this.context.trialType,
+        mice_state: target.state,
+        timestamp: super.getElapsedTime(initialTime)
 
-    };
+      };
 
-    super.storeData(exportData);
-
+      super.storeData(exportData);
+    }
   }
 
 
