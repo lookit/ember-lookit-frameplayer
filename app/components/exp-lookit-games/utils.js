@@ -25,7 +25,16 @@ export default class Utils{
   static get  SCALE(){return SCALE;}
   static set  SCALE(val){ SCALE = val;}
   static get  SCREEN_HEIGHT(){return 645;}
+  static  get paddleBoxValues(){
 
+    return {
+      left: 1.2035 * SCALE,
+      top:1.3671 * SCALE,
+      right:1.4585 * SCALE,
+      down: 1.5671 * SCALE
+
+    };
+  }
 
 
 

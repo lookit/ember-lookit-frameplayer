@@ -18,7 +18,6 @@ const JITTER_MIN_TIME = 850; // Min value for time Jitter randomizer
 const DATA_COLLECTION_TIME = 20; // Data collection Timeout
 let dataLoop = {}; // controlling data Collection loop
 let gameLoop = {}; // controlling main game loop
-let mouseY = 0; // mouse pointer  position on Y axis
 let currentRounds = 0; // current game trial number
 let maxRounds = 0;
 let initBallY = 0.0; // Initial ball Y position
@@ -26,11 +25,11 @@ let initX = 0.52; // Initial ball X position
 let initV = 0; //  Initial velocity
 let gravity = 0;
 let ballvx = 0;  // current ball velocity on X axis
-let paddle = {};
 let ball = {};
-let paddleBox = {
-  position: {x: 0, y: 0},
-  dimensions: {width: 0, height: 0}
+let gameState = {
+  initialTime : 0,
+  startTime: 0
+
 };
 
 
@@ -66,7 +65,6 @@ export default class Base {
     this.canvas.requestPointerLock =  this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock || this.canvas.webkitRequestPointerLock;
     this.canvas.requestPointerLock();
     this.calculateCanvas();
-    this.paddleBoxParameters();
     this.ballObject();
     this.currentRounds = 0;
     maxRounds = this.context.trialsNumber;
@@ -90,16 +88,8 @@ export default class Base {
   }
 
 
-  paddleBoxParameters() {
-    let leftBorder = (1.2035) * Utils.SCALE;
-    let topBorder = (1.3671) * Utils.SCALE;
-    let rightBorder = (1.4585) * Utils.SCALE;
-    let downBorder = (1.5671) * Utils.SCALE;
-    paddleBox.position.x = leftBorder;
-    paddleBox.position.y = topBorder;
-    paddleBox.dimensions.width = rightBorder - leftBorder;
-    paddleBox.dimensions.height = downBorder - topBorder;
-  }
+
+
 
   /**
    * Calculate canvas based on current Width Height
@@ -131,8 +121,7 @@ export default class Base {
    * @method init
    */
   init() {
-    mouseY =  paddleBox.position.y+paddleBox.dimensions.height/2;
-    clearInterval(dataLoop);
+    clearTimeout(dataLoop);
     this.dataTimer();
   }
 
@@ -190,33 +179,7 @@ export default class Base {
   }
 
 
-  /**
-   * Create and draw box for initial paddle location.
-   * The box symbolizes initial paddle location in all games
-   * @param color {int} Color of the Paddle box
-   * @param fill {boolean} Set solid color paddle box
-   * @method createPaddleBox
-   */
-  createPaddleBox(color = Utils.blueColor, fill = false) {
 
-    if(fill){
-
-      this.ctx.fillStyle = color;
-      this.ctx.fillRect(paddleBox.position.x, paddleBox.position.y, paddleBox.dimensions.width, paddleBox.dimensions.height);
-
-    }else{
-
-      this.ctx.beginPath();
-      this.ctx.rect(paddleBox.position.x, paddleBox.position.y, paddleBox.dimensions.width, paddleBox.dimensions.height);
-      this.ctx.fillStyle = color;
-      this.ctx.lineWidth = '8';
-      this.ctx.strokeStyle = color;
-      this.ctx.stroke();
-    }
-
-
-
-  }
 
 
   get currentRounds() {
@@ -251,26 +214,6 @@ export default class Base {
     initBallY = val;
   }
 
-  set paddleBox(val){
-
-    paddleBox = val;
-  }
-
-  get paddleBox(){
-
-    return paddleBox;
-  }
-
-  set paddle(val){
-
-    paddle = val;
-  }
-
-  get paddle(){
-
-    return paddle;
-  }
-
 
   set ball(val){
     ball = val;
@@ -279,6 +222,19 @@ export default class Base {
   get ball(){
 
     return ball;
+  }
+
+  get PADDLE_REST_TIME_MS(){
+    return PADDLE_REST_TIME_MS;
+  }
+
+  set gameState(val){
+    gameState = val;
+  }
+
+  get gameState(){
+
+    return gameState;
   }
 
 
@@ -317,7 +273,7 @@ export default class Base {
 
   stop() {
 
-    clearInterval(dataLoop);
+    clearTimeout(dataLoop);
 
   }
 
@@ -503,7 +459,7 @@ export default class Base {
    * @method initGame
    */
   initGame() {
-
+    gameState.initialTime =0;
     this.loopTimer();
 
   }
@@ -517,7 +473,7 @@ export default class Base {
   finishGame(score) {
 
     this.currentRounds++;
-    this.clearInterval();
+    clearTimeout(dataLoop);
     cancelAnimationFrame(gameLoop);
     if (score) {
       this.increaseScore();
@@ -529,82 +485,16 @@ export default class Base {
       this.context.set('showInstructions', true);
       this.context.send('export');
       this.context.stopRecorder().finally(() => {
-        this.context.destroyRecorder();
-        this.context.send('next');
+          this.context.destroyRecorder();
+          this.context.send('next');
       });
     }
 
   }
 
-  /**
-   * Clear all current running game loops
-   * @method clearInterval
-   */
-  clearInterval() {
-
-    window.clearInterval(0);
-
-  }
 
 
 
-
-  /**
-   * Basket object per Matlab coordinates
-   * @method basketObject
-   * @param basket paddle parameters
-   * @return {object} basket parameters
-   */
-  basketObject() {
-
-    let position = (this.canvas.height - mouseY)/Utils.SCALE;
-    let radiusRim = 0.1;
-    let leftBorder = (1.3310 - radiusRim) * Utils.SCALE;
-    let topBorder = (1.3671 - position) * Utils.SCALE;
-    let rightBorder = (1.3310 + radiusRim) * Utils.SCALE;
-    let downBorder = (1.5371 - position) * Utils.SCALE;
-
-    paddle.position = {x: leftBorder, y: mouseY};
-    paddle.dimensions = {width: rightBorder - leftBorder, height: downBorder - topBorder};
-
-  }
-
-
-  /**
-   * Store paddle position and time history for velocity calculation
-   * @method paddleHistory
-   * @param {object} paddle
-   * @param {int} trial initial Time in Unixtime
-   */
-  paddleHistory(initialTime) {
-
-
-    paddle.times.push(this.getElapsedTime(initialTime));
-    if(paddle.positions.length > 80){
-      paddle.positions = paddle.positions.slice(-80);
-    }
-    paddle.positions.push((this.canvas.height - paddle.position.y) / Utils.SCALE);
-
-  }
-
-  /**
-   * Paddle object per Matlab coordinates
-   * @method paddleObject
-   * @param {object} paddle
-   * @return {object} paddle {position: {x: number, y: number}, dimensions: {width: number, height: number}}
-   */
-  paddleObject(){
-    let position = (this.canvas.height - mouseY)/Utils.SCALE ;
-    let leftBorder = (1.256)*Utils.SCALE ;
-    let topBorder = (1.3671-position)*Utils.SCALE;
-    let rightBorder = (1.406)*Utils.SCALE;
-    let downBorder =  (1.3871-position)*Utils.SCALE ;
-
-    paddle.position = {x: leftBorder,y:mouseY};
-    paddle.dimensions = {width: rightBorder - leftBorder, height: downBorder-topBorder};
-
-
-  }
 
   /**
    * Create initial ball object with state parameters for all games
@@ -642,13 +532,13 @@ export default class Base {
 
   convertYvalue(val){
 
-    return (this.canvas.height - val)/this.canvas.height;
+    return ((this.canvas.height - val)/Utils.SCALE).toFixed(3);
 
   }
 
   convertXvalue(val){
 
-    return val/this.canvas.width;
+    return (val/Utils.SCALE).toFixed(3);
 
   }
 
@@ -660,9 +550,9 @@ export default class Base {
    * @param intialTime {int} Unixtime formatted time
    * @return {number}  difference in seconds between current time and intialTime, decimal
    */
-  getElapsedTime(intialTime) {
+  getElapsedTime(time = gameState.initialTime) {
 
-    return (new Date().getTime() - intialTime) / 1000;
+    return (new Date().getTime() - time) / 1000;
   }
 
   /**
@@ -672,9 +562,9 @@ export default class Base {
    * number}}
    * @param initialTime {int}
    */
-  trajectory(initialTime) {
+  trajectory(time = gameState.initialTime) {
 
-    let  iterator =  this.getElapsedTime(initialTime);
+    let  iterator =  this.getElapsedTime(time);
     this.ctx.beginPath();
 
     let positionY = initBallY+initV*(iterator)+0.5*-gravity*Math.pow(iterator,2);
@@ -709,17 +599,7 @@ export default class Base {
 
   }
 
-  /**
-   * Check if ball is on the floor and missed target
-   * @method ballIsOnFloor
-   * @param ball {position: {x: number, y: number}, radius: number, dimensions: {width: number, height:
-   * number}}
-   * @return {boolean}
-   */
-  ballIsOnFloor(){
 
-    return ball.position.y > paddleBox.position.y + paddleBox.dimensions.height - 0.048 * Utils.SCALE;
-  }
 
   /**
    * Draw ball per x,y ball location
@@ -747,61 +627,20 @@ export default class Base {
 
   }
 
-  /**
-   * Check if user returned paddle to initial coordinates and call finish of the game to restart
-   * current round
-   * Check if paddle is stationary for PADDLE_REST_TIME_MS, if yes proceed to the next trial
-   * @method paddleAtZero
-   * @param {object} paddle {position: {x: number, y: number}, dimensions: {width: number, height: number}}
-   * @param {boolean} score should increase score
-   */
-  paddleAtZero(score) {
-
-
-    let topBorder = 1.3671 * Utils.SCALE;
-
-    if (paddle.position.y >= topBorder) {
-      // Check if paddle is not moving inside the box
-      let paddleTimeArrSize = paddle.positions.length;
-      if (paddle.paddleLastMovedMillis === 0 || (paddle.position.y !== (this.canvas.height - paddle.positions[paddleTimeArrSize - 1] * Utils.SCALE))) {
-        paddle.paddleLastMovedMillis = new Date().getTime();
-
-      } else if (new Date().getTime() - paddle.paddleLastMovedMillis >= PADDLE_REST_TIME_MS) {
-        paddle.paddleLastMovedMillis = 0;
-        this.finishGame(score);
-      }
-
-    } else {
-
-      paddle.paddleLastMovedMillis = 0;
-    }
-
-  }
 
   /**
-   * Check if paddle is moved ahead of time
-   * @method paddleIsMoved
-   * @param {object} paddle parameters object {position: {x: number, y: number}, dimensions: {width: number, height: number}}
-   * @param {boolean} checkPaddleHeight if height needed for reference (bounce game)
+   * Check if ball is on the floor and missed target
+   * @method ballIsOnFloor
+   * @param ball {position: {x: number, y: number}, radius: number, dimensions: {width: number, height:
+   * number}}
    * @return {boolean}
    */
-  paddleIsMoved(){
+  ballIsOnFloor(down=Utils.paddleBoxValues.down){
 
-    if( paddle.positions.length > 2 && paddle.position.y !== (this.canvas.height - paddle.positions[paddle.positions.length-3]*Utils.SCALE)){
-
-      return true;
-    }
-
-
-    // Check if paddle is moved outside the box limits
-    return this.isOutsideBox();
-
+    return ball.position.y >  down  - 0.048 * Utils.SCALE;
   }
 
 
-  isOutsideBox(paddleHeight = paddle.dimensions.height) {
-    return paddle.position.y < paddleBox.position.y - paddleBox.dimensions.height + paddleHeight;
-  }
 
   /**
    * Draw image object according to object parameters
@@ -816,34 +655,7 @@ export default class Base {
   }
 
 
-  /**
-   * Set paddle coordinates up to velocity
-   * Check if paddle not going past the paddle box bottom border
-   * Move paddle inside paddle Box upon start of the game
-   * @method paddleMove
-   * @param {object} paddle {position: {x: number, y: number}, dimensions: {width: number, height: number}}
-   * @param {int} initialTime,  Initial time (Unixtime) for current game round
-   * @param {object} ball {position: {x: number, y: number}, radius: number, dimensions: {width: number, height: number}}
-   */
-  paddleMove(initialTime) {
 
-
-    //Do not go over the bottom border
-    if(paddle.position.y > paddleBox.position.y + paddleBox.dimensions.height - paddle.dimensions.height){
-
-      paddle.position.y = paddleBox.position.y + paddleBox.dimensions.height - paddle.dimensions.height;
-    }
-
-    // Move paddle inside paddle Box upon start of the game
-    if(ball.state === 'start' && currentRounds === 0 && paddle.position.y < paddleBox.position.y) {
-
-      mouseY = paddle.position.y + 0.0238 * Utils.SCALE;
-    }
-
-    this.paddleHistory(initialTime);
-
-
-  }
 
 
   /**
@@ -878,29 +690,11 @@ export default class Base {
     return ballState;
   }
 
-  /**
-   * Increment current position cursor by movementY value (difference in y coordinate between the given event and the
-   * previous mousemove event )
-   * Check initial cursor position, if the position is lower then low paddle box border, stop t\
-   * mouse pointer updates.
-   * @method onMouseMove
-   * @param e {Event} current mouse event
-   */
-  onMouseMove(e){
 
-    let border = paddleBox.position.y+paddleBox.dimensions.height - paddle.dimensions.height;
-    mouseY += e.movementY;
-    //Check for down border
-    if(mouseY  > border && e.movementY >0){
-      mouseY =  border;
-    }
+  onSoundEvent(e){
 
-    //Check for upper border
-    if(mouseY < paddle.dimensions.height){
-      mouseY =  paddle.dimensions.height;
-    }
-
-
+    gameState.startTime = 0;
+    gameState.initialTime = new Date().getTime();
   }
 
 

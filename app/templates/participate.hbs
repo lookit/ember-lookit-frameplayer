@@ -1,5 +1,12 @@
 <div id="expContainer">
     {{#if response.study.id}}
+        <div id="application-parse-error-text">
+            <p> Error loading study "{{study.name}}" - likely an error parsing the study protocol. </p>
+            <p> <strong>Participants:</strong> please contact {{study.contactInfo}} or lookit-tech@mit.edu for assistance. </p>
+            <p> <strong>Researchers:</strong> see web console (browser developer tools) for details. </p>
+            <p> Study sequence: {{study.structure.sequence}} </p>
+        </div>
+
         {{exp-player
               experiment=study
               session=response

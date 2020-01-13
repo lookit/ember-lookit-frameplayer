@@ -1,6 +1,6 @@
 /*
  * Developed by Gleb Iakovlev on 5/3/19 9:09 PM.
- * Last modified 4/29/19 8:18 PM.
+ * Last modified 4/29/19 11:01 PM.
  * Copyright (c) Cognoteq Software Solutions 2019.
  * All rights reserved
  */
@@ -12,72 +12,60 @@ import Base from './base';
  * @submodule games
  *
  */
-const INITIAL_DELAY = 2.5;
-let targets = [];
-let pressed = {};
-let keys = ['y', 'g', 'v']; //Keyboard keys for upper,middle and lower windows
-let initialTime = 0; // initial time for current game trial
+let target = {};
+let keyPressed = {}; // Current key pressed status
+let randomNumber = 0; // Current random number for fireworks (decide which color to display)
+let TfArr = []; // Time Flight array
+let TfArrIndex = [0.85,1,1.15];
+const TARGETX = 1.3310; // Current X position
 let jitterT = 0; // Time jitter (variates from 500 ms to 1500 ms), time between sound start and ball starting to fly
+const WINDOW_SIZE = 0.066; //Current window size
+const TARGET_SIZE = 0.02;  // Current target (star) size
+const CENTER = 1.30715;  // Appropriate star position in center
 let startTime = 0; // start of the game to wait before music playing
-let buttonPressDelay = 0;
+const INITIAL_DELAY = 2.5;
+const TOTAL_FLIGHT_TIME = 1.5;
 // Media arrays for loading
-let windowImgs = [];
-let windowImageURLS = [];
-let obstrImgs = [];
-let obstrImageURLS = [];
+let targetImgs = [];
 let sounds = [];
 let soundURLs = [];
-let imageURls = [];
+let imageURLs = [];
 let images = [];
-let trajectoryParameters = [];
+let fireworksURLs = [];
+let STAR_SIZE = 0.03;
 
-const gameArrayValues = {
-
-  OBSTRUCTIONS: [1,2,3],
-  VELOCITIES:[1,2,3]
-
-};
 
 // Media mapping as Enum
 const gameSound = {
   START: 0,
-  LAUNCH: 1,
-  CATCH: 2,
-  FAIL: 3
+  CATCH_GREAT: 1,
+  CATCH_GOOD: 2,
+  FAIL:3,
+  WHISTLE:4
 };
-
 const gameImage = {
-  LAUNCHER: 0,
+  BACKGROUND: 0,
   BALL: 1,
-  TARGET: 2,
-  window: {
-    WINDOW1: 0,
-    WINDOW2: 1,
-    WINDOW3: 2
-  },
-  shuttle: {
-    SMALL: 0,
-    MIDDLE: 1,
-    LARGE: 2
+  STARS: 2,
+  BALLBOX: 3,
+  fireworks: {
+    BLUE: 0,
+    GREEN: 1,
+    RED: 2
   }
-};
 
-const gameRandomization = {
-  OBSTRUCTION:0,
-  VELOCITY:1
 };
 
 
 
 /**
- * The user will operate with keyboard keys to predict which ball trajectory will hit which window
- * in the obstruction (shuttle).
+ * Main implementation of feed  the mouse in the house game.
+ * The user will operate with keyboard keys to predict when ball trajectory will hit the window.
  * The trajectory is randomized with various values in trajectories array
- * @class DiscreteButtonSpatial
+ * @class ButtonPressWindow
  * @extends Base
  */
-export default class DiscreteButtonSpatial extends Base {
-
+export default class ButtonPressWindow extends Base {
   /**
    * @method constructor
    * @constructor constructor
@@ -85,128 +73,55 @@ export default class DiscreteButtonSpatial extends Base {
    * @param document
    */
   constructor(context, document) {
+
     super(context, document);
-    imageURls = [super.Utils.slimeMonster, super.Utils.slimeBall, super.Utils.splat];
-    windowImageURLS = [super.Utils.openWindowYellow, super.Utils.openWindowGreen, super.Utils.openWindowViolet];
-    obstrImageURLS = [super.Utils.shuttleNarrow, super.Utils.shuttle, super.Utils.shuttleWide];
-    soundURLs = [super.Utils.monsterGrowl, super.Utils.monsterLaunch, super.Utils.good3MouseSound, super.Utils.bad3MouseSound];
-
-  }
-
-  /**
-   * Get Current window position and align it according to possible obstruction (shuttle) size
-   * @method getWindow
-   * @param index of the target (shuttle) in array of objects
-   * @return {{image: *, position: {x: number, y: number}, radius: number, dimensions: {width: number, height: number}}}
-   */
-  getWindow(index) {
-    index = index + 1;
-    let top = 1.12;
-    let leftBorder = (1.5450) * super.Utils.SCALE;
-    let windowPosition = gameImage.window.WINDOW1;
-    switch (index) {
-
-      case 2:
-
-        top = 1.25;
-        windowPosition = gameImage.window.WINDOW2;
-        leftBorder = (1.555) * super.Utils.SCALE;
-
-        break;
-
-      case 3:
-
-        top = 1.39;
-        windowPosition = gameImage.window.WINDOW3;
-        leftBorder = (1.555) * super.Utils.SCALE;
-        break;
-
-    }
-
-    let topBorder = top * super.Utils.SCALE;
-
-    return {
-      dimensions: {width: 0.10238 * super.Utils.SCALE, height: 0.075 * super.Utils.SCALE},
-      position: {
-        x: leftBorder,
-        y: topBorder
-      },
-      radius: 0.00956 * super.Utils.SCALE,
-      image: windowImgs[windowPosition]
-    };
+    fireworksURLs = [super.Utils.Explosion_big_blue, super.Utils.Explosion_big_green, super.Utils.Explosion_big_red, super.Utils.Explosion_small];
+    soundURLs = [super.Utils.fuse, super.Utils.firework_big, super.Utils.firework_small, super.Utils.ballcatchFailSound, super.Utils.firework_whistle];
+    imageURLs = [super.Utils.skyline,super.Utils.Fireball,super.Utils.star,super.Utils.boxOfFireworks];
 
   }
 
 
-
   /**
-   * Draw target  according to coordinates
+   * Draw house with roof according to coordinates
    * @method createBackground
    */
-  createShuttle() {
+  createBackground() {
 
-    let leftBorder = 0.798 * super.Utils.SCALE;
-    let topBorder = 0.78 * super.Utils.SCALE;
+    let leftBorder = (TARGETX - 0.74) * super.Utils.SCALE;
+    let topBorder = (0.8) * super.Utils.SCALE;
 
-    let targetParams = {
+    let backgroundObj = {
 
-      dimensions: {width: 1.19 * super.Utils.SCALE, height: 1.135 * super.Utils.SCALE},
+      dimensions: {width: 1.54 * super.Utils.SCALE, height: 0.9 * super.Utils.SCALE},
       position: {x: leftBorder, y: topBorder}
+
     };
 
-
-    this.getShuttle(targetParams);
-
-  }
-
-
-  /**
-   *
-   * Get shuttle image from sources and display according to position parameters
-   * @param targetParams target position parameters
-   * @method getShuttle
-   */
-  getShuttle(targetParams) {
-
-    let index = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];// Get current shuttle case
-    let shuttle = {};
-    targetParams.position.x = {};
-
-    switch (index) {
-
-      case 2:
-        targetParams.position.x = 0.798 * super.Utils.SCALE;
-        shuttle = obstrImgs[gameImage.shuttle.MIDDLE];
-        break;
-      case 3:
-        targetParams.position.x = 0.77 * super.Utils.SCALE;
-        shuttle = obstrImgs[gameImage.shuttle.LARGE];
-        break;
-      default:
-        targetParams.position.x = 0.81 * super.Utils.SCALE;
-        shuttle = obstrImgs[gameImage.shuttle.SMALL];
-        break;
-
-
-    }
-
-    super.drawImageObject(targetParams, shuttle);
+    super.drawImageObject(backgroundObj, images[gameImage.BACKGROUND]);
 
   }
 
-
   /**
-   * Create the window in the target
+   * Create target window
    * @method createTargetWindow
-   * @param target
    */
-  createWindow(target) {
+  createTargetWindow() {
 
-    super.drawImageObject(target, target.image);
+    super.drawImageObject(target, images[gameImage.STARS]);
 
   }
 
+  /**
+   * Show the current  ball location .
+   * Center the ball location.
+   * @method showBallLocation
+   */
+  showBallLocation(){
 
+    super.drawBall(images[gameImage.BALL]);
+
+  }
 
 
   /**
@@ -216,57 +131,39 @@ export default class DiscreteButtonSpatial extends Base {
    */
   init() {
     startTime = new Date().getTime();
-    if(this.context.trialType === 'demo'){
-      trajectoryParameters = this.context.demoObstructions.map((obstruction,index)=> [obstruction,this.context.demoTrajectories[index]]);
-    }else {
-      trajectoryParameters = super.getTrajectoriesObstacles(gameArrayValues.OBSTRUCTIONS, gameArrayValues.VELOCITIES);
-    }
-    // Randomize trajectory for each obstruction
-    super.fillAudioArray(soundURLs,sounds);
-    super.fillImageArray(imageURls,images);
-    super.fillImageArray(windowImageURLS,windowImgs);
-    super.fillImageArray(obstrImageURLS,obstrImgs);
 
+    if(this.context.trialType === 'demo'){
+      TfArr =   this.context.demoTrajectories;
+    }else{
+      TfArr = super.uniformArr(TfArrIndex); // Fill out uniform the Time Flight array
+    }
+
+    this.setTargetBackground();
+    super.fillAudioArray(soundURLs,sounds);
+    super.fillImageArray(fireworksURLs,targetImgs);
+    super.fillImageArray(imageURLs,images);
+    images.push(targetImgs);
 
     sounds[gameSound.START].addEventListener('onloadeddata', this.initGame(), false);
-    sounds[gameSound.START].addEventListener('playing', function () {
-      initialTime = new Date().getTime();
-    });
+    sounds[gameSound.START].addEventListener('playing', super.onSoundEvent);
+
     super.init();
+
   }
 
 
   /**
    * Initialize each game round with initial object parameters
-   * Randomize number of obstructions (obstructions)
-   * Reset the sounds sources for older browser versions
    * Wait for start sound and start the main game loop
    * @method initGame
    */
   initGame() {
-    initialTime = 0;
-    pressed = Array(3).fill(false);
     jitterT = super.trialStartTime();
-    buttonPressDelay = 0;
-    super.ball = {
-      position: {x: 0, y: 0},
-      radius: 0.02385 * super.Utils.SCALE,
-      restitution: super.Utils.restitution,
-      timeReached: new Date().getTime()
-
-    };
-
+    keyPressed.value = 0;
+    this.setTargetBackground();
+    randomNumber = Math.floor(Math.random() * 3); // Get random value from 0 to 2
     super.ballObject();
-
-    if(super.currentRounds > 0 ){
-      sounds[gameSound.START].play();
-    }
-
-    targets = Array(3).fill({}).map((_, index) =>
-
-      (this.getWindow(index))
-    );
-    if(super.getElapsedTime(startTime) >= 2) {
+    if(super.currentRounds > 0 ) {
       sounds[gameSound.START].play();
     }
 
@@ -275,126 +172,176 @@ export default class DiscreteButtonSpatial extends Base {
   }
 
 
-  /**
-   * Show the ball location in window.
-   * Center the ball location.
-   * @method showBallLocation
-   * @param index Index of the object in array
-   */
-  showBallLocation(index) {
+  setTargetBackground() {
+    let topBorder = (1.178) * super.Utils.SCALE;
+    let leftBorder = (TARGETX - STAR_SIZE/2) * super.Utils.SCALE;
 
-    //Put the ball in the center of target once it hits window constraints
-    let target = targets[index];
+    target = {
 
-    let splat = {
-
-      dimensions: {width: 0.09645 * super.Utils.SCALE, height: 0.09107 * super.Utils.SCALE},
-      position: {x: target.position.x - 0.0238 * super.Utils.SCALE, y: target.position.y}
+      dimensions: {width: STAR_SIZE * super.Utils.SCALE , height: STAR_SIZE * super.Utils.SCALE},
+      position: {
+        x: leftBorder,
+        y: topBorder
+      },
+      radius: 0.007143 * super.Utils.SCALE
     };
 
-    super.drawImageObject(splat, images[gameImage.TARGET]);
+  }
 
+  /**
+   * trajectory  : 1,2,3 ( Time when ball hits the basket at 500,600,700 ms )
+   * @method dataCollection
+   */
+  dataCollection() {
+    //Set  0,1,2,3 as button pressed values (0:  no button pressed, 1 : pressed , missed target, 2 : pressed, within
+    // window, 3 : hit the target)
+    if(super.ball.state === 'hit' || super.ball.state === 'fall') {
+      let currentTrajectory = TfArrIndex.indexOf(TfArr[this.currentRounds]) + 1;
+      let exportData = {
 
+        game_type: 'buttonPressWindow',
+        trajectory: currentTrajectory,
+        ball_position_x: super.convertXvalue(super.ball.position.x),
+        ball_position_y: super.convertYvalue(super.ball.position.y),
+        ball_timestamp: super.ball.timestamp,
+        button_pressed: keyPressed.value,
+        trial: super.currentRounds,
+        trialType: this.context.trialType,
+        timestamp: super.getElapsedTime(),
+        feedback: super.ballState(),
+        scale: super.Utils.SCALE.toFixed(1),
+        window_height: screen.height,
+        window_width: screen.width,
+        target_position: TARGETX.toFixed(3)
+
+      };
+
+      super.storeData(exportData);
+    }
+    super.dataCollection();
   }
 
 
   /**
-   * Set appropriate index value in pressed array, according to index of the key pressed
-   * @method  keyDownHandler
-   * @param e {object} event
+   * Get current keyboard event on press button
+   * @method keyDownHandler
+   * @param {object} e
    */
   keyDownHandler(e) {
 
-    if (super.ball.state !== 'hit' && super.ball.state !== 'hit target') {
-      pressed = pressed.fill(false);
-      pressed = pressed.map((val, index) => keys[index] === e.key );
+    if (e.key === ' ' || e.key === 'Spacebar') {
+
+      keyPressed = {value: 1, when: new Date().getTime()};
     }
 
   }
 
   /**
-   * Display launcher
-   * @method discreteLauncher
-   * @param image of the Launcher
+   * Draw launcher image
+   * @method createLauncher
+   * @param image
    */
-  discreteLauncher(image) {
+  createLauncher(image) {
 
-
-    let leftBorder = (0.701) * super.Utils.SCALE;
-    let topBorder = (1.3671) * super.Utils.SCALE;
+    let initX  = 0.7510;
+    let leftBorder = (initX - 0.05) * super.Utils.SCALE;
+    let topBoarder = (1.3171) * super.Utils.SCALE;
 
     let launcher = {
-
-      dimensions: {width: 0.19 * super.Utils.SCALE, height: 0.273 * super.Utils.SCALE},
-      position: {x: leftBorder, y: topBorder}
+      position: {x:leftBorder, y:topBoarder },
+      dimensions: {width: 0.13605 * super.Utils.SCALE , height:0.1548 * super.Utils.SCALE }
     };
-    super.drawImageObject(launcher, image);
 
+    super.drawImageObject(launcher, image);
 
   }
 
 
   /**
+   *
    * Main loop of the game
-   * Set initial position of the ball in a box and starting sound .
+   * Set initial position of the ball in a box and initiate starting sound.
    * After that  start ball trajectory.
-   * If ball hits the target or missed the target(window) show the ball in the window and selected window
-   * clicked by user (indicate the window background with color).
-   * Increase the score if ball hits the window.
+   * If ball hits the target or missed the target(window) show the ball in the window
+   * Check if user hits the keyboard key when ball trajectory reached the window bounds.
+   * Increase the score if ball hits the target.
    * Move the ball to initial position.
    * Wait for some time until rattle sound played.
-   * @method keyDownHandler
+   * @method loop
    */
-  loop() {
+  loop(){
+
     super.loop();
-    super.generateTrajectoryParamsDiscreteSpatial(trajectoryParameters[super.currentRounds][gameRandomization.VELOCITY]);
-    this.discreteLauncher(images[gameImage.LAUNCHER]);
-
-    let index = pressed.findIndex(item => item !== false);
-
-    if(initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(startTime) >= INITIAL_DELAY) {
+    super.generateTrajectoryParamsDiscrete(TfArr);
+    this.createBackground();
+    this.createTargetWindow();
+    // Delay before music start
+    if(super.gameState.initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(startTime) >= INITIAL_DELAY) {
 
       sounds[gameSound.START].play();
 
     }
 
+
     if (super.ball.state === 'start') {
+
       super.moveBallToStart(images[gameImage.BALL]);
-      if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
+      if (super.gameState.initialTime > 0 && super.getElapsedTime(super.gameState.initialTime) > jitterT) {
         sounds[gameSound.START].pause();
-        sounds[gameSound.LAUNCH].play();
-        initialTime = new Date().getTime();
+        sounds[gameSound.START].currentTime = 0;
         super.ball.state = 'fall';
+        sounds[gameSound.WHISTLE].play();
+        super.gameState.initialTime = new Date().getTime();
+
 
       }
-
 
     }
 
 
     if (super.ball.state === 'fall') {
 
-      super.trajectory(initialTime);
-      super.drawBall(images[gameImage.BALL]);
-      if (super.getElapsedTime(initialTime) >= 0.5) {
+      if (super.gameState.initialTime > 0 && super.getElapsedTime() < TOTAL_FLIGHT_TIME) {
+        super.trajectory();
+      }
 
-        super.ball.state = 'hit house';
+      if (super.gameState.initialTime > 0 && super.getElapsedTime() > 0.1 && super.ballIsOnFloor()) {
+        sounds[gameSound.FAIL].play();
+        super.ball.state = 'hit';
       }
 
 
-    }
-
-    if ((super.ball.state === 'fall' || super.ball.state === 'hit house') && index >= 0) {
-
-      super.ball.state = 'hit';
-
-    }
+      super.drawBall(images[gameImage.BALL]);
+      this.createBackground();
+      this.createTargetWindow();
 
 
-    if (super.ball.state === 'hit house') {
-      if (super.getElapsedTime(initialTime) >= 2.5) {
-        initialTime = new Date().getTime();
+      //Check for target (star) position , if we are within the window size
+      if (keyPressed.value === 1) {
+        sounds[gameSound.WHISTLE].pause();
+        sounds[gameSound.WHISTLE].currentTime = 0;
+        let position = Math.abs(super.ball.position.x - CENTER * super.Utils.SCALE );
+
+        if (position < TARGET_SIZE * super.Utils.SCALE) {
+          super.increaseScore();
+          super.ball.hitstate = 'very good';
+          keyPressed.value = 3;
+          sounds[gameSound.CATCH_GREAT].play();
+
+
+        } else if (position < (WINDOW_SIZE) * super.Utils.SCALE) {
+          keyPressed.value = 2;
+          super.ball.hitstate = 'good';
+          sounds[gameSound.CATCH_GOOD].play();
+
+        } else {
+          sounds[gameSound.FAIL].play();
+
+        }
+
+        this.dataCollection();
         super.ball.state = 'hit';
+
       }
 
     }
@@ -402,114 +349,47 @@ export default class DiscreteButtonSpatial extends Base {
 
     if (super.ball.state === 'hit') {
 
-      if(buttonPressDelay === 0){
-        buttonPressDelay = new Date().getTime();
+      let difference = super.ball.position.x - CENTER * super.Utils.SCALE;
+      if (super.ball.hitstate === 'very good') {
+        let explosion = this.setExplosionPosition(10, 0.03572 * super.Utils.SCALE);
+        super.drawImageObject(explosion, targetImgs[randomNumber]);
       }
 
-      if(buttonPressDelay >0 && super.getElapsedTime(buttonPressDelay) >= 0.5) {
-        this.checkHitState(index);
+      if (super.ball.hitstate === 'good') {
+        let explosion = this.setExplosionPosition(6, difference);
+        super.drawImageObject(explosion, targetImgs[3]);
       }
 
-    }
 
-    this.createShuttle();
-
-    if (super.ball.state === 'hit target') {
-
-      if (index >= 0) {
-        let target = targets[index];
-        this.createWindow(target);
-
-      }
-      this.showWindow(index);
-      if (super.getElapsedTime(initialTime) >= 3) {
+      if (super.getElapsedTime() > 3.5) {
         super.finishGame(false);
       }
 
+      if(super.ball.hitstate !== 'good' && super.ball.hitstate !== 'very good' ){
+
+        this.showBallLocation();
+      }
 
     }
 
+    this.createLauncher(images[gameImage.BALLBOX]);
 
   }
 
-  /**
-   * Show result after button press
-   * @param index index of the selected button
-   */
-  checkHitState(index) {
 
-    // Check if current index of the pressed item corresponds to the actual target index
-    if (index === this.getCorrectIndex()) {
+  setExplosionPosition(multiplier, difference) {
 
-      sounds[gameSound.CATCH].play();
+    return {
 
-    } else {
-      sounds[gameSound.FAIL].play();
-    }
-
-
-    super.ball.state = 'hit target';
-  }
-
-
-  /**
-   * Show correct index for current trajectory
-   * @returns {number} index of trajectory
-   */
-  getCorrectIndex() {
-    let indexArr = [2, 1, 0]; //reverse index to get value
-    return  indexArr[trajectoryParameters[super.currentRounds][gameRandomization.VELOCITY] - 1];
-  }
-
-  /**
-   * Show selected window
-   * @method showWindow
-   * @param index
-   */
-  showWindow(index) {
-    let pressed_target = targets[index];
-
-    if (pressed_target) {
-      this.createWindow(pressed_target);
-
-    }
-
-    this.showBallLocation(this.getCorrectIndex());
-
-  }
-
-  /**
-   * Columns structure
-   * window: 1,2,3 indicating correct location of where the slime will land - top, middle or bottom
-   * selected_button: 1,2,3,4 indicating no button or which button was clicked.  0 : Y ,1:G , 2: V, 3 : no button
-   * ship: 1,2,3 indicating size of spaceship (from small to bigger)
-   * @method dataCollection
-   */
-  dataCollection() {
-    super.dataCollection();
-
-
-    let target_state = pressed.findIndex(item => item !== false);
-    if(keys[target_state] === undefined){
-      target_state = 3;
-    }
-
-
-    let exportData = {
-      game_type: 'discreteButtonSpatial',
-      window: this.getCorrectIndex()+1,
-      selected_button: target_state + 1  ,
-      obstruction_number: trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION],
-      ball_position_x: super.convertXvalue(super.ball.position.x),
-      ball_position_y: super.convertYvalue(super.ball.position.y),
-      trial: super.currentRounds,
-      trialType: this.context.trialType,
-      timestamp: super.getElapsedTime(initialTime)
+      dimensions: {width: target.dimensions.width * multiplier, height: target.dimensions.height * multiplier},
+      position: {
+        x: CENTER * super.Utils.SCALE - (target.dimensions.width * multiplier / 2) + difference,
+        y: super.ball.position.y - target.dimensions.height * multiplier / 2 + 0.02381 * super.Utils.SCALE
+      }
 
     };
-    if(super.ball.state === 'hit' || super.ball.state === 'fall') {
-      super.storeData(exportData);
-    }
   }
+
+
 
 }

@@ -5,7 +5,7 @@
  * All rights reserved
  */
 
-import Base from './base';
+import PaddleGames from './paddleGames';
 /**
  *
  * @submodule games
@@ -14,14 +14,12 @@ import Base from './base';
 
 let obstructions = []; // Possible obstructions array
 let targetStars = {}; // Start location (shows upon reaching the rim on basket )
-let initialTime = 0; // initial time for current game trial
 let Height = 0.8; // Current trajectory height
 let jitterT = 0;
 let radiusRim = 0.1; //Rim size on basket
 let redDotMargin = radiusRim / 4;
 let obstructionsNum = 0; // Current number of obstructions (randomized each trial)
 let consecutiveCounts = 0;  // Calculate number of consecutive successful attempts
-let startTime = 0;
 const GEAR_RADIUS = 0.05;
 const TRAVEL_TIME = 1.3;
 const SOUND_DELAY = 1.6;
@@ -71,7 +69,7 @@ const gameArrayValues = {
  * @class DiscreteCatch
  * @extends Base
  */
-export default class DiscreteCatch extends Base {
+export default class DiscreteCatch extends PaddleGames {
   /**
    * @method constructor
    * @constructor constructor
@@ -116,7 +114,7 @@ export default class DiscreteCatch extends Base {
 
     document.addEventListener("mousemove",  super.onMouseMove);
 
-    //Listener for catch events, make sounds play in sections of 19 milisecondsfor consecutive successful catches
+    //Listener for catch events, make sounds play in sections of 19 miliseconds for consecutive successful catches
     sounds[gameSound.CATCH].addEventListener('timeupdate', function (){
       if (this.currentTime >= (consecutiveCounts+1)*SOUND_DELAY) {
         this.pause();
@@ -126,15 +124,14 @@ export default class DiscreteCatch extends Base {
       }
     }, false);
 
-    sounds[gameSound.START].addEventListener('playing', function () {
-      startTime = 0;
-      initialTime = new Date().getTime();
-
-    });
+    sounds[gameSound.START].addEventListener('playing', super.onSoundEvent);
     sounds[gameSound.START].addEventListener('onloadeddata', this.initGame(), false);
     super.init();
 
   }
+
+
+
 
 
   /**
@@ -147,7 +144,6 @@ export default class DiscreteCatch extends Base {
     super.initX = 0.51;
     super.initBallY = 0.08;
     jitterT = super.trialStartTime();
-    initialTime =0;
     super.createPaddleBox();
     super.basketObject();
     obstructionsNum = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];
@@ -159,7 +155,7 @@ export default class DiscreteCatch extends Base {
       ( this.getObstruction(index+1))
     );
 
-    startTime = new Date().getTime();
+    super.gameState.startTime = new Date().getTime();
     super.initGame();
 
   }
@@ -191,7 +187,6 @@ export default class DiscreteCatch extends Base {
    * @method dataCollection
    */
   dataCollection() {
-    super.dataCollection();
     if(super.ball.state === 'hit' || super.ball.state === 'fall') {
 
       let exportData = {
@@ -203,18 +198,23 @@ export default class DiscreteCatch extends Base {
         paddle_center_x: super.convertXvalue(super.paddle.position.x   + (super.paddle.dimensions.width / 2) ),
         paddle_x: super.convertXvalue(super.paddle.position.x),
         paddle_position_y: this.convertYvalue(super.paddle.position.y),
-        red_dot_start_position: (1.3301 - redDotMargin)* super.Utils.SCALE / this.canvas.width,
-        red_dot_width: redDotMargin*2*super.Utils.SCALE / this.canvas.width,
+        paddle_timestamp: super.paddle.time,
+        red_dot_start_position: (1.3301 - redDotMargin).toFixed(3),
+        red_dot_width: redDotMargin*2,
         obstruction_number: trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION],
         trial: super.currentRounds,
         trialType: this.context.trialType,
         feedback: super.ballState(),
-        timestamp: super.getElapsedTime(initialTime)
+        scale: super.Utils.SCALE.toFixed(1),
+        window_height: screen.height,
+        window_width: screen.width,
+        timestamp: super.getElapsedTime()
 
       };
 
-         super.storeData(exportData);
+      super.storeData(exportData);
     }
+    super.dataCollection();
   }
 
 
@@ -318,20 +318,20 @@ export default class DiscreteCatch extends Base {
    */
   loop() {
     super.loop();
-    ball = super.ball;
     super.generateTrajectoryParams(trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT],Height);
     this.createLauncher(images[gameImage.BALLBOX]);
     let paddleBoxColor = super.Utils.blueColor;
+    ball = super.ball;
     if(super.ball.state === 'start'){
       this.ballObject();
       super.ball.position.y = (1.291 )* super.Utils.SCALE;
-      if (startTime > 0 &&   super.getElapsedTime(startTime) > TRAVEL_TIME ){
+      if (super.gameState.startTime > 0 &&   super.getElapsedTime(super.gameState.startTime) > TRAVEL_TIME ){
         sounds[gameSound.START].play();
       }
 
-      if(initialTime > 0 && super.isOutsideBox()){
-        initialTime = new Date().getTime();
-        startTime = new Date().getTime();
+      if(super.gameState.initialTime > 0 && super.isOutsideBox()){
+        super.gameState.initialTime = new Date().getTime();
+        super.gameState.startTime = new Date().getTime();
         sounds[gameSound.START].pause();
         sounds[gameSound.START].currentTime = 0;
         paddleBoxColor = super.Utils.redColor;
@@ -339,10 +339,10 @@ export default class DiscreteCatch extends Base {
 
       }
 
-      if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
+      if (super.gameState.initialTime > 0 && super.getElapsedTime() > jitterT) {
         sounds[gameSound.START].pause();
         sounds[gameSound.START].currentTime = 0;
-        initialTime = new Date().getTime();
+        super.gameState.initialTime  = new Date().getTime();
         super.ball.state = 'fall';
       }
 
@@ -350,12 +350,12 @@ export default class DiscreteCatch extends Base {
 
 
     if(super.ball.state === 'fall'){
-      if(initialTime > 0 && super.getElapsedTime(initialTime) <= TRAVEL_TIME) {
+      if(super.gameState.initialTime > 0 && super.getElapsedTime() <= TRAVEL_TIME) {
         super.ball.positions.push(super.ball.position.y);
-        super.trajectory( initialTime);
+        super.trajectory();
       }
 
-      if(initialTime > 0 && super.ballIsOnFloor()) {
+      if(super.gameState.initialTime > 0 && super.ballIsOnFloor()) {
         super.ball.state = 'hit';
       }
 
@@ -422,7 +422,7 @@ export default class DiscreteCatch extends Base {
     obstructions.forEach(obstruction => super.drawImage(obstruction, obstruction.image));
     this.basketObject();
     super.createPaddleBox(paddleBoxColor,true);
-    super.paddleMove(initialTime);
+    super.paddleMove();
     super.drawImageObject(super.paddle,images[gameImage.PADDLE]);
 
   }
