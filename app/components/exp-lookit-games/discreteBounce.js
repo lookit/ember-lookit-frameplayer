@@ -272,14 +272,13 @@ export default class DiscreteBounce extends PaddleGames {
         super.drawImageObject(bricks, images[gameImage.BRICKS_SMALL]);
 
       }else if(super.ball.hitstate === 'bounce'){
-        super.drawBall(images[gameImage.BALL]);
         super.drawImageObject(target, images[gameImage.WALL_INITIAL]);
       } else {
+        super.drawBall(images[gameImage.BALL]);
         super.drawImageObject(target, images[gameImage.WALL_INITIAL]);
       }
 
       super.paddleAtZero( false);
-
 
     }
 
