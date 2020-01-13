@@ -14,7 +14,6 @@ import Base from './base';
  */
 let target = {};
 let keyPressed = {}; // Current key pressed status
-let initialTime = 0;  // initial time for current game trial
 let randomNumber = 0; // Current random number for fireworks (decide which color to display)
 let TfArr = []; // Time Flight array
 let TfArrIndex = [0.85,1,1.15];
@@ -146,9 +145,7 @@ export default class ButtonPressWindow extends Base {
     images.push(targetImgs);
 
     sounds[gameSound.START].addEventListener('onloadeddata', this.initGame(), false);
-    sounds[gameSound.START].addEventListener('playing', function () {
-      initialTime = new Date().getTime();
-    });
+    sounds[gameSound.START].addEventListener('playing', super.onSoundEvent);
 
     super.init();
 
@@ -161,7 +158,6 @@ export default class ButtonPressWindow extends Base {
    * @method initGame
    */
   initGame() {
-    initialTime = 0;
     jitterT = super.trialStartTime();
     keyPressed.value = 0;
     this.setTargetBackground();
@@ -197,7 +193,6 @@ export default class ButtonPressWindow extends Base {
    * @method dataCollection
    */
   dataCollection() {
-    super.dataCollection();
     //Set  0,1,2,3 as button pressed values (0:  no button pressed, 1 : pressed , missed target, 2 : pressed, within
     // window, 3 : hit the target)
     if(super.ball.state === 'hit' || super.ball.state === 'fall') {
@@ -212,14 +207,18 @@ export default class ButtonPressWindow extends Base {
         button_pressed: keyPressed.value,
         trial: super.currentRounds,
         trialType: this.context.trialType,
-        timestamp: super.getElapsedTime(initialTime),
+        timestamp: super.getElapsedTime(),
         feedback: super.ballState(),
-        target_position: TARGETX
+        scale: super.Utils.SCALE.toFixed(1),
+        window_height: screen.height,
+        window_width: screen.width,
+        target_position: TARGETX.toFixed(3)
 
       };
 
       super.storeData(exportData);
     }
+    super.dataCollection();
   }
 
 
@@ -277,7 +276,7 @@ export default class ButtonPressWindow extends Base {
     this.createBackground();
     this.createTargetWindow();
     // Delay before music start
-    if(initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(startTime) >= INITIAL_DELAY) {
+    if(super.gameState.initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(startTime) >= INITIAL_DELAY) {
 
       sounds[gameSound.START].play();
 
@@ -287,12 +286,12 @@ export default class ButtonPressWindow extends Base {
     if (super.ball.state === 'start') {
 
       super.moveBallToStart(images[gameImage.BALL]);
-      if (initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
+      if (super.gameState.initialTime > 0 && super.getElapsedTime() > jitterT) {
         sounds[gameSound.START].pause();
         sounds[gameSound.START].currentTime = 0;
         super.ball.state = 'fall';
         sounds[gameSound.WHISTLE].play();
-        initialTime = new Date().getTime();
+        super.gameState.initialTime = new Date().getTime();
 
 
       }
@@ -302,11 +301,11 @@ export default class ButtonPressWindow extends Base {
 
     if (super.ball.state === 'fall') {
 
-      if (initialTime > 0 && super.getElapsedTime(initialTime) < TOTAL_FLIGHT_TIME) {
-        super.trajectory(initialTime);
+      if (super.gameState.initialTime > 0 && super.getElapsedTime() < TOTAL_FLIGHT_TIME) {
+        super.trajectory();
       }
 
-      if (initialTime > 0 && super.getElapsedTime(initialTime) > 0.1 && super.ballIsOnFloor()) {
+      if (super.gameState.initialTime > 0 && super.getElapsedTime() > 0.1 && super.ballIsOnFloor()) {
         sounds[gameSound.FAIL].play();
         super.ball.state = 'hit';
       }
@@ -340,7 +339,6 @@ export default class ButtonPressWindow extends Base {
 
         }
 
-        this.dataCollection();
         super.ball.state = 'hit';
 
       }
@@ -362,7 +360,7 @@ export default class ButtonPressWindow extends Base {
       }
 
 
-      if (super.getElapsedTime(initialTime) > 3.5) {
+      if (super.getElapsedTime() > 3.5) {
         super.finishGame(false);
       }
 

@@ -5,7 +5,7 @@
  * All rights reserved
  */
 
-import Base from './base';
+import PaddleGames from './paddleGames';
 
 
 /**
@@ -17,9 +17,7 @@ let target = {}; // Current target (rat)  position parameters
 let clockObject = {}; //  Object symbolizes clock (pizza) location parameters
 let initBallY = 0.27; // Initial Y ball location
 let initX = 1.33; // Initial X ball location
-let initialTime = 0; // Initial time for current game trial
 let jitterT = 0; // Time jitter (variates from 500 ms to 1500 ms), time between sound start and ball starting to fly
-
 // Media arrays for loading
 let sounds = [];
 let soundURLs = [];
@@ -50,7 +48,7 @@ const gameImage = {
  * @class DiscreteCatchLift
  * @extends Base
  */
-export default class DiscreteCatchLift extends Base {
+export default class DiscreteCatchLift extends PaddleGames {
   /**
    * @method constructor
    * @constructor constructor
@@ -108,10 +106,7 @@ export default class DiscreteCatchLift extends Base {
     this.setClockObject();
 
     sounds[gameSound.START].addEventListener('onloadeddata', this.initGame(), false);
-    sounds[gameSound.START].addEventListener('playing', function () {
-      initialTime = new Date().getTime();
-
-    });
+    sounds[gameSound.START].addEventListener('playing', super.onSoundEvent);
 
     super.init();
 
@@ -146,7 +141,6 @@ export default class DiscreteCatchLift extends Base {
    * @method initGame
    */
   initGame() {
-    initialTime = 0;
     jitterT = super.trialStartTime();
     target.state = 'start';
     target.lastTime = new Date().getTime();
@@ -166,8 +160,7 @@ export default class DiscreteCatchLift extends Base {
    * @method  dataCollection Collect data
    */
   dataCollection() {
-    super.dataCollection();
-    if(initialTime > 0) {
+    if(super.gameState.initialTime > 0) {
       let exportData = {
         game_type: 'discreteCatchLift',
         basket_x: super.convertXvalue(super.paddle.position.x),
@@ -177,12 +170,17 @@ export default class DiscreteCatchLift extends Base {
         trial: super.currentRounds,
         trialType: this.context.trialType,
         mice_state: target.state,
-        timestamp: super.getElapsedTime(initialTime)
+        paddle_timestamp: super.paddle.time,
+        scale: super.Utils.SCALE.toFixed(1),
+        window_height: screen.height,
+        window_width: screen.width,
+        timestamp: super.getElapsedTime()
 
       };
 
       super.storeData(exportData);
     }
+    super.dataCollection();
   }
 
 
@@ -255,18 +253,18 @@ export default class DiscreteCatchLift extends Base {
     super.loop();
     let paddleBoxColor = super.Utils.blueColor;
     super.basketObject();
-    super.paddleMove(initialTime);
+    super.paddleMove();
     super.createPaddleBox(paddleBoxColor);
     super.drawImageObject(clockObject, images[gameImage.CLOCK]);
 
-    if (initialTime === 0 ) {
+    if (super.gameState.initialTime === 0 ) {
 
       sounds[gameSound.START].play();
     }
 
 
-    if (initialTime > 0 && super.paddleIsMoved() && target.state === 'start') {
-      initialTime = 0;
+    if (super.gameState.initialTime > 0 && super.paddleIsMoved() && target.state === 'start') {
+      super.gameState.initialTime = 0;
       sounds[gameSound.START].pause();
       sounds[gameSound.START].currentTime = 0;
       paddleBoxColor = super.Utils.redColor;
@@ -274,7 +272,7 @@ export default class DiscreteCatchLift extends Base {
     }
 
     //Randomize initial wait time here
-    if (target.state === 'start' && initialTime > 0 && super.getElapsedTime(initialTime) > jitterT) {
+    if (target.state === 'start' && super.gameState.initialTime > 0 && super.getElapsedTime() > jitterT) {
       sounds[gameSound.START].pause();
       sounds[gameSound.START].currentTime = 0;
       target.state = 'showTarget';
