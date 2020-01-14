@@ -187,7 +187,7 @@ export default class DiscreteCatch extends PaddleGames {
    * @method dataCollection
    */
   dataCollection() {
-    if(super.ball.state === 'hit' || super.ball.state === 'fall') {
+    if(super.ball.state === 'start' ||  super.ball.state === 'hit' || super.ball.state === 'fall') {
 
       let exportData = {
         game_type: 'discreteCatch',

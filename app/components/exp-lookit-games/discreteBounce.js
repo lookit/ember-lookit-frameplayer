@@ -280,6 +280,7 @@ export default class DiscreteBounce extends PaddleGames {
 
       super.paddleAtZero( false);
 
+
     }
 
     if (super.ball.state !== 'done') {
@@ -301,7 +302,6 @@ export default class DiscreteBounce extends PaddleGames {
   bounceTrajectory() {
     let Xiterator = super.getElapsedTime();
     let Yiterator = super.getElapsedTime(super.ball.impactTime);
-
     this.ctx.beginPath();
     let positionY = super.ball.impactPosition + super.paddle.releaseVelocity * (Yiterator) + 0.5 * -super.TrajectoryVars.gravity * Math.pow(Yiterator, 2);
     let positionX = super.TrajectoryVars.initX + super.TrajectoryVars.ballvx * (Xiterator);
@@ -313,7 +313,7 @@ export default class DiscreteBounce extends PaddleGames {
     super.ball.positions.push(super.ball.position);
     super.ball.position.x = leftBorder;
     super.ball.position.y = this.canvas.height - positionY * super.Utils.SCALE ;
-
+    super.ball.timestamp = super.getElapsedTime();
 
   }
 
@@ -538,7 +538,7 @@ export default class DiscreteBounce extends PaddleGames {
    * @method dataCollection
    */
   dataCollection() {
-    if(super.ball.state === 'hit' || super.ball.state === 'bounce' || super.ball.state === 'fall') {
+    if(super.ball.state === 'start' ||  super.ball.state === 'hit' || super.ball.state === 'bounce' || super.ball.state === 'fall') {
       let exportData = {
         game_type: 'BounceGame',
         trajectory: hArray[super.currentRounds],
