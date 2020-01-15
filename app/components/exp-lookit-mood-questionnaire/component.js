@@ -52,8 +52,8 @@ let pad = function(number) {
  }
 
  * ```
- * @class ExpLookitMoodQuestionnaire
- * @extends ExpFrameBase
+ * @class Exp-lookit-mood-questionnaire
+ * @extends Exp-frame-base
  */
 
 const Validations = buildValidations({
@@ -114,26 +114,22 @@ const Validations = buildValidations({
 export default ExpFrameBaseComponent.extend(Validations, {
     layout: layout,
     type: 'exp-lookit-mood-questionnaire',
+    frameSchemaProperties: {
+        /**
+         * Intro paragraph describing why we want mood info
+         *
+         * @property {String} introText
+         * @default 'How are you two doing? We really want to know: we’re interested in how your child’s mood affects his or her looking preferences.'
+         */
+        introText: {
+            type: 'string',
+            description: 'Intro paragraph describing why we want mood info',
+            default: 'How are you two doing? We really want to know: we’re interested in how your child’s mood affects his or her looking preferences.'
+        }
+    },
     meta: {
         name: 'ExpLookitMoodQuestionnaire',
         description: 'Mood questionnaire for Lookit studies, very slightly generalized from physics version exp-mood-questionnaire',
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                 * Intro paragraph describing why we want mood info
-                 *
-                 * @property {String} introText
-                 * @default 'How are you two doing? We really want to know: we’re interested in how your child’s mood affects his or her looking preferences.'
-                 */
-                introText: {
-                    type: 'string',
-                    description: 'Intro paragraph describing why we want mood info',
-                    default: 'How are you two doing? We really want to know: we’re interested in how your child’s mood affects his or her looking preferences.'
-                }
-            },
-            required: []
-        },
         data: {
             /**
              * Parameters captured and sent to the server

@@ -3,6 +3,9 @@ import layout from './template';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
+import ExpandAssets from '../../mixins/expand-assets';
+import { audioAssetOptions, videoAssetOptions } from '../../mixins/expand-assets';
+import { observer } from '@ember/object';
 
 let {
     $
@@ -14,8 +17,6 @@ let {
  */
 
 /**
- * Deprecated: not yet adapted for use with webrtc recorder. Currently kept in codebase
- * as an example of generating & drawing stimuli on the fly, but can be safely removed.
  *
  * Frame to implement specific test trial structure for geometry alternation
  * experiment. Includes announcement, calibration, and alternation (test)
@@ -32,137 +33,125 @@ let {
  * event to trigger fullscreen mode. (Browsers don't allow us to switch to FS
  * without a user event.)
  *
+ * Specifying media locations:
+ * For any parameters that expect a list of audio/video sources, you can EITHER provide
+ * a list of src/type pairs with full paths like this:
+ ```json
+    [
+        {
+            'src': 'http://.../video1.mp4',
+            'type': 'video/mp4'
+        },
+        {
+            'src': 'http://.../video1.webm',
+            'type': 'video/webm'
+        }
+    ]
+ ```
+ * OR you can provide a single string 'stub', which will be expanded
+ * based on the parameter baseDir and the media types expected - either audioTypes or
+ * videoTypes as appropriate. For example, if you provide the audio source `intro`
+ * and baseDir is https://mystimuli.org/mystudy/, with audioTypes ['mp3', 'ogg'], then this
+ * will be expanded to:
+ ```json
+                  [
+                         {
+                             src: 'https://mystimuli.org/mystudy/mp3/intro.mp3',
+                             type: 'audio/mp3'
+                         },
+                         {
+                             src: 'https://mystimuli.org/mystudy/ogg/intro.ogg',
+                             type: 'audio/ogg'
+                         }
+                 ]
+ ```
+ * This allows you to simplify your JSON document a bit and also easily switch to a
+ * new version of your stimuli without changing every URL. You can mix source objects with
+ * full URLs and those using stubs within the same directory. However, any stimuli
+ * specified using stubs MUST be
+ * organized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.
+ *
+ * Example usage:
 
-```json
+ ```json
  "frames": {
     "alt-trial": {
         "kind": "exp-lookit-geometry-alternation",
         "triangleLineWidth": 8,
-        "calibrationVideoSources": [
-            {
-                "src": "https://s3.amazonaws.com/lookitcontents/geometry/webm/attention.webm",
-                "type": "video/webm"
-            },
-            {
-                "src": "https://s3.amazonaws.com/lookitcontents/geometry/mp4/attention.mp4",
-                "type": "video/mp4"
-            }
-        ],
+        "baseDir": "https://s3.amazonaws.com/lookitcontents/geometry/",
+        "videoTypes": ["mp4", "webm"],
+        "audioTypes": ["mp3", "ogg"],
+        "calibrationVideoSources": "attention",
         "trialLength": 60,
         "attnLength": 10,
         "calibrationLength": 3000,
-        "fsAudio": [
-            {
-                "src": "https://s3.amazonaws.com/lookitcontents/geometry/mp3/fullscreen.mp3",
-                "type": "audio/mp3"
-            },
-            {
-                "src": "https://s3.amazonaws.com/lookitcontents/geometry/ogg/fullscreen.ogg",
-                "type": "audio/ogg"
-            }
-        ],
+        "fsAudio": "fullscreen",
         "triangleColor": "#056090",
-        "unpauseAudio": [
-            {
-                "src": "https://s3.amazonaws.com/lookitcontents/geometry/mp3/return_after_pause.mp3",
-                "type": "audio/mp3"
-            },
-            {
-                "src": "https://s3.amazonaws.com/lookitcontents/geometry/ogg/return_after_pause.ogg",
-                "type": "audio/ogg"
-            }
-        ],
-        "pauseAudio": [
-            {
-                "src": "https://s3.amazonaws.com/lookitcontents/geometry/mp3/pause.mp3",
-                "type": "audio/mp3"
-            },
-            {
-                "src": "https://s3.amazonaws.com/lookitcontents/geometry/ogg/pause.ogg",
-                "type": "audio/ogg"
-            }
-        ],
-        "videoSources": [
-            {
-                "src": "https://s3.amazonaws.com/lookitcontents/exp-physics-final/stimuli/attention/webm/attentiongrabber.webm",
-                "type": "video/webm"
-            },
-            {
-                "src": "https://s3.amazonaws.com/lookitcontents/exp-physics-final/stimuli/attention/mp4/attentiongrabber.mp4",
-                "type": "video/mp4"
-            }
-        ],
-        "musicSources": [
-            {
-                "src": "https://s3.amazonaws.com/lookitcontents/geometry/mp3/happy-stroll.mp3",
-                "type": "audio/mp3"
-            },
-            {
-                "src": "https://s3.amazonaws.com/lookitcontents/geometry/ogg/happy-stroll.ogg",
-                "type": "audio/ogg"
-            }
-        ],
-        "calibrationAudioSources": [
-            {
-                "src": "https://s3.amazonaws.com/lookitcontents/geometry/mp3/chimes.mp3",
-                "type": "audio/mp3"
-            },
-            {
-                "src": "https://s3.amazonaws.com/lookitcontents/geometry/ogg/chimes.ogg",
-                "type": "audio/ogg"
-            }
-        ],
+        "unpauseAudio": "return_after_pause",
+        "pauseAudio": "pause",
+        "videoSources": "attentiongrabber",
+        "musicSources": "happy-stroll",
+        "calibrationAudioSources": "chimes",
         "altOnLeft": true,
         "context": true,
-        "audioSources": [
-            {
-                "type": "audio/mp3",
-                "src": "https://s3.amazonaws.com/lookitcontents/geometry/mp3/video_01.mp3"
-            },
-            {
-                "type": "audio/ogg",
-                "src": "https://s3.amazonaws.com/lookitcontents/geometry/ogg/video_01.ogg"
-            }
-        ],
-        "endAudioSources": [
-            {
-                "type": 'audio/mp3',
-                "src": "https://s3.amazonaws.com/lookitcontents/geometry/mp3/all_done.mp3"
-            },
-            {
-                "type": "audio/ogg",
-                "src": "https://s3.amazonaws.com/lookitcontents/geometry/ogg/all_done.ogg"
-            }
-        ]
+        "audioSources": "video_01",
+        "endAudioSources": "all_done"
     }
  }
 
  * ```
- * @class ExpLookitGeometryAlternation
- * @extends ExpFrameBase
- * @uses FullScreen
- * @uses VideoRecord
+ * @class Exp-lookit-geometry-alternation
+ * @extends Exp-frame-base
+ * @uses Full-screen
+ * @uses Video-record
+ * @uses Expand-assets
  */
 
-export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord,  {
+export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
+
     type: 'exp-lookit-geometry-alternation',
     layout: layout,
     displayFullscreen: true, // force fullscreen for all uses of this component
     fullScreenElementId: 'experiment-player',
     fsButtonID: 'fsButton',
-    videoRecorder: Ember.inject.service(),
-    recorder: null,
-    hasCamAccess: Ember.computed.alias('recorder.hasCamAccess'),
-    videoUploadConnected: Ember.computed.alias('recorder.connected'),
 
     // Track state of experiment
     completedAudio: false,
     completedAttn: false,
     currentSegment: 'intro', // 'calibration', 'test' (mutually exclusive)
 
-    readyToStartCalibration: Ember.computed('hasCamAccess', 'videoUploadConnected', 'completedAudio', 'completedAttn',
+    // Override setting in VideoRecord mixin - only use camera if doing recording
+    doUseCamera: Ember.computed.alias('doRecording'),
+    startRecordingAutomatically: Ember.computed.alias('doRecording'),
+
+    recordingStarted: false,
+
+    assetsToExpand: {
+        'audio': [
+            'audioSources',
+            'musicSources',
+            'calibrationAudioSources',
+            'endAudioSources',
+            'pauseAudio',
+            'unpauseAudio',
+            'fsAudio'
+        ],
+        'video': [
+            'calibrationVideoSources',
+            'videoSources'
+        ],
+        'image': [
+        ]
+    },
+
+    readyToStartCalibration: Ember.computed('recordingStarted', 'completedAudio', 'completedAttn',
         function() {
-            return (this.get('hasCamAccess') && this.get('videoUploadConnected') && this.get('completedAudio') && this.get('completedAttn'));
+            if (this.get('session').get('recorder')) {
+                if (this.get('session').get('recorder').get('recording')) {
+                    return true;
+                }
+            }
+            return (this.get('recordingStarted') && this.get('completedAudio') && this.get('completedAttn'));
         }),
 
     // used only by template
@@ -184,292 +173,200 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord,  {
     settings: null,
     triangleBases: null,
 
+    frameSchemaProperties: {
+        /**
+         * Whether to do webcam recording on this frame
+         *
+         * @property {Boolean} doRecording
+         */
+        doRecording: {
+            type: 'boolean',
+            description: 'Whether to do webcam recording',
+            default: true
+        },
+        /**
+         * True to use big fat triangle as context figure, or false to use small skinny triangle as context.
+         *
+         * @property {Boolean} context
+         * @default true
+         */
+        context: {
+            type: 'boolean',
+            description: 'True to use big fat triangle as context, or false to use small skinny triangle as context.',
+            default: true
+        },
+        /**
+         * Whether to put the shape+size alternating stream on the left (other stream alternates only in size)
+         *
+         * @property {Boolean} altOnLeft
+         * @default true
+        */
+        altOnLeft: {
+            type: 'boolean',
+            description: 'Whether to put the shape+size alternating stream on the left.',
+            default: true
+        },
+        /**
+         * color of triangle outline (3 or 6 char hex, starting with #)
+         *
+         * @property {String} triangleColor
+         * @default '#056090'
+         */
+        triangleColor: {
+            type: 'string',
+            description: 'color of triangle outline (3 or 6 char hex, starting with #)',
+            default: '#056090'
+        },
+        /**
+         * triangle line width in pixels
+         *
+         * @property {Integer} triangleLineWidth
+         * @default 5
+         */
+        triangleLineWidth: {
+            type: 'integer',
+            description: 'triangle line width in pixels',
+            default: 5
+        },
+        /**
+         * minimum amount of time to show attention-getter in seconds
+         *
+         * @property {Number} attnLength
+         * @default 5
+         */
+        attnLength: {
+            type: 'number',
+            description: 'minimum amount of time to show attention-getter in seconds',
+            default: 5
+        },
+        /**
+         * length of alternation trial in seconds
+         *
+         * @property {Number} trialLength
+         * @default 6
+         */
+        trialLength: {
+            type: 'number',
+            description: 'length of alternation trial in seconds',
+            default: 6
+        },
+        /**
+         * length of single calibration segment in ms
+         *
+         * @property {Number} calibrationLength
+         * @default 3000
+         */
+        calibrationLength: {
+            type: 'number',
+            description: 'length of single calibration segment in ms',
+            default: 3000
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * instructions during attention-getter video
+         *
+         * @property {Object[]} audioSources
+         */
+        audioSources: {
+            oneOf: audioAssetOptions,
+            description: 'List of objects specifying audio src and type for instructions during attention-getter video',
+            default: []
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * music during trial
+         *
+         * @property {Object[]} musicSources
+         */
+        musicSources: {
+            oneOf: audioAssetOptions,
+            description: 'List of objects specifying audio src and type for music during trial',
+            default: []
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * audio after completion of trial (optional; used for last
+         * trial "okay to open your eyes now" announcement)
+         *
+         * @property {Object[]} endAudioSources
+         */
+        endAudioSources: {
+            oneOf: audioAssetOptions,
+            description: 'Supply this to play audio at the end of the trial; list of objects specifying audio src and type',
+            default: []
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * calibration audio (played 4 times during calibration)
+         *
+         * @property {Object[]} calibrationAudioSources
+         */
+        calibrationAudioSources: {
+            oneOf: audioAssetOptions,
+            description: 'list of objects specifying audio src and type for calibration audio',
+            default: []
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * calibration video (played from start 4 times during
+         * calibration)
+         *
+         * @property {Object[]} calibrationVideoSources
+         */
+        calibrationVideoSources: {
+            oneOf: videoAssetOptions,
+            description: 'list of objects specifying video src and type for calibration video',
+            default: []
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * attention-getter video (should be loopable)
+         *
+         * @property {Object[]} videoSources
+         */
+        videoSources: {
+            oneOf: videoAssetOptions,
+            description: 'List of objects specifying video src and type for attention-getter video',
+            default: []
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * audio played upon pausing study
+         *
+         * @property {Object[]} pauseAudio
+         */
+        pauseAudio: {
+            oneOf: audioAssetOptions,
+            description: 'List of objects specifying audio src and type for audio played when pausing study',
+            default: []
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * audio played upon unpausing study
+         *
+         * @property {Object[]} unpauseAudio
+         */
+        unpauseAudio: {
+            oneOf: audioAssetOptions,
+            description: 'List of objects specifying audio src and type for audio played when pausing study',
+            default: []
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * audio played when study is paused due to not being fullscreen
+         *
+         * @property {Object[]} fsAudio
+         */
+        fsAudio: {
+            oneOf: audioAssetOptions,
+            description: 'List of objects specifying audio src and type for audio played when pausing study if study is not fullscreen',
+            default: []
+        }
+    },
+
     meta: {
         name: 'ExpLookitGeometryAlternation',
         description: 'Frame to implement specific test trial structure for geometry alternation experiment. Includes announcement, calibration, and alternation (test) phases. During "alternation," two streams of triangles are shown, in rectangles on the left and right of the screen: one one side both size and shape change, on the other only size changes. Frame is displayed fullscreen and video recording is conducted during calibration/test.',
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                 * True to use big fat triangle as context figure, or false to use small skinny triangle as context.
-                 *
-                 * @property {Boolean} context
-                 * @default true
-                 */
-                context: {
-                    type: 'boolean',
-                    description: 'True to use big fat triangle as context, or false to use small skinny triangle as context.',
-                    default: true
-                },
-                /**
-                 * Whether to put the shape+size alternating stream on the left (other stream alternates only in size)
-                 *
-                 * @property {Boolean} altOnLeft
-                 * @default true
-                */
-                altOnLeft: {
-                    type: 'boolean',
-                    description: 'Whether to put the shape+size alternating stream on the left.',
-                    default: true
-                },
-                /**
-                 * color of triangle outline (3 or 6 char hex, starting with #)
-                 *
-                 * @property {String} triangleColor
-                 * @default '#056090'
-                 */
-                triangleColor: {
-                    type: 'string',
-                    description: 'color of triangle outline (3 or 6 char hex, starting with #)',
-                    default: '#056090'
-                },
-                /**
-                 * triangle line width in pixels
-                 *
-                 * @property {Integer} triangleLineWidth
-                 * @default 5
-                 */
-                triangleLineWidth: {
-                    type: 'integer',
-                    description: 'triangle line width in pixels',
-                    default: 5
-                },
-                /**
-                 * minimum amount of time to show attention-getter in seconds
-                 *
-                 * @property {Number} attnLength
-                 * @default 5
-                 */
-                attnLength: {
-                    type: 'number',
-                    description: 'minimum amount of time to show attention-getter in seconds',
-                    default: 5
-                },
-                /**
-                 * length of alternation trial in seconds
-                 *
-                 * @property {Number} trialLength
-                 * @default 6
-                 */
-                trialLength: {
-                    type: 'number',
-                    description: 'length of alternation trial in seconds',
-                    default: 6
-                },
-                /**
-                 * length of single calibration segment in ms
-                 *
-                 * @property {Number} calibrationLength
-                 * @default 3000
-                 */
-                calibrationLength: {
-                    type: 'number',
-                    description: 'length of single calibration segment in ms',
-                    default: 3000
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * instructions during attention-getter video
-                 *
-                 * @property {Object[]} audioSources
-                 */
-                audioSources: {
-                    type: 'array',
-                    description: 'List of objects specifying audio src and type for instructions during attention-getter video',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * music during trial
-                 *
-                 * @property {Object[]} musicSources
-                 */
-                musicSources: {
-                    type: 'array',
-                    description: 'List of objects specifying audio src and type for music during trial',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * audio after completion of trial (optional; used for last
-                 * trial "okay to open your eyes now" announcement)
-                 *
-                 * @property {Object[]} endAudioSources
-                 */
-                endAudioSources: {
-                    type: 'array',
-                    description: 'Supply this to play audio at the end of the trial; list of objects specifying audio src and type',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * calibration audio (played 4 times during calibration)
-                 *
-                 * @property {Object[]} calibrationAudioSources
-                 */
-                calibrationAudioSources: {
-                    type: 'array',
-                    description: 'list of objects specifying audio src and type for calibration audio',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * calibration video (played from start 4 times during
-                 * calibration)
-                 *
-                 * @property {Object[]} calibrationVideoSources
-                 */
-                calibrationVideoSources: {
-                    type: 'array',
-                    description: 'list of objects specifying video src and type for calibration audio',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * attention-getter video (should be loopable)
-                 *
-                 * @property {Object[]} videoSources
-                 */
-                videoSources: {
-                    type: 'array',
-                    description: 'List of objects specifying video src and type for attention-getter video',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * audio played upon pausing study
-                 *
-                 * @property {Object[]} pauseAudio
-                 */
-                pauseAudio: {
-                    type: 'array',
-                    description: 'List of objects specifying audio src and type for audio played when pausing study',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * audio played upon unpausing study
-                 *
-                 * @property {Object[]} unpauseAudio
-                 */
-                unpauseAudio: {
-                    type: 'array',
-                    description: 'List of objects specifying audio src and type for audio played when pausing study',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * audio played when study is paused due to not being fullscreen
-                 *
-                 * @property {Object[]} fsAudio
-                 */
-                fsAudio: {
-                    type: 'array',
-                    description: 'List of objects specifying audio src and type for audio played when pausing study if study is not fullscreen',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                }
-            }
-        },
-
         data: {
             /**
              * Parameters captured and sent to the server
@@ -500,7 +397,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord,  {
         }
     },
 
-    calObserver: Ember.observer('readyToStartCalibration', function(frame) {
+    calObserver: observer('readyToStartCalibration', function(frame) {
         if (frame.get('readyToStartCalibration') && frame.get('currentSegment') === 'intro') {
             if (!frame.checkFullscreen()) {
                 frame.pauseStudy();
@@ -510,7 +407,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord,  {
         }
     }),
 
-    segmentObserver: Ember.observer('currentSegment', function(frame) {
+    segmentObserver: observer('currentSegment', function(frame) {
         // Don't trigger starting intro; that'll be done manually.
         if (frame.get('currentSegment') === 'calibration') {
             frame.startCalibration();
@@ -526,13 +423,26 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord,  {
             this.notifyPropertyChange('readyToStartCalibration');
         },
 
-        next() {
+        finish() {
+
+            // Call this something separate from next because stopRecorder promise needs
+            // to call next AFTER recording is stopped and we don't want this to have
+            // already been destroyed at that point.
             /**
              * Just before stopping webcam video capture
              *
              * @event stoppingCapture
-             */
-            this.stopRecorder();
+            */
+            var _this = this;
+            this.stopRecorder().then(() => {
+                _this.set('stoppedRecording', true);
+                _this.send('next');
+                return;
+            }, () => {
+                _this.send('next');
+                return;
+            });
+
             this._super(...arguments);
         }
 
@@ -644,7 +554,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord,  {
         if (this.get('endAudioSources').length) {
             $('#player-endaudio')[0].play();
         } else {
-            this.send('next');
+            this.send('finish');
         }
     },
 
@@ -693,12 +603,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord,  {
             transform=" translate(${LX}, ${LY})
                         translate(37.5, 56)
                         rotate(${LRot})
-                        scale(${LFlip * LSize})" />`;
+                        scale(${LFlip * LSize})
+                        scale(${LFlip, 1})" />`;
         var rightTriangle = `${this.triangleBases[Rshape]}
             transform=" translate(${RX}, ${RY})
                         translate(162.5, 56)
                         rotate(${RRot})
-                        scale(${RFlip * RSize})" />`;
+                        scale(${RSize})
+                        scale(${RFlip, 1})" />`;
         $('#stimuli').html(leftTriangle + rightTriangle);
     },
 
@@ -877,37 +789,47 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord,  {
             calLength: this.get('calibrationLength')});
 
         this.send('showFullscreen');
+        this.notifyPropertyChange('readyToStartCalibration');
         this.startIntro();
-
-        if (this.get('experiment') && this.get('id') && this.get('session')) {
-
-            const installPromise = this.setupRecorder(this.$('#videoRecorder'), {
-                hidden: true
-            });
-            installPromise.then(() => {
-                /**
-                 * When video recorder has been installed
-                 *
-                 * @event recorderReady
-                 */
-                this.send('setTimeEvent', 'recorderReady');
-            });
-        }
     },
 
-    willDestroyElement() {
-        this.send('setTimeEvent', 'destroyingElement');
-
-        // Whenever the component is destroyed, make sure that event handlers are removed and video recorder is stopped
-        const recorder = this.get('recorder');
-        if (recorder) {
-            this.get('recorder').hide(); // Hide the webcam config screen
-            this.stopRecorder();
-        }
-        // Remove pause handler
+    willDestroyElement() { // remove event handler
         $(document).off('keyup.pauser');
-
+        window.clearInterval(this.get('introTimer'));
+        window.clearInterval(this.get('stimTimer'));
         this._super(...arguments);
-    }
+    },
 
+    /**
+     * Observer that starts recording once recorder is ready. Override to do additional
+     * stuff at this point!
+     * @method whenPossibleToRecord
+     */
+    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
+        if (this.get('doRecording')) {
+            var _this = this;
+            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
+                this.startRecorder().then(() => {
+                    _this.set('recorderReady', false);
+                    _this.set('recordingStarted', true);
+                });
+            }
+        }
+    }),
+
+    /**
+     * Observer that starts recording once sessionrecorder is ready.
+     * @method whenPossibleToRecordSession
+     */
+    whenPossibleToRecordSession: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
+        if (this.get('startSessionRecording')) {
+            var _this = this;
+            if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
+                this.startSessionRecorder().then(() => {
+                    _this.set('sessionRecorderReady', false);
+                    _this.set('recordingStarted', true);
+                });
+            }
+        }
+    }),
 });

@@ -13,17 +13,15 @@ let {
 /**
  * An instance of a video recorder tied to or used by one specific page. A given experiment may use more than one
  *   video recorder depending on the number of video capture frames.
- * @class VideoRecorderObject
+ * @class video-recorder
  */
 const VideoRecorder = Ember.Object.extend({
-    manager: null,
 
     element: null,
 
     divId: 'lookit-video-recorder',
-    recorderId: '',
+    recorderId: (new Date().getTime() + ''),
     pipeVideoName: '',
-    videoId: '',
 
     started: Ember.computed.alias('_started').readOnly(),
     hasCamAccess: false,
@@ -45,6 +43,7 @@ const VideoRecorder = Ember.Object.extend({
 
     _recordPromise: null,
     _stopPromise: null,
+    _isuploaded: false,
 
     recorder: null, // The actual recorder object, also stored in PipeSDK.recorders obj
 
@@ -85,24 +84,15 @@ const VideoRecorder = Ember.Object.extend({
     install(videoFilename = '', pipeKey = '', pipeEnv = 1, maxRecordingTime = 100000000, autosave = 1, audioOnly = 0) {
 
         let origDivId = this.get('divId');
-        console.log(origDivId);
 
         this.set('divId', `${this.get('divId')}-${this.get('recorderId')}`);
-        console.log(this.get('divId'));
 
         var $element = $(this.get('element'));
-        let hidden = this.get('hidden');
-        if (hidden) {
-            $element = $('body');
-        }
-        console.log($element);
 
         let divId = this.get('divId');
-        let videoId = this.get('videoId');
 
         var $container = $('<div>', {
             id: `${divId}-container`,
-            'data-videoid': videoId,
             css: {
                 height: '100%'
             }
@@ -114,7 +104,7 @@ const VideoRecorder = Ember.Object.extend({
         return new RSVP.Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
 
             var pipeConfig = {
-                qualityurl: 'avq/480p.xml',
+                qualityurl: 'https://d3l7d0ho3mojk5.cloudfront.net/pipe/720p.xml',
                 showMenu: 0, // hide recording button menu
                 sis: 1, // skip initial screen
                 asv: autosave, // autosave recordings
@@ -168,6 +158,7 @@ const VideoRecorder = Ember.Object.extend({
         }
         let count = 0;
         var _this = this;
+        this.set('_isuploaded', false);
         let id = window.setInterval(() => {
             if (++count > 50) { // stop trying - failure (5s)
                 if (_this.get('onCamAccess')) {
@@ -184,10 +175,14 @@ const VideoRecorder = Ember.Object.extend({
         }, 100); // try every 100ms
 
         return new Ember.RSVP.Promise((resolve, reject) => {
-            _this.set('_recordPromise', {
-                resolve,
-                reject
-            });
+            if (_this.get('recording')) {
+                resolve(this);
+            } else {
+                _this.set('_recordPromise', {
+                    resolve,
+                    reject
+                });
+            }
         });
     },
 
@@ -210,77 +205,49 @@ const VideoRecorder = Ember.Object.extend({
      * @method stop
      */
     stop() {
-        function sleep(time) {
-            return new Promise((resolve) => setTimeout(resolve, time));
-        }
-
-        // Force at least 3 seconds of video to be recorded to ensure upload is called.
-        // Not thoroughly tested that this is still necessary w webRTC recorder.
-        var timeLeft = 3 - this.getTime();
-        if (this.get('hasCamAccess') && (timeLeft > 0)) {
-            // sleep time expects milliseconds
-            return sleep(timeLeft * 1000).then(() => this.stop());
-        } else {
-            var recorder = this.get('recorder');
-            if (recorder) {
-                Ember.run.next(this, () => {
-                    try {
-                        recorder.stopVideo();
-                    } catch (e) {
-                        // TODO: Under some conditions there is no stopVideo method- can we do a better job of
-                        //  identifying genuine errors?
-                    }
-                    this.set('_recording', false);
-                });
+        var recorder = this.get('recorder');
+        if (recorder) {
+            try {
+                recorder.stopVideo();
+            } catch (e) {
+                console.log('error stopping video');
             }
+        }
+        this.set('_recording', false);
 
-            var _this = this;
-
-            // If we don't end up uploading within 10 seconds, call reject
-            this.set('uploadTimeout', window.setTimeout(function() {
+        var _this = this;
+        var _stopPromise = new Ember.RSVP.Promise((resolve, reject) => {
+            // If we don't end up uploading within 5 seconds, call reject
+            _this.set('uploadTimeout', window.setTimeout(function() {
+                    console.warn('waiting for upload timed out');
                     window.clearTimeout(_this.get('uploadTimeout'));
-                    _this.get('_stopPromise').reject();
-                }, 10000));
-
-            var _stopPromise = new Ember.RSVP.Promise((resolve, reject) => {
-                this.set('_stopPromise', {
+                    reject();
+                }, 5000));
+            if (_this.get('_isuploaded')) {
+                window.clearTimeout(_this.get('uploadTimeout'));
+                resolve(_this);
+            } else {
+                _this.set('_stopPromise', {
                     resolve: resolve,
                     reject: reject
                 });
-            });
-            return _stopPromise;
-        }
+            }
+        });
+        return _stopPromise;
     },
 
     /**
-     * Destroy video recorder and remove from list of recorders. Use this to remove
-     * the video recorder when destroying a frame.
+     * Destroy video recorder
      *
      * @method destroy
      */
     destroy() {
-        this.get('manager').destroy(this);
-    },
-
-    /**
-     * Uninstall the video recorder from the page
-     *
-     * @method uninstall
-     */
-    uninstall() {
         console.log(`Destroying the videoRecorder: ${this.get('divId')}`);
         $(`#${this.get('divId')}-container`).remove();
         if (this.get('recorder') && this.get('recorder').remove) {
             this.get('recorder').remove();
         }
         this.set('_recording', false);
-    },
-
-    finish() {
-        return new Ember.RSVP.Promise((resolve) => {
-            // todo
-            resolve();
-        });
     },
 
     on(hookName, func) {
@@ -300,13 +267,13 @@ const VideoRecorder = Ember.Object.extend({
         }
     },
 
+    // Once recording finishes uploading, resolve call to stop
     _onUploadDone(recorderId, streamName, streamDuration, audioCodec, videoCodec, fileType, audioOnly, location) { // eslint-disable-line no-unused-vars
-        //this.destroy();
         window.clearTimeout(this.get('uploadTimeout'));
+        this.set('_isuploaded', true);
         if (this.get('_stopPromise')) {
-            console.log('Resolving stop promise...');
-            console.log(streamName);
-            this.get('_stopPromise').resolve();
+            console.log('Upload completed for file: ' + streamName);
+            this.get('_stopPromise').resolve(this);
         }
     },
 
@@ -325,7 +292,6 @@ const VideoRecorder = Ember.Object.extend({
     },
 
     _onConnectionStatus(recorderId, status) { // eslint-disable-line no-unused-vars
-        console.log('onConnectionStatus');
         this.set('connected', status === 'connected');
     },
 
@@ -352,46 +318,4 @@ const VideoRecorder = Ember.Object.extend({
     // End webcam hooks
 });
 
-/**
- * A service designed to facilitate video recording by providing helper methods and managing multiple recorder objects
- *  Using a persistent service is intended to ensure we destroy recorder elements when the video is done uploading,
- *  rather than just when the user exits the frame
- *
- * @class videoRecorder
- */
-export default Ember.Service.extend({
-    _recorders: {},
-
-    //Initial setup of the service
-    //init() {
-    //    Might ideally load pipe.js only here, if using this service, but wait for load
-    //    see https://api.jquery.com/jquery.getscript/
-    //    $.cachedScript( 'https://cdn.addpipe.com/2.0/pipe.js' );
-    //},
-
-    //Insert the recorder
-    start(videoId, element) {
-        if (typeof (videoId) !== 'string') {
-            throw new Error('videoId must be a string');
-        }
-        var props = {recorderId: (new Date().getTime() + ''), element: element, manager: this};
-        let handle = new VideoRecorder(props);
-        this.set(`_recorders.${props.recorderId}`, handle);
-        console.log('created new video recorder ' + props.recorderId);
-        return handle;
-    },
-
-    destroy(recorder) {
-        var recorders = this.get('_recorders');
-        delete recorders[recorder.get('recorderId')];
-        this.set('_recorders', recorders);
-        recorder.uninstall();
-    },
-
-    destroyAll() {
-        for (let rec in PipeSDK.recorders) {
-            rec.remove();
-        }
-    }
-
-});
+export default VideoRecorder;

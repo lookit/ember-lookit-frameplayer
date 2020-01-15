@@ -4,6 +4,7 @@ import ExpFrameBaseComponent from '../exp-frame-base/component';
 import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
+import { audioAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
 import { observer } from '@ember/object';
 
 let {
@@ -29,7 +30,10 @@ let {
  * fullscreen mode.
  *
  * The parent may press 'next' to proceed, or the study may proceed
- * automatically when audio finishes (autoProceed).
+ * automatically when audio finishes (autoProceed). Optionally, if using autoProceed,
+ * the frame may be displayed for a minimum duration, so that e.g. it lasts exactly 10
+ * seconds from start of audio even though the audio is only 2 seconds long. If using this
+ * feature a progress bar may be displayed.
  *
  * Any number of images may be placed on the screen, and their position
  * specified. (Aspect ratio will be the same as the original image.)
@@ -77,8 +81,8 @@ let {
                     "audioId": "firstAudio",
                     "sources": "intro1",
                     "highlights": [
-                        {"range": [3.017343,	5.600283], "image": 	"leftA"},
-                        {"range": [5.752911,	8.899402], "image": 	"rightA"}
+                        {"range": [3.017343,    5.600283], "image":     "leftA"},
+                        {"range": [5.752911,    8.899402], "image":     "rightA"}
                     ]
                 }
             ]
@@ -86,11 +90,11 @@ let {
  }
 
  * ```
- * @class ExpLookitStoryPage
- * @extends ExpFrameBase
- * @uses FullScreen
- * @uses VideoRecord
- * @uses ExpandAssets
+ * @class Exp-lookit-story-page
+ * @extends Exp-frame-base
+ * @uses Full-screen
+ * @uses Video-record
+ * @uses Expand-assets
  */
 
 export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
@@ -113,167 +117,184 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     // Don't need to override startRecordingAutomatically as we override the observer
     // whenPossibleToRecord directly.
 
+    pageTimer: null,
+    progressTimer: null,
+    timerStart: null,
+    finishedAllAudio: false,
+    minDurationAchieved: false,
+
     assetsToExpand: {
         'audio': ['audioSources/sources'],
         'video': [],
         'image': ['images/src']
     },
 
-    meta: {
-        name: 'ExpLookitStoryPage',
-        description: 'Frame to display a basic storybook page trial, with images and audio',
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                 * Whether to do webcam recording (will wait for webcam
-                 * connection before starting audio if so)
-                 *
-                 * @property {Boolean} doRecording
-                 */
-                doRecording: {
-                    type: 'boolean',
-                    description: 'Whether to do webcam recording (will wait for webcam connection before starting audio if so'
-                },
-                /**
-                 * Whether to proceed automatically after audio (and hide
-                 * replay/next buttons)
-                 *
-                 * @property {Boolean} autoProceed
-                 */
-                autoProceed: {
-                    type: 'boolean',
-                    description: 'Whether to proceed automatically after audio (and hide replay/next buttons)'
-                },
-                /**
-                 * Array of objects describing audio to play at the start of
-                 * this frame. Each element describes a separate audio segment.
-                 *
-                 * @property {Object[]} audioSources
-                 *   @param {String} audioId unique string identifying this
-                 *      audio segment
-                 *   @param {Object[]} sources Array of {src: 'url', type:
-                 *      'MIMEtype'} objects with audio sources for this segment
-                 *
-                 * Can also give a single string `filename`, which will
-                 * be expanded out to the appropriate array based on `baseDir`
-                 * and `audioTypes` values; see `audioTypes`.
-                 *
-                 *   @param {Object[]} highlights Array of {'range': [startT,
-                 *      endT], 'image': 'imageId'} objects, where the imageId
-                 *      values correspond to the ids given in images
-                 */
-                audioSources: {
-                    type: 'array',
-                    description: 'List of objects specifying audio src and type for audio played during test trial',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'audioId': {
-                                type: 'string'
-                            },
-                            'sources': {
-                                type: 'array',
-                                items: {
-                                    type: 'object',
-                                    properties: {
-                                        'src': {
-                                            type: 'string'
-                                        },
-                                        'type': {
-                                            type: 'string'
-                                        }
-                                    }
-                                }
-                            },
-                            'highlights': {
-                                type: 'array',
-                                items: {
-                                    type: 'object',
-                                    properties: {
-                                        'range': {
-                                            type: 'array',
-                                            items: {
-                                                type: 'number'
-                                            }
-                                        },
-                                        'image': {
-                                            'type': 'string'
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Text block to display to parent.  (Each field is optional)
-                 *
-                 * @property {Object} parentTextBlock
-                 *   @param {String} title title to display
-                 *   @param {String} text paragraph of text
-                 *   @param {Boolean} emph whether to bold this paragraph
-                 *   @param {Object} css object specifying any css properties
-                 *      to apply to this section, and their values - e.g.
-                 *      {'color': 'red', 'font-size': '12px'}
-                 */
-                parentTextBlock: {
-                    type: 'object',
-                    properties: {
-                        title: {
-                            type: 'string'
-                        },
-                        text: {
-                            type: 'string'
-                        },
-                        emph: {
-                            type: 'boolean'
-                        },
-                        css: {
-                            type: 'object',
-                            default: {}
-                        }
-                    },
-                    default: {}
-                },
-                /**
-                 * Array of images to display and information about their placement
-                 *
-                 * @property {Object[]} images
-                 *   @param {String} id unique ID for this image
-                 *   @param {String} src URL of image source. This can be a full
-                 *     URL, or relative to baseDir (see baseDir).
-                 *   @param {String} left left margin, as percentage of story area width
-                 *   @param {String} width image width, as percentage of story area width
-                 *   @param {String} top top margin, as percentage of story area height
+    frameSchemaProperties: {
+        /**
+         * Whether to do webcam recording (will wait for webcam
+         * connection before starting audio if so)
+         *
+         * @property {Boolean} doRecording
+         */
+        doRecording: {
+            type: 'boolean',
+            description: 'Whether to do webcam recording (will wait for webcam connection before starting audio if so'
+        },
+        /**
+         * Whether to proceed automatically after audio (and hide
+         * replay/next buttons)
+         *
+         * @property {Boolean} autoProceed
+         */
+        autoProceed: {
+            type: 'boolean',
+            description: 'Whether to proceed automatically after audio (and hide replay/next buttons)'
+        },
 
-                 */
-                images: {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'id': {
-                                type: 'string'
-                            },
-                            'src': {
-                                type: 'string'
-                            },
-                            'left': {
-                                type: 'string'
-                            },
-                            'width': {
-                                type: 'string'
-                            },
-                            'top': {
-                                type: 'string'
+        /**
+         * [Only used if autoProceed is true] Minimum duration of frame in seconds.
+         * Frame will auto-proceed after this much time has elapsed and all audio
+         * has completed.
+         *
+         * @property {Number} durationSeconds
+         */
+        durationSeconds: {
+            type: 'number',
+            description: 'Minimum duration of frame in seconds if autoproceeding'
+        },
+
+        /**
+         * [Only used if autoProceed is true and durationSeconds set] Whether to
+         * show a progress bar based on durationSeconds in the parent text area.
+         *
+         * @property {Number} showProgressBar
+         */
+        showProgressBar: {
+            type: 'boolean',
+            description: 'Whether to show a progress bar based on durationSeconds'
+        },
+
+        /**
+         * Array of objects describing audio to play at the start of
+         * this frame. Each element describes a separate audio segment.
+         *
+         * @property {Object[]} audioSources
+         *   @param {String} audioId unique string identifying this
+         *      audio segment
+         *   @param {Object[]} sources Array of {src: 'url', type:
+         *      'MIMEtype'} objects with audio sources for this segment
+         *
+         * Can also give a single string `filename`, which will
+         * be expanded out to the appropriate array based on `baseDir`
+         * and `audioTypes` values; see `audioTypes`.
+         *
+         *   @param {Object[]} highlights Array of {'range': [startT,
+         *      endT], 'image': 'imageId'} objects, where the imageId
+         *      values correspond to the ids given in images
+         */
+        audioSources: {
+            type: 'array',
+            description: 'List of objects specifying audio src and type for audio played during test trial',
+            default: [],
+            items: {
+                type: 'object',
+                properties: {
+                    'audioId': {
+                        type: 'string'
+                    },
+                    'sources': {
+                        anyOf: audioAssetOptions
+                    },
+                    'highlights': {
+                        type: 'array',
+                        items: {
+                            type: 'object',
+                            properties: {
+                                'range': {
+                                    type: 'array',
+                                    items: {
+                                        type: 'number'
+                                    }
+                                },
+                                'image': {
+                                    'type': 'string'
+                                }
                             }
                         }
                     }
                 }
             }
         },
+        /**
+         * Text block to display to parent.  (Each field is optional)
+         *
+         * @property {Object} parentTextBlock
+         *   @param {String} title title to display
+         *   @param {String} text paragraph of text
+         *   @param {Boolean} emph whether to bold this paragraph
+         *   @param {Object} css object specifying any css properties
+         *      to apply to this section, and their values - e.g.
+         *      {'color': 'red', 'font-size': '12px'}
+         */
+        parentTextBlock: {
+            type: 'object',
+            properties: {
+                title: {
+                    type: 'string'
+                },
+                text: {
+                    type: 'string'
+                },
+                emph: {
+                    type: 'boolean'
+                },
+                css: {
+                    type: 'object',
+                    default: {}
+                }
+            },
+            default: {}
+        },
+        /**
+         * Array of images to display and information about their placement
+         *
+         * @property {Object[]} images
+         *   @param {String} id unique ID for this image
+         *   @param {String} src URL of image source. This can be a full
+         *     URL, or relative to baseDir (see baseDir).
+         *   @param {String} left left margin, as percentage of story area width
+         *   @param {String} width image width, as percentage of story area width
+         *   @param {String} top top margin, as percentage of story area height
+
+         */
+        images: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    'id': {
+                        type: 'string'
+                    },
+                    'src': {
+                        anyOf: imageAssetOptions
+                    },
+                    'left': {
+                        type: 'string'
+                    },
+                    'width': {
+                        type: 'string'
+                    },
+                    'top': {
+                        type: 'string'
+                    }
+                }
+            }
+        }
+    },
+
+    meta: {
+        name: 'ExpLookitStoryPage',
+        description: 'Frame to display a basic storybook page trial, with images and audio',
         data: {
             type: 'object',
             /**
@@ -296,7 +317,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         }
     },
 
-    // Override to do a bit extra when recording
+    // Override to do a bit extra when recording (single-frame)
     whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
         if (this.get('doRecording')) {
             var _this = this;
@@ -312,21 +333,41 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         }
     }),
 
+    // Override to do a bit extra when starting session recorder
+    whenPossibleToRecordSession: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
+        if (this.get('startSessionRecording')) {
+            var _this = this;
+            if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
+                this.startSessionRecorder().then(() => {
+                    _this.send('setTimeEvent', 'startedSessionRecording');
+                    _this.set('sessionRecorderReady', false);
+                    _this.set('currentAudioIndex', -1);
+                    _this.send('playNextAudioSegment');
+                    $('#waitForVideo').hide();
+                    $('.story-image-container').show();
+                });
+            }
+        }
+    }),
+
     actions: {
 
         // During playing audio
         updateCharacterHighlighting() {
 
             var thisAudioData = this.get('audioSources')[this.currentAudioIndex];
-            var t = $('#' + thisAudioData.audioId)[0].currentTime;
 
-            $('.story-image-container').removeClass('highlight');
+            if (thisAudioData.highlights) {
+                var t = $('#' + thisAudioData.audioId)[0].currentTime;
 
-            thisAudioData.highlights.forEach(function (h) {
-                if (t > h.range[0] && t < h.range[1]) {
-                    $('#' + h.image).addClass('highlight');
-                }
-            });
+                $('.story-image-container').removeClass('highlight');
+
+                thisAudioData.highlights.forEach(function (h) {
+                    if (t > h.range[0] && t < h.range[1]) {
+                        $('#' + h.image).addClass('highlight');
+                    }
+                });
+            }
         },
 
         replay() {
@@ -343,27 +384,61 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         finish() {
             var _this = this;
-            this.stopRecorder().then(() => {
-                _this.set('stoppedRecording', true);
+            this.send('setTimeEvent', 'finish called');
+
+            if (this.get('doRecording')) {
+                this.stopRecorder().then(() => {
+                    _this.set('stoppedRecording', true);
+                    _this.send('next');
+                }, () => {
+                    _this.send('next');
+                });
+            } else {
                 _this.send('next');
-            }, () => {
-                _this.send('next');
-            });
+            }
         },
 
         playNextAudioSegment() {
             this.set('currentAudioIndex', this.get('currentAudioIndex') + 1);
+            if (this.currentAudioIndex == 0) { // Starting first audio segment: start timer & progress bar
+                if (this.get('durationSeconds')) {
+                    let _this = this;
+                    this.send('setTimeEvent', 'setting timer');
+                    this.set('pageTimer', window.setTimeout(function() {
+                            _this.send('setTimeEvent', 'timer ended');
+                            _this.set('minDurationAchieved', true);
+                            if (_this.get('finishedAllAudio')) {
+                                _this.send('finish');
+                            }
+                        }, _this.get('durationSeconds') * 1000));
+                    if (this.get('showProgressBar')) {
+                        this.set('timerStart', new Date().getTime());
+                        let timerStart = _this.get('timerStart');
+                        let durationSeconds = _this.get('durationSeconds') * 10;
+                        this.set('progressTimer', window.setInterval(function() {
+                            let now = new Date().getTime();
+                            var prctDone =  (now - timerStart) / durationSeconds;
+                            $('.progress-bar').css('width', prctDone + '%');
+                        }, 100));
+                    }
+                } else {
+                    this.set('minDurationAchieved', true);
+                }
+            }
             if (this.currentAudioIndex < this.get('audioSources').length) {
-                $('#' + this.get('audioSources')[this.currentAudioIndex].audioId)[0].play();
+
+                $('#' + this.get('audioSources')[this.currentAudioIndex].audioId)[0].play().then(() => {
+                    this.send('setTimeEvent', 'startAudioSegment', {'currentAudioIndex': this.currentAudioIndex});
+                });
             } else {
-                if (this.get('autoProceed')) {
+                this.set('finishedAllAudio', true);
+                if (this.get('autoProceed') && this.get('minDurationAchieved')) {
                     this.send('finish');
                 } else {
                     $('#nextbutton').prop('disabled', false);
                 }
             }
         }
-
     },
 
     didInsertElement() {
@@ -380,15 +455,21 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         // If not recording, go to audio right away! Otherwise will be triggered when
         // recording starts.
-        if (!this.get('doRecording')) {
+        if (!(this.get('doRecording') || this.get('startSessionRecording'))) {
             this.send('playNextAudioSegment');
         }
 
     },
 
+    willDestroyElement() {
+        window.clearInterval(this.get('pageTimer'));
+        window.clearInterval(this.get('progressTimer'));
+        this._super(...arguments);
+    },
+
     // Hide story once rendered (as long as story hasn't started yet anyway)
     didRender() {
-        if (this.get('doRecording') && this.get('currentAudioIndex') == -1) {
+        if ((this.get('doRecording') || this.get('startSessionRecording')) && this.get('currentAudioIndex') == -1) {
             $('.story-image-container').hide();
         }
     }

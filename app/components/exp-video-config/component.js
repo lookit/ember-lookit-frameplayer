@@ -25,9 +25,9 @@ hard-coded, to provide a general-purpose technical setup frame.
 }
 ```
 
-@class ExpVideoConfig
-@extends ExpFrameBase
-@extends VideoRecord
+@class Exp-video-config
+@extends Exp-frame-base
+@extends Video-record
 */
 
 export default ExpFrameBaseComponent.extend(VideoRecord, {
@@ -52,28 +52,23 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             this.setupRecorder(this.$(this.get('recorderElement')));
         },
     },
+    frameSchemaProperties: {
+        /**
+        Text to show as the introduction to the troubleshooting tips section
+        @property {String} troubleshootingIntro
+        @default ""
+        */
+        troubleshootingIntro: {
+            type: 'string',
+            description: 'Text to show as introduction to troubleshooting tips section',
+            default: ''
+        }
+    },
 
     type: 'exp-videoconfig',
     meta: {
         name: 'Video Recorder Configuration',
         description: 'Frame guiding the user through setting up webcam, with no recording.',
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                Text to show as the introduction to the troubleshooting tips section
-                @property {String} troubleshootingIntro
-                @default ""
-                */
-                troubleshootingIntro: {
-                    type: 'string',
-                    description: 'Text to show as introduction to troubleshooting tips section',
-                    default: ''
-                }
-
-            },
-            required: []
-        },
         data: {
             type: 'object',
             properties: {}

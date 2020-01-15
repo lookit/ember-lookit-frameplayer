@@ -151,8 +151,12 @@
                     {{exp-format debriefing.text}}
                 {{/if}}
             </p>
+
             <hr>
-            {{bs-button class="pull-right" defaultText="Finish" type="success" onClick=(action "finish")}}
+            {{#if showShareButton}}
+                <a class="btn btn-primary pull-left" target="_blank" rel="noopener" href={{sharelink}} role="button">Share this study on Facebook!</a>
+            {{/if}}
+            {{bs-button class="pull-right" defaultText="Exit" type="success" onClick=(action "finish")}}
         {{/if}}
     </div>
 </div>

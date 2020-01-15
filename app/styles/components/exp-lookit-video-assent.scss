@@ -1,0 +1,164 @@
+$exp-lookit-video-assent-text-color: #04631c;
+$exp-lookit-video-assent-highlight-color: #d4efdf;
+
+.exp-lookit-video-assent
+{
+    &.row {
+        width: 90vw;
+        left: 5vw;
+        position: fixed;
+    }
+
+    .well.video-assent-prompt  {
+        div {
+            &.question {
+                padding-bottom: 20px;
+            }
+            clear: both;
+        }
+        display: block;
+        font-size: 1.5em;
+        font-weight: bold;
+        //background-color: $exp-lookit-video-assent-highlight-color;
+    }
+
+    .video-assent-doc {
+        overflow: scroll;
+
+        p {
+            font-size: 1.5em;
+            max-width: 35em;
+            margin: auto;
+            text-align: justify;
+        }
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .exp-lookit-assent-visual-container {
+        height: 40vh;
+    }
+
+    .exp-lookit-assent-image {
+        object-fit: contain;
+        width: 100%;
+        height: 40vh;
+        padding: 10px;
+    }
+
+    .assent-info {
+        min-height: 65vh;
+        height: 65vh;
+    }
+
+    .assent-instruction-text {
+    }
+
+    .video-assent-body * {
+        text-align:left;
+    }
+
+    .video-assent-numbered-direction {
+        font-weight: bold;
+        padding-bottom: 15px;
+        padding-top: 15px;
+    }
+
+    .video-assent-nav {
+        button.vertical-center {
+            margin-top: 30vh;
+        }
+    }
+
+    ol.exp-lookit-video-assent-pagination {
+        counter-reset: list;
+        margin-left: auto;
+        margin-right: auto;
+        width: fit-content;
+
+        &> li.exp-lookit-video-assent-pagenumber {
+            list-style: none;
+            display: inline;
+            padding: 5px 10px 5px 10px;
+            margin: 5px;
+            border-radius: 5px;
+            background-color: #ccc;
+            color: #2980B9;
+            font-weight: bold;
+
+            &.current {
+                background-color: #2980B9;
+                color: #ccc;
+            }
+
+            &:before {
+                content: counter(list, decimal);
+                counter-increment: list;
+            }
+        }
+    }
+
+    .video-assent-number {
+        color: $exp-lookit-video-assent-text-color;
+        font-size: 1.5em;
+        font-weight: bold;
+        background-color: $exp-lookit-video-assent-highlight-color;
+        border-radius:15px;
+        padding:2px 6px;
+        margin:2px;
+        border: thin solid $exp-lookit-video-assent-text-color;
+    }
+
+    .video-assent-direction {
+        color: $exp-lookit-video-assent-text-color;
+        font-size: 1.5em;
+        vertical-align: center;
+    }
+
+    .video-assent-title {
+        color: $exp-lookit-video-assent-text-color;
+        font-size: 2em;
+        font-weight: bold;
+        vertical-align: center;
+    }
+
+    button.right {
+        right: 1vw;
+        position: absolute;
+        display: inline;
+        float: none !important;
+    }
+
+    #downloadbutton {
+        border: thin solid #cccccc;
+    }
+
+    #yesbutton, #nobutton {
+        font-size: 1.5em;
+    }
+
+    .no-assent-warning {
+        color: red;
+        font-size: 1.5em;
+    }
+
+    #submitbutton {
+        bottom: 5%;
+        right: 5vw;
+        position: fixed;
+        font-size: 1.5em;
+    }
+
+    #consent-form-full-text, .hidden-webcam {
+        display: none;
+    }
+
+    .assent-decision {
+        &.lookit-assent-inactive {
+            opacity:0.5;
+        }
+    }
+
+}

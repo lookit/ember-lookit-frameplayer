@@ -25,10 +25,10 @@ import layout from './template';
  */
 
 export default ExpFrameBaseComponent.extend({
-    type: 'exp-test',
+    type: 'exp-lookit-games',
     layout: layout,
     meta: {
-        name: 'ExpTest',
+        name: 'ExpLookitGames',
         description: 'TODO: a description of this frame goes here.',
         parameters: {
             type: 'object',

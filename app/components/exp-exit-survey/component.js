@@ -14,12 +14,12 @@ import FullScreen from '../../mixins/full-screen';
  */
 
 /**
-This is the exit survey used by "Your baby the physicist". Use the updated frame {{#crossLink "ExpLookitExitSurvey"}}{{/crossLink}} instead.
+This is the exit survey used by "Your baby the physicist". Use the updated frame {{#crossLink "Exp-lookit-exit-survey"}}{{/crossLink}} instead.
 
-@class ExpExitSurvey
-@extends ExpFrameBase
+@class Exp-exit-survey
+@extends Exp-frame-base
 @uses Validations
-@uses FullScreen
+@uses Full-screen
 */
 
 const Validations = buildValidations({
@@ -30,13 +30,12 @@ const Validations = buildValidations({
     useOfMedia: validator('presence', {
         presence: true,
         message: 'This field is required',
-        disabled(model) {
-            return model.get('withdrawal');
-        }
+        disabled: Ember.computed.readOnly('model.withdrawal')
     }),
     databraryShare: validator('presence', {
         presence: true,
-        message: 'This field is required'
+        message: 'This field is required',
+        disabled: Ember.computed.readOnly('model.withdrawal')
     })
 });
 
@@ -45,14 +44,10 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
     type: 'exp-exit-survey',
     frameType: 'EXIT',
     fullScreenElementId: 'experiment-player',
+    frameSchemaProperties: {},
     meta: {
         name: 'ExpExitSurvey',
         description: 'Exit survey for Lookit.',
-        parameters: {
-            type: 'object',
-            properties: {
-            }
-        },
         data: {
             type: 'object',
             properties: {

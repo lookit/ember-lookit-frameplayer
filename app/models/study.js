@@ -11,7 +11,6 @@ export default DS.Model.extend(HasManyQuery.ModelMixin, {
     contactInfo: DS.attr('string'),
     image: DS.attr('string'),
     structure: DS.attr(''),
-    displayFullScreen: DS.attr('boolean'),
     exitURL: DS.attr('string'),
     state: DS.attr('string'),
     public: DS.attr('boolean'),

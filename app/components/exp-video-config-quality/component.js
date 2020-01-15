@@ -92,9 +92,9 @@ You can also customize any or all text and images as in the following example.
 }
 ```
 
-@class ExpVideoConfigQuality
-@extends ExpFrameBase
-@extends VideoRecord
+@class Exp-video-config-quality
+@extends Exp-frame-base
+@extends Video-record
 
 */
 
@@ -103,163 +103,159 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     type: 'exp-video-config-quality',
     maxRecordingLength: 60,
+    frameSchemaProperties: {
+        /**
+        Text to show as the introduction to the list of things to check. Can include
+        HTML.
+        @property {String} introText
+        @default ""
+        */
+        introText: {
+            type: 'string',
+            description: 'Text to show as the introduction to the list of things to check',
+            default: 'We\'ll be analyzing where your child chooses to look during the videos--but only if we can tell where that is! Please check each of the following to ensure we\'re able to use your video:'
+        },
+        /**
+        Title to display to participant
+        @property {String} title
+        @default ""
+        */
+        title: {
+            type: 'string',
+            description: 'Title to display to participant',
+            default: 'Webcam setup for preferential looking'
+        },
+        /**
+        Whether to show checkboxes under each instruction item and require
+        participant to check them off to proceed.
+        @property {Boolean} requireItemConfirmation
+        @default true
+        */
+        requireItemConfirmation: {
+            type: 'boolean',
+            description: 'Whether to show checkboxes under each instruction item',
+            default: true
+        },
+        /**
+        Whether to require participant to make and view a test video. Ignored if
+        showRecordMenu is false.
+        @property {Boolean} requireTestVideo
+        @default true
+        */
+        requireTestVideo: {
+            type: 'boolean',
+            description: 'Whether to require participant to record and view a test video',
+            default: true
+        },
+        /**
+        Whether to display record/replay menu to participant. If false,
+        requireTestVideo value is ignored.
+        @property {Boolean} showRecordMenu
+        @default true
+        */
+        showRecordMenu: {
+            type: 'boolean',
+            description: 'Whether to display record/replay menu to participant',
+            default: true
+        },
+        /**
+        Text to show below the webcam view. For instance, you might instruct
+        families to make a short recording in the position they will be in for the
+        experiment, and make sure that the infant's eyes are visible or that the
+        child is audible. HTML is allowed.
+        @property {String} recordingInstructionText
+        @default "Did it!"
+        */
+        recordingInstructionText: {
+            type: 'string',
+            description: 'Text to show below the webcam view',
+            default: 'You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.'
+        },
+        /**
+        Text to show next to instructions checkboxes, if participant is required
+        to check off each instruction (see requireItemConfirmation). Ignored if
+        requireItemConfirmation is false.
+        @property {String} completedItemText
+        @default "Did it!"
+        */
+        completedItemText: {
+            type: 'string',
+            description: 'Text to show next to instructions checkboxes',
+            default: 'Did it!'
+        },
+        /**
+        List of instruction segments to display to participant. Rendered using
+        {{#crossLink "Exp-text-block"}}{{/crossLink}}, so all parameters
+        of ExpTextBlock can be used.
+        @property {Object} instructionBlocks
+          @param {String} text instructions text (can include html)
+          @param {Object} image image to display, with 'src' & 'alt' attributes
+        @default [set of standard instructions]
+        */
+        instructionBlocks: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    text: {
+                        type: 'string'
+                    },
+                    image: {
+                        type: 'object',
+                        properties: {
+                            src: {
+                                type: 'string'
+                            },
+                            alt: {
+                                type: 'string'
+                            }
+                        }
+                    }
+                }
+            },
+            description: 'List of instruction segments to display',
+            default: [
+                {
+                    text: '<strong>Make sure the webcam you\'re using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!',
+                    image: {
+                        src: 'assets/centering.png',
+                        alt: 'Example images of using centered external webcam on monitor or built-in webcam on laptop.'
+                    }
+                },
+                {
+                    text: '<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there\'s just one monitor, you\'re all set!)',
+                    image: {
+                        src: 'assets/monitors.png',
+                        alt: 'Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.'
+                    }
+                },
+                {
+                    text: 'Check the lighting by making sure you can <strong>clearly see your own eyes</strong> on the webcam view to the right. You may need to either turn on a light or reduce light coming from behind you.',
+                    image: {
+                        src: 'assets/lighting.png',
+                        alt: 'Example images showing good lighting, room too dark, and backlit scene where eyes are not visible.'
+                    }
+                },
+                {
+                    text: 'During the study, we\'ll ask that you sit facing away from the monitor, holding your child over your shoulder, like this. (More on that in a moment!) <strong>Make sure the webcam is angled up or down enough that your child\'s eyes are visible in this position</strong>.',
+                    image: {
+                        src: 'assets/over_shoulder.jpg',
+                        alt: 'Example image showing a dad holding his child looking over his shoulder.'
+                    }
+                },
+                {
+                    text: 'If it\'s practical, <strong>minimize exciting things</strong> that are visible behind or to the side of the screen--for instance, by facing a wall instead of the kitchen. (If this isn\'t practical for you, don\'t worry about it--just check the box!)',
+                    image: {
+                        src: 'assets/distractions.png',
+                        alt: 'Example images showing a child and puppy next to the computer, versus a computer just on its own.'
+                    }
+                }
+            ]
+        }
+    },
     meta: {
         name: 'Video Recorder Configuration for preferential looking',
         description: 'Video configuration frame showing webcam view at right and instructions for checking video quality for preferential looking setup at left, with pictures.',
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                Text to show as the introduction to the list of things to check. Can include
-                HTML.
-                @property {String} introText
-                @default ""
-                */
-                introText: {
-                    type: 'string',
-                    description: 'Text to show as the introduction to the list of things to check',
-                    default: 'We\'ll be analyzing where your child chooses to look during the videos--but only if we can tell where that is! Please check each of the following to ensure we\'re able to use your video:'
-                },
-                /**
-                Title to display to participant
-                @property {String} title
-                @default ""
-                */
-                title: {
-                    type: 'string',
-                    description: 'Title to display to participant',
-                    default: 'Webcam setup for preferential looking'
-                },
-                /**
-                Whether to show checkboxes under each instruction item and require
-                participant to check them off to proceed.
-                @property {Boolean} requireItemConfirmation
-                @default true
-                */
-                requireItemConfirmation: {
-                    type: 'boolean',
-                    description: 'Whether to show checkboxes under each instruction item',
-                    default: true
-                },
-                /**
-                Whether to require participant to make and view a test video. Ignored if
-                showRecordMenu is false.
-                @property {Boolean} requireTestVideo
-                @default true
-                */
-                requireTestVideo: {
-                    type: 'boolean',
-                    description: 'Whether to require participant to record and view a test video',
-                    default: true
-                },
-                /**
-                Whether to display record/replay menu to participant. If false,
-                requireTestVideo value is ignored.
-                @property {Boolean} showRecordMenu
-                @default true
-                */
-                showRecordMenu: {
-                    type: 'boolean',
-                    description: 'Whether to display record/replay menu to participant',
-                    default: true
-                },
-                /**
-                Text to show below the webcam view. For instance, you might instruct
-                families to make a short recording in the position they will be in for the
-                experiment, and make sure that the infant's eyes are visible or that the
-                child is audible. HTML is allowed.
-                @property {String} recordingInstructionText
-                @default "Did it!"
-                */
-                recordingInstructionText: {
-                    type: 'string',
-                    description: 'Text to show below the webcam view',
-                    default: 'You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.'
-                },
-                /**
-                Text to show next to instructions checkboxes, if participant is required
-                to check off each instruction (see requireItemConfirmation). Ignored if
-                requireItemConfirmation is false.
-                @property {String} completedItemText
-                @default "Did it!"
-                */
-                completedItemText: {
-                    type: 'string',
-                    description: 'Text to show next to instructions checkboxes',
-                    default: 'Did it!'
-                },
-                /**
-                List of instruction segments to display to participant. Rendered using
-                {{#crossLink "ExpTextBlock"}}{{/crossLink}}, so all parameters
-                of ExpTextBlock can be used.
-                @property {Object} instructionBlocks
-                  @param {String} text instructions text (can include html)
-                  @param {Object} image image to display, with 'src' & 'alt' attributes
-                @default [set of standard instructions]
-                */
-                instructionBlocks: {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            text: {
-                                type: 'string'
-                            },
-                            image: {
-                                type: 'object',
-                                properties: {
-                                    src: {
-                                        type: 'string'
-                                    },
-                                    alt: {
-                                        type: 'string'
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    description: 'List of instruction segments to display',
-                    default: [
-                        {
-                            text: '<strong>Make sure the webcam you\'re using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!',
-                            image: {
-                                src: 'assets/centering.png',
-                                alt: 'Example images of using centered external webcam on monitor or built-in webcam on laptop.'
-                            }
-                        },
-                        {
-                            text: '<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there\'s just one monitor, you\'re all set!)',
-                            image: {
-                                src: 'assets/monitors.png',
-                                alt: 'Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.'
-                            }
-                        },
-                        {
-                            text: 'Check the lighting by making sure you can <strong>clearly see your own eyes</strong> on the webcam view to the right. You may need to either turn on a light or reduce light coming from behind you.',
-                            image: {
-                                src: 'assets/lighting.png',
-                                alt: 'Example images showing good lighting, room too dark, and backlit scene where eyes are not visible.'
-                            }
-                        },
-                        {
-                            text: 'During the study, we\'ll ask that you sit facing away from the monitor, holding your child over your shoulder, like this. (More on that in a moment!) <strong>Make sure the webcam is angled up or down enough that your child\'s eyes are visible in this position</strong>.',
-                            image: {
-                                src: 'assets/over_shoulder.jpg',
-                                alt: 'Example image showing a dad holding his child looking over his shoulder.'
-                            }
-                        },
-                        {
-                            text: 'If it\'s practical, <strong>minimize exciting things</strong> that are visible behind or to the side of the screen--for instance, by facing a wall instead of the kitchen. (If this isn\'t practical for you, don\'t worry about it--just check the box!)',
-                            image: {
-                                src: 'assets/distractions.png',
-                                alt: 'Example images showing a child and puppy next to the computer, versus a computer just on its own.'
-                            }
-                        }
-                    ]
-                }
-            },
-            required: []
-        },
         data: {
             type: 'object',
             properties: {}
@@ -337,6 +333,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 _this.set('hasPlayedBack', true);
                 _this.checkIfDone();
             });
+
+            this.get('recorder').on('btStopRecordingPressed', (recId) => {   // eslint-disable-line no-unused-vars
+                _this.get('recorder').set('_recording', false); // so we don't also call stop when leaving page unless needed
+                _this.set('stoppedRecording', true);
+            });
+
         }
     }),
 

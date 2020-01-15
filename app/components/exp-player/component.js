@@ -26,7 +26,8 @@ let {
  *   frameIndex=0
  *   fullScreenElementId='expContainer'}}
  * ```
- * @class ExpPlayer
+ *
+ * @class Exp-player
  */
 export default Ember.Component.extend(FullScreen, {
     layout: layout,
@@ -38,7 +39,6 @@ export default Ember.Component.extend(FullScreen, {
     conditions: null,
 
     frameIndex: 0, // Index of the currently active frame
-    framePage: 0, // Index of the currently visible page within a frame
 
     displayFullscreen: false,
     fullScreenElementId: 'experiment-player',
@@ -146,11 +146,11 @@ export default Ember.Component.extend(FullScreen, {
 
         var parser = new ExperimentParser({
             structure: this.get('experiment.structure'),
-            pastSessions: this.get('pastSessions').toArray()
+            pastSessions: this.get('pastSessions').toArray(),
+            child: this.get('session.child')
         });
         var [frameConfigs, conditions] = parser.parse();
         this.set('frames', frameConfigs); // When player loads, convert structure to list of frames
-        this.set('displayFullscreen', this.get('experiment.displayFullscreen') || false); // Choose whether to display this experiment fullscreen (default false)
 
         var session = this.get('session');
         session.set('conditions', conditions);
@@ -174,7 +174,10 @@ export default Ember.Component.extend(FullScreen, {
         var componentName = `${currentFrameConfig.kind}`;
 
         if (!Ember.getOwner(this).lookup(`component:${componentName}`)) {
-            console.warn(`No component named ${componentName} is registered.`);
+            var availableFrames = Ember.getOwner(this).lookup(`container-debug-adapter:main`).catalogEntriesByType('component')
+                .filter(componentName => componentName.includes('component') && componentName.includes('exp-') && !['components/exp-blank', 'components/exp-frame-base', 'components/exp-text-block', 'components/exp-player'].includes(componentName))
+                .map(componentName => componentName.replace('components/', ''));
+            console.error(`Unknown frame kind '${componentName}' specified. Check that 'kind' is specified for all frames and that it is always one of the following available frame kinds:\n\t${availableFrames.join('\n\t')}\nFrames are described in more detail https://lookit.github.io/ember-lookit-frameplayer/modules/frames.html. Frame kinds are all lowercase, like 'exp-lookit-exit-survey'. If you are trying to use a newer frame, you may need to update the frameplayer code for your study; see https://lookit.readthedocs.io/en/develop/researchers-update-code.html.`);
         }
         return componentName;
     }),
@@ -188,6 +191,7 @@ export default Ember.Component.extend(FullScreen, {
     _transition() {
         Ember.run(() => {
             this.set('_currentFrameTemplate', 'exp-blank');
+            // should also set all frame properties back to defaults.
         });
         this.set('_currentFrameTemplate', null);
     },
@@ -211,24 +215,30 @@ export default Ember.Component.extend(FullScreen, {
 
         saveFrame(frameId, frameData) {
             // Save the data from a completed frame to the session data item
-            this.get('session.sequence').push(frameId);
+            if (this.get('session.sequence') && frameId != this.get('session.sequence')[this.get('session.sequence').length - 1]) {
+                this.get('session.sequence').push(frameId);
+            }
             this.get('session.expData')[frameId] = frameData;
-            if (this.get('session').child.content.id === 'TEST_CHILD_DISREGARD') {
+            if (!this.get('session').child.content || this.get('session').child.content.id === 'TEST_CHILD_DISREGARD') {
                 return Ember.RSVP.Promise.resolve();
             } else {
                 return this.get('session').save();
             }
         },
 
-        next() {
+        next(nextFrameIndex = -1) {
             var frameIndex = this.get('frameIndex');
-            if (frameIndex < (this.get('frames').length - 1)) {
+            if (nextFrameIndex == -1) {
+                nextFrameIndex = frameIndex + 1;
+            } else if (nextFrameIndex < 0 || nextFrameIndex > this.get('frames').length) {
+                throw new Error('selectNextFrame function provided for this frame returns a frame index out of bounds');
+            }
+            if (nextFrameIndex < (this.get('frames').length)) {
                 this._transition();
-                this.set('frameIndex', frameIndex + 1);
-                this.set('framePage', 0);
+                this.set('frameIndex', nextFrameIndex);
                 return;
             }
-            this._exit();
+            this._exit(); // exit if nextFrameIndex == this.get('frames').length
         },
 
         skipone() {
@@ -238,6 +248,10 @@ export default Ember.Component.extend(FullScreen, {
                 this.set('frameIndex', frameIndex + 2);
                 return;
             }
+            this._exit();
+        },
+
+        exit() {
             this._exit();
         },
 
@@ -253,11 +267,20 @@ export default Ember.Component.extend(FullScreen, {
             this.set('hasAttemptedExit', false);
         },
 
-        updateFramePage(framePage) {
-            this.set('framePage', framePage);
-        },
-
         exitEarly() {
+            // Stop/destroy session recorder if needed
+            if (this.get('session').get('recorder')) {
+                var sessionRecorder = this.get('session').get('recorder');
+                this.get('session').set('recordingInProgress', false);
+                if (sessionRecorder.get('recording')) {
+                    sessionRecorder.stop().finally(() => {
+                        sessionRecorder.destroy();
+                    });
+                } else {
+                    sessionRecorder.destroy();
+                }
+            }
+
             this.set('hasAttemptedExit', false);
             Ember.$(window).off('keydown');
             // Save any available data immediately
@@ -269,7 +292,7 @@ export default Ember.Component.extend(FullScreen, {
 
             // Navigate to last page in experiment (assumed to be survey frame)
             var max = this.get('frames.length') - 1;
-            this.set('frameIndex', max);
+            this.send('next', max);
         },
     }
 });

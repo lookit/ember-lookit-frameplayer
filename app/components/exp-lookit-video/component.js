@@ -5,7 +5,7 @@ import FullScreen from '../../mixins/full-screen';
 import MediaReload from '../../mixins/media-reload';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
-import { observer } from '@ember/object';
+import { audioAssetOptions, videoAssetOptions } from '../../mixins/expand-assets';
 
 let {
     $
@@ -101,12 +101,12 @@ let {
         }
 
 * ```
-* @class ExpLookitVideo
-* @extends ExpFrameBase
-* @uses FullScreen
-* @uses MediaReload
-* @uses VideoRecord
-* @uses ExpandAssets
+* @class Exp-lookit-video
+* @extends Exp-frame-base
+* @uses Full-screen
+* @uses Media-reload
+* @uses Video-record
+* @uses Expand-assets
 */
 
 // TODO: refactor into cleaner structure with segments announcement, intro, calibration, test, with more general logic for transitions. Construct list at start since some elements optional. Then proceed through - instead of setting task manually, use utility to move to next task within list.
@@ -140,6 +140,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
 
     // Override setting in VideoRecord mixin - only use camera if doing recording
     doUseCamera: Ember.computed.alias('doRecording'),
+    startRecordingAutomatically: Ember.computed.alias('doRecording'),
 
     completedAnnouncementAudio: false,
     completedAnnouncementTime: false,
@@ -168,273 +169,227 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
     currentTask: null, // announce, intro, calibration, or test.
     isPaused: false,
 
+    frameSchemaProperties: {
+        /**
+        Array of objects specifying video src and type for test video (these should be the same video, but multiple sources--e.g. mp4 and webm--are generally needed for cross-browser support). If none provided, skip test phase.
+
+        Example value:
+
+        ```[{'src': 'http://.../video1.mp4', 'type': 'video/mp4'}, {'src': 'http://.../video1.webm', 'type': 'video/webm'}]```
+        @property {Array} sources
+            @param {String} src
+            @param {String} type
+        @default []
+        */
+        sources: {
+            anyOf: videoAssetOptions,
+            description: 'List of objects specifying video src and type for test videos',
+            default: []
+        },
+
+        /**
+        Array of objects specifying video src and type for alternate test video, as for sources. Alternate test video will be shown if the first test is paused, after restarting the trial. If alternate test video is also paused, we just move on. If altSources is not provided, defaults to playing same test video again (but still only one pause of test video allowed per trial).
+        @property {Array} altSources
+            @param {String} src
+            @param {String} type
+        @default []
+        */
+        altSources: {
+            anyOf: videoAssetOptions,
+            description: 'List of objects specifying video src and type for alternate test videos',
+            default: []
+        },
+
+        /**
+        Array of objects specifying intro video src and type, as for sources.
+        If empty, intro segment will be skipped.
+        @property {Array} introSources
+            @param {String} src
+            @param {String} type
+        @default []
+        */
+        introSources: {
+            anyOf: videoAssetOptions,
+            description: 'List of objects specifying intro video src and type',
+            default: []
+        },
+
+        /**
+        Array of objects specifying attention-grabber video src and type, as for sources. The attention-grabber video is shown (looping) during the announcement phase and when the study is paused.
+        @property {Array} attnSources
+            @param {String} src
+            @param {String} type
+        @default []
+        */
+        attnSources: {
+            anyOf: videoAssetOptions,
+            description: 'List of objects specifying attention-grabber video src and type',
+            default: []
+        },
+        /**
+         * minimum amount of time to show attention-getter in seconds. Announcement phase (attention-getter plus audio) will last the minimum of announceLength and the duration of any announcement audio.
+         *
+         * @property {Number} announceLength
+         * @default 2
+         */
+        announceLength: {
+            type: 'number',
+            description: 'minimum duration of announcement phase in seconds',
+            default: 2
+        },
+        /**
+        List of objects specifying intro announcement src and type. If empty and minimum announceLength is 0, announcement is skipped.
+        Example: `[{'src': 'http://.../audio1.mp3', 'type': 'audio/mp3'}, {'src': 'http://.../audio1.ogg', 'type': 'audio/ogg'}]`
+        @property {Array} audioSources
+            @param {String} src
+            @param {String} type
+        @default []
+        */
+        audioSources: {
+            anyOf: audioAssetOptions,
+            description: 'List of objects specifying intro announcement audio src and type',
+            default: []
+        },
+
+        /**
+        List of objects specifying music audio src and type, as for audioSources.
+        If empty, no music is played.
+        @param musicSources
+        @property {Array} musicSources
+            @param {String} src
+            @param {String} type
+        @default []
+        */
+        musicSources: {
+            anyOf: audioAssetOptions,
+            description: 'List of objects specifying music audio src and type',
+            default: ''
+        },
+
+        /**
+        Length to loop test videos, in seconds. Set if you want a time-based limit. E.g., setting testLength to 20 means that the first 20 seconds of the video will be played, with shorter videos looping until they get to 20s. Leave out or set to Infinity  to play the video through to the end a set number of times instead. If a testLength is set, it overrides any value set in testCount.
+        @property {Number} testLength
+        @default Infinity
+        */
+        testLength: {
+            type: 'number',
+            description: 'Length of test videos in seconds',
+            default: Infinity
+        },
+
+        /**
+        Number of times to play test video before moving on. This is ignored if
+        testLength is set to a finite value.
+        @property {Number} testCount
+        @default 1
+        */
+        testCount: {
+            type: 'number',
+            description: 'Number of times to play test video',
+            default: 1
+        },
+
+        /**
+        Whether to do any video recording during this frame. Default true. Set to false for e.g. last frame where just doing an announcement.
+        @property {Boolean} doRecording
+        @default true
+        */
+        doRecording: {
+            type: 'boolean',
+            description: 'Whether to do video recording',
+            default: true
+        },
+        /**
+         * length of single calibration segment in ms. 0 to skip calibration.
+         *
+         * @property {Number} calibrationLength
+         * @default 3000
+         */
+        calibrationLength: {
+            type: 'number',
+            description: 'length of single calibration segment in ms',
+            default: 3000
+        },
+        /**
+         * Ordered list of positions to show calibration segment in. Options are
+         * "center", "left", "right". Ignored if calibrationLength is 0.
+         *
+         * @property {Array} calibrationPositions
+         * @default ["center", "left", "right", "center"]
+         */
+        calibrationPositions: {
+            type: 'array',
+            description: 'Ordered list of positions to show calibration',
+            default: ['center', 'left', 'right', 'center']
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * calibration audio (played at each calibration position).
+         * Ignored if calibrationLength is 0.
+         *
+         * @property {Object[]} calibrationAudioSources
+         * @default []
+         */
+        calibrationAudioSources: {
+            anyOf: audioAssetOptions,
+            description: 'list of objects specifying audio src and type for calibration audio',
+            default: []
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * calibration video (played from start at each calibration position).
+         * Ignored if calibrationLength is 0.
+         *
+         * @property {Object[]} calibrationVideoSources
+         * @default []
+         */
+        calibrationVideoSources: {
+            anyOf: videoAssetOptions,
+            description: 'list of objects specifying video src and type for calibration audio',
+            default: []
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * audio played upon pausing study
+         *
+         * @property {Object[]} pauseAudio
+         * @default []
+         */
+        pauseAudio: {
+            anyOf: audioAssetOptions,
+            description: 'List of objects specifying audio src and type for audio played when pausing study',
+            default: []
+        },
+        /**
+         * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+         * audio played upon unpausing study
+         *
+         * @property {Object[]} unpauseAudio
+         * @default []
+         */
+        unpauseAudio: {
+            anyOf: audioAssetOptions,
+            description: 'List of objects specifying audio src and type for audio played when unpausing study',
+            default: []
+        },
+        /**
+         * Text to show under "Study paused / Press space to resume" when study is paused.
+         * Default: (You'll have a moment to turn around again.)
+         *
+         * @property {String} pauseText
+         * @default []
+
+         */
+        pauseText: {
+            type: 'string',
+            description: 'Text to show under Study paused when study is paused.',
+            default: "(You'll have a moment to turn around again.)"
+        }
+    },
+
     meta: {
         name: 'Video player',
         description: 'Component that plays a video',
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                Array of objects specifying video src and type for test video (these should be the same video, but multiple sources--e.g. mp4 and webm--are generally needed for cross-browser support). If none provided, skip test phase.
-
-                Example value:
-
-                ```[{'src': 'http://.../video1.mp4', 'type': 'video/mp4'}, {'src': 'http://.../video1.webm', 'type': 'video/webm'}]```
-                @property {Array} sources
-                    @param {String} src
-                    @param {String} type
-                @default []
-                */
-                sources: {
-                    type: 'string',
-                    description: 'List of objects specifying video src and type for test videos',
-                    default: []
-                },
-
-                /**
-                Array of objects specifying video src and type for alternate test video, as for sources. Alternate test video will be shown if the first test is paused, after restarting the trial. If alternate test video is also paused, we just move on. If altSources is not provided, defaults to playing same test video again (but still only one pause of test video allowed per trial).
-                @property {Array} altSources
-                    @param {String} src
-                    @param {String} type
-                @default []
-                */
-                altSources: {
-                    type: 'string',
-                    description: 'List of objects specifying video src and type for alternate test videos',
-                    default: []
-                },
-
-                /**
-                Array of objects specifying intro video src and type, as for sources.
-                If empty, intro segment will be skipped.
-                @property {Array} introSources
-                    @param {String} src
-                    @param {String} type
-                @default []
-                */
-                introSources: {
-                    type: 'string',
-                    description: 'List of objects specifying intro video src and type',
-                    default: []
-                },
-
-                /**
-                Array of objects specifying attention-grabber video src and type, as for sources. The attention-grabber video is shown (looping) during the announcement phase and when the study is paused.
-                @property {Array} attnSources
-                    @param {String} src
-                    @param {String} type
-                @default []
-                */
-                attnSources: {
-                    type: 'string',
-                    description: 'List of objects specifying attention-grabber video src and type',
-                    default: []
-                },
-                /**
-                 * minimum amount of time to show attention-getter in seconds. Announcement phase (attention-getter plus audio) will last the minimum of announceLength and the duration of any announcement audio.
-                 *
-                 * @property {Number} announceLength
-                 * @default 2
-                 */
-                announceLength: {
-                    type: 'number',
-                    description: 'minimum duration of announcement phase in seconds',
-                    default: 2
-                },
-                /**
-                List of objects specifying intro announcement src and type. If empty and minimum announceLength is 0, announcement is skipped.
-                Example: `[{'src': 'http://.../audio1.mp3', 'type': 'audio/mp3'}, {'src': 'http://.../audio1.ogg', 'type': 'audio/ogg'}]`
-                @property {Array} audioSources
-                    @param {String} src
-                    @param {String} type
-                @default []
-                */
-                audioSources: {
-                    type: 'string',
-                    description: 'List of objects specifying intro announcement audio src and type',
-                    default: []
-                },
-
-                /**
-                List of objects specifying music audio src and type, as for audioSources.
-                If empty, no music is played.
-                @param musicSources
-                @property {Array} musicSources
-                    @param {String} src
-                    @param {String} type
-                @default []
-                */
-                musicSources: {
-                    type: 'string',
-                    description: 'List of objects specifying music audio src and type',
-                    default: []
-                },
-
-                /**
-                Length to loop test videos, in seconds. Set if you want a time-based limit. E.g., setting testLength to 20 means that the first 20 seconds of the video will be played, with shorter videos looping until they get to 20s. Leave out or set to Infinity  to play the video through to the end a set number of times instead. If a testLength is set, it overrides any value set in testCount.
-                @property {Number} testLength
-                @default Infinity
-                */
-                testLength: {
-                    type: 'number',
-                    description: 'Length of test videos in seconds',
-                    default: Infinity
-                },
-
-                /**
-                Number of times to play test video before moving on. This is ignored if
-                testLength is set to a finite value.
-                @property {Number} testCount
-                @default 1
-                */
-                testCount: {
-                    type: 'number',
-                    description: 'Number of times to play test video',
-                    default: 1
-                },
-
-                /**
-                Whether to do any video recording during this frame. Default true. Set to false for e.g. last frame where just doing an announcement.
-                @property {Boolean} doRecording
-                @default true
-                */
-                doRecording: {
-                    type: 'boolean',
-                    description: 'Whether to do video recording',
-                    default: true
-                },
-                /**
-                 * length of single calibration segment in ms. 0 to skip calibration.
-                 *
-                 * @property {Number} calibrationLength
-                 * @default 3000
-                 */
-                calibrationLength: {
-                    type: 'number',
-                    description: 'length of single calibration segment in ms',
-                    default: 3000
-                },
-                /**
-                 * Ordered list of positions to show calibration segment in. Options are
-                 * "center", "left", "right". Ignored if calibrationLength is 0.
-                 *
-                 * @property {Array} calibrationPositions
-                 * @default ["center", "left", "right", "center"]
-                 */
-                calibrationPositions: {
-                    type: 'Array',
-                    description: 'Ordered list of positions to show calibration',
-                    default: ['center', 'left', 'right', 'center']
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * calibration audio (played at each calibration position).
-                 * Ignored if calibrationLength is 0.
-                 *
-                 * @property {Object[]} calibrationAudioSources
-                 * @default []
-                 */
-                calibrationAudioSources: {
-                    type: 'array',
-                    description: 'list of objects specifying audio src and type for calibration audio',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * calibration video (played from start at each calibration position).
-                 * Ignored if calibrationLength is 0.
-                 *
-                 * @property {Object[]} calibrationVideoSources
-                 * @default []
-                 */
-                calibrationVideoSources: {
-                    type: 'array',
-                    description: 'list of objects specifying video src and type for calibration audio',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * audio played upon pausing study
-                 *
-                 * @property {Object[]} pauseAudio
-                 * @default []
-                 */
-                pauseAudio: {
-                    type: 'array',
-                    description: 'List of objects specifying audio src and type for audio played when pausing study',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
-                 * audio played upon unpausing study
-                 *
-                 * @property {Object[]} unpauseAudio
-                 * @default []
-                 */
-                unpauseAudio: {
-                    type: 'array',
-                    description: 'List of objects specifying audio src and type for audio played when unpausing study',
-                    default: [],
-                    items: {
-                        type: 'object',
-                        properties: {
-                            'src': {
-                                type: 'string'
-                            },
-                            'type': {
-                                type: 'string'
-                            }
-                        }
-                    }
-                },
-                /**
-                 * Text to show under "Study paused / Press space to resume" when study is paused.
-                 * Default: (You'll have a moment to turn around again.)
-                 *
-                 * @property {String} pauseText
-                 * @default []
-
-                 */
-                pauseText: {
-                    type: 'string',
-                    description: 'Text to show under Study paused when study is paused.',
-                    default: "(You'll have a moment to turn around again.)"
-                }
-            }
-        },
         data: {
             type: 'object',
             /**
@@ -536,10 +491,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 this.send('finish');
             } else if (this.get('shouldLoop')) {
                 this.set('_lastTime', 0);
-                this.$('#player-video')[0].play();
+                if ((this.get('testVideosTimesPlayed') >= this.get('testCount')) && (this.get('testLength') === Infinity)) {
+                    this.send('finish');
+                } else {
+                    this.$('#player-video')[0].play();
+                }
             } else {
                 this.send('setTimeEvent', 'videoStopped', {
-                    currentTask
+                    currentTask: currentTask
                 });
                 if (this.get('currentTask') === 'intro') {
                     this.set('currentTask', 'calibration');
@@ -548,7 +507,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         },
 
         finish() { // Move to next frame altogether
-            // Call this something separate from test because stopRecorder promise needs
+            // Call this something separate from next because stopRecorder promise needs
             // to call next AFTER recording is stopped and we don't want this to have
             // already been destroyed at that point.
             window.clearInterval(this.get('testTimer'));
@@ -558,12 +517,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             this.set('testVideosTimesPlayed', 0);
             this.set('completedAnnouncementAudio', false);
             this.set('completedAnnouncementTime', false);
-            if ($('video#player-video').length) {
-                $('video#player-video')[0].pause();
-            }
-            if ($('audio#exp-music').length) {
-                $('audio#exp-music')[0].pause();
-            }
             var _this = this;
             if (this.get('doRecording')) {
                 this.stopRecorder().then(() => {
@@ -781,22 +734,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         this.set('currentTask', 'announce');
         this.segmentObserver(this);
     },
-
-    /**
-     * Observer that starts recording once recorder is ready. Override to do additional
-     * stuff at this point!
-     * @method whenPossibleToRecord
-     */
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('doRecording')) {
-            var _this = this;
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                this.startRecorder().then(() => {
-                    _this.set('recorderReady', false);
-                });
-            }
-        }
-    }),
 
     willDestroyElement() { // remove event handler
         $(document).off('keyup.pauser');

@@ -1,6 +1,7 @@
 import layout from './template';
 
 import {validator, buildValidations} from 'ember-cp-validations';
+import Ember from 'ember';
 
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 import FullScreen from '../../mixins/full-screen';
@@ -18,13 +19,12 @@ const Validations = buildValidations({
     useOfMedia: validator('presence', {
         presence: true,
         message: 'This field is required',
-        disabled(model) {
-            return model.get('withdrawal');
-        }
+        disabled: Ember.computed.readOnly('model.withdrawal')
     }),
     databraryShare: validator('presence', {
         presence: true,
-        message: 'This field is required'
+        message: 'This field is required',
+        disabled: Ember.computed.readOnly('model.withdrawal')
     })
 });
 
@@ -47,10 +47,10 @@ Standard exit survey for Lookit studies: confirm participant birthdate, ask user
 }
 ```
 
-@class ExpLookitExitSurvey
-@extends ExpFrameBase
+@class Exp-lookit-exit-survey
+@extends Exp-frame-base
 
-@uses FullScreen
+@uses Full-screen
 @uses Validations
 */
 
@@ -59,48 +59,56 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
     type: 'exp-lookit-exit-survey',
     frameType: 'EXIT',
     fullScreenElementId: 'experiment-player',
+    frameSchemaProperties: {
+        /**
+        Object specifying information to show on second page of exit survey, before returning to main Lookit site.
+        @property {Object} debriefing
+            @param {String} title Title of debriefing page
+            @param {String} text Paragraph to show as debriefing
+            @param {Object} image Object specifying source URL [src] & alt-text [alt] for any image to show during debriefing (optional). Example: `{
+        "src": "https://s3.amazonaws.com/lookitcontents/ducks/duck.png",
+        "alt": "Very cute duck"
+        }`
+        */
+        debriefing: {
+            type: 'object',
+            properties: {
+                title: {
+                    type: 'string',
+                    default: 'Thank you!'
+                },
+                text: {
+                    type: 'string'
+                },
+                image: {
+                    type: 'object',
+                    properties: {
+                        src: {
+                            type: 'string'
+                        },
+                        alt: {
+                            type: 'string'
+                        }
+                    }
+                }
+            }
+        },
+        /**
+         * Whether to show a 'share this study on Facebook' button
+         *
+         * @property {Boolean} showShareButton
+         * @default true
+         */
+        showShareButton: {
+            type: 'boolean',
+            description: 'Whether to show a \'share this study on Facebook\' button',
+            default: true
+        }
+    },
+    frameSchemaRequired: ['debriefing'],
     meta: {
         name: 'ExpLookitExitSurvey',
         description: 'Exit survey for Lookit.',
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                Object specifying information to show on second page of exit survey, before returning to main Lookit site.
-                @property {Object} debriefing
-                    @param {String} title Title of debriefing page
-                    @param {String} text Paragraph to show as debriefing
-                    @param {Object} image Object specifying source URL [src] & alt-text [alt] for any image to show during debriefing (optional). Example: `{
-                "src": "https://s3.amazonaws.com/lookitcontents/ducks/duck.png",
-                "alt": "Very cute duck"
-                }`
-                */
-                debriefing: {
-                    type: 'object',
-                    properties: {
-                        title: {
-                            type: 'string',
-                            default: 'Thank you!'
-                        },
-                        text: {
-                            type: 'string'
-                        },
-                        image: {
-                            type: 'object',
-                            properties: {
-                                src: {
-                                    type: 'string'
-                                },
-                                alt: {
-                                    type: 'string'
-                                }
-                            }
-                        }
-                    }
-                },
-                required: ['debriefing']
-            }
-        },
         data: {
             /**
              * Parameters captured and sent to the server
@@ -176,5 +184,12 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
         finish() {
             this.send('next');
         }
+    },
+
+    didInsertElement() {
+        this._super(...arguments);
+        // Alternate study ID method
+        // let studyID = window.location.href.split('/').filter(piece => !!piece).slice(-2)[0];
+        this.set('sharelink', 'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flookit.mit.edu%2Fstudies%2F' + this.get('experiment').get('id') + '%2F');
     }
 });

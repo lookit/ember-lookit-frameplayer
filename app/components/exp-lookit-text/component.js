@@ -31,59 +31,58 @@ import ExpFrameBaseComponent from '../exp-frame-base/component';
  }
 
  * ```
- * @class ExpLookitText
- * @extends ExpFrameBase
+ * @class Exp-lookit-text
+ * @extends Exp-frame-base
  */
 
 export default ExpFrameBaseComponent.extend({
     type: 'exp-lookit-text',
     layout: layout,
+
+    frameSchemaProperties: {
+        /**
+         * Whether to show a 'previous' button
+         *
+         * @property {Boolean} showPreviousButton
+         * @default true
+         */
+        showPreviousButton: {
+            type: 'boolean',
+            default: true
+        },
+        /**
+         * Array of text blocks (paragraphs) to display. Rendered using
+         * {{#crossLink "Exp-text-block"}}{{/crossLink}}, so all parameters
+         * of ExpTextBlock can be used.
+         *
+         * @property {Object} blocks
+         *   @param {String} title title to display
+         *   @param {String} text paragraph of text
+         *   @param {Boolean} emph whether to bold this paragraph
+         */
+        blocks: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    title: {
+                        type: 'string'
+                    },
+                    text: {
+                        type: 'string'
+                    },
+                    emph: {
+                        type: 'boolean'
+                    }
+                }
+            },
+            default: []
+        }
+    },
+
     meta: {
         name: 'ExpLookitText',
         description: 'Text-only frame for a Lookit study',
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                 * Whether to show a 'previous' button
-                 *
-                 * @property {Boolean} showPreviousButton
-                 * @default true
-                 */
-                showPreviousButton: {
-                    type: 'boolean',
-                    default: true
-                },
-                /**
-                 * Array of text blocks (paragraphs) to display. Rendered using
-                 * {{#crossLink "ExpTextBlock"}}{{/crossLink}}, so all parameters
-                 * of ExpTextBlock can be used.
-                 *
-                 * @property {Object} blocks
-                 *   @param {String} title title to display
-                 *   @param {String} text paragraph of text
-                 *   @param {Boolean} emph whether to bold this paragraph
-                 */
-                blocks: {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            title: {
-                                type: 'string'
-                            },
-                            text: {
-                                type: 'string'
-                            },
-                            emph: {
-                                type: 'boolean'
-                            }
-                        }
-                    },
-                    default: []
-                }
-            }
-        },
         data: {
             type: 'object',
             properties: {

@@ -4,6 +4,7 @@
 */
 
 import Ember from 'ember';
+import Substituter from '../utils/replace-values';
 
 /**
 * Randomizer to implement flexible condition assignment and counterbalancing by
@@ -15,146 +16,146 @@ import Ember from 'ember';
 * For a more detailed walkthrough, please see
 * https://lookit.readthedocs.io/en/develop/experiments.html#randomizer-frames
 *
-* To use, define a frame with "kind": "choice" and "sampler": "random-parameter-set",
+* To use, define a frame with 'kind': 'choice' and 'sampler': 'random-parameter-set',
 * as shown below, in addition to the parameters described under 'properties'.
 *
 * This
 *
 ```json
-"frames": {
-    "test-trials": {
-        "sampler": "random-parameter-set",
-        "kind": "choice",
-        "commonFrameProperties": {
-            "kind": "exp-lookit-story-page",
-            "baseDir": "https://s3.amazonaws.com/lookitcontents/ingroupobligations/",
-            "audioTypes": ["mp3", "ogg"],
-            "doRecording": true,
-            "autoProceed": false,
-            "parentTextBlock": {
-                "title": "Parents!",
-                "text": "Common instructions across test trials here",
-                "emph": true
+'frames': {
+    'test-trials': {
+        'sampler': 'random-parameter-set',
+        'kind': 'choice',
+        'commonFrameProperties': {
+            'kind': 'exp-lookit-story-page',
+            'baseDir': 'https://s3.amazonaws.com/lookitcontents/ingroupobligations/',
+            'audioTypes': ['mp3', 'ogg'],
+            'doRecording': true,
+            'autoProceed': false,
+            'parentTextBlock': {
+                'title': 'Parents!',
+                'text': 'Common instructions across test trials here',
+                'emph': true
             }
         },
-        "frameList": [
+        'frameList': [
             {
-                "images": [
+                'images': [
                     {
-                        "id": "agent",
-                        "src": "AGENTIMG1",
-                        "left": "40",
-                        "width": "20",
-                        "top": "10"
+                        'id': 'agent',
+                        'src': 'AGENTIMG1',
+                        'left': '40',
+                        'width': '20',
+                        'top': '10'
                     },
                     {
-                        "id": "left",
-                        "src": "LEFTIMG1",
-                        "left": "10",
-                        "width": "20",
-                        "top": "50"
+                        'id': 'left',
+                        'src': 'LEFTIMG1',
+                        'left': '10',
+                        'width': '20',
+                        'top': '50'
                     },
                     {
-                        "id": "right",
-                        "src": "RIGHTIMG1",
-                        "left": "70",
-                        "width": "20",
-                        "top": "50"
+                        'id': 'right',
+                        'src': 'RIGHTIMG1',
+                        'left': '70',
+                        'width': '20',
+                        'top': '50'
                     }
                 ],
-                "audioSources": [
+                'audioSources': [
                     {
-                        "audioId": "questionaudio",
-                        "sources": [{"stub": "QUESTION1AUDIO"}],
-                        "highlights": "QUESTION1HIGHLIGHTS"
+                        'audioId': 'questionaudio',
+                        'sources': [{'stub': 'QUESTION1AUDIO'}],
+                        'highlights': 'QUESTION1HIGHLIGHTS'
                     }
                 ]
             },
             {
-                "images": [
+                'images': [
                     {
-                        "id": "agent",
-                        "src": "AGENTIMG2",
-                        "left": "40",
-                        "width": "20",
-                        "top": "10"
+                        'id': 'agent',
+                        'src': 'AGENTIMG2',
+                        'left': '40',
+                        'width': '20',
+                        'top': '10'
                     },
                     {
-                        "id": "left",
-                        "src": "LEFTIMG2",
-                        "left": "10",
-                        "width": "20",
-                        "top": "50"
+                        'id': 'left',
+                        'src': 'LEFTIMG2',
+                        'left': '10',
+                        'width': '20',
+                        'top': '50'
                     },
                     {
-                        "id": "right",
-                        "src": "RIGHTIMG2",
-                        "left": "70",
-                        "width": "20",
-                        "top": "50"
+                        'id': 'right',
+                        'src': 'RIGHTIMG2',
+                        'left': '70',
+                        'width': '20',
+                        'top': '50'
                     }
                 ],
-                "audioSources": [
+                'audioSources': [
                     {
-                        "audioId": "questionaudio",
-                        "sources": [{"stub": "QUESTION2AUDIO"}],
-                        "highlights": "QUESTION2HIGHLIGHTS"
+                        'audioId': 'questionaudio',
+                        'sources': [{'stub': 'QUESTION2AUDIO'}],
+                        'highlights': 'QUESTION2HIGHLIGHTS'
                     }
                 ]
             }
         ],
-        "parameterSets": [
+        'parameterSets': [
             {
-                "AGENTIMG1": "flurpagent1.jpg",
-                "LEFTIMG1": "flurpvictim1.jpg",
-                "RIGHTIMG1": "zazzvictim1.jpg",
-                "QUESTION1AUDIO": "flurpleftmean1",
-                "QUESTION1HIGHLIGHTS": [
-                    {"range": [0.399293,	3.617124], "image": "agent"},
-                    {"range": [5.085112,	6.811467], "image": "left"},
-                    {"range": [6.905418,	8.702236], "image": "right"}
+                'AGENTIMG1': 'flurpagent1.jpg',
+                'LEFTIMG1': 'flurpvictim1.jpg',
+                'RIGHTIMG1': 'zazzvictim1.jpg',
+                'QUESTION1AUDIO': 'flurpleftmean1',
+                'QUESTION1HIGHLIGHTS': [
+                    {'range': [0.399293,	3.617124], 'image': 'agent'},
+                    {'range': [5.085112,	6.811467], 'image': 'left'},
+                    {'range': [6.905418,	8.702236], 'image': 'right'}
                 ],
-                "AGENTIMG2": "flurpagent2.jpg",
-                "LEFTIMG2": "flurpvictim2.jpg",
-                "RIGHTIMG2": "zazzvictim2.jpg",
-                "QUESTION2AUDIO": "flurpleftinduct1",
-                "QUESTION2HIGHLIGHTS": [
-                    {"range": [0.372569,	5.309110], "image": "agent"},
-                    {"range": [5.495395,	7.209213], "image": "left"},
-                    {"range": [5.495395,	7.209213], "image": "right"},
-                    {"range": [9.966225,	11.922212], "image": "left"},
-                    {"range": [12.052612,	14.008600], "image": "right"}
+                'AGENTIMG2': 'flurpagent2.jpg',
+                'LEFTIMG2': 'flurpvictim2.jpg',
+                'RIGHTIMG2': 'zazzvictim2.jpg',
+                'QUESTION2AUDIO': 'flurpleftinduct1',
+                'QUESTION2HIGHLIGHTS': [
+                    {'range': [0.372569,	5.309110], 'image': 'agent'},
+                    {'range': [5.495395,	7.209213], 'image': 'left'},
+                    {'range': [5.495395,	7.209213], 'image': 'right'},
+                    {'range': [9.966225,	11.922212], 'image': 'left'},
+                    {'range': [12.052612,	14.008600], 'image': 'right'}
                 ]
             },
             {
-                "AGENTIMG1": "zazzagent1.jpg",
-                "LEFTIMG1": "flurpvictim1.jpg",
-                "RIGHTIMG1": "zazzvictim1.jpg",
-                "QUESTION1AUDIO": "zazzrightnice1",
-                "QUESTION1HIGHLIGHTS": [
-                    {"range": [0.348454,	3.736871], "image": "agent"},
-                    {"range": [5.395033,	6.884975], "image": "left"},
-                    {"range": [6.969085,	8.975701], "image": "right"}
+                'AGENTIMG1': 'zazzagent1.jpg',
+                'LEFTIMG1': 'flurpvictim1.jpg',
+                'RIGHTIMG1': 'zazzvictim1.jpg',
+                'QUESTION1AUDIO': 'zazzrightnice1',
+                'QUESTION1HIGHLIGHTS': [
+                    {'range': [0.348454,	3.736871], 'image': 'agent'},
+                    {'range': [5.395033,	6.884975], 'image': 'left'},
+                    {'range': [6.969085,	8.975701], 'image': 'right'}
                 ],
-                "AGENTIMG2": "zazzagent2.jpg",
-                "LEFTIMG2": "flurpvictim2.jpg",
-                "RIGHTIMG2": "zazzvictim2.jpg",
-                "QUESTION2AUDIO": "zazzrightinduct1",
-                "QUESTION2HIGHLIGHTS": [
-                    {"range": [0.572920,	5.138376], "image": "agent"},
-                    {"range": [5.335317,	7.089884], "image": "left"},
-                    {"range": [5.335317,	7.089884], "image": "right"},
-                    {"range": [9.721735,	11.565821], "image": "left"},
-                    {"range": [11.655340,	13.535233], "image": "right"}
+                'AGENTIMG2': 'zazzagent2.jpg',
+                'LEFTIMG2': 'flurpvictim2.jpg',
+                'RIGHTIMG2': 'zazzvictim2.jpg',
+                'QUESTION2AUDIO': 'zazzrightinduct1',
+                'QUESTION2HIGHLIGHTS': [
+                    {'range': [0.572920,	5.138376], 'image': 'agent'},
+                    {'range': [5.335317,	7.089884], 'image': 'left'},
+                    {'range': [5.335317,	7.089884], 'image': 'right'},
+                    {'range': [9.721735,	11.565821], 'image': 'left'},
+                    {'range': [11.655340,	13.535233], 'image': 'right'}
                 ]
             }
         ],
-        "parameterSetWeights": [1, 1]
+        'parameterSetWeights': [1, 1]
     }
 }
 
 * ```
-* @class randomParameterSet
+* @class Random-parameter-set
 */
 
 function getRandomElement(arr, weights) {
@@ -171,23 +172,11 @@ function getRandomElement(arr, weights) {
     }
 }
 
-// http://stackoverflow.com/a/12646864
-function shuffleArray(array) {
-    var shuffled = Ember.$.extend(true, [], array); // deep copy array
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = shuffled[i];
-        shuffled[i] = shuffled[j];
-        shuffled[j] = temp;
-    }
-    return shuffled;
-}
-
 // TODO: in the future we may want to allow nesting of the list-object-selector syntax,
 // e.g. LISTVAR__3__4, LISTVAR1__LISTVAR2__3, LISTVAR1__1__LISTVAR2__3 - but this quickly
 // also requires appropriate processing of parentheses/order-of-operations.
 
-var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
+var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame, child) {
 
     // Data provided to randomizer (properties of frameConfig):
 
@@ -319,6 +308,46 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
      */
 
     /**
+     * [Optional] How to select a parameterSet for a participant who has previously
+     * participated in this study. Must be one of 'random' (default), 'persist', or
+     * 'rotate'. Meanings:
+     *
+     * * `"random"`: regardless of any previous sessions from this participant, select a
+     *    parameterSet for this participant as usual (including using parameterSetWeights if
+     *    provided). Default behavior.
+     *
+     * * `"persist"`: Continue assigning the same participant to the same parameterSet for all
+     *    sessions.
+     *
+     * * `"rotate"`: The first time, assign parameterSet randomly (per parameterSetWeights if
+     *    given); after that, each time the participant participates assign them to the next
+     *    parameterSet in the list. Subtracts length of parameterSets until the 'next' index
+     *    is in range.
+     *
+     * The most recent session in which the `conditions` data includes an element that looks
+     * like it was generated by this same randomizer (i.e., with key ending in `-frameId`,
+     * like `-test-trials`) will always be used for assignment. **Only sessions with a
+     * completed consent frame are considered, so that participants are not rotated through
+     * conditions simply due to refreshing the setup page.**
+     *
+     * Note: The "same" or "next" parameterSets are determined by the **index** of the
+     *    previously-selected parameterSet. That is, if you were assigned to conditionNum 0
+     *    (index 0 in parameterSets) last time, you will be assigned to conditionNum 0 again
+     *    this time if `conditionForAdditionalSessions` is `"persist"` and conditionNum 1 if
+     *    `conditionForAdditionalSessions` is `"rotate"`. So if you update the list of parameterSets
+     *    in your study - e.g. to fix a bug or clarify wording - the new values will be used
+     *    even for repeat participants. But be careful that you do not reorder them unless you
+     *    intend to, say, swap all participants to the opposite condition on a specified date!
+     *
+     *    If the previous index is now outside the range of the parameterSets list (e.g., you
+     *    used to have 6 conditions, and the participant was previously in conditionNum 5,
+     *    but then you changed parameterSets to have only 3 elements) and conditionForAdditionalSessions is
+     *    `"persist"`, then the participant is assigned to the last element of parameterSets.
+     *
+     * @property {String} conditionForAdditionalSessions
+     */
+
+    /**
      * [Optional] Array of weights for parameter sets; elements correspond to
      * elements of parameterSets. The probability of selecting an element
      * `parameterSets[i]` is `parameterSetWeights[i]/sum(parameterSetWeights)`.
@@ -326,78 +355,114 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
      * If not provided, all `parameterSets` are weighted equally.
      *
      * This is intended to allow manual control of counterbalancing during
-     * data collection, e.g. to allow one condition to "catch up" if it was
+     * data collection, e.g. to allow one condition to 'catch up' if it was
      * randomly selected less often.
+     *
+     * Instead of providing a single list of the same length as parameterSets,
+     * you may instead provide a list of objects specifying the weights to use within
+     * various age ranges, like this:
+     *
+```
+    'parameterSetWeights': [
+        {
+            'minAge': 0,
+            'maxAge': 365,
+            'weights': [1, 0, 1]
+        },
+        {
+            'minAge': 365,
+            'maxAge': 10000,
+            'weights': [0, 1, 0]
+        },
+    ]
+```
+     * The child's age in days will be computed, and the weights used will be based on the
+     * first element of `parameterSetWeights` where the child falls between the min and max
+     * age. In the example above, children under one year old will be assigned to either
+     * the first or third condition; children over a year will be assigned to the second condition.
+     * This may be useful for researchers who need to balance condition assignment per
+     * age bracket. As you code data and realize you are set on 3-year-olds in condition A, for
+     * instance, you can stop assigning any more 3-year-olds to that condition.
      *
      * @property {Number[]} parameterSetWeights
      */
 
-    function replaceValues(obj, rep) {
-        for (var property in obj) {
-            if (obj.hasOwnProperty(property)) {
-                if (typeof obj[property] === 'object') { // recursively handle objects
-                    obj[property] = replaceValues(obj[property], rep);
-                } else if (Array.isArray(obj[property])) { // and lists
-                    for (var iElement = 0; iElement < obj[property].length; iElement++) {
-                        obj[property][iElement] = replaceValues(obj[property][iElement], rep);
+    // Select a parameter set to use for this trial.
+    var parameterSet;
+    var parameterSetIndex;
+
+    // Assign based on previous sessions, if appropriate.
+    var selectedBasedOnPreviousSession = false;
+    if (frameConfig.hasOwnProperty('conditionForAdditionalSessions') && frameConfig.conditionForAdditionalSessions != 'random') {
+        // if there are any previous sessions with the appropriate info
+        var mostRecentSession = pastSessions.find(sess => sess.get('completedConsentFrame') && Object.keys(sess.get('conditions', {})).some(frId => frId.endsWith('-' + frameId)));
+        if (mostRecentSession) {
+            let conditions = mostRecentSession.get('conditions');
+            let conditionKey = Object.keys(conditions).find(frId => frId.endsWith('-' + frameId));
+            let prevCondition = conditions[conditionKey];
+            if (frameConfig.conditionForAdditionalSessions == 'persist') {
+                parameterSetIndex = prevCondition.conditionNum;
+                if (parameterSetIndex >= frameConfig.parameterSets.length) {
+                    parameterSetIndex = frameConfig.parameterSets.length - 1;
+                }
+            } else if (frameConfig.conditionForAdditionalSessions == 'rotate') {
+                parameterSetIndex = prevCondition.conditionNum + 1;
+                while (parameterSetIndex >= frameConfig.parameterSets.length) {
+                    parameterSetIndex = parameterSetIndex - frameConfig.parameterSets.length;
+                }
+            } else {
+                throw `Unrecognized conditionForAdditionalSessions option. Should be one of 'persist', 'random', or 'rotate'.`;
+            }
+            parameterSet =  frameConfig.parameterSets[parameterSetIndex];
+            selectedBasedOnPreviousSession = true;
+        }
+    }
+
+    // Otherwise... (not assigning based on previous sessions)
+    if (!selectedBasedOnPreviousSession) {
+
+        var equalWeights = new Array(frameConfig.parameterSets.length).fill(1);
+        if (!(frameConfig.hasOwnProperty('parameterSetWeights'))) {
+            frameConfig.parameterSetWeights = equalWeights;
+        } else {
+            if (typeof frameConfig.parameterSetWeights[0] === 'object') {
+                // Get child's age in days
+                var childDOB;
+                try {
+                    childDOB = child.get('birthday');
+                    if (isNaN(childDOB)) {
+                        console.warn('No child birthday available for randomization. Using today\'s date.');
+                        childDOB = new Date().getTime();
                     }
-                } else if (typeof obj[property] === 'string') { // do substitution for strings
-                    // If rep has this exact property, just sub in that value
-                    if (rep.hasOwnProperty(obj[property])) {
-                        obj[property] = rep[obj[property]];
-                    } else if (typeof obj[property] === 'string' && obj[property].includes('#')) { // Also check for selector syntax:
-                        // property of form X__Y, rep has property X, Y is a valid selector.
-                        var segments = obj[property].split('#');
-                        var propName = segments[0];
-                        var selector = segments.slice(1).join('#');
-                        if (rep.hasOwnProperty(propName)) {
-                            var theList = rep[propName];
-                            if (!Array.isArray(theList)) {
-                                throw 'Selector syntax used in frame but corresponding value in parameterSet is not a list';
-                            }
-                            if (Ember.$.isNumeric(selector)) {
-                                var index = Math.round(selector);
-                                obj[property] = theList[index];
-                            } else if (selector === 'RAND') {
-                                obj[property] = theList[Math.floor(Math.random() * theList.length)];
-                            } else if (selector === 'PERM') {
-                                obj[property] = shuffleArray(theList);
-                            } else if (selector === 'UNIQ') {
-                                // If no shuffled version & index stored for this property, create
-                                if (!storedProperties.hasOwnProperty(propName)) {
-                                    storedProperties[propName] = {'shuffledArray': shuffleArray(theList), 'index': 0};
-                                }
-                                // Fetch current element from shuffled array
-                                obj[property] = storedProperties[propName].shuffledArray[storedProperties[propName].index];
-                                // Move to next for next UNIQ element using this property
-                                storedProperties[propName].index = storedProperties[propName].index + 1;
-                                // Loop around to start if needed
-                                if (storedProperties[propName].index == storedProperties[propName].shuffledArray.length) {
-                                    storedProperties[propName].index = 0;
-                                }
-                            } else {
-                                throw 'Unknown selector after # in parameter specification';
-                            }
-                        }
-                    }
+                } catch (error) {
+                    console.warn('No child birthday available for randomization. Using today\'s date.');
+                    childDOB = new Date().getTime();
+                }
+                var childAgeDays = (new Date().getTime() - childDOB) / (1000 * 60 * 60 * 24);
+
+                // Find the age range this child fits in
+                var ageBasedWeightObj = frameConfig.parameterSetWeights.find(function(element) {
+                    return (element.minAge <= childAgeDays && childAgeDays <= element.maxAge);
+                });
+                if (ageBasedWeightObj) {
+                    frameConfig.parameterSetWeights = ageBasedWeightObj.weights;
+                    console.log('Using age-based randomization parameters');
+                } else { // Set to equal weights if child doesn't fall in any range given
+                    console.warn('Child does not fall into any designated age range for randomization. Weighting parameter sets equally.');
+                    frameConfig.parameterSetWeights = equalWeights;
                 }
             }
         }
-        return obj;
-    }
 
-    // Select a parameter set to use for this trial.
-    if (!(frameConfig.hasOwnProperty('parameterSetWeights'))) {
-        frameConfig.parameterSetWeights = new Array(frameConfig.parameterSets.length).fill(1);
+        var parameterData = getRandomElement(frameConfig.parameterSets, frameConfig.parameterSetWeights);
+        parameterSetIndex = parameterData[0];
+        parameterSet = parameterData[1];
     }
-
-    var parameterData = getRandomElement(frameConfig.parameterSets, frameConfig.parameterSetWeights);
-    var parameterSetIndex = parameterData[0];
-    var parameterSet = parameterData[1];
-    var storedProperties = {}; // any properties we need to permute and keep track of indices within, across frames, when replacing
 
     var frames = [];
     var thisFrame = {};
+
+    var substituter = new Substituter();
 
     for (var iFrame = 0; iFrame < frameConfig.frameList.length; iFrame++) {
 
@@ -414,7 +479,7 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
 
         // Substitute any properties that can be replaced based on
         // the parameter set.
-        thisFrame = replaceValues(thisFrame, parameterSet);
+        thisFrame = substituter.replaceValues(thisFrame, parameterSet);
 
         // Assign frame ID
         //thisFrame.id = `${frameId}`;

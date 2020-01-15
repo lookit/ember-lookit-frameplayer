@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>app/randomizers/select.js - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/Exp-exit-survey.html">Exp-exit-survey</a></li>
+                            <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
+                            <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
+                            <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
+                            <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
+                            <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
+                            <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
+                            <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
+                            <li><a href="../classes/Exp-lookit-preview-explanation.html">Exp-lookit-preview-explanation</a></li>
+                            <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
+                            <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-text.html">Exp-lookit-text</a></li>
+                            <li><a href="../classes/Exp-lookit-video.html">Exp-lookit-video</a></li>
+                            <li><a href="../classes/Exp-lookit-video-assent.html">Exp-lookit-video-assent</a></li>
+                            <li><a href="../classes/Exp-lookit-video-consent.html">Exp-lookit-video-consent</a></li>
+                            <li><a href="../classes/Exp-player.html">Exp-player</a></li>
+                            <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
+                            <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
+                            <li><a href="../classes/Exp-video-consent.html">Exp-video-consent</a></li>
+                            <li><a href="../classes/Exp-video-preview.html">Exp-video-preview</a></li>
+                            <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
+                            <li><a href="../classes/Full-screen.html">Full-screen</a></li>
+                            <li><a href="../classes/Media-reload.html">Media-reload</a></li>
+                            <li><a href="../classes/Permute.html">Permute</a></li>
+                            <li><a href="../classes/Random-parameter-set.html">Random-parameter-set</a></li>
+                            <li><a href="../classes/Select.html">Select</a></li>
+                            <li><a href="../classes/Session-record.html">Session-record</a></li>
+                            <li><a href="../classes/Video-record.html">Video-record</a></li>
+                            <li><a href="../classes/video-recorder.html">video-recorder</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: app/randomizers/select.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+* @module exp-player
+* @submodule randomizers
+*/
+
+/**
+* Randomizer to allow selection of one (or arbitrary sequence) of defined frames.
+* This is intended to be used either within a {{#crossLink &quot;Random-parameter-set&quot;}}{{/crossLink}} randomizer with
+* different &#x60;parameterSets&#x60; picking out different values for &#x60;whichFrames&#x60;) or indirectly
+* via the {{#crossLink &quot;Exp-frame-select&quot;}}{{/crossLink}} frame (which allows setting &#x60;whichFrames&#x60; using a custom
+* &#x60;generateProperties&#x60; function). Note that you cannot add a &#x60;generateProperties&#x60; function
+* directly to a randomizer!
+*
+* To use, define a frame with &quot;kind&quot;: &quot;choice&quot; and &quot;sampler&quot;: &quot;select&quot;,
+* as shown below, in addition to the parameters described under &#x27;properties&#x27;.
+*
+&#x60;&#x60;&#x60;json
+&quot;frames&quot;: {
+    &quot;select-randomizer-test&quot;: {
+        &quot;sampler&quot;: &quot;select&quot;,
+        &quot;kind&quot;: &quot;choice&quot;,
+        &quot;whichFrames&quot;: 0,
+        &quot;commonFrameProperties&quot;: {
+            &quot;kind&quot;: &quot;exp-lookit-text&quot;
+        },
+        &quot;frameOptions&quot;: [
+            {
+                &quot;blocks&quot;: [
+                    {
+                        &quot;emph&quot;: true,
+                        &quot;text&quot;: &quot;Let&#x27;s think about hippos!&quot;,
+                        &quot;title&quot;: &quot;FRAME 1&quot;
+                    },
+                    {
+                        &quot;text&quot;: &quot;Some more about hippos...&quot;
+                    }
+                ]
+            },
+            {
+                &quot;blocks&quot;: [
+                    {
+                        &quot;emph&quot;: false,
+                        &quot;text&quot;: &quot;Let&#x27;s think about dolphins!&quot;,
+                        &quot;title&quot;: &quot;FRAME 2&quot;
+                    }
+                ]
+            }
+        ]
+    }
+}
+*
+* &#x60;&#x60;&#x60;
+* @class Select
+*/
+
+var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
+
+    // Data provided to randomizer (properties of frameConfig):
+
+    /**
+     * List of frames that can be created by this randomizer. Each frame is an
+     * object with any necessary frame-specific properties specified. The
+     * &#x27;kind&#x27; of frame can be specified either here (per frame) or in
+     * commonFrameProperties. If a property is defined for a given frame both
+     * in this frame list and in commonFrameProperties, the value in the frame
+     * list will take precedence.
+     *
+     * (E.g., you could include &#x27;kind&#x27;: &#x27;normal-frame&#x27; in
+     * commmonFrameProperties, but for a single frame in frameOptions, include
+     * &#x27;kind&#x27;: &#x27;special-frame&#x27;.)
+     *
+     * @property {Object[]} frameOptions
+     */
+
+    /**
+     * Object describing common parameters to use in EVERY frame created
+     * by this randomizer. Parameter names and values are as described in
+     * the documentation for the frameType used.
+     *
+     * @property {Object} commonFrameProperties
+     */
+
+    /**
+     * Index or indices (0-indexed) within frameOptions to actually use. This can be either a number
+     * (e.g., 0 or 1 to use the first or second option respectively) or an array providing
+     * an ordered list of indices to use (e.g., [0, 1] or [1, 0] to use the first then
+     * second or second then first options, respectively). All indices must be integers
+     * in [0, frameOptions.length).
+     *
+     * If not provided or -1, the entire frameOptions list is used in order. (If empty
+     * list is provided, however, that is respected and no frames are inserted by this
+     * randomizer.)
+     *
+     * @property {Number} whichFrames
+     */
+
+    var thisFrame = {};
+    var frames = [];
+
+    // If a single frame index is provided, convert to a single-element list
+    if ((typeof frameConfig.whichFrames) === &#x27;number&#x27; &amp;&amp; frameConfig.whichFrames != -1) {
+        frameConfig.whichFrames = [frameConfig.whichFrames];
+    } else if (!frameConfig.hasOwnProperty(&#x27;whichFrames&#x27;) || frameConfig.whichFrames == -1 || !frameConfig.whichFrames) {
+        frameConfig.whichFrames = [...frameConfig.frameOptions.keys()];
+    }
+
+    for (var iFrame = 0; iFrame &lt; frameConfig.whichFrames.length; iFrame++) {
+        if (frameConfig.whichFrames[iFrame] &lt; 0 || frameConfig.whichFrames[iFrame] &gt;= frameConfig.frameOptions.length) {
+            throw &#x60;Frame index in whichFrames out of range in select randomizer. All frame indices must be between 0 and frameOptions.length - 1.&#x60;;
+        }
+
+        // Assign parameters common to all frames made by this randomizer
+        thisFrame = {};
+        Object.assign(thisFrame, frameConfig.commonFrameProperties);
+
+        // Assign parameters specific to this frame (allow to override
+        // common parameters assigned above)
+        Object.assign(thisFrame, frameConfig.frameOptions[frameConfig.whichFrames[iFrame]]);
+
+        thisFrame = resolveFrame(frameId + &#x27;-&#x27; + iFrame, thisFrame)[0];
+        frames.push(...thisFrame);
+    }
+
+    /**
+     * Parameters captured and sent to the server
+     *
+     * @method conditions
+     * @param {Object[]} whichFrames the index/indices of the frame(s) used
+     */
+    return [frames, {&#x27;whichFrames&#x27;: frameConfig.whichFrames}];
+};
+export default randomizer;
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

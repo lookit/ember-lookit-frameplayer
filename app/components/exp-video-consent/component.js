@@ -11,7 +11,8 @@ import VideoRecord from '../../mixins/video-record';
 /**
 Video consent frame for Lookit studies UNDER INITIAL MIT PROTOCOL ONLY, with consent document displayed at left and instructions to start recording, read a statement out loud, and send.
 This version allows custom specification of consent form text.
-For studies by researchers who have signed the Lookit Usage Agreement and have approval from their own IRB, please use exp-lookit-video-consent frame.
+For studies by researchers who have signed the Lookit Usage Agreement and have approval from their own IRB,
+please use an {{#crossLink "Exp-lookit-video-consent"}}{{/crossLink}}  frame instead.
 Consent document can be downloaded as PDF document by participant.
 
 ```json
@@ -45,65 +46,63 @@ Consent document can be downloaded as PDF document by participant.
 }
 ```
 
-@class ExpVideoConsent
-@extends ExpLookitVideoConsent
+@class Exp-video-consent
+@extends Exp-lookit-video-consent
 
-@uses VideoRecord
+@uses Video-record
 */
 
 export default ExpLookitVideoConsent.extend(VideoRecord, {
     layout,
 
+    frameSchemaProperties: {
+        /**
+        Title of the consent document
+        @property {String} title
+        @default 'Consent to participate in behavioral research: <br> Inference and induction study'
+        */
+        title: {
+            type: 'string',
+            default: 'Consent to participate in behavioral research: <br> Inference and induction study'
+        },
+
+        /**
+        Array of paragraphs of the consent document, each with title and text.
+        @property {Array} blocks
+            @param {String} title
+            @param {String} text
+        @default []
+        */
+        blocks: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    title: {
+                        type: 'string'
+                    },
+                    text: {
+                        type: 'string'
+                    }
+                }
+            },
+            default: []
+        },
+
+        /**
+        Text the user is asked to read aloud to consent
+        @property {String} prompt
+        @default 'I consent to participate in this study'
+        */
+        prompt: {
+            type: 'string',
+            default: 'I consent to participate in this study'
+        }
+    },
+
     meta: {
         name: 'Video Consent Form',
         description: 'A video consent form.',
-        parameters: {
-            type: 'object',
-            properties: {
-                /**
-                Title of the consent document
-                @property {String} title
-                @default 'Consent to participate in behavioral research: <br> Inference and induction study'
-                */
-                title: {
-                    type: 'string',
-                    default: 'Consent to participate in behavioral research: <br> Inference and induction study'
-                },
-
-                /**
-                Array of paragraphs of the consent document, each with title and text.
-                @property {Array} blocks
-                    @param {String} title
-                    @param {String} text
-                @default []
-                */
-                blocks: {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            title: {
-                                type: 'string'
-                            },
-                            text: {
-                                type: 'string'
-                            }
-                        }
-                    },
-                    default: []
-                },
-
-                /**
-                Text the user is asked to read aloud to consent
-                @property {String} prompt
-                @default 'I consent to participate in this study'
-                */
-                prompt: {
-                    type: 'string',
-                    default: 'I consent to participate in this study'
-                }
-            }
-        },
         data: {
             /**
              * Parameters captured and sent to the server

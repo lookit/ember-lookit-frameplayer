@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>app/mixins/session-record.js - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/Exp-exit-survey.html">Exp-exit-survey</a></li>
+                            <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
+                            <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
+                            <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
+                            <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
+                            <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
+                            <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
+                            <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
+                            <li><a href="../classes/Exp-lookit-preview-explanation.html">Exp-lookit-preview-explanation</a></li>
+                            <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
+                            <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-text.html">Exp-lookit-text</a></li>
+                            <li><a href="../classes/Exp-lookit-video.html">Exp-lookit-video</a></li>
+                            <li><a href="../classes/Exp-lookit-video-assent.html">Exp-lookit-video-assent</a></li>
+                            <li><a href="../classes/Exp-lookit-video-consent.html">Exp-lookit-video-consent</a></li>
+                            <li><a href="../classes/Exp-player.html">Exp-player</a></li>
+                            <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
+                            <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
+                            <li><a href="../classes/Exp-video-consent.html">Exp-video-consent</a></li>
+                            <li><a href="../classes/Exp-video-preview.html">Exp-video-preview</a></li>
+                            <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
+                            <li><a href="../classes/Full-screen.html">Full-screen</a></li>
+                            <li><a href="../classes/Media-reload.html">Media-reload</a></li>
+                            <li><a href="../classes/Permute.html">Permute</a></li>
+                            <li><a href="../classes/Random-parameter-set.html">Random-parameter-set</a></li>
+                            <li><a href="../classes/Select.html">Select</a></li>
+                            <li><a href="../classes/Session-record.html">Session-record</a></li>
+                            <li><a href="../classes/Video-record.html">Video-record</a></li>
+                            <li><a href="../classes/video-recorder.html">video-recorder</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: app/mixins/session-record.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import Ember from &#x27;ember&#x27;;
+import { observer } from &#x27;@ember/object&#x27;;
+import VideoRecorder from &#x27;../services/video-recorder&#x27;;
+
+let {
+    $
+} = Ember;
+
+/**
+ * @module exp-player
+ * @submodule mixins
+ */
+
+/**
+ * A mixin that can be used to add basic support for video recording to a particular experiment frame
+ *
+ * By default, the recorder will be installed when this frame loads, but recording
+ * will not start automatically. To override either of these settings, set
+ * the properties &#x60;doUseCamera&#x60; and/or &#x60;startRecordingAutomatically&#x60; in the consuming
+ * frame.
+ *
+ * You will also need to set &#x60;sessionRecorderElement&#x60; if the recorder is to be housed other than
+ * in an element identified by the ID &#x60;recorder&#x60;.
+ *
+ * The properties &#x60;recorder&#x60;, &#x60;sessionRecorderReady&#x60;, and
+ * &#x60;sessionVideoId&#x60; become available to the consuming frame. The recorder object has fields
+ * that give information about its state: &#x60;hasWebCam&#x60;, &#x27;hasCamAccess&#x60;, &#x60;recording&#x60;,
+ * &#x60;connected&#x60;, and &#x60;micChecked&#x60; - for details, see services/video-recorder.js. These
+ * can be accessed from the consuming frame as e.g. &#x60;this.get(&#x27;recorder&#x27;).get(&#x27;hasWebCam&#x27;)&#x60;.
+ *
+ * If starting recording automatically, the function &#x60;whenPossibleToRecord&#x60; will be called
+ * once recording is possible, and will start recording. If you want to do other things
+ * at this point, like proceeding to a test trial, you can override this function in your
+ * frame.
+ *
+ * See &#x27;methods&#x27; for the functions you can use on a frame that extends VideoRecord.
+ *
+ * Events recorded in a frame that extends VideoRecord will automatically have additional
+ * fields sessionVideoId (video filename), pipeId (temporary filename initially assigned by
+ * the recording service),
+ * and streamTime (when in the video they happened, in s).
+ *
+ * @class Session-record
+ */
+
+/**
+ * When recorder detects a change in camera access
+ *
+ * @event hasCamAccess
+ * @param {Boolean} hasCamAccess
+ */
+
+/**
+ * When recorder detects a change in video stream connection status
+ *
+ * @event videoStreamConnection
+ * @param {String} status status of video stream connection, e.g.
+ * &#x27;NetConnection.Connect.Success&#x27; if successful
+ */
+
+/**
+ * Just before stopping webcam video capture
+ *
+ * @event stoppingCapture
+ */
+
+export default Ember.Mixin.create({
+
+    /*
+     * The recorder object, accessible to the consuming frame. Includes properties
+     * recorder.nWebcams, recorder.hasCamAccess, recorder.micChecked, recorder.connected.
+     */
+    sessionRecorder: Ember.computed.alias(&#x27;session.recorder&#x27;),
+    sessionRecordingInProgress: Ember.computed.alias(&#x27;session.recordingInProgress&#x27;),
+
+    /* A video ID to use for the current recording. Format is
+     * &#x60;videoStream_&lt;experimentId&gt;_multiframe-&lt;frameIdOfFirstFrame&gt;_&lt;sessionId&gt;_timestampMS_RRR&#x60;
+     * where RRR are random numeric digits.
+     */
+    sessionVideoId: Ember.computed.alias(&#x27;session.videoId&#x27;),
+
+    // JQuery ID to identify the recorder element.
+    sessionRecorderElement: &#x27;sessionRecorder&#x27;,
+
+    /**
+     * Whether to start a session (multi-frame) recording as soon as possible upon loading this frame. This allows you to conduct video recording across multiple frames, simply specifying which frame to start and end on. Individual frames may also provide frame-specific recording capabilities; it is best NOT to conduct both a multiframe &#x27;session&#x27; recording and frame-specific recording simultaneously as multiple video streams will eat up bandwidth. If you decide to use session recording, turn off recording for any frames that would otherwise record. There can be multiple session recordings in an experiment, e.g. from frames 1-3 and 5-10.
+     * @property {Number} startSessionRecording
+     * @default false
+     */
+    startSessionRecording: false,
+
+    /**
+     * Whether to end any session (multi-frame) recording at the end of this frame.
+     * @property {Number} endSessionRecording
+     * @default false
+     */
+    endSessionRecording: false,
+
+    // Whether recorder has been set up yet. Automatically set when doing setup.
+    sessionRecorderReady: false,
+
+    /**
+     * Whether to do audio-only (vs also video) recording for session (multiframe) recording. Only used if starting session recording this frame.
+     * @property {Number} sessionAudioOnly
+     * @default 0
+     */
+    sessionAudioOnly: 0,
+
+    _generateSessionVideoId() {
+        return [
+            &#x27;videoStream&#x27;,
+            this.get(&#x27;experiment.id&#x27;),
+            this.get(&#x27;id&#x27;) + &#x27;-multiframe&#x27;,
+            this.get(&#x27;session.id&#x27;),
+            +Date.now(), // Timestamp in ms
+            Math.floor(Math.random() * 1000)
+        ].join(&#x27;_&#x27;);
+    },
+
+    /**
+     * Set up a video recorder instance
+     * @method setupRecorder
+     * @param {Node} element A DOM node representing where to mount the recorder
+     * @return {Promise} A promise representing the result of installing the recorder
+     */
+    setupSessionRecorder(recorderElementId) {
+
+        var $sessionRecorderElement = $(&#x27;&lt;div&gt;&#x27;, {
+            id: recorderElementId,
+            class: &#x27;video-recorder-hidden&#x27;
+        });
+        // Make sure to append to the player&#x27;s parent so that this doesn&#x27;t get removed
+        // (which won&#x27;t prevent recording, but WILL prevent receiving events!)
+        $(&#x27;#&#x27; + this.get(&#x27;elementId&#x27;)).parent().append($sessionRecorderElement);
+        var $element = $(&#x27;#&#x27; + recorderElementId);
+
+        const maxRecordingLength = 100000000;
+        const autosave = 1;
+        const sessionVideoId = this._generateSessionVideoId();
+        this.get(&#x27;session&#x27;).set(&#x27;videoId&#x27;, sessionVideoId);
+        const sessionRecorder = new VideoRecorder({element: $element});
+        const pipeLoc = Ember.getOwner(this).resolveRegistration(&#x27;config:environment&#x27;).pipeLoc;
+        const pipeEnv = Ember.getOwner(this).resolveRegistration(&#x27;config:environment&#x27;).pipeEnv;
+        const installPromise = sessionRecorder.install(sessionVideoId, pipeLoc, pipeEnv,
+          maxRecordingLength, autosave, this.get(&#x27;sessionAudioOnly&#x27;));
+
+        // Track specific events for all frames that use VideoRecorder
+        var _this = this;
+        sessionRecorder.on(&#x27;onCamAccess&#x27;, (recId, hasAccess) =&gt; {   // eslint-disable-line no-unused-vars
+            if (!(_this.get(&#x27;isDestroyed&#x27;) || _this.get(&#x27;isDestroying&#x27;))) {
+                _this.send(&#x27;setTimeEvent&#x27;, &#x27;sessionRecorder.hasCamAccess&#x27;, {
+                    hasCamAccess: hasAccess
+                });
+            }
+        });
+        sessionRecorder.on(&#x27;onConnectionStatus&#x27;, (recId, status) =&gt; {   // eslint-disable-line no-unused-vars
+            if (!(_this.get(&#x27;isDestroyed&#x27;) || _this.get(&#x27;isDestroying&#x27;))) {
+                _this.send(&#x27;setTimeEvent&#x27;, &#x27;videoStreamConnection&#x27;, {
+                    status: status
+                });
+            }
+        });
+        _this.get(&#x27;session&#x27;).set(&#x27;recorder&#x27;, sessionRecorder);
+        return installPromise;
+    },
+
+    /**
+     * Start recording
+     * @method startSessionRecorder
+     * @return Promise Resolves when recording has started
+     */
+    startSessionRecorder() {
+        const sessionRecorder = this.get(&#x27;sessionRecorder&#x27;);
+        if (sessionRecorder) {
+            return sessionRecorder.record();
+        } else {
+            return Ember.RSVP.reject();
+        }
+    },
+
+    /**
+     * Stop recording
+     * @method startSessionRecorder
+     * @return Promise Resolves when recording has started
+     */
+    stopSessionRecorder() {
+        const sessionRecorder = this.get(&#x27;sessionRecorder&#x27;);
+        if (sessionRecorder) {
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;stoppingCapture&#x27;);
+            return sessionRecorder.stop();
+        } else {
+            return Ember.RSVP.reject();
+        }
+    },
+
+    /**
+     * Destroy recorder and stop accessing webcam
+     * @method destroySessionRecorder
+     */
+    destroySessionRecorder() {
+        const recorder = this.get(&#x27;sessionRecorder&#x27;);
+        if (recorder) {
+            if (!(this.get(&#x27;isDestroyed&#x27;) || this.get(&#x27;isDestroying&#x27;))) {
+                this.send(&#x27;setTimeEvent&#x27;, &#x27;destroyingRecorder&#x27;);
+            }
+            recorder.destroy();
+        }
+    },
+
+    didInsertElement() {
+        if (this.get(&#x27;startSessionRecording&#x27;)) {
+            var _this = this;
+
+            this.setupSessionRecorder(this.get(&#x27;sessionRecorderElement&#x27;)).then(() =&gt; {
+                /**
+                 * When session video recorder has been installed
+                 *
+                 * @event sessionRecorderReady
+                 */
+                _this.send(&#x27;setTimeEvent&#x27;, &#x27;sessionRecorderReady&#x27;);
+                _this.get(&#x27;session&#x27;).set(&#x27;recordingInProgress&#x27;, true);
+                _this.set(&#x27;sessionRecorderReady&#x27;, true);
+                _this.whenPossibleToRecordSession(); // make sure this fires
+            });
+        }
+        this._super(...arguments);
+    },
+
+    willDestroyElement() {
+        var _this = this;
+        if (_this.get(&#x27;sessionRecorder&#x27;) &amp;&amp; _this.get(&#x27;endSessionRecording&#x27;)) {
+            if (!(_this.get(&#x27;session&#x27;).get(&#x27;recordingInProgress&#x27;))) {
+                _this.destroySessionRecorder();
+            } else {
+                _this.stopSessionRecorder().then(() =&gt; {
+                    _this.set(&#x27;stoppedSessionRecording&#x27;, true);
+                    _this.destroySessionRecorder();
+                }, () =&gt; {
+                    _this.destroySessionRecorder();
+                });
+            }
+        }
+        _this.send(&#x27;setTimeEvent&#x27;, &#x27;destroyingElement&#x27;);
+        _this._super(...arguments);
+    },
+
+    /**
+     * Observer that starts recording once session recorder is ready. Override to do additional
+     * stuff at this point!
+     * @method whenPossibleToRecord
+     */
+    whenPossibleToRecordSession: observer(&#x27;sessionRecorder.hasCamAccess&#x27;, &#x27;sessionRecorderReady&#x27;, function() {
+        if (this.get(&#x27;startSessionRecording&#x27;)) {
+            var _this = this;
+            if (this.get(&#x27;sessionRecorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;sessionRecorderReady&#x27;)) {
+                this.startSessionRecorder().then(() =&gt; {
+                    _this.send(&#x27;setTimeEvent&#x27;, &#x27;startedSessionRecording&#x27;);
+                    _this.set(&#x27;sessionRecorderReady&#x27;, false);
+                });
+            }
+        }
+    })
+
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

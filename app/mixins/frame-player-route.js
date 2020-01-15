@@ -29,12 +29,12 @@ export default Ember.Mixin.create({
             .then(() => this._getStudy(params))
             .then((study) => {
                 this.set('_study', study);
-                console.log(study.id);
+                console.log('Study: ' + study.id);
                 return this._getChild(params);
             })
             .then((child) => {
                 this.set('_child', child);
-                console.log(child.id);
+                console.log('Child: ' + child.id);
                 return this._createStudyResponse().save();
             }).then((response) => {
                 this.set('_response', response);

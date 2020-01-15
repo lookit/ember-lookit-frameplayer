@@ -115,4 +115,6 @@ $exp-lookit-story-page-height: (100 - $exp-lookit-story-page-top-margin - $exp-l
     font-size: x-large;
 }
 
-
+.exp-lookit-story-page div.progress {
+    height: 3vh !important;
+}
