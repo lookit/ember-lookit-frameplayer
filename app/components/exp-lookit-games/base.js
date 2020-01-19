@@ -549,6 +549,9 @@ export default class Base {
    */
   getElapsedTime(time = gameState.initialTime) {
 
+    if(time === 0){
+      return  0;
+    }
     return (new Date().getTime() - time) / 1000;
   }
 
