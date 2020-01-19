@@ -79,7 +79,7 @@ export default class Base {
 
     this.dataTimer = function () {
       let inst = this;
-      dataLoop = setTimeout(function () {
+      dataLoop = setInterval(function () {
         inst.dataCollection();
       }, DATA_COLLECTION_TIME);
 
@@ -121,7 +121,7 @@ export default class Base {
    * @method init
    */
   init() {
-    clearTimeout(dataLoop);
+    clearInterval(dataLoop);
     this.dataTimer();
   }
 
@@ -273,7 +273,7 @@ export default class Base {
 
   stop() {
 
-    clearTimeout(dataLoop);
+   // clearTimeout(dataLoop);
 
   }
 
@@ -307,8 +307,6 @@ export default class Base {
    */
   dataCollection() {
 
-
-    this.dataTimer();
 
   }
 
@@ -473,7 +471,6 @@ export default class Base {
   finishGame(score) {
 
     this.currentRounds++;
-    clearTimeout(dataLoop);
     cancelAnimationFrame(gameLoop);
     if (score) {
       this.increaseScore();
@@ -482,6 +479,7 @@ export default class Base {
       this.initGame();
 
     } else {
+      clearInterval(dataLoop);
       this.context.set('showInstructions', true);
       this.context.send('export');
       this.context.stopRecorder().finally(() => {
@@ -552,6 +550,9 @@ export default class Base {
    */
   getElapsedTime(time = gameState.initialTime) {
 
+    if(time === 0){
+      return  0;
+    }
     return (new Date().getTime() - time) / 1000;
   }
 
