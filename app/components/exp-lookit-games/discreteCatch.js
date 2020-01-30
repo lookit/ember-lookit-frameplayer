@@ -170,7 +170,7 @@ export default class DiscreteCatch extends PaddleGames {
   getObstruction(obstructionIndex = 1) {
 
     let leftBorder = (1 - 0.105 * obstructionIndex) * super.Utils.SCALE ;
-    let topBorder = (0.994) * super.Utils.SCALE;
+    let topBorder = (0.94) * super.Utils.SCALE;
     let rightBorder = 1.18  * super.Utils.SCALE;
     let downBorder = (1.622) * super.Utils.SCALE;
     return {
