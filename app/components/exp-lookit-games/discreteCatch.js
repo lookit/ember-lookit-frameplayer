@@ -378,8 +378,13 @@ export default class DiscreteCatch extends PaddleGames {
       if (super.ball.hitstate === 'very good') {
 
         super.increaseScore();
+        // Limit consecutive sounds to 10 only
         if (consecutiveCounts > 10) {
           consecutiveCounts = 10;
+        }
+        //start from second count to make different sound from regular catch
+        if(consecutiveCounts === 0){
+          consecutiveCounts = 2;
         }
         sounds[gameSound.CATCH].currentTime = (SOUND_DELAY > 0 ? SOUND_DELAY + 0.16 : 0) * consecutiveCounts;
         sounds[gameSound.CATCH].play();
