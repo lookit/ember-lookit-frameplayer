@@ -151,6 +151,7 @@ export default class DiscreteCatchLift extends PaddleGames {
     if (super.currentRounds > 0 || (super.currentRounds === 0 && !super.paddleIsMoved())) {
       sounds[gameSound.START].play();
     }
+    super.paddle.moved = 0;
 
     super.initGame();
   }
