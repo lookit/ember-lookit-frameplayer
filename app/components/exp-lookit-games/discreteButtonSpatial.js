@@ -500,6 +500,12 @@ export default class DiscreteButtonSpatial extends Base {
         ball_timestamp:super.ball.timestamp,
         trial: super.currentRounds,
         trialType: this.context.trialType,
+        scale: super.Utils.SCALE.toFixed(1),
+        window_height: screen.height,
+        window_width: screen.width,
+        canvas_height: this.canvas.height,
+        canvas_width: this.canvas.width,
+        dpi:window.devicePixelRatio,
         timestamp: super.getElapsedTime()
 
       };

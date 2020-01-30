@@ -218,9 +218,9 @@ export default class PaddleGames extends Base {
     }
 
     // Move paddle inside paddle Box upon start of the game
-    if(super.ball.state === 'start' && super.currentRounds === 0 && paddle.position.y < paddleBox.position.y) {
+    if(super.ball.state === 'start' && super.currentRounds === 0 && paddle.position.y < paddleBox.position.y  &&  paddle.positions.length == 0 ) {
 
-      mouseY = paddle.position.y + 0.0238 * super.Utils.SCALE;
+       mouseY = paddleBox.position.y + paddle.dimensions.height/2 ;
     }
 
     paddle.time = super.getElapsedTime();

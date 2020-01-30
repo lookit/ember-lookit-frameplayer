@@ -211,6 +211,9 @@ export default class ButtonPressWindow extends Base {
         scale: super.Utils.SCALE.toFixed(1),
         window_height: screen.height,
         window_width: screen.width,
+        canvas_height: this.canvas.height,
+        canvas_width: this.canvas.width,
+        dpi:window.devicePixelRatio,
         target_position: TARGETX.toFixed(3)
 
       };
