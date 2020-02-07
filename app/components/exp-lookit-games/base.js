@@ -107,7 +107,7 @@ export default class Base {
       this.Utils.SCALE  =  420 * coefficient;
     }else{
       this.canvas.width = screen.width;
-      let coefficient = screen.width/768;
+      let coefficient = screen.width/1024;
       this.canvas.height = coefficient * 768;
       this.Utils.SCALE  =  420 * coefficient;
     }
@@ -476,6 +476,7 @@ export default class Base {
       this.increaseScore();
     }
     if (this.currentRounds < maxRounds) {
+      gameState.startTime = 0;
       this.initGame();
 
     } else {

@@ -357,6 +357,7 @@ export default class DiscreteButtonSpatial extends Base {
       super.moveBallToStart(images[gameImage.BALL]);
       if (super.gameState.initialTime > 0 && super.getElapsedTime() > jitterT) {
         sounds[gameSound.START].pause();
+        sounds[gameSound.START].currentTime = 0;
         sounds[gameSound.LAUNCH].play();
         super.gameState.initialTime = new Date().getTime();
         super.ball.state = 'fall';
