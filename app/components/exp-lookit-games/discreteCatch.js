@@ -147,8 +147,8 @@ export default class DiscreteCatch extends PaddleGames {
     super.createPaddleBox();
     super.basketObject();
     obstructionsNum = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];
-    super.ballObject();
-    super.ball.position.y = (1.1471 )* super.Utils.SCALE;
+    this.ballObject();
+    super.ball.position.y = (1.291 )* super.Utils.SCALE;
     // Generate array of obstruction objects
     obstructions = Array(obstructionsNum).fill({}).map((value, index) =>
 
