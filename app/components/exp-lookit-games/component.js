@@ -407,7 +407,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
           }
         },
         play() {
-            this.send('showFullscreen');
+
             this.set('showInstructions', false);
             this.set('showProgress', false);
             this.set('showIntro', false);
@@ -431,9 +431,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
         this._super(...arguments);
 
         this.set('isPlaying', true);
-        if(this.get('fullscreen') === true){
-          this.send('showFullscreen');
-        }
+
         if (this.get('playGame') === true) {
 
           this.send('play');
