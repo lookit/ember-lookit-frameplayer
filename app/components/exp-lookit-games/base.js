@@ -62,8 +62,31 @@ export default class Base {
     // Event listener for mouse and keyboard here
     document.addEventListener('keydown', this.keyDownHandler, false);
     document.addEventListener('keyup', this.keyUpHandler, false);
+
+
+    let isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+
     this.canvas.requestPointerLock =  this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock || this.canvas.webkitRequestPointerLock;
-    this.canvas.requestPointerLock();
+    if(isSafari) {
+      this.canvas.requestPointerLock();
+    }else{
+
+      //fix for google chrome and firefox, request pointer lock only after full screen event
+      document.addEventListener('fullscreenchange', (event) => {
+
+        if (document.fullscreenElement) {
+          document.fullscreenElement.requestPointerLock();
+          document.fullscreenElement.style.setProperty('cursor', 'none', 'important');
+
+        } else {
+          console.log('Leaving full-screen mode.');
+        }
+      });
+    }
+    this.canvas.requestFullscreen = this.canvas.requestFullscreen || this.canvas.msRequestFullscreen || this.canvas.mozRequestFullScreen || this.canvas.webkitRequestFullscreen;
+    this.canvas.requestFullscreen();
+
+
     this.calculateCanvas();
     this.ballObject();
     this.currentRounds = 0;
