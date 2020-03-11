@@ -10,13 +10,13 @@ export default Ember.Mixin.create({
         return this.get('store').findRecord('study', params.study_id);
     },
     _getChild(params) {
+        // Note: could handle case where child_id parameter is missing or invalid here and
+        // generate an example child record.
         return this.get('store').findRecord('child', params.child_id);
     },
     _createStudyResponse() {
         let response = this.store.createRecord('response', {
             completed: false,
-            feedback: '',
-            hasReadFeedback: '',
             expData: {},
             sequence: []
         });
