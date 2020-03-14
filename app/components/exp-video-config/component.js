@@ -3,6 +3,12 @@ import layout from './template';
 
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 import VideoRecord from '../../mixins/video-record';
+import { LOOKIT_PREFERRED_DEVICES } from '../../services/video-recorder';
+import { observer } from '@ember/object';
+
+let {
+    $
+} = Em;
 
 /**
  * @module exp-player
@@ -36,6 +42,48 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     micChecked: Em.computed.alias('recorder.micChecked'),
     hasCamAccess: Em.computed.alias('recorder.hasCamAccess'),
 
+    populateDropdowns() {
+        const micSelect = $('select#audioSource')[0];
+        const camSelect = $('select#videoSource')[0];
+        const selectors = [micSelect, camSelect];
+
+        // Adapted from the example at https://github.com/webrtc/samples/blob/gh-pages/src/content/devices/input-output/js/main.js
+        navigator.mediaDevices.enumerateDevices().then(function(deviceInfos) {
+            selectors.forEach(select => {
+                while (select.firstChild) {
+                    select.removeChild(select.firstChild);
+                }
+                const blankOption = document.createElement('option');
+                blankOption.text = 'select...';
+                blankOption.value = 123;
+                select.appendChild(blankOption);
+            });
+            for (let i = 0; i !== deviceInfos.length; ++i) {
+                const deviceInfo = deviceInfos[i];
+                const option = document.createElement('option');
+                option.value = deviceInfo.deviceId;
+                if (deviceInfo.kind === 'audioinput') {
+                    option.text = deviceInfo.label || `Microphone ${micSelect.length + 1}`;
+                    if (option.value == LOOKIT_PREFERRED_DEVICES.mic) {
+                        option.selected = true;
+                    }
+                    micSelect.appendChild(option);
+                } else if (deviceInfo.kind === 'videoinput') {
+                    option.text = deviceInfo.label || `Camera ${camSelect.length + 1}`;
+                    if (option.value == LOOKIT_PREFERRED_DEVICES.cam) {
+                        option.selected = true;
+                    }
+                    camSelect.appendChild(option);
+                }
+            }
+        });
+    },
+
+    reloadRecorder() {
+        this.destroyRecorder();
+        this.setupRecorder(this.$(this.get('recorderElement')));
+    },
+
     actions: {
 
         checkAudioThenNext() {
@@ -46,11 +94,27 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             }
         },
 
-        reloadRecorder() {
+        reloadRecorderButton() {
             this.set('showWarning', false);
-            this.destroyRecorder();
-            this.setupRecorder(this.$(this.get('recorderElement')));
+            this.populateDropdowns();
+            this.reloadRecorder();
         },
+
+        processSelectedMic() {
+            var selectedMicId = $('select#audioSource')[0].value;
+            if (selectedMicId) {
+                LOOKIT_PREFERRED_DEVICES.mic = selectedMicId;
+                this.reloadRecorder();
+            }
+        },
+
+        processSelectedCam() {
+            var selectedCamId = $('select#videoSource')[0].value;
+            if (selectedCamId) {
+                LOOKIT_PREFERRED_DEVICES.cam = selectedCamId;
+                this.reloadRecorder();
+            }
+        }
     },
     frameSchemaProperties: {
         /**
@@ -73,5 +137,17 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             type: 'object',
             properties: {}
         }
+    },
+
+    updateOptions: observer('hasCamAccess', function() {
+        if (this.get('hasCamAccess')) {
+            this.populateDropdowns();
+        }
+    }),
+
+    didInsertElement() {
+        this._super(...arguments);
+        this.populateDropdowns();
     }
 });
+
