@@ -185,7 +185,7 @@ export default ExpFrameBaseComponent.extend({
         this.parentView.set('frames', frames);
         var existingConditions = this.parentView.get('conditions');
         if (existingConditions) {
-          Object.assign(existingConditions, conditions);
+            Object.assign(existingConditions, conditions);
         }
         this.parentView.set('conditions', existingConditions);
     },

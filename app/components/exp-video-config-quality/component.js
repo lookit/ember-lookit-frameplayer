@@ -273,7 +273,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 .prop('id', 'exp-video-config-quality-hide-record-buttons')
                 .html('.exp-video-config-quality div[id^="pipeMenu"] {visibility: hidden; display: none !important;}'));
         } else {
-            $('#exp-video-config-quality-hide-record-buttons').remove()
+            $('#exp-video-config-quality-hide-record-buttons').remove();
         }
     },
 
