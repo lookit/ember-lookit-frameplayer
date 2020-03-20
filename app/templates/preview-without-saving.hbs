@@ -17,3 +17,16 @@
           }}
     {{/if}}
 </div>
+
+{{#bs-modal open=showData title="Data collected during this preview session" closeAction=(action 'toggleData') as |modal|}}
+    {{#modal.body}}
+        <p>
+            <strong> Note: </strong>
+            This dialog will not appear to participants when they complete a study. Instead, the "Finish" button will redirect them to the exit URL you specify.
+        </p>
+        <hr>
+        <pre class="preview-data">
+            {{previewData}}
+        </pre>
+    {{/modal.body}}
+{{/bs-modal}}

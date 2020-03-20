@@ -1,3 +1,5 @@
+{{! template-lint-disable invalid-interactive}}
+
 <div class="row exp-video-config">
 
     <div class="col-md-10 col-md-offset-1">
@@ -19,6 +21,17 @@
         <div class="row exp-video-config recorder-container">
             <div id="recorder" class="col-xs-12"></div>
         </div>
+
+        <div class="row select-source">
+            <div class="select" onchange={{action 'processSelectedMic' value="target.value"}}>
+                <label for="audioSource">Microphone: </label><select id="audioSource"></select>
+            </div>
+
+            <div class="select" onchange={{action 'processSelectedCam' value="target.value"}}>
+                <label for="videoSource">Camera: </label><select id="videoSource"></select>
+            </div>
+        </div>
+
         <p class="support-note"> <em>Note:</em> Lookit is currently only supported on recent versions of Firefox and Chrome. It doesn't work on mobile devices like phones or tablets yet!</p>
 
     </div>
@@ -48,7 +61,7 @@
                     {{/if}}
 
                     <div class="statusBox">
-                        <button id="reloadButton" class="btn btn-default" {{action 'reloadRecorder'}}>
+                        <button id="reloadButton" class="btn btn-default" {{action 'reloadRecorderButton'}}>
                             {{#if hasCamAccess}}
                                 Redetect webcam
                             {{else}}
