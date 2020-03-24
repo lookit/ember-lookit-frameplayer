@@ -66,6 +66,19 @@ const gameRandomization = {
 };
 
 
+let exportData = {
+  game_type: 'discreteButtonSpatial',
+  window:  [],
+  selected_button: []  ,
+  obstruction_number: [],
+  ball_position_x: [],
+  ball_position_y: [],
+  ball_timestamp: [],
+  trial: [],
+  trialType: '',
+  timestamp: []
+
+};
 
 /**
  * The user will operate with keyboard keys to predict which ball trajectory will hit which window
@@ -491,25 +504,16 @@ export default class DiscreteButtonSpatial extends Base {
       }
 
 
-      let exportData = {
-        game_type: 'discreteButtonSpatial',
-        window: this.getCorrectIndex()+1,
-        selected_button: target_state + 1  ,
-        obstruction_number: trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION],
-        ball_position_x: super.convertXvalue(super.ball.position.x),
-        ball_position_y: super.convertYvalue(super.ball.position.y),
-        ball_timestamp:super.ball.timestamp,
-        trial: super.currentRounds,
-        trialType: this.context.trialType,
-        scale: super.Utils.SCALE.toFixed(1),
-        window_height: screen.height,
-        window_width: screen.width,
-        canvas_height: this.canvas.height,
-        canvas_width: this.canvas.width,
-        dpi:window.devicePixelRatio,
-        timestamp: super.getElapsedTime()
+      exportData.window.push(this.getCorrectIndex()+1);
+      exportData.selected_button.push(target_state + 1);
+      exportData.obstruction_number.push(trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION]);
+      exportData.trial.push(super.currentRounds);
+      exportData.trialType = this.context.trialType;
+      exportData.ball_position_x.push(super.convertXvalue(super.ball.position.x));
+      exportData.ball_position_y.push(super.convertYvalue(super.ball.position.y));
+      exportData.ball_timestamp.push(super.ball.timestamp);
+      exportData.timestamp.push(super.getElapsedTime());
 
-      };
 
       super.storeData(exportData);
     }
