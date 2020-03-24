@@ -418,7 +418,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
         },
         export(){
 
-          this.jsonToCSVConvertor(this.export_arr,"Data",true);
+          this.jsonDownload(this.export_arr,"Data");
 
         }
 
@@ -549,6 +549,35 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, {
     willDestroyElement() {
         this._super(...arguments);
     },
+
+
+    jsonDownload(JSONData, ReportTitle){
+
+      JSONData = JSON.stringify(JSONData);
+
+      let fileName = "Report_";
+      //this will remove the blank-spaces from the title and replace it with an underscore
+      fileName += ReportTitle.replace(/ /g,"_");
+
+      //Initialize file format you want csv or xls
+      //let uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
+      let blob = new Blob([JSONData], { type: 'text/json' });
+
+
+      //this trick will generate a temp <a /> tag
+      let link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+
+      //set the visibility hidden so it will not effect on your web-layout
+      link.style = "visibility:hidden";
+      link.download = fileName + ".json";
+
+      //this part will append the anchor tag and remove it after automatic click
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    },
+
     jsonToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
       //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
       JSONData = JSON.stringify(JSONData);
