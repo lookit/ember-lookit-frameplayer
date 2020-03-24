@@ -470,7 +470,7 @@ export default class Base {
    */
   storeData(exportData) {
 
-    this.context.get('export_arr').addObject(exportData);
+    this.context.set('export_arr',exportData);
 
   }
 

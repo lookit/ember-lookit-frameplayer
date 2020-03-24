@@ -56,6 +56,21 @@ const gameImage = {
 };
 
 
+let exportData = {
+
+  game_type: 'buttonPressWindow',
+  trajectory: [],
+  ball_position_x: [],
+  ball_position_y: [],
+  ball_timestamp: [],
+  button_pressed: [],
+  trial: [],
+  trialType: '',
+  timestamp: [],
+  feedback: [],
+  target_position: ''
+
+};
 
 /**
  * Main implementation of feed  the mouse in the house game.
@@ -196,27 +211,17 @@ export default class ButtonPressWindow extends Base {
     // window, 3 : hit the target)
     if(super.ball.state === 'start' || super.ball.state === 'hit' || super.ball.state === 'fall') {
       let currentTrajectory = TfArrIndex.indexOf(TfArr[this.currentRounds]) + 1;
-      let exportData = {
 
-        game_type: 'buttonPressWindow',
-        trajectory: currentTrajectory,
-        ball_position_x: super.convertXvalue(super.ball.position.x),
-        ball_position_y: super.convertYvalue(super.ball.position.y),
-        ball_timestamp: super.ball.timestamp,
-        button_pressed: keyPressed.value,
-        trial: super.currentRounds,
-        trialType: this.context.trialType,
-        timestamp: super.getElapsedTime(),
-        feedback: super.ballState(),
-        scale: super.Utils.SCALE.toFixed(1),
-        window_height: screen.height,
-        window_width: screen.width,
-        canvas_height: this.canvas.height,
-        canvas_width: this.canvas.width,
-        dpi:window.devicePixelRatio,
-        target_position: TARGETX.toFixed(3)
+      exportData.trajectory.push(currentTrajectory);
+      exportData.ball_position_x.push(super.convertXvalue(super.ball.position.x));
+      exportData.ball_position_y.push(super.convertYvalue(super.ball.position.y));
+      exportData.ball_timestamp.push(super.ball.timestamp);
+      exportData.trial.push(super.currentRounds);
+      exportData.trialType = this.context.trialType;
+      exportData.timestamp.push(super.getElapsedTime());
+      exportData.feedback.push(this.ballState());
+      exportData.target_position = TARGETX.toFixed(3)
 
-      };
 
       super.storeData(exportData);
     }

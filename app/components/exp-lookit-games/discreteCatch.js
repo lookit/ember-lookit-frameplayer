@@ -61,6 +61,27 @@ const gameArrayValues = {
 
 };
 
+
+let exportData = {
+  game_type: 'discreteCatch',
+  trajectory: [],
+  ball_position_x: [],
+  obstruction_number:[],
+  ball_position_y: [],
+  ball_timestamp: [],
+  paddle_position_y: [],
+  paddle_timestamp: [],
+  trial: [],
+  feedback: [],
+  timestamp: [],
+  paddle_x:'',
+  trialType:'',
+  paddle_center_x:'',
+  red_dot_width:'',
+  red_dot_start_position:''
+
+};
+
 /**
  * Main implementation of catch game.
  * The user will operate with paddle to catch the super.ball started
@@ -189,31 +210,22 @@ export default class DiscreteCatch extends PaddleGames {
   dataCollection() {
     if(super.ball.state === 'start' ||  super.ball.state === 'hit' || super.ball.state === 'fall') {
 
-      let exportData = {
-        game_type: 'discreteCatch',
-        trajectory: trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT],
-        ball_position_x: super.convertXvalue(super.ball.position.x),
-        ball_position_y:  this.convertYvalue(super.ball.position.y),
-        ball_timestamp: super.ball.timestamp,
-        paddle_center_x: super.convertXvalue(super.paddle.position.x   + (super.paddle.dimensions.width / 2) ),
-        paddle_x: super.convertXvalue(super.paddle.position.x),
-        paddle_position_y: this.convertYvalue(super.paddle.position.y),
-        paddle_timestamp: super.paddle.time,
-        red_dot_start_position: (1.3301 - redDotMargin).toFixed(3),
-        red_dot_width: redDotMargin*2,
-        obstruction_number: trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION],
-        trial: super.currentRounds,
-        trialType: this.context.trialType,
-        feedback: super.ballState(),
-        scale: super.Utils.SCALE.toFixed(1),
-        window_height: screen.height,
-        window_width: screen.width,
-        canvas_height: this.canvas.height,
-        canvas_width: this.canvas.width,
-        dpi:window.devicePixelRatio,
-        timestamp: super.getElapsedTime()
+      exportData.ball_position_x.push(super.convertXvalue(super.ball.position.x));
+      exportData.ball_position_y.push(super.convertYvalue(super.ball.position.y));
+      exportData.ball_timestamp.push(super.ball.timestamp);
+      exportData.timestamp.push(super.getElapsedTime());
+      exportData.paddle_position_y.push(super.convertYvalue(super.paddle.position.y));
+      exportData.trial.push(super.currentRounds);
+      exportData.trajectory.push(trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT]);
+      exportData.feedback.push(this.ballState());
+      exportData.obstruction_number.push(trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION]);
+      exportData.paddle_timestamp.push(super.paddle.time);
+      exportData.paddle_x = super.convertXvalue(super.paddle.position.x);
+      exportData.trialType = this.context.trialType;
+      exportData.paddle_center_x = super.convertXvalue(super.paddle.position.x   +  (super.paddle.dimensions.width / 2));
+      exportData.red_dot_width =redDotMargin*2;
+      exportData.red_dot_start_position = (1.3301 - redDotMargin).toFixed(3);
 
-      };
 
       super.storeData(exportData);
     }
