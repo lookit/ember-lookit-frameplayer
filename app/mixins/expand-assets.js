@@ -6,7 +6,10 @@ import Ember from 'ember';
  */
 
 /**
- * Allow users to provide audio/video and image source values as either relative paths
+ *
+ * Reference for DEVELOPERS of new frames only!
+ *
+ * Mixin to allow users to provide audio/video and image source values as either relative paths
  * within a base directory or as full paths.
  *
  * When adding this mixin to a frame, you will need to define a property of the frame

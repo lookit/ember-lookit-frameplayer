@@ -29,19 +29,16 @@
                     <div id="api-tabview-panel">
                         <h2 class="off-left">Collections</h2>
                         <ul id="api-modules" class="apis modules">
-                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
                             <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
                             <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
                             <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
                             <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
-                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
                         </ul>
                         <h2 class="off-left">All elements</h2>
                               <div id="api-tabview-filter">
                       <input type="search" id="api-filter" placeholder="Type to filter">
                     </div>
                         <ul id="api-classes" class="apis classes">
-                            <li><a href="../classes/Exp-exit-survey.html">Exp-exit-survey</a></li>
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
@@ -59,10 +56,9 @@
                             <li><a href="../classes/Exp-lookit-video.html">Exp-lookit-video</a></li>
                             <li><a href="../classes/Exp-lookit-video-assent.html">Exp-lookit-video-assent</a></li>
                             <li><a href="../classes/Exp-lookit-video-consent.html">Exp-lookit-video-consent</a></li>
-                            <li><a href="../classes/Exp-player.html">Exp-player</a></li>
+                            <li><a href="../classes/Exp-lookit-webcam-display.html">Exp-lookit-webcam-display</a></li>
                             <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
                             <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
-                            <li><a href="../classes/Exp-video-consent.html">Exp-video-consent</a></li>
                             <li><a href="../classes/Exp-video-preview.html">Exp-video-preview</a></li>
                             <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
                             <li><a href="../classes/Full-screen.html">Full-screen</a></li>
@@ -119,9 +115,12 @@ import Ember from &#x27;ember&#x27;;
  */
 
 /**
+ *
+ * Reference for DEVELOPERS of new frames only!
+ *
  * Allow any media-containing frame to correctly reset.
  * Fix LEI-93, an issue where the second of two consecutive videos did not play correctly.
-
+ *
  * Due to an internal ember quirk/optimization, the component instance is not destroyed if two of the same thing are
  *  used in a row, which means the same video tag was being dynamically reassigned- something HTML does not normally
  * allow. The page needs to be manually told to load the correct new video.

@@ -8,12 +8,13 @@ let {
     $
 } = Ember;
 
-/**
+// Use regular comment syntax here to exclude from docs for clarity
+/*
  * @module exp-player
  * @submodule components
  */
 
-/**
+/*
  * Experiment player: a component that renders a series of frames that define an experiment
  *
  * Sample usage:
