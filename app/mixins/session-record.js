@@ -12,6 +12,9 @@ let {
  */
 
 /**
+ *
+ * Reference for DEVELOPERS of new frames only!
+ *
  * A mixin that can be used to add basic support for video recording to a particular experiment frame
  *
  * By default, the recorder will be installed when this frame loads, but recording

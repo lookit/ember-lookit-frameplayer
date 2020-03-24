@@ -29,19 +29,16 @@
                     <div id="api-tabview-panel">
                         <h2 class="off-left">Collections</h2>
                         <ul id="api-modules" class="apis modules">
-                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
                             <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
                             <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
                             <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
                             <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
-                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
                         </ul>
                         <h2 class="off-left">All elements</h2>
                               <div id="api-tabview-filter">
                       <input type="search" id="api-filter" placeholder="Type to filter">
                     </div>
                         <ul id="api-classes" class="apis classes">
-                            <li><a href="../classes/Exp-exit-survey.html">Exp-exit-survey</a></li>
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
@@ -59,10 +56,9 @@
                             <li><a href="../classes/Exp-lookit-video.html">Exp-lookit-video</a></li>
                             <li><a href="../classes/Exp-lookit-video-assent.html">Exp-lookit-video-assent</a></li>
                             <li><a href="../classes/Exp-lookit-video-consent.html">Exp-lookit-video-consent</a></li>
-                            <li><a href="../classes/Exp-player.html">Exp-player</a></li>
+                            <li><a href="../classes/Exp-lookit-webcam-display.html">Exp-lookit-webcam-display</a></li>
                             <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
                             <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
-                            <li><a href="../classes/Exp-video-consent.html">Exp-video-consent</a></li>
                             <li><a href="../classes/Exp-video-preview.html">Exp-video-preview</a></li>
                             <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
                             <li><a href="../classes/Full-screen.html">Full-screen</a></li>
@@ -213,6 +209,10 @@
                                 <a href="#method_serializeContent">serializeContent</a>
 
                             </li>
+                            <li class="index-item method">
+                                <a href="#method_serializeContent">serializeContent</a>
+
+                            </li>
                             <li class="index-item method inherited inherited">
                                 <a href="#method_setupRecorder">setupRecorder</a>
 
@@ -280,6 +280,10 @@
                                 <a href="#property_baseDir">baseDir</a>
 
                             </li>
+                            <li class="index-item property">
+                                <a href="#property_blocks">blocks</a>
+
+                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_displayFullscreenOverride">displayFullscreenOverride</a>
 
@@ -320,6 +324,10 @@
                                 <a href="#property_prompt">prompt</a>
 
                             </li>
+                            <li class="index-item property">
+                                <a href="#property_prompt">prompt</a>
+
+                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_recorder">recorder</a>
 
@@ -346,6 +354,10 @@
                             </li>
                             <li class="index-item property">
                                 <a href="#property_text">text</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_title">title</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -438,7 +450,7 @@
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_destroyRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l306"><code>app&#x2F;mixins&#x2F;video-record.js:306</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l309"><code>app&#x2F;mixins&#x2F;video-record.js:309</code></a>
         </p>
 
 
@@ -468,7 +480,7 @@
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Session-record.html#method_destroySessionRecorder">Session-record</a>:
-        <a href="../files/app_mixins_session-record.js.html#l196"><code>app&#x2F;mixins&#x2F;session-record.js:196</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l199"><code>app&#x2F;mixins&#x2F;session-record.js:199</code></a>
         </p>
 
 
@@ -498,7 +510,7 @@
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#method_exitFullscreen">Full-screen</a>:
-        <a href="../files/app_mixins_full-screen.js.html#l137"><code>app&#x2F;mixins&#x2F;full-screen.js:137</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l140"><code>app&#x2F;mixins&#x2F;full-screen.js:140</code></a>
         </p>
 
 
@@ -528,7 +540,7 @@
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_hideRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l373"><code>app&#x2F;mixins&#x2F;video-record.js:373</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l376"><code>app&#x2F;mixins&#x2F;video-record.js:376</code></a>
         </p>
 
 
@@ -649,7 +661,7 @@ event sent by a particular frame</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_pauseRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l232"><code>app&#x2F;mixins&#x2F;video-record.js:232</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l235"><code>app&#x2F;mixins&#x2F;video-record.js:235</code></a>
         </p>
 
 
@@ -675,8 +687,7 @@ instead stop/start and make separate clips if needed.
 
 
                     <div class="param-description">
-                        <p>If provided (and true), don't raise an error if recording isn't ready yet. Not actually used for WebRTC.</p>
-
+                        If provided (and true), don't raise an error if recording isn't ready yet. Not actually used for WebRTC.
                     </div>
 
                 </li>
@@ -701,7 +712,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_resumeRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l252"><code>app&#x2F;mixins&#x2F;video-record.js:252</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l255"><code>app&#x2F;mixins&#x2F;video-record.js:255</code></a>
         </p>
 
 
@@ -717,6 +728,116 @@ instead stop/start and make separate clips if needed.
     </div>
 
 
+
+
+</div>
+<div id="method_serializeContent" class="method item">
+    <h3 class="name"><code>serializeContent</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>consentFormText</code>
+                </li>
+                <li class="arg">
+                        <code>videoID</code>
+                </li>
+                <li class="arg">
+                        <code>videoList</code>
+                </li>
+                <li class="arg">
+                        <code>eventTimings</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+            <p>Inherited from
+            <a href="../classes/Exp-frame-base.html#method_serializeContent">
+                Exp-frame-base
+            </a>
+            but overwritten in
+        <a href="../files/app_components_exp-video-consent_component.js.html#l108"><code>app&#x2F;components&#x2F;exp-video-consent&#x2F;component.js:108</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Parameters captured and sent to the server</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">consentFormText</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>the exact text shown in the consent document during this frame</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">videoID</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>The ID of any webcam video recorded during this frame</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">videoList</code>
+                        <span class="type">List</span>
+
+
+                    <div class="param-description">
+                        <p>a list of webcam video IDs in case there are &gt;1</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">eventTimings</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                    <p>The payload sent to the server</p>
+
+            </div>
+        </div>
 
 
 </div>
@@ -748,11 +869,8 @@ instead stop/start and make separate clips if needed.
 
 
     <div class="meta">
-            <p>Inherited from
-            <a href="../classes/Exp-frame-base.html#method_serializeContent">
-                Exp-frame-base
-            </a>
-            but overwritten in
+                <p>
+                Defined in
         <a href="../files/app_components_exp-video-preview_component.js.html#l181"><code>app&#x2F;components&#x2F;exp-video-preview&#x2F;component.js:181</code></a>
         </p>
 
@@ -843,7 +961,7 @@ instead stop/start and make separate clips if needed.
                 Session-record
             </a>
             but overwritten in
-        <a href="../files/app_mixins_video-record.js.html#l197"><code>app&#x2F;mixins&#x2F;video-record.js:197</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l200"><code>app&#x2F;mixins&#x2F;video-record.js:200</code></a>
         </p>
 
 
@@ -864,8 +982,7 @@ instead stop/start and make separate clips if needed.
 
 
                     <div class="param-description">
-                        <p>A DOM node representing where to mount the recorder</p>
-
+                        A DOM node representing where to mount the recorder
                     </div>
 
                 </li>
@@ -877,8 +994,7 @@ instead stop/start and make separate clips if needed.
 
             <div class="returns-description">
                         <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>:
-                    <p>A promise representing the result of installing the recorder</p>
-
+                    A promise representing the result of installing the recorder
             </div>
         </div>
 
@@ -899,7 +1015,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#method_showFullscreen">Full-screen</a>:
-        <a href="../files/app_mixins_full-screen.js.html#l104"><code>app&#x2F;mixins&#x2F;full-screen.js:104</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l107"><code>app&#x2F;mixins&#x2F;full-screen.js:107</code></a>
         </p>
 
 
@@ -929,7 +1045,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_showRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l382"><code>app&#x2F;mixins&#x2F;video-record.js:382</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l385"><code>app&#x2F;mixins&#x2F;video-record.js:385</code></a>
         </p>
 
 
@@ -963,7 +1079,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_startRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l270"><code>app&#x2F;mixins&#x2F;video-record.js:270</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l273"><code>app&#x2F;mixins&#x2F;video-record.js:273</code></a>
         </p>
 
 
@@ -979,8 +1095,7 @@ instead stop/start and make separate clips if needed.
             <h4>Returns:</h4>
 
             <div class="returns-description">
-                    <p>Promise Resolves when recording has started</p>
-
+                    Promise Resolves when recording has started
             </div>
         </div>
 
@@ -1007,7 +1122,7 @@ instead stop/start and make separate clips if needed.
                 Session-record
             </a>
             but overwritten in
-        <a href="../files/app_mixins_session-record.js.html#l167"><code>app&#x2F;mixins&#x2F;session-record.js:167</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l170"><code>app&#x2F;mixins&#x2F;session-record.js:170</code></a>
         </p>
 
 
@@ -1047,7 +1162,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_stopRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l291"><code>app&#x2F;mixins&#x2F;video-record.js:291</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l294"><code>app&#x2F;mixins&#x2F;video-record.js:294</code></a>
         </p>
 
 
@@ -1063,8 +1178,7 @@ instead stop/start and make separate clips if needed.
             <h4>Returns:</h4>
 
             <div class="returns-description">
-                    <p>Promise A promise that resolves when upload is complete</p>
-
+                    Promise A promise that resolves when upload is complete
             </div>
         </div>
 
@@ -1088,7 +1202,7 @@ instead stop/start and make separate clips if needed.
                 Session-record
             </a>
             but overwritten in
-        <a href="../files/app_mixins_video-record.js.html#l357"><code>app&#x2F;mixins&#x2F;video-record.js:357</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l360"><code>app&#x2F;mixins&#x2F;video-record.js:360</code></a>
         </p>
 
 
@@ -1120,7 +1234,7 @@ stuff at this point!
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_[doUseCamera=true]">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l144"><code>app&#x2F;mixins&#x2F;video-record.js:144</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l147"><code>app&#x2F;mixins&#x2F;video-record.js:147</code></a>
         </p>
 
 
@@ -1145,7 +1259,7 @@ to override if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_[recorderElement=&#x27;#recorder&#x27;]">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l110"><code>app&#x2F;mixins&#x2F;video-record.js:110</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l113"><code>app&#x2F;mixins&#x2F;video-record.js:113</code></a>
         </p>
 
 
@@ -1169,7 +1283,7 @@ to override if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_[startRecordingAutomatically=false]">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l151"><code>app&#x2F;mixins&#x2F;video-record.js:151</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l154"><code>app&#x2F;mixins&#x2F;video-record.js:154</code></a>
         </p>
 
 
@@ -1194,7 +1308,7 @@ should set to override if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Expand-assets.html#property_assetsToExpand">Expand-assets </a> (click for formatted description):
-        <a href="../files/app_mixins_expand-assets.js.html#l92"><code>app&#x2F;mixins&#x2F;expand-assets.js:92</code></a>
+        <a href="../files/app_mixins_expand-assets.js.html#l95"><code>app&#x2F;mixins&#x2F;expand-assets.js:95</code></a>
         </p>
 
 
@@ -1218,7 +1332,7 @@ should set to override if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_audioOnly">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l137"><code>app&#x2F;mixins&#x2F;video-record.js:137</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l140"><code>app&#x2F;mixins&#x2F;video-record.js:140</code></a>
         </p>
 
 
@@ -1243,7 +1357,7 @@ should set to override if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Expand-assets.html#property_audioTypes">Expand-assets </a> (click for formatted description):
-        <a href="../files/app_mixins_expand-assets.js.html#l119"><code>app&#x2F;mixins&#x2F;expand-assets.js:119</code></a>
+        <a href="../files/app_mixins_expand-assets.js.html#l122"><code>app&#x2F;mixins&#x2F;expand-assets.js:122</code></a>
         </p>
 
 
@@ -1284,7 +1398,7 @@ expanded out to
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_autosave">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l130"><code>app&#x2F;mixins&#x2F;video-record.js:130</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l133"><code>app&#x2F;mixins&#x2F;video-record.js:133</code></a>
         </p>
 
 
@@ -1309,7 +1423,7 @@ expanded out to
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Expand-assets.html#property_baseDir">Expand-assets </a> (click for formatted description):
-        <a href="../files/app_mixins_expand-assets.js.html#l99"><code>app&#x2F;mixins&#x2F;expand-assets.js:99</code></a>
+        <a href="../files/app_mixins_expand-assets.js.html#l102"><code>app&#x2F;mixins&#x2F;expand-assets.js:102</code></a>
         </p>
 
 
@@ -1332,6 +1446,54 @@ does not end in a slash, one will be added.
 
 
 </div>
+<div id="property_blocks" class="property item">
+    <h3 class="name"><code>blocks</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-video-consent_component.js.html#l70"><code>app&#x2F;components&#x2F;exp-video-consent&#x2F;component.js:70</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Array of paragraphs of the consent document, each with title and text.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> []</p>
+
+
+        <h4>Sub-properties:</h4>
+
+        <ul class="params-list">
+            <li class="param">
+                    <code class="param-name">title</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                     
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">text</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                     
+                </div>
+
+            </li>
+        </ul>
+</div>
 <div id="property_displayFullscreenOverride" class="property item inherited">
     <h3 class="name"><code>displayFullscreenOverride</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
@@ -1343,7 +1505,7 @@ does not end in a slash, one will be added.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#property_displayFullscreenOverride">Full-screen </a> (click for formatted description):
-        <a href="../files/app_mixins_full-screen.js.html#l163"><code>app&#x2F;mixins&#x2F;full-screen.js:163</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l166"><code>app&#x2F;mixins&#x2F;full-screen.js:166</code></a>
         </p>
 
 
@@ -1368,7 +1530,7 @@ generally used that way.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Session-record.html#property_endSessionRecording">Session-record </a> (click for formatted description):
-        <a href="../files/app_mixins_session-record.js.html#l92"><code>app&#x2F;mixins&#x2F;session-record.js:92</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l95"><code>app&#x2F;mixins&#x2F;session-record.js:95</code></a>
         </p>
 
 
@@ -1393,7 +1555,7 @@ generally used that way.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#property_fsButtonID">Full-screen </a> (click for formatted description):
-        <a href="../files/app_mixins_full-screen.js.html#l24"><code>app&#x2F;mixins&#x2F;full-screen.js:24</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l27"><code>app&#x2F;mixins&#x2F;full-screen.js:27</code></a>
         </p>
 
 
@@ -1417,7 +1579,7 @@ generally used that way.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#property_fullScreenElementId">Full-screen </a> (click for formatted description):
-        <a href="../files/app_mixins_full-screen.js.html#l17"><code>app&#x2F;mixins&#x2F;full-screen.js:17</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l20"><code>app&#x2F;mixins&#x2F;full-screen.js:20</code></a>
         </p>
 
 
@@ -1526,7 +1688,7 @@ to be on one line.)</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_maxRecordingLength">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l123"><code>app&#x2F;mixins&#x2F;video-record.js:123</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l126"><code>app&#x2F;mixins&#x2F;video-record.js:126</code></a>
         </p>
 
 
@@ -1684,6 +1846,32 @@ generated for this randomizer.</li>
 
 
 </div>
+<div id="property_prompt" class="property item">
+    <h3 class="name"><code>prompt</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-video-consent_component.js.html#l93"><code>app&#x2F;components&#x2F;exp-video-consent&#x2F;component.js:93</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Text the user is asked to read aloud to consent</p>
+
+    </div>
+
+        <p><strong>Default:</strong> &#x27;I consent to participate in this study&#x27;</p>
+
+
+</div>
 <div id="property_recorder" class="property item inherited">
     <h3 class="name"><code>recorder</code></h3>
     <span class="type">VideoRecorder</span>
@@ -1695,7 +1883,7 @@ generated for this randomizer.</li>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_recorder">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l88"><code>app&#x2F;mixins&#x2F;video-record.js:88</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l91"><code>app&#x2F;mixins&#x2F;video-record.js:91</code></a>
         </p>
 
 
@@ -1720,7 +1908,7 @@ recorder.nWebcams, recorder.hasCamAccess, recorder.micChecked, recorder.connecte
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_recorderReady">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l116"><code>app&#x2F;mixins&#x2F;video-record.js:116</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l119"><code>app&#x2F;mixins&#x2F;video-record.js:119</code></a>
         </p>
 
 
@@ -1812,7 +2000,7 @@ just used for attempts to leave the study early</li>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Session-record.html#property_sessionAudioOnly">Session-record </a> (click for formatted description):
-        <a href="../files/app_mixins_session-record.js.html#l102"><code>app&#x2F;mixins&#x2F;session-record.js:102</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l105"><code>app&#x2F;mixins&#x2F;session-record.js:105</code></a>
         </p>
 
 
@@ -1837,7 +2025,7 @@ just used for attempts to leave the study early</li>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Session-record.html#property_startSessionRecording">Session-record </a> (click for formatted description):
-        <a href="../files/app_mixins_session-record.js.html#l85"><code>app&#x2F;mixins&#x2F;session-record.js:85</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l88"><code>app&#x2F;mixins&#x2F;session-record.js:88</code></a>
         </p>
 
 
@@ -1862,7 +2050,7 @@ just used for attempts to leave the study early</li>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_stoppedRecording">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l102"><code>app&#x2F;mixins&#x2F;video-record.js:102</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l105"><code>app&#x2F;mixins&#x2F;video-record.js:105</code></a>
         </p>
 
 
@@ -1902,6 +2090,32 @@ stopped.
 
 
 </div>
+<div id="property_title" class="property item">
+    <h3 class="name"><code>title</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-video-consent_component.js.html#l60"><code>app&#x2F;components&#x2F;exp-video-consent&#x2F;component.js:60</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Title of the consent document</p>
+
+    </div>
+
+        <p><strong>Default:</strong> &#x27;Consent to participate in behavioral research: &lt;br&gt; Inference and induction study&#x27;</p>
+
+
+</div>
 <div id="property_videoId" class="property item inherited">
     <h3 class="name"><code>videoId</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
@@ -1913,7 +2127,7 @@ stopped.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_videoId">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l158"><code>app&#x2F;mixins&#x2F;video-record.js:158</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l161"><code>app&#x2F;mixins&#x2F;video-record.js:161</code></a>
         </p>
 
 
@@ -1939,7 +2153,7 @@ where RRR are random numeric digits.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_videoList">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l95"><code>app&#x2F;mixins&#x2F;video-record.js:95</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l98"><code>app&#x2F;mixins&#x2F;video-record.js:98</code></a>
         </p>
 
 
@@ -2023,7 +2237,7 @@ Accessible to consuming frame.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Expand-assets.html#property_videoTypes">Expand-assets </a> (click for formatted description):
-        <a href="../files/app_mixins_expand-assets.js.html#l147"><code>app&#x2F;mixins&#x2F;expand-assets.js:147</code></a>
+        <a href="../files/app_mixins_expand-assets.js.html#l150"><code>app&#x2F;mixins&#x2F;expand-assets.js:150</code></a>
         </p>
 
 
@@ -2070,7 +2284,7 @@ expanded out to
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Full-screen.html#event_enteredFullscreen">Full-screen</a>:
-                            <a href="../files/app_mixins_full-screen.js.html#l76"><code>app&#x2F;mixins&#x2F;full-screen.js:76</code></a>
+                            <a href="../files/app_mixins_full-screen.js.html#l79"><code>app&#x2F;mixins&#x2F;full-screen.js:79</code></a>
                             </p>
                     
                     
@@ -2097,7 +2311,7 @@ expanded out to
                                     Session-record
                                 </a>
                                 but overwritten in
-                            <a href="../files/app_mixins_video-record.js.html#l53"><code>app&#x2F;mixins&#x2F;video-record.js:53</code></a>
+                            <a href="../files/app_mixins_video-record.js.html#l56"><code>app&#x2F;mixins&#x2F;video-record.js:56</code></a>
                             </p>
                     
                     
@@ -2137,7 +2351,7 @@ expanded out to
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Full-screen.html#event_leftFullscreen">Full-screen</a>:
-                            <a href="../files/app_mixins_full-screen.js.html#l88"><code>app&#x2F;mixins&#x2F;full-screen.js:88</code></a>
+                            <a href="../files/app_mixins_full-screen.js.html#l91"><code>app&#x2F;mixins&#x2F;full-screen.js:91</code></a>
                             </p>
                     
                     
@@ -2186,7 +2400,7 @@ expanded out to
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Video-record.html#event_pauseVideo">Video-record</a>:
-                            <a href="../files/app_mixins_video-record.js.html#l68"><code>app&#x2F;mixins&#x2F;video-record.js:68</code></a>
+                            <a href="../files/app_mixins_video-record.js.html#l71"><code>app&#x2F;mixins&#x2F;video-record.js:71</code></a>
                             </p>
                     
                     
@@ -2235,7 +2449,7 @@ expanded out to
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Video-record.html#event_recorderReady">Video-record</a>:
-                            <a href="../files/app_mixins_video-record.js.html#l344"><code>app&#x2F;mixins&#x2F;video-record.js:344</code></a>
+                            <a href="../files/app_mixins_video-record.js.html#l347"><code>app&#x2F;mixins&#x2F;video-record.js:347</code></a>
                             </p>
                     
                     
@@ -2259,7 +2473,7 @@ expanded out to
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Session-record.html#event_sessionRecorderReady">Session-record</a>:
-                            <a href="../files/app_mixins_session-record.js.html#l215"><code>app&#x2F;mixins&#x2F;session-record.js:215</code></a>
+                            <a href="../files/app_mixins_session-record.js.html#l218"><code>app&#x2F;mixins&#x2F;session-record.js:218</code></a>
                             </p>
                     
                     
@@ -2286,7 +2500,7 @@ expanded out to
                                     Session-record
                                 </a>
                                 but overwritten in
-                            <a href="../files/app_mixins_video-record.js.html#l80"><code>app&#x2F;mixins&#x2F;video-record.js:80</code></a>
+                            <a href="../files/app_mixins_video-record.js.html#l83"><code>app&#x2F;mixins&#x2F;video-record.js:83</code></a>
                             </p>
                     
                     
@@ -2310,7 +2524,7 @@ expanded out to
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Video-record.html#event_unpauseVideo">Video-record</a>:
-                            <a href="../files/app_mixins_video-record.js.html#l74"><code>app&#x2F;mixins&#x2F;video-record.js:74</code></a>
+                            <a href="../files/app_mixins_video-record.js.html#l77"><code>app&#x2F;mixins&#x2F;video-record.js:77</code></a>
                             </p>
                     
                     
@@ -2337,7 +2551,7 @@ expanded out to
                                     Session-record
                                 </a>
                                 but overwritten in
-                            <a href="../files/app_mixins_video-record.js.html#l60"><code>app&#x2F;mixins&#x2F;video-record.js:60</code></a>
+                            <a href="../files/app_mixins_video-record.js.html#l63"><code>app&#x2F;mixins&#x2F;video-record.js:63</code></a>
                             </p>
                     
                     

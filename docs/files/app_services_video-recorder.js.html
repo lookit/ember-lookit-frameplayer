@@ -29,19 +29,16 @@
                     <div id="api-tabview-panel">
                         <h2 class="off-left">Collections</h2>
                         <ul id="api-modules" class="apis modules">
-                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
                             <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
                             <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
                             <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
                             <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
-                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
                         </ul>
                         <h2 class="off-left">All elements</h2>
                               <div id="api-tabview-filter">
                       <input type="search" id="api-filter" placeholder="Type to filter">
                     </div>
                         <ul id="api-classes" class="apis classes">
-                            <li><a href="../classes/Exp-exit-survey.html">Exp-exit-survey</a></li>
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
@@ -59,10 +56,9 @@
                             <li><a href="../classes/Exp-lookit-video.html">Exp-lookit-video</a></li>
                             <li><a href="../classes/Exp-lookit-video-assent.html">Exp-lookit-video-assent</a></li>
                             <li><a href="../classes/Exp-lookit-video-consent.html">Exp-lookit-video-consent</a></li>
-                            <li><a href="../classes/Exp-player.html">Exp-player</a></li>
+                            <li><a href="../classes/Exp-lookit-webcam-display.html">Exp-lookit-webcam-display</a></li>
                             <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
                             <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
-                            <li><a href="../classes/Exp-video-consent.html">Exp-video-consent</a></li>
                             <li><a href="../classes/Exp-video-preview.html">Exp-video-preview</a></li>
                             <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
                             <li><a href="../classes/Full-screen.html">Full-screen</a></li>
@@ -113,7 +109,7 @@
     <pre class="code prettyprint linenums">
 import Ember from &#x27;ember&#x27;;
 
-/**
+/* OMIT *
  * @module exp-player
  * @submodule services
  */
@@ -122,6 +118,69 @@ let {
     $,
     RSVP
 } = Ember;
+
+var LOOKIT_PREFERRED_DEVICES = {
+    &#x27;cam&#x27;: null,
+    &#x27;mic&#x27;: null
+};
+
+// Deal with Firefox issue where, after selecting camera/mic to share and saying to
+// &#x27;remember&#x27; settings, the default cam/mic are used each time getUserMedia is called.
+// This does NOT fix persisting selections across multiple Lookit sessions, but will
+// persist it through the session (one page load). (To forcibly fix selection, can
+// revoke &amp; refresh page).
+// Override getUserMedia function to insert our preference on camera and mic, and to set
+// that preference the first time getUserMedia is called successfully. We do this rather than
+// editing https://cdn.addpipe.com/2.0/pipe.js and hosting our own copy so we don&#x27;t have to
+// maintain across changes to Pipe.
+// Only override newer navigator.mediaDevices.getUserMedia rather than also
+// navigator.getUserMedia, as the latter will only be used by Pipe if the newer one is not
+// available, in which case probably bigger problems than this one.
+navigator.mediaDevices.getUserMedia = (function(origGetUserMedia) {
+    return function() {
+        // Add preferred mic and camera, if already stored, to any other constraints being
+        // passed to getUserMedia
+        var constraints = arguments[0];
+        if (constraints.hasOwnProperty(&#x27;audio&#x27;) &amp;&amp; LOOKIT_PREFERRED_DEVICES.mic) {
+            constraints.audio.deviceId = LOOKIT_PREFERRED_DEVICES.mic;
+        }
+        if (constraints.hasOwnProperty(&#x27;video&#x27;) &amp;&amp; LOOKIT_PREFERRED_DEVICES.cam) {
+            constraints.video.deviceId = LOOKIT_PREFERRED_DEVICES.cam;
+        }
+        return origGetUserMedia.apply(this, arguments).then(function(stream) {
+            // Set the preferred cam/mic IDs the first time we get a stream
+            try {
+                var audioTracks = stream.getAudioTracks();
+                var videoTracks = stream.getVideoTracks();
+                if (!LOOKIT_PREFERRED_DEVICES.mic &amp;&amp; audioTracks) {
+                    var thisAudioLabel = audioTracks[0].label;
+                    navigator.mediaDevices.enumerateDevices()
+                    .then(function(devices) {
+                        devices.forEach(function(device) {
+                            if (device.kind == &#x27;audioinput&#x27; &amp;&amp; device.label == thisAudioLabel) {
+                                LOOKIT_PREFERRED_DEVICES.mic = device.deviceId;
+                            }
+                        });
+                    });
+                }
+                if (!LOOKIT_PREFERRED_DEVICES.cam &amp;&amp; videoTracks) {
+                    var thisVideoLabel = videoTracks[0].label;
+                    navigator.mediaDevices.enumerateDevices()
+                    .then(function(devices) {
+                        devices.forEach(function(device) {
+                            if (device.kind == &#x27;videoinput&#x27; &amp;&amp; device.label == thisVideoLabel) {
+                                LOOKIT_PREFERRED_DEVICES.cam = device.deviceId;
+                            }
+                        });
+                    });
+                }
+            } catch (error) {
+                console.error(&#x27;Error setting preferred mic/camera: &#x27; + error);
+            }
+            return stream;
+        });
+    };
+})(navigator.mediaDevices.getUserMedia);
 
 /**
  * An instance of a video recorder tied to or used by one specific page. A given experiment may use more than one
@@ -432,6 +491,8 @@ const VideoRecorder = Ember.Object.extend({
 });
 
 export default VideoRecorder;
+
+export { LOOKIT_PREFERRED_DEVICES };
 
     </pre>
 </div>

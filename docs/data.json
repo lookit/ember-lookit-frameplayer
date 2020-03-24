@@ -12,9 +12,7 @@
             "modules": {
                 "frames": 1
             },
-            "classes": {
-                "Exp-exit-survey": 1
-            },
+            "classes": {},
             "fors": {},
             "namespaces": {}
         },
@@ -171,14 +169,19 @@
             "fors": {},
             "namespaces": {}
         },
+        "app/components/exp-lookit-webcam-display/component.js": {
+            "name": "app/components/exp-lookit-webcam-display/component.js",
+            "modules": {},
+            "classes": {
+                "Exp-lookit-webcam-display": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "app/components/exp-player/component.js": {
             "name": "app/components/exp-player/component.js",
-            "modules": {
-                "components": 1
-            },
-            "classes": {
-                "Exp-player": 1
-            },
+            "modules": {},
+            "classes": {},
             "fors": {},
             "namespaces": {}
         },
@@ -203,9 +206,7 @@
         "app/components/exp-video-consent/component.js": {
             "name": "app/components/exp-video-consent/component.js",
             "modules": {},
-            "classes": {
-                "Exp-video-consent": 1
-            },
+            "classes": {},
             "fors": {},
             "namespaces": {}
         },
@@ -303,9 +304,7 @@
         },
         "app/services/video-recorder.js": {
             "name": "app/services/video-recorder.js",
-            "modules": {
-                "services": 1
-            },
+            "modules": {},
             "classes": {
                 "video-recorder": 1
             },
@@ -327,14 +326,11 @@
             "name": "exp-player",
             "submodules": {
                 "frames": 1,
-                "components": 1,
                 "mixins": 1,
-                "randomizers": 1,
-                "services": 1
+                "randomizers": 1
             },
             "elements": {},
             "classes": {
-                "Exp-exit-survey": 1,
                 "Exp-frame-base": 1,
                 "Exp-frame-select": 1,
                 "Exp-lookit-dialogue-page": 1,
@@ -352,10 +348,9 @@
                 "Exp-lookit-video": 1,
                 "Exp-lookit-video-assent": 1,
                 "Exp-lookit-video-consent": 1,
-                "Exp-player": 1,
+                "Exp-lookit-webcam-display": 1,
                 "Exp-video-config": 1,
                 "Exp-video-config-quality": 1,
-                "Exp-video-consent": 1,
                 "Exp-video-preview": 1,
                 "Expand-assets": 1,
                 "Full-screen": 1,
@@ -371,7 +366,7 @@
             "namespaces": {},
             "tag": "module",
             "file": "app/services/video-recorder.js",
-            "line": 13,
+            "line": 76,
             "description": "Reusable parts of experiments. Includes frame definitions, randomizers, and utilities.",
             "itemtype": "main"
         },
@@ -380,7 +375,6 @@
             "submodules": {},
             "elements": {},
             "classes": {
-                "Exp-exit-survey": 1,
                 "Exp-frame-base": 1,
                 "Exp-frame-select": 1,
                 "Exp-lookit-dialogue-page": 1,
@@ -398,9 +392,9 @@
                 "Exp-lookit-video": 1,
                 "Exp-lookit-video-assent": 1,
                 "Exp-lookit-video-consent": 1,
+                "Exp-lookit-webcam-display": 1,
                 "Exp-video-config": 1,
                 "Exp-video-config-quality": 1,
-                "Exp-video-consent": 1,
                 "Exp-video-preview": 1
             },
             "fors": {},
@@ -410,25 +404,7 @@
             "namespace": "",
             "file": "app/components/exp-video-preview/component.js",
             "line": 16,
-            "description": "Reusable frames that can be used as part of user-defined experiments. This is the main reference for researchers\n  looking to build their own experiment definitions on the experimenter platform.",
-            "tag": "main",
-            "itemtype": "main"
-        },
-        "components": {
-            "name": "components",
-            "submodules": {},
-            "elements": {},
-            "classes": {
-                "Exp-player": 1
-            },
-            "fors": {},
-            "is_submodule": 1,
-            "namespaces": {},
-            "module": "exp-player",
-            "namespace": "",
-            "file": "app/components/exp-player/component.js",
-            "line": 16,
-            "description": "Reusable components for UI rendering and interactivity",
+            "description": "Reusable frames that can be used as part of Lookit studies. This is the main reference\n  for researchers writing their own study protocols on Lookit.",
             "tag": "main",
             "itemtype": "main"
         },
@@ -450,7 +426,7 @@
             "namespace": "",
             "file": "app/mixins/video-record.js",
             "line": 14,
-            "description": "Mixins that can be used to add functionality to specific frames",
+            "description": "Reference for DEVELOPERS of new frames only (not Lookit researchers writing their\nstudy protocols on the site)!\n\nMixins that can be used to add specific functionality to frames",
             "tag": "main",
             "itemtype": "main"
         },
@@ -473,47 +449,9 @@
             "description": "Reusable randomizers that can be used as part of user-defined experiments.\nRandomizers allow researchers to specify how to select which frames or\nsequences of frames to use as part of a particular session of a given\nexperiment, for instance in order to counterbalance stimuli used across\nsubjects, assign subjects randomly to different experimental conditions, or\nimplement a longitudinal design where the frames used in this study depend on\nthe frames used in the participant's last session.",
             "tag": "main",
             "itemtype": "main"
-        },
-        "services": {
-            "name": "services",
-            "submodules": {},
-            "elements": {},
-            "classes": {
-                "video-recorder": 1
-            },
-            "fors": {},
-            "is_submodule": 1,
-            "namespaces": {},
-            "module": "exp-player",
-            "namespace": "",
-            "file": "app/services/video-recorder.js",
-            "line": 13,
-            "description": "Services used to provide centralized functionality",
-            "tag": "main",
-            "itemtype": "main"
         }
     },
     "classes": {
-        "Exp-exit-survey": {
-            "name": "Exp-exit-survey",
-            "shortname": "Exp-exit-survey",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "exp-player",
-            "submodule": "frames",
-            "namespace": "",
-            "file": "app/components/exp-exit-survey/component.js",
-            "line": 16,
-            "description": "This is the exit survey used by \"Your baby the physicist\". Use the updated frame {{#crossLink \"Exp-lookit-exit-survey\"}}{{/crossLink}} instead.",
-            "extends": "Exp-frame-base",
-            "uses": [
-                "Validations",
-                "Full-screen"
-            ]
-        },
         "Exp-frame-base": {
             "name": "Exp-frame-base",
             "shortname": "Exp-frame-base",
@@ -831,20 +769,21 @@
                 "Video-record"
             ]
         },
-        "Exp-player": {
-            "name": "Exp-player",
-            "shortname": "Exp-player",
+        "Exp-lookit-webcam-display": {
+            "name": "Exp-lookit-webcam-display",
+            "shortname": "Exp-lookit-webcam-display",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
             "module": "exp-player",
-            "submodule": "components",
+            "submodule": "frames",
             "namespace": "",
-            "file": "app/components/exp-player/component.js",
-            "line": 16,
-            "description": "Experiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```"
+            "file": "app/components/exp-lookit-webcam-display/component.js",
+            "line": 11,
+            "description": "TODO: edit docs!\nA frame to collect a video observation with the participant's help. By default the\nwebcam is displayed to the participant and they can choose when to start, pause, and\nresume recording. The duration of an individual recording can optionally be limited\nand/or recording can be started automatically. This is intended for cases where we\nwant the parent to perform some test or behavior with the child, rather than\npresenting stimuli ourselves. E.g., you might give instructions to conduct a structured\ninterview and allow the parent to control recording.\n\nEach element of the 'blocks' parameter is rendered using {{#crossLink \"Exp-text-block\"}}{{/crossLink}}.\n\n```\n   \"frames\": {\n       \"observation\": {\n           \"kind\": \"exp-lookit-observation\",\n           \"blocks\": [\n               {\n                   \"title\": \"Time to do the joke!\",\n                   \"listblocks\": [\n                       {\n                           \"text\": \"Rip the paper\"\n                       },\n                       {\n                           \"text\": \"Wait ten seconds\"\n                       }\n                   ]\n               }\n           ],\n           \"hideWebcam\": true,\n           \"hideControls\": false,\n           \"recordSegmentLength\": 10,\n           \"startRecordingAutomatically\": false,\n           \"nextButtonText\": \"move on\",\n           \"showPreviousButton\": false\n       }\n   }\n```",
+            "extends": "Video-record"
         },
         "Exp-video-config": {
             "name": "Exp-video-config",
@@ -858,7 +797,7 @@
             "submodule": "frames",
             "namespace": "",
             "file": "app/components/exp-video-config/component.js",
-            "line": 12,
+            "line": 18,
             "description": "Video configuration frame guiding user through making sure permissions are set\nappropriately and microphone is working, with troubleshooting text. Almost all content is\nhard-coded, to provide a general-purpose technical setup frame.\n\n```json\n\"frames\": {\n    \"video-config\": {\n        \"kind\": \"exp-video-config\",\n        \"troubleshootingIntro\": \"If you're having any trouble getting your webcam set up,\n          please feel free to call the XYZ lab at (123) 456-7890 and we'd be glad to\n          help you out!\"\n    }\n}\n```",
             "extends": "Video-record"
         },
@@ -877,25 +816,6 @@
             "line": 17,
             "description": "Video configuration frame showing webcam view at right and instructions for checking\nvideo quality for preferential looking setup at left. Default content is hard-coded to\nprovide a reasonable set of instructions for preferential looking setups, so the frame can\nbe used as follows with no parameters besides `kind`:\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\"\n    }\n}\n```\n\nOptionally,\nparticipants can be required to check off each item before they can proceed to the next\nframe. If `requireItemConfirmation` is true (default), then the 'next' button will\nappear disabled until the participant has checked off all buttons, although if they click\nit anyway they will get an informative warning and the instructions section will scroll\nto the first unchecked item.\n\nParticipants can also be optionally required to create and view a short recording, e.g. to\ncheck their child will be audible or their child's eyes will be visible in a particular position.\n\nYou can also customize any or all text and images as in the following example.\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\",\n        \"title\": \"Webcam setup for preferential looking\",\n        \"introText\": \"We'll be analyzing where your child chooses to look during the videos--but only if we can tell where that is! Please check each of the following to ensure we're able to use your video:\",\n        \"requireItemConfirmation\": true,\n        \"completedItemText\": \"Did it!\",\n        \"instructionBlocks\": [\n                    {\n                        \"text\": \"<strong>Make sure the webcam you're using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/centering.png\",\n                            \"alt\": \"Example images of using centered external webcam on monitor or built-in webcam on laptop.\"\n                        }\n                    },\n                    {\n                        \"text\": \"<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there's just one monitor, you're all set!)\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/monitors.png\",\n                            \"alt\": \"Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.\"\n                        }\n                    },\n                    {\n                        \"text\": \"Check the lighting by making sure you can <strong>clearly see your own eyes</strong> on the webcam view to the right. You may need to either turn on a light or reduce light coming from behind you.\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/lighting.png\",\n                            \"alt\": \"Example images showing good lighting, room too dark, and backlit scene where eyes are not visible.\"\n                        }\n                    },\n                    {\n                        \"text\": \"If it's practical, <strong>minimize exciting things</strong> that are visible behind or to the side of the screen--for instance, by facing a wall instead of the kitchen. (If this isn't practical for you, don't worry about it--just check the box!)\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/distractions.png\",\n                            \"alt\": \"Example images showing a child and puppy next to the computer, versus a computer just on its own.\"\n                        }\n                    },\n                    {\n                        \"text\": \"During the study, we'll ask that you sit facing away from the monitor, holding your child over your shoulder, like this. (More on that in a moment!) <strong>Make sure the webcam is angled up or down enough that your child's eyes are visible in this position</strong>. If you're not sure if your child's eyes will be visible, you can make a short recording to check!\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/over_shoulder.jpg\",\n                            \"alt\": \"Example image showing a dad holding his child looking over his shoulder.\"\n                        }\n                    }\n                ],\n            \"requireTestVideo\": true,\n            \"showRecordMenu\": true,\n            \"recordingInstructionText\": \"You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.\"\n    }\n}\n```",
             "extends": "Video-record"
-        },
-        "Exp-video-consent": {
-            "name": "Exp-video-consent",
-            "shortname": "Exp-video-consent",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "exp-player",
-            "submodule": "frames",
-            "namespace": "",
-            "file": "app/components/exp-video-consent/component.js",
-            "line": 11,
-            "description": "Video consent frame for Lookit studies UNDER INITIAL MIT PROTOCOL ONLY, with consent document displayed at left and instructions to start recording, read a statement out loud, and send.\nThis version allows custom specification of consent form text.\nFor studies by researchers who have signed the Lookit Usage Agreement and have approval from their own IRB,\nplease use an {{#crossLink \"Exp-lookit-video-consent\"}}{{/crossLink}}  frame instead.\nConsent document can be downloaded as PDF document by participant.\n\n```json\n\"frames\": {\n    \"video-consent\": {\n        \"blocks\": [\n            {\n                 \"text\": \"Observing your child's behavior during this experimental session will help us to understand how infants and children use evidence to learn and make predictions about the world.\",\n                \"title\": \"About the study\"\n            },\n            {\n                \"text\": \"Your and your child's participation in this session are completely voluntary. If you and your child choose to participate, you may stop the session at any point with no penalty. Please pause or stop the session if your child becomes very fussy or does not want to participate. If this is a study with multiple sessions, there are no penalties for not completing all sessions.\",\n                \"title\": \"Participation\"\n            },\n            {\n                \"text\": \"During the session, you and your child will be recorded via your computer's webcam and microphone while watching a video or completing an activity. Video recordings and other data you enter are sent securely to our lab. At the end of the session, or when you end it early, you will be prompted to choose a privacy level for your webcam recordings. \",\n                \"title\": \"Webcam recording\"\n            },\n            {\n                \"text\": \"Recordings and survey responses will be stored on a password-protected server and accessed only by the Lookit researchers working on this study and any other groups you allow when selecting a privacy level. A researcher may transcribe responses or record information such as where you or your child is looking. Data will not be used to identify you or your child. The results of the research may be presented at scientific meetings or published in scientific journals, but no video clips will be shared unless you allow this when selecting a privacy level.\\n\\nRaw data may also be published when it can not identify children; for instance, we may publish children’s looking times to the left versus right of the screen, or parent comments with children’s names removed. We may also study your child’s responses in connection with his or her previous responses to this or other studies, siblings’ responses, or demographic survey responses. We never publish children’s birthdates or names, and we never publish your demographic data in conjunction with your child’s video.\",\n                \"title\": \"Use of data\"\n            },\n            {\n                \"text\": \"If you or your child have any questions or concerns about this research, you may contact Professor Laura Schulz: {contact}\",\n                \"title\": \"Contact information\"\n            }\n        ],\n        \"prompt\": \"\\\"I have read and understand the consent document. I am this child's parent or legal guardian and we both agree to participate in this study.\\\"\",\n        \"kind\": \"exp-video-consent\"\n    }\n}\n```",
-            "extends": "Exp-lookit-video-consent",
-            "uses": [
-                "Video-record"
-            ]
         },
         "Exp-video-preview": {
             "name": "Exp-video-preview",
@@ -939,7 +859,7 @@
             "namespace": "",
             "file": "app/mixins/expand-assets.js",
             "line": 8,
-            "description": "Allow users to provide audio/video and image source values as either relative paths\nwithin a base directory or as full paths.\n\nWhen adding this mixin to a frame, you will need to define a property of the frame\n`assetsToExpand`, which indicates which parameters might be source objects that need\nexpansion. `assetsToExpand` should be an object with keys `image`, `video`, and `audio`,\nand each value should be an Array of parameter names that provide sources for resources\nof the corresponding type. E.g.,\n```\n   {\n       'image': ['leftObjectPic', 'rightObjectPic'],\n       'audio': ['introAudio', 'testAudio'],\n       'video': ['objectDemoVideo']\n   }\n```\n\nThis is defined directly within your frame, e.g.:\n```\n   export default ExpFrameBaseComponent.extend(ExpandAssets, {\n       ...\n       type: 'exp-my-cool-frame',\n       assetsToExpand:     {\n           'image': ['leftObjectPic', 'rightObjectPic'],\n           'audio': ['introAudio', 'testAudio'],\n           'video': ['objectDemoVideo']\n           },\n       ...,\n       meta: {...},\n       actions: {...}\n   });\n```\n\n\n\nThe *user* of your frame can then optionally provide `baseDir`, `audioTypes`, and\n`videoTypes` parameters to indicate how to expand relative paths.\n\nHow expansion works:\n- **Images**: Suppose the list `assetsToExpand['image']` contains `centerStimulus`. If\n  `centerStimulus` is provided as a full URL (with `://` in it), nothing will happen to\n  it. But if `centerStimulus` is a string that is not a full URL, it will be transformed\n  during the `didReceiveAttrs` hook to `baseDir + 'img/' + centerStimulus`.\n\n- **Audio**: Suppose the list `assetsToExpand['audio']` contains `utterance1`. If\n  `utterance1` is a nonempty string (rather than an object/Array), e.g., `goodmorning`,\n  and `audioTypes` has been set to `['typeA', 'typeB']`,\n  then `utterance1` will be expanded out to\n```\n        [\n            {\n                src: 'baseDir' + 'typeA/goodmorning.typeA',\n                type: 'audio/typeA'\n            },\n            {\n                src: 'baseDir' + 'typeB/goodmorning.typeB',\n                type: 'audio/typeB'\n            }\n        ]\n```\n\n- **Video**: Same as audio, but using the types from `videoTypes`.\n\n**Important**: During the `didReceiveAttrs` hook, your frame will acquire new properties `[parameterName]_parsed`\nfor each of the parameters named in `assetsToExpand`. These properties will hold the\nexpanded values. E.g., in the example above, you would now have a `centerStimulus_parsed`\nproperty. This is what you should use for showing/playing images/audio/video in your\nframe template.\n\n**Advanced use**: the property names in `assetsToExpand` can be either full parameter names\nas in the examples above, or can be of the form `parameterName/subProperty`. If using\nthe `parameterName/subProperty` syntax, instead of processing the parameter `parameterName`,\nwe will expect that that parameter is either an object with property `subProperty`\n(which will be expanded) or an Array of objects with property `subProperty` (which will\nbe expanded). The original value of the `parameterName` parameter may in this case be\nmutated as assets are expanded. However, your frame will still also acquire a new\nproperty `[parameterName]_parsed` which you should use for accessing the processed\nvalues. This avoids potential problems with the template being rendered using the original\nvalues and not updated."
+            "description": "Reference for DEVELOPERS of new frames only!\nMixin to allow users to provide audio/video and image source values as either relative paths\n within a base directory or as full paths.\nWhen adding this mixin to a frame, you will need to define a property of the frame\n `assetsToExpand`, which indicates which parameters might be source objects that need\n expansion. `assetsToExpand` should be an object with keys `image`, `video`, and `audio`,\n and each value should be an Array of parameter names that provide sources for resources\n of the corresponding type. E.g.,\n ```\n    {\n        'image': ['leftObjectPic', 'rightObjectPic'],\n        'audio': ['introAudio', 'testAudio'],\n        'video': ['objectDemoVideo']\n    }\n ```\nThis is defined directly within your frame, e.g.:\n```\n    export default ExpFrameBaseComponent.extend(ExpandAssets, {\n        ...\n        type: 'exp-my-cool-frame',\n        assetsToExpand:     {\n            'image': ['leftObjectPic', 'rightObjectPic'],\n            'audio': ['introAudio', 'testAudio'],\n            'video': ['objectDemoVideo']\n            },\n        ...,\n        meta: {...},\n        actions: {...}\n    });\n```\n\n\nThe *user* of your frame can then optionally provide `baseDir`, `audioTypes`, and\n `videoTypes` parameters to indicate how to expand relative paths.\nHow expansion works:\n - **Images**: Suppose the list `assetsToExpand['image']` contains `centerStimulus`. If\n   `centerStimulus` is provided as a full URL (with `://` in it), nothing will happen to\n   it. But if `centerStimulus` is a string that is not a full URL, it will be transformed\n   during the `didReceiveAttrs` hook to `baseDir + 'img/' + centerStimulus`.\n- **Audio**: Suppose the list `assetsToExpand['audio']` contains `utterance1`. If\n   `utterance1` is a nonempty string (rather than an object/Array), e.g., `goodmorning`,\n   and `audioTypes` has been set to `['typeA', 'typeB']`,\n   then `utterance1` will be expanded out to\n ```\n         [\n             {\n                 src: 'baseDir' + 'typeA/goodmorning.typeA',\n                 type: 'audio/typeA'\n             },\n             {\n                 src: 'baseDir' + 'typeB/goodmorning.typeB',\n                 type: 'audio/typeB'\n             }\n         ]\n ```\n- **Video**: Same as audio, but using the types from `videoTypes`.\n**Important**: During the `didReceiveAttrs` hook, your frame will acquire new properties `[parameterName]_parsed`\n for each of the parameters named in `assetsToExpand`. These properties will hold the\n expanded values. E.g., in the example above, you would now have a `centerStimulus_parsed`\n property. This is what you should use for showing/playing images/audio/video in your\n frame template.\n**Advanced use**: the property names in `assetsToExpand` can be either full parameter names\n as in the examples above, or can be of the form `parameterName/subProperty`. If using\n the `parameterName/subProperty` syntax, instead of processing the parameter `parameterName`,\n we will expect that that parameter is either an object with property `subProperty`\n (which will be expanded) or an Array of objects with property `subProperty` (which will\n be expanded). The original value of the `parameterName` parameter may in this case be\n mutated as assets are expanded. However, your frame will still also acquire a new\n property `[parameterName]_parsed` which you should use for accessing the processed\n values. This avoids potential problems with the template being rendered using the original\n values and not updated."
         },
         "Full-screen": {
             "name": "Full-screen",
@@ -949,7 +869,6 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [
-                "Exp-exit-survey",
                 "Exp-frame-base",
                 "Exp-lookit-dialogue-page",
                 "Exp-lookit-exit-survey",
@@ -964,7 +883,7 @@
             "namespace": "",
             "file": "app/mixins/full-screen.js",
             "line": 12,
-            "description": "Allow components to specify fullscreen capabilities based on minimal configuration options"
+            "description": "Reference for DEVELOPERS of new frames only!\nAllow components to specify fullscreen capabilities based on minimal configuration options"
         },
         "Media-reload": {
             "name": "Media-reload",
@@ -983,7 +902,7 @@
             "namespace": "",
             "file": "app/mixins/media-reload.js",
             "line": 8,
-            "description": "Allow any media-containing frame to correctly reset.\nFix LEI-93, an issue where the second of two consecutive videos did not play correctly.\n\nDue to an internal ember quirk/optimization, the component instance is not destroyed if two of the same thing are\n used in a row, which means the same video tag was being dynamically reassigned- something HTML does not normally\nallow. The page needs to be manually told to load the correct new video.\n\nSee commentary here: http://stackoverflow.com/a/18454389/1422268"
+            "description": "Reference for DEVELOPERS of new frames only!\nAllow any media-containing frame to correctly reset.\n Fix LEI-93, an issue where the second of two consecutive videos did not play correctly.\nDue to an internal ember quirk/optimization, the component instance is not destroyed if two of the same thing are\n  used in a row, which means the same video tag was being dynamically reassigned- something HTML does not normally\n allow. The page needs to be manually told to load the correct new video.\nSee commentary here: http://stackoverflow.com/a/18454389/1422268"
         },
         "Session-record": {
             "name": "Session-record",
@@ -1000,7 +919,7 @@
             "namespace": "",
             "file": "app/mixins/session-record.js",
             "line": 14,
-            "description": "A mixin that can be used to add basic support for video recording to a particular experiment frame\n\nBy default, the recorder will be installed when this frame loads, but recording\nwill not start automatically. To override either of these settings, set\nthe properties `doUseCamera` and/or `startRecordingAutomatically` in the consuming\nframe.\n\nYou will also need to set `sessionRecorderElement` if the recorder is to be housed other than\nin an element identified by the ID `recorder`.\n\nThe properties `recorder`, `sessionRecorderReady`, and\n`sessionVideoId` become available to the consuming frame. The recorder object has fields\nthat give information about its state: `hasWebCam`, 'hasCamAccess`, `recording`,\n`connected`, and `micChecked` - for details, see services/video-recorder.js. These\ncan be accessed from the consuming frame as e.g. `this.get('recorder').get('hasWebCam')`.\n\nIf starting recording automatically, the function `whenPossibleToRecord` will be called\nonce recording is possible, and will start recording. If you want to do other things\nat this point, like proceeding to a test trial, you can override this function in your\nframe.\n\nSee 'methods' for the functions you can use on a frame that extends VideoRecord.\n\nEvents recorded in a frame that extends VideoRecord will automatically have additional\nfields sessionVideoId (video filename), pipeId (temporary filename initially assigned by\nthe recording service),\nand streamTime (when in the video they happened, in s)."
+            "description": "Reference for DEVELOPERS of new frames only!\nA mixin that can be used to add basic support for video recording to a particular experiment frame\nBy default, the recorder will be installed when this frame loads, but recording\n will not start automatically. To override either of these settings, set\n the properties `doUseCamera` and/or `startRecordingAutomatically` in the consuming\n frame.\nYou will also need to set `sessionRecorderElement` if the recorder is to be housed other than\n in an element identified by the ID `recorder`.\nThe properties `recorder`, `sessionRecorderReady`, and\n `sessionVideoId` become available to the consuming frame. The recorder object has fields\n that give information about its state: `hasWebCam`, 'hasCamAccess`, `recording`,\n `connected`, and `micChecked` - for details, see services/video-recorder.js. These\n can be accessed from the consuming frame as e.g. `this.get('recorder').get('hasWebCam')`.\nIf starting recording automatically, the function `whenPossibleToRecord` will be called\n once recording is possible, and will start recording. If you want to do other things\n at this point, like proceeding to a test trial, you can override this function in your\n frame.\nSee 'methods' for the functions you can use on a frame that extends VideoRecord.\nEvents recorded in a frame that extends VideoRecord will automatically have additional\n fields sessionVideoId (video filename), pipeId (temporary filename initially assigned by\n the recording service),\n and streamTime (when in the video they happened, in s)."
         },
         "Video-record": {
             "name": "Video-record",
@@ -1018,7 +937,6 @@
                 "Exp-lookit-video",
                 "Exp-lookit-video-assent",
                 "Exp-lookit-video-consent",
-                "Exp-video-consent",
                 "Exp-video-preview"
             ],
             "module": "exp-player",
@@ -1026,7 +944,7 @@
             "namespace": "",
             "file": "app/mixins/video-record.js",
             "line": 14,
-            "description": "A mixin that can be used to add basic support for video recording across frames\n\nBy default, the recorder will be installed when this frame loads, but recording\nwill not start automatically. To override either of these settings, set\nthe properties `doUseCamera` and/or `startRecordingAutomatically` in the consuming\nframe.\n\nYou will also need to set `recorderElement` if the recorder is to be housed other than\nin an element identified by the ID `recorder`.\n\nThe properties `recorder`, `videoList`, `stoppedRecording`, `recorderReady`, and\n`videoId` become available to the consuming frame. The recorder object has fields\nthat give information about its state: `hasWebCam`, 'hasCamAccess`, `recording`,\n`connected`, and `micChecked` - for details, see services/video-recorder.js. These\ncan be accessed from the consuming frame as e.g. `this.get('recorder').get('hasWebCam')`.\n\nIf starting recording automatically, the function `whenPossibleToRecord` will be called\nonce recording is possible, and will start recording. If you want to do other things\nat this point, like proceeding to a test trial, you can override this function in your\nframe.\n\nSee 'methods' for the functions you can use on a frame that extends VideoRecord.\n\nEvents recorded in a frame that extends VideoRecord will automatically have additional\nfields videoId (video filename), pipeId (temporary filename initially assigned by\nthe recording service),\nand streamTime (when in the video they happened, in s).\n\nSetting up the camera is handled in didInsertElement, and making sure recording is\nstopped is handled in willDestroyElement (Ember hooks that fire during the component\nlifecycle). It is very important (in general, but especially when using this mixin)\nthat you call `this._super(...arguments);` in any functions where your frame overrides\nhooks like this, so that the mixin's functions get called too!"
+            "description": "Reference for DEVELOPERS of new frames only!\nA mixin that can be used to add basic support for video recording across frames\nBy default, the recorder will be installed when this frame loads, but recording\n will not start automatically. To override either of these settings, set\n the properties `doUseCamera` and/or `startRecordingAutomatically` in the consuming\n frame.\nYou will also need to set `recorderElement` if the recorder is to be housed other than\n in an element identified by the ID `recorder`.\nThe properties `recorder`, `videoList`, `stoppedRecording`, `recorderReady`, and\n `videoId` become available to the consuming frame. The recorder object has fields\n that give information about its state: `hasWebCam`, 'hasCamAccess`, `recording`,\n `connected`, and `micChecked` - for details, see services/video-recorder.js. These\n can be accessed from the consuming frame as e.g. `this.get('recorder').get('hasWebCam')`.\nIf starting recording automatically, the function `whenPossibleToRecord` will be called\n once recording is possible, and will start recording. If you want to do other things\n at this point, like proceeding to a test trial, you can override this function in your\n frame.\nSee 'methods' for the functions you can use on a frame that extends VideoRecord.\nEvents recorded in a frame that extends VideoRecord will automatically have additional\n fields videoId (video filename), pipeId (temporary filename initially assigned by\n the recording service),\n and streamTime (when in the video they happened, in s).\nSetting up the camera is handled in didInsertElement, and making sure recording is\n stopped is handled in willDestroyElement (Ember hooks that fire during the component\n lifecycle). It is very important (in general, but especially when using this mixin)\n that you call `this._super(...arguments);` in any functions where your frame overrides\n hooks like this, so that the mixin's functions get called too!"
         },
         "Permute": {
             "name": "Permute",
@@ -1082,10 +1000,9 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "exp-player",
-            "submodule": "services",
             "namespace": "",
             "file": "app/services/video-recorder.js",
-            "line": 13,
+            "line": 76,
             "description": "An instance of a video recorder tied to or used by one specific page. A given experiment may use more than one\n  video recorder depending on the number of video capture frames."
         }
     },
@@ -1543,7 +1460,19 @@
         },
         {
             "file": "app/components/exp-lookit-exit-survey/component.js",
-            "line": 102,
+            "line": 96,
+            "description": "Whether to show a 'share this study on Facebook' button",
+            "itemtype": "property",
+            "name": "showShareButton",
+            "type": "Boolean",
+            "default": "true",
+            "class": "Exp-lookit-exit-survey",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-exit-survey/component.js",
+            "line": 113,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "serializeContent",
@@ -4339,19 +4268,113 @@
             "submodule": "frames"
         },
         {
+            "file": "app/components/exp-lookit-webcam-display/component.js",
+            "line": 60,
+            "description": "Array of blocks for {{#crossLink \"Exp-text-block\"}}{{/crossLink}}, specifying text/images of instructions to display",
+            "itemtype": "property",
+            "name": "blocks",
+            "type": "Object[]",
+            "class": "Exp-lookit-webcam-display",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "title",
+                    "description": "Title of this section",
+                    "type": "String"
+                },
+                {
+                    "name": "text",
+                    "description": "Paragraph text of this section",
+                    "type": "String"
+                },
+                {
+                    "name": "listblocks",
+                    "description": "Object specifying bulleted points for this section. Each object is of the form:\n  {text: 'text of bullet point', image: {src: 'url', alt: 'alt-text'}}. Images are optional.",
+                    "type": "Object[]"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-webcam-display/component.js",
+            "line": 106,
+            "description": "Whether to automatically begin recording upon frame load",
+            "itemtype": "property",
+            "name": "startRecordingAutomatically",
+            "type": "Boolean",
+            "default": "false",
+            "class": "Exp-lookit-webcam-display",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-webcam-display/component.js",
+            "line": 116,
+            "description": "Text to display on the 'next frame' button",
+            "itemtype": "property",
+            "name": "nextButtonText",
+            "type": "String",
+            "default": "'Next'",
+            "class": "Exp-lookit-webcam-display",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-webcam-display/component.js",
+            "line": 126,
+            "description": "Whether to show a 'previous' button",
+            "itemtype": "property",
+            "name": "showPreviousButton",
+            "type": "Boolean",
+            "default": "true",
+            "class": "Exp-lookit-webcam-display",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-webcam-display/component.js",
+            "line": 142,
+            "description": "Parameters captured and sent to the server",
+            "itemtype": "method",
+            "name": "serializeContent",
+            "params": [
+                {
+                    "name": "videoID",
+                    "description": "The ID of any webcam video recorded during this frame",
+                    "type": "String"
+                },
+                {
+                    "name": "videoList",
+                    "description": "a list of webcam video IDs in case there are >1",
+                    "type": "List"
+                },
+                {
+                    "name": "eventTimings",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The payload sent to the server",
+                "type": "Object"
+            },
+            "class": "Exp-lookit-webcam-display",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
             "file": "app/components/exp-player/component.js",
-            "line": 55,
+            "line": 56,
             "description": "The message to display in the early exit modal. Newer browsers may not respect this message.",
             "itemtype": "property",
             "name": "messageEarlyExitModal",
             "type": "String|null",
-            "class": "Exp-player",
-            "module": "exp-player",
-            "submodule": "components"
+            "class": "Exp-video-config",
+            "module": "exp-player"
         },
         {
             "file": "app/components/exp-player/component.js",
-            "line": 61,
+            "line": 62,
             "description": "Customize what happens when the user exits the page",
             "itemtype": "method",
             "name": "beforeUnload",
@@ -4366,13 +4389,12 @@
                 "description": "If string is provided, triggers a modal to confirm user wants to leave page",
                 "type": "String|null"
             },
-            "class": "Exp-player",
-            "module": "exp-player",
-            "submodule": "components"
+            "class": "Exp-video-config",
+            "module": "exp-player"
         },
         {
             "file": "app/components/exp-video-config/component.js",
-            "line": 56,
+            "line": 120,
             "description": "Text to show as the introduction to the troubleshooting tips section",
             "itemtype": "property",
             "name": "troubleshootingIntro",
@@ -4492,7 +4514,7 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 320,
+            "line": 323,
             "description": "Observer that adds listener for play button once recorder is ready.",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -4502,25 +4524,25 @@
         },
         {
             "file": "app/components/exp-video-consent/component.js",
-            "line": 59,
+            "line": 60,
             "description": "Title of the consent document",
             "itemtype": "property",
             "name": "title",
             "type": "String",
             "default": "'Consent to participate in behavioral research: <br> Inference and induction study'",
-            "class": "Exp-video-consent",
+            "class": "Exp-video-preview",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-video-consent/component.js",
-            "line": 69,
+            "line": 70,
             "description": "Array of paragraphs of the consent document, each with title and text.",
             "itemtype": "property",
             "name": "blocks",
             "type": "Array",
             "default": "[]",
-            "class": "Exp-video-consent",
+            "class": "Exp-video-preview",
             "module": "exp-player",
             "submodule": "frames",
             "subprops": [
@@ -4538,19 +4560,19 @@
         },
         {
             "file": "app/components/exp-video-consent/component.js",
-            "line": 92,
+            "line": 93,
             "description": "Text the user is asked to read aloud to consent",
             "itemtype": "property",
             "name": "prompt",
             "type": "String",
             "default": "'I consent to participate in this study'",
-            "class": "Exp-video-consent",
+            "class": "Exp-video-preview",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-video-consent/component.js",
-            "line": 107,
+            "line": 108,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "serializeContent",
@@ -4580,7 +4602,7 @@
                 "description": "The payload sent to the server",
                 "type": "Object"
             },
-            "class": "Exp-video-consent",
+            "class": "Exp-video-preview",
             "module": "exp-player",
             "submodule": "frames"
         },
@@ -4689,7 +4711,7 @@
         },
         {
             "file": "app/mixins/expand-assets.js",
-            "line": 92,
+            "line": 95,
             "description": "Object describing which properties may need expansion",
             "itemtype": "property",
             "name": "assetsToExpand",
@@ -4700,7 +4722,7 @@
         },
         {
             "file": "app/mixins/expand-assets.js",
-            "line": 99,
+            "line": 102,
             "description": "Base directory for where to find stimuli. Any image src\nvalues that are not full paths will be expanded by prefixing\nwith `baseDir` + `img/`. Any audio/video src values provided as\nstrings rather than objects with `src` and `type` will be\nexpanded out to `baseDir/avtype/[stub].avtype`, where the potential\navtypes are given by `audioTypes` and `videoTypes`.\n\nbaseDir should include a trailing slash\n(e.g., `http://stimuli.org/myexperiment/`); if a value is provided that\ndoes not end in a slash, one will be added.",
             "itemtype": "property",
             "name": "baseDir",
@@ -4712,7 +4734,7 @@
         },
         {
             "file": "app/mixins/expand-assets.js",
-            "line": 119,
+            "line": 122,
             "description": "List of audio types to expect for any audio specified just\nwith a string rather than with a list of src/type objects.\nIf audioTypes is `['typeA', 'typeB']` and an audio source\nis given as `intro`, the audio source will be\nexpanded out to\n\n\n    [\n        {\n            src: 'baseDir' + 'typeA/intro.typeA',\n            type: 'audio/typeA'\n        },\n        {\n            src: 'baseDir' + 'typeB/intro.typeB',\n            type: 'audio/typeB'\n        }\n    ]",
             "itemtype": "property",
             "name": "audioTypes",
@@ -4724,7 +4746,7 @@
         },
         {
             "file": "app/mixins/expand-assets.js",
-            "line": 147,
+            "line": 150,
             "description": "List of video types to expect for any audio specified just\nwith a string rather than with a list of src/type objects.\nIf videoTypes is `['typeA', 'typeB']` and a video source\nis given as `intro`, the video source will be\nexpanded out to\n\n\n    [\n        {\n            src: 'baseDir' + 'typeA/intro.typeA',\n            type: 'video/typeA'\n        },\n        {\n            src: 'baseDir' + 'typeB/intro.typeB',\n            type: 'video/typeB'\n        }\n    ]",
             "itemtype": "property",
             "name": "videoTypes",
@@ -4736,7 +4758,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 17,
+            "line": 20,
             "description": "The element ID of the thing to make full screen (video element, div, etc)",
             "itemtype": "property",
             "name": "fullScreenElementId",
@@ -4747,7 +4769,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 24,
+            "line": 27,
             "description": "The element ID of a button to show if the user leaves fullscreen mode",
             "itemtype": "property",
             "name": "fsButtonID",
@@ -4758,7 +4780,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 76,
+            "line": 79,
             "description": "Upon detecting change to fullscreen mode",
             "itemtype": "event",
             "name": "enteredFullscreen",
@@ -4768,7 +4790,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 88,
+            "line": 91,
             "description": "Upon detecting change out of fullscreen mode",
             "itemtype": "event",
             "name": "leftFullscreen",
@@ -4778,7 +4800,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 104,
+            "line": 107,
             "description": "Make a specified element fullscreen",
             "itemtype": "method",
             "name": "showFullscreen",
@@ -4788,7 +4810,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 137,
+            "line": 140,
             "description": "Exit fullscreen mode",
             "itemtype": "method",
             "name": "exitFullscreen",
@@ -4798,7 +4820,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 163,
+            "line": 166,
             "description": "Whether to display this frame as fullscreen, even though it is not\ngenerally used that way.",
             "itemtype": "property",
             "name": "displayFullscreenOverride",
@@ -4809,7 +4831,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 46,
+            "line": 49,
             "description": "When recorder detects a change in camera access",
             "itemtype": "event",
             "name": "hasCamAccess",
@@ -4826,7 +4848,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 53,
+            "line": 56,
             "description": "When recorder detects a change in video stream connection status",
             "itemtype": "event",
             "name": "videoStreamConnection",
@@ -4843,7 +4865,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 61,
+            "line": 64,
             "description": "Just before stopping webcam video capture",
             "itemtype": "event",
             "name": "stoppingCapture",
@@ -4853,7 +4875,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 85,
+            "line": 88,
             "description": "Whether to start a session (multi-frame) recording as soon as possible upon loading this frame. This allows you to conduct video recording across multiple frames, simply specifying which frame to start and end on. Individual frames may also provide frame-specific recording capabilities; it is best NOT to conduct both a multiframe 'session' recording and frame-specific recording simultaneously as multiple video streams will eat up bandwidth. If you decide to use session recording, turn off recording for any frames that would otherwise record. There can be multiple session recordings in an experiment, e.g. from frames 1-3 and 5-10.",
             "itemtype": "property",
             "name": "startSessionRecording",
@@ -4865,7 +4887,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 92,
+            "line": 95,
             "description": "Whether to end any session (multi-frame) recording at the end of this frame.",
             "itemtype": "property",
             "name": "endSessionRecording",
@@ -4877,7 +4899,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 102,
+            "line": 105,
             "description": "Whether to do audio-only (vs also video) recording for session (multiframe) recording. Only used if starting session recording this frame.",
             "itemtype": "property",
             "name": "sessionAudioOnly",
@@ -4889,7 +4911,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 120,
+            "line": 123,
             "description": "Set up a video recorder instance",
             "itemtype": "method",
             "name": "setupRecorder",
@@ -4910,7 +4932,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 167,
+            "line": 170,
             "description": "Start recording",
             "itemtype": "method",
             "name": "startSessionRecorder",
@@ -4923,7 +4945,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 181,
+            "line": 184,
             "description": "Stop recording",
             "itemtype": "method",
             "name": "startSessionRecorder",
@@ -4936,7 +4958,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 196,
+            "line": 199,
             "description": "Destroy recorder and stop accessing webcam",
             "itemtype": "method",
             "name": "destroySessionRecorder",
@@ -4946,7 +4968,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 215,
+            "line": 218,
             "description": "When session video recorder has been installed",
             "itemtype": "event",
             "name": "sessionRecorderReady",
@@ -4956,7 +4978,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 247,
+            "line": 250,
             "description": "Observer that starts recording once session recorder is ready. Override to do additional\nstuff at this point!",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -4966,7 +4988,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 53,
+            "line": 56,
             "description": "When recorder detects a change in camera access",
             "itemtype": "event",
             "name": "hasCamAccess",
@@ -4983,7 +5005,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 60,
+            "line": 63,
             "description": "When recorder detects a change in video stream connection status",
             "itemtype": "event",
             "name": "videoStreamConnection",
@@ -5000,7 +5022,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 68,
+            "line": 71,
             "description": "When pausing study, immediately before request to pause webcam recording",
             "itemtype": "event",
             "name": "pauseVideo",
@@ -5010,7 +5032,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 74,
+            "line": 77,
             "description": "When unpausing study, immediately before request to resume webcam recording",
             "itemtype": "event",
             "name": "unpauseVideo",
@@ -5020,7 +5042,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 80,
+            "line": 83,
             "description": "Just before stopping webcam video capture",
             "itemtype": "event",
             "name": "stoppingCapture",
@@ -5030,7 +5052,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 88,
+            "line": 91,
             "description": "The recorder object, accessible to the consuming frame. Includes properties\nrecorder.nWebcams, recorder.hasCamAccess, recorder.micChecked, recorder.connected.",
             "itemtype": "property",
             "name": "recorder",
@@ -5041,7 +5063,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 95,
+            "line": 98,
             "description": "A list of all video IDs used in this mixing (a new one is created for each recording).\nAccessible to consuming frame.",
             "itemtype": "property",
             "name": "videoList",
@@ -5052,7 +5074,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 102,
+            "line": 105,
             "description": "Whether recording is stopped already, meaning it doesn't need to be re-stopped when\ndestroying frame. This should be set to true by the consuming frame when video is\nstopped.",
             "itemtype": "property",
             "name": "stoppedRecording",
@@ -5063,7 +5085,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 110,
+            "line": 113,
             "description": "JQuery string to identify the recorder element.",
             "itemtype": "property",
             "name": "[recorderElement='#recorder']",
@@ -5074,7 +5096,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 116,
+            "line": 119,
             "description": "Whether recorder has been set up yet. Automatically set when doing setup.\nAccessible to consuming frame.",
             "itemtype": "property",
             "name": "recorderReady",
@@ -5085,7 +5107,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 123,
+            "line": 126,
             "description": "Maximum recording length in seconds. Can be overridden by consuming frame.",
             "itemtype": "property",
             "name": "maxRecordingLength",
@@ -5097,7 +5119,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 130,
+            "line": 133,
             "description": "Whether to autosave recordings. Can be overridden by consuming frame.",
             "itemtype": "property",
             "name": "autosave",
@@ -5109,7 +5131,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 137,
+            "line": 140,
             "description": "Whether to do audio-only (vs also video) recording. Can be overridden by consuming frame.",
             "itemtype": "property",
             "name": "audioOnly",
@@ -5121,7 +5143,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 144,
+            "line": 147,
             "description": "Whether to use the camera in this frame. Consuming frame should set this property\nto override if needed.",
             "itemtype": "property",
             "name": "[doUseCamera=true]",
@@ -5132,7 +5154,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 151,
+            "line": 154,
             "description": "Whether to start recording ASAP (only applies if doUseCamera). Consuming frame\nshould set to override if needed.",
             "itemtype": "property",
             "name": "[startRecordingAutomatically=false]",
@@ -5143,7 +5165,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 158,
+            "line": 161,
             "description": "A video ID to use for the current recording. Format is\n`videoStream_<experimentId>_<frameId>_<sessionId>_timestampMS_RRR`\nwhere RRR are random numeric digits.",
             "itemtype": "property",
             "name": "videoId",
@@ -5154,7 +5176,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 178,
+            "line": 181,
             "description": "Extend any base time event capture with information about the recorded video",
             "itemtype": "method",
             "name": "makeTimeEvent",
@@ -5178,7 +5200,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 197,
+            "line": 200,
             "description": "Set up a video recorder instance",
             "itemtype": "method",
             "name": "setupRecorder",
@@ -5199,7 +5221,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 232,
+            "line": 235,
             "description": "Pause the recorder (and capture timing events). For webRTC recorder, this is\njust a placeholder and doesn't actually pause the recording. If webRTC used,\nincludes extra data actuallyPaused: false. This is for backwards compatibility\nwith frames that pause/resume recording, and should not be used going forward -\ninstead stop/start and make separate clips if needed.",
             "itemtype": "method",
             "name": "pauseRecorder",
@@ -5217,7 +5239,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 252,
+            "line": 255,
             "description": "Resume a paused recording. For webRTC recorder, this is just a placeholder and\ndoesn't actually pause the recording. If webRTC used, includes extra data\nwasActuallyPaused: false. This is for backwards compatibility\nwith frames that pause/resume recording, and should not be used going forward -\ninstead stop/start and make separate clips if needed.",
             "itemtype": "method",
             "name": "resumeRecorder",
@@ -5227,7 +5249,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 270,
+            "line": 273,
             "description": "Start recording",
             "itemtype": "method",
             "name": "startRecorder",
@@ -5240,7 +5262,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 291,
+            "line": 294,
             "description": "Stop the recording",
             "itemtype": "method",
             "name": "stopRecorder",
@@ -5253,7 +5275,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 306,
+            "line": 309,
             "description": "Destroy recorder and stop accessing webcam",
             "itemtype": "method",
             "name": "destroyRecorder",
@@ -5263,7 +5285,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 344,
+            "line": 347,
             "description": "When video recorder has been installed",
             "itemtype": "event",
             "name": "recorderReady",
@@ -5273,7 +5295,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 357,
+            "line": 360,
             "description": "Observer that starts recording once recorder is ready. Override to do additional\nstuff at this point!",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -5283,7 +5305,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 373,
+            "line": 376,
             "description": "Hide the recorder from display. Useful if you would like to keep recording without extra UI elements to\n  distract the user.",
             "itemtype": "method",
             "name": "hideRecorder",
@@ -5293,7 +5315,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 382,
+            "line": 385,
             "description": "Show the recorder to the user. Useful if you want to temporarily show a hidden recorder- eg to let the user fix\n  a problem with video capture settings",
             "itemtype": "method",
             "name": "showRecorder",
@@ -5407,7 +5429,7 @@
         {
             "file": "app/randomizers/random-parameter-set.js",
             "line": 310,
-            "description": "[Optional] How to select a parameterSet for a participant who has previously\nparticipated in this study. Must be one of 'random' (default), 'persist', or\n'rotate'. Meanings:\n\n'random': regardless of any previous sessions from this participant, select a\n   parameterSet for this participant as usual (including using parameterSetWeights if\n   provided). Default behavior.\n\n'persist': Continue assigning the same participant to the same parameterSet for all\n   sessions.\n\n'rotate': The first time, assign parameterSet randomly (per parameterSetWeights if\n   given); after that, each time the participant participates assign them to the next\n   parameterSet in the list. Subtracts length of parameterSets until the 'next' index\n   is in range.\n\nThe most recent session in which the `conditions` data includes an element that looks\nlike it was generated by this same randomizer (i.e., with key ending in `-frameId`,\nlike `-test-trials`) will always be used for assignment.\n\nNote: The 'same' or 'next' parameterSets are determined by the **index** of the\n   previously-selected parameterSet. That is, if you were assigned to conditionNum 0\n   (index 0 in parameterSets) last time, you will be assigned to conditionNum 0 again\n   this time if conditionForAdditionalSessions is `persist` and conditionNum 1 if\n   conditionForAdditionalSessions is `rotate`. So if you update the list of parameterSets\n   in your study - e.g. to fix a bug or clarify wording - the new values will be used\n   even for repeat participants. But be careful that you do not reorder them unless you\n   intend to, say, swap all participants to the opposite condition on a specified date.\n   If the previous index is now outside the range of the parameterSets list (e.g., you\n   used to have 6 conditions, and the participant was previously in conditionNum 5,\n   but then you changed parameterSets to have only 3 elements) and conditionForAdditionalSessions is\n   `persist` then the participant is assigned to the last element of parameterSets.",
+            "description": "[Optional] How to select a parameterSet for a participant who has previously\nparticipated in this study. Must be one of 'random' (default), 'persist', or\n'rotate'. Meanings:\n\n* `\"random\"`: regardless of any previous sessions from this participant, select a\n   parameterSet for this participant as usual (including using parameterSetWeights if\n   provided). Default behavior.\n\n* `\"persist\"`: Continue assigning the same participant to the same parameterSet for all\n   sessions.\n\n* `\"rotate\"`: The first time, assign parameterSet randomly (per parameterSetWeights if\n   given); after that, each time the participant participates assign them to the next\n   parameterSet in the list. Subtracts length of parameterSets until the 'next' index\n   is in range.\n\nThe most recent session in which the `conditions` data includes an element that looks\nlike it was generated by this same randomizer (i.e., with key ending in `-frameId`,\nlike `-test-trials`) will always be used for assignment. **Only sessions with a\ncompleted consent frame are considered, so that participants are not rotated through\nconditions simply due to refreshing the setup page.**\n\nNote: The \"same\" or \"next\" parameterSets are determined by the **index** of the\n   previously-selected parameterSet. That is, if you were assigned to conditionNum 0\n   (index 0 in parameterSets) last time, you will be assigned to conditionNum 0 again\n   this time if `conditionForAdditionalSessions` is `\"persist\"` and conditionNum 1 if\n   `conditionForAdditionalSessions` is `\"rotate\"`. So if you update the list of parameterSets\n   in your study - e.g. to fix a bug or clarify wording - the new values will be used\n   even for repeat participants. But be careful that you do not reorder them unless you\n   intend to, say, swap all participants to the opposite condition on a specified date!\n\n   If the previous index is now outside the range of the parameterSets list (e.g., you\n   used to have 6 conditions, and the participant was previously in conditionNum 5,\n   but then you changed parameterSets to have only 3 elements) and conditionForAdditionalSessions is\n   `\"persist\"`, then the participant is assigned to the last element of parameterSets.",
             "itemtype": "property",
             "name": "conditionForAdditionalSessions",
             "type": "String",
@@ -5417,7 +5439,7 @@
         },
         {
             "file": "app/randomizers/random-parameter-set.js",
-            "line": 347,
+            "line": 350,
             "description": "[Optional] Array of weights for parameter sets; elements correspond to\nelements of parameterSets. The probability of selecting an element\n`parameterSets[i]` is `parameterSetWeights[i]/sum(parameterSetWeights)`.\n\nIf not provided, all `parameterSets` are weighted equally.\n\nThis is intended to allow manual control of counterbalancing during\ndata collection, e.g. to allow one condition to 'catch up' if it was\nrandomly selected less often.\n\nInstead of providing a single list of the same length as parameterSets,\nyou may instead provide a list of objects specifying the weights to use within\nvarious age ranges, like this:\n\n```\n   'parameterSetWeights': [\n       {\n           'minAge': 0,\n           'maxAge': 365,\n           'weights': [1, 0, 1]\n       },\n       {\n           'minAge': 365,\n           'maxAge': 10000,\n           'weights': [0, 1, 0]\n       },\n   ]\n```\nThe child's age in days will be computed, and the weights used will be based on the\nfirst element of `parameterSetWeights` where the child falls between the min and max\nage. In the example above, children under one year old will be assigned to either\nthe first or third condition; children over a year will be assigned to the second condition.\nThis may be useful for researchers who need to balance condition assignment per\nage bracket. As you code data and realize you are set on 3-year-olds in condition A, for\ninstance, you can stop assigning any more 3-year-olds to that condition.",
             "itemtype": "property",
             "name": "parameterSetWeights",
@@ -5428,7 +5450,7 @@
         },
         {
             "file": "app/randomizers/random-parameter-set.js",
-            "line": 488,
+            "line": 491,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "conditions",
@@ -5500,7 +5522,7 @@
         },
         {
             "file": "app/services/video-recorder.js",
-            "line": 71,
+            "line": 134,
             "description": "Install a recorder onto the page and optionally begin recording immediately.",
             "itemtype": "method",
             "name": "install",
@@ -5535,12 +5557,11 @@
                 "type": "Promise"
             },
             "class": "video-recorder",
-            "module": "exp-player",
-            "submodule": "services"
+            "module": "exp-player"
         },
         {
             "file": "app/services/video-recorder.js",
-            "line": 149,
+            "line": 212,
             "description": "Start recording a video, and allow the state of the recording to be accessed for later usage",
             "itemtype": "method",
             "name": "record",
@@ -5549,12 +5570,11 @@
                 "type": "Promise"
             },
             "class": "video-recorder",
-            "module": "exp-player",
-            "submodule": "services"
+            "module": "exp-player"
         },
         {
             "file": "app/services/video-recorder.js",
-            "line": 189,
+            "line": 252,
             "description": "Get a timestamp based on the current recording position. Useful to ensure that tracked timing events\n line up with the video.",
             "itemtype": "method",
             "name": "getTime",
@@ -5563,28 +5583,25 @@
                 "type": "Date|null"
             },
             "class": "video-recorder",
-            "module": "exp-player",
-            "submodule": "services"
+            "module": "exp-player"
         },
         {
             "file": "app/services/video-recorder.js",
-            "line": 203,
+            "line": 266,
             "description": "Stop recording and save the video to the server",
             "itemtype": "method",
             "name": "stop",
             "class": "video-recorder",
-            "module": "exp-player",
-            "submodule": "services"
+            "module": "exp-player"
         },
         {
             "file": "app/services/video-recorder.js",
-            "line": 239,
+            "line": 302,
             "description": "Destroy video recorder",
             "itemtype": "method",
             "name": "destroy",
             "class": "video-recorder",
-            "module": "exp-player",
-            "submodule": "services"
+            "module": "exp-player"
         }
     ],
     "warnings": []
