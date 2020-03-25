@@ -27,6 +27,11 @@
 // Physics study only
 @import "components/exp-exit-survey";
 
+#experiment-player {
+    font-size: large;
+    background-color: #FFFFFF !important;
+}
+
 .exp-text-large {
     font-size: 2em;
 }
@@ -107,11 +112,6 @@ p#pipeClickPowered {
     position: absolute;
 }
 
-#experiment-player {
-    background-color: #FFFFFF !important;
-}
-
-
 
 /* PARTICIPATE */
 #expContainer:fullscreen {
@@ -131,3 +131,6 @@ p#pipeClickPowered {
     margin: auto;
 }
 
+.btn {
+    font-size: large;
+}
