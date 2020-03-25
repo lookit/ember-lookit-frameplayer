@@ -21,6 +21,7 @@
 @import "components/exp-lookit-video-assent";
 @import "components/exp-lookit-survey";
 @import "components/exp-lookit-observation";
+@import "components/exp-lookit-webcam-display";
 @import "components/radio-group";
 
 // Physics study only
@@ -93,6 +94,10 @@ p#pipeClickPowered {
 
 .recorder-container #recorder {
     height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: auto;
 }
 
 .video-recorder-hidden {

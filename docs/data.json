@@ -782,7 +782,7 @@
             "namespace": "",
             "file": "app/components/exp-lookit-webcam-display/component.js",
             "line": 11,
-            "description": "TODO: edit docs!\nA frame to collect a video observation with the participant's help. By default the\nwebcam is displayed to the participant and they can choose when to start, pause, and\nresume recording. The duration of an individual recording can optionally be limited\nand/or recording can be started automatically. This is intended for cases where we\nwant the parent to perform some test or behavior with the child, rather than\npresenting stimuli ourselves. E.g., you might give instructions to conduct a structured\ninterview and allow the parent to control recording.\n\nEach element of the 'blocks' parameter is rendered using {{#crossLink \"Exp-text-block\"}}{{/crossLink}}.\n\n```\n   \"frames\": {\n       \"observation\": {\n           \"kind\": \"exp-lookit-observation\",\n           \"blocks\": [\n               {\n                   \"title\": \"Time to do the joke!\",\n                   \"listblocks\": [\n                       {\n                           \"text\": \"Rip the paper\"\n                       },\n                       {\n                           \"text\": \"Wait ten seconds\"\n                       }\n                   ]\n               }\n           ],\n           \"hideWebcam\": true,\n           \"hideControls\": false,\n           \"recordSegmentLength\": 10,\n           \"startRecordingAutomatically\": false,\n           \"nextButtonText\": \"move on\",\n           \"showPreviousButton\": false\n       }\n   }\n```",
+            "description": "A frame to display the user's webcam stream, along with a small amount of optional text.\nExpected use is as a break during an experiment, e.g. to check positioning, but could\nalso be used as a lightweight frame for data collection.\n\nNot fullscreen by default, but can be displayed fullscreen as shown in example below.\nCan optionally record video.\n\n\n```\n   \"frames\": {\n       \"webcam-display-break\": {\n           \"kind\": \"exp-lookit-webcam-display\",\n           \"blocks\": [\n               {\n                   \"title\": \"Here is a short break\",\n                   \"listblocks\": [\n                       {\n                           \"text\": \"You can check that your child is still visible\"\n                       },\n                       {\n                           \"text\": \"You can make some silly faces\"\n                       }\n                   ]\n               }\n           ],\n           \"nextButtonText\": \"Next\",\n           \"showPreviousButton\": false,\n           \"displayFullscreenOverride\": true,\n           \"startRecordingAutomatically\": false\n       }\n   }\n```",
             "extends": "Video-record"
         },
         "Exp-video-config": {
@@ -4269,7 +4269,7 @@
         },
         {
             "file": "app/components/exp-lookit-webcam-display/component.js",
-            "line": 60,
+            "line": 55,
             "description": "Array of blocks for {{#crossLink \"Exp-text-block\"}}{{/crossLink}}, specifying text/images of instructions to display",
             "itemtype": "property",
             "name": "blocks",
@@ -4297,7 +4297,7 @@
         },
         {
             "file": "app/components/exp-lookit-webcam-display/component.js",
-            "line": 106,
+            "line": 101,
             "description": "Whether to automatically begin recording upon frame load",
             "itemtype": "property",
             "name": "startRecordingAutomatically",
@@ -4309,7 +4309,7 @@
         },
         {
             "file": "app/components/exp-lookit-webcam-display/component.js",
-            "line": 116,
+            "line": 111,
             "description": "Text to display on the 'next frame' button",
             "itemtype": "property",
             "name": "nextButtonText",
@@ -4321,7 +4321,7 @@
         },
         {
             "file": "app/components/exp-lookit-webcam-display/component.js",
-            "line": 126,
+            "line": 121,
             "description": "Whether to show a 'previous' button",
             "itemtype": "property",
             "name": "showPreviousButton",
@@ -4333,7 +4333,7 @@
         },
         {
             "file": "app/components/exp-lookit-webcam-display/component.js",
-            "line": 142,
+            "line": 137,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "serializeContent",
