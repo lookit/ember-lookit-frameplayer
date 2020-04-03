@@ -504,10 +504,10 @@ export default class DiscreteButtonSpatial extends Base {
       }
 
 
-      exportData.window.push(this.getCorrectIndex()+1);
-      exportData.selected_button.push(target_state + 1);
-      exportData.obstruction_number.push(trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION]);
-      exportData.trial.push(super.currentRounds);
+      exportData.window = this.getCorrectIndex()+1;
+      exportData.selected_button = target_state + 1;
+      exportData.obstruction_number = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];
+      exportData.trial = super.currentRounds;
       exportData.trialType = this.context.trialType;
       exportData.ball_position_x.push(super.convertXvalue(super.ball.position.x));
       exportData.ball_position_y.push(super.convertYvalue(super.ball.position.y));
