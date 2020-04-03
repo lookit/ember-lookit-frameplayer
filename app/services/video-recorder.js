@@ -10,6 +10,69 @@ let {
     RSVP
 } = Ember;
 
+var LOOKIT_PREFERRED_DEVICES = {
+    'cam': null,
+    'mic': null
+};
+
+// Deal with Firefox issue where, after selecting camera/mic to share and saying to
+// 'remember' settings, the default cam/mic are used each time getUserMedia is called.
+// This does NOT fix persisting selections across multiple Lookit sessions, but will
+// persist it through the session (one page load). (To forcibly fix selection, can
+// revoke & refresh page).
+// Override getUserMedia function to insert our preference on camera and mic, and to set
+// that preference the first time getUserMedia is called successfully. We do this rather than
+// editing https://cdn.addpipe.com/2.0/pipe.js and hosting our own copy so we don't have to
+// maintain across changes to Pipe.
+// Only override newer navigator.mediaDevices.getUserMedia rather than also
+// navigator.getUserMedia, as the latter will only be used by Pipe if the newer one is not
+// available, in which case probably bigger problems than this one.
+navigator.mediaDevices.getUserMedia = (function(origGetUserMedia) {
+    return function() {
+        // Add preferred mic and camera, if already stored, to any other constraints being
+        // passed to getUserMedia
+        var constraints = arguments[0];
+        if (constraints.hasOwnProperty('audio') && LOOKIT_PREFERRED_DEVICES.mic) {
+            constraints.audio.deviceId = LOOKIT_PREFERRED_DEVICES.mic;
+        }
+        if (constraints.hasOwnProperty('video') && LOOKIT_PREFERRED_DEVICES.cam) {
+            constraints.video.deviceId = LOOKIT_PREFERRED_DEVICES.cam;
+        }
+        return origGetUserMedia.apply(this, arguments).then(function(stream) {
+            // Set the preferred cam/mic IDs the first time we get a stream
+            try {
+                var audioTracks = stream.getAudioTracks();
+                var videoTracks = stream.getVideoTracks();
+                if (!LOOKIT_PREFERRED_DEVICES.mic && audioTracks) {
+                    var thisAudioLabel = audioTracks[0].label;
+                    navigator.mediaDevices.enumerateDevices()
+                    .then(function(devices) {
+                        devices.forEach(function(device) {
+                            if (device.kind == 'audioinput' && device.label == thisAudioLabel) {
+                                LOOKIT_PREFERRED_DEVICES.mic = device.deviceId;
+                            }
+                        });
+                    });
+                }
+                if (!LOOKIT_PREFERRED_DEVICES.cam && videoTracks) {
+                    var thisVideoLabel = videoTracks[0].label;
+                    navigator.mediaDevices.enumerateDevices()
+                    .then(function(devices) {
+                        devices.forEach(function(device) {
+                            if (device.kind == 'videoinput' && device.label == thisVideoLabel) {
+                                LOOKIT_PREFERRED_DEVICES.cam = device.deviceId;
+                            }
+                        });
+                    });
+                }
+            } catch (error) {
+                console.error('Error setting preferred mic/camera: ' + error);
+            }
+            return stream;
+        });
+    };
+})(navigator.mediaDevices.getUserMedia);
+
 /**
  * An instance of a video recorder tied to or used by one specific page. A given experiment may use more than one
  *   video recorder depending on the number of video capture frames.
@@ -319,3 +382,5 @@ const VideoRecorder = Ember.Object.extend({
 });
 
 export default VideoRecorder;
+
+export { LOOKIT_PREFERRED_DEVICES };
