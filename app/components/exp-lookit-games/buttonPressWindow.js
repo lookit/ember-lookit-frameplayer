@@ -212,14 +212,14 @@ export default class ButtonPressWindow extends Base {
     if(super.ball.state === 'start' || super.ball.state === 'hit' || super.ball.state === 'fall') {
       let currentTrajectory = TfArrIndex.indexOf(TfArr[this.currentRounds]) + 1;
 
-      exportData.trajectory.push(currentTrajectory);
+      exportData.trajectory = currentTrajectory;
       exportData.ball_position_x.push(super.convertXvalue(super.ball.position.x));
       exportData.ball_position_y.push(super.convertYvalue(super.ball.position.y));
       exportData.ball_timestamp.push(super.ball.timestamp);
-      exportData.trial.push(super.currentRounds);
+      exportData.trial = super.currentRounds;
       exportData.trialType = this.context.trialType;
       exportData.timestamp.push(super.getElapsedTime());
-      exportData.feedback.push(this.ballState());
+      exportData.feedback = this.ballState();
       exportData.target_position = TARGETX.toFixed(3)
 
 
