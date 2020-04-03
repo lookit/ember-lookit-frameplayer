@@ -31,6 +31,7 @@ let gameState = {
   startTime: 0
 
 };
+let exportData = {};
 
 
 // let INITIAL_SCREEN_WIDTH = this.canvas.width/1024; // X  screen from matlab
@@ -470,7 +471,7 @@ export default class Base {
    */
   storeData(exportData) {
 
-    this.context.get('export_arr').addObject(exportData);
+    this.exportData = exportData;
 
   }
 
@@ -500,6 +501,7 @@ export default class Base {
     }
     if (this.currentRounds < maxRounds) {
       gameState.startTime = 0;
+      this.context.get('export_arr').addObject(this.exportData);
       this.initGame();
 
     } else {
@@ -507,6 +509,7 @@ export default class Base {
       this.context.set('showInstructions', true);
       this.context.stopRecorder().finally(() => {
           this.context.destroyRecorder();
+          this.canvas.exitPointerLock();
           this.context.send('next');
       });
     }

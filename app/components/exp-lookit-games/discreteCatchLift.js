@@ -40,6 +40,21 @@ const gameImage = {
   CLOCK_EMPTY: 3
 };
 
+
+let exportData = {
+  game_type: 'discreteCatchLift',
+  basket_x: '',
+  basket_y: [],
+  mice_x: '',
+  mice_y: [],
+  trial: [],
+  trialType: '',
+  mice_state: [],
+  paddle_timestamp: [],
+  timestamp: []
+
+};
+
 /**
  *  * Main implementation of Catch the target game.
  * The user will with paddle (basket) to catch the target.
@@ -162,25 +177,17 @@ export default class DiscreteCatchLift extends PaddleGames {
    */
   dataCollection() {
     if(super.gameState.initialTime > 0) {
-      let exportData = {
-        game_type: 'discreteCatchLift',
-        basket_x: super.convertXvalue(super.paddle.position.x),
-        basket_y: super.convertYvalue(super.paddle.position.y),
-        mice_x: super.convertXvalue(target.position.x),
-        mice_y: super.convertYvalue(target.position.y),
-        trial: super.currentRounds,
-        trialType: this.context.trialType,
-        mice_state: target.state,
-        paddle_timestamp: super.paddle.time,
-        scale: super.Utils.SCALE.toFixed(1),
-        window_height: screen.height,
-        window_width: screen.width,
-        canvas_height: this.canvas.height,
-        canvas_width: this.canvas.width,
-        dpi:window.devicePixelRatio,
-        timestamp: super.getElapsedTime()
 
-      };
+      exportData.basket_x = super.convertXvalue(super.paddle.position.x);
+      exportData.basket_y.push(super.convertYvalue(super.paddle.position.y));
+      exportData.mice_x =  super.convertXvalue(target.position.x);
+      exportData.mice_y =  super.convertYvalue(target.position.y);
+      exportData.trial = super.currentRounds;
+      exportData.trialType = this.context.trialType;
+      exportData.mice_state.push(target.state);
+      exportData.paddle_timestamp.push(super.paddle.time);
+      exportData.timestamp.push(super.getElapsedTime());
+
 
       super.storeData(exportData);
     }
