@@ -68,7 +68,7 @@ export default class Base {
     let isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
 
     this.canvas.requestPointerLock =  this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock || this.canvas.webkitRequestPointerLock;
-    this.canvas.exitPointerLock = this.canvas.exitPointerLock    ||  this.canvas.mozExitPointerLock;
+    document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock;
     if(isSafari) {
       this.canvas.requestPointerLock();
     }else{
@@ -511,7 +511,7 @@ export default class Base {
       this.context.send('export');
       this.context.stopRecorder().finally(() => {
           this.context.destroyRecorder();
-          this.canvas.exitPointerLock();
+          document.exitPointerLock();
           this.context.send('next');
       });
     }
