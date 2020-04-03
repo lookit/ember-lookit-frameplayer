@@ -181,8 +181,8 @@ export default class DiscreteCatchLift extends PaddleGames {
       exportData.basket_x = super.convertXvalue(super.paddle.position.x);
       exportData.basket_y.push(super.convertYvalue(super.paddle.position.y));
       exportData.mice_x =  super.convertXvalue(target.position.x);
-      exportData.mice_y.push( super.convertYvalue(target.position.y));
-      exportData.trial.push(super.currentRounds);
+      exportData.mice_y =  super.convertYvalue(target.position.y);
+      exportData.trial = super.currentRounds;
       exportData.trialType = this.context.trialType;
       exportData.mice_state.push(target.state);
       exportData.paddle_timestamp.push(super.paddle.time);
