@@ -129,26 +129,46 @@
 </div>
 
 
-<div>
+<div id="examples" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#screenshot">Screenshot</a></li>
+        <li class="api-class-tab methods"><a href="#video">Video</a></li>
+    </ul>
+    <div>
+        <div id="screenshot" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-screenshot">
+                <img src="../assets/screenshots/Exp-lookit-video-assent.png">
+            </div>
+        </div>
 
-    <img src="../assets/screenshots/Exp-lookit-video-assent.png" class="class-screenshot">
-
+        <div id="video" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-video">
+                <video controls poster="../assets/screenshots/Exp-lookit-video-assent.png" >
+                    <source src="../assets/framevideos/Exp-lookit-video-assent.mp4" type='video/mp4'>
+                    No video available for this frame.
+                </video>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
 
 <div class="box intro">
     <p>Video assent frame for Lookit studies for older children to agree to participation,
 separately from parental consent.</p>
-<p>A series of assent form &quot;pages&quot; is displayed, each one displaying some combination of
+<p>A series of assent form "pages" is displayed, each one displaying some combination of
 (a) an image or the participant's webcam view or a video, (b) audio, and (c) text. You can
 optionally record webcam video during the whole assent procedure or on the last page.</p>
 <p>Once the family has viewed all pages, the
 child can answer a question about whether to participate. If they choose yes, they proceed;
 if they choose no, they are sent to the exit URL.</p>
-<p>You can either simply have children click on &quot;Yes&quot; or &quot;No,&quot; or you can add audio/video on
+<p>You can either simply have children click on "Yes" or "No," or you can add audio/video on
 the last page that instructs them to answer verbally, and do webcam recording on that page.
-For instance, you might show a video of yourself asking &quot;Do you want to participate in this study?
-You can say &quot;yes&quot; or &quot;no.&quot; Parents, once your child has answered, please click on their answer
-to the right.&quot;</p>
+For instance, you might show a video of yourself asking "Do you want to participate in this study?
+You can say "yes" or "no." Parents, once your child has answered, please click on their answer
+to the right."</p>
 <p>In general it is expected that only one of webcam view, video, and image will be provided per
 page, although it is ok to have only text or only text plus audio. If audio or video is provided for a page,
 the participant must finish it to proceed. (If both audio and video are provided they will
@@ -196,50 +216,53 @@ new version of your stimuli without changing every URL. You can mix source objec
 full URLs and those using stubs within the same directory. However, any stimuli
 specified using stubs MUST be organized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.</p>
 <p>Example usage:</p>
-<pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
-    &quot;video-assent&quot;: {
-        &quot;kind&quot;: &quot;exp-lookit-video-assent&quot;,
-            &quot;pages&quot;: [
+<pre class="code prettyprint"><code class="language-json">"frames": {
+    "video-assent": {
+        "kind": "exp-lookit-video-assent",
+            "pages": [
                 {
-                    &quot;imgSrc&quot;: &quot;jane_smith.png&quot;,
-                    &quot;altText&quot;: &quot;Jane Smith&quot;,
-                    &quot;textBlocks&quot;: [
+                    "imgSrc": "jane_smith.png",
+                    "altText": "Jane Smith",
+                    "textBlocks": [
                         {
-                            &quot;text&quot;: &quot;My name is Jane Smith. I am a scientist who studies why children love cats.&quot;
+                            "text": "My name is Jane Smith. I am a scientist who studies why children love cats."
                         }
                     ],
-                    &quot;audio&quot;: &quot;narration_1&quot;
+                    "audio": "narration_1"
                 },
                 {
-                    &quot;imgSrc&quot;: &quot;cats_game.png&quot;,
-                    &quot;altText&quot;: &quot;picture of sample game&quot;,
-                    &quot;textBlocks&quot;: [
+                    "imgSrc": "cats_game.png",
+                    "altText": "picture of sample game",
+                    "textBlocks": [
                         {
-                            &quot;text&quot;: &quot;In this study, you will play a game about cats.&quot;
+                            "text": "In this study, you will play a game about cats."
                         }
                     ]
                 },
                 {
-                    &quot;showWebcam&quot;: true,
-                    &quot;textBlocks&quot;: [
+                    "showWebcam": true,
+                    "textBlocks": [
                         {
-                            &quot;text&quot;: &quot;During the study, your webcam will record a video of you. We will watch this video later to see how much you love cats.&quot;
+                            "text": "During the study, your webcam will record a video of you. We will watch this video later to see how much you love cats."
                         }
                     ]
                 }
             ],
-            &quot;baseDir&quot;: &quot;https://s3.amazonaws.com/lookitcontents/cats/&quot;,
-            &quot;videoTypes&quot;: [
-                &quot;webm&quot;,
-                &quot;mp4&quot;
+            "baseDir": "https://s3.amazonaws.com/lookitcontents/cats/",
+            "videoTypes": [
+                "webm",
+                "mp4"
             ],
-            &quot;participationQuestion&quot;: &quot;Do you want to participate in this study?&quot;,
-            &quot;minimumYearsToAssent&quot;: 7
+            "participationQuestion": "Do you want to participate in this study?",
+            "minimumYearsToAssent": 7
         }
     }
 }
 </code></pre>
 
+</div>
+
+<div>
 </div>
 
 
@@ -1463,7 +1486,7 @@ generally used that way.
     </div>
 
     <div class="description">
-        <p>Function to generate additional properties for this frame (like {&quot;kind&quot;: &quot;exp-lookit-text&quot;})
+        <p>Function to generate additional properties for this frame (like {"kind": "exp-lookit-text"})
 at the time the frame is initialized. Allows behavior of study to depend on what has
 happened so far (e.g., answers on a form or to previous test trials).
 Must be a valid Javascript function, returning an object, provided as
@@ -1483,10 +1506,10 @@ to access:</p>
 <ul>
 <li><code>additionalInformation</code>: String; additional information field from child form</li>
 <li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
-&quot;24&quot; through &quot;39&quot;, &quot;na&quot; (not sure or prefer not to answer),
-&quot;&lt;24&quot; (under 24 weeks), and &quot;40&gt;&quot; (40 or more weeks).</li>
-<li><code>birthday</code>: timestamp in format &quot;Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)&quot;</li>
-<li><code>gender</code>: &quot;f&quot; (female), &quot;m&quot; (male), &quot;o&quot; (other), or &quot;na&quot; (prefer not to answer)</li>
+"24" through "39", "na" (not sure or prefer not to answer),
+"&lt;24" (under 24 weeks), and "40&gt;" (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>gender</code>: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)</li>
 <li><code>givenName</code>: String, child's given name/nickname</li>
 <li><code>id</code>: String, child UUID</li>
 </ul>
@@ -1497,7 +1520,7 @@ ordered starting from most recent (at index 0 is this session!). Each has proper
 <li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
 <li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
 <li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
-<li><code>createdOn</code>: timestamp in format &quot;Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>createdOn</code>: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"</li>
 <li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
 <li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
 just used for attempts to leave the study early</li>
@@ -1954,10 +1977,10 @@ to access:</p>
 <ul>
 <li><code>additionalInformation</code>: String; additional information field from child form</li>
 <li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
-&quot;24&quot; through &quot;39&quot;, &quot;na&quot; (not sure or prefer not to answer),
-&quot;&lt;24&quot; (under 24 weeks), and &quot;40&gt;&quot; (40 or more weeks).</li>
-<li><code>birthday</code>: timestamp in format &quot;Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)&quot;</li>
-<li><code>gender</code>: &quot;f&quot; (female), &quot;m&quot; (male), &quot;o&quot; (other), or &quot;na&quot; (prefer not to answer)</li>
+"24" through "39", "na" (not sure or prefer not to answer),
+"&lt;24" (under 24 weeks), and "40&gt;" (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>gender</code>: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)</li>
 <li><code>givenName</code>: String, child's given name/nickname</li>
 <li><code>id</code>: String, child UUID</li>
 </ul>
@@ -1968,14 +1991,14 @@ ordered starting from most recent (at index 0 is this session!). Each has proper
 <li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
 <li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
 <li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
-<li><code>createdOn</code>: timestamp in format &quot;Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>createdOn</code>: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"</li>
 <li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
 <li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
 just used for attempts to leave the study early</li>
 <li><code>sequence</code>: ordered list of frameIds, corresponding to keys in expData</li>
 </ul>
 <p>Example that just sends us to the last frame of the study no matter what:
-<code>&#x60;&amp;quot;function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}&amp;quot;</code>``</p>
+<code>&#x60;&quot;function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}&quot;</code>``</p>
 
     </div>
 

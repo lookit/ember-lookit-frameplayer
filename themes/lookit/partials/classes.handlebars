@@ -48,11 +48,44 @@
     </div>
 {{/if}}
 
+{{#eq submodule "frames"}}
+{{#noteq name "Exp-frame-base"}}
+{{#noteq name "Exp-frame-select"}}
+<div id="examples" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#screenshot">Screenshot</a></li>
+        <li class="api-class-tab methods"><a href="#video">Video</a></li>
+    </ul>
+    <div>
+        <div id="screenshot" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-screenshot">
+                <img src="../assets/screenshots/{{name}}.png">
+            </div>
+        </div>
+
+        <div id="video" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-video">
+                <video controls poster="../assets/screenshots/{{name}}.png" >
+                    <source src="../assets/framevideos/{{name}}.mp4" type='video/mp4'>
+                    No video available for this frame.
+                </video>
+            </div>
+        </div>
+    </div>
+</div>
+{{/noteq}}
+{{/noteq}}
+{{/eq}}
+
+
+
+
+<div class="box intro">
+    {{{classDescription}}}
+</div>
+
 <div>
-
-    <img src="../assets/screenshots/{{name}}.png" class="class-screenshot">
-
-      {{#example}}
+  {{#example}}
       <div class="example">
           <h4>Example:</h4>
           <div class="example-content">
@@ -60,10 +93,6 @@
           </div>
       </div>
   {{/example}}
-</div>
-
-<div class="box intro">
-    {{{classDescription}}}
 </div>
 
 {{#is_constructor}}
