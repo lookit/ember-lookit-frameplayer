@@ -293,14 +293,13 @@ export default ExpFrameBaseComponent.extend({
         });
         const prependFrameInds = false;
         var [frameConfigs, conditions] = parser.parse(prependFrameInds);
-
         var frames = this.parentView.get(&#x27;frames&#x27;);
         frames.splice(this.get(&#x27;frameIndex&#x27;) + 1, 0, ...frameConfigs);
-
         this.parentView.set(&#x27;frames&#x27;, frames);
-
         var existingConditions = this.parentView.get(&#x27;conditions&#x27;);
-        Object.assign(existingConditions, conditions);
+        if (existingConditions) {
+            Object.assign(existingConditions, conditions);
+        }
         this.parentView.set(&#x27;conditions&#x27;, existingConditions);
     },
 

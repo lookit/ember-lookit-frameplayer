@@ -129,11 +129,31 @@
 </div>
 
 
-<div>
+<div id="examples" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#screenshot">Screenshot</a></li>
+        <li class="api-class-tab methods"><a href="#video">Video</a></li>
+    </ul>
+    <div>
+        <div id="screenshot" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-screenshot">
+                <img src="../assets/screenshots/Exp-lookit-video-consent.png">
+            </div>
+        </div>
 
-    <img src="../assets/screenshots/Exp-lookit-video-consent.png" class="class-screenshot">
-
+        <div id="video" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-video">
+                <video controls poster="../assets/screenshots/Exp-lookit-video-consent.png" >
+                    <source src="../assets/framevideos/Exp-lookit-video-consent.mp4" type='video/mp4'>
+                    No video available for this frame.
+                </video>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
 
 <div class="box intro">
     <p>Video consent frame for Lookit studies, with consent document displayed at left and instructions to start recording, read a statement out loud, and send. A standard consent
@@ -143,23 +163,26 @@ document is displayed, with additional study-specific information provided by th
 <code>consent_002</code>: Added optional GDPR section and research subject rights statement</p>
 <p>To look up the exact text of the consent document, see <a href="https://github.com/lookit/ember-lookit-frameplayer/blob/master/app/components/exp-lookit-video-consent/template.hbs">https://github.com/lookit/ember-lookit-frameplayer/blob/master/app/components/exp-lookit-video-consent/template.hbs</a></p>
 <p>The consent document can be downloaded as PDF document by participant.</p>
-<pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
-    &quot;video-consent&quot;: {
-        &quot;kind&quot;: &quot;exp-lookit-video-consent&quot;,
-        &quot;template&quot;: &quot;consent_002&quot;,
-        &quot;PIName&quot;: &quot;Jane Smith&quot;,
-        &quot;institution&quot;: &quot;Science University&quot;,
-        &quot;PIContact&quot;: &quot;Jane Smith at 123 456 7890&quot;,
-        &quot;purpose&quot;: &quot;Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.&quot;,
-        &quot;procedures&quot;: &quot;Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.&quot;,
-        &quot;payment&quot;: &quot;After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.&quot;,
-        &quot;datause&quot;: &quot;We are primarily interested in your child's emotional reactions to the images and sounds. A research assistant will watch your video to measure the precise amount of delight in your child's face as he or she sees each cat picture.&quot;
-        &quot;gdpr&quot;: false,
-        &quot;research_rights_statement&quot;: &quot;You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Chairman of the Committee on the Use of Humans as Experimental Subjects, M.I.T., Room E25-143B, 77 Massachusetts Ave, Cambridge, MA 02139, phone 1-617-253 6787.&quot;&quot;
+<pre class="code prettyprint"><code class="language-json">"frames": {
+    "video-consent": {
+        "kind": "exp-lookit-video-consent",
+        "template": "consent_002",
+        "PIName": "Jane Smith",
+        "institution": "Science University",
+        "PIContact": "Jane Smith at 123 456 7890",
+        "purpose": "Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.",
+        "procedures": "Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.",
+        "payment": "After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.",
+        "datause": "We are primarily interested in your child's emotional reactions to the images and sounds. A research assistant will watch your video to measure the precise amount of delight in your child's face as he or she sees each cat picture."
+        "gdpr": false,
+        "research_rights_statement": "You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Chairman of the Committee on the Use of Humans as Experimental Subjects, M.I.T., Room E25-143B, 77 Massachusetts Ave, Cambridge, MA 02139, phone 1-617-253 6787.""
     }
 }
 </code></pre>
 
+</div>
+
+<div>
 </div>
 
 
@@ -1275,7 +1298,7 @@ should set to override if needed.
     </div>
 
     <div class="description">
-        <p>Study-specific data use statement (optional). This will follow the following more general text: &quot;The research group led by [PIName] at [institution] will have access to video and other data collected during this session. We will also have access to your account profile, demographic survey, and the child profile for the child who is participating, including changes you make in the future to any of this information. We may study your child’s responses in connection with his or her previous responses to this or other studies run by our group, siblings’ responses to this or other studies run by our group, or demographic survey responses.&quot;
+        <p>Study-specific data use statement (optional). This will follow the following more general text: "The research group led by [PIName] at [institution] will have access to video and other data collected during this session. We will also have access to your account profile, demographic survey, and the child profile for the child who is participating, including changes you make in the future to any of this information. We may study your child’s responses in connection with his or her previous responses to this or other studies run by our group, siblings’ responses to this or other studies run by our group, or demographic survey responses."
 You may want to note what measures you will actually be coding for (looking time, facial expressions, parent-child interaction, etc.) and other more specific information about your use of data from this study here. For instance, you would note if you were building a corpus of naturalistic data that may be used to answer a variety of questions (rather than just collecting data for a single planned study).</p>
 
     </div>
@@ -1475,7 +1498,7 @@ generally used that way.
     </div>
 
     <div class="description">
-        <p>Function to generate additional properties for this frame (like {&quot;kind&quot;: &quot;exp-lookit-text&quot;})
+        <p>Function to generate additional properties for this frame (like {"kind": "exp-lookit-text"})
 at the time the frame is initialized. Allows behavior of study to depend on what has
 happened so far (e.g., answers on a form or to previous test trials).
 Must be a valid Javascript function, returning an object, provided as
@@ -1495,10 +1518,10 @@ to access:</p>
 <ul>
 <li><code>additionalInformation</code>: String; additional information field from child form</li>
 <li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
-&quot;24&quot; through &quot;39&quot;, &quot;na&quot; (not sure or prefer not to answer),
-&quot;&lt;24&quot; (under 24 weeks), and &quot;40&gt;&quot; (40 or more weeks).</li>
-<li><code>birthday</code>: timestamp in format &quot;Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)&quot;</li>
-<li><code>gender</code>: &quot;f&quot; (female), &quot;m&quot; (male), &quot;o&quot; (other), or &quot;na&quot; (prefer not to answer)</li>
+"24" through "39", "na" (not sure or prefer not to answer),
+"&lt;24" (under 24 weeks), and "40&gt;" (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>gender</code>: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)</li>
 <li><code>givenName</code>: String, child's given name/nickname</li>
 <li><code>id</code>: String, child UUID</li>
 </ul>
@@ -1509,7 +1532,7 @@ ordered starting from most recent (at index 0 is this session!). Each has proper
 <li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
 <li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
 <li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
-<li><code>createdOn</code>: timestamp in format &quot;Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>createdOn</code>: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"</li>
 <li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
 <li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
 just used for attempts to leave the study early</li>
@@ -1679,7 +1702,7 @@ generated for this randomizer.</li>
     </div>
 
     <div class="description">
-        <p>Statement about payment/compensation for participation, including a statement that there are no additional benefits anticipated to the participant. E.g., &quot;After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.&quot;</p>
+        <p>Statement about payment/compensation for participation, including a statement that there are no additional benefits anticipated to the participant. E.g., "After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience."</p>
 
     </div>
 
@@ -1704,7 +1727,7 @@ generated for this randomizer.</li>
     </div>
 
     <div class="description">
-        <p>Contact information for PI or lab in case of participant questions or concerns. This will directly follow the phrase &quot;please contact&quot;, so format accordingly: e.g., &quot;the XYZ lab at <a href="mailto:xyz@science.edu">xyz@science.edu</a>&quot; or &quot;Mary Smith at 123 456 7890&quot;.</p>
+        <p>Contact information for PI or lab in case of participant questions or concerns. This will directly follow the phrase "please contact", so format accordingly: e.g., "the XYZ lab at <a href="mailto:xyz@science.edu">xyz@science.edu</a>" or "Mary Smith at 123 456 7890".</p>
 
     </div>
 
@@ -1754,7 +1777,7 @@ generated for this randomizer.</li>
     </div>
 
     <div class="description">
-        <p>Brief description of study procedures, including any risks or a statement that there are no anticipated risks. We add a statement about the duration (from your study definition) to the start (e.g., &quot;This study takes about 10 minutes to complete&quot;), so you don't need to include that. It can be in third person or addressed to the parent. E.g., &quot;Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.&quot;</p>
+        <p>Brief description of study procedures, including any risks or a statement that there are no anticipated risks. We add a statement about the duration (from your study definition) to the start (e.g., "This study takes about 10 minutes to complete"), so you don't need to include that. It can be in third person or addressed to the parent. E.g., "Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating."</p>
 
     </div>
 
@@ -1779,7 +1802,7 @@ generated for this randomizer.</li>
     </div>
 
     <div class="description">
-        <p>Brief description of purpose of study - 1-2 sentences that describe what you are trying to find out. Language should be as straightforward and accessible as possible! E.g., &quot;Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.&quot;</p>
+        <p>Brief description of purpose of study - 1-2 sentences that describe what you are trying to find out. Language should be as straightforward and accessible as possible! E.g., "Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails."</p>
 
     </div>
 
@@ -1899,10 +1922,10 @@ to access:</p>
 <ul>
 <li><code>additionalInformation</code>: String; additional information field from child form</li>
 <li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
-&quot;24&quot; through &quot;39&quot;, &quot;na&quot; (not sure or prefer not to answer),
-&quot;&lt;24&quot; (under 24 weeks), and &quot;40&gt;&quot; (40 or more weeks).</li>
-<li><code>birthday</code>: timestamp in format &quot;Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)&quot;</li>
-<li><code>gender</code>: &quot;f&quot; (female), &quot;m&quot; (male), &quot;o&quot; (other), or &quot;na&quot; (prefer not to answer)</li>
+"24" through "39", "na" (not sure or prefer not to answer),
+"&lt;24" (under 24 weeks), and "40&gt;" (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>gender</code>: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)</li>
 <li><code>givenName</code>: String, child's given name/nickname</li>
 <li><code>id</code>: String, child UUID</li>
 </ul>
@@ -1913,14 +1936,14 @@ ordered starting from most recent (at index 0 is this session!). Each has proper
 <li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
 <li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
 <li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
-<li><code>createdOn</code>: timestamp in format &quot;Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>createdOn</code>: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"</li>
 <li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
 <li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
 just used for attempts to leave the study early</li>
 <li><code>sequence</code>: ordered list of frameIds, corresponding to keys in expData</li>
 </ul>
 <p>Example that just sends us to the last frame of the study no matter what:
-<code>&#x60;&amp;quot;function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}&amp;quot;</code>``</p>
+<code>&#x60;&quot;function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}&quot;</code>``</p>
 
     </div>
 

@@ -381,9 +381,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
         if (!this.get(&#x27;showRecordMenu&#x27;)) {
             this.set(&#x27;requireTestVideo&#x27;, false);
-            $(&#x27;body&#x27;).append($(&#x27;&lt;style&gt;&#x27;)
+            $(&#x27;.exp-video-config-quality&#x27;).append($(&#x27;&lt;style&gt;&#x27;) // CSS rule so that persists if element reloaded
                 .prop(&#x27;type&#x27;, &#x27;text/css&#x27;)
-                .html(&#x27;.exp-video-config-quality #pipeMenu {display: none !important;}&#x27;));
+                .prop(&#x27;id&#x27;, &#x27;exp-video-config-quality-hide-record-buttons&#x27;)
+                .html(&#x27;.exp-video-config-quality div[id^=&quot;pipeMenu&quot;] {visibility: hidden; display: none !important;}&#x27;));
+        } else {
+            $(&#x27;#exp-video-config-quality-hide-record-buttons&#x27;).remove();
         }
     },
 

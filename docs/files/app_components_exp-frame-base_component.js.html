@@ -719,6 +719,7 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         // before as possible, to enable forms etc. to work ok in fullscreen mode.
         Ember.$(&#x27;*&#x27;).removeClass(&#x27;player-fullscreen&#x27;);
         Ember.$(&#x27;*&#x27;).removeClass(&#x27;player-fullscreen-override&#x27;);
+        Ember.$(&#x27;#application-parse-error-text&#x27;).hide();
         var $element = Ember.$(&#x60;#${this.get(&#x27;fullScreenElementId&#x27;)}&#x60;);
         if (this.get(&#x27;displayFullscreenOverride&#x27;) &amp;&amp; !this.get(&#x27;displayFullscreen&#x27;)) {
             $element.addClass(&#x27;player-fullscreen-override&#x27;);

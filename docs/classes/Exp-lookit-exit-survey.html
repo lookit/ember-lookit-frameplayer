@@ -130,29 +130,52 @@
 </div>
 
 
-<div>
+<div id="examples" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#screenshot">Screenshot</a></li>
+        <li class="api-class-tab methods"><a href="#video">Video</a></li>
+    </ul>
+    <div>
+        <div id="screenshot" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-screenshot">
+                <img src="../assets/screenshots/Exp-lookit-exit-survey.png">
+            </div>
+        </div>
 
-    <img src="../assets/screenshots/Exp-lookit-exit-survey.png" class="class-screenshot">
-
+        <div id="video" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-video">
+                <video controls poster="../assets/screenshots/Exp-lookit-exit-survey.png" >
+                    <source src="../assets/framevideos/Exp-lookit-exit-survey.mp4" type='video/mp4'>
+                    No video available for this frame.
+                </video>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
 
 <div class="box intro">
     <p>Standard exit survey for Lookit studies: confirm participant birthdate, ask user for video sharing permission level &amp; Databrary sharing, option to withdraw, freeform comments, debriefing/thank you text. Leaves fullscreen mode.</p>
-<pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
-    &quot;my-exit-survey&quot;: {
-        &quot;kind&quot;: &quot;exp-lookit-exit-survey&quot;,
-        &quot;debriefing&quot;: {
-            &quot;title&quot;: &quot;Thank you!&quot;,
-            &quot;text&quot;: &quot;Learning how children react to ducks will help scientists design better rubber ducks.&quot;,
-            &quot;image&quot;: {
-                &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/ducks/duck.png&quot;,
-                &quot;alt&quot;: &quot;Very cute duck&quot;
+<pre class="code prettyprint"><code class="language-json">"frames": {
+    "my-exit-survey": {
+        "kind": "exp-lookit-exit-survey",
+        "debriefing": {
+            "title": "Thank you!",
+            "text": "Learning how children react to ducks will help scientists design better rubber ducks.",
+            "image": {
+                "src": "https://s3.amazonaws.com/lookitcontents/ducks/duck.png",
+                "alt": "Very cute duck"
             }
         }
     }
 }
 </code></pre>
 
+</div>
+
+<div>
 </div>
 
 
@@ -246,6 +269,10 @@
                             </li>
                             <li class="index-item property inherited">
                                 <a href="#property_sessionAudioOnly">sessionAudioOnly</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_showShareButton">showShareButton</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -485,7 +512,7 @@ event sent by a particular frame</p>
                 Exp-frame-base
             </a>
             but overwritten in
-        <a href="../files/app_components_exp-lookit-exit-survey_component.js.html#l102"><code>app&#x2F;components&#x2F;exp-lookit-exit-survey&#x2F;component.js:102</code></a>
+        <a href="../files/app_components_exp-lookit-exit-survey_component.js.html#l113"><code>app&#x2F;components&#x2F;exp-lookit-exit-survey&#x2F;component.js:113</code></a>
         </p>
 
 
@@ -811,7 +838,7 @@ stuff at this point!
                     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
 
                 <div class="param-description">
-                    <p>Object specifying source URL [src] &amp; alt-text [alt] for any image to show during debriefing (optional). Example: <code>{ &quot;src&quot;: &quot;https://s3.amazonaws.com/lookitcontents/ducks/duck.png&quot;, &quot;alt&quot;: &quot;Very cute duck&quot; }</code></p>
+                    <p>Object specifying source URL [src] &amp; alt-text [alt] for any image to show during debriefing (optional). Example: <code>{ "src": "https://s3.amazonaws.com/lookitcontents/ducks/duck.png", "alt": "Very cute duck" }</code></p>
 
                 </div>
 
@@ -943,7 +970,7 @@ generally used that way.
     </div>
 
     <div class="description">
-        <p>Function to generate additional properties for this frame (like {&quot;kind&quot;: &quot;exp-lookit-text&quot;})
+        <p>Function to generate additional properties for this frame (like {"kind": "exp-lookit-text"})
 at the time the frame is initialized. Allows behavior of study to depend on what has
 happened so far (e.g., answers on a form or to previous test trials).
 Must be a valid Javascript function, returning an object, provided as
@@ -963,10 +990,10 @@ to access:</p>
 <ul>
 <li><code>additionalInformation</code>: String; additional information field from child form</li>
 <li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
-&quot;24&quot; through &quot;39&quot;, &quot;na&quot; (not sure or prefer not to answer),
-&quot;&lt;24&quot; (under 24 weeks), and &quot;40&gt;&quot; (40 or more weeks).</li>
-<li><code>birthday</code>: timestamp in format &quot;Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)&quot;</li>
-<li><code>gender</code>: &quot;f&quot; (female), &quot;m&quot; (male), &quot;o&quot; (other), or &quot;na&quot; (prefer not to answer)</li>
+"24" through "39", "na" (not sure or prefer not to answer),
+"&lt;24" (under 24 weeks), and "40&gt;" (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>gender</code>: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)</li>
 <li><code>givenName</code>: String, child's given name/nickname</li>
 <li><code>id</code>: String, child UUID</li>
 </ul>
@@ -977,7 +1004,7 @@ ordered starting from most recent (at index 0 is this session!). Each has proper
 <li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
 <li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
 <li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
-<li><code>createdOn</code>: timestamp in format &quot;Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>createdOn</code>: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"</li>
 <li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
 <li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
 just used for attempts to leave the study early</li>
@@ -1117,10 +1144,10 @@ to access:</p>
 <ul>
 <li><code>additionalInformation</code>: String; additional information field from child form</li>
 <li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
-&quot;24&quot; through &quot;39&quot;, &quot;na&quot; (not sure or prefer not to answer),
-&quot;&lt;24&quot; (under 24 weeks), and &quot;40&gt;&quot; (40 or more weeks).</li>
-<li><code>birthday</code>: timestamp in format &quot;Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)&quot;</li>
-<li><code>gender</code>: &quot;f&quot; (female), &quot;m&quot; (male), &quot;o&quot; (other), or &quot;na&quot; (prefer not to answer)</li>
+"24" through "39", "na" (not sure or prefer not to answer),
+"&lt;24" (under 24 weeks), and "40&gt;" (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>gender</code>: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)</li>
 <li><code>givenName</code>: String, child's given name/nickname</li>
 <li><code>id</code>: String, child UUID</li>
 </ul>
@@ -1131,14 +1158,14 @@ ordered starting from most recent (at index 0 is this session!). Each has proper
 <li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
 <li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
 <li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
-<li><code>createdOn</code>: timestamp in format &quot;Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>createdOn</code>: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"</li>
 <li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
 <li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
 just used for attempts to leave the study early</li>
 <li><code>sequence</code>: ordered list of frameIds, corresponding to keys in expData</li>
 </ul>
 <p>Example that just sends us to the last frame of the study no matter what:
-<code>&#x60;&amp;quot;function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}&amp;quot;</code>``</p>
+<code>&#x60;&quot;function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}&quot;</code>``</p>
 
     </div>
 
@@ -1168,6 +1195,32 @@ just used for attempts to leave the study early</li>
     </div>
 
         <p><strong>Default:</strong> 0</p>
+
+
+</div>
+<div id="property_showShareButton" class="property item">
+    <h3 class="name"><code>showShareButton</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-exit-survey_component.js.html#l96"><code>app&#x2F;components&#x2F;exp-lookit-exit-survey&#x2F;component.js:96</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Whether to show a 'share this study on Facebook' button</p>
+
+    </div>
+
+        <p><strong>Default:</strong> true</p>
 
 
 </div>

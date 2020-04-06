@@ -132,11 +132,31 @@
 </div>
 
 
-<div>
+<div id="examples" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#screenshot">Screenshot</a></li>
+        <li class="api-class-tab methods"><a href="#video">Video</a></li>
+    </ul>
+    <div>
+        <div id="screenshot" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-screenshot">
+                <img src="../assets/screenshots/Exp-lookit-video.png">
+            </div>
+        </div>
 
-    <img src="../assets/screenshots/Exp-lookit-video.png" class="class-screenshot">
-
+        <div id="video" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-video">
+                <video controls poster="../assets/screenshots/Exp-lookit-video.png" >
+                    <source src="../assets/framevideos/Exp-lookit-video.mp4" type='video/mp4'>
+                    No video available for this frame.
+                </video>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
 
 <div class="box intro">
     <p>Basic video display for looking measures (e.g. preferential looking, looking time).
@@ -191,38 +211,41 @@ full URLs and those using stubs within the same directory. However, any stimuli
 specified using stubs MUST be
 organized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.</p>
 <p>This frame is displayed fullscreen; if the frame before it is not, that frame
-needs to include a manual &quot;next&quot; button so that there's a user interaction
+needs to include a manual "next" button so that there's a user interaction
 event to trigger fullscreen mode. (Browsers don't allow us to switch to FS
 without a user event.)</p>
 <p>Example usage:</p>
-<pre class="code prettyprint"><code class="language-json">       &quot;sample-intermodal-trial-2&quot;: {
-           &quot;kind&quot;: &quot;exp-lookit-video&quot;,
-           &quot;isLast&quot;: false,
-           &quot;baseDir&quot;: &quot;https://s3.amazonaws.com/lookitcontents/intermodal/&quot;,
-           &quot;sources&quot;: &quot;sbs_ramp_down_up_apple_c1_b1_NN&quot;,
-           &quot;testCount&quot;: 2,
-           &quot;altSources&quot;: &quot;sbs_ramp_up_down_apple_c1_b1_NN&quot;,
-           &quot;audioTypes&quot;: [
-               &quot;ogg&quot;,
-               &quot;mp3&quot;
+<pre class="code prettyprint"><code class="language-json">       "sample-intermodal-trial-2": {
+           "kind": "exp-lookit-video",
+           "isLast": false,
+           "baseDir": "https://s3.amazonaws.com/lookitcontents/intermodal/",
+           "sources": "sbs_ramp_down_up_apple_c1_b1_NN",
+           "testCount": 2,
+           "altSources": "sbs_ramp_up_down_apple_c1_b1_NN",
+           "audioTypes": [
+               "ogg",
+               "mp3"
            ],
-           &quot;pauseAudio&quot;: &quot;pause&quot;,
-           &quot;videoTypes&quot;: [
-               &quot;webm&quot;,
-               &quot;mp4&quot;
+           "pauseAudio": "pause",
+           "videoTypes": [
+               "webm",
+               "mp4"
            ],
-           &quot;attnSources&quot;: &quot;attentiongrabber&quot;,
-           &quot;audioSources&quot;: &quot;video_02&quot;,
-           &quot;introSources&quot;: &quot;cropped_book&quot;,
-           &quot;musicSources&quot;: &quot;music_02&quot;,
-           &quot;unpauseAudio&quot;: &quot;return_after_pause&quot;,
-           &quot;calibrationLength&quot;: 3000,
-           &quot;calibrationAudioSources&quot;: &quot;chimes&quot;,
-           &quot;calibrationVideoSources&quot;: &quot;attentiongrabber&quot;
+           "attnSources": "attentiongrabber",
+           "audioSources": "video_02",
+           "introSources": "cropped_book",
+           "musicSources": "music_02",
+           "unpauseAudio": "return_after_pause",
+           "calibrationLength": 3000,
+           "calibrationAudioSources": "chimes",
+           "calibrationVideoSources": "attentiongrabber"
        }
 
 </code></pre>
 
+</div>
+
+<div>
 </div>
 
 
@@ -1691,7 +1714,7 @@ Ignored if calibrationLength is 0.</p>
 
     <div class="description">
         <p>Ordered list of positions to show calibration segment in. Options are
-&quot;center&quot;, &quot;left&quot;, &quot;right&quot;. Ignored if calibrationLength is 0.</p>
+"center", "left", "right". Ignored if calibrationLength is 0.</p>
 
     </div>
 
@@ -1878,7 +1901,7 @@ generally used that way.
     </div>
 
     <div class="description">
-        <p>Function to generate additional properties for this frame (like {&quot;kind&quot;: &quot;exp-lookit-text&quot;})
+        <p>Function to generate additional properties for this frame (like {"kind": "exp-lookit-text"})
 at the time the frame is initialized. Allows behavior of study to depend on what has
 happened so far (e.g., answers on a form or to previous test trials).
 Must be a valid Javascript function, returning an object, provided as
@@ -1898,10 +1921,10 @@ to access:</p>
 <ul>
 <li><code>additionalInformation</code>: String; additional information field from child form</li>
 <li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
-&quot;24&quot; through &quot;39&quot;, &quot;na&quot; (not sure or prefer not to answer),
-&quot;&lt;24&quot; (under 24 weeks), and &quot;40&gt;&quot; (40 or more weeks).</li>
-<li><code>birthday</code>: timestamp in format &quot;Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)&quot;</li>
-<li><code>gender</code>: &quot;f&quot; (female), &quot;m&quot; (male), &quot;o&quot; (other), or &quot;na&quot; (prefer not to answer)</li>
+"24" through "39", "na" (not sure or prefer not to answer),
+"&lt;24" (under 24 weeks), and "40&gt;" (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>gender</code>: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)</li>
 <li><code>givenName</code>: String, child's given name/nickname</li>
 <li><code>id</code>: String, child UUID</li>
 </ul>
@@ -1912,7 +1935,7 @@ ordered starting from most recent (at index 0 is this session!). Each has proper
 <li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
 <li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
 <li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
-<li><code>createdOn</code>: timestamp in format &quot;Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>createdOn</code>: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"</li>
 <li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
 <li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
 just used for attempts to leave the study early</li>
@@ -2191,7 +2214,7 @@ audio played upon pausing study</p>
     </div>
 
     <div class="description">
-        <p>Text to show under &quot;Study paused / Press space to resume&quot; when study is paused.
+        <p>Text to show under "Study paused / Press space to resume" when study is paused.
 Default: (You'll have a moment to turn around again.)</p>
 
     </div>
@@ -2288,10 +2311,10 @@ to access:</p>
 <ul>
 <li><code>additionalInformation</code>: String; additional information field from child form</li>
 <li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
-&quot;24&quot; through &quot;39&quot;, &quot;na&quot; (not sure or prefer not to answer),
-&quot;&lt;24&quot; (under 24 weeks), and &quot;40&gt;&quot; (40 or more weeks).</li>
-<li><code>birthday</code>: timestamp in format &quot;Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)&quot;</li>
-<li><code>gender</code>: &quot;f&quot; (female), &quot;m&quot; (male), &quot;o&quot; (other), or &quot;na&quot; (prefer not to answer)</li>
+"24" through "39", "na" (not sure or prefer not to answer),
+"&lt;24" (under 24 weeks), and "40&gt;" (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>gender</code>: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)</li>
 <li><code>givenName</code>: String, child's given name/nickname</li>
 <li><code>id</code>: String, child UUID</li>
 </ul>
@@ -2302,14 +2325,14 @@ ordered starting from most recent (at index 0 is this session!). Each has proper
 <li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
 <li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
 <li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
-<li><code>createdOn</code>: timestamp in format &quot;Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>createdOn</code>: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"</li>
 <li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
 <li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
 just used for attempts to leave the study early</li>
 <li><code>sequence</code>: ordered list of frameIds, corresponding to keys in expData</li>
 </ul>
 <p>Example that just sends us to the last frame of the study no matter what:
-<code>&#x60;&amp;quot;function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}&amp;quot;</code>``</p>
+<code>&#x60;&quot;function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}&quot;</code>``</p>
 
     </div>
 

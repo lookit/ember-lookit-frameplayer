@@ -123,11 +123,31 @@
 </div>
 
 
-<div>
+<div id="examples" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#screenshot">Screenshot</a></li>
+        <li class="api-class-tab methods"><a href="#video">Video</a></li>
+    </ul>
+    <div>
+        <div id="screenshot" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-screenshot">
+                <img src="../assets/screenshots/Exp-lookit-survey.png">
+            </div>
+        </div>
 
-    <img src="../assets/screenshots/Exp-lookit-survey.png" class="class-screenshot">
-
+        <div id="video" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-video">
+                <video controls poster="../assets/screenshots/Exp-lookit-survey.png" >
+                    <source src="../assets/framevideos/Exp-lookit-survey.mp4" type='video/mp4'>
+                    No video available for this frame.
+                </video>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
 
 <div class="box intro">
     <p>Basic survey frame allowing researcher to specify question text and types.</p>
@@ -141,7 +161,7 @@ In that documentation, you will see that each field type - e.g., Checkbox, Radio
 has some 'Schema' properties and some 'Options' properties. The properties under 'Schema'
 will be defined in the 'schema' object of your formSchema. The properties under 'Options'
 will be defined in the 'options' object of your formSchema.</p>
-<p>Many question types allow you to easily validate answers. For instance, for a &quot;number&quot;
+<p>Many question types allow you to easily validate answers. For instance, for a "number"
 field you can set minimum and maximum values, and entries will automatically be
 required to be numeric (<a href="http://www.alpacajs.org/docs/fields/number.html">http://www.alpacajs.org/docs/fields/number.html</a>). You can also
 either set required: true in the schema-&gt;properties entry for this field OR set
@@ -157,7 +177,7 @@ formSchema to customize the layout of their forms and the initial data. A 'dataS
 may be specified under options to populate a question's potential answers (e.g., to
 load a list of countries from some other source rather than hard-coding it, or to
 provide checkboxes with vocabulary items from an externally-defined inventory).</p>
-<p>You can also use alpacajs's &quot;dependencies&quot; and &quot;conditional dependencies&quot; functionality to
+<p>You can also use alpacajs's "dependencies" and "conditional dependencies" functionality to
 set up fields that depend on other fields - e.g., asking if the child speaks any
 language besides English in the home and only if so displaying a dropdown to select the
 language(s), or asking if the child likes Elmo or Grover better and then asking a question
@@ -176,435 +196,438 @@ height of the window (it will scroll to fit).</p>
 able to provide custom functions (e.g. validators, custom dataSource functions)
 directly to the formSchema.</p>
 <p>Here is an example of a reasonably simple survey using this frame:</p>
-<pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
-       &quot;pet-survey&quot;: {
-           &quot;kind&quot;: &quot;exp-lookit-survey&quot;,
-           &quot;formSchema&quot;: {
-               &quot;schema&quot;: {
-                   &quot;type&quot;: &quot;object&quot;,
-                   &quot;title&quot;: &quot;Tell us about your pet!&quot;,
-                   &quot;properties&quot;: {
-                       &quot;age&quot;: {
-                           &quot;type&quot;: &quot;integer&quot;,
-                           &quot;title&quot;: &quot;Age&quot;,
-                           &quot;maximum&quot;: 200,
-                           &quot;minimum&quot;: 0,
-                           &quot;required&quot;: true
+<pre class="code prettyprint"><code class="language-json">"frames": {
+       "pet-survey": {
+           "kind": "exp-lookit-survey",
+           "formSchema": {
+               "schema": {
+                   "type": "object",
+                   "title": "Tell us about your pet!",
+                   "properties": {
+                       "age": {
+                           "type": "integer",
+                           "title": "Age",
+                           "maximum": 200,
+                           "minimum": 0,
+                           "required": true
                        },
-                       &quot;name&quot;: {
-                           &quot;type&quot;: &quot;string&quot;,
-                           &quot;title&quot;: &quot;Name&quot;,
-                           &quot;required&quot;: true
+                       "name": {
+                           "type": "string",
+                           "title": "Name",
+                           "required": true
                        },
-                       &quot;species&quot;: {
-                           &quot;enum&quot;: [
-                               &quot;dog&quot;,
-                               &quot;cat&quot;,
-                               &quot;fish&quot;,
-                               &quot;bird&quot;,
-                               &quot;raccoon&quot;
+                       "species": {
+                           "enum": [
+                               "dog",
+                               "cat",
+                               "fish",
+                               "bird",
+                               "raccoon"
                            ],
-                           &quot;type&quot;: &quot;string&quot;,
-                           &quot;title&quot;: &quot;What type of animal?&quot;,
-                           &quot;default&quot;: &quot;&quot;
+                           "type": "string",
+                           "title": "What type of animal?",
+                           "default": ""
                        }
                    }
                },
-               &quot;options&quot;: {
-                   &quot;fields&quot;: {
-                       &quot;age&quot;: {
-                           &quot;numericEntry&quot;: true
+               "options": {
+                   "fields": {
+                       "age": {
+                           "numericEntry": true
                        },
-                       &quot;name&quot;: {
-                           &quot;placeholder&quot;: &quot;a name...&quot;
+                       "name": {
+                           "placeholder": "a name..."
                        },
-                       &quot;species&quot;: {
-                           &quot;type&quot;: &quot;radio&quot;,
-                           &quot;message&quot;: &quot;Seriously, what species??&quot;,
-                           &quot;validator&quot;: &quot;required-field&quot;
+                       "species": {
+                           "type": "radio",
+                           "message": "Seriously, what species??",
+                           "validator": "required-field"
                        }
                    }
                }
            },
-           &quot;nextButtonText&quot;: &quot;Moving on...&quot;
+           "nextButtonText": "Moving on..."
        }
    }
 </code></pre>
 <p>And here is an example of re-implementing the exp-lookit-mood-questionnaire, using
 custom formatting, time-pickers, dependencies, and question groups.</p>
-<pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
-           &quot;survey-sample-3&quot;: {
-           &quot;kind&quot;: &quot;exp-lookit-survey&quot;,
-           &quot;formSchema&quot;: {
-               &quot;view&quot;: {
-                   &quot;fields&quot;: {
-                       &quot;/child/happy&quot;: {
-                           &quot;templates&quot;: {
-                               &quot;control&quot;: &quot;&lt;div&gt;{{#if options.leftLabel}}&lt;label class='label-left'&gt;{{{options.leftLabel}}}&lt;/label&gt;{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}&lt;label class='label-right'&gt;{{{options.rightLabel}}}&lt;/label&gt;{{/if}}&lt;/div&gt;&quot;
+<pre class="code prettyprint"><code class="language-json">"frames": {
+           "survey-sample-3": {
+           "kind": "exp-lookit-survey",
+           "formSchema": {
+               "view": {
+                   "fields": {
+                       "/child/happy": {
+                           "templates": {
+                               "control": "&lt;div&gt;&lt;/div&gt;"
                            }
                        },
-                       &quot;/child/active&quot;: {
-                           &quot;templates&quot;: {
-                               &quot;control&quot;: &quot;&lt;div&gt;{{#if options.leftLabel}}&lt;label class='label-left'&gt;{{{options.leftLabel}}}&lt;/label&gt;{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}&lt;label class='label-right'&gt;{{{options.rightLabel}}}&lt;/label&gt;{{/if}}&lt;/div&gt;&quot;
+                       "/child/active": {
+                           "templates": {
+                               "control": "&lt;div&gt;&lt;/div&gt;"
                            }
                        },
-                       &quot;/child/rested&quot;: {
-                           &quot;templates&quot;: {
-                               &quot;control&quot;: &quot;&lt;div&gt;{{#if options.leftLabel}}&lt;label class='label-left'&gt;{{{options.leftLabel}}}&lt;/label&gt;{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}&lt;label class='label-right'&gt;{{{options.rightLabel}}}&lt;/label&gt;{{/if}}&lt;/div&gt;&quot;
+                       "/child/rested": {
+                           "templates": {
+                               "control": "&lt;div&gt;&lt;/div&gt;"
                            }
                        },
-                       &quot;/child/healthy&quot;: {
-                           &quot;templates&quot;: {
-                               &quot;control&quot;: &quot;&lt;div&gt;{{#if options.leftLabel}}&lt;label class='label-left'&gt;{{{options.leftLabel}}}&lt;/label&gt;{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}&lt;label class='label-right'&gt;{{{options.rightLabel}}}&lt;/label&gt;{{/if}}&lt;/div&gt;&quot;
+                       "/child/healthy": {
+                           "templates": {
+                               "control": "&lt;div&gt;&lt;/div&gt;"
                            }
                        },
-                       &quot;/parent/energetic&quot;: {
-                           &quot;templates&quot;: {
-                               &quot;control&quot;: &quot;&lt;div&gt;{{#if options.leftLabel}}&lt;label class='label-left'&gt;{{{options.leftLabel}}}&lt;/label&gt;{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}&lt;label class='label-right'&gt;{{{options.rightLabel}}}&lt;/label&gt;{{/if}}&lt;/div&gt;&quot;
+                       "/parent/energetic": {
+                           "templates": {
+                               "control": "&lt;div&gt;&lt;/div&gt;"
                            }
                        },
-                       &quot;/parent/parentHappy&quot;: {
-                           &quot;templates&quot;: {
-                               &quot;control&quot;: &quot;&lt;div&gt;{{#if options.leftLabel}}&lt;label class='label-left'&gt;{{{options.leftLabel}}}&lt;/label&gt;{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}&lt;label class='label-right'&gt;{{{options.rightLabel}}}&lt;/label&gt;{{/if}}&lt;/div&gt;&quot;
+                       "/parent/parentHappy": {
+                           "templates": {
+                               "control": "&lt;div&gt;&lt;/div&gt;"
                            }
                        },
-                       &quot;/parent/ontopofstuff&quot;: {
-                           &quot;templates&quot;: {
-                               &quot;control&quot;: &quot;&lt;div&gt;{{#if options.leftLabel}}&lt;label class='label-left'&gt;{{{options.leftLabel}}}&lt;/label&gt;{{/if}}{{#control}}{{/control}}{{#if options.rightLabel}}&lt;label class='label-right'&gt;{{{options.rightLabel}}}&lt;/label&gt;{{/if}}&lt;/div&gt;&quot;
+                       "/parent/ontopofstuff": {
+                           "templates": {
+                               "control": "&lt;div&gt;&lt;/div&gt;"
                            }
                        }
                    },
-                   &quot;layout&quot;: {
-                       &quot;bindings&quot;: {
-                           &quot;child&quot;: &quot;#child&quot;,
-                           &quot;parent&quot;: &quot;#parent&quot;,
-                           &quot;lastEat&quot;: &quot;#lastEat&quot;,
-                           &quot;nextNap&quot;: &quot;#nextNap&quot;,
-                           &quot;napWakeUp&quot;: &quot;#napWakeUp&quot;,
-                           &quot;doingBefore&quot;: &quot;#doingBefore&quot;,
-                           &quot;usualNapSchedule&quot;: &quot;#usualNapSchedule&quot;
+                   "layout": {
+                       "bindings": {
+                           "child": "#child",
+                           "parent": "#parent",
+                           "lastEat": "#lastEat",
+                           "nextNap": "#nextNap",
+                           "napWakeUp": "#napWakeUp",
+                           "doingBefore": "#doingBefore",
+                           "usualNapSchedule": "#usualNapSchedule"
                        },
-                       &quot;template&quot;: &quot;&lt;div class='row exp-text exp-lookit-mood-questionnaire'&gt;&lt;h4&gt;{{{options.formTitle}}}&lt;/h4&gt;&lt;p&gt;{{{options.introText}}}&lt;/p&gt;&lt;div id='child'&gt;&lt;/div&gt;&lt;div id='parent'&gt;&lt;/div&gt;&lt;div id='napWakeUp'&gt;&lt;/div&gt;&lt;div id='usualNapSchedule'&gt;&lt;/div&gt;&lt;div id='nextNap'&gt;&lt;/div&gt;&lt;div id='lastEat'&gt;&lt;/div&gt;&lt;div id='doingBefore'&gt;&lt;/div&gt;&lt;/div&gt;&quot;
+                       "template": "&lt;div class='row exp-text exp-lookit-mood-questionnaire'&gt;&lt;h4&gt;&lt;/h4&gt;&lt;p&gt;&lt;/p&gt;&lt;div id='child'&gt;&lt;/div&gt;&lt;div id='parent'&gt;&lt;/div&gt;&lt;div id='napWakeUp'&gt;&lt;/div&gt;&lt;div id='usualNapSchedule'&gt;&lt;/div&gt;&lt;div id='nextNap'&gt;&lt;/div&gt;&lt;div id='lastEat'&gt;&lt;/div&gt;&lt;div id='doingBefore'&gt;&lt;/div&gt;&lt;/div&gt;"
                    },
-                   &quot;parent&quot;: &quot;bootstrap-edit&quot;
+                   "parent": "bootstrap-edit"
                },
-               &quot;schema&quot;: {
-                   &quot;type&quot;: &quot;object&quot;,
-                   &quot;properties&quot;: {
-                       &quot;child&quot;: {
-                           &quot;type&quot;: &quot;object&quot;,
-                           &quot;title&quot;: &quot;How is your CHILD feeling right now?&quot;,
-                           &quot;properties&quot;: {
-                               &quot;happy&quot;: {
-                                   &quot;enum&quot;: [
-                                       &quot;1&quot;,
-                                       &quot;2&quot;,
-                                       &quot;3&quot;,
-                                       &quot;4&quot;,
-                                       &quot;5&quot;,
-                                       &quot;6&quot;,
-                                       &quot;7&quot;
+               "schema": {
+                   "type": "object",
+                   "properties": {
+                       "child": {
+                           "type": "object",
+                           "title": "How is your CHILD feeling right now?",
+                           "properties": {
+                               "happy": {
+                                   "enum": [
+                                       "1",
+                                       "2",
+                                       "3",
+                                       "4",
+                                       "5",
+                                       "6",
+                                       "7"
                                    ],
-                                   &quot;required&quot;: true
+                                   "required": true
                                },
-                               &quot;active&quot;: {
-                                   &quot;enum&quot;: [
-                                       &quot;1&quot;,
-                                       &quot;2&quot;,
-                                       &quot;3&quot;,
-                                       &quot;4&quot;,
-                                       &quot;5&quot;,
-                                       &quot;6&quot;,
-                                       &quot;7&quot;
+                               "active": {
+                                   "enum": [
+                                       "1",
+                                       "2",
+                                       "3",
+                                       "4",
+                                       "5",
+                                       "6",
+                                       "7"
                                    ],
-                                   &quot;required&quot;: true
+                                   "required": true
                                },
-                               &quot;rested&quot;: {
-                                   &quot;enum&quot;: [
-                                       &quot;1&quot;,
-                                       &quot;2&quot;,
-                                       &quot;3&quot;,
-                                       &quot;4&quot;,
-                                       &quot;5&quot;,
-                                       &quot;6&quot;,
-                                       &quot;7&quot;
+                               "rested": {
+                                   "enum": [
+                                       "1",
+                                       "2",
+                                       "3",
+                                       "4",
+                                       "5",
+                                       "6",
+                                       "7"
                                    ],
-                                   &quot;required&quot;: true
+                                   "required": true
                                },
-                               &quot;healthy&quot;: {
-                                   &quot;enum&quot;: [
-                                       &quot;1&quot;,
-                                       &quot;2&quot;,
-                                       &quot;3&quot;,
-                                       &quot;4&quot;,
-                                       &quot;5&quot;,
-                                       &quot;6&quot;,
-                                       &quot;7&quot;
+                               "healthy": {
+                                   "enum": [
+                                       "1",
+                                       "2",
+                                       "3",
+                                       "4",
+                                       "5",
+                                       "6",
+                                       "7"
                                    ],
-                                   &quot;required&quot;: true
+                                   "required": true
                                }
                            }
                        },
-                       &quot;parent&quot;: {
-                           &quot;type&quot;: &quot;object&quot;,
-                           &quot;title&quot;: &quot;How are YOU feeling right now?&quot;,
-                           &quot;properties&quot;: {
-                               &quot;energetic&quot;: {
-                                   &quot;enum&quot;: [
-                                       &quot;1&quot;,
-                                       &quot;2&quot;,
-                                       &quot;3&quot;,
-                                       &quot;4&quot;,
-                                       &quot;5&quot;,
-                                       &quot;6&quot;,
-                                       &quot;7&quot;
+                       "parent": {
+                           "type": "object",
+                           "title": "How are YOU feeling right now?",
+                           "properties": {
+                               "energetic": {
+                                   "enum": [
+                                       "1",
+                                       "2",
+                                       "3",
+                                       "4",
+                                       "5",
+                                       "6",
+                                       "7"
                                    ],
-                                   &quot;required&quot;: true
+                                   "required": true
                                },
-                               &quot;parentHappy&quot;: {
-                                   &quot;enum&quot;: [
-                                       &quot;1&quot;,
-                                       &quot;2&quot;,
-                                       &quot;3&quot;,
-                                       &quot;4&quot;,
-                                       &quot;5&quot;,
-                                       &quot;6&quot;,
-                                       &quot;7&quot;
+                               "parentHappy": {
+                                   "enum": [
+                                       "1",
+                                       "2",
+                                       "3",
+                                       "4",
+                                       "5",
+                                       "6",
+                                       "7"
                                    ],
-                                   &quot;required&quot;: true
+                                   "required": true
                                },
-                               &quot;ontopofstuff&quot;: {
-                                   &quot;enum&quot;: [
-                                       &quot;1&quot;,
-                                       &quot;2&quot;,
-                                       &quot;3&quot;,
-                                       &quot;4&quot;,
-                                       &quot;5&quot;,
-                                       &quot;6&quot;,
-                                       &quot;7&quot;
+                               "ontopofstuff": {
+                                   "enum": [
+                                       "1",
+                                       "2",
+                                       "3",
+                                       "4",
+                                       "5",
+                                       "6",
+                                       "7"
                                    ],
-                                   &quot;required&quot;: true
+                                   "required": true
                                }
                            }
                        },
-                       &quot;lastEat&quot;: {
-                           &quot;title&quot;: &quot;About how long ago did your child last eat or drink?&quot;,
-                           &quot;required&quot;: true
+                       "lastEat": {
+                           "title": "About how long ago did your child last eat or drink?",
+                           "required": true
                        },
-                       &quot;nextNap&quot;: {
-                           &quot;title&quot;: &quot;About how much longer until his/her next nap (or bedtime)?&quot;,
-                           &quot;required&quot;: true
+                       "nextNap": {
+                           "title": "About how much longer until his/her next nap (or bedtime)?",
+                           "required": true
                        },
-                       &quot;napWakeUp&quot;: {
-                           &quot;title&quot;: &quot;About how long ago did your child last wake up from sleep or a nap?&quot;,
-                           &quot;required&quot;: true
+                       "napWakeUp": {
+                           "title": "About how long ago did your child last wake up from sleep or a nap?",
+                           "required": true
                        },
-                       &quot;doingBefore&quot;: {
-                           &quot;title&quot;: &quot;What was your child doing before this?&quot;,
-                           &quot;required&quot;: true
+                       "doingBefore": {
+                           "title": "What was your child doing before this?",
+                           "required": true
                        },
-                       &quot;usualNapSchedule&quot;: {
-                           &quot;enum&quot;: [
-                               &quot;yes&quot;,
-                               &quot;no&quot;,
-                               &quot;yes-overdue&quot;
+                       "usualNapSchedule": {
+                           "enum": [
+                               "yes",
+                               "no",
+                               "yes-overdue"
                            ],
-                           &quot;title&quot;: &quot;Does your child have a usual nap schedule?&quot;,
-                           &quot;required&quot;: true
+                           "title": "Does your child have a usual nap schedule?",
+                           "required": true
                        }
                    },
-                   &quot;dependencies&quot;: {
-                       &quot;nextNap&quot;: [
-                           &quot;usualNapSchedule&quot;
+                   "dependencies": {
+                       "nextNap": [
+                           "usualNapSchedule"
                        ]
                    }
                },
-               &quot;options&quot;: {
-                   &quot;fields&quot;: {
-                       &quot;child&quot;: {
-                           &quot;fields&quot;: {
-                               &quot;happy&quot;: {
-                                   &quot;type&quot;: &quot;radio&quot;,
-                                   &quot;order&quot;: 3,
-                                   &quot;vertical&quot;: false,
-                                   &quot;leftLabel&quot;: &quot;Fussy&quot;,
-                                   &quot;fieldClass&quot;: &quot;aligned-radio-group&quot;,
-                                   &quot;rightLabel&quot;: &quot;Happy&quot;,
-                                   &quot;optionLabels&quot;: [
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;
+               "options": {
+                   "fields": {
+                       "child": {
+                           "fields": {
+                               "happy": {
+                                   "type": "radio",
+                                   "order": 3,
+                                   "vertical": false,
+                                   "leftLabel": "Fussy",
+                                   "fieldClass": "aligned-radio-group",
+                                   "rightLabel": "Happy",
+                                   "optionLabels": [
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       ""
                                    ]
                                },
-                               &quot;active&quot;: {
-                                   &quot;type&quot;: &quot;radio&quot;,
-                                   &quot;order&quot;: 4,
-                                   &quot;vertical&quot;: false,
-                                   &quot;leftLabel&quot;: &quot;Calm&quot;,
-                                   &quot;fieldClass&quot;: &quot;aligned-radio-group&quot;,
-                                   &quot;rightLabel&quot;: &quot;Active&quot;,
-                                   &quot;optionLabels&quot;: [
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;
+                               "active": {
+                                   "type": "radio",
+                                   "order": 4,
+                                   "vertical": false,
+                                   "leftLabel": "Calm",
+                                   "fieldClass": "aligned-radio-group",
+                                   "rightLabel": "Active",
+                                   "optionLabels": [
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       ""
                                    ]
                                },
-                               &quot;rested&quot;: {
-                                   &quot;type&quot;: &quot;radio&quot;,
-                                   &quot;order&quot;: 1,
-                                   &quot;vertical&quot;: false,
-                                   &quot;leftLabel&quot;: &quot;Tired&quot;,
-                                   &quot;fieldClass&quot;: &quot;aligned-radio-group&quot;,
-                                   &quot;rightLabel&quot;: &quot;Rested&quot;,
-                                   &quot;optionLabels&quot;: [
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;
+                               "rested": {
+                                   "type": "radio",
+                                   "order": 1,
+                                   "vertical": false,
+                                   "leftLabel": "Tired",
+                                   "fieldClass": "aligned-radio-group",
+                                   "rightLabel": "Rested",
+                                   "optionLabels": [
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       ""
                                    ]
                                },
-                               &quot;healthy&quot;: {
-                                   &quot;type&quot;: &quot;radio&quot;,
-                                   &quot;order&quot;: 2,
-                                   &quot;vertical&quot;: false,
-                                   &quot;leftLabel&quot;: &quot;Sick&quot;,
-                                   &quot;fieldClass&quot;: &quot;aligned-radio-group&quot;,
-                                   &quot;rightLabel&quot;: &quot;Healthy&quot;,
-                                   &quot;optionLabels&quot;: [
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;
+                               "healthy": {
+                                   "type": "radio",
+                                   "order": 2,
+                                   "vertical": false,
+                                   "leftLabel": "Sick",
+                                   "fieldClass": "aligned-radio-group",
+                                   "rightLabel": "Healthy",
+                                   "optionLabels": [
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       ""
                                    ]
                                }
                            }
                        },
-                       &quot;parent&quot;: {
-                           &quot;fields&quot;: {
-                               &quot;energetic&quot;: {
-                                   &quot;type&quot;: &quot;radio&quot;,
-                                   &quot;order&quot;: 1,
-                                   &quot;vertical&quot;: false,
-                                   &quot;leftLabel&quot;: &quot;Tired&quot;,
-                                   &quot;fieldClass&quot;: &quot;aligned-radio-group&quot;,
-                                   &quot;rightLabel&quot;: &quot;Energetic&quot;,
-                                   &quot;optionLabels&quot;: [
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;
+                       "parent": {
+                           "fields": {
+                               "energetic": {
+                                   "type": "radio",
+                                   "order": 1,
+                                   "vertical": false,
+                                   "leftLabel": "Tired",
+                                   "fieldClass": "aligned-radio-group",
+                                   "rightLabel": "Energetic",
+                                   "optionLabels": [
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       ""
                                    ]
                                },
-                               &quot;parentHappy&quot;: {
-                                   &quot;type&quot;: &quot;radio&quot;,
-                                   &quot;order&quot;: 3,
-                                   &quot;vertical&quot;: false,
-                                   &quot;leftLabel&quot;: &quot;Upset&quot;,
-                                   &quot;fieldClass&quot;: &quot;aligned-radio-group&quot;,
-                                   &quot;rightLabel&quot;: &quot;Happy&quot;,
-                                   &quot;optionLabels&quot;: [
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;
+                               "parentHappy": {
+                                   "type": "radio",
+                                   "order": 3,
+                                   "vertical": false,
+                                   "leftLabel": "Upset",
+                                   "fieldClass": "aligned-radio-group",
+                                   "rightLabel": "Happy",
+                                   "optionLabels": [
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       ""
                                    ]
                                },
-                               &quot;ontopofstuff&quot;: {
-                                   &quot;type&quot;: &quot;radio&quot;,
-                                   &quot;order&quot;: 2,
-                                   &quot;vertical&quot;: false,
-                                   &quot;leftLabel&quot;: &quot;Overwhelmed&quot;,
-                                   &quot;fieldClass&quot;: &quot;aligned-radio-group&quot;,
-                                   &quot;rightLabel&quot;: &quot;On top of things&quot;,
-                                   &quot;optionLabels&quot;: [
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;,
-                                       &quot;&quot;
+                               "ontopofstuff": {
+                                   "type": "radio",
+                                   "order": 2,
+                                   "vertical": false,
+                                   "leftLabel": "Overwhelmed",
+                                   "fieldClass": "aligned-radio-group",
+                                   "rightLabel": "On top of things",
+                                   "optionLabels": [
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       "",
+                                       ""
                                    ]
                                }
                            }
                        },
-                       &quot;lastEat&quot;: {
-                           &quot;size&quot;: 10,
-                           &quot;type&quot;: &quot;time&quot;,
-                           &quot;picker&quot;: {
-                               &quot;useCurrent&quot;: &quot;day&quot;
+                       "lastEat": {
+                           "size": 10,
+                           "type": "time",
+                           "picker": {
+                               "useCurrent": "day"
                            },
-                           &quot;dateFormat&quot;: &quot;HH:mm&quot;,
-                           &quot;placeholder&quot;: &quot;hours:minutes&quot;
+                           "dateFormat": "HH:mm",
+                           "placeholder": "hours:minutes"
                        },
-                       &quot;nextNap&quot;: {
-                           &quot;size&quot;: 10,
-                           &quot;type&quot;: &quot;time&quot;,
-                           &quot;picker&quot;: {
-                               &quot;useCurrent&quot;: &quot;day&quot;
+                       "nextNap": {
+                           "size": 10,
+                           "type": "time",
+                           "picker": {
+                               "useCurrent": "day"
                            },
-                           &quot;dateFormat&quot;: &quot;HH:mm&quot;,
-                           &quot;placeholder&quot;: &quot;hours:minutes&quot;,
-                           &quot;dependencies&quot;: {
-                               &quot;usualNapSchedule&quot;: &quot;yes&quot;
+                           "dateFormat": "HH:mm",
+                           "placeholder": "hours:minutes",
+                           "dependencies": {
+                               "usualNapSchedule": "yes"
                            }
                        },
-                       &quot;napWakeUp&quot;: {
-                           &quot;size&quot;: 10,
-                           &quot;type&quot;: &quot;time&quot;,
-                           &quot;picker&quot;: {
-                               &quot;useCurrent&quot;: &quot;day&quot;
+                       "napWakeUp": {
+                           "size": 10,
+                           "type": "time",
+                           "picker": {
+                               "useCurrent": "day"
                            },
-                           &quot;dateFormat&quot;: &quot;HH:mm&quot;,
-                           &quot;placeholder&quot;: &quot;hours:minutes&quot;
+                           "dateFormat": "HH:mm",
+                           "placeholder": "hours:minutes"
                        },
-                       &quot;doingBefore&quot;: {
-                           &quot;type&quot;: &quot;text&quot;,
-                           &quot;placeholder&quot;: &quot;examples: having lunch, playing outside, going to the store with me&quot;
+                       "doingBefore": {
+                           "type": "text",
+                           "placeholder": "examples: having lunch, playing outside, going to the store with me"
                        },
-                       &quot;usualNapSchedule&quot;: {
-                           &quot;sort&quot;: false,
-                           &quot;type&quot;: &quot;select&quot;,
-                           &quot;hideNone&quot;: false,
-                           &quot;noneLabel&quot;: &quot;&quot;,
-                           &quot;optionLabels&quot;: [
-                               &quot;Yes&quot;,
-                               &quot;No&quot;,
-                               &quot;Yes, and he/she is already due for a nap&quot;
+                       "usualNapSchedule": {
+                           "sort": false,
+                           "type": "select",
+                           "hideNone": false,
+                           "noneLabel": "",
+                           "optionLabels": [
+                               "Yes",
+                               "No",
+                               "Yes, and he/she is already due for a nap"
                            ],
-                           &quot;removeDefaultNone&quot;: false
+                           "removeDefaultNone": false
                        }
                    },
-                   &quot;formTitle&quot;: &quot;Mood Questionnaire&quot;,
-                   &quot;introText&quot;: &quot;How are you two doing? We really want to know: we’re interested in how your child’s mood affects which sorts of surprising physical events he/she notices. You can help us find out what babies are really learning as they get older... and what they already knew, but weren’t calm and focused enough to show us!&quot;,
-                   &quot;hideInitValidationError&quot;: true
+                   "formTitle": "Mood Questionnaire",
+                   "introText": "How are you two doing? We really want to know: we’re interested in how your child’s mood affects which sorts of surprising physical events he/she notices. You can help us find out what babies are really learning as they get older... and what they already knew, but weren’t calm and focused enough to show us!",
+                   "hideInitValidationError": true
                }
            },
-           &quot;nextButtonText&quot;: &quot;Next&quot;
+           "nextButtonText": "Next"
        }
 
 </code></pre>
 
+</div>
+
+<div>
 </div>
 
 
@@ -1351,7 +1374,7 @@ desired field described at  <a href="http://www.alpacajs.org/documentation.html"
     </div>
 
     <div class="description">
-        <p>Function to generate additional properties for this frame (like {&quot;kind&quot;: &quot;exp-lookit-text&quot;})
+        <p>Function to generate additional properties for this frame (like {"kind": "exp-lookit-text"})
 at the time the frame is initialized. Allows behavior of study to depend on what has
 happened so far (e.g., answers on a form or to previous test trials).
 Must be a valid Javascript function, returning an object, provided as
@@ -1371,10 +1394,10 @@ to access:</p>
 <ul>
 <li><code>additionalInformation</code>: String; additional information field from child form</li>
 <li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
-&quot;24&quot; through &quot;39&quot;, &quot;na&quot; (not sure or prefer not to answer),
-&quot;&lt;24&quot; (under 24 weeks), and &quot;40&gt;&quot; (40 or more weeks).</li>
-<li><code>birthday</code>: timestamp in format &quot;Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)&quot;</li>
-<li><code>gender</code>: &quot;f&quot; (female), &quot;m&quot; (male), &quot;o&quot; (other), or &quot;na&quot; (prefer not to answer)</li>
+"24" through "39", "na" (not sure or prefer not to answer),
+"&lt;24" (under 24 weeks), and "40&gt;" (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>gender</code>: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)</li>
 <li><code>givenName</code>: String, child's given name/nickname</li>
 <li><code>id</code>: String, child UUID</li>
 </ul>
@@ -1385,7 +1408,7 @@ ordered starting from most recent (at index 0 is this session!). Each has proper
 <li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
 <li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
 <li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
-<li><code>createdOn</code>: timestamp in format &quot;Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>createdOn</code>: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"</li>
 <li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
 <li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
 just used for attempts to leave the study early</li>
@@ -1551,10 +1574,10 @@ to access:</p>
 <ul>
 <li><code>additionalInformation</code>: String; additional information field from child form</li>
 <li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
-&quot;24&quot; through &quot;39&quot;, &quot;na&quot; (not sure or prefer not to answer),
-&quot;&lt;24&quot; (under 24 weeks), and &quot;40&gt;&quot; (40 or more weeks).</li>
-<li><code>birthday</code>: timestamp in format &quot;Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)&quot;</li>
-<li><code>gender</code>: &quot;f&quot; (female), &quot;m&quot; (male), &quot;o&quot; (other), or &quot;na&quot; (prefer not to answer)</li>
+"24" through "39", "na" (not sure or prefer not to answer),
+"&lt;24" (under 24 weeks), and "40&gt;" (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>gender</code>: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)</li>
 <li><code>givenName</code>: String, child's given name/nickname</li>
 <li><code>id</code>: String, child UUID</li>
 </ul>
@@ -1565,14 +1588,14 @@ ordered starting from most recent (at index 0 is this session!). Each has proper
 <li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
 <li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
 <li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
-<li><code>createdOn</code>: timestamp in format &quot;Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>createdOn</code>: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"</li>
 <li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
 <li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
 just used for attempts to leave the study early</li>
 <li><code>sequence</code>: ordered list of frameIds, corresponding to keys in expData</li>
 </ul>
 <p>Example that just sends us to the last frame of the study no matter what:
-<code>&#x60;&amp;quot;function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}&amp;quot;</code>``</p>
+<code>&#x60;&quot;function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}&quot;</code>``</p>
 
     </div>
 
