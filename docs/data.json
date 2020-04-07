@@ -825,7 +825,7 @@
             "namespace": "",
             "file": "app/components/exp-lookit-video-consent/component.js",
             "line": 16,
-            "description": "Video consent frame for Lookit studies, with consent document displayed at left and instructions to start recording, read a statement out loud, and send. A standard consent\ndocument is displayed, with additional study-specific information provided by the researcher, in accordance with the Lookit terms of use.\n\nResearchers can select from the following named templates:\n\n`consent_001`: Original Lookit consent document (2019)\n`consent_002`: Added optional GDPR section and research subject rights statement\n\nTo look up the exact text of the consent document, see https://github.com/lookit/ember-lookit-frameplayer/blob/master/app/components/exp-lookit-video-consent/template.hbs\n\nThe consent document can be downloaded as PDF document by participant.\n\n```json\n\"frames\": {\n    \"video-consent\": {\n        \"kind\": \"exp-lookit-video-consent\",\n        \"template\": \"consent_002\",\n        \"PIName\": \"Jane Smith\",\n        \"institution\": \"Science University\",\n        \"PIContact\": \"Jane Smith at 123 456 7890\",\n        \"purpose\": \"Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.\",\n        \"procedures\": \"Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.\",\n        \"payment\": \"After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.\",\n        \"datause\": \"We are primarily interested in your child's emotional reactions to the images and sounds. A research assistant will watch your video to measure the precise amount of delight in your child's face as he or she sees each cat picture.\"\n        \"gdpr\": false,\n        \"research_rights_statement\": \"You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Chairman of the Committee on the Use of Humans as Experimental Subjects, M.I.T., Room E25-143B, 77 Massachusetts Ave, Cambridge, MA 02139, phone 1-617-253 6787.\"\"\n    }\n}\n```",
+            "description": "Video consent frame for Lookit studies, with consent document displayed at left and instructions to start recording, read a statement out loud, and send. A standard consent\ndocument is displayed, with additional study-specific information provided by the researcher, in accordance with the Lookit terms of use.\n\nResearchers can select from the following named templates:\n\n`consent_001`: Original Lookit consent document (2019)\n`consent_002`: Added optional GDPR section and research subject rights statement\n\nTo look up the exact text of the consent document, see https://github.com/lookit/ember-lookit-frameplayer/blob/master/app/components/exp-lookit-video-consent/template.hbs\n\nThe consent document can be downloaded as PDF document by participant.\n\n```json\n\"frames\": {\n    \"video-consent\": {\n        \"kind\": \"exp-lookit-video-consent\",\n        \"template\": \"consent_002\",\n        \"PIName\": \"Jane Smith\",\n        \"institution\": \"Science University\",\n        \"PIContact\": \"Jane Smith at 123 456 7890\",\n        \"purpose\": \"Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.\",\n        \"procedures\": \"Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.\",\n        \"payment\": \"After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.\",\n        \"datause\": \"We are primarily interested in your child's emotional reactions to the images and sounds. A research assistant will watch your video to measure the precise amount of delight in your child's face as he or she sees each cat picture.\",\n        \"gdpr\": false,\n        \"research_rights_statement\": \"You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Chairman of the Committee on the Use of Humans as Experimental Subjects, M.I.T., Room E25-143B, 77 Massachusetts Ave, Cambridge, MA 02139, phone 1-617-253 6787.\"\n    }\n}\n```",
             "extends": "Exp-frame-base",
             "uses": [
                 "Video-record"
@@ -910,7 +910,7 @@
             "namespace": "",
             "file": "app/components/exp-video-preview/component.js",
             "line": 16,
-            "description": "A frame that displays a series of videos to preview, without collecting data as a live experiment. User can go through these at their own pace and video controls are shown. Webcam video is recorded starting once the user presses a button to actually display the videos, so that researchers can check that the participant (infant/child) did not see the videos ahead of time.\n```json\n\"frames\": {\n   \"my-sample-frame\": {\n       \"id\": \"video-preview\",\n       \"kind\": \"exp-video-preview\",\n       \"text\": \"Here are the videos your child will see in this study. You can watch them ahead of time--please just don't show your child yet!\",\n       \"prompt\": \"My child can NOT see the screen. Start the preview!\",\n       \"baseDir\": \"https://url.com/\",\n       \"videoTypes\": [\"webm\", \"mp4\"]\n       \"videos\": [\n          {\n            \"caption\": \"User-facing text that appears below the video\",\n            \"sources\": \"example_intro\"\n          },\n          {\n            \"caption\": \"User-facing text that appears below the video\",\n            \"imgSrc\": \"caterpillar_picture\"\n          }\n        ]\n   }\n\n```",
+            "description": "A frame that displays a series of videos to preview, without collecting data as a live experiment. User can go through these at their own pace and video controls are shown. Webcam video is recorded starting once the user presses a button to actually display the videos, so that researchers can check that the participant (infant/child) did not see the videos ahead of time.\n```json\n\"frames\": {\n   \"my-sample-frame\": {\n       \"id\": \"video-preview\",\n       \"kind\": \"exp-video-preview\",\n       \"text\": \"Here are the videos your child will see in this study. You can watch them ahead of time--please just don't show your child yet!\",\n       \"prompt\": \"My child can NOT see the screen. Start the preview!\",\n       \"baseDir\": \"https://url.com/\",\n       \"videoTypes\": [\"webm\", \"mp4\"],\n       \"videos\": [\n          {\n            \"caption\": \"User-facing text that appears below the video\",\n            \"sources\": \"example_intro\"\n          },\n          {\n            \"caption\": \"User-facing text that appears below the video\",\n            \"imgSrc\": \"caterpillar_picture\"\n          }\n        ]\n   }\n }\n\n```",
             "extends": "Exp-frame-base",
             "uses": [
                 "Expand-assets",
@@ -4598,7 +4598,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 106,
+            "line": 107,
             "description": "A series of preview videos to display within a single frame, defined as an array of objects.",
             "itemtype": "property",
             "name": "videos",
@@ -4626,7 +4626,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 135,
+            "line": 136,
             "description": "Text on the button prompt asking the user to continue to the videos",
             "itemtype": "property",
             "name": "prompt",
@@ -4637,7 +4637,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 145,
+            "line": 146,
             "description": "Informational text to display to the user before videos are shown, along with button to continue",
             "itemtype": "property",
             "name": "text",
@@ -4648,7 +4648,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 155,
+            "line": 156,
             "description": "Text on the button to proceed to the next example video/image",
             "itemtype": "property",
             "name": "nextStimulusText",
@@ -4659,7 +4659,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 165,
+            "line": 166,
             "description": "Text on the button to proceed to the previous example video/image",
             "itemtype": "property",
             "name": "previousStimulusText",
@@ -4670,7 +4670,7 @@
         },
         {
             "file": "app/components/exp-video-preview/component.js",
-            "line": 181,
+            "line": 182,
             "description": "Parameters captured and sent to the server",
             "itemtype": "method",
             "name": "serializeContent",
