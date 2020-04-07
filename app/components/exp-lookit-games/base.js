@@ -488,6 +488,15 @@ export default class Base {
   }
 
 
+  cloneMessage(object) {
+    var clone ={};
+    for( var key in object ){
+      if(object.hasOwnProperty(key)) //ensure not adding inherited props
+        clone[key]=object[key];
+    }
+    return clone;
+  }
+
   /**
    * Finish current round and check for rounds left
    * @method finishGame
@@ -497,12 +506,13 @@ export default class Base {
 
     this.currentRounds++;
     cancelAnimationFrame(gameLoop);
+    let clone = this.cloneMessage(this.exportData);
+    this.context.export_arr.push(clone);
     if (score) {
       this.increaseScore();
     }
     if (this.currentRounds < maxRounds) {
       gameState.startTime = 0;
-      this.context.get('export_arr').addObject(this.exportData);
       this.initGame();
 
     } else {
