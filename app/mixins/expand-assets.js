@@ -194,8 +194,16 @@ var expandAssetsMixin = Ember.Mixin.create({
                 if (typeof asset === 'string' && !(asset.includes('://'))) {
                     // Image: replace stub with full URL if needed
                     fullAsset = this.baseDir + 'img/' + asset;
+                    fetch(fullAsset, { method: 'HEAD', mode: 'no-cors' }); // Throws error if unavailable
+                } else if (Array.isArray(asset)) {
+                    for (var i = 0; i < asset.length; i++) {
+                        var currentVal = asset[i];
+                        if (typeof currentVal === 'string' && !(currentVal.includes('://'))) {
+                            asset[i] = this.baseDir + 'img/' + currentVal;
+                            fetch(asset[i], { method: 'HEAD', mode: 'no-cors' }); // Throws error if unavailable
+                        }
+                    }
                 }
-                fetch(fullAsset, { method: 'HEAD', mode: 'no-cors' }); // Throws error if unavailable
                 return fullAsset;
             case 'audio':
             case 'video':
