@@ -41,19 +41,7 @@ const gameImage = {
 };
 
 
-let exportData = {
-  game_type: 'discreteCatchLift',
-  basket_x: '',
-  basket_y: [],
-  mice_x: '',
-  mice_y: [],
-  trial: [],
-  trialType: '',
-  mice_state: [],
-  paddle_timestamp: [],
-  timestamp: []
 
-};
 
 /**
  *  * Main implementation of Catch the target game.
@@ -156,6 +144,21 @@ export default class DiscreteCatchLift extends PaddleGames {
    * @method initGame
    */
   initGame() {
+
+    super.exportData = {
+      game_type: 'discreteCatchLift',
+      basket_x: '',
+      basket_y: [],
+      mice_x: '',
+      mice_y: [],
+      trial: [],
+      trialType: '',
+      mice_state: [],
+      paddle_timestamp: [],
+      timestamp: []
+
+    };
+
     jitterT = super.trialStartTime();
     target.state = 'start';
     target.lastTime = new Date().getTime();
@@ -178,18 +181,17 @@ export default class DiscreteCatchLift extends PaddleGames {
   dataCollection() {
     if(super.gameState.initialTime > 0) {
 
-      exportData.basket_x = super.convertXvalue(super.paddle.position.x);
-      exportData.basket_y.push(super.convertYvalue(super.paddle.position.y));
-      exportData.mice_x =  super.convertXvalue(target.position.x);
-      exportData.mice_y =  super.convertYvalue(target.position.y);
-      exportData.trial = super.currentRounds;
-      exportData.trialType = this.context.trialType;
-      exportData.mice_state.push(target.state);
-      exportData.paddle_timestamp.push(super.paddle.time);
-      exportData.timestamp.push(super.getElapsedTime());
+      super.exportData.basket_x = super.convertXvalue(super.paddle.position.x);
+      super.exportData.basket_y.push(super.convertYvalue(super.paddle.position.y));
+      super.exportData.mice_x =  super.convertXvalue(target.position.x);
+      super.exportData.mice_y =  super.convertYvalue(target.position.y);
+      super.exportData.trial = super.currentRounds;
+      super.exportData.trialType = this.context.trialType;
+      super.exportData.mice_state.push(target.state);
+      super.exportData.paddle_timestamp.push(super.paddle.time);
+      super.exportData.timestamp.push(super.getElapsedTime());
 
 
-      super.storeData(exportData);
     }
     super.dataCollection();
   }

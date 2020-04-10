@@ -66,19 +66,7 @@ const gameRandomization = {
 };
 
 
-let exportData = {
-  game_type: 'discreteButtonSpatial',
-  window:  [],
-  selected_button: []  ,
-  obstruction_number: [],
-  ball_position_x: [],
-  ball_position_y: [],
-  ball_timestamp: [],
-  trial: [],
-  trialType: '',
-  timestamp: []
 
-};
 
 /**
  * The user will operate with keyboard keys to predict which ball trajectory will hit which window
@@ -253,6 +241,21 @@ export default class DiscreteButtonSpatial extends Base {
    * @method initGame
    */
   initGame() {
+
+    super.exportData = {
+      game_type: 'discreteButtonSpatial',
+      window:  [],
+      selected_button: []  ,
+      obstruction_number: [],
+      ball_position_x: [],
+      ball_position_y: [],
+      ball_timestamp: [],
+      trial: [],
+      trialType: '',
+      timestamp: []
+
+    };
+
     pressed = Array(3).fill(false);
     jitterT = super.trialStartTime();
     buttonPressDelay = 0;
@@ -504,18 +507,16 @@ export default class DiscreteButtonSpatial extends Base {
       }
 
 
-      exportData.window = this.getCorrectIndex()+1;
-      exportData.selected_button = target_state + 1;
-      exportData.obstruction_number = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];
-      exportData.trial = super.currentRounds;
-      exportData.trialType = this.context.trialType;
-      exportData.ball_position_x.push(super.convertXvalue(super.ball.position.x));
-      exportData.ball_position_y.push(super.convertYvalue(super.ball.position.y));
-      exportData.ball_timestamp.push(super.ball.timestamp);
-      exportData.timestamp.push(super.getElapsedTime());
+      super.exportData.window = this.getCorrectIndex()+1;
+      super.exportData.selected_button = target_state + 1;
+      super.exportData.obstruction_number = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];
+      super.exportData.trial = super.currentRounds;
+      super.exportData.trialType = this.context.trialType;
+      super.exportData.ball_position_x.push(super.convertXvalue(super.ball.position.x));
+      super.exportData.ball_position_y.push(super.convertYvalue(super.ball.position.y));
+      super.exportData.ball_timestamp.push(super.ball.timestamp);
+      super.exportData.timestamp.push(super.getElapsedTime());
 
-
-      super.storeData(exportData);
     }
 
     super.dataCollection();
