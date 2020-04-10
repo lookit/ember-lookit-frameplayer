@@ -56,21 +56,7 @@ const gameImage = {
 };
 
 
-let exportData = {
 
-  game_type: 'buttonPressWindow',
-  trajectory: [],
-  ball_position_x: [],
-  ball_position_y: [],
-  ball_timestamp: [],
-  button_pressed: [],
-  trial: [],
-  trialType: '',
-  timestamp: [],
-  feedback: [],
-  target_position: ''
-
-};
 
 /**
  * Main implementation of feed  the mouse in the house game.
@@ -172,6 +158,23 @@ export default class ButtonPressWindow extends Base {
    * @method initGame
    */
   initGame() {
+
+    super.exportData = {
+
+      game_type: 'buttonPressWindow',
+      trajectory: [],
+      ball_position_x: [],
+      ball_position_y: [],
+      ball_timestamp: [],
+      button_pressed: [],
+      trial: [],
+      trialType: '',
+      timestamp: [],
+      feedback: [],
+      target_position: ''
+
+    };
+
     jitterT = super.trialStartTime();
     keyPressed.value = 0;
     this.setTargetBackground();
@@ -212,18 +215,17 @@ export default class ButtonPressWindow extends Base {
     if(super.ball.state === 'start' || super.ball.state === 'hit' || super.ball.state === 'fall') {
       let currentTrajectory = TfArrIndex.indexOf(TfArr[this.currentRounds]) + 1;
 
-      exportData.trajectory = currentTrajectory;
-      exportData.ball_position_x.push(super.convertXvalue(super.ball.position.x));
-      exportData.ball_position_y.push(super.convertYvalue(super.ball.position.y));
-      exportData.ball_timestamp.push(super.ball.timestamp);
-      exportData.trial = super.currentRounds;
-      exportData.trialType = this.context.trialType;
-      exportData.timestamp.push(super.getElapsedTime());
-      exportData.feedback = this.ballState();
-      exportData.target_position = TARGETX.toFixed(3)
+      super.exportData.trajectory = currentTrajectory;
+      super.exportData.ball_position_x.push(super.convertXvalue(super.ball.position.x));
+      super.exportData.ball_position_y.push(super.convertYvalue(super.ball.position.y));
+      super.exportData.ball_timestamp.push(super.ball.timestamp);
+      super.exportData.trial = super.currentRounds;
+      super.exportData.trialType = this.context.trialType;
+      super.exportData.timestamp.push(super.getElapsedTime());
+      super.exportData.feedback = this.ballState();
+      super.exportData.target_position = TARGETX.toFixed(3);
 
 
-      super.storeData(exportData);
     }
     super.dataCollection();
   }

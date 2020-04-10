@@ -205,7 +205,16 @@ export default class Base {
 
 
 
+  get exportData(){
 
+    return exportData;
+  }
+
+
+  set exportData(val){
+
+    exportData = val;
+  }
 
   get currentRounds() {
 
@@ -465,16 +474,7 @@ export default class Base {
     );
 
   }
-  /**
-   * Store data and pass to  Lookit platform variable
-   * @method storeData
-   * @param {array} export Data array of objects with all data passed to Lookit platform
-   */
-  storeData(exportData) {
 
-    this.exportData = exportData;
-
-  }
 
 
   /**
