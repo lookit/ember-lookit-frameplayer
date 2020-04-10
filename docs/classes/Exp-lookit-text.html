@@ -119,36 +119,64 @@
 </div>
 
 
-<div>
+<div id="examples" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#screenshot">Screenshot</a></li>
+        <li class="api-class-tab methods"><a href="#video">Video</a></li>
+    </ul>
+    <div>
+        <div id="screenshot" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-screenshot">
+                <img src="../assets/screenshots/Exp-lookit-text.png">
+            </div>
+        </div>
 
-    <img src="../assets/screenshots/Exp-lookit-text.png" class="class-screenshot">
-
+        <div id="video" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-video">
+<<<<<<< Updated upstream
+                <video controls poster="../assets/screenshots/Exp-lookit-text.png" >
+                    <source src="../assets/framevideos/Exp-lookit-text.mp4" type='video/mp4'>
+=======
+                <video controls>
+                    <source src="../assets/framevideos/Exp-lookit-text.mp4" poster="../assets/screenshots/Exp-lookit-text.png" type='video/mp4'>
+>>>>>>> Stashed changes
+                    No video available for this frame.
+                </video>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
 
 <div class="box intro">
     <p>A frame to display text-only instructions, etc. to the user.</p>
-<pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
-   &quot;study-intro&quot;: {
-       &quot;blocks&quot;: [
+<pre class="code prettyprint"><code class="language-json">"frames": {
+   "study-intro": {
+       "blocks": [
            {
-               &quot;emph&quot;: true,
-               &quot;text&quot;: &quot;Important: your child does not need to be with you until the videos begin. First, let's go over what will happen!&quot;,
-               &quot;title&quot;: &quot;Your baby, the physicist&quot;
+               "emph": true,
+               "text": "Important: your child does not need to be with you until the videos begin. First, let's go over what will happen!",
+               "title": "Your baby, the physicist"
            },
            {
-               &quot;text&quot;: &quot;Some introductory text about this study.&quot;
+               "text": "Some introductory text about this study."
            },
            {
-               &quot;text&quot;: &quot;Another paragraph about this study.&quot;
+               "text": "Another paragraph about this study."
            }
        ],
-       &quot;showPreviousButton&quot;: false,
-       &quot;kind&quot;: &quot;exp-lookit-text&quot;
+       "showPreviousButton": false,
+       "kind": "exp-lookit-text"
    }
 }
 
 </code></pre>
 
+</div>
+
+<div>
 </div>
 
 
@@ -473,9 +501,9 @@ event sent by a particular frame</p>
 
     <div class="description">
         <p>The base class does not define any data to save to the server. It does, however, capture some basic event
-timing data. (such as when the user clicks the &quot;next&quot; button)</p>
+timing data. (such as when the user clicks the "next" button)</p>
 <p>This section slightly breaks YUIDoc conventions- rather than being a literal guide to using the code, the
-&quot;parameters&quot; here are abstract descriptions of what data is captured.</p>
+"parameters" here are abstract descriptions of what data is captured.</p>
 <p>Each frame that extends ExpFrameBase will send an array <code>eventTimings</code>
 back to the server upon completion. This array is an ordered list (oldest
 to newest) of every EVENT that happened during the frame. Each event is
@@ -863,7 +891,7 @@ generally used that way.
     </div>
 
     <div class="description">
-        <p>Function to generate additional properties for this frame (like {&quot;kind&quot;: &quot;exp-lookit-text&quot;})
+        <p>Function to generate additional properties for this frame (like {"kind": "exp-lookit-text"})
 at the time the frame is initialized. Allows behavior of study to depend on what has
 happened so far (e.g., answers on a form or to previous test trials).
 Must be a valid Javascript function, returning an object, provided as
@@ -883,10 +911,10 @@ to access:</p>
 <ul>
 <li><code>additionalInformation</code>: String; additional information field from child form</li>
 <li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
-&quot;24&quot; through &quot;39&quot;, &quot;na&quot; (not sure or prefer not to answer),
-&quot;&lt;24&quot; (under 24 weeks), and &quot;40&gt;&quot; (40 or more weeks).</li>
-<li><code>birthday</code>: timestamp in format &quot;Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)&quot;</li>
-<li><code>gender</code>: &quot;f&quot; (female), &quot;m&quot; (male), &quot;o&quot; (other), or &quot;na&quot; (prefer not to answer)</li>
+"24" through "39", "na" (not sure or prefer not to answer),
+"&lt;24" (under 24 weeks), and "40&gt;" (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>gender</code>: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)</li>
 <li><code>givenName</code>: String, child's given name/nickname</li>
 <li><code>id</code>: String, child UUID</li>
 </ul>
@@ -897,7 +925,7 @@ ordered starting from most recent (at index 0 is this session!). Each has proper
 <li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
 <li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
 <li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
-<li><code>createdOn</code>: timestamp in format &quot;Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>createdOn</code>: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"</li>
 <li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
 <li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
 just used for attempts to leave the study early</li>
@@ -1037,10 +1065,10 @@ to access:</p>
 <ul>
 <li><code>additionalInformation</code>: String; additional information field from child form</li>
 <li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
-&quot;24&quot; through &quot;39&quot;, &quot;na&quot; (not sure or prefer not to answer),
-&quot;&lt;24&quot; (under 24 weeks), and &quot;40&gt;&quot; (40 or more weeks).</li>
-<li><code>birthday</code>: timestamp in format &quot;Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)&quot;</li>
-<li><code>gender</code>: &quot;f&quot; (female), &quot;m&quot; (male), &quot;o&quot; (other), or &quot;na&quot; (prefer not to answer)</li>
+"24" through "39", "na" (not sure or prefer not to answer),
+"&lt;24" (under 24 weeks), and "40&gt;" (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>gender</code>: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)</li>
 <li><code>givenName</code>: String, child's given name/nickname</li>
 <li><code>id</code>: String, child UUID</li>
 </ul>
@@ -1051,14 +1079,14 @@ ordered starting from most recent (at index 0 is this session!). Each has proper
 <li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
 <li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
 <li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
-<li><code>createdOn</code>: timestamp in format &quot;Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>createdOn</code>: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"</li>
 <li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
 <li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
 just used for attempts to leave the study early</li>
 <li><code>sequence</code>: ordered list of frameIds, corresponding to keys in expData</li>
 </ul>
 <p>Example that just sends us to the last frame of the study no matter what:
-<code>&#x60;&amp;quot;function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}&amp;quot;</code>``</p>
+<code>&#x60;&quot;function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}&quot;</code>``</p>
 
     </div>
 

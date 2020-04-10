@@ -23,7 +23,7 @@ import { videoAssetOptions, imageAssetOptions } from '../../mixins/expand-assets
         "text": "Here are the videos your child will see in this study. You can watch them ahead of time--please just don't show your child yet!",
         "prompt": "My child can NOT see the screen. Start the preview!",
         "baseDir": "https://url.com/",
-        "videoTypes": ["webm", "mp4"]
+        "videoTypes": ["webm", "mp4"],
         "videos": [
            {
              "caption": "User-facing text that appears below the video",
@@ -35,6 +35,7 @@ import { videoAssetOptions, imageAssetOptions } from '../../mixins/expand-assets
            }
          ]
     }
+  }
 
  * ```
  * @class Exp-video-preview

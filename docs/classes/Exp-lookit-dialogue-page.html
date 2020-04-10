@@ -127,11 +127,36 @@
 </div>
 
 
-<div>
+<div id="examples" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#screenshot">Screenshot</a></li>
+        <li class="api-class-tab methods"><a href="#video">Video</a></li>
+    </ul>
+    <div>
+        <div id="screenshot" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-screenshot">
+                <img src="../assets/screenshots/Exp-lookit-dialogue-page.png">
+            </div>
+        </div>
 
-    <img src="../assets/screenshots/Exp-lookit-dialogue-page.png" class="class-screenshot">
-
+        <div id="video" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-video">
+<<<<<<< Updated upstream
+                <video controls poster="../assets/screenshots/Exp-lookit-dialogue-page.png" >
+                    <source src="../assets/framevideos/Exp-lookit-dialogue-page.mp4" type='video/mp4'>
+=======
+                <video controls>
+                    <source src="../assets/framevideos/Exp-lookit-dialogue-page.mp4" poster="../assets/screenshots/Exp-lookit-dialogue-page.png" type='video/mp4'>
+>>>>>>> Stashed changes
+                    No video available for this frame.
+                </video>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
 
 <div class="box intro">
     <p>Frame to implement a storybook page with dialogue spoken by characters.
@@ -151,7 +176,7 @@ is recorded.</p>
 positioning on the screen, any animation at the start of the trial, any
 associated audio, and whether that audio is required.</p>
 <p>This frame is displayed fullscreen; if the frame before it is not, that frame
-needs to include a manual &quot;next&quot; button so that there's a user interaction
+needs to include a manual "next" button so that there's a user interaction
 event to trigger fullscreen mode. (Browsers don't allow us to switch to FS
 without a user event.)</p>
 <p>The examples below show a few expected uses of this frame. In phase-2,
@@ -161,83 +186,83 @@ the narrative audio, the user can click on speaker1 to play the audio, and
 will then be able to proceed.</p>
 <p>phase-5 is a choice trial, where the user has to click on one of the two
 images before proceeding.</p>
-<pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
-       &quot;phase-2&quot;: {
-           &quot;kind&quot;: &quot;exp-lookit-dialogue-page&quot;,
-           &quot;baseDir&quot;: &quot;https://s3.amazonaws.com/lookitcontents/politeness/&quot;,
-           &quot;audioTypes&quot;: [&quot;mp3&quot;, &quot;ogg&quot;],
-           &quot;backgroundImage&quot;: &quot;order1_test1_background.png&quot;,
-           &quot;doRecording&quot;: false,
-           &quot;autoProceed&quot;: false,
-           &quot;parentTextBlock&quot;: {
-               &quot;title&quot;: &quot;Parents!&quot;,
-               &quot;text&quot;: &quot;some instructions&quot;,
-               &quot;emph&quot;: true,
-               &quot;css&quot;: {
-                   &quot;color&quot;: &quot;red&quot;,
-                   &quot;font-size&quot;: &quot;12px&quot;
+<pre class="code prettyprint"><code class="language-json">"frames": {
+       "phase-2": {
+           "kind": "exp-lookit-dialogue-page",
+           "baseDir": "https://s3.amazonaws.com/lookitcontents/politeness/",
+           "audioTypes": ["mp3", "ogg"],
+           "backgroundImage": "order1_test1_background.png",
+           "doRecording": false,
+           "autoProceed": false,
+           "parentTextBlock": {
+               "title": "Parents!",
+               "text": "some instructions",
+               "emph": true,
+               "css": {
+                   "color": "red",
+                   "font-size": "12px"
                }
            },
-           &quot;images&quot;: [
+           "images": [
                {
-                   &quot;id&quot;: &quot;protagonist&quot;,
-                   &quot;src&quot;: &quot;order1_test1_listener1.png&quot;,
-                   &quot;left&quot;: &quot;40&quot;,
-                   &quot;bottom&quot;: &quot;2&quot;,
-                   &quot;height&quot;: &quot;60&quot;
+                   "id": "protagonist",
+                   "src": "order1_test1_listener1.png",
+                   "left": "40",
+                   "bottom": "2",
+                   "height": "60"
                },
                {
-                   &quot;id&quot;: &quot;speaker1&quot;,
-                   &quot;text&quot;: &quot;Click to hear what he said!&quot;,
-                   &quot;src&quot;: &quot;order1_test1_speaker1.png&quot;,
-                   &quot;left&quot;: &quot;20&quot;,
-                   &quot;bottom&quot;: &quot;2&quot;,
-                   &quot;height&quot;: &quot;60&quot;,
-                   &quot;animate&quot;: &quot;flyleft&quot;,
-                   &quot;requireAudio&quot;: true,
-                   &quot;imageAudio&quot;: &quot;polcon_example_2_2speaker1polite&quot;
+                   "id": "speaker1",
+                   "text": "Click to hear what he said!",
+                   "src": "order1_test1_speaker1.png",
+                   "left": "20",
+                   "bottom": "2",
+                   "height": "60",
+                   "animate": "flyleft",
+                   "requireAudio": true,
+                   "imageAudio": "polcon_example_2_2speaker1polite"
                }
            ],
-           &quot;audioSources&quot;: [
+           "audioSources": [
                {
-                   &quot;audioId&quot;: &quot;firstAudio&quot;,
-                   &quot;sources&quot;: &quot;polcon_example_2_1intro&quot;
+                   "audioId": "firstAudio",
+                   "sources": "polcon_example_2_1intro"
                }
            ]
        },
-       &quot;phase-5&quot;: {
-           &quot;kind&quot;: &quot;exp-lookit-dialogue-page&quot;,
-           &quot;baseDir&quot;: &quot;https://s3.amazonaws.com/lookitcontents/politeness/&quot;,
-           &quot;audioTypes&quot;: [&quot;mp3&quot;, &quot;ogg&quot;],
-           &quot;backgroundImage&quot;: &quot;order1_test1_background.png&quot;,
-           &quot;doRecording&quot;: false,
-           &quot;autoProceed&quot;: false,
-           &quot;isChoiceFrame&quot;: true,
-           &quot;parentTextBlock&quot;: {
-               &quot;title&quot;: &quot;Parents:&quot;,
-               &quot;text&quot;: &quot;click on the character your child selects.&quot;,
-               &quot;emph&quot;: true
+       "phase-5": {
+           "kind": "exp-lookit-dialogue-page",
+           "baseDir": "https://s3.amazonaws.com/lookitcontents/politeness/",
+           "audioTypes": ["mp3", "ogg"],
+           "backgroundImage": "order1_test1_background.png",
+           "doRecording": false,
+           "autoProceed": false,
+           "isChoiceFrame": true,
+           "parentTextBlock": {
+               "title": "Parents:",
+               "text": "click on the character your child selects.",
+               "emph": true
            },
-           &quot;images&quot;: [
+           "images": [
                {
-                   &quot;id&quot;: &quot;speaker1&quot;,
-                   &quot;src&quot;: &quot;order1_test1_speaker1.png&quot;,
-                   &quot;left&quot;: &quot;20&quot;,
-                   &quot;bottom&quot;: &quot;2&quot;,
-                   &quot;height&quot;: &quot;60&quot;
+                   "id": "speaker1",
+                   "src": "order1_test1_speaker1.png",
+                   "left": "20",
+                   "bottom": "2",
+                   "height": "60"
                },
                {
-                   &quot;id&quot;: &quot;speaker2&quot;,
-                   &quot;src&quot;: &quot;order1_test1_speaker2.png&quot;,
-                   &quot;left&quot;: &quot;60&quot;,
-                   &quot;bottom&quot;: &quot;2&quot;,
-                   &quot;height&quot;: &quot;60&quot;
+                   "id": "speaker2",
+                   "src": "order1_test1_speaker2.png",
+                   "left": "60",
+                   "bottom": "2",
+                   "height": "60"
                }
            ],
-           &quot;audioSources&quot;: [
+           "audioSources": [
                {
-                   &quot;audioId&quot;: &quot;firstAudio&quot;,
-                   &quot;sources&quot;: &quot;polcon_example_5q1&quot;
+                   "audioId": "firstAudio",
+                   "sources": "polcon_example_5q1"
                }
            ]
        }
@@ -245,6 +270,9 @@ images before proceeding.</p>
 
 </code></pre>
 
+</div>
+
+<div>
 </div>
 
 
@@ -1734,7 +1762,7 @@ connection before starting audio if so)</p>
     </div>
 
     <div class="description">
-        <p>Function to generate additional properties for this frame (like {&quot;kind&quot;: &quot;exp-lookit-text&quot;})
+        <p>Function to generate additional properties for this frame (like {"kind": "exp-lookit-text"})
 at the time the frame is initialized. Allows behavior of study to depend on what has
 happened so far (e.g., answers on a form or to previous test trials).
 Must be a valid Javascript function, returning an object, provided as
@@ -1754,10 +1782,10 @@ to access:</p>
 <ul>
 <li><code>additionalInformation</code>: String; additional information field from child form</li>
 <li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
-&quot;24&quot; through &quot;39&quot;, &quot;na&quot; (not sure or prefer not to answer),
-&quot;&lt;24&quot; (under 24 weeks), and &quot;40&gt;&quot; (40 or more weeks).</li>
-<li><code>birthday</code>: timestamp in format &quot;Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)&quot;</li>
-<li><code>gender</code>: &quot;f&quot; (female), &quot;m&quot; (male), &quot;o&quot; (other), or &quot;na&quot; (prefer not to answer)</li>
+"24" through "39", "na" (not sure or prefer not to answer),
+"&lt;24" (under 24 weeks), and "40&gt;" (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>gender</code>: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)</li>
 <li><code>givenName</code>: String, child's given name/nickname</li>
 <li><code>id</code>: String, child UUID</li>
 </ul>
@@ -1768,7 +1796,7 @@ ordered starting from most recent (at index 0 is this session!). Each has proper
 <li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
 <li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
 <li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
-<li><code>createdOn</code>: timestamp in format &quot;Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>createdOn</code>: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"</li>
 <li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
 <li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
 just used for attempts to leave the study early</li>
@@ -2256,10 +2284,10 @@ to access:</p>
 <ul>
 <li><code>additionalInformation</code>: String; additional information field from child form</li>
 <li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
-&quot;24&quot; through &quot;39&quot;, &quot;na&quot; (not sure or prefer not to answer),
-&quot;&lt;24&quot; (under 24 weeks), and &quot;40&gt;&quot; (40 or more weeks).</li>
-<li><code>birthday</code>: timestamp in format &quot;Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)&quot;</li>
-<li><code>gender</code>: &quot;f&quot; (female), &quot;m&quot; (male), &quot;o&quot; (other), or &quot;na&quot; (prefer not to answer)</li>
+"24" through "39", "na" (not sure or prefer not to answer),
+"&lt;24" (under 24 weeks), and "40&gt;" (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>gender</code>: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)</li>
 <li><code>givenName</code>: String, child's given name/nickname</li>
 <li><code>id</code>: String, child UUID</li>
 </ul>
@@ -2270,14 +2298,14 @@ ordered starting from most recent (at index 0 is this session!). Each has proper
 <li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
 <li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
 <li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
-<li><code>createdOn</code>: timestamp in format &quot;Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)&quot;</li>
+<li><code>createdOn</code>: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"</li>
 <li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
 <li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
 just used for attempts to leave the study early</li>
 <li><code>sequence</code>: ordered list of frameIds, corresponding to keys in expData</li>
 </ul>
 <p>Example that just sends us to the last frame of the study no matter what:
-<code>&#x60;&amp;quot;function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}&amp;quot;</code>``</p>
+<code>&#x60;&quot;function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}&quot;</code>``</p>
 
     </div>
 

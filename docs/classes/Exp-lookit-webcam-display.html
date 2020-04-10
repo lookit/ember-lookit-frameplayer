@@ -119,11 +119,36 @@
 </div>
 
 
-<div>
+<div id="examples" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#screenshot">Screenshot</a></li>
+        <li class="api-class-tab methods"><a href="#video">Video</a></li>
+    </ul>
+    <div>
+        <div id="screenshot" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-screenshot">
+                <img src="../assets/screenshots/Exp-lookit-webcam-display.png">
+            </div>
+        </div>
 
-    <img src="../assets/screenshots/Exp-lookit-webcam-display.png" class="class-screenshot">
-
+        <div id="video" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-video">
+<<<<<<< Updated upstream
+                <video controls poster="../assets/screenshots/Exp-lookit-webcam-display.png" >
+                    <source src="../assets/framevideos/Exp-lookit-webcam-display.mp4" type='video/mp4'>
+=======
+                <video controls>
+                    <source src="../assets/framevideos/Exp-lookit-webcam-display.mp4" poster="../assets/screenshots/Exp-lookit-webcam-display.png" type='video/mp4'>
+>>>>>>> Stashed changes
+                    No video available for this frame.
+                </video>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
 
 <div class="box intro">
     <p>A frame to display the user's webcam stream, along with a small amount of optional text.
@@ -131,30 +156,33 @@ Expected use is as a break during an experiment, e.g. to check positioning, but 
 also be used as a lightweight frame for data collection.</p>
 <p>Not fullscreen by default, but can be displayed fullscreen as shown in example below.
 Can optionally record video.</p>
-<pre class="code prettyprint"><code>   &quot;frames&quot;: {
-       &quot;webcam-display-break&quot;: {
-           &quot;kind&quot;: &quot;exp-lookit-webcam-display&quot;,
-           &quot;blocks&quot;: [
+<pre class="code prettyprint"><code>   "frames": {
+       "webcam-display-break": {
+           "kind": "exp-lookit-webcam-display",
+           "blocks": [
                {
-                   &quot;title&quot;: &quot;Here is a short break&quot;,
-                   &quot;listblocks&quot;: [
+                   "title": "Here is a short break",
+                   "listblocks": [
                        {
-                           &quot;text&quot;: &quot;You can check that your child is still visible&quot;
+                           "text": "You can check that your child is still visible"
                        },
                        {
-                           &quot;text&quot;: &quot;You can make some silly faces&quot;
+                           "text": "You can make some silly faces"
                        }
                    ]
                }
            ],
-           &quot;nextButtonText&quot;: &quot;Next&quot;,
-           &quot;showPreviousButton&quot;: false,
-           &quot;displayFullscreenOverride&quot;: true,
-           &quot;startRecordingAutomatically&quot;: false
+           "nextButtonText": "Next",
+           "showPreviousButton": false,
+           "displayFullscreenOverride": true,
+           "startRecordingAutomatically": false
        }
    }
 </code></pre>
 
+</div>
+
+<div>
 </div>
 
 

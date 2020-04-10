@@ -116,48 +116,46 @@
 </div>
 
 
-<div>
 
-    <img src="../assets/screenshots/Permute.png" class="class-screenshot">
 
-</div>
+
 
 <div class="box intro">
     <p>Randomizer to allow random ordering of a list of frames. Intended to be
 useful for e.g. randomly permuting the order of particular stimuli used during
 a set of trials (although frames need not be of the same kind to permute).</p>
-<p>To use, define a frame with &quot;kind&quot;: &quot;choice&quot; and &quot;sampler&quot;: &quot;permute&quot;,
+<p>To use, define a frame with "kind": "choice" and "sampler": "permute",
 as shown below, in addition to the parameters described under 'properties'.</p>
-<pre class="code prettyprint"><code class="language-json">&quot;frames&quot;: {
-   &quot;test-trials&quot;: {
-       &quot;sampler&quot;: &quot;permute&quot;,
-       &quot;kind&quot;: &quot;choice&quot;,
-       &quot;commonFrameProperties&quot;: {
-           &quot;showPreviousButton&quot;: false
+<pre class="code prettyprint"><code class="language-json">"frames": {
+   "test-trials": {
+       "sampler": "permute",
+       "kind": "choice",
+       "commonFrameProperties": {
+           "showPreviousButton": false
        },
-       &quot;frameOptions&quot;: [
+       "frameOptions": [
            {
-               &quot;blocks&quot;: [
+               "blocks": [
                    {
-                       &quot;emph&quot;: true,
-                       &quot;text&quot;: &quot;Let's think about hippos!&quot;,
-                       &quot;title&quot;: &quot;hippos!&quot;
+                       "emph": true,
+                       "text": "Let's think about hippos!",
+                       "title": "hippos!"
                    },
                    {
-                       &quot;text&quot;: &quot;Some more about hippos...&quot;
+                       "text": "Some more about hippos..."
                    }
                ],
-               &quot;kind&quot;: &quot;exp-lookit-text&quot;
+               "kind": "exp-lookit-text"
            },
            {
-               &quot;blocks&quot;: [
+               "blocks": [
                    {
-                       &quot;emph&quot;: false,
-                       &quot;text&quot;: &quot;Let's think about dolphins!&quot;,
-                       &quot;title&quot;: &quot;dolphins!&quot;
+                       "emph": false,
+                       "text": "Let's think about dolphins!",
+                       "title": "dolphins!"
                    }
                ],
-               &quot;kind&quot;: &quot;exp-lookit-text&quot;
+               "kind": "exp-lookit-text"
            }
        ]
    }
@@ -165,6 +163,9 @@ as shown below, in addition to the parameters described under 'properties'.</p>
 
 </code></pre>
 
+</div>
+
+<div>
 </div>
 
 

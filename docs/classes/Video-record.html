@@ -116,11 +116,9 @@
 </div>
 
 
-<div>
 
-    <img src="../assets/screenshots/Video-record.png" class="class-screenshot">
 
-</div>
+
 
 <div class="box intro">
     <p>Reference for DEVELOPERS of new frames only!
@@ -136,6 +134,9 @@ The properties <code>recorder</code>, <code>videoList</code>, <code>stoppedRecor
 that give information about its state: <code>hasWebCam</code>, 'hasCamAccess<code>,</code>recording<code>,</code>connected<code>, and</code>micChecked<code>- for details, see services/video-recorder.js. These can be accessed from the consuming frame as e.g.</code>this.get('recorder').get('hasWebCam')<code>. If starting recording automatically, the function</code>whenPossibleToRecord<code>will be called once recording is possible, and will start recording. If you want to do other things at this point, like proceeding to a test trial, you can override this function in your frame. See 'methods' for the functions you can use on a frame that extends VideoRecord. Events recorded in a frame that extends VideoRecord will automatically have additional fields videoId (video filename), pipeId (temporary filename initially assigned by the recording service), and streamTime (when in the video they happened, in s). Setting up the camera is handled in didInsertElement, and making sure recording is stopped is handled in willDestroyElement (Ember hooks that fire during the component lifecycle). It is very important (in general, but especially when using this mixin) that you call</code>this._super(...arguments);` in any functions where your frame overrides
 hooks like this, so that the mixin's functions get called too!</p>
 
+</div>
+
+<div>
 </div>
 
 

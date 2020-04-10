@@ -12,6 +12,8 @@ var win          = Y.config.win,
     defaultRoute,
 
     classTabView,
+    exampleTabView,
+    selectedExampleTab,
     selectedTab;
 
 // Kill pjax functionality unless serving over HTTP.
@@ -130,26 +132,44 @@ pjax.checkVisibility = function (tab) {
     });
 };
 
-pjax.initClassTabView = function () {
-    if (!Y.all('#classdocs .api-class-tab').size()) {
-        return;
-    }
-
-    if (classTabView) {
-        classTabView.destroy();
-        selectedTab = null;
-    }
-
-    classTabView = new Y.TabView({
-        srcNode: '#classdocs',
-
-        on: {
-            selectionChange: pjax.onTabSelectionChange
+pjax.initClassTabViews = function () {
+    if (Y.all('#classdocs .api-class-tab').size()) {
+        if (classTabView) {
+            classTabView.destroy();
+            selectedTab = null;
         }
-    });
 
-    pjax.updateTabState();
-    classTabView.render();
+        classTabView = new Y.TabView({
+            srcNode: '#classdocs',
+
+            on: {
+                selectionChange: pjax.onTabSelectionChange
+            }
+        });
+
+        pjax.updateTabState('#classdocs', classTabView);
+        classTabView.render();
+    }
+
+
+    if (Y.all('#examples .api-class-tab').size()) {
+        if (exampleTabView) {
+            exampleTabView.destroy();
+            selectedExampleTab = null;
+        }
+
+        exampleTabView = new Y.TabView({
+            srcNode: '#examples',
+
+            on: {
+                selectionChange: pjax.onTabSelectionChangeExample
+            }
+        });
+
+        pjax.updateTabState('#examples', exampleTabView);
+        exampleTabView.render();
+    }
+
 };
 
 pjax.initLineNumbers = function () {
@@ -193,7 +213,7 @@ pjax.initRoot = function () {
     pjax.set('root', root.join('/'));
 };
 
-pjax.updateTabState = function (src) {
+pjax.updateTabState = function (element, classTabView, src) {
     var hash = win.location.hash.substring(1),
         defaultTab, node, tab, tabPanel;
 
@@ -211,7 +231,7 @@ pjax.updateTabState = function (src) {
         setTimeout(function () {
             // For some reason, unless we re-get the node instance here,
             // getY() always returns 0.
-            var node = Y.one('#classdocs').getById(hash);
+            var node = Y.one(element).getById(hash);
             win.scrollTo(0, node.getY() - 70);
         }, 1);
     }
@@ -231,9 +251,9 @@ pjax.updateTabState = function (src) {
         }
     }
 
-    if (hash && (node = Y.one('#classdocs').getById(hash))) {
+    if (hash && (node = Y.one(element).getById(hash))) {
         if ((tabPanel = node.ancestor('.api-class-tabpanel', true))) {
-            if ((tab = Y.one('#classdocs .api-class-tab.' + tabPanel.get('id')))) {
+            if ((tab = Y.one(element + ' .api-class-tab.' + tabPanel.get('id')))) {
                 if (classTabView.get('rendered')) {
                     Y.Widget.getByNode(tab).set('selected', 1);
                 } else {
@@ -251,11 +271,11 @@ pjax.updateTabState = function (src) {
             }
         }
     } else {
-        tab = Y.one('#classdocs .api-class-tab.' + defaultTab);
+        tab = Y.one(element + ' .api-class-tab.' + defaultTab);
 
         // When the `defaultTab` node isn't found, `localStorage` is stale.
         if (!tab && defaultTab !== 'index') {
-            tab = Y.one('#classdocs .api-class-tab.index');
+            tab = Y.one(element + ' .api-class-tab.index');
         }
 
         if (classTabView.get('rendered')) {
@@ -291,7 +311,7 @@ pjax.handleClasses = function (req, res, next) {
 
     // Handles success and local filesystem XHRs.
     if (res.ioResponse.readyState === 4 && (!status || (status >= 200 && status < 300))) {
-        pjax.initClassTabView();
+        pjax.initClassTabViews();
     }
 
     next();
@@ -317,9 +337,11 @@ pjax.onNavigate = function (e) {
 
     if (hash) {
         tab = originTarget && originTarget.ancestor('.yui3-tab', true);
+        console.log(tab);
 
         if (hash === win.location.hash) {
-            pjax.updateTabState('hashchange');
+            pjax.updateTabState('#classdocs', classTabView, 'hashchange');
+            pjax.updateTabState('#examples', exampleTabView, 'hashchange');
         } else if (!tab) {
             win.location.hash = hash;
         }
@@ -343,16 +365,13 @@ pjax.onTabSelectionChange = function (e) {
         tabId = tab.get('contentBox').getAttribute('href').substring(1);
 
     selectedTab = tab;
+};
 
-    // If switching from a previous tab (i.e., this is not the default tab),
-    // replace the history entry with a hash URL that will cause this tab to
-    // be selected if the user navigates away and then returns using the back
-    // or forward buttons.
-    if (e.prevVal && localStorage) {
-        localStorage.setItem('tab_' + pjax.getPath(), tabId);
-    }
+pjax.onTabSelectionChangeExample = function (e) {
+    var tab   = e.newVal,
+        tabId = tab.get('contentBox').getAttribute('href').substring(1);
 
-    pjax.checkVisibility(tab);
+    selectedExampleTab = tab;
 };
 
 // -- Init ---------------------------------------------------------------------
@@ -361,16 +380,16 @@ pjax.on('navigate', pjax.onNavigate);
 
 pjax.initRoot();
 pjax.upgrade();
-pjax.initClassTabView();
+pjax.initClassTabViews();
 pjax.initLineNumbers();
-pjax.updateVisibility();
 
 Y.APIList.rootPath = pjax.get('root');
 
 Y.one('#api-options').delegate('click', pjax.onOptionClick, 'input');
 
 Y.on('hashchange', function (e) {
-    pjax.updateTabState('hashchange');
+    pjax.updateTabState('#classdocs', classTabView, 'hashchange');
+    pjax.updateTabState('#examples', exampleTabView, 'hashchange');
 }, win);
 
 });
