@@ -62,25 +62,7 @@ const gameArrayValues = {
 };
 
 
-let exportData = {
-  game_type: 'discreteCatch',
-  trajectory: [],
-  ball_position_x: [],
-  obstruction_number:[],
-  ball_position_y: [],
-  ball_timestamp: [],
-  paddle_position_y: [],
-  paddle_timestamp: [],
-  trial: [],
-  feedback: [],
-  timestamp: [],
-  paddle_x:'',
-  trialType:'',
-  paddle_center_x:'',
-  red_dot_width:'',
-  red_dot_start_position:''
 
-};
 
 /**
  * Main implementation of catch game.
@@ -162,6 +144,27 @@ export default class DiscreteCatch extends PaddleGames {
    * @method initGame
    */
   initGame() {
+
+    super.exportData = {
+      game_type: 'discreteCatch',
+      trajectory: [],
+      ball_position_x: [],
+      obstruction_number:[],
+      ball_position_y: [],
+      ball_timestamp: [],
+      paddle_position_y: [],
+      paddle_timestamp: [],
+      trial: [],
+      feedback: [],
+      timestamp: [],
+      paddle_x:'',
+      trialType:'',
+      paddle_center_x:'',
+      red_dot_width:'',
+      red_dot_start_position:''
+
+    };
+
     super.initX = 0.51;
     super.initBallY = 0.08;
     jitterT = super.trialStartTime();
@@ -210,24 +213,23 @@ export default class DiscreteCatch extends PaddleGames {
   dataCollection() {
     if(super.ball.state === 'start' ||  super.ball.state === 'hit' || super.ball.state === 'fall') {
 
-      exportData.ball_position_x.push(super.convertXvalue(super.ball.position.x));
-      exportData.ball_position_y.push(super.convertYvalue(super.ball.position.y));
-      exportData.ball_timestamp.push(super.ball.timestamp);
-      exportData.timestamp.push(super.getElapsedTime());
-      exportData.paddle_position_y.push(super.convertYvalue(super.paddle.position.y));
-      exportData.trial = super.currentRounds;
-      exportData.trajectory = trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT];
-      exportData.feedback = this.ballState();
-      exportData.obstruction_number = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];
-      exportData.paddle_timestamp.push(super.paddle.time);
-      exportData.paddle_x = super.convertXvalue(super.paddle.position.x);
-      exportData.trialType = this.context.trialType;
-      exportData.paddle_center_x = super.convertXvalue(super.paddle.position.x   +  (super.paddle.dimensions.width / 2));
-      exportData.red_dot_width =redDotMargin*2;
-      exportData.red_dot_start_position = (1.3301 - redDotMargin).toFixed(3);
+      super.exportData.ball_position_x.push(super.convertXvalue(super.ball.position.x));
+      super.exportData.ball_position_y.push(super.convertYvalue(super.ball.position.y));
+      super.exportData.ball_timestamp.push(super.ball.timestamp);
+      super.exportData.timestamp.push(super.getElapsedTime());
+      super.exportData.paddle_position_y.push(super.convertYvalue(super.paddle.position.y));
+      super.exportData.trial = super.currentRounds;
+      super.exportData.trajectory = trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT];
+      super.exportData.feedback = this.ballState();
+      super.exportData.obstruction_number = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];
+      super.exportData.paddle_timestamp.push(super.paddle.time);
+      super.exportData.paddle_x = super.convertXvalue(super.paddle.position.x);
+      super.exportData.trialType = this.context.trialType;
+      super.exportData.paddle_center_x = super.convertXvalue(super.paddle.position.x   +  (super.paddle.dimensions.width / 2));
+      super.exportData.red_dot_width =redDotMargin*2;
+      super.exportData.red_dot_start_position = (1.3301 - redDotMargin).toFixed(3);
 
 
-      super.storeData(exportData);
     }
     super.dataCollection();
   }
