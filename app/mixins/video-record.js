@@ -197,13 +197,10 @@ export default Ember.Mixin.create({
      * @return {Object} Event data object
      */
     makeTimeEvent(eventName, extra) {
-        // All frames using this mixin will add videoId and streamTime to every server event
+        // All frames using this mixin will add streamTime to every server event
         let base = this._super(eventName, extra);
-        const streamTime = this.get('recorder') ? this.get('recorder').getTime() : null;
         Ember.assign(base, {
-            videoId: this.get('videoId'),
-            pipeId: this.get('recorder') ? this.get('recorder').get('pipeVideoName') : null,
-            streamTime: streamTime
+            streamTime: this.get('recorder') ? this.get('recorder').getTime() : null
         });
         return base;
     },
@@ -240,6 +237,9 @@ export default Ember.Mixin.create({
             }
         });
         this.set('recorder', recorder);
+        this.send('setTimeEvent', 'setupVideoRecorder', {
+            videoId: videoId
+        });
         return installPromise;
     },
 
@@ -290,7 +290,9 @@ export default Ember.Mixin.create({
         const recorder = this.get('recorder');
         if (recorder) {
             return recorder.record().then(() => {
-                this.send('setTimeEvent', 'startRecording');
+                this.send('setTimeEvent', 'startRecording', {
+                    pipeId: recorder.get('pipeVideoName')
+                });
                 if (this.get('videoList') == null) {
                     this.set('videoList', [this.get('videoId')]);
                 } else {
@@ -347,7 +349,6 @@ export default Ember.Mixin.create({
                 });
             }
         }
-        _this.send('setTimeEvent', 'destroyingElement');
         _this._super(...arguments);
     },
 
