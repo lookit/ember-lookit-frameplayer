@@ -177,6 +177,29 @@ var expandAssetsMixin = Ember.Mixin.create({
         }
     },
 
+    checkFileExists(url) {
+        // see https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+        //
+        // Getting back a meaningful response about whether the file even exists requires
+        // CORS settings on the server to allow this origin, which is *not* required for
+        // simply loading the image/video/audio in the browser, which is all we really
+        // need to do. This function will warn if CORS blocks the request or if the file
+        // is not available, but this will cause a lot of (unnecessary) noise in many cases.
+
+        // Could alternately try to load assets into browser to see if they exist, but
+        // in cases where there are a bunch of potential assets listed, we don't necessarily
+        // want to load them all upfront.
+        fetch(url, { method: 'HEAD' }).then((response) => {
+            if (!response.ok) {
+                console.warn('File not available: ', url);
+                console.log(response);
+            }
+        })
+        .catch((error) => {
+            console.warn('File not available: ', url, ' - error: ', error);
+        });
+    },
+
     // Utility to expand stubs into either full URLs (for images) or
     // array of {src: 'url', type: 'MIMEtype'} objects (for audio/video).
     expandAsset(asset, type) {
@@ -193,13 +216,11 @@ var expandAssetsMixin = Ember.Mixin.create({
                 if (typeof asset === 'string' && !(asset.includes('://'))) {
                     // Image: replace stub with full URL if needed
                     fullAsset = this.baseDir + 'img/' + asset;
-                    fetch(fullAsset, { method: 'HEAD', mode: 'no-cors' }); // Throws error if unavailable
                 } else if (Array.isArray(asset)) {
                     for (var i = 0; i < asset.length; i++) {
                         var currentVal = asset[i];
                         if (typeof currentVal === 'string' && !(currentVal.includes('://'))) {
                             asset[i] = this.baseDir + 'img/' + currentVal;
-                            fetch(asset[i], { method: 'HEAD', mode: 'no-cors' }); // Throws error if unavailable
                         }
                     }
                 }
@@ -212,7 +233,6 @@ var expandAssetsMixin = Ember.Mixin.create({
                     fullAsset = [];
                     for (var iType = 0; iType < types.length; iType++) {
                         let url = _this.baseDir + types[iType] + '/' + asset + '.' + types[iType];
-                        fetch(url, { method: 'HEAD', mode: 'no-cors' }); // Throws error if unavailable
                         fullAsset.push({
                             src: url,
                             type: type + '/' + types[iType]
