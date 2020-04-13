@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>app/components/exp-lookit-story-page/component.js - ember-lookit-frameplayer</title>
+    <title>app/components/exp-lookit-image-audio/component.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -104,7 +104,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: app/components/exp-lookit-story-page/component.js</h1>
+<h1 class="file-heading">File: app/components/exp-lookit-image-audio/component.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -407,6 +407,15 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         description: &#x27;Frame to display a basic storybook page trial, with images and audio&#x27;,
         data: {
             type: &#x27;object&#x27;,
+            /**
+             * Parameters captured and sent to the server
+             *
+             * @method serializeContent
+             * @param {Object} eventTimings
+             * @param {String} videoID The ID of any webcam video recorded during this frame
+             * @param {List} videoList a list of webcam video IDs in case there are &gt;1
+             * @return {Object} The payload sent to the server
+             */
             properties: {
                 videoId: {
                     type: &#x27;string&#x27;

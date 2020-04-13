@@ -41,6 +41,7 @@
                         <ul id="api-classes" class="apis classes">
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
@@ -261,6 +262,8 @@ export default Ember.Component.extend(FullScreen, {
         });
         var [frameConfigs, conditions] = parser.parse();
         this.set(&#x27;frames&#x27;, frameConfigs); // When player loads, convert structure to list of frames
+
+        $(&#x27;head title&#x27;).html(this.get(&#x27;experiment.name&#x27;));
 
         var session = this.get(&#x27;session&#x27;);
         session.set(&#x27;conditions&#x27;, conditions);
