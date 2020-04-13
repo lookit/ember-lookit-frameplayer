@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Exp-lookit-story-page - ember-lookit-frameplayer</title>
+    <title>Exp-lookit-change-detection - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -104,7 +104,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>Exp-lookit-story-page Class</h1>
+<h1>Exp-lookit-change-detection Class</h1>
 <div class="box meta">
         <div class="uses">
             Uses
@@ -120,7 +120,7 @@
         </div>
 
         <div class="foundat">
-            Defined in: <a href="../files/app_components_exp-lookit-story-page_component.js.html#l19"><code>app&#x2F;components&#x2F;exp-lookit-story-page&#x2F;component.js:19</code></a>
+            Defined in: <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l30"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:30</code></a>
         </div>
 
             Collection: <a href="../modules/frames.html">frames</a><br>
@@ -136,14 +136,14 @@
     <div>
         <div id="screenshot" class="api-class-tabpanel">
             <div class="class-screenshot" id="example-screenshot">
-                <img src="../assets/screenshots/Exp-lookit-story-page.png">
+                <img src="../assets/screenshots/Exp-lookit-change-detection.png">
             </div>
         </div>
 
         <div id="video" class="api-class-tabpanel">
             <div class="class-screenshot" id="example-video">
-                <video controls poster="../assets/screenshots/Exp-lookit-story-page.png" >
-                    <source src="../assets/framevideos/Exp-lookit-story-page.mp4" type='video/mp4'>
+                <video controls poster="../assets/screenshots/Exp-lookit-change-detection.png" >
+                    <source src="../assets/framevideos/Exp-lookit-change-detection.mp4" type='video/mp4'>
                     No video available for this frame.
                 </video>
             </div>
@@ -155,71 +155,98 @@
 
 
 <div class="box intro">
-    <p>Frame to implement a basic "storybook page" trial, with images placed on the
-screen within a display area and a sequence of audio files played.
-Optionally, images may be highlighted at specified times during the audio
-files.</p>
-<p>Webcam recording may be turned on or off; if on, the page is not displayed
-or audio started until recording begins.</p>
-<p>Frame is displayed fullscreen, but is not paused or otherwise disabled if the
-user leaves fullscreen. A button appears prompting the user to return to
-fullscreen mode.</p>
-<p>The parent may press 'next' to proceed, or the study may proceed
-automatically when audio finishes (autoProceed). Optionally, if using autoProceed,
-the frame may be displayed for a minimum duration, so that e.g. it lasts exactly 10
-seconds from start of audio even though the audio is only 2 seconds long. If using this
-feature a progress bar may be displayed.</p>
-<p>Any number of images may be placed on the screen, and their position
-specified. (Aspect ratio will be the same as the original image.)</p>
+    <p>Frame for a preferential looking "alternation" or "change detection" paradigm trial,
+in which separate streams of images are displayed on the left and right of the screen.
+Typically, on one side images would be alternating between two categories - e.g., images
+of 8 vs. 16 dots, images of cats vs. dogs - and on the other side the images would all
+be in the same category.</p>
+<p>The frame starts with an optional brief "announcement" segment, where an attention-getter
+video is displayed and audio is played. During this segment, the trial can be paused
+and restarted.</p>
+<p>If <code>doRecording</code> is true (default), then we wait for recording to begin before the
+actual test trial can begin. We also always wait for all images to pre-load, so that
+there are no delays in loading images that affect the timing of presentation.</p>
+<p>You can customize the appearance of the frame: background color overall, color of the
+two rectangles that contain the image streams, and border of those rectangles. You can
+also specify how long to present the images for, how long to clear the screen in between
+image pairs, and how long the test trial should be altogether.</p>
+<p>You provide four lists of images to use in this frame: <code>leftImagesA</code>, <code>leftImagesB</code>,
+<code>rightImagesA</code>, and <code>rightImagesB</code>. The left stream will alternate between images in
+<code>leftImagesA</code> and <code>leftImagesB</code>. The right stream will alternate between images in
+<code>rightImagesA</code> and <code>rightImagesB</code>. They are either presented in random order (default)
+within those lists, or can be presented in the exact order listed by setting
+<code>randomizeImageOrder</code> to false.</p>
+<p>The timing of all image presentations and the specific images presented is recorded in
+the event data.</p>
 <p>This frame is displayed fullscreen; if the frame before it is not, that frame
 needs to include a manual "next" button so that there's a user interaction
-event to trigger fullscreen mode. (Browsers don't allow us to switch to FS
-without a user event.)</p>
-<pre class="code prettyprint"><code class="language-json">"frames": {
-   "story-intro-1": {
-           "doRecording": false,
-           "autoProceed": true,
-           "baseDir": "https://s3.amazonaws.com/lookitcontents/ingroupobligations/",
-           "audioTypes": ["mp3", "ogg"],
-           "parentTextBlock": {
-               "title": "Parents!",
-               "text": "some instructions",
-               "emph": true,
-               "css": {
-                   "color": "red",
-                   "font-size": "12px"
-               }
-           },
-           "images": [
-               {
-                   "id": "leftA",
-                   "src": "flurps1.jpg",
-                   "left": "10",
-                   "width": "30",
-                   "top": "34.47"
-               },
-               {
-                   "id": "rightA",
-                   "src": "zazzes1.jpg",
-                   "left": "60",
-                   "width": "30",
-                   "top": "34.47"
-               }
-           ],
-           "kind": "exp-lookit-story-page",
-           "audioSources": [
-               {
-                   "audioId": "firstAudio",
-                   "sources": "intro1",
-                   "highlights": [
-                       {"range": [3.017343,    5.600283], "image":     "leftA"},
-                       {"range": [5.752911,    8.899402], "image":     "rightA"}
-                   ]
-               }
-           ]
+event to trigger fullscreen mode. (Browsers don't allow switching to fullscreen
+without a user event.) If the user leaves fullscreen, that event is recorded, but the
+trial is not paused.</p>
+<p>Specifying media locations:</p>
+<p>For any parameters that expect a list of audio/video sources, you can EITHER provide
+a list of src/type pairs with full paths like this:</p>
+<pre class="code prettyprint"><code class="language-json">   [
+       {
+           'src': 'http://.../video1.mp4',
+           'type': 'video/mp4'
+       },
+       {
+           'src': 'http://.../video1.webm',
+           'type': 'video/webm'
        }
-}
-
+   ]
+</code></pre>
+<p>OR you can provide a single string 'stub', which will be expanded
+based on the parameter baseDir and the media types expected - either audioTypes or
+videoTypes as appropriate. For example, if you provide the audio source <code>intro</code>
+and baseDir is <a href="https://mystimuli.org/mystudy/">https://mystimuli.org/mystudy/</a>, with audioTypes ['mp3', 'ogg'], then this
+will be expanded to:</p>
+<pre class="code prettyprint"><code class="language-json">                 [
+                        {
+                            src: 'https://mystimuli.org/mystudy/mp3/intro.mp3',
+                            type: 'audio/mp3'
+                        },
+                        {
+                            src: 'https://mystimuli.org/mystudy/ogg/intro.ogg',
+                            type: 'audio/ogg'
+                        }
+                ]
+</code></pre>
+<p>This allows you to simplify your JSON document a bit and also easily switch to a
+new version of your stimuli without changing every URL. You can mix source objects with
+full URLs and those using stubs within the same directory. However, any stimuli
+specified using stubs MUST be
+organized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.</p>
+<p>Example usage:</p>
+<pre class="code prettyprint"><code class="language-json"> "frames": {
+    "alt-trial": {
+        "kind": "exp-lookit-change-detection",
+        "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
+        "videoTypes": ["mp4", "webm"],
+        "audioTypes": ["mp3", "ogg"],
+        "trialLength": 15,
+        "attnLength": 2,
+        "fsAudio": "sample_1",
+        "unpauseAudio": "return_after_pause",
+        "pauseAudio": "pause",
+        "videoSources": "attentiongrabber",
+        "musicSources": "music_01",
+        "audioSources": "video_01",
+        "endAudioSources": "all_done",
+        "border": "thick solid black",
+        "leftImagesA": ["apple.jpg", "orange.jpg"],
+        "rightImagesA": ["square.png", "tall.png", "wide.png"],
+        "leftImagesB": ["apple.jpg", "orange.jpg"],
+        "rightImagesB": ["apple.jpg", "orange.jpg"],
+        "startWithA": true,
+        "randomizeImageOrder": true,
+        "displayMs": 500,
+        "blankMs": 250,
+        "containerColor": "white",
+        "backgroundColor": "#abc",
+    }
+ }
 </code></pre>
 
 </div>
@@ -273,14 +300,6 @@ without a user event.)</p>
                                 <a href="#method_resumeRecorder">resumeRecorder</a>
 
                             </li>
-                            <li class="index-item method">
-                                <a href="#method_serializeContent">serializeContent</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_serializeContent">serializeContent</a>
-
-                            </li>
                             <li class="index-item method inherited">
                                 <a href="#method_serializeContent">serializeContent</a>
 
@@ -309,8 +328,12 @@ without a user event.)</p>
                                 <a href="#method_stopRecorder">stopRecorder</a>
 
                             </li>
-                            <li class="index-item method inherited inherited">
+                            <li class="index-item method inherited">
                                 <a href="#method_whenPossibleToRecord">whenPossibleToRecord</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_whenPossibleToRecordSession">whenPossibleToRecordSession</a>
 
                             </li>
                     </ul>
@@ -336,12 +359,12 @@ without a user event.)</p>
                                 <a href="#property_assetsToExpand">assetsToExpand</a>
 
                             </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_audioOnly">audioOnly</a>
+                            <li class="index-item property">
+                                <a href="#property_attnLength">attnLength</a>
 
                             </li>
-                            <li class="index-item property">
-                                <a href="#property_audioSources">audioSources</a>
+                            <li class="index-item property inherited">
+                                <a href="#property_audioOnly">audioOnly</a>
 
                             </li>
                             <li class="index-item property">
@@ -352,20 +375,28 @@ without a user event.)</p>
                                 <a href="#property_audioTypes">audioTypes</a>
 
                             </li>
-                            <li class="index-item property">
-                                <a href="#property_autoProceed">autoProceed</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_autoProceed">autoProceed</a>
-
-                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_autosave">autosave</a>
 
                             </li>
+                            <li class="index-item property">
+                                <a href="#property_backgroundColor">backgroundColor</a>
+
+                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_baseDir">baseDir</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_blankMs">blankMs</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_border">border</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_containerColor">containerColor</a>
 
                             </li>
                             <li class="index-item property inherited inherited">
@@ -373,7 +404,7 @@ without a user event.)</p>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_doRecording">doRecording</a>
+                                <a href="#property_displayMs">displayMs</a>
 
                             </li>
                             <li class="index-item property">
@@ -381,23 +412,15 @@ without a user event.)</p>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_doRecording">doRecording</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_durationSeconds">durationSeconds</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_durationSeconds">durationSeconds</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_durationSeconds">durationSeconds</a>
+                                <a href="#property_endAudioSources">endAudioSources</a>
 
                             </li>
                             <li class="index-item property inherited">
                                 <a href="#property_endSessionRecording">endSessionRecording</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_fsAudio">fsAudio</a>
 
                             </li>
                             <li class="index-item property inherited inherited">
@@ -413,23 +436,19 @@ without a user event.)</p>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_images">images</a>
+                                <a href="#property_leftImagesA">leftImagesA</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_images">images</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_images">images</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_images">images</a>
+                                <a href="#property_leftImagesB">leftImagesB</a>
 
                             </li>
                             <li class="index-item property inherited">
                                 <a href="#property_maxRecordingLength">maxRecordingLength</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_musicSources">musicSources</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -437,15 +456,11 @@ without a user event.)</p>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_parentTextBlock">parentTextBlock</a>
+                                <a href="#property_pauseAudio">pauseAudio</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_parentTextBlock">parentTextBlock</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_parentTextBlock">parentTextBlock</a>
+                                <a href="#property_randomizeImageOrder">randomizeImageOrder</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -456,6 +471,14 @@ without a user event.)</p>
                                 <a href="#property_recorderReady">recorderReady</a>
 
                             </li>
+                            <li class="index-item property">
+                                <a href="#property_rightImagesA">rightImagesA</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_rightImagesA">rightImagesA</a>
+
+                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_selectNextFrame">selectNextFrame</a>
 
@@ -464,24 +487,24 @@ without a user event.)</p>
                                 <a href="#property_sessionAudioOnly">sessionAudioOnly</a>
 
                             </li>
-                            <li class="index-item property">
-                                <a href="#property_showProgressBar">showProgressBar</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_showProgressBar">showProgressBar</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_showProgressBar">showProgressBar</a>
-
-                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_startSessionRecording">startSessionRecording</a>
 
                             </li>
+                            <li class="index-item property">
+                                <a href="#property_startWithA">startWithA</a>
+
+                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_stoppedRecording">stoppedRecording</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_trialLength">trialLength</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_unpauseAudio">unpauseAudio</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -490,6 +513,10 @@ without a user event.)</p>
                             </li>
                             <li class="index-item property inherited">
                                 <a href="#property_videoList">videoList</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_videoSources">videoSources</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -504,6 +531,10 @@ without a user event.)</p>
                     <h3>Events</h3>
 
                     <ul class="index-list events extends">
+                            <li class="index-item event">
+                                <a href="#event_clearImages">clearImages</a>
+
+                            </li>
                             <li class="index-item event inherited inherited">
                                 <a href="#event_enteredFullscreen">enteredFullscreen</a>
 
@@ -524,6 +555,10 @@ without a user event.)</p>
                                 <a href="#event_pauseVideo">pauseVideo</a>
 
                             </li>
+                            <li class="index-item event">
+                                <a href="#event_presentImages">presentImages</a>
+
+                            </li>
                             <li class="index-item event inherited">
                                 <a href="#event_previousFrame">previousFrame</a>
 
@@ -536,7 +571,15 @@ without a user event.)</p>
                                 <a href="#event_sessionRecorderReady">sessionRecorderReady</a>
 
                             </li>
-                            <li class="index-item event inherited inherited">
+                            <li class="index-item event">
+                                <a href="#event_startIntro">startIntro</a>
+
+                            </li>
+                            <li class="index-item event">
+                                <a href="#event_startTestTrial">startTestTrial</a>
+
+                            </li>
+                            <li class="index-item event inherited">
                                 <a href="#event_stoppingCapture">stoppingCapture</a>
 
                             </li>
@@ -860,199 +903,19 @@ instead stop/start and make separate clips if needed.
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
-                        <code>eventTimings</code>
+                        <code>leftSequence</code>
+                </li>
+                <li class="arg">
+                        <code>rightSequence</code>
                 </li>
                 <li class="arg">
                         <code>videoID</code>
                 </li>
                 <li class="arg">
-                        <code>videoList</code>
+                        <code>hasBeenPaused</code>
                 </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/app_components_exp-lookit-single-image_component.js.html#l244"><code>app&#x2F;components&#x2F;exp-lookit-single-image&#x2F;component.js:244</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Parameters captured and sent to the server</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">eventTimings</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">videoID</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                        <p>The ID of any webcam video recorded during this frame</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">videoList</code>
-                        <span class="type">List</span>
-
-
-                    <div class="param-description">
-                        <p>a list of webcam video IDs in case there are &gt;1</p>
-
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
-                    <p>The payload sent to the server</p>
-
-            </div>
-        </div>
-
-
-</div>
-<div id="method_serializeContent" class="method item">
-    <h3 class="name"><code>serializeContent</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
                         <code>eventTimings</code>
-                </li>
-                <li class="arg">
-                        <code>videoID</code>
-                </li>
-                <li class="arg">
-                        <code>videoList</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/app_components_exp-lookit-story-page_component.js.html#l300"><code>app&#x2F;components&#x2F;exp-lookit-story-page&#x2F;component.js:300</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Parameters captured and sent to the server</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">eventTimings</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">videoID</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                        <p>The ID of any webcam video recorded during this frame</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">videoList</code>
-                        <span class="type">List</span>
-
-
-                    <div class="param-description">
-                        <p>a list of webcam video IDs in case there are &gt;1</p>
-
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
-                    <p>The payload sent to the server</p>
-
-            </div>
-        </div>
-
-
-</div>
-<div id="method_serializeContent" class="method item">
-    <h3 class="name"><code>serializeContent</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>eventTimings</code>
-                </li>
-                <li class="arg">
-                        <code>videoID</code>
-                </li>
-                <li class="arg">
-                        <code>videoList</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
@@ -1073,7 +936,7 @@ instead stop/start and make separate clips if needed.
                 Exp-frame-base
             </a>
             but overwritten in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l300"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:300</code></a>
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l516"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:516</code></a>
         </p>
 
 
@@ -1090,12 +953,24 @@ instead stop/start and make separate clips if needed.
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">eventTimings</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <code class="param-name">leftSequence</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
 
 
                     <div class="param-description">
-                         
+                        <p>Sequence of images shown on the left</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">rightSequence</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+                    <div class="param-description">
+                        <p>Sequence of images shown on the right</p>
+
                     </div>
 
                 </li>
@@ -1105,19 +980,29 @@ instead stop/start and make separate clips if needed.
 
 
                     <div class="param-description">
-                        <p>The ID of any webcam video recorded during this frame</p>
+                        <p>The ID of any video recorded during this frame</p>
 
                     </div>
 
                 </li>
                 <li class="param">
-                        <code class="param-name">videoList</code>
-                        <span class="type">List</span>
+                        <code class="param-name">hasBeenPaused</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
 
 
                     <div class="param-description">
-                        <p>a list of webcam video IDs in case there are &gt;1</p>
+                        <p>whether this trial was paused</p>
 
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">eventTimings</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
                     </div>
 
                 </li>
@@ -1389,7 +1274,7 @@ instead stop/start and make separate clips if needed.
 
 
 </div>
-<div id="method_whenPossibleToRecord" class="method item inherited">
+<div id="method_whenPossibleToRecord" class="method item">
     <h3 class="name"><code>whenPossibleToRecord</code></h3>
 
         <span class="paren">()</span>
@@ -1407,7 +1292,7 @@ instead stop/start and make separate clips if needed.
                 Session-record
             </a>
             but overwritten in
-        <a href="../files/app_mixins_video-record.js.html#l361"><code>app&#x2F;mixins&#x2F;video-record.js:361</code></a>
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l827"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:827</code></a>
         </p>
 
 
@@ -1415,8 +1300,40 @@ instead stop/start and make separate clips if needed.
     </div>
 
     <div class="description">
-        Observer that starts recording once recorder is ready. Override to do additional
-stuff at this point!
+        <p>Observer that starts recording once recorder is ready. Override to do additional
+stuff at this point!</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_whenPossibleToRecordSession" class="method item">
+    <h3 class="name"><code>whenPossibleToRecordSession</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l845"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:845</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Observer that starts recording once sessionrecorder is ready.</p>
+
     </div>
 
 
@@ -1526,6 +1443,33 @@ should set to override if needed.
 
 
 </div>
+<div id="property_attnLength" class="property item">
+    <h3 class="name"><code>attnLength</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l243"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:243</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>minimum amount of time to show attention-getter in seconds. If 0, attention-getter
+segment is skipped.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> 0</p>
+
+
+</div>
 <div id="property_audioOnly" class="property item inherited">
     <h3 class="name"><code>audioOnly</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
@@ -1562,128 +1506,20 @@ should set to override if needed.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l177"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:177</code></a>
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l268"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:268</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Array of objects describing audio to play at the start of
-this frame. Each element describes a separate audio segment.</p>
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+instructions during attention-getter video</p>
 
     </div>
 
 
 
-        <h4>Sub-properties:</h4>
-
-        <ul class="params-list">
-            <li class="param">
-                    <code class="param-name">audioId</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>unique string identifying this
-audio segment</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">sources</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
-
-                <div class="param-description">
-                    <p>Array of {src: 'url', type:
-'MIMEtype'} objects with audio sources for this segment</p>
-<p>Can also give a single string <code>filename</code>, which will
-be expanded out to the appropriate array based on <code>baseDir</code>
-and <code>audioTypes</code> values; see <code>audioTypes</code>.</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">highlights</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
-
-                <div class="param-description">
-                    <p>Array of {'range': [startT,
-endT], 'image': 'imageId'} objects, where the imageId
-values correspond to the ids given in images</p>
-
-                </div>
-
-            </li>
-        </ul>
-</div>
-<div id="property_audioSources" class="property item">
-    <h3 class="name"><code>audioSources</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-story-page_component.js.html#l177"><code>app&#x2F;components&#x2F;exp-lookit-story-page&#x2F;component.js:177</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Array of objects describing audio to play at the start of
-this frame. Each element describes a separate audio segment.</p>
-
-    </div>
-
-
-
-        <h4>Sub-properties:</h4>
-
-        <ul class="params-list">
-            <li class="param">
-                    <code class="param-name">audioId</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>unique string identifying this
-audio segment</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">sources</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
-
-                <div class="param-description">
-                    <p>Array of {src: 'url', type:
-'MIMEtype'} objects with audio sources for this segment</p>
-<p>Can also give a single string <code>filename</code>, which will
-be expanded out to the appropriate array based on <code>baseDir</code>
-and <code>audioTypes</code> values; see <code>audioTypes</code>.</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">highlights</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
-
-                <div class="param-description">
-                    <p>Array of {'range': [startT,
-endT], 'image': 'imageId'} objects, where the imageId
-values correspond to the ids given in images</p>
-
-                </div>
-
-            </li>
-        </ul>
 </div>
 <div id="property_audioTypes" class="property item inherited">
     <h3 class="name"><code>audioTypes</code></h3>
@@ -1726,58 +1562,6 @@ expanded out to
 
 
 </div>
-<div id="property_autoProceed" class="property item">
-    <h3 class="name"><code>autoProceed</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l143"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:143</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Whether to proceed automatically after audio (and hide
-replay/next buttons)</p>
-
-    </div>
-
-
-
-</div>
-<div id="property_autoProceed" class="property item">
-    <h3 class="name"><code>autoProceed</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-story-page_component.js.html#l143"><code>app&#x2F;components&#x2F;exp-lookit-story-page&#x2F;component.js:143</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Whether to proceed automatically after audio (and hide
-replay/next buttons)</p>
-
-    </div>
-
-
-
-</div>
 <div id="property_autosave" class="property item inherited">
     <h3 class="name"><code>autosave</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
@@ -1800,6 +1584,34 @@ replay/next buttons)</p>
     </div>
 
         <p><strong>Default:</strong> 1</p>
+
+
+</div>
+<div id="property_backgroundColor" class="property item">
+    <h3 class="name"><code>backgroundColor</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l422"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:422</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Color of background. See <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">https://developer.mozilla.org/en-US/docs/Web/CSS/color_value</a>
+for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
+rgb hex values (e.g. '#800080' - include the '#')</p>
+
+    </div>
+
+        <p><strong>Default:</strong> &#x27;white&#x27;</p>
 
 
 </div>
@@ -1837,6 +1649,89 @@ does not end in a slash, one will be added.
 
 
 </div>
+<div id="property_blankMs" class="property item">
+    <h3 class="name"><code>blankMs</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l399"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:399</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Amount of time for blank display between each image, in milliseconds</p>
+
+    </div>
+
+        <p><strong>Default:</strong> 750</p>
+
+
+</div>
+<div id="property_border" class="property item">
+    <h3 class="name"><code>border</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l410"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:410</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Format of border to display around alternation streams, if any. See
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/border">https://developer.mozilla.org/en-US/docs/Web/CSS/border</a> for syntax.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> &#x27;thin solid gray&#x27;</p>
+
+
+</div>
+<div id="property_containerColor" class="property item">
+    <h3 class="name"><code>containerColor</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l435"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:435</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Color of image stream container, if different from overall background.
+Defaults to backgroundColor if one is provided.
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">https://developer.mozilla.org/en-US/docs/Web/CSS/color_value</a>
+for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
+rgb hex values (e.g. '#800080' - include the '#')</p>
+
+    </div>
+
+        <p><strong>Default:</strong> &#x27;white&#x27;</p>
+
+
+</div>
 <div id="property_displayFullscreenOverride" class="property item inherited">
     <h3 class="name"><code>displayFullscreenOverride</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
@@ -1865,9 +1760,9 @@ generally used that way.
 
 
 </div>
-<div id="property_doRecording" class="property item">
-    <h3 class="name"><code>doRecording</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+<div id="property_displayMs" class="property item">
+    <h3 class="name"><code>displayMs</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
 
 
 
@@ -1876,44 +1771,18 @@ generally used that way.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-story-page_component.js.html#l133"><code>app&#x2F;components&#x2F;exp-lookit-story-page&#x2F;component.js:133</code></a>
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l388"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:388</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Whether to do webcam recording (will wait for webcam
-connection before starting audio if so)</p>
+        <p>Amount of time to display each image, in milliseconds</p>
 
     </div>
 
-
-
-</div>
-<div id="property_doRecording" class="property item">
-    <h3 class="name"><code>doRecording</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-single-image_component.js.html#l110"><code>app&#x2F;components&#x2F;exp-lookit-single-image&#x2F;component.js:110</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Whether to do webcam recording (will wait for webcam
-connection before starting audio if so)</p>
-
-    </div>
-
+        <p><strong>Default:</strong> 750</p>
 
 
 </div>
@@ -1928,24 +1797,23 @@ connection before starting audio if so)</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l133"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:133</code></a>
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l233"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:233</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Whether to do webcam recording (will wait for webcam
-connection before starting audio if so)</p>
+        <p>Whether to do webcam recording on this frame</p>
 
     </div>
 
 
 
 </div>
-<div id="property_durationSeconds" class="property item">
-    <h3 class="name"><code>durationSeconds</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+<div id="property_endAudioSources" class="property item">
+    <h3 class="name"><code>endAudioSources</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
 
 
 
@@ -1954,69 +1822,16 @@ connection before starting audio if so)</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-single-image_component.js.html#l121"><code>app&#x2F;components&#x2F;exp-lookit-single-image&#x2F;component.js:121</code></a>
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l290"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:290</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Duration of frame in seconds. If set and positive, there will be no next button
-displayed and the experiment will auto-proceed after the duration elapses.</p>
-
-    </div>
-
-
-
-</div>
-<div id="property_durationSeconds" class="property item">
-    <h3 class="name"><code>durationSeconds</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l154"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:154</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>[Only used if autoProceed is true] Minimum duration of frame in seconds.
-Frame will auto-proceed after this much time has elapsed and all audio
-has completed.</p>
-
-    </div>
-
-
-
-</div>
-<div id="property_durationSeconds" class="property item">
-    <h3 class="name"><code>durationSeconds</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-story-page_component.js.html#l154"><code>app&#x2F;components&#x2F;exp-lookit-story-page&#x2F;component.js:154</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>[Only used if autoProceed is true] Minimum duration of frame in seconds.
-Frame will auto-proceed after this much time has elapsed and all audio
-has completed.</p>
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+audio after completion of trial (optional; used for last
+trial "okay to open your eyes now" announcement)</p>
 
     </div>
 
@@ -2045,6 +1860,32 @@ has completed.</p>
     </div>
 
         <p><strong>Default:</strong> false</p>
+
+
+</div>
+<div id="property_fsAudio" class="property item">
+    <h3 class="name"><code>fsAudio</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l335"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:335</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+audio played when study is paused due to not being fullscreen</p>
+
+    </div>
+
 
 
 </div>
@@ -2187,9 +2028,9 @@ to be on one line.)</p>
 
 
 </div>
-<div id="property_images" class="property item">
-    <h3 class="name"><code>images</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+<div id="property_leftImagesA" class="property item">
+    <h3 class="name"><code>leftImagesA</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String[]</a></span>
 
 
 
@@ -2198,78 +2039,25 @@ to be on one line.)</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-story-page_component.js.html#l258"><code>app&#x2F;components&#x2F;exp-lookit-story-page&#x2F;component.js:258</code></a>
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l450"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:450</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Array of images to display and information about their placement</p>
+        <p>Set A of images to display on left of screen. Left stream will alternate between
+images from set A and from set B. Elements of list can be full URLs or relative
+paths starting from <code>baseDir</code>.</p>
 
     </div>
 
 
 
-        <h4>Sub-properties:</h4>
-
-        <ul class="params-list">
-            <li class="param">
-                    <code class="param-name">id</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>unique ID for this image</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">src</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>URL of image source. This can be a full
-URL, or relative to baseDir (see baseDir).</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">left</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>left margin, as percentage of story area width</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">width</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>image width, as percentage of story area width</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">top</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>top margin, as percentage of story area height</p>
-
-                </div>
-
-            </li>
-        </ul>
 </div>
-<div id="property_images" class="property item">
-    <h3 class="name"><code>images</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+<div id="property_leftImagesB" class="property item">
+    <h3 class="name"><code>leftImagesB</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String[]</a></span>
 
 
 
@@ -2278,224 +2066,21 @@ URL, or relative to baseDir (see baseDir).</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-single-image_component.js.html#l210"><code>app&#x2F;components&#x2F;exp-lookit-single-image&#x2F;component.js:210</code></a>
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l465"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:465</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Image to display and information about its placement</p>
+        <p>Set B of images to display on left of screen. Left stream will alternate between
+images from set A and from set B. Elements of list can be full URLs or relative
+paths starting from <code>baseDir</code>.</p>
 
     </div>
 
 
 
-        <h4>Sub-properties:</h4>
-
-        <ul class="params-list">
-            <li class="param">
-                    <code class="param-name">src</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>URL of image source. This can be a full
-URL, or relative to baseDir (see baseDir).</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">left</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>left margin, as percentage of story area width</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">width</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>image width, as percentage of story area width</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">top</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>top margin, as percentage of story area height</p>
-
-                </div>
-
-            </li>
-        </ul>
-</div>
-<div id="property_images" class="property item">
-    <h3 class="name"><code>images</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-single-image_component.js.html#l174"><code>app&#x2F;components&#x2F;exp-lookit-single-image&#x2F;component.js:174</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Array of images to display and information about their placement</p>
-
-    </div>
-
-
-
-        <h4>Sub-properties:</h4>
-
-        <ul class="params-list">
-            <li class="param">
-                    <code class="param-name">id</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>unique ID for this image</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">src</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>URL of image source. This can be a full
-URL, or relative to baseDir (see baseDir).</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">left</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>left margin, as percentage of story area width</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">width</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>image width, as percentage of story area width</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">top</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>top margin, as percentage of story area height</p>
-
-                </div>
-
-            </li>
-        </ul>
-</div>
-<div id="property_images" class="property item">
-    <h3 class="name"><code>images</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l258"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:258</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Array of images to display and information about their placement</p>
-
-    </div>
-
-
-
-        <h4>Sub-properties:</h4>
-
-        <ul class="params-list">
-            <li class="param">
-                    <code class="param-name">id</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>unique ID for this image</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">src</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>URL of image source. This can be a full
-URL, or relative to baseDir (see baseDir).</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">left</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>left margin, as percentage of story area width</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">width</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>image width, as percentage of story area width</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">top</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>top margin, as percentage of story area height</p>
-
-                </div>
-
-            </li>
-        </ul>
 </div>
 <div id="property_maxRecordingLength" class="property item inherited">
     <h3 class="name"><code>maxRecordingLength</code></h3>
@@ -2519,6 +2104,32 @@ URL, or relative to baseDir (see baseDir).</p>
     </div>
 
         <p><strong>Default:</strong> 100000000</p>
+
+
+</div>
+<div id="property_musicSources" class="property item">
+    <h3 class="name"><code>musicSources</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l279"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:279</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+music during trial</p>
+
+    </div>
+
 
 
 </div>
@@ -2591,9 +2202,9 @@ generated for this randomizer.</li>
 
 
 </div>
-<div id="property_parentTextBlock" class="property item">
-    <h3 class="name"><code>parentTextBlock</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+<div id="property_pauseAudio" class="property item">
+    <h3 class="name"><code>pauseAudio</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
 
 
 
@@ -2602,69 +2213,24 @@ generated for this randomizer.</li>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l228"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:228</code></a>
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l313"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:313</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Text block to display to parent.  (Each field is optional)</p>
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+audio played upon pausing study</p>
 
     </div>
 
 
 
-        <h4>Sub-properties:</h4>
-
-        <ul class="params-list">
-            <li class="param">
-                    <code class="param-name">title</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>title to display</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">text</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>paragraph of text</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">emph</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-                <div class="param-description">
-                    <p>whether to bold this paragraph</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">css</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-                <div class="param-description">
-                    <p>object specifying any css properties
-to apply to this section, and their values - e.g.
-{'color': 'red', 'font-size': '12px'}</p>
-
-                </div>
-
-            </li>
-        </ul>
 </div>
-<div id="property_parentTextBlock" class="property item">
-    <h3 class="name"><code>parentTextBlock</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+<div id="property_randomizeImageOrder" class="property item">
+    <h3 class="name"><code>randomizeImageOrder</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
 
 
 
@@ -2673,136 +2239,34 @@ to apply to this section, and their values - e.g.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-story-page_component.js.html#l228"><code>app&#x2F;components&#x2F;exp-lookit-story-page&#x2F;component.js:228</code></a>
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l359"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:359</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Text block to display to parent.  (Each field is optional)</p>
+        <p>Whether to randomize image presentation order within the lists leftImagesA,
+leftImagesB, rightImagesA, and rightImagesB. If true (default), the order
+of presentation is randomized. Each time all the images in one list have been
+presented, the order is randomized again for the next 'round.' If false, the
+order of presentation is as written in the list. Once all images are presented,
+we loop back around to the first image and start again.</p>
+<p>Example of randomization: suppose we have defined</p>
+<pre class="code prettyprint"><code>leftImagesA: ['apple', 'banana', 'cucumber'],
+leftImagesB: ['aardvark', 'bat'],
+randomizeImageOrder: true,
+startWithA: true
+</code></pre>
+<p>And suppose the timing is such that we end up with 10 images total. Here is a
+possible sequence of images shown on the left:</p>
+<p>['banana', 'aardvark', 'apple', 'bat', 'cucumber', 'bat', 'cucumber', 'aardvark', 'apple', 'bat']</p>
 
     </div>
 
+        <p><strong>Default:</strong> true</p>
 
 
-        <h4>Sub-properties:</h4>
-
-        <ul class="params-list">
-            <li class="param">
-                    <code class="param-name">title</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>title to display</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">text</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>paragraph of text</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">emph</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-                <div class="param-description">
-                    <p>whether to bold this paragraph</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">css</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-                <div class="param-description">
-                    <p>object specifying any css properties
-to apply to this section, and their values - e.g.
-{'color': 'red', 'font-size': '12px'}</p>
-
-                </div>
-
-            </li>
-        </ul>
-</div>
-<div id="property_parentTextBlock" class="property item">
-    <h3 class="name"><code>parentTextBlock</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-single-image_component.js.html#l144"><code>app&#x2F;components&#x2F;exp-lookit-single-image&#x2F;component.js:144</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Text block to display to parent.  (Each field is optional)</p>
-
-    </div>
-
-
-
-        <h4>Sub-properties:</h4>
-
-        <ul class="params-list">
-            <li class="param">
-                    <code class="param-name">title</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>title to display</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">text</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>paragraph of text</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">emph</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-                <div class="param-description">
-                    <p>whether to bold this paragraph</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">css</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-                <div class="param-description">
-                    <p>object specifying any css properties
-to apply to this section, and their values - e.g.
-{'color': 'red', 'font-size': '12px'}</p>
-
-                </div>
-
-            </li>
-        </ul>
 </div>
 <div id="property_recorder" class="property item inherited">
     <h3 class="name"><code>recorder</code></h3>
@@ -2849,6 +2313,60 @@ recorder.nWebcams, recorder.hasCamAccess, recorder.micChecked, recorder.connecte
     <div class="description">
         Whether recorder has been set up yet. Automatically set when doing setup.
 Accessible to consuming frame.
+    </div>
+
+
+
+</div>
+<div id="property_rightImagesA" class="property item">
+    <h3 class="name"><code>rightImagesA</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l480"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:480</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Set A of images to display on right of screen. Right stream will alternate between
+images from set A and from set B. Elements of list can be full URLs or relative
+paths starting from <code>baseDir</code>.</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_rightImagesA" class="property item">
+    <h3 class="name"><code>rightImagesA</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l495"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:495</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Set B of images to display on right of screen. Right stream will alternate between
+images from set A and from set B. Elements of list can be full URLs or relative
+paths starting from <code>baseDir</code>.</p>
+
     </div>
 
 
@@ -2946,84 +2464,6 @@ just used for attempts to leave the study early</li>
 
 
 </div>
-<div id="property_showProgressBar" class="property item">
-    <h3 class="name"><code>showProgressBar</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-story-page_component.js.html#l166"><code>app&#x2F;components&#x2F;exp-lookit-story-page&#x2F;component.js:166</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>[Only used if autoProceed is true and durationSeconds set] Whether to
-show a progress bar based on durationSeconds in the parent text area.</p>
-
-    </div>
-
-
-
-</div>
-<div id="property_showProgressBar" class="property item">
-    <h3 class="name"><code>showProgressBar</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l166"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:166</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>[Only used if autoProceed is true and durationSeconds set] Whether to
-show a progress bar based on durationSeconds in the parent text area.</p>
-
-    </div>
-
-
-
-</div>
-<div id="property_showProgressBar" class="property item">
-    <h3 class="name"><code>showProgressBar</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-single-image_component.js.html#l133"><code>app&#x2F;components&#x2F;exp-lookit-single-image&#x2F;component.js:133</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>[Only used if durationSeconds set] Whether to
-show a progress bar based on durationSeconds in the parent text area.</p>
-
-    </div>
-
-
-
-</div>
 <div id="property_startSessionRecording" class="property item inherited">
     <h3 class="name"><code>startSessionRecording</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
@@ -3049,6 +2489,34 @@ show a progress bar based on durationSeconds in the parent text area.</p>
 
 
 </div>
+<div id="property_startWithA" class="property item">
+    <h3 class="name"><code>startWithA</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l346"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:346</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Whether to start with the 'A' image list on both left and right. If true, both
+sides start with their respective A image lists; if false, both lists start with
+their respective B image lists.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> true</p>
+
+
+</div>
 <div id="property_stoppedRecording" class="property item inherited">
     <h3 class="name"><code>stoppedRecording</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
@@ -3070,6 +2538,60 @@ show a progress bar based on durationSeconds in the parent text area.</p>
         Whether recording is stopped already, meaning it doesn't need to be re-stopped when
 destroying frame. This should be set to true by the consuming frame when video is
 stopped.
+    </div>
+
+
+
+</div>
+<div id="property_trialLength" class="property item">
+    <h3 class="name"><code>trialLength</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l255"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:255</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>length of alternation trial in seconds. This refers only to the section of the
+trial where the alternating image streams are presented - it does not count
+any announcement phase.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> 60</p>
+
+
+</div>
+<div id="property_unpauseAudio" class="property item">
+    <h3 class="name"><code>unpauseAudio</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l324"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:324</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+audio played upon unpausing study</p>
+
     </div>
 
 
@@ -3126,6 +2648,32 @@ Accessible to consuming frame.
 
 
 </div>
+<div id="property_videoSources" class="property item">
+    <h3 class="name"><code>videoSources</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l302"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:302</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Sources Array of {src: 'url', type: 'MIMEtype'} objects for
+attention-getter video (should be loopable)</p>
+
+    </div>
+
+
+
+</div>
 <div id="property_videoTypes" class="property item inherited">
     <h3 class="name"><code>videoTypes</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String[]</a></span>
@@ -3173,6 +2721,31 @@ expanded out to
             <div id="events" class="api-class-tabpanel">
                 <h2 class="off-left">Events</h2>
 
+                    <div id="event_clearImages" class="events item">
+                        <h3 class="name"><code>clearImages</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l671"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:671</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Records each time images are cleared from display</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
                     <div id="event_enteredFullscreen" class="events item inherited">
                         <h3 class="name"><code>enteredFullscreen</code></h3>
                         <span class="type"></span>
@@ -3319,6 +2892,59 @@ expanded out to
                     
                     
                     </div>
+                    <div id="event_presentImages" class="events item">
+                        <h3 class="name"><code>presentImages</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l706"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:706</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Immediately after making images visible</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Event Payload:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">left</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>url of left image</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">right</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>url of right image</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
                     <div id="event_previousFrame" class="events item inherited">
                         <h3 class="name"><code>previousFrame</code></h3>
                         <span class="type"></span>
@@ -3392,7 +3018,57 @@ expanded out to
                     
                     
                     </div>
-                    <div id="event_stoppingCapture" class="events item inherited">
+                    <div id="event_startIntro" class="events item">
+                        <h3 class="name"><code>startIntro</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l609"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:609</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Immediately before starting intro/announcement segment</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_startTestTrial" class="events item">
+                        <h3 class="name"><code>startTestTrial</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l633"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:633</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Immediately before starting test trial segment</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_stoppingCapture" class="events item">
                         <h3 class="name"><code>stoppingCapture</code></h3>
                         <span class="type"></span>
                     
@@ -3406,14 +3082,15 @@ expanded out to
                                     Session-record
                                 </a>
                                 but overwritten in
-                            <a href="../files/app_mixins_video-record.js.html#l83"><code>app&#x2F;mixins&#x2F;video-record.js:83</code></a>
+                            <a href="../files/app_components_exp-lookit-change-detection_component.js.html#l582"><code>app&#x2F;components&#x2F;exp-lookit-change-detection&#x2F;component.js:582</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            Just before stopping webcam video capture
+                            <p>Just before stopping webcam video capture</p>
+                    
                         </div>
                     
                     
@@ -3477,9 +3154,8 @@ expanded out to
                     
                     
                                         <div class="param-description">
-                                            <p>status of video stream connection, e.g.
-                    'NetConnection.Connect.Success' if successful</p>
-                    
+                                            status of video stream connection, e.g.
+                    'NetConnection.Connect.Success' if successful
                                         </div>
                     
                                     </li>

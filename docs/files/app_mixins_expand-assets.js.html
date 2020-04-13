@@ -41,6 +41,7 @@
                         <ul id="api-classes" class="apis classes">
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
@@ -286,6 +287,29 @@ var expandAssetsMixin = Ember.Mixin.create({
         }
     },
 
+    checkFileExists(url) {
+        // see https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+        //
+        // Getting back a meaningful response about whether the file even exists requires
+        // CORS settings on the server to allow this origin, which is *not* required for
+        // simply loading the image/video/audio in the browser, which is all we really
+        // need to do. This function will warn if CORS blocks the request or if the file
+        // is not available, but this will cause a lot of (unnecessary) noise in many cases.
+
+        // Could alternately try to load assets into browser to see if they exist, but
+        // in cases where there are a bunch of potential assets listed, we don&#x27;t necessarily
+        // want to load them all upfront.
+        fetch(url, { method: &#x27;HEAD&#x27; }).then((response) =&gt; {
+            if (!response.ok) {
+                console.warn(&#x27;File not available: &#x27;, url);
+                console.log(response);
+            }
+        })
+        .catch((error) =&gt; {
+            console.warn(&#x27;File not available: &#x27;, url, &#x27; - error: &#x27;, error);
+        });
+    },
+
     // Utility to expand stubs into either full URLs (for images) or
     // array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects (for audio/video).
     expandAsset(asset, type) {
@@ -302,13 +326,11 @@ var expandAssetsMixin = Ember.Mixin.create({
                 if (typeof asset === &#x27;string&#x27; &amp;&amp; !(asset.includes(&#x27;://&#x27;))) {
                     // Image: replace stub with full URL if needed
                     fullAsset = this.baseDir + &#x27;img/&#x27; + asset;
-                    fetch(fullAsset, { method: &#x27;HEAD&#x27;, mode: &#x27;no-cors&#x27; }); // Throws error if unavailable
                 } else if (Array.isArray(asset)) {
                     for (var i = 0; i &lt; asset.length; i++) {
                         var currentVal = asset[i];
                         if (typeof currentVal === &#x27;string&#x27; &amp;&amp; !(currentVal.includes(&#x27;://&#x27;))) {
                             asset[i] = this.baseDir + &#x27;img/&#x27; + currentVal;
-                            fetch(asset[i], { method: &#x27;HEAD&#x27;, mode: &#x27;no-cors&#x27; }); // Throws error if unavailable
                         }
                     }
                 }
@@ -321,7 +343,6 @@ var expandAssetsMixin = Ember.Mixin.create({
                     fullAsset = [];
                     for (var iType = 0; iType &lt; types.length; iType++) {
                         let url = _this.baseDir + types[iType] + &#x27;/&#x27; + asset + &#x27;.&#x27; + types[iType];
-                        fetch(url, { method: &#x27;HEAD&#x27;, mode: &#x27;no-cors&#x27; }); // Throws error if unavailable
                         fullAsset.push({
                             src: url,
                             type: type + &#x27;/&#x27; + types[iType]

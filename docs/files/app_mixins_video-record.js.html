@@ -41,6 +41,7 @@
                         <ul id="api-classes" class="apis classes">
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
@@ -295,13 +296,10 @@ export default Ember.Mixin.create({
      * @return {Object} Event data object
      */
     makeTimeEvent(eventName, extra) {
-        // All frames using this mixin will add videoId and streamTime to every server event
+        // All frames using this mixin will add streamTime to every server event
         let base = this._super(eventName, extra);
-        const streamTime = this.get(&#x27;recorder&#x27;) ? this.get(&#x27;recorder&#x27;).getTime() : null;
         Ember.assign(base, {
-            videoId: this.get(&#x27;videoId&#x27;),
-            pipeId: this.get(&#x27;recorder&#x27;) ? this.get(&#x27;recorder&#x27;).get(&#x27;pipeVideoName&#x27;) : null,
-            streamTime: streamTime
+            streamTime: this.get(&#x27;recorder&#x27;) ? this.get(&#x27;recorder&#x27;).getTime() : null
         });
         return base;
     },
@@ -338,6 +336,9 @@ export default Ember.Mixin.create({
             }
         });
         this.set(&#x27;recorder&#x27;, recorder);
+        this.send(&#x27;setTimeEvent&#x27;, &#x27;setupVideoRecorder&#x27;, {
+            videoId: videoId
+        });
         return installPromise;
     },
 
@@ -388,7 +389,9 @@ export default Ember.Mixin.create({
         const recorder = this.get(&#x27;recorder&#x27;);
         if (recorder) {
             return recorder.record().then(() =&gt; {
-                this.send(&#x27;setTimeEvent&#x27;, &#x27;startRecording&#x27;);
+                this.send(&#x27;setTimeEvent&#x27;, &#x27;startRecording&#x27;, {
+                    pipeId: recorder.get(&#x27;pipeVideoName&#x27;)
+                });
                 if (this.get(&#x27;videoList&#x27;) == null) {
                     this.set(&#x27;videoList&#x27;, [this.get(&#x27;videoId&#x27;)]);
                 } else {
@@ -445,7 +448,6 @@ export default Ember.Mixin.create({
                 });
             }
         }
-        _this.send(&#x27;setTimeEvent&#x27;, &#x27;destroyingElement&#x27;);
         _this._super(...arguments);
     },
 

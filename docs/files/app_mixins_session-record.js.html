@@ -41,6 +41,7 @@
                         <ul id="api-classes" class="apis classes">
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
@@ -270,9 +271,13 @@ export default Ember.Mixin.create({
                 _this.send(&#x27;setTimeEvent&#x27;, &#x27;videoStreamConnection&#x27;, {
                     status: status
                 });
+                _this.notifyPropertyChange(&#x27;whenPossibleToRecordSession&#x27;);
             }
         });
-        _this.get(&#x27;session&#x27;).set(&#x27;recorder&#x27;, sessionRecorder);
+        this.set(&#x27;sessionRecorder&#x27;, sessionRecorder);
+        this.send(&#x27;setTimeEvent&#x27;, &#x27;setupSessionVideoRecorder&#x27;, {
+            sessionVideoId: sessionVideoId,
+        });
         return installPromise;
     },
 
@@ -284,7 +289,12 @@ export default Ember.Mixin.create({
     startSessionRecorder() {
         const sessionRecorder = this.get(&#x27;sessionRecorder&#x27;);
         if (sessionRecorder) {
-            return sessionRecorder.record();
+            var _this = this;
+            return sessionRecorder.record().then(() =&gt; {
+                _this.send(&#x27;setTimeEvent&#x27;, &#x27;startRecording&#x27;, {
+                    sessionPipeId: sessionRecorder.get(&#x27;pipeVideoName&#x27;)
+                });
+            });
         } else {
             return Ember.RSVP.reject();
         }
@@ -352,7 +362,6 @@ export default Ember.Mixin.create({
                 });
             }
         }
-        _this.send(&#x27;setTimeEvent&#x27;, &#x27;destroyingElement&#x27;);
         _this._super(...arguments);
     },
 
@@ -362,9 +371,9 @@ export default Ember.Mixin.create({
      * @method whenPossibleToRecord
      */
     whenPossibleToRecordSession: observer(&#x27;sessionRecorder.hasCamAccess&#x27;, &#x27;sessionRecorderReady&#x27;, function() {
-        if (this.get(&#x27;startSessionRecording&#x27;)) {
-            var _this = this;
-            if (this.get(&#x27;sessionRecorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;sessionRecorderReady&#x27;)) {
+        if (this.get(&#x27;sessionRecorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;sessionRecorderReady&#x27;)) {
+            if (this.get(&#x27;startSessionRecording&#x27;)) {
+                var _this = this;
                 this.startSessionRecorder().then(() =&gt; {
                     _this.send(&#x27;setTimeEvent&#x27;, &#x27;startedSessionRecording&#x27;);
                     _this.set(&#x27;sessionRecorderReady&#x27;, false);

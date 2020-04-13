@@ -41,6 +41,7 @@
                         <ul id="api-classes" class="apis classes">
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
@@ -611,8 +612,6 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         // Add some extra info if there&#x27;s session recording ongoing
         if (this.get(&#x27;sessionRecorder&#x27;) &amp;&amp; this.get(&#x27;sessionRecordingInProgress&#x27;)) {
             Ember.assign(eventData, {
-                sessionVideoId: this.get(&#x27;sessionVideoId&#x27;),
-                sessionPipeId: this.get(&#x27;sessionRecorder&#x27;).get(&#x27;pipeVideoName&#x27;),
                 sessionStreamTime: this.get(&#x27;sessionRecorder&#x27;).getTime()
             });
         }
