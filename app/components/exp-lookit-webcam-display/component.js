@@ -134,15 +134,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         name: 'ExpLookitWebcamDisplay',
         description: 'This frame displays the participant\'s webcam and some optional text. It can be used for setup or for a quick break to check positioning.',
         data: {
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {String} videoID The ID of any webcam video recorded during this frame
-             * @param {List} videoList a list of webcam video IDs in case there are >1
-             * @param {Object} eventTimings
-             * @return {Object} The payload sent to the server
-             */
             type: 'object',
             properties: {
                 videoId: {
