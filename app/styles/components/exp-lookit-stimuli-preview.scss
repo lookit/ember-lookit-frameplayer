@@ -1,0 +1,26 @@
+.exp-lookit-stimuli-preview {
+
+    video.exp-lookit-preview-video {
+        max-height: 100%;
+        max-width: 100%;
+    }
+
+    img.exp-lookit-preview-image {
+        max-height: 100%;
+        max-width: 100%;
+    }
+
+    div.preview-container {
+        height: 65vh;
+    }
+
+    .text-block-img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-height: 220px;
+        border-radius: 3%;
+        border: thin solid black;
+    }
+
+}
