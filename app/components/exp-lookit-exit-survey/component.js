@@ -110,34 +110,42 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
         name: 'ExpLookitExitSurvey',
         description: 'Exit survey for Lookit.',
         data: {
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {String} birthDate Child's birthdate as entered into exit survey; timestamp string starting YYYY-mm-dd.
-             * @param {String} databraryShare Whether data can be shared with Databrary: 'yes' or 'no'
-             * @param {String} useOfMedia Video privacy level: 'private', 'scientific', or 'public'
-             * @param {Boolean} withdrawal Whether the user checked the box to withdraw video data
-             * @param {String} feedback Freeform comments entered by parent
-             * @param {Object} eventTimings Only event captured during this frame is 'nextFrame'; example eventTimings value: `[{u'eventType': u'nextFrame', u'timestamp': u'2016-08-03T00:45:37.157Z'}]`
-             * @return {Object} The payload sent to the server
-             */
             type: 'object',
             properties: {
+               /**
+                * Child's birthdate as entered into exit survey; timestamp string starting YYYY-mm-dd.
+                * @attribute birthDate
+                */
                 birthDate: {
                     type: 'string',
                     default: null
                 },
+               /**
+                * Whether data can be shared with Databrary: 'yes' or 'no'
+                * @attribute databraryShare
+                */
                 databraryShare: {
                     type: 'string'
                 },
+               /**
+                * Video privacy level: 'private', 'scientific', or 'public'
+                * @attribute useOfMedia
+                */
                 useOfMedia: {
                     type: 'string'
                 },
+               /**
+                * Whether the the box to withdraw video data is checked
+                * @attribute withdrawal
+                */
                 withdrawal: {
                     type: 'boolean',
                     default: false
                 },
+               /**
+                * Freeform comments entered by parent
+                * @attribute feedback
+                */
                 feedback: {
                     type: 'string',
                     default: ''

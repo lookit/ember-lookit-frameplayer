@@ -92,6 +92,7 @@ var expandAssetsMixin = Ember.Mixin.create({
     /**
      * Object describing which properties may need expansion
      * @property {String} assetsToExpand
+     * @private
      */
     assetsToExpand: {},
 

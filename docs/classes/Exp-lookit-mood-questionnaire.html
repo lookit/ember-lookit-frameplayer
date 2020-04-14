@@ -195,6 +195,7 @@ to all questions are required to move on.</p>
 
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
             <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+            <li class="api-class-tab attrs"><a href="#attrs">Data collected</a></li>
             <li class="api-class-tab events"><a href="#events">Events</a></li>
     </ul>
 
@@ -253,11 +254,11 @@ to all questions are required to move on.</p>
                                 <a href="#property_endSessionRecording">endSessionRecording</a>
 
                             </li>
-                            <li class="index-item property inherited">
+                            <li class="index-item property private inherited">
                                 <a href="#property_fsButtonID">fsButtonID</a>
 
                             </li>
-                            <li class="index-item property inherited">
+                            <li class="index-item property private inherited">
                                 <a href="#property_fullScreenElementId">fullScreenElementId</a>
 
                             </li>
@@ -288,6 +289,57 @@ to all questions are required to move on.</p>
                     </ul>
                 </div>
 
+                <div class="index-section attrs">
+                    <h3>Data collected</h3>
+
+                    <ul class="index-list attrs extends">
+                            <li class="index-item attr">
+                                <a href="#attr_active">active</a>
+                            </li>
+                            <li class="index-item attr">
+                                <a href="#attr_childHappy">childHappy</a>
+                            </li>
+                            <li class="index-item attr">
+                                <a href="#attr_doingBefore">doingBefore</a>
+                            </li>
+                            <li class="index-item attr">
+                                <a href="#attr_energetic">energetic</a>
+                            </li>
+                            <li class="index-item attr inherited">
+                                <a href="#attr_eventTimings">eventTimings</a>
+                            </li>
+                            <li class="index-item attr inherited">
+                                <a href="#attr_frameType">frameType</a>
+                            </li>
+                            <li class="index-item attr inherited">
+                                <a href="#attr_generatedProperties">generatedProperties</a>
+                            </li>
+                            <li class="index-item attr">
+                                <a href="#attr_healthy">healthy</a>
+                            </li>
+                            <li class="index-item attr">
+                                <a href="#attr_lastEat">lastEat</a>
+                            </li>
+                            <li class="index-item attr">
+                                <a href="#attr_napWakeUp">napWakeUp</a>
+                            </li>
+                            <li class="index-item attr">
+                                <a href="#attr_nextNap">nextNap</a>
+                            </li>
+                            <li class="index-item attr">
+                                <a href="#attr_ontopofstuff">ontopofstuff</a>
+                            </li>
+                            <li class="index-item attr">
+                                <a href="#attr_parentHappy">parentHappy</a>
+                            </li>
+                            <li class="index-item attr">
+                                <a href="#attr_rested">rested</a>
+                            </li>
+                            <li class="index-item attr">
+                                <a href="#attr_usualNapSchedule">usualNapSchedule</a>
+                            </li>
+                    </ul>
+                </div>
 
                 <div class="index-section events">
                     <h3>Events</h3>
@@ -377,7 +429,7 @@ to all questions are required to move on.</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#method_exitFullscreen">Full-screen</a>:
-        <a href="../files/app_mixins_full-screen.js.html#l137"><code>app&#x2F;mixins&#x2F;full-screen.js:137</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l139"><code>app&#x2F;mixins&#x2F;full-screen.js:139</code></a>
         </p>
 
 
@@ -419,7 +471,7 @@ to all questions are required to move on.</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Exp-frame-base.html#method_makeTimeEvent">Exp-frame-base</a>:
-        <a href="../files/app_components_exp-frame-base_component.js.html#l487"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:487</code></a>
+        <a href="../files/app_components_exp-frame-base_component.js.html#l498"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:498</code></a>
         </p>
 
 
@@ -473,46 +525,13 @@ event sent by a particular frame</p>
 
 
 </div>
-<div id="method_serializeContent" class="method item">
+<div id="method_serializeContent" class="method item inherited">
     <h3 class="name"><code>serializeContent</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
-                        <code>rested</code>
-                </li>
-                <li class="arg">
-                        <code>healthy</code>
-                </li>
-                <li class="arg">
-                        <code>childHappy</code>
-                </li>
-                <li class="arg">
-                        <code>active</code>
-                </li>
-                <li class="arg">
-                        <code>energetic</code>
-                </li>
-                <li class="arg">
-                        <code>ontopofstuff</code>
-                </li>
-                <li class="arg">
-                        <code>healthy</code>
-                </li>
-                <li class="arg">
-                        <code>napWakeUp</code>
-                </li>
-                <li class="arg">
-                        <code>usualNapSchedule</code>
-                </li>
-                <li class="arg">
-                        <code>nextNap</code>
-                </li>
-                <li class="arg">
-                        <code>lastEat</code>
-                </li>
-                <li class="arg">
-                        <code>doingBefore</code>
+                        <code>eventTimings</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
@@ -528,12 +547,9 @@ event sent by a particular frame</p>
 
 
     <div class="meta">
-            <p>Inherited from
-            <a href="../classes/Exp-frame-base.html#method_serializeContent">
-                Exp-frame-base
-            </a>
-            but overwritten in
-        <a href="../files/app_components_exp-lookit-mood-questionnaire_component.js.html#l134"><code>app&#x2F;components&#x2F;exp-lookit-mood-questionnaire&#x2F;component.js:134</code></a>
+                <p>Inherited from
+                <a href="../classes/Exp-frame-base.html#method_serializeContent">Exp-frame-base</a>:
+        <a href="../files/app_components_exp-frame-base_component.js.html#l480"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:480</code></a>
         </p>
 
 
@@ -541,7 +557,9 @@ event sent by a particular frame</p>
     </div>
 
     <div class="description">
-        <p>Parameters captured and sent to the server</p>
+        <p>Each frame that extends ExpFrameBase will send at least an array <code>eventTimings</code>,
+a frame type, and any generateProperties back to the server upon completion.
+Individual frames may define additional properties that are sent.</p>
 
     </div>
 
@@ -550,134 +568,12 @@ event sent by a particular frame</p>
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">rested</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                        <code class="param-name">eventTimings</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
 
 
                     <div class="param-description">
-                        <p>Rating for CHILD on tired - rested scale, '1' to '7' where '7' is rested</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">healthy</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                        <p>Rating for CHILD on sick - healthy scale, '1' to '7' where '7' is healthy</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">childHappy</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                        <p>Rating for CHILD on fussy - happy scale, '1' to '7' where '7' is happy</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">active</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                        <p>Rating for CHILD on calm - active scale, '1' to '7' where '7' is active</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">energetic</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                        <p>Rating for PARENT on tired - energetic scale, '1' to '7' where '7' is energetic</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">ontopofstuff</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                        <p>Rating for PARENT on overwhelmed - on top of stuff scale, '1' to '7' where '7' is on top of stuff</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">healthy</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                        <p>Rating for PARENT on upset - happy scale, '1' to '7' where '7' is happy</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">napWakeUp</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                        <p>how long since the child woke up from nap, HH:mm</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">usualNapSchedule</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                        <p>whether the child has a typical nap schedule: 'no', 'yes', or 'yes-overdue' if child is overdue for nap</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">nextNap</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                        <p>only valid if usualNapSchedule is 'yes';  how long until child is due to sleep again, HH:mm</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">lastEat</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                        <p>how long since the child ate/drank, HH:mm</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">doingBefore</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                        <p>what the child was doing before this (free response)</p>
-
+                         
                     </div>
 
                 </li>
@@ -689,8 +585,6 @@ event sent by a particular frame</p>
 
             <div class="returns-description">
                         <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
-                    <p>The payload sent to the server</p>
-
             </div>
         </div>
 
@@ -776,7 +670,7 @@ event sent by a particular frame</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#method_showFullscreen">Full-screen</a>:
-        <a href="../files/app_mixins_full-screen.js.html#l104"><code>app&#x2F;mixins&#x2F;full-screen.js:104</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l106"><code>app&#x2F;mixins&#x2F;full-screen.js:106</code></a>
         </p>
 
 
@@ -881,7 +775,7 @@ stuff at this point!
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#property_displayFullscreenOverride">Full-screen </a> (click for formatted description):
-        <a href="../files/app_mixins_full-screen.js.html#l163"><code>app&#x2F;mixins&#x2F;full-screen.js:163</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l165"><code>app&#x2F;mixins&#x2F;full-screen.js:165</code></a>
         </p>
 
 
@@ -920,18 +814,19 @@ generally used that way.
 
 
 </div>
-<div id="property_fsButtonID" class="property item inherited">
+<div id="property_fsButtonID" class="property item private inherited">
     <h3 class="name"><code>fsButtonID</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
 
 
+        <span class="flag private">private</span>
 
 
 
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#property_fsButtonID">Full-screen </a> (click for formatted description):
-        <a href="../files/app_mixins_full-screen.js.html#l24"><code>app&#x2F;mixins&#x2F;full-screen.js:24</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l25"><code>app&#x2F;mixins&#x2F;full-screen.js:25</code></a>
         </p>
 
 
@@ -944,11 +839,12 @@ generally used that way.
 
 
 </div>
-<div id="property_fullScreenElementId" class="property item inherited">
+<div id="property_fullScreenElementId" class="property item private inherited">
     <h3 class="name"><code>fullScreenElementId</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
 
 
+        <span class="flag private">private</span>
 
 
 
@@ -1267,6 +1163,453 @@ just used for attempts to leave the study early</li>
 </div>
             </div>
 
+            <div id="attrs" class="api-class-tabpanel">
+                <h2 class="off-left">Data keys collected</h2>
+                These are the fields that will be captured by this frame and sent back to the Lookit server.
+                Each of these fields will correspond to one row of the CSV frame data for a given response - the
+                row will have <code>key</code> set to the data key name, and <code>value</code> set to the value for this response.
+                Equivalently, this data will be available in the <code>exp_data</code> field of the response JSON data.
+                    <div id="attr_active" class="attr item">
+                        <a name="config_active"></a> 
+                        <h3 class="name"><code>active</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-mood-questionnaire_component.js.html#l157"><code>app&#x2F;components&#x2F;exp-lookit-mood-questionnaire&#x2F;component.js:157</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Rating for CHILD on calm - active scale, '1' to '7' where '7' is active</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_childHappy" class="attr item">
+                        <a name="config_childHappy"></a> 
+                        <h3 class="name"><code>childHappy</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-mood-questionnaire_component.js.html#l150"><code>app&#x2F;components&#x2F;exp-lookit-mood-questionnaire&#x2F;component.js:150</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Rating for CHILD on fussy - happy scale, '1' to '7' where '7' is happy</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_doingBefore" class="attr item">
+                        <a name="config_doingBefore"></a> 
+                        <h3 class="name"><code>doingBefore</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-mood-questionnaire_component.js.html#l215"><code>app&#x2F;components&#x2F;exp-lookit-mood-questionnaire&#x2F;component.js:215</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>what the child was doing before this (free response)</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_energetic" class="attr item">
+                        <a name="config_energetic"></a> 
+                        <h3 class="name"><code>energetic</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-mood-questionnaire_component.js.html#l164"><code>app&#x2F;components&#x2F;exp-lookit-mood-questionnaire&#x2F;component.js:164</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Rating for PARENT on tired - energetic scale, '1' to '7' where '7' is energetic</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_eventTimings" class="attr item inherited">
+                        <a name="config_eventTimings"></a> 
+                        <h3 class="name"><code>eventTimings</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/Exp-frame-base.html#attr_eventTimings">Exp-frame-base</a>:
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l472"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:472</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Ordered list of events captured during this frame (oldest to newest). Each event is
+                    represented as an object with at least the properties
+                    <code>{'eventType': EVENTNAME, 'timestamp': TIMESTAMP}</code>.
+                    See Events tab for details of events that might be captured.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_frameType" class="attr item inherited">
+                        <a name="config_frameType"></a> 
+                        <h3 class="name"><code>frameType</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/Exp-frame-base.html#attr_frameType">Exp-frame-base</a>:
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l466"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:466</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Type of frame: EXIT (exit survey), CONSENT (consent or assent frame), or DEFAULT
+                    (anything else)</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_generatedProperties" class="attr item inherited">
+                        <a name="config_generatedProperties"></a> 
+                        <h3 class="name"><code>generatedProperties</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/Exp-frame-base.html#attr_generatedProperties">Exp-frame-base</a>:
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l460"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:460</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Any properties generated via a custom generateProperties function provided to this
+                    frame (e.g., a score you computed to decide on feedback). In general will be null.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_healthy" class="attr item">
+                        <a name="config_healthy"></a> 
+                        <h3 class="name"><code>healthy</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-mood-questionnaire_component.js.html#l143"><code>app&#x2F;components&#x2F;exp-lookit-mood-questionnaire&#x2F;component.js:143</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Rating for CHILD on sick - healthy scale, '1' to '7' where '7' is healthy</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_lastEat" class="attr item">
+                        <a name="config_lastEat"></a> 
+                        <h3 class="name"><code>lastEat</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-mood-questionnaire_component.js.html#l207"><code>app&#x2F;components&#x2F;exp-lookit-mood-questionnaire&#x2F;component.js:207</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>how long since the child ate/drank, HH:mm</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_napWakeUp" class="attr item">
+                        <a name="config_napWakeUp"></a> 
+                        <h3 class="name"><code>napWakeUp</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-mood-questionnaire_component.js.html#l185"><code>app&#x2F;components&#x2F;exp-lookit-mood-questionnaire&#x2F;component.js:185</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>how long since the child woke up from nap, HH:mm</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_nextNap" class="attr item">
+                        <a name="config_nextNap"></a> 
+                        <h3 class="name"><code>nextNap</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-mood-questionnaire_component.js.html#l200"><code>app&#x2F;components&#x2F;exp-lookit-mood-questionnaire&#x2F;component.js:200</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>only valid if usualNapSchedule is 'yes';  how long until child is due to sleep again, HH:mm</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_ontopofstuff" class="attr item">
+                        <a name="config_ontopofstuff"></a> 
+                        <h3 class="name"><code>ontopofstuff</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-mood-questionnaire_component.js.html#l171"><code>app&#x2F;components&#x2F;exp-lookit-mood-questionnaire&#x2F;component.js:171</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Rating for PARENT on overwhelmed - on top of stuff scale, '1' to '7' where '7' is on top of stuff</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_parentHappy" class="attr item">
+                        <a name="config_parentHappy"></a> 
+                        <h3 class="name"><code>parentHappy</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-mood-questionnaire_component.js.html#l178"><code>app&#x2F;components&#x2F;exp-lookit-mood-questionnaire&#x2F;component.js:178</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Rating for PARENT on upset - happy scale, '1' to '7' where '7' is happy</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_rested" class="attr item">
+                        <a name="config_rested"></a> 
+                        <h3 class="name"><code>rested</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-mood-questionnaire_component.js.html#l136"><code>app&#x2F;components&#x2F;exp-lookit-mood-questionnaire&#x2F;component.js:136</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Rating for CHILD on tired - rested scale, '1' to '7' where '7' is rested</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_usualNapSchedule" class="attr item">
+                        <a name="config_usualNapSchedule"></a> 
+                        <h3 class="name"><code>usualNapSchedule</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-mood-questionnaire_component.js.html#l193"><code>app&#x2F;components&#x2F;exp-lookit-mood-questionnaire&#x2F;component.js:193</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>whether the child has a typical nap schedule: 'no', 'yes', or 'yes-overdue' if child is overdue for nap</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+            </div>
 
             <div id="events" class="api-class-tabpanel">
                 <h2 class="off-left">Events</h2>
@@ -1282,7 +1625,7 @@ just used for attempts to leave the study early</li>
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Full-screen.html#event_enteredFullscreen">Full-screen</a>:
-                            <a href="../files/app_mixins_full-screen.js.html#l76"><code>app&#x2F;mixins&#x2F;full-screen.js:76</code></a>
+                            <a href="../files/app_mixins_full-screen.js.html#l78"><code>app&#x2F;mixins&#x2F;full-screen.js:78</code></a>
                             </p>
                     
                     
@@ -1346,7 +1689,7 @@ just used for attempts to leave the study early</li>
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Full-screen.html#event_leftFullscreen">Full-screen</a>:
-                            <a href="../files/app_mixins_full-screen.js.html#l88"><code>app&#x2F;mixins&#x2F;full-screen.js:88</code></a>
+                            <a href="../files/app_mixins_full-screen.js.html#l90"><code>app&#x2F;mixins&#x2F;full-screen.js:90</code></a>
                             </p>
                     
                     
@@ -1370,7 +1713,7 @@ just used for attempts to leave the study early</li>
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Exp-frame-base.html#event_nextFrame">Exp-frame-base</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l534"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:534</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l545"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:545</code></a>
                             </p>
                     
                     
@@ -1395,7 +1738,7 @@ just used for attempts to leave the study early</li>
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Exp-frame-base.html#event_previousFrame">Exp-frame-base</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l589"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:589</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l600"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:600</code></a>
                             </p>
                     
                     

@@ -309,15 +309,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         name: &#x27;ExpLookitObservation&#x27;,
         description: &#x27;This frame allows the participant to record an event, intended for observational studies.&#x27;,
         data: {
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {String} videoID The ID of any webcam video recorded during this frame
-             * @param {List} videoList a list of webcam video IDs in case there are &gt;1
-             * @param {Object} eventTimings
-             * @return {Object} The payload sent to the server
-             */
             type: &#x27;object&#x27;,
             properties: {
                 videoId: {

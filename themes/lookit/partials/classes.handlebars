@@ -113,7 +113,7 @@
             <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
         {{/if}}
         {{#if attrs}}
-            <li class="api-class-tab attrs"><a href="#attrs">Attributes</a></li>
+            <li class="api-class-tab attrs"><a href="#attrs">Data collected</a></li>
         {{/if}}
         {{#if events}}
             <li class="api-class-tab events"><a href="#events">Events</a></li>
@@ -168,7 +168,7 @@
 
             {{#if attrs}}
                 <div class="index-section attrs">
-                    <h3>Attributes</h3>
+                    <h3>Data collected</h3>
 
                     <ul class="index-list attrs{{#if extends}} extends{{/if}}">
                         {{#attrs}}
@@ -224,8 +224,11 @@
 
         {{#if attrs}}
             <div id="attrs" class="api-class-tabpanel">
-                <h2 class="off-left">Attributes</h2>
-
+                <h2 class="off-left">Data keys collected</h2>
+                These are the fields that will be captured by this frame and sent back to the Lookit server.
+                Each of these fields will correspond to one row of the CSV frame data for a given response - the
+                row will have `key` set to the data key name, and `value` set to the value for this response.
+                Equivalently, this data will be available in the `exp_data` field of the response JSON data.
                 {{#attrs}}
                     {{>attrs}}
                 {{/attrs}}

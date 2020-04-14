@@ -179,15 +179,6 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
         description: 'Frame that displays a series of preview videos, self-paced with controls.',
         data: {
             type: 'object',
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {String} videoID The ID of any webcam video recorded during this frame
-             * @param {List} videoList a list of webcam video IDs in case there are >1
-             * @param {Object} eventTimings
-             * @return {Object} The payload sent to the server
-             */
             properties: {
                 videoId: {
                     type: 'string'
@@ -195,8 +186,7 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
                 videoList: {
                     type: 'list'
                 }
-            },
-            // No fields are required
+            }
         }
     }
 });
