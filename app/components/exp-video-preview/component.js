@@ -8,12 +8,13 @@ import ExpandAssets from '../../mixins/expand-assets';
 import { computed } from '@ember/object';
 import { videoAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
 
-/**
+/*
  * @module exp-player
  * @submodule frames
  */
 
-/**
+// Use regular comment syntax here to exclude from docs for clarity
+/*
  * A frame that displays a series of videos to preview, without collecting data as a live experiment. User can go through these at their own pace and video controls are shown. Webcam video is recorded starting once the user presses a button to actually display the videos, so that researchers can check that the participant (infant/child) did not see the videos ahead of time.
  ```json
  "frames": {
@@ -43,6 +44,7 @@ import { videoAssetOptions, imageAssetOptions } from '../../mixins/expand-assets
  * @uses Expand-assets
  * @uses Video-record
  * @uses Media-reload
+ * @deprecated
  */
 export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAssets, {
     layout,
@@ -104,7 +106,7 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
     },
     type: 'exp-video-preview',
     frameSchemaProperties: {
-        /**
+        /*
          * A series of preview videos to display within a single frame, defined as an array of objects.
          *
          * @property {Array} videos
@@ -133,7 +135,7 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
             },
             default: []
         },
-        /**
+        /*
          * Text on the button prompt asking the user to continue to the videos
          *
          * @property {String} prompt
@@ -143,7 +145,7 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
             description: 'Text on the button prompt asking the user to continue to the videos',
             default: 'Begin preview'
         },
-        /**
+        /*
          * Informational text to display to the user before videos are shown, along with button to continue
          *
          * @property {String} text
@@ -153,7 +155,7 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
             description: 'Informational text to display to the user before videos are shown, along with button to continue',
             default: ''
         },
-        /**
+        /*
          * Text on the button to proceed to the next example video/image
          *
          * @property {String} nextStimulusText
@@ -163,7 +165,7 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
             description: 'Text on the button to proceed to the next example video/image',
             default: 'Next'
         },
-        /**
+        /*
          * Text on the button to proceed to the previous example video/image
          *
          * @property {String} previousStimulusText
@@ -179,15 +181,6 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
         description: 'Frame that displays a series of preview videos, self-paced with controls.',
         data: {
             type: 'object',
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {String} videoID The ID of any webcam video recorded during this frame
-             * @param {List} videoList a list of webcam video IDs in case there are >1
-             * @param {Object} eventTimings
-             * @return {Object} The payload sent to the server
-             */
             properties: {
                 videoId: {
                     type: 'string'
@@ -195,8 +188,7 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
                 videoList: {
                     type: 'list'
                 }
-            },
-            // No fields are required
+            }
         }
     }
 });

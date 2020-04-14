@@ -542,22 +542,11 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         description: 'Component that displays video or images for looking measurements',
         data: {
             type: 'object',
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {Array} videosShown Sources of videos (potentially) shown during this trial: [source of test video, source of alternate test video].
-             * @param {Object} eventTimings
-             * @param {String} videoID The ID of any webcam video recorded during this frame
-             * @param {String} rightImage URL of image shown on right (given as a property of the frame)
-             * @param {String} leftImage URL of image shown on left (given as a property of the frame)
-             * @param {String} centerImage URL of image shown at center (given as a property of the frame)
-             * @param {Number} testLength seconds to display images/loop videos (given as a property of the frame), if using time-based limit
-             * @param {String} baseDir location of stimuli
-             * @param {String} testAudio test audio file played, if any
-             * @return {Object} The payload sent to the server
-             */
             properties: {
+               /**
+                * Sources of videos (potentially) shown during this trial: [source of test video, source of alternate test video].
+                * @attribute videosShown
+                */
                 videosShown: {
                     type: 'string',
                     default: []
@@ -565,21 +554,45 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 videoId: {
                     type: 'string'
                 },
+               /**
+                * URL of image shown on right (given as a property of the frame)
+                * @attribute rightImage
+                */
                 rightImage: {
                     type: 'string'
                 },
+               /**
+                * URL of image shown on left (given as a property of the frame)
+                * @attribute leftImage
+                */
                 leftImage: {
                     type: 'string'
                 },
+               /**
+                * URL of image shown at center (given as a property of the frame)
+                * @attribute centerImage
+                */
                 centerImage: {
                     type: 'string'
                 },
+               /**
+                * seconds to display images/loop videos (given as a property of the frame), if using time-based limit
+                * @attribute testLength
+                */
                 testLength: {
                     type: 'number'
                 },
+               /**
+                * test audio file played, if any
+                * @attribute testAudio
+                */
                 testAudio: {
                     type: 'string'
                 },
+               /**
+                * location of stimuli
+                * @attribute baseDir
+                */
                 baseDir: {
                     type: 'string'
                 }

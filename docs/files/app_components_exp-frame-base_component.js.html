@@ -50,7 +50,7 @@
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
                             <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
-                            <li><a href="../classes/Exp-lookit-preview-explanation.html">Exp-lookit-preview-explanation</a></li>
+                            <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
                             <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
                             <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-text.html">Exp-lookit-text</a></li>
@@ -60,7 +60,6 @@
                             <li><a href="../classes/Exp-lookit-webcam-display.html">Exp-lookit-webcam-display</a></li>
                             <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
                             <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
-                            <li><a href="../classes/Exp-video-preview.html">Exp-video-preview</a></li>
                             <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
                             <li><a href="../classes/Full-screen.html">Full-screen</a></li>
                             <li><a href="../classes/Media-reload.html">Media-reload</a></li>
@@ -568,18 +567,29 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
     },
 
     /**
-     * The base class does not define any data to save to the server. It does, however, capture some basic event
-     *   timing data. (such as when the user clicks the &quot;next&quot; button)
-     *
-     * This section slightly breaks YUIDoc conventions- rather than being a literal guide to using the code, the
-     *   &quot;parameters&quot; here are abstract descriptions of what data is captured.
-     *
-     * Each frame that extends ExpFrameBase will send an array &#x60;eventTimings&#x60;
-     * back to the server upon completion. This array is an ordered list (oldest
-     * to newest) of every EVENT that happened during the frame. Each event is
+     * Any properties generated via a custom generateProperties function provided to this
+     * frame (e.g., a score you computed to decide on feedback). In general will be null.
+     * @attribute generatedProperties
+     */
+
+     /**
+     * Type of frame: EXIT (exit survey), CONSENT (consent or assent frame), or DEFAULT
+     * (anything else)
+     * @attribute frameType
+     */
+
+    /**
+     * Ordered list of events captured during this frame (oldest to newest). Each event is
      * represented as an object with at least the properties
-     * &#x60;{&#x27;eventType&#x27;: EVENTNAME, &#x27;timestamp&#x27;: TIMESTAMP}&#x60;. Frame-specific events
-     * may define additional properties that are sent.
+     * &#x60;{&#x27;eventType&#x27;: EVENTNAME, &#x27;timestamp&#x27;: TIMESTAMP}&#x60;.
+     * See Events tab for details of events that might be captured.
+     * @attribute eventTimings
+     */
+
+    /**
+     * Each frame that extends ExpFrameBase will send at least an array &#x60;eventTimings&#x60;,
+     * a frame type, and any generateProperties back to the server upon completion.
+     * Individual frames may define additional properties that are sent.
      *
      * @param {Array} eventTimings
      * @method serializeContent

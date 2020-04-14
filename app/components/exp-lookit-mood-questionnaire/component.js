@@ -131,61 +131,91 @@ export default ExpFrameBaseComponent.extend(Validations, {
         name: 'ExpLookitMoodQuestionnaire',
         description: 'Mood questionnaire for Lookit studies, very slightly generalized from physics version exp-mood-questionnaire',
         data: {
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {String} rested Rating for CHILD on tired - rested scale, '1' to '7' where '7' is rested
-             * @param {String} healthy Rating for CHILD on sick - healthy scale, '1' to '7' where '7' is healthy
-             * @param {String} childHappy Rating for CHILD on fussy - happy scale, '1' to '7' where '7' is happy
-             * @param {String} active Rating for CHILD on calm - active scale, '1' to '7' where '7' is active
-             * @param {String} energetic Rating for PARENT on tired - energetic scale, '1' to '7' where '7' is energetic
-             * @param {String} ontopofstuff Rating for PARENT on overwhelmed - on top of stuff scale, '1' to '7' where '7' is on top of stuff
-             * @param {String} healthy Rating for PARENT on upset - happy scale, '1' to '7' where '7' is happy
-             * @param {String} napWakeUp how long since the child woke up from nap, HH:mm
-             * @param {String} usualNapSchedule whether the child has a typical nap schedule: 'no', 'yes', or 'yes-overdue' if child is overdue for nap
-             * @param {String} nextNap only valid if usualNapSchedule is 'yes';  how long until child is due to sleep again, HH:mm
-             * @param {String} lastEat how long since the child ate/drank, HH:mm
-             * @param {String} doingBefore what the child was doing before this (free response)
-             * @return {Object} The payload sent to the server
-             */
             type: 'object',
             properties: {
+               /**
+                * Rating for CHILD on tired - rested scale, '1' to '7' where '7' is rested
+                * @attribute rested
+                */
                 rested: {
                     type: 'string'
                 },
+               /**
+                * Rating for CHILD on sick - healthy scale, '1' to '7' where '7' is healthy
+                * @attribute healthy
+                */
                 healthy: {
                     type: 'string'
                 },
+               /**
+                * Rating for CHILD on fussy - happy scale, '1' to '7' where '7' is happy
+                * @attribute childHappy
+                */
                 childHappy: {
                     type: 'string'
                 },
+               /**
+                * Rating for CHILD on calm - active scale, '1' to '7' where '7' is active
+                * @attribute active
+                */
                 active: {
                     type: 'string'
                 },
+               /**
+                * Rating for PARENT on tired - energetic scale, '1' to '7' where '7' is energetic
+                * @attribute energetic
+                */
                 energetic: {
                     type: 'string'
                 },
+               /**
+                * Rating for PARENT on overwhelmed - on top of stuff scale, '1' to '7' where '7' is on top of stuff
+                * @attribute ontopofstuff
+                */
                 ontopofstuff: {
                     type: 'string'
                 },
+               /**
+                * Rating for PARENT on upset - happy scale, '1' to '7' where '7' is happy
+                * @attribute parentHappy
+                */
                 parentHappy: {
                     type: 'string'
                 },
+               /**
+                * how long since the child woke up from nap, HH:mm
+                * @attribute napWakeUp
+                */
                 napWakeUp: {
                     type: 'string',
                     default: null
                 },
+               /**
+                * whether the child has a typical nap schedule: 'no', 'yes', or 'yes-overdue' if child is overdue for nap
+                * @attribute usualNapSchedule
+                */
                 usualNapSchedule: {
                     type: 'string'
                 },
+               /**
+                * only valid if usualNapSchedule is 'yes';  how long until child is due to sleep again, HH:mm
+                * @attribute nextNap
+                */
                 nextNap: {
                     type: 'string'
                 },
+               /**
+                * how long since the child ate/drank, HH:mm
+                * @attribute lastEat
+                */
                 lastEat: {
                     type: 'string',
                     default: null
                 },
+               /**
+                * what the child was doing before this (free response)
+                * @attribute doingBefore
+                */
                 doingBefore: {
                     type: 'string'
                 }

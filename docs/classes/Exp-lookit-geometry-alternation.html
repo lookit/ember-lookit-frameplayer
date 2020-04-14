@@ -50,7 +50,7 @@
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
                             <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
-                            <li><a href="../classes/Exp-lookit-preview-explanation.html">Exp-lookit-preview-explanation</a></li>
+                            <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
                             <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
                             <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-text.html">Exp-lookit-text</a></li>
@@ -60,7 +60,6 @@
                             <li><a href="../classes/Exp-lookit-webcam-display.html">Exp-lookit-webcam-display</a></li>
                             <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
                             <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
-                            <li><a href="../classes/Exp-video-preview.html">Exp-video-preview</a></li>
                             <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
                             <li><a href="../classes/Full-screen.html">Full-screen</a></li>
                             <li><a href="../classes/Media-reload.html">Media-reload</a></li>
@@ -241,6 +240,7 @@ Example usage:</p>
 
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
             <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+            <li class="api-class-tab attrs"><a href="#attrs">Data collected</a></li>
             <li class="api-class-tab events"><a href="#events">Events</a></li>
     </ul>
 
@@ -323,23 +323,11 @@ Example usage:</p>
                     <h3>Properties</h3>
 
                     <ul class="index-list properties extends">
-                            <li class="index-item property inherited">
-                                <a href="#property_[doUseCamera=true]">[doUseCamera=true]</a>
-
-                            </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_[recorderElement=&#x27;#recorder&#x27;]">[recorderElement=&#x27;#recorder&#x27;]</a>
-
-                            </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_[startRecordingAutomatically=false]">[startRecordingAutomatically=false]</a>
-
-                            </li>
                             <li class="index-item property">
                                 <a href="#property_altOnLeft">altOnLeft</a>
 
                             </li>
-                            <li class="index-item property inherited">
+                            <li class="index-item property private inherited">
                                 <a href="#property_assetsToExpand">assetsToExpand</a>
 
                             </li>
@@ -359,7 +347,7 @@ Example usage:</p>
                                 <a href="#property_audioTypes">audioTypes</a>
 
                             </li>
-                            <li class="index-item property inherited">
+                            <li class="index-item property private inherited">
                                 <a href="#property_autosave">autosave</a>
 
                             </li>
@@ -391,6 +379,10 @@ Example usage:</p>
                                 <a href="#property_doRecording">doRecording</a>
 
                             </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_doUseCamera">doUseCamera</a>
+
+                            </li>
                             <li class="index-item property">
                                 <a href="#property_endAudioSources">endAudioSources</a>
 
@@ -403,11 +395,11 @@ Example usage:</p>
                                 <a href="#property_fsAudio">fsAudio</a>
 
                             </li>
-                            <li class="index-item property inherited inherited">
+                            <li class="index-item property private inherited inherited">
                                 <a href="#property_fsButtonID">fsButtonID</a>
 
                             </li>
-                            <li class="index-item property inherited inherited">
+                            <li class="index-item property private inherited inherited">
                                 <a href="#property_fullScreenElementId">fullScreenElementId</a>
 
                             </li>
@@ -431,11 +423,15 @@ Example usage:</p>
                                 <a href="#property_pauseAudio">pauseAudio</a>
 
                             </li>
-                            <li class="index-item property inherited">
+                            <li class="index-item property private inherited">
                                 <a href="#property_recorder">recorder</a>
 
                             </li>
-                            <li class="index-item property inherited">
+                            <li class="index-item property private inherited">
+                                <a href="#property_recorderElement">recorderElement</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
                                 <a href="#property_recorderReady">recorderReady</a>
 
                             </li>
@@ -448,10 +444,14 @@ Example usage:</p>
 
                             </li>
                             <li class="index-item property inherited">
-                                <a href="#property_startSessionRecording">startSessionRecording</a>
+                                <a href="#property_startRecordingAutomatically">startRecordingAutomatically</a>
 
                             </li>
                             <li class="index-item property inherited">
+                                <a href="#property_startSessionRecording">startSessionRecording</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
                                 <a href="#property_stoppedRecording">stoppedRecording</a>
 
                             </li>
@@ -471,11 +471,11 @@ Example usage:</p>
                                 <a href="#property_unpauseAudio">unpauseAudio</a>
 
                             </li>
-                            <li class="index-item property inherited">
+                            <li class="index-item property private inherited">
                                 <a href="#property_videoId">videoId</a>
 
                             </li>
-                            <li class="index-item property inherited">
+                            <li class="index-item property private inherited">
                                 <a href="#property_videoList">videoList</a>
 
                             </li>
@@ -490,6 +490,30 @@ Example usage:</p>
                     </ul>
                 </div>
 
+                <div class="index-section attrs">
+                    <h3>Data collected</h3>
+
+                    <ul class="index-list attrs extends">
+                            <li class="index-item attr">
+                                <a href="#attr_altOnLeft">altOnLeft</a>
+                            </li>
+                            <li class="index-item attr">
+                                <a href="#attr_context">context</a>
+                            </li>
+                            <li class="index-item attr inherited">
+                                <a href="#attr_eventTimings">eventTimings</a>
+                            </li>
+                            <li class="index-item attr inherited">
+                                <a href="#attr_frameType">frameType</a>
+                            </li>
+                            <li class="index-item attr inherited">
+                                <a href="#attr_generatedProperties">generatedProperties</a>
+                            </li>
+                            <li class="index-item attr">
+                                <a href="#attr_hasBeenPaused">hasBeenPaused</a>
+                            </li>
+                    </ul>
+                </div>
 
                 <div class="index-section events">
                     <h3>Events</h3>
@@ -577,7 +601,7 @@ Example usage:</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_destroyRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l311"><code>app&#x2F;mixins&#x2F;video-record.js:311</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l322"><code>app&#x2F;mixins&#x2F;video-record.js:322</code></a>
         </p>
 
 
@@ -640,7 +664,7 @@ Example usage:</p>
                 Full-screen
             </a>
             but overwritten in
-        <a href="../files/app_mixins_full-screen.js.html#l140"><code>app&#x2F;mixins&#x2F;full-screen.js:140</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l142"><code>app&#x2F;mixins&#x2F;full-screen.js:142</code></a>
         </p>
 
 
@@ -670,7 +694,7 @@ Example usage:</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_hideRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l377"><code>app&#x2F;mixins&#x2F;video-record.js:377</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l388"><code>app&#x2F;mixins&#x2F;video-record.js:388</code></a>
         </p>
 
 
@@ -716,7 +740,7 @@ Example usage:</p>
                 Video-record
             </a>
             but overwritten in
-        <a href="../files/app_components_exp-frame-base_component.js.html#l487"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:487</code></a>
+        <a href="../files/app_components_exp-frame-base_component.js.html#l498"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:498</code></a>
         </p>
 
 
@@ -791,7 +815,7 @@ event sent by a particular frame</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_pauseRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l235"><code>app&#x2F;mixins&#x2F;video-record.js:235</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l246"><code>app&#x2F;mixins&#x2F;video-record.js:246</code></a>
         </p>
 
 
@@ -842,7 +866,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_resumeRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l255"><code>app&#x2F;mixins&#x2F;video-record.js:255</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l266"><code>app&#x2F;mixins&#x2F;video-record.js:266</code></a>
         </p>
 
 
@@ -861,23 +885,11 @@ instead stop/start and make separate clips if needed.
 
 
 </div>
-<div id="method_serializeContent" class="method item">
+<div id="method_serializeContent" class="method item inherited">
     <h3 class="name"><code>serializeContent</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>context</code>
-                </li>
-                <li class="arg">
-                        <code>altOnLeft</code>
-                </li>
-                <li class="arg">
-                        <code>videoID</code>
-                </li>
-                <li class="arg">
-                        <code>hasBeenPaused</code>
-                </li>
                 <li class="arg">
                         <code>eventTimings</code>
                 </li>
@@ -895,12 +907,9 @@ instead stop/start and make separate clips if needed.
 
 
     <div class="meta">
-            <p>Inherited from
-            <a href="../classes/Exp-frame-base.html#method_serializeContent">
-                Exp-frame-base
-            </a>
-            but overwritten in
-        <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l371"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:371</code></a>
+                <p>Inherited from
+                <a href="../classes/Exp-frame-base.html#method_serializeContent">Exp-frame-base</a>:
+        <a href="../files/app_components_exp-frame-base_component.js.html#l480"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:480</code></a>
         </p>
 
 
@@ -908,7 +917,9 @@ instead stop/start and make separate clips if needed.
     </div>
 
     <div class="description">
-        <p>Parameters captured and sent to the server</p>
+        <p>Each frame that extends ExpFrameBase will send at least an array <code>eventTimings</code>,
+a frame type, and any generateProperties back to the server upon completion.
+Individual frames may define additional properties that are sent.</p>
 
     </div>
 
@@ -917,52 +928,8 @@ instead stop/start and make separate clips if needed.
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">context</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-
-                    <div class="param-description">
-                        <p>True to use big fat triangle as context figure, or false to use small skinny triangle as context. [same as passed to this frame]</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">altOnLeft</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-
-                    <div class="param-description">
-                        <p>Whether to put the shape+size alternating stream on the left (other stream alternates only in size) [same as passed to this frame]</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">videoID</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                        <p>The ID of any video recorded during this frame</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">hasBeenPaused</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-
-                    <div class="param-description">
-                        <p>whether this trial was paused</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
                         <code class="param-name">eventTimings</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
 
 
                     <div class="param-description">
@@ -978,8 +945,6 @@ instead stop/start and make separate clips if needed.
 
             <div class="returns-description">
                         <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
-                    <p>The payload sent to the server</p>
-
             </div>
         </div>
 
@@ -1012,7 +977,7 @@ instead stop/start and make separate clips if needed.
                 Session-record
             </a>
             but overwritten in
-        <a href="../files/app_mixins_video-record.js.html#l197"><code>app&#x2F;mixins&#x2F;video-record.js:197</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l208"><code>app&#x2F;mixins&#x2F;video-record.js:208</code></a>
         </p>
 
 
@@ -1069,7 +1034,7 @@ instead stop/start and make separate clips if needed.
                 Full-screen
             </a>
             but overwritten in
-        <a href="../files/app_mixins_full-screen.js.html#l107"><code>app&#x2F;mixins&#x2F;full-screen.js:107</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l109"><code>app&#x2F;mixins&#x2F;full-screen.js:109</code></a>
         </p>
 
 
@@ -1099,7 +1064,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_showRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l386"><code>app&#x2F;mixins&#x2F;video-record.js:386</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l397"><code>app&#x2F;mixins&#x2F;video-record.js:397</code></a>
         </p>
 
 
@@ -1133,7 +1098,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_startRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l273"><code>app&#x2F;mixins&#x2F;video-record.js:273</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l284"><code>app&#x2F;mixins&#x2F;video-record.js:284</code></a>
         </p>
 
 
@@ -1216,7 +1181,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_stopRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l296"><code>app&#x2F;mixins&#x2F;video-record.js:296</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l307"><code>app&#x2F;mixins&#x2F;video-record.js:307</code></a>
         </p>
 
 
@@ -1256,7 +1221,7 @@ instead stop/start and make separate clips if needed.
                 Session-record
             </a>
             but overwritten in
-        <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l803"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:803</code></a>
+        <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l804"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:804</code></a>
         </p>
 
 
@@ -1288,7 +1253,7 @@ stuff at this point!</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l820"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:820</code></a>
+        <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l821"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:821</code></a>
         </p>
 
 
@@ -1309,80 +1274,6 @@ stuff at this point!</p>
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
 
-<div id="property_[doUseCamera=true]" class="property item inherited">
-    <h3 class="name"><code>[doUseCamera=true]</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/Video-record.html#property_[doUseCamera=true]">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l147"><code>app&#x2F;mixins&#x2F;video-record.js:147</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        Whether to use the camera in this frame. Consuming frame should set this property
-to override if needed.
-    </div>
-
-
-
-</div>
-<div id="property_[recorderElement=&#x27;#recorder&#x27;]" class="property item inherited">
-    <h3 class="name"><code>[recorderElement=&#x27;#recorder&#x27;]</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/Video-record.html#property_[recorderElement=&#x27;#recorder&#x27;]">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l113"><code>app&#x2F;mixins&#x2F;video-record.js:113</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        JQuery string to identify the recorder element.
-    </div>
-
-
-
-</div>
-<div id="property_[startRecordingAutomatically=false]" class="property item inherited">
-    <h3 class="name"><code>[startRecordingAutomatically=false]</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/Video-record.html#property_[startRecordingAutomatically=false]">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l154"><code>app&#x2F;mixins&#x2F;video-record.js:154</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        Whether to start recording ASAP (only applies if doUseCamera). Consuming frame
-should set to override if needed.
-    </div>
-
-
-
-</div>
 <div id="property_altOnLeft" class="property item">
     <h3 class="name"><code>altOnLeft</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
@@ -1409,11 +1300,12 @@ should set to override if needed.
 
 
 </div>
-<div id="property_assetsToExpand" class="property item inherited">
+<div id="property_assetsToExpand" class="property item private inherited">
     <h3 class="name"><code>assetsToExpand</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
 
 
+        <span class="flag private">private</span>
 
 
 
@@ -1470,7 +1362,7 @@ should set to override if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_audioOnly">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l140"><code>app&#x2F;mixins&#x2F;video-record.js:140</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l148"><code>app&#x2F;mixins&#x2F;video-record.js:148</code></a>
         </p>
 
 
@@ -1521,7 +1413,7 @@ instructions during attention-getter video</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Expand-assets.html#property_audioTypes">Expand-assets </a> (click for formatted description):
-        <a href="../files/app_mixins_expand-assets.js.html#l122"><code>app&#x2F;mixins&#x2F;expand-assets.js:122</code></a>
+        <a href="../files/app_mixins_expand-assets.js.html#l123"><code>app&#x2F;mixins&#x2F;expand-assets.js:123</code></a>
         </p>
 
 
@@ -1551,18 +1443,19 @@ expanded out to
 
 
 </div>
-<div id="property_autosave" class="property item inherited">
+<div id="property_autosave" class="property item private inherited">
     <h3 class="name"><code>autosave</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
 
 
+        <span class="flag private">private</span>
 
 
 
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_autosave">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l133"><code>app&#x2F;mixins&#x2F;video-record.js:133</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l139"><code>app&#x2F;mixins&#x2F;video-record.js:139</code></a>
         </p>
 
 
@@ -1570,6 +1463,7 @@ expanded out to
 
     <div class="description">
         Whether to autosave recordings. Can be overridden by consuming frame.
+TODO: eventually use this to set up non-recording option for previewing
     </div>
 
         <p><strong>Default:</strong> 1</p>
@@ -1587,7 +1481,7 @@ expanded out to
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Expand-assets.html#property_baseDir">Expand-assets </a> (click for formatted description):
-        <a href="../files/app_mixins_expand-assets.js.html#l102"><code>app&#x2F;mixins&#x2F;expand-assets.js:102</code></a>
+        <a href="../files/app_mixins_expand-assets.js.html#l103"><code>app&#x2F;mixins&#x2F;expand-assets.js:103</code></a>
         </p>
 
 
@@ -1729,7 +1623,7 @@ calibration)</p>
                 Full-screen
             </a>
             but overwritten in
-        <a href="../files/app_mixins_full-screen.js.html#l166"><code>app&#x2F;mixins&#x2F;full-screen.js:166</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l168"><code>app&#x2F;mixins&#x2F;full-screen.js:168</code></a>
         </p>
 
 
@@ -1765,6 +1659,32 @@ generally used that way.
 
     </div>
 
+
+
+</div>
+<div id="property_doUseCamera" class="property item inherited">
+    <h3 class="name"><code>doUseCamera</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#property_doUseCamera">Video-record </a> (click for formatted description):
+        <a href="../files/app_mixins_video-record.js.html#l155"><code>app&#x2F;mixins&#x2F;video-record.js:155</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Whether to use the camera in this frame. Consuming frame should set this property
+to override if needed.
+    </div>
+
+        <p><strong>Default:</strong> true</p>
 
 
 </div>
@@ -1846,11 +1766,12 @@ audio played when study is paused due to not being fullscreen</p>
 
 
 </div>
-<div id="property_fsButtonID" class="property item inherited">
+<div id="property_fsButtonID" class="property item private inherited">
     <h3 class="name"><code>fsButtonID</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
 
 
+        <span class="flag private">private</span>
 
 
 
@@ -1860,7 +1781,7 @@ audio played when study is paused due to not being fullscreen</p>
                 Full-screen
             </a>
             but overwritten in
-        <a href="../files/app_mixins_full-screen.js.html#l27"><code>app&#x2F;mixins&#x2F;full-screen.js:27</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l28"><code>app&#x2F;mixins&#x2F;full-screen.js:28</code></a>
         </p>
 
 
@@ -1873,11 +1794,12 @@ audio played when study is paused due to not being fullscreen</p>
 
 
 </div>
-<div id="property_fullScreenElementId" class="property item inherited">
+<div id="property_fullScreenElementId" class="property item private inherited">
     <h3 class="name"><code>fullScreenElementId</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
 
 
+        <span class="flag private">private</span>
 
 
 
@@ -1996,7 +1918,7 @@ to be on one line.)</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_maxRecordingLength">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l126"><code>app&#x2F;mixins&#x2F;video-record.js:126</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l132"><code>app&#x2F;mixins&#x2F;video-record.js:132</code></a>
         </p>
 
 
@@ -2006,7 +1928,7 @@ to be on one line.)</p>
         Maximum recording length in seconds. Can be overridden by consuming frame.
     </div>
 
-        <p><strong>Default:</strong> 100000000</p>
+        <p><strong>Default:</strong> 7200</p>
 
 
 </div>
@@ -2131,11 +2053,12 @@ audio played upon pausing study</p>
 
 
 </div>
-<div id="property_recorder" class="property item inherited">
+<div id="property_recorder" class="property item private inherited">
     <h3 class="name"><code>recorder</code></h3>
     <span class="type">VideoRecorder</span>
 
 
+        <span class="flag private">private</span>
 
 
 
@@ -2156,18 +2079,45 @@ recorder.nWebcams, recorder.hasCamAccess, recorder.micChecked, recorder.connecte
 
 
 </div>
-<div id="property_recorderReady" class="property item inherited">
+<div id="property_recorderElement" class="property item private inherited">
+    <h3 class="name"><code>recorderElement</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#property_recorderElement">Video-record </a> (click for formatted description):
+        <a href="../files/app_mixins_video-record.js.html#l116"><code>app&#x2F;mixins&#x2F;video-record.js:116</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        JQuery string to identify the recorder element.
+    </div>
+
+        <p><strong>Default:</strong> &#x27;#recorder&#x27;</p>
+
+
+</div>
+<div id="property_recorderReady" class="property item private inherited">
     <h3 class="name"><code>recorderReady</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
 
 
+        <span class="flag private">private</span>
 
 
 
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_recorderReady">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l119"><code>app&#x2F;mixins&#x2F;video-record.js:119</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l124"><code>app&#x2F;mixins&#x2F;video-record.js:124</code></a>
         </p>
 
 
@@ -2273,6 +2223,32 @@ just used for attempts to leave the study early</li>
 
 
 </div>
+<div id="property_startRecordingAutomatically" class="property item inherited">
+    <h3 class="name"><code>startRecordingAutomatically</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#property_startRecordingAutomatically">Video-record </a> (click for formatted description):
+        <a href="../files/app_mixins_video-record.js.html#l163"><code>app&#x2F;mixins&#x2F;video-record.js:163</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Whether to start recording ASAP (only applies if doUseCamera). Consuming frame
+should set to override if needed.
+    </div>
+
+        <p><strong>Default:</strong> false</p>
+
+
+</div>
 <div id="property_startSessionRecording" class="property item inherited">
     <h3 class="name"><code>startSessionRecording</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
@@ -2298,18 +2274,19 @@ just used for attempts to leave the study early</li>
 
 
 </div>
-<div id="property_stoppedRecording" class="property item inherited">
+<div id="property_stoppedRecording" class="property item private inherited">
     <h3 class="name"><code>stoppedRecording</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
 
 
+        <span class="flag private">private</span>
 
 
 
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_stoppedRecording">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l105"><code>app&#x2F;mixins&#x2F;video-record.js:105</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l107"><code>app&#x2F;mixins&#x2F;video-record.js:107</code></a>
         </p>
 
 
@@ -2428,18 +2405,19 @@ audio played upon unpausing study</p>
 
 
 </div>
-<div id="property_videoId" class="property item inherited">
+<div id="property_videoId" class="property item private inherited">
     <h3 class="name"><code>videoId</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
 
 
+        <span class="flag private">private</span>
 
 
 
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_videoId">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l161"><code>app&#x2F;mixins&#x2F;video-record.js:161</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l171"><code>app&#x2F;mixins&#x2F;video-record.js:171</code></a>
         </p>
 
 
@@ -2454,25 +2432,26 @@ where RRR are random numeric digits.
 
 
 </div>
-<div id="property_videoList" class="property item inherited">
+<div id="property_videoList" class="property item private inherited">
     <h3 class="name"><code>videoList</code></h3>
     <span class="type">List</span>
 
 
+        <span class="flag private">private</span>
 
 
 
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_videoList">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l98"><code>app&#x2F;mixins&#x2F;video-record.js:98</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l99"><code>app&#x2F;mixins&#x2F;video-record.js:99</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        A list of all video IDs used in this mixing (a new one is created for each recording).
+        A list of all video IDs used in this mixin (a new one is created for each recording).
 Accessible to consuming frame.
     </div>
 
@@ -2516,7 +2495,7 @@ attention-getter video (should be loopable)</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Expand-assets.html#property_videoTypes">Expand-assets </a> (click for formatted description):
-        <a href="../files/app_mixins_expand-assets.js.html#l150"><code>app&#x2F;mixins&#x2F;expand-assets.js:150</code></a>
+        <a href="../files/app_mixins_expand-assets.js.html#l151"><code>app&#x2F;mixins&#x2F;expand-assets.js:151</code></a>
         </p>
 
 
@@ -2548,6 +2527,192 @@ expanded out to
 </div>
             </div>
 
+            <div id="attrs" class="api-class-tabpanel">
+                <h2 class="off-left">Data keys collected</h2>
+                These are the fields that will be captured by this frame and sent back to the Lookit server.
+                Each of these fields will correspond to one row of the CSV frame data for a given response - the
+                row will have <code>key</code> set to the data key name, and <code>value</code> set to the value for this response.
+                Equivalently, this data will be available in the <code>exp_data</code> field of the response JSON data.
+                    <div id="attr_altOnLeft" class="attr item">
+                        <a name="config_altOnLeft"></a> 
+                        <h3 class="name"><code>altOnLeft</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l380"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:380</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Whether to put the shape+size alternating stream on the left (other stream alternates only in size) [same as passed to this frame]</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_context" class="attr item">
+                        <a name="config_context"></a> 
+                        <h3 class="name"><code>context</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l373"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:373</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>True to use big fat triangle as context figure, or false to use small skinny triangle as context. [same as passed to this frame]</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_eventTimings" class="attr item inherited">
+                        <a name="config_eventTimings"></a> 
+                        <h3 class="name"><code>eventTimings</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/Exp-frame-base.html#attr_eventTimings">Exp-frame-base</a>:
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l472"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:472</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Ordered list of events captured during this frame (oldest to newest). Each event is
+                    represented as an object with at least the properties
+                    <code>{'eventType': EVENTNAME, 'timestamp': TIMESTAMP}</code>.
+                    See Events tab for details of events that might be captured.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_frameType" class="attr item inherited">
+                        <a name="config_frameType"></a> 
+                        <h3 class="name"><code>frameType</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/Exp-frame-base.html#attr_frameType">Exp-frame-base</a>:
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l466"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:466</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Type of frame: EXIT (exit survey), CONSENT (consent or assent frame), or DEFAULT
+                    (anything else)</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_generatedProperties" class="attr item inherited">
+                        <a name="config_generatedProperties"></a> 
+                        <h3 class="name"><code>generatedProperties</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/Exp-frame-base.html#attr_generatedProperties">Exp-frame-base</a>:
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l460"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:460</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Any properties generated via a custom generateProperties function provided to this
+                    frame (e.g., a score you computed to decide on feedback). In general will be null.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_hasBeenPaused" class="attr item">
+                        <a name="config_hasBeenPaused"></a> 
+                        <h3 class="name"><code>hasBeenPaused</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l390"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:390</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>whether this trial was paused</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+            </div>
 
             <div id="events" class="api-class-tabpanel">
                 <h2 class="off-left">Events</h2>
@@ -2563,7 +2728,7 @@ expanded out to
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l618"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:618</code></a>
+                            <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l619"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:619</code></a>
                             </p>
                     
                     
@@ -2591,7 +2756,7 @@ expanded out to
                                     Full-screen
                                 </a>
                                 but overwritten in
-                            <a href="../files/app_mixins_full-screen.js.html#l79"><code>app&#x2F;mixins&#x2F;full-screen.js:79</code></a>
+                            <a href="../files/app_mixins_full-screen.js.html#l81"><code>app&#x2F;mixins&#x2F;full-screen.js:81</code></a>
                             </p>
                     
                     
@@ -2661,7 +2826,7 @@ expanded out to
                                     Full-screen
                                 </a>
                                 but overwritten in
-                            <a href="../files/app_mixins_full-screen.js.html#l91"><code>app&#x2F;mixins&#x2F;full-screen.js:91</code></a>
+                            <a href="../files/app_mixins_full-screen.js.html#l93"><code>app&#x2F;mixins&#x2F;full-screen.js:93</code></a>
                             </p>
                     
                     
@@ -2685,7 +2850,7 @@ expanded out to
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Exp-frame-base.html#event_nextFrame">Exp-frame-base</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l532"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:532</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l543"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:543</code></a>
                             </p>
                     
                     
@@ -2734,7 +2899,7 @@ expanded out to
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Exp-frame-base.html#event_previousFrame">Exp-frame-base</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l587"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:587</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l598"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:598</code></a>
                             </p>
                     
                     
@@ -2759,7 +2924,7 @@ expanded out to
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Video-record.html#event_recorderReady">Video-record</a>:
-                            <a href="../files/app_mixins_video-record.js.html#l348"><code>app&#x2F;mixins&#x2F;video-record.js:348</code></a>
+                            <a href="../files/app_mixins_video-record.js.html#l359"><code>app&#x2F;mixins&#x2F;video-record.js:359</code></a>
                             </p>
                     
                     
@@ -2807,7 +2972,7 @@ expanded out to
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l493"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:493</code></a>
+                            <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l494"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:494</code></a>
                             </p>
                     
                     
@@ -2849,7 +3014,7 @@ expanded out to
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l458"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:458</code></a>
+                            <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l459"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:459</code></a>
                             </p>
                     
                     
@@ -2874,7 +3039,7 @@ expanded out to
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l522"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:522</code></a>
+                            <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l523"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:523</code></a>
                             </p>
                     
                     
@@ -2902,7 +3067,7 @@ expanded out to
                                     Session-record
                                 </a>
                                 but overwritten in
-                            <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l431"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:431</code></a>
+                            <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l432"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:432</code></a>
                             </p>
                     
                     
@@ -2954,7 +3119,7 @@ expanded out to
                                     Session-record
                                 </a>
                                 but overwritten in
-                            <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l570"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:570</code></a>
+                            <a href="../files/app_components_exp-lookit-geometry-alternation_component.js.html#l571"><code>app&#x2F;components&#x2F;exp-lookit-geometry-alternation&#x2F;component.js:571</code></a>
                             </p>
                     
                     

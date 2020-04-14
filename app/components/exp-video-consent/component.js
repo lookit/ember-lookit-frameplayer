@@ -3,7 +3,7 @@ import layout from './template';
 import ExpLookitVideoConsent from '../exp-lookit-video-consent/component';
 import VideoRecord from '../../mixins/video-record';
 
-/**
+/*
  * @module exp-player
  * @submodule frames
  */
@@ -49,7 +49,7 @@ Consent document can be downloaded as PDF document by participant.
 
 @class Exp-video-consent
 @extends Exp-lookit-video-consent
-
+@deprecated
 @uses Video-record
 */
 
@@ -57,7 +57,7 @@ export default ExpLookitVideoConsent.extend(VideoRecord, {
     layout,
 
     frameSchemaProperties: {
-        /**
+        /*
         Title of the consent document
         @property {String} title
         @default 'Consent to participate in behavioral research: <br> Inference and induction study'
@@ -67,7 +67,7 @@ export default ExpLookitVideoConsent.extend(VideoRecord, {
             default: 'Consent to participate in behavioral research: <br> Inference and induction study'
         },
 
-        /**
+        /*
         Array of paragraphs of the consent document, each with title and text.
         @property {Array} blocks
             @param {String} title
@@ -90,7 +90,7 @@ export default ExpLookitVideoConsent.extend(VideoRecord, {
             default: []
         },
 
-        /**
+        /*
         Text the user is asked to read aloud to consent
         @property {String} prompt
         @default 'I consent to participate in this study'
@@ -105,16 +105,6 @@ export default ExpLookitVideoConsent.extend(VideoRecord, {
         name: 'Video Consent Form',
         description: 'A video consent form.',
         data: {
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {String} consentFormText the exact text shown in the consent document during this frame
-             * @param {String} videoID The ID of any webcam video recorded during this frame
-             * @param {List} videoList a list of webcam video IDs in case there are >1
-             * @param {Object} eventTimings
-             * @return {Object} The payload sent to the server
-             */
             type: 'object',
             properties: {
                 videoId: {

@@ -39,7 +39,7 @@ The consent document can be downloaded as PDF document by participant.
         "payment": "After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.",
         "datause": "We are primarily interested in your child's emotional reactions to the images and sounds. A research assistant will watch your video to measure the precise amount of delight in your child's face as he or she sees each cat picture.",
         "gdpr": false,
-        "research_rights_statement": "You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Chairman of the Committee on the Use of Humans as Experimental Subjects, M.I.T., Room E25-143B, 77 Massachusetts Ave, Cambridge, MA 02139, phone 1-617-253 6787."
+        "research_rights_statement": "You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the [IRB NAME], [INSTITUTION], [ADDRESS/CONTACT]"
     }
 }
 ```
@@ -255,16 +255,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         name: 'Video Consent Form',
         description: 'A video consent form.',
         data: {
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {String} consentFormText the exact text shown in the consent document during this frame
-             * @param {String} videoID The ID of any webcam video recorded during this frame
-             * @param {List} videoList a list of webcam video IDs in case there are >1
-             * @param {Object} eventTimings
-             * @return {Object} The payload sent to the server
-             */
             type: 'object',
             properties: {
                 videoId: {
@@ -273,6 +263,10 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 videoList: {
                     type: 'list'
                 },
+               /**
+                * the exact text shown in the consent document during this frame
+                * @attribute consentFormText
+                */
                 consentFormText: {
                     type: 'string'
                 }

@@ -1,12 +1,13 @@
 import layout from './template';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 
-/**
+/*
  * @module exp-player
  * @submodule frames
  */
 
-/**
+// Use regular comment syntax here to exclude from docs for clarity
+/*
  * A frame that to explain any blinding procedures to parents, and offer them the option to preview stimuli before the study. Two buttons allow the user to move forward: one goes to the next frame (if the parent wants to preview stimuli), and one skips the next frame and goes to the one after that (if the parent declins). Therefore, this frame should be followed by an {{#crossLink "Exp-video-preview"}}{{/crossLink}} frame.
 
 ```json
@@ -37,13 +38,14 @@ import ExpFrameBaseComponent from '../exp-frame-base/component';
  * ```
  * @class Exp-lookit-preview-explanation
  * @extends Exp-frame-base
+ * @deprecated
  */
 
 export default ExpFrameBaseComponent.extend({
     type: 'exp-lookit-preview-explanation',
     layout: layout,
     frameSchemaProperties: {
-        /**
+        /*
          * Whether to show a 'previous' button
          *
          * @property {Boolean} showPreviousButton
@@ -53,7 +55,7 @@ export default ExpFrameBaseComponent.extend({
             type: 'boolean',
             default: true
         },
-        /**
+        /*
          * Array of text blocks (paragraphs) to display after the image.
          *
          * @property {Object} blocks
@@ -79,7 +81,7 @@ export default ExpFrameBaseComponent.extend({
             },
             default: []
         },
-        /**
+        /*
          * Object specifying first block of text (pre-image) to display.
          *
          * @property {Object} introBlock
@@ -101,7 +103,7 @@ export default ExpFrameBaseComponent.extend({
                 }
             }
         },
-        /**
+        /*
          * Image to display after the intro block. (Displayed centered,
          * with border, max height 220px.) E.g., a picture of a parent
          * holding a child looking over their shoulder.
@@ -122,7 +124,7 @@ export default ExpFrameBaseComponent.extend({
             },
             required: ['src', 'alt']
         },
-        /**
+        /*
          * Text to display on the button to go to the next frame
          *
          * @property {String} previewButtonText
@@ -132,7 +134,7 @@ export default ExpFrameBaseComponent.extend({
             type: 'string',
             default: 'I\'d like to preview the videos'
         },
-        /**
+        /*
          * Text to display on the button to skip the next frame
          *
          * @property {String} skipButtonText

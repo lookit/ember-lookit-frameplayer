@@ -282,23 +282,13 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         name: 'ExpLookitInstructions',
         description: 'A frame to display bulleted instructions to the user, along with an audio clip to make sure sound playback is working.',
         data: {
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {Boolean} showWarning whether the warning about sound being played is currently shown
-             * @return {Object} The payload sent to the server
-             */
             type: 'object',
             properties: {
-                showWarning: {
-                    type: 'boolean',
-                    default: false
-                }
-            },
-            required: ['showWarning']
+            }
         }
     },
+
+    showWarning: false,
 
     actions: {
         mediaPlayed(e) {

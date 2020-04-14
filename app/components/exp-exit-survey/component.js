@@ -8,7 +8,7 @@ import moment from 'moment';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 import FullScreen from '../../mixins/full-screen';
 
-/**
+/*
  * @module exp-player
  * @submodule frames
  */
@@ -21,6 +21,7 @@ This is the exit survey used by "Your baby the physicist". Use the updated frame
 @extends Exp-frame-base
 @uses Validations
 @uses Full-screen
+@deprecated
 */
 
 const Validations = buildValidations({

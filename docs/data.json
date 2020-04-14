@@ -7,18 +7,11 @@
         "version": "0.0.0"
     },
     "files": {
-        "app/components/exp-exit-survey/component.js": {
-            "name": "app/components/exp-exit-survey/component.js",
+        "app/components/exp-frame-base/component.js": {
+            "name": "app/components/exp-frame-base/component.js",
             "modules": {
                 "frames": 1
             },
-            "classes": {},
-            "fors": {},
-            "namespaces": {}
-        },
-        "app/components/exp-frame-base/component.js": {
-            "name": "app/components/exp-frame-base/component.js",
-            "modules": {},
             "classes": {
                 "Exp-frame-base": 1
             },
@@ -122,19 +115,19 @@
             "fors": {},
             "namespaces": {}
         },
-        "app/components/exp-lookit-preview-explanation/component.js": {
-            "name": "app/components/exp-lookit-preview-explanation/component.js",
-            "modules": {},
-            "classes": {
-                "Exp-lookit-preview-explanation": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
         "app/components/exp-lookit-single-image/component.js": {
             "name": "app/components/exp-lookit-single-image/component.js",
             "modules": {},
             "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "app/components/exp-lookit-stimuli-preview/component.js": {
+            "name": "app/components/exp-lookit-stimuli-preview/component.js",
+            "modules": {},
+            "classes": {
+                "Exp-lookit-stimuli-preview": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -222,22 +215,6 @@
             "modules": {},
             "classes": {
                 "Exp-video-config-quality": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "app/components/exp-video-consent/component.js": {
-            "name": "app/components/exp-video-consent/component.js",
-            "modules": {},
-            "classes": {},
-            "fors": {},
-            "namespaces": {}
-        },
-        "app/components/exp-video-preview/component.js": {
-            "name": "app/components/exp-video-preview/component.js",
-            "modules": {},
-            "classes": {
-                "Exp-video-preview": 1
             },
             "fors": {},
             "namespaces": {}
@@ -366,7 +343,7 @@
                 "Exp-lookit-mood-questionnaire": 1,
                 "Exp-lookit-observation": 1,
                 "Exp-lookit-preferential-looking": 1,
-                "Exp-lookit-preview-explanation": 1,
+                "Exp-lookit-stimuli-preview": 1,
                 "Exp-lookit-survey": 1,
                 "Exp-lookit-text": 1,
                 "Exp-lookit-video": 1,
@@ -375,7 +352,6 @@
                 "Exp-lookit-webcam-display": 1,
                 "Exp-video-config": 1,
                 "Exp-video-config-quality": 1,
-                "Exp-video-preview": 1,
                 "Expand-assets": 1,
                 "Full-screen": 1,
                 "Media-reload": 1,
@@ -411,7 +387,7 @@
                 "Exp-lookit-mood-questionnaire": 1,
                 "Exp-lookit-observation": 1,
                 "Exp-lookit-preferential-looking": 1,
-                "Exp-lookit-preview-explanation": 1,
+                "Exp-lookit-stimuli-preview": 1,
                 "Exp-lookit-survey": 1,
                 "Exp-lookit-text": 1,
                 "Exp-lookit-video": 1,
@@ -419,16 +395,15 @@
                 "Exp-lookit-video-consent": 1,
                 "Exp-lookit-webcam-display": 1,
                 "Exp-video-config": 1,
-                "Exp-video-config-quality": 1,
-                "Exp-video-preview": 1
+                "Exp-video-config-quality": 1
             },
             "fors": {},
             "is_submodule": 1,
             "namespaces": {},
             "module": "exp-player",
             "namespace": "",
-            "file": "app/components/exp-video-preview/component.js",
-            "line": 16,
+            "file": "app/components/exp-video-config-quality/component.js",
+            "line": 17,
             "description": "Reusable frames that can be used as part of Lookit studies. This is the main reference\n  for researchers writing their own study protocols on Lookit.",
             "tag": "main",
             "itemtype": "main"
@@ -707,9 +682,9 @@
                 "Expand-assets"
             ]
         },
-        "Exp-lookit-preview-explanation": {
-            "name": "Exp-lookit-preview-explanation",
-            "shortname": "Exp-lookit-preview-explanation",
+        "Exp-lookit-stimuli-preview": {
+            "name": "Exp-lookit-stimuli-preview",
+            "shortname": "Exp-lookit-stimuli-preview",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -718,10 +693,15 @@
             "module": "exp-player",
             "submodule": "frames",
             "namespace": "",
-            "file": "app/components/exp-lookit-preview-explanation/component.js",
-            "line": 9,
-            "description": "A frame that to explain any blinding procedures to parents, and offer them the option to preview stimuli before the study. Two buttons allow the user to move forward: one goes to the next frame (if the parent wants to preview stimuli), and one skips the next frame and goes to the one after that (if the parent declins). Therefore, this frame should be followed by an {{#crossLink \"Exp-video-preview\"}}{{/crossLink}} frame.\n\n```json\n\"frames\": {\n   \"my-video-preview-explanation\": {\n       \"introBlock\": {\n           \"text\": \"During the videos, we'll ask that you hold your child over your shoulder like this, so that you're facing face away from the screen.\"\n       },\n       \"image\": {\n           \"alt\": \"Father holding child looking over his shoulder\",\n           \"src\": \"https://s3.amazonaws.com/lookitcontents/exp-physics/OverShoulder.jpg\"\n       },\n       \"kind\": \"exp-lookit-preview-explanation\",\n       \"skipButtonText\": \"Skip preview\",\n       \"previewButtonText\": \"I'd like to preview the videos\",\n       \"blocks\": [\n           {\n               \"text\": \"The reason we ask this is that your child is learning from you all the time. Even if he or she can't see where you're looking, you may unconsciously shift towards one side or the other and influence your child's attention. We want to make sure we're measuring your child's preferences, not yours!\"\n           },\n           {\n               \"text\": \"If you'd like to see the videos your child will be shown, you can take a look ahead of time now. It's important that you preview the videos without your child, so that the videos will still be new to them.\"\n           }\n       ],\n       \"showPreviousButton\": true\n   }\n}\n\n```",
-            "extends": "Exp-frame-base"
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 16,
+            "description": "A frame that to explain any blinding procedures to parents, and offer them the option to preview stimuli before the study. Two buttons allow the user to move forward: one goes to the next frame (if the parent wants to preview stimuli), and one skips the next frame and goes to the one after that (if the parent declins). Therefore, this frame should be followed by an {{#crossLink \"Exp-video-preview\"}}{{/crossLink}} frame.\n\n```json\n\"frames\": {\n   \"my-video-preview-explanation\": {\n       \"kind\": \"exp-lookit-stimuli-preview\",\n       \"skipButtonText\": \"Skip preview\",\n       \"previewButtonText\": \"I'd like to preview the videos\",\n       \"blocks\": [\n           {\n                \"text\": \"During the videos, we'll ask that you hold your child over your shoulder like this, so that you're facing face away from the screen.\"\n           },\n           {\n               \"image\": {\n                   \"alt\": \"Father holding child looking over his shoulder\",\n                   \"src\": \"https://raw.githubusercontent.com/kimberscott/placeholder-stimuli/master/img/OverShoulder.jpg\"\n               }\n           },\n           {\n               \"text\": \"This is because your child is learning from you all the time, and may pick up on even very small cues about what you think. But if you can't see the stimuli, we're definitely only measuring your child's own beliefs.\"\n           },\n           {\n               \"text\": \"If you'd like to see the videos your child will be shown, you can take a look ahead of time now. It's important that you preview the videos without your child, so that the videos will still be new to them.\"\n           }\n       ],\n       \"showPreviousButton\": true,\n       \"baseDir\": \"https://raw.githubusercontent.com/kimberscott/placeholder-stimuli/master/\",\n       \"videoTypes\": [\"webm\", \"mp4\"],\n       \"audioTypes\": [\"mp3\", \"ogg\"],\n       \"stimuli\": [\n          {\n            \"caption\": \"At the start of each section, we will play a video like this that shows a common household object, like a book or an apple.\",\n            \"video\": \"cropped_book\"\n          },\n          {\n            \"caption\": \"Your child will be looking at images like this, and we'll ask him or her to describe each one.\",\n            \"image\": \"square.png\"\n          },\n          {\n            \"caption\": \"Between sections, we will play audio like this so you know where you are in the study.\",\n            \"audio\": \"sample_1\"\n          }\n        ]\n   }\n}\n\n```",
+            "extends": "Exp-frame-base",
+            "uses": [
+                "Expand-assets",
+                "Video-record",
+                "Media-reload"
+            ]
         },
         "Exp-lookit-survey": {
             "name": "Exp-lookit-survey",
@@ -809,7 +789,7 @@
             "namespace": "",
             "file": "app/components/exp-lookit-video-consent/component.js",
             "line": 16,
-            "description": "Video consent frame for Lookit studies, with consent document displayed at left and instructions to start recording, read a statement out loud, and send. A standard consent\ndocument is displayed, with additional study-specific information provided by the researcher, in accordance with the Lookit terms of use.\n\nResearchers can select from the following named templates:\n\n`consent_001`: Original Lookit consent document (2019)\n`consent_002`: Added optional GDPR section and research subject rights statement\n\nTo look up the exact text of the consent document, see https://github.com/lookit/ember-lookit-frameplayer/blob/master/app/components/exp-lookit-video-consent/template.hbs\n\nThe consent document can be downloaded as PDF document by participant.\n\n```json\n\"frames\": {\n    \"video-consent\": {\n        \"kind\": \"exp-lookit-video-consent\",\n        \"template\": \"consent_002\",\n        \"PIName\": \"Jane Smith\",\n        \"institution\": \"Science University\",\n        \"PIContact\": \"Jane Smith at 123 456 7890\",\n        \"purpose\": \"Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.\",\n        \"procedures\": \"Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.\",\n        \"payment\": \"After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.\",\n        \"datause\": \"We are primarily interested in your child's emotional reactions to the images and sounds. A research assistant will watch your video to measure the precise amount of delight in your child's face as he or she sees each cat picture.\",\n        \"gdpr\": false,\n        \"research_rights_statement\": \"You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Chairman of the Committee on the Use of Humans as Experimental Subjects, M.I.T., Room E25-143B, 77 Massachusetts Ave, Cambridge, MA 02139, phone 1-617-253 6787.\"\n    }\n}\n```",
+            "description": "Video consent frame for Lookit studies, with consent document displayed at left and instructions to start recording, read a statement out loud, and send. A standard consent\ndocument is displayed, with additional study-specific information provided by the researcher, in accordance with the Lookit terms of use.\n\nResearchers can select from the following named templates:\n\n`consent_001`: Original Lookit consent document (2019)\n`consent_002`: Added optional GDPR section and research subject rights statement\n\nTo look up the exact text of the consent document, see https://github.com/lookit/ember-lookit-frameplayer/blob/master/app/components/exp-lookit-video-consent/template.hbs\n\nThe consent document can be downloaded as PDF document by participant.\n\n```json\n\"frames\": {\n    \"video-consent\": {\n        \"kind\": \"exp-lookit-video-consent\",\n        \"template\": \"consent_002\",\n        \"PIName\": \"Jane Smith\",\n        \"institution\": \"Science University\",\n        \"PIContact\": \"Jane Smith at 123 456 7890\",\n        \"purpose\": \"Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.\",\n        \"procedures\": \"Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.\",\n        \"payment\": \"After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.\",\n        \"datause\": \"We are primarily interested in your child's emotional reactions to the images and sounds. A research assistant will watch your video to measure the precise amount of delight in your child's face as he or she sees each cat picture.\",\n        \"gdpr\": false,\n        \"research_rights_statement\": \"You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the [IRB NAME], [INSTITUTION], [ADDRESS/CONTACT]\"\n    }\n}\n```",
             "extends": "Exp-frame-base",
             "uses": [
                 "Video-record"
@@ -863,27 +843,6 @@
             "description": "Video configuration frame showing webcam view at right and instructions for checking\nvideo quality for preferential looking setup at left. Default content is hard-coded to\nprovide a reasonable set of instructions for preferential looking setups, so the frame can\nbe used as follows with no parameters besides `kind`:\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\"\n    }\n}\n```\n\nOptionally,\nparticipants can be required to check off each item before they can proceed to the next\nframe. If `requireItemConfirmation` is true (default), then the 'next' button will\nappear disabled until the participant has checked off all buttons, although if they click\nit anyway they will get an informative warning and the instructions section will scroll\nto the first unchecked item.\n\nParticipants can also be optionally required to create and view a short recording, e.g. to\ncheck their child will be audible or their child's eyes will be visible in a particular position.\n\nYou can also customize any or all text and images as in the following example.\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\",\n        \"title\": \"Webcam setup for preferential looking\",\n        \"introText\": \"We'll be analyzing where your child chooses to look during the videos--but only if we can tell where that is! Please check each of the following to ensure we're able to use your video:\",\n        \"requireItemConfirmation\": true,\n        \"completedItemText\": \"Did it!\",\n        \"instructionBlocks\": [\n                    {\n                        \"text\": \"<strong>Make sure the webcam you're using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/centering.png\",\n                            \"alt\": \"Example images of using centered external webcam on monitor or built-in webcam on laptop.\"\n                        }\n                    },\n                    {\n                        \"text\": \"<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there's just one monitor, you're all set!)\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/monitors.png\",\n                            \"alt\": \"Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.\"\n                        }\n                    },\n                    {\n                        \"text\": \"Check the lighting by making sure you can <strong>clearly see your own eyes</strong> on the webcam view to the right. You may need to either turn on a light or reduce light coming from behind you.\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/lighting.png\",\n                            \"alt\": \"Example images showing good lighting, room too dark, and backlit scene where eyes are not visible.\"\n                        }\n                    },\n                    {\n                        \"text\": \"If it's practical, <strong>minimize exciting things</strong> that are visible behind or to the side of the screen--for instance, by facing a wall instead of the kitchen. (If this isn't practical for you, don't worry about it--just check the box!)\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/distractions.png\",\n                            \"alt\": \"Example images showing a child and puppy next to the computer, versus a computer just on its own.\"\n                        }\n                    },\n                    {\n                        \"text\": \"During the study, we'll ask that you sit facing away from the monitor, holding your child over your shoulder, like this. (More on that in a moment!) <strong>Make sure the webcam is angled up or down enough that your child's eyes are visible in this position</strong>. If you're not sure if your child's eyes will be visible, you can make a short recording to check!\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/over_shoulder.jpg\",\n                            \"alt\": \"Example image showing a dad holding his child looking over his shoulder.\"\n                        }\n                    }\n                ],\n            \"requireTestVideo\": true,\n            \"showRecordMenu\": true,\n            \"recordingInstructionText\": \"You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.\"\n    }\n}\n```",
             "extends": "Video-record"
         },
-        "Exp-video-preview": {
-            "name": "Exp-video-preview",
-            "shortname": "Exp-video-preview",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "exp-player",
-            "submodule": "frames",
-            "namespace": "",
-            "file": "app/components/exp-video-preview/component.js",
-            "line": 16,
-            "description": "A frame that displays a series of videos to preview, without collecting data as a live experiment. User can go through these at their own pace and video controls are shown. Webcam video is recorded starting once the user presses a button to actually display the videos, so that researchers can check that the participant (infant/child) did not see the videos ahead of time.\n```json\n\"frames\": {\n   \"my-sample-frame\": {\n       \"id\": \"video-preview\",\n       \"kind\": \"exp-video-preview\",\n       \"text\": \"Here are the videos your child will see in this study. You can watch them ahead of time--please just don't show your child yet!\",\n       \"prompt\": \"My child can NOT see the screen. Start the preview!\",\n       \"baseDir\": \"https://url.com/\",\n       \"videoTypes\": [\"webm\", \"mp4\"],\n       \"videos\": [\n          {\n            \"caption\": \"User-facing text that appears below the video\",\n            \"sources\": \"example_intro\"\n          },\n          {\n            \"caption\": \"User-facing text that appears below the video\",\n            \"imgSrc\": \"caterpillar_picture\"\n          }\n        ]\n   }\n }\n\n```",
-            "extends": "Exp-frame-base",
-            "uses": [
-                "Expand-assets",
-                "Video-record",
-                "Media-reload"
-            ]
-        },
         "Expand-assets": {
             "name": "Expand-assets",
             "shortname": "Expand-assets",
@@ -898,8 +857,8 @@
                 "Exp-lookit-geometry-alternation-open",
                 "Exp-lookit-story-page",
                 "Exp-lookit-preferential-looking",
-                "Exp-lookit-video",
-                "Exp-video-preview"
+                "Exp-lookit-stimuli-preview",
+                "Exp-lookit-video"
             ],
             "module": "exp-player",
             "submodule": "mixins",
@@ -942,8 +901,8 @@
             "plugin_for": [],
             "extension_for": [
                 "Exp-lookit-preferential-looking",
-                "Exp-lookit-video",
-                "Exp-video-preview"
+                "Exp-lookit-stimuli-preview",
+                "Exp-lookit-video"
             ],
             "module": "exp-player",
             "submodule": "mixins",
@@ -983,10 +942,10 @@
                 "Exp-lookit-geometry-alternation-open",
                 "Exp-lookit-story-page",
                 "Exp-lookit-preferential-looking",
+                "Exp-lookit-stimuli-preview",
                 "Exp-lookit-video",
                 "Exp-lookit-video-assent",
-                "Exp-lookit-video-consent",
-                "Exp-video-preview"
+                "Exp-lookit-video-consent"
             ],
             "module": "exp-player",
             "submodule": "mixins",
@@ -1096,7 +1055,37 @@
         {
             "file": "app/components/exp-frame-base/component.js",
             "line": 460,
-            "description": "The base class does not define any data to save to the server. It does, however, capture some basic event\n  timing data. (such as when the user clicks the \"next\" button)\n\nThis section slightly breaks YUIDoc conventions- rather than being a literal guide to using the code, the\n  \"parameters\" here are abstract descriptions of what data is captured.\n\nEach frame that extends ExpFrameBase will send an array `eventTimings`\nback to the server upon completion. This array is an ordered list (oldest\nto newest) of every EVENT that happened during the frame. Each event is\nrepresented as an object with at least the properties\n`{'eventType': EVENTNAME, 'timestamp': TIMESTAMP}`. Frame-specific events\nmay define additional properties that are sent.",
+            "description": "Any properties generated via a custom generateProperties function provided to this\nframe (e.g., a score you computed to decide on feedback). In general will be null.",
+            "itemtype": "attribute",
+            "name": "generatedProperties",
+            "class": "Exp-frame-base",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-frame-base/component.js",
+            "line": 466,
+            "description": "Type of frame: EXIT (exit survey), CONSENT (consent or assent frame), or DEFAULT\n(anything else)",
+            "itemtype": "attribute",
+            "name": "frameType",
+            "class": "Exp-frame-base",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-frame-base/component.js",
+            "line": 472,
+            "description": "Ordered list of events captured during this frame (oldest to newest). Each event is\nrepresented as an object with at least the properties\n`{'eventType': EVENTNAME, 'timestamp': TIMESTAMP}`.\nSee Events tab for details of events that might be captured.",
+            "itemtype": "attribute",
+            "name": "eventTimings",
+            "class": "Exp-frame-base",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-frame-base/component.js",
+            "line": 480,
+            "description": "Each frame that extends ExpFrameBase will send at least an array `eventTimings`,\na frame type, and any generateProperties back to the server upon completion.\nIndividual frames may define additional properties that are sent.",
             "params": [
                 {
                     "name": "eventTimings",
@@ -1116,7 +1105,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 487,
+            "line": 498,
             "description": "Create the time event payload for a particular frame / event. This can be overridden to add fields to every\n event sent by a particular frame",
             "itemtype": "method",
             "name": "makeTimeEvent",
@@ -1143,7 +1132,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 532,
+            "line": 543,
             "description": "Move to next frame",
             "itemtype": "event",
             "name": "nextFrame",
@@ -1153,7 +1142,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 587,
+            "line": 598,
             "description": "Move to previous frame",
             "itemtype": "event",
             "name": "previousFrame",
@@ -1436,48 +1425,37 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 516,
-            "description": "Parameters captured and sent to the server",
+            "line": 518,
+            "description": "Sequence of images shown on the left",
             "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "leftSequence",
-                    "description": "Sequence of images shown on the left",
-                    "type": "Boolean"
-                },
-                {
-                    "name": "rightSequence",
-                    "description": "Sequence of images shown on the right",
-                    "type": "Boolean"
-                },
-                {
-                    "name": "videoID",
-                    "description": "The ID of any video recorded during this frame",
-                    "type": "String"
-                },
-                {
-                    "name": "hasBeenPaused",
-                    "description": "whether this trial was paused",
-                    "type": "Boolean"
-                },
-                {
-                    "name": "eventTimings",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
+            "name": "leftSequence",
             "class": "Exp-lookit-change-detection",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 582,
+            "line": 525,
+            "description": "Sequence of images shown on the right",
+            "itemtype": "method",
+            "name": "rightSequence",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 535,
+            "description": "Whether this trial was paused",
+            "itemtype": "method",
+            "name": "hasBeenPaused",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 583,
             "description": "Just before stopping webcam video capture",
             "itemtype": "event",
             "name": "stoppingCapture",
@@ -1487,7 +1465,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 609,
+            "line": 610,
             "description": "Immediately before starting intro/announcement segment",
             "itemtype": "event",
             "name": "startIntro",
@@ -1497,7 +1475,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 633,
+            "line": 634,
             "description": "Immediately before starting test trial segment",
             "itemtype": "event",
             "name": "startTestTrial",
@@ -1507,7 +1485,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 671,
+            "line": 672,
             "description": "Records each time images are cleared from display",
             "itemtype": "event",
             "name": "clearImages",
@@ -1517,7 +1495,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 706,
+            "line": 707,
             "description": "Immediately after making images visible",
             "itemtype": "event",
             "name": "presentImages",
@@ -1539,20 +1517,24 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 827,
+            "line": 828,
             "description": "Observer that starts recording once recorder is ready. Override to do additional\nstuff at this point!",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
+            "access": "private",
+            "tagname": "",
             "class": "Exp-lookit-change-detection",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 845,
+            "line": 847,
             "description": "Observer that starts recording once sessionrecorder is ready.",
             "itemtype": "method",
             "name": "whenPossibleToRecordSession",
+            "access": "private",
+            "tagname": "",
             "class": "Exp-lookit-change-detection",
             "module": "exp-player",
             "submodule": "frames"
@@ -1747,43 +1729,38 @@
         },
         {
             "file": "app/components/exp-lookit-dialogue-page/component.js",
-            "line": 427,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "videoID",
-                    "description": "The ID of any video recorded during this frame",
-                    "type": "String"
-                },
-                {
-                    "name": "videoList",
-                    "description": "a list of webcam video IDs in case there are >1",
-                    "type": "List"
-                },
-                {
-                    "name": "eventTimings",
-                    "description": "",
-                    "type": "Object"
-                },
-                {
-                    "name": "currentlyHighlighted",
-                    "description": "which image is selected at\n  the end of the trial, or null if none is. This indicates the\n  final selected choice for a choice trial.",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
+            "line": 432,
+            "description": "Which image is selected at\n  the end of the trial, or null if none is. This indicates the\n  final selected choice for a choice trial.",
+            "itemtype": "attribute",
+            "name": "currentlyHighlighted",
             "class": "Exp-lookit-dialogue-page",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-dialogue-page/component.js",
-            "line": 483,
+            "line": 441,
+            "description": "Trial number as passed to this frame",
+            "itemtype": "attribute",
+            "name": "nTrial",
+            "type": "number",
+            "class": "Exp-lookit-dialogue-page",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-dialogue-page/component.js",
+            "line": 449,
+            "description": "Phase number as passed to this frame",
+            "itemtype": "attribute",
+            "name": "nPhase",
+            "class": "Exp-lookit-dialogue-page",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-dialogue-page/component.js",
+            "line": 486,
             "description": "When one of the images is clicked during a choice frame",
             "itemtype": "event",
             "name": "clickSpeaker",
@@ -1800,7 +1777,7 @@
         },
         {
             "file": "app/components/exp-lookit-dialogue-page/component.js",
-            "line": 514,
+            "line": 517,
             "description": "When image audio is started",
             "itemtype": "event",
             "name": "startSpeakerAudio",
@@ -1817,7 +1794,7 @@
         },
         {
             "file": "app/components/exp-lookit-dialogue-page/component.js",
-            "line": 533,
+            "line": 536,
             "description": "When image audio is played (recorded even if not completed)",
             "itemtype": "event",
             "name": "playSpeakerAudio",
@@ -1834,7 +1811,7 @@
         },
         {
             "file": "app/components/exp-lookit-dialogue-page/component.js",
-            "line": 579,
+            "line": 582,
             "description": "When narration audio is completed",
             "itemtype": "event",
             "name": "completeMainAudio",
@@ -1884,46 +1861,50 @@
         },
         {
             "file": "app/components/exp-lookit-exit-survey/component.js",
-            "line": 113,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "birthDate",
-                    "description": "Child's birthdate as entered into exit survey; timestamp string starting YYYY-mm-dd.",
-                    "type": "String"
-                },
-                {
-                    "name": "databraryShare",
-                    "description": "Whether data can be shared with Databrary: 'yes' or 'no'",
-                    "type": "String"
-                },
-                {
-                    "name": "useOfMedia",
-                    "description": "Video privacy level: 'private', 'scientific', or 'public'",
-                    "type": "String"
-                },
-                {
-                    "name": "withdrawal",
-                    "description": "Whether the user checked the box to withdraw video data",
-                    "type": "Boolean"
-                },
-                {
-                    "name": "feedback",
-                    "description": "Freeform comments entered by parent",
-                    "type": "String"
-                },
-                {
-                    "name": "eventTimings",
-                    "description": "Only event captured during this frame is 'nextFrame'; example eventTimings value: `[{u'eventType': u'nextFrame', u'timestamp': u'2016-08-03T00:45:37.157Z'}]`",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
+            "line": 115,
+            "description": "Child's birthdate as entered into exit survey; timestamp string starting YYYY-mm-dd.",
+            "itemtype": "attribute",
+            "name": "birthDate",
+            "class": "Exp-lookit-exit-survey",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-exit-survey/component.js",
+            "line": 123,
+            "description": "Whether data can be shared with Databrary: 'yes' or 'no'",
+            "itemtype": "attribute",
+            "name": "databraryShare",
+            "class": "Exp-lookit-exit-survey",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-exit-survey/component.js",
+            "line": 130,
+            "description": "Video privacy level: 'private', 'scientific', or 'public'",
+            "itemtype": "attribute",
+            "name": "useOfMedia",
+            "class": "Exp-lookit-exit-survey",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-exit-survey/component.js",
+            "line": 137,
+            "description": "Whether the the box to withdraw video data is checked",
+            "itemtype": "attribute",
+            "name": "withdrawal",
+            "class": "Exp-lookit-exit-survey",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-exit-survey/component.js",
+            "line": 145,
+            "description": "Freeform comments entered by parent",
+            "itemtype": "attribute",
+            "name": "feedback",
             "class": "Exp-lookit-exit-survey",
             "module": "exp-player",
             "submodule": "frames"
@@ -2124,48 +2105,37 @@
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation/component.js",
-            "line": 371,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "context",
-                    "description": "True to use big fat triangle as context figure, or false to use small skinny triangle as context. [same as passed to this frame]",
-                    "type": "Boolean"
-                },
-                {
-                    "name": "altOnLeft",
-                    "description": "Whether to put the shape+size alternating stream on the left (other stream alternates only in size) [same as passed to this frame]",
-                    "type": "Boolean"
-                },
-                {
-                    "name": "videoID",
-                    "description": "The ID of any video recorded during this frame",
-                    "type": "String"
-                },
-                {
-                    "name": "hasBeenPaused",
-                    "description": "whether this trial was paused",
-                    "type": "Boolean"
-                },
-                {
-                    "name": "eventTimings",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
+            "line": 373,
+            "description": "True to use big fat triangle as context figure, or false to use small skinny triangle as context. [same as passed to this frame]",
+            "itemtype": "attribute",
+            "name": "context",
             "class": "Exp-lookit-geometry-alternation",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation/component.js",
-            "line": 431,
+            "line": 380,
+            "description": "Whether to put the shape+size alternating stream on the left (other stream alternates only in size) [same as passed to this frame]",
+            "itemtype": "attribute",
+            "name": "altOnLeft",
+            "class": "Exp-lookit-geometry-alternation",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-geometry-alternation/component.js",
+            "line": 390,
+            "description": "whether this trial was paused",
+            "itemtype": "attribute",
+            "name": "hasBeenPaused",
+            "class": "Exp-lookit-geometry-alternation",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-geometry-alternation/component.js",
+            "line": 432,
             "description": "Just before stopping webcam video capture",
             "itemtype": "event",
             "name": "stoppingCapture",
@@ -2175,7 +2145,7 @@
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation/component.js",
-            "line": 458,
+            "line": 459,
             "description": "Immediately before starting intro/announcement segment",
             "itemtype": "event",
             "name": "startIntro",
@@ -2185,7 +2155,7 @@
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation/component.js",
-            "line": 493,
+            "line": 494,
             "description": "Start of EACH calibration segment",
             "itemtype": "event",
             "name": "startCalibration",
@@ -2202,7 +2172,7 @@
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation/component.js",
-            "line": 522,
+            "line": 523,
             "description": "Immediately before starting test trial segment",
             "itemtype": "event",
             "name": "startTestTrial",
@@ -2212,7 +2182,7 @@
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation/component.js",
-            "line": 570,
+            "line": 571,
             "description": "records EACH triangle presentation during test trial",
             "itemtype": "event",
             "name": "videoStreamConnection",
@@ -2284,7 +2254,7 @@
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation/component.js",
-            "line": 618,
+            "line": 619,
             "description": "Records each time triangles are cleared from display",
             "itemtype": "event",
             "name": "clearTriangles",
@@ -2294,7 +2264,7 @@
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation/component.js",
-            "line": 803,
+            "line": 804,
             "description": "Observer that starts recording once recorder is ready. Override to do additional\nstuff at this point!",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -2304,7 +2274,7 @@
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation/component.js",
-            "line": 820,
+            "line": 821,
             "description": "Observer that starts recording once sessionrecorder is ready.",
             "itemtype": "method",
             "name": "whenPossibleToRecordSession",
@@ -2508,48 +2478,37 @@
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation-open/component.js",
-            "line": 370,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "context",
-                    "description": "True to use big fat triangle as context figure, or false to use small skinny triangle as context. [same as passed to this frame]",
-                    "type": "Boolean"
-                },
-                {
-                    "name": "altOnLeft",
-                    "description": "Whether to put the shape+size alternating stream on the left (other stream alternates only in size) [same as passed to this frame]",
-                    "type": "Boolean"
-                },
-                {
-                    "name": "videoID",
-                    "description": "The ID of any video recorded during this frame",
-                    "type": "String"
-                },
-                {
-                    "name": "hasBeenPaused",
-                    "description": "whether this trial was paused",
-                    "type": "Boolean"
-                },
-                {
-                    "name": "eventTimings",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
+            "line": 372,
+            "description": "True to use big fat triangle as context figure, or false to use small skinny triangle as context. [same as passed to this frame]",
+            "itemtype": "attribute",
+            "name": "context",
             "class": "Exp-lookit-geometry-alternation-open",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation-open/component.js",
-            "line": 443,
+            "line": 379,
+            "description": "Whether to put the shape+size alternating stream on the left (other stream alternates only in size) [same as passed to this frame]",
+            "itemtype": "attribute",
+            "name": "altOnLeft",
+            "class": "Exp-lookit-geometry-alternation-open",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-geometry-alternation-open/component.js",
+            "line": 389,
+            "description": "whether this trial was paused",
+            "itemtype": "attribute",
+            "name": "hasBeenPaused",
+            "class": "Exp-lookit-geometry-alternation-open",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-geometry-alternation-open/component.js",
+            "line": 444,
             "description": "Just before stopping webcam video capture",
             "itemtype": "event",
             "name": "stoppingCapture",
@@ -2559,7 +2518,7 @@
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation-open/component.js",
-            "line": 470,
+            "line": 471,
             "description": "Immediately before starting intro/announcement segment",
             "itemtype": "event",
             "name": "startIntro",
@@ -2569,7 +2528,7 @@
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation-open/component.js",
-            "line": 508,
+            "line": 509,
             "description": "Start of EACH calibration segment",
             "itemtype": "event",
             "name": "startCalibration",
@@ -2586,7 +2545,7 @@
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation-open/component.js",
-            "line": 537,
+            "line": 538,
             "description": "Immediately before starting test trial segment",
             "itemtype": "event",
             "name": "startTestTrial",
@@ -2596,7 +2555,7 @@
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation-open/component.js",
-            "line": 585,
+            "line": 586,
             "description": "records EACH triangle presentation during test trial",
             "itemtype": "event",
             "name": "videoStreamConnection",
@@ -2668,7 +2627,7 @@
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation-open/component.js",
-            "line": 633,
+            "line": 634,
             "description": "Records each time triangles are cleared from display",
             "itemtype": "event",
             "name": "clearTriangles",
@@ -2678,7 +2637,7 @@
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation-open/component.js",
-            "line": 817,
+            "line": 818,
             "description": "Observer that starts recording once recorder is ready. Override to do additional\nstuff at this point!",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -2688,7 +2647,7 @@
         },
         {
             "file": "app/components/exp-lookit-geometry-alternation-open/component.js",
-            "line": 835,
+            "line": 836,
             "description": "Observer that starts recording once sessionrecorder is ready.",
             "itemtype": "method",
             "name": "whenPossibleToRecordSession",
@@ -2840,37 +2799,6 @@
             ]
         },
         {
-            "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 300,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "eventTimings",
-                    "description": "",
-                    "type": "Object"
-                },
-                {
-                    "name": "videoID",
-                    "description": "The ID of any webcam video recorded during this frame",
-                    "type": "String"
-                },
-                {
-                    "name": "videoList",
-                    "description": "a list of webcam video IDs in case there are >1",
-                    "type": "List"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
-            "class": "Exp-lookit-story-page",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
             "file": "app/components/exp-lookit-instructions/component.js",
             "line": 116,
             "description": "Whether to display the user's webcam",
@@ -2968,27 +2896,6 @@
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-instructions/component.js",
-            "line": 285,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "showWarning",
-                    "description": "whether the warning about sound being played is currently shown",
-                    "type": "Boolean"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
-            "class": "Exp-lookit-instructions",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
             "file": "app/components/exp-lookit-mood-questionnaire/component.js",
             "line": 118,
             "description": "Intro paragraph describing why we want mood info",
@@ -3002,76 +2909,120 @@
         },
         {
             "file": "app/components/exp-lookit-mood-questionnaire/component.js",
-            "line": 134,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "rested",
-                    "description": "Rating for CHILD on tired - rested scale, '1' to '7' where '7' is rested",
-                    "type": "String"
-                },
-                {
-                    "name": "healthy",
-                    "description": "Rating for CHILD on sick - healthy scale, '1' to '7' where '7' is healthy",
-                    "type": "String"
-                },
-                {
-                    "name": "childHappy",
-                    "description": "Rating for CHILD on fussy - happy scale, '1' to '7' where '7' is happy",
-                    "type": "String"
-                },
-                {
-                    "name": "active",
-                    "description": "Rating for CHILD on calm - active scale, '1' to '7' where '7' is active",
-                    "type": "String"
-                },
-                {
-                    "name": "energetic",
-                    "description": "Rating for PARENT on tired - energetic scale, '1' to '7' where '7' is energetic",
-                    "type": "String"
-                },
-                {
-                    "name": "ontopofstuff",
-                    "description": "Rating for PARENT on overwhelmed - on top of stuff scale, '1' to '7' where '7' is on top of stuff",
-                    "type": "String"
-                },
-                {
-                    "name": "healthy",
-                    "description": "Rating for PARENT on upset - happy scale, '1' to '7' where '7' is happy",
-                    "type": "String"
-                },
-                {
-                    "name": "napWakeUp",
-                    "description": "how long since the child woke up from nap, HH:mm",
-                    "type": "String"
-                },
-                {
-                    "name": "usualNapSchedule",
-                    "description": "whether the child has a typical nap schedule: 'no', 'yes', or 'yes-overdue' if child is overdue for nap",
-                    "type": "String"
-                },
-                {
-                    "name": "nextNap",
-                    "description": "only valid if usualNapSchedule is 'yes';  how long until child is due to sleep again, HH:mm",
-                    "type": "String"
-                },
-                {
-                    "name": "lastEat",
-                    "description": "how long since the child ate/drank, HH:mm",
-                    "type": "String"
-                },
-                {
-                    "name": "doingBefore",
-                    "description": "what the child was doing before this (free response)",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
+            "line": 136,
+            "description": "Rating for CHILD on tired - rested scale, '1' to '7' where '7' is rested",
+            "itemtype": "attribute",
+            "name": "rested",
+            "class": "Exp-lookit-mood-questionnaire",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-mood-questionnaire/component.js",
+            "line": 143,
+            "description": "Rating for CHILD on sick - healthy scale, '1' to '7' where '7' is healthy",
+            "itemtype": "attribute",
+            "name": "healthy",
+            "class": "Exp-lookit-mood-questionnaire",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-mood-questionnaire/component.js",
+            "line": 150,
+            "description": "Rating for CHILD on fussy - happy scale, '1' to '7' where '7' is happy",
+            "itemtype": "attribute",
+            "name": "childHappy",
+            "class": "Exp-lookit-mood-questionnaire",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-mood-questionnaire/component.js",
+            "line": 157,
+            "description": "Rating for CHILD on calm - active scale, '1' to '7' where '7' is active",
+            "itemtype": "attribute",
+            "name": "active",
+            "class": "Exp-lookit-mood-questionnaire",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-mood-questionnaire/component.js",
+            "line": 164,
+            "description": "Rating for PARENT on tired - energetic scale, '1' to '7' where '7' is energetic",
+            "itemtype": "attribute",
+            "name": "energetic",
+            "class": "Exp-lookit-mood-questionnaire",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-mood-questionnaire/component.js",
+            "line": 171,
+            "description": "Rating for PARENT on overwhelmed - on top of stuff scale, '1' to '7' where '7' is on top of stuff",
+            "itemtype": "attribute",
+            "name": "ontopofstuff",
+            "class": "Exp-lookit-mood-questionnaire",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-mood-questionnaire/component.js",
+            "line": 178,
+            "description": "Rating for PARENT on upset - happy scale, '1' to '7' where '7' is happy",
+            "itemtype": "attribute",
+            "name": "parentHappy",
+            "class": "Exp-lookit-mood-questionnaire",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-mood-questionnaire/component.js",
+            "line": 185,
+            "description": "how long since the child woke up from nap, HH:mm",
+            "itemtype": "attribute",
+            "name": "napWakeUp",
+            "class": "Exp-lookit-mood-questionnaire",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-mood-questionnaire/component.js",
+            "line": 193,
+            "description": "whether the child has a typical nap schedule: 'no', 'yes', or 'yes-overdue' if child is overdue for nap",
+            "itemtype": "attribute",
+            "name": "usualNapSchedule",
+            "class": "Exp-lookit-mood-questionnaire",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-mood-questionnaire/component.js",
+            "line": 200,
+            "description": "only valid if usualNapSchedule is 'yes';  how long until child is due to sleep again, HH:mm",
+            "itemtype": "attribute",
+            "name": "nextNap",
+            "class": "Exp-lookit-mood-questionnaire",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-mood-questionnaire/component.js",
+            "line": 207,
+            "description": "how long since the child ate/drank, HH:mm",
+            "itemtype": "attribute",
+            "name": "lastEat",
+            "class": "Exp-lookit-mood-questionnaire",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-mood-questionnaire/component.js",
+            "line": 215,
+            "description": "what the child was doing before this (free response)",
+            "itemtype": "attribute",
+            "name": "doingBefore",
             "class": "Exp-lookit-mood-questionnaire",
             "module": "exp-player",
             "submodule": "frames"
@@ -3190,38 +3141,7 @@
         },
         {
             "file": "app/components/exp-lookit-observation/component.js",
-            "line": 199,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "videoID",
-                    "description": "The ID of any webcam video recorded during this frame",
-                    "type": "String"
-                },
-                {
-                    "name": "videoList",
-                    "description": "a list of webcam video IDs in case there are >1",
-                    "type": "List"
-                },
-                {
-                    "name": "eventTimings",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
-            "class": "Exp-lookit-observation",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-lookit-observation/component.js",
-            "line": 238,
+            "line": 229,
             "description": "Webcam display hidden from participant",
             "itemtype": "event",
             "name": "hideWebcam",
@@ -3231,7 +3151,7 @@
         },
         {
             "file": "app/components/exp-lookit-observation/component.js",
-            "line": 278,
+            "line": 269,
             "description": "Video recording automatically paused upon reaching time limit",
             "itemtype": "event",
             "name": "recorderTimeout",
@@ -3241,7 +3161,7 @@
         },
         {
             "file": "app/components/exp-lookit-observation/component.js",
-            "line": 336,
+            "line": 327,
             "description": "Webcam display hidden from participant",
             "itemtype": "event",
             "name": "hideWebcam",
@@ -3251,7 +3171,7 @@
         },
         {
             "file": "app/components/exp-lookit-observation/component.js",
-            "line": 347,
+            "line": 338,
             "description": "Webcam display shown to participant",
             "itemtype": "event",
             "name": "showWebcam",
@@ -3642,68 +3562,77 @@
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 545,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "videosShown",
-                    "description": "Sources of videos (potentially) shown during this trial: [source of test video, source of alternate test video].",
-                    "type": "Array"
-                },
-                {
-                    "name": "eventTimings",
-                    "description": "",
-                    "type": "Object"
-                },
-                {
-                    "name": "videoID",
-                    "description": "The ID of any webcam video recorded during this frame",
-                    "type": "String"
-                },
-                {
-                    "name": "rightImage",
-                    "description": "URL of image shown on right (given as a property of the frame)",
-                    "type": "String"
-                },
-                {
-                    "name": "leftImage",
-                    "description": "URL of image shown on left (given as a property of the frame)",
-                    "type": "String"
-                },
-                {
-                    "name": "centerImage",
-                    "description": "URL of image shown at center (given as a property of the frame)",
-                    "type": "String"
-                },
-                {
-                    "name": "testLength",
-                    "description": "seconds to display images/loop videos (given as a property of the frame), if using time-based limit",
-                    "type": "Number"
-                },
-                {
-                    "name": "baseDir",
-                    "description": "location of stimuli",
-                    "type": "String"
-                },
-                {
-                    "name": "testAudio",
-                    "description": "test audio file played, if any",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
+            "line": 546,
+            "description": "Sources of videos (potentially) shown during this trial: [source of test video, source of alternate test video].",
+            "itemtype": "attribute",
+            "name": "videosShown",
             "class": "Exp-lookit-preferential-looking",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-preferential-looking/component.js",
-            "line": 802,
+            "line": 557,
+            "description": "URL of image shown on right (given as a property of the frame)",
+            "itemtype": "attribute",
+            "name": "rightImage",
+            "class": "Exp-lookit-preferential-looking",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-preferential-looking/component.js",
+            "line": 564,
+            "description": "URL of image shown on left (given as a property of the frame)",
+            "itemtype": "attribute",
+            "name": "leftImage",
+            "class": "Exp-lookit-preferential-looking",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-preferential-looking/component.js",
+            "line": 571,
+            "description": "URL of image shown at center (given as a property of the frame)",
+            "itemtype": "attribute",
+            "name": "centerImage",
+            "class": "Exp-lookit-preferential-looking",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-preferential-looking/component.js",
+            "line": 578,
+            "description": "seconds to display images/loop videos (given as a property of the frame), if using time-based limit",
+            "itemtype": "attribute",
+            "name": "testLength",
+            "class": "Exp-lookit-preferential-looking",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-preferential-looking/component.js",
+            "line": 585,
+            "description": "test audio file played, if any",
+            "itemtype": "attribute",
+            "name": "testAudio",
+            "class": "Exp-lookit-preferential-looking",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-preferential-looking/component.js",
+            "line": 592,
+            "description": "location of stimuli",
+            "itemtype": "attribute",
+            "name": "baseDir",
+            "class": "Exp-lookit-preferential-looking",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-preferential-looking/component.js",
+            "line": 815,
             "description": "Start of EACH calibration segment",
             "itemtype": "event",
             "name": "startCalibration",
@@ -3715,121 +3644,6 @@
                 }
             ],
             "class": "Exp-lookit-preferential-looking",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-lookit-preview-explanation/component.js",
-            "line": 46,
-            "description": "Whether to show a 'previous' button",
-            "itemtype": "property",
-            "name": "showPreviousButton",
-            "type": "Boolean",
-            "default": "true",
-            "class": "Exp-lookit-preview-explanation",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-lookit-preview-explanation/component.js",
-            "line": 56,
-            "description": "Array of text blocks (paragraphs) to display after the image.",
-            "itemtype": "property",
-            "name": "blocks",
-            "type": "Object",
-            "class": "Exp-lookit-preview-explanation",
-            "module": "exp-player",
-            "submodule": "frames",
-            "subprops": [
-                {
-                    "name": "title",
-                    "description": "title to display",
-                    "type": "String"
-                },
-                {
-                    "name": "text",
-                    "description": "paragraph of text",
-                    "type": "String"
-                },
-                {
-                    "name": "emph",
-                    "description": "whether to bold this paragraph",
-                    "type": "Boolean"
-                }
-            ]
-        },
-        {
-            "file": "app/components/exp-lookit-preview-explanation/component.js",
-            "line": 82,
-            "description": "Object specifying first block of text (pre-image) to display.",
-            "itemtype": "property",
-            "name": "introBlock",
-            "type": "Object",
-            "class": "Exp-lookit-preview-explanation",
-            "module": "exp-player",
-            "submodule": "frames",
-            "subprops": [
-                {
-                    "name": "title",
-                    "description": "title to display",
-                    "type": "String"
-                },
-                {
-                    "name": "text",
-                    "description": "paragraph of text",
-                    "type": "String"
-                },
-                {
-                    "name": "emph",
-                    "description": "whether to bold this paragraph",
-                    "type": "Boolean"
-                }
-            ]
-        },
-        {
-            "file": "app/components/exp-lookit-preview-explanation/component.js",
-            "line": 104,
-            "description": "Image to display after the intro block. (Displayed centered,\nwith border, max height 220px.) E.g., a picture of a parent\nholding a child looking over their shoulder.",
-            "itemtype": "property",
-            "name": "image",
-            "type": "Object",
-            "class": "Exp-lookit-preview-explanation",
-            "module": "exp-player",
-            "submodule": "frames",
-            "subprops": [
-                {
-                    "name": "src",
-                    "description": "URL of image",
-                    "type": "String"
-                },
-                {
-                    "name": "alt",
-                    "description": "alt-text",
-                    "type": "String"
-                }
-            ]
-        },
-        {
-            "file": "app/components/exp-lookit-preview-explanation/component.js",
-            "line": 125,
-            "description": "Text to display on the button to go to the next frame",
-            "itemtype": "property",
-            "name": "previewButtonText",
-            "type": "String",
-            "default": "'I\\'d like to preview the videos'",
-            "class": "Exp-lookit-preview-explanation",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-lookit-preview-explanation/component.js",
-            "line": 135,
-            "description": "Text to display on the button to skip the next frame",
-            "itemtype": "property",
-            "name": "skipButtonText",
-            "type": "String",
-            "default": "'Skip preview'",
-            "class": "Exp-lookit-preview-explanation",
             "module": "exp-player",
             "submodule": "frames"
         },
@@ -3971,33 +3785,171 @@
             ]
         },
         {
-            "file": "app/components/exp-lookit-single-image/component.js",
-            "line": 244,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 103,
+            "description": "Whether to show a 'previous' button",
+            "itemtype": "property",
+            "name": "showPreviousButton",
+            "type": "Boolean",
+            "default": "true",
+            "class": "Exp-lookit-stimuli-preview",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 113,
+            "description": "Array of text blocks to display as an introduction to the preview. Should be a list\nof objects that can be passed to exp-text-block; each can have any of the\nproperties below.",
+            "itemtype": "property",
+            "name": "blocks",
+            "type": "Array",
+            "class": "Exp-lookit-stimuli-preview",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
                 {
-                    "name": "eventTimings",
+                    "name": "title",
+                    "description": "title to display",
+                    "type": "String"
+                },
+                {
+                    "name": "text",
+                    "description": "paragraph of text",
+                    "type": "String"
+                },
+                {
+                    "name": "emph",
+                    "description": "whether to bold this paragraph",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "image",
                     "description": "",
                     "type": "Object"
                 },
                 {
-                    "name": "videoID",
-                    "description": "The ID of any webcam video recorded during this frame",
+                    "name": "src",
+                    "description": "URL of image (must be full URL)",
                     "type": "String"
                 },
                 {
-                    "name": "videoList",
-                    "description": "a list of webcam video IDs in case there are >1",
-                    "type": "List"
+                    "name": "alt",
+                    "description": "alt-text",
+                    "type": "String"
+                },
+                {
+                    "name": "listblocks",
+                    "description": "Object specifying bulleted points for this section\n     These will themselves be passed to exp-text-block and can include images,\n     etc.",
+                    "type": "Object[]"
                 }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
-            "class": "Exp-lookit-story-page",
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 163,
+            "description": "Text on the preview button user clicks to proceed to stimuli/images",
+            "itemtype": "property",
+            "name": "previewButtonText",
+            "type": "String",
+            "default": "'I\\'d like to preview the videos'",
+            "class": "Exp-lookit-stimuli-preview",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 173,
+            "description": "Text to display on the button to skip the next frame",
+            "itemtype": "property",
+            "name": "skipButtonText",
+            "type": "String",
+            "default": "'Skip preview'",
+            "class": "Exp-lookit-stimuli-preview",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 183,
+            "description": "A series of preview stimuli to display within a single frame, defined as an array of objects.\nGenerally each item of the list will include ONE of image, video, or audio\n(depending on the stimulus type), plus a caption.",
+            "itemtype": "property",
+            "name": "stimuli",
+            "type": "Array",
+            "class": "Exp-lookit-stimuli-preview",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "caption",
+                    "description": "Some text to appear under this video",
+                    "type": "String"
+                },
+                {
+                    "name": "video",
+                    "description": "String indicating video URL. This can be relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects.",
+                    "type": "Object[]"
+                },
+                {
+                    "name": "audio",
+                    "description": "String indicating audio URL. This can be relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects.",
+                    "type": "Object[]"
+                },
+                {
+                    "name": "image",
+                    "description": "URL of image to display (optional; each preview video should designate either video or image). Can be full path or relative to baseDir.",
+                    "type": "String"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 218,
+            "description": "Text on the button to proceed to the next example video/image",
+            "itemtype": "property",
+            "name": "nextStimulusText",
+            "type": "String",
+            "class": "Exp-lookit-stimuli-preview",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 228,
+            "description": "Text on the button to proceed to the previous example video/image",
+            "itemtype": "property",
+            "name": "previousStimulusText",
+            "type": "String",
+            "class": "Exp-lookit-stimuli-preview",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 257,
+            "description": "User clicks on start preview button",
+            "itemtype": "event",
+            "name": "startPreview",
+            "class": "Exp-lookit-stimuli-preview",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 271,
+            "description": "User clicks to move to next stimulus",
+            "itemtype": "event",
+            "name": "nextStimulus",
+            "class": "Exp-lookit-stimuli-preview",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 280,
+            "description": "User clicks to move to previous stimulus",
+            "itemtype": "event",
+            "name": "previousStimulus",
+            "class": "Exp-lookit-stimuli-preview",
             "module": "exp-player",
             "submodule": "frames"
         },
@@ -4145,37 +4097,6 @@
             ]
         },
         {
-            "file": "app/components/exp-lookit-story-page/component.js",
-            "line": 300,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "eventTimings",
-                    "description": "",
-                    "type": "Object"
-                },
-                {
-                    "name": "videoID",
-                    "description": "The ID of any webcam video recorded during this frame",
-                    "type": "String"
-                },
-                {
-                    "name": "videoList",
-                    "description": "a list of webcam video IDs in case there are >1",
-                    "type": "List"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
-            "class": "Exp-lookit-story-page",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
             "file": "app/components/exp-lookit-survey/component.js",
             "line": 516,
             "description": "Whether to show a 'previous' button",
@@ -4224,31 +4145,20 @@
         },
         {
             "file": "app/components/exp-lookit-survey/component.js",
-            "line": 575,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "formSchema",
-                    "description": "The same formSchema that was provided as a parameter to this frame, for ease of analysis if randomizing or iterating on experimental design.",
-                    "type": "Object"
-                },
-                {
-                    "name": "formData",
-                    "description": "Data corresponding to the fields defined in formSchema['schema']['properties']. The keys of formData are the FIELDNAMEs used there, and the values are the participant's responses. Note that if the participant does not answer a question, that key may be absent, rather than being present with a null value.",
-                    "type": "Object"
-                },
-                {
-                    "name": "eventTimings",
-                    "description": "Only events captured during this frame are 'nextFrame'/'previousFrame'; example eventTimings value: `[{u'eventType': u'nextFrame', u'timestamp': u'2016-08-03T00:45:37.157Z'}]`",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
+            "line": 577,
+            "description": "The same formSchema that was provided as a parameter to this frame, for ease of analysis if randomizing or iterating on experimental design.",
+            "itemtype": "attribute",
+            "name": "formSchema",
+            "class": "Exp-lookit-survey",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-survey/component.js",
+            "line": 584,
+            "description": "Data corresponding to the fields defined in formSchema['schema']['properties']. The keys of formData are the FIELDNAMEs used there, and the values are the participant's responses. Note that if the participant does not answer a question, that key may be absent, rather than being present with a null value.",
+            "itemtype": "attribute",
+            "name": "formData",
             "class": "Exp-lookit-survey",
             "module": "exp-player",
             "submodule": "frames"
@@ -4575,38 +4485,17 @@
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 395,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "videosShown",
-                    "description": "Sources of videos (potentially) shown during this trial: [source of test video, source of alternate test video].",
-                    "type": "Array"
-                },
-                {
-                    "name": "eventTimings",
-                    "description": "",
-                    "type": "Object"
-                },
-                {
-                    "name": "videoID",
-                    "description": "The ID of any webcam video recorded during this frame",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
+            "line": 396,
+            "description": "Sources of videos (potentially) shown during this trial: [source of test video, source of alternate test video].",
+            "itemtype": "attribute",
+            "name": "videosShown",
             "class": "Exp-lookit-video",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 608,
+            "line": 603,
             "description": "Start of EACH calibration segment",
             "itemtype": "event",
             "name": "startCalibration",
@@ -4793,48 +4682,27 @@
         },
         {
             "file": "app/components/exp-lookit-video-assent/component.js",
-            "line": 474,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "assentFormText",
-                    "description": "the exact text shown in the assent document during this frame",
-                    "type": "String"
-                },
-                {
-                    "name": "videoID",
-                    "description": "The ID of any webcam video recorded during this frame",
-                    "type": "String"
-                },
-                {
-                    "name": "videoList",
-                    "description": "a list of webcam video IDs in case there are >1",
-                    "type": "List"
-                },
-                {
-                    "name": "childResponse",
-                    "description": "The child's response to the assent question - Yes or No",
-                    "type": "String"
-                },
-                {
-                    "name": "eventTimings",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
+            "line": 482,
+            "description": "the exact text shown in the assent document during this frame",
+            "itemtype": "attribute",
+            "name": "assentFormText",
             "class": "Exp-lookit-video-assent",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-video-assent/component.js",
-            "line": 538,
+            "line": 489,
+            "description": "The child's response to the assent question - Yes or No",
+            "itemtype": "attribute",
+            "name": "childResponse",
+            "class": "Exp-lookit-video-assent",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video-assent/component.js",
+            "line": 535,
             "description": "Skip the assent form because the participant is too young to give assent",
             "itemtype": "event",
             "name": "skipAssentDueToParticipantAge",
@@ -4987,36 +4855,10 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 258,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "consentFormText",
-                    "description": "the exact text shown in the consent document during this frame",
-                    "type": "String"
-                },
-                {
-                    "name": "videoID",
-                    "description": "The ID of any webcam video recorded during this frame",
-                    "type": "String"
-                },
-                {
-                    "name": "videoList",
-                    "description": "a list of webcam video IDs in case there are >1",
-                    "type": "List"
-                },
-                {
-                    "name": "eventTimings",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
+            "line": 266,
+            "description": "the exact text shown in the consent document during this frame",
+            "itemtype": "attribute",
+            "name": "consentFormText",
             "class": "Exp-lookit-video-consent",
             "module": "exp-player",
             "submodule": "frames"
@@ -5081,37 +4923,6 @@
             "name": "showPreviousButton",
             "type": "Boolean",
             "default": "true",
-            "class": "Exp-lookit-webcam-display",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-lookit-webcam-display/component.js",
-            "line": 137,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "videoID",
-                    "description": "The ID of any webcam video recorded during this frame",
-                    "type": "String"
-                },
-                {
-                    "name": "videoList",
-                    "description": "a list of webcam video IDs in case there are >1",
-                    "type": "List"
-                },
-                {
-                    "name": "eventTimings",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
             "class": "Exp-lookit-webcam-display",
             "module": "exp-player",
             "submodule": "frames"
@@ -5268,198 +5079,11 @@
         },
         {
             "file": "app/components/exp-video-config-quality/component.js",
-            "line": 323,
+            "line": 331,
             "description": "Observer that adds listener for play button once recorder is ready.",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
             "class": "Exp-video-config-quality",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-video-consent/component.js",
-            "line": 60,
-            "description": "Title of the consent document",
-            "itemtype": "property",
-            "name": "title",
-            "type": "String",
-            "default": "'Consent to participate in behavioral research: <br> Inference and induction study'",
-            "class": "Exp-video-preview",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-video-consent/component.js",
-            "line": 70,
-            "description": "Array of paragraphs of the consent document, each with title and text.",
-            "itemtype": "property",
-            "name": "blocks",
-            "type": "Array",
-            "default": "[]",
-            "class": "Exp-video-preview",
-            "module": "exp-player",
-            "submodule": "frames",
-            "subprops": [
-                {
-                    "name": "title",
-                    "description": "",
-                    "type": "String"
-                },
-                {
-                    "name": "text",
-                    "description": "",
-                    "type": "String"
-                }
-            ]
-        },
-        {
-            "file": "app/components/exp-video-consent/component.js",
-            "line": 93,
-            "description": "Text the user is asked to read aloud to consent",
-            "itemtype": "property",
-            "name": "prompt",
-            "type": "String",
-            "default": "'I consent to participate in this study'",
-            "class": "Exp-video-preview",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-video-consent/component.js",
-            "line": 108,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "consentFormText",
-                    "description": "the exact text shown in the consent document during this frame",
-                    "type": "String"
-                },
-                {
-                    "name": "videoID",
-                    "description": "The ID of any webcam video recorded during this frame",
-                    "type": "String"
-                },
-                {
-                    "name": "videoList",
-                    "description": "a list of webcam video IDs in case there are >1",
-                    "type": "List"
-                },
-                {
-                    "name": "eventTimings",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
-            "class": "Exp-video-preview",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-video-preview/component.js",
-            "line": 107,
-            "description": "A series of preview videos to display within a single frame, defined as an array of objects.",
-            "itemtype": "property",
-            "name": "videos",
-            "type": "Array",
-            "class": "Exp-video-preview",
-            "module": "exp-player",
-            "submodule": "frames",
-            "subprops": [
-                {
-                    "name": "caption",
-                    "description": "Some text to appear under this video",
-                    "type": "String"
-                },
-                {
-                    "name": "sources",
-                    "description": "String indicating video path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects.",
-                    "type": "Object[]"
-                },
-                {
-                    "name": "imgSrc",
-                    "description": "URL of image to display (optional; each preview video should designate either sources or imgSrc). Can be full path or relative to baseDir.",
-                    "type": "String"
-                }
-            ]
-        },
-        {
-            "file": "app/components/exp-video-preview/component.js",
-            "line": 136,
-            "description": "Text on the button prompt asking the user to continue to the videos",
-            "itemtype": "property",
-            "name": "prompt",
-            "type": "String",
-            "class": "Exp-video-preview",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-video-preview/component.js",
-            "line": 146,
-            "description": "Informational text to display to the user before videos are shown, along with button to continue",
-            "itemtype": "property",
-            "name": "text",
-            "type": "String",
-            "class": "Exp-video-preview",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-video-preview/component.js",
-            "line": 156,
-            "description": "Text on the button to proceed to the next example video/image",
-            "itemtype": "property",
-            "name": "nextStimulusText",
-            "type": "String",
-            "class": "Exp-video-preview",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-video-preview/component.js",
-            "line": 166,
-            "description": "Text on the button to proceed to the previous example video/image",
-            "itemtype": "property",
-            "name": "previousStimulusText",
-            "type": "String",
-            "class": "Exp-video-preview",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-video-preview/component.js",
-            "line": 182,
-            "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
-            "name": "serializeContent",
-            "params": [
-                {
-                    "name": "videoID",
-                    "description": "The ID of any webcam video recorded during this frame",
-                    "type": "String"
-                },
-                {
-                    "name": "videoList",
-                    "description": "a list of webcam video IDs in case there are >1",
-                    "type": "List"
-                },
-                {
-                    "name": "eventTimings",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "The payload sent to the server",
-                "type": "Object"
-            },
-            "class": "Exp-video-preview",
             "module": "exp-player",
             "submodule": "frames"
         },
@@ -5470,13 +5094,15 @@
             "itemtype": "property",
             "name": "assetsToExpand",
             "type": "String",
+            "access": "private",
+            "tagname": "",
             "class": "Expand-assets",
             "module": "exp-player",
             "submodule": "mixins"
         },
         {
             "file": "app/mixins/expand-assets.js",
-            "line": 102,
+            "line": 103,
             "description": "Base directory for where to find stimuli. Any image src\nvalues that are not full paths will be expanded by prefixing\nwith `baseDir` + `img/`. Any audio/video src values provided as\nstrings rather than objects with `src` and `type` will be\nexpanded out to `baseDir/avtype/[stub].avtype`, where the potential\navtypes are given by `audioTypes` and `videoTypes`.\n\nbaseDir should include a trailing slash\n(e.g., `http://stimuli.org/myexperiment/`); if a value is provided that\ndoes not end in a slash, one will be added.",
             "itemtype": "property",
             "name": "baseDir",
@@ -5488,7 +5114,7 @@
         },
         {
             "file": "app/mixins/expand-assets.js",
-            "line": 122,
+            "line": 123,
             "description": "List of audio types to expect for any audio specified just\nwith a string rather than with a list of src/type objects.\nIf audioTypes is `['typeA', 'typeB']` and an audio source\nis given as `intro`, the audio source will be\nexpanded out to\n\n\n    [\n        {\n            src: 'baseDir' + 'typeA/intro.typeA',\n            type: 'audio/typeA'\n        },\n        {\n            src: 'baseDir' + 'typeB/intro.typeB',\n            type: 'audio/typeB'\n        }\n    ]",
             "itemtype": "property",
             "name": "audioTypes",
@@ -5500,7 +5126,7 @@
         },
         {
             "file": "app/mixins/expand-assets.js",
-            "line": 150,
+            "line": 151,
             "description": "List of video types to expect for any audio specified just\nwith a string rather than with a list of src/type objects.\nIf videoTypes is `['typeA', 'typeB']` and a video source\nis given as `intro`, the video source will be\nexpanded out to\n\n\n    [\n        {\n            src: 'baseDir' + 'typeA/intro.typeA',\n            type: 'video/typeA'\n        },\n        {\n            src: 'baseDir' + 'typeB/intro.typeB',\n            type: 'video/typeB'\n        }\n    ]",
             "itemtype": "property",
             "name": "videoTypes",
@@ -5517,24 +5143,28 @@
             "itemtype": "property",
             "name": "fullScreenElementId",
             "type": "String",
+            "access": "private",
+            "tagname": "",
             "class": "Full-screen",
             "module": "exp-player",
             "submodule": "mixins"
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 27,
+            "line": 28,
             "description": "The element ID of a button to show if the user leaves fullscreen mode",
             "itemtype": "property",
             "name": "fsButtonID",
             "type": "String",
+            "access": "private",
+            "tagname": "",
             "class": "Full-screen",
             "module": "exp-player",
             "submodule": "mixins"
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 79,
+            "line": 81,
             "description": "Upon detecting change to fullscreen mode",
             "itemtype": "event",
             "name": "enteredFullscreen",
@@ -5544,7 +5174,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 91,
+            "line": 93,
             "description": "Upon detecting change out of fullscreen mode",
             "itemtype": "event",
             "name": "leftFullscreen",
@@ -5554,7 +5184,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 107,
+            "line": 109,
             "description": "Make a specified element fullscreen",
             "itemtype": "method",
             "name": "showFullscreen",
@@ -5564,7 +5194,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 140,
+            "line": 142,
             "description": "Exit fullscreen mode",
             "itemtype": "method",
             "name": "exitFullscreen",
@@ -5574,7 +5204,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 166,
+            "line": 168,
             "description": "Whether to display this frame as fullscreen, even though it is not\ngenerally used that way.",
             "itemtype": "property",
             "name": "displayFullscreenOverride",
@@ -5811,81 +5441,94 @@
             "itemtype": "property",
             "name": "recorder",
             "type": "VideoRecorder",
+            "access": "private",
+            "tagname": "",
             "class": "Video-record",
             "module": "exp-player",
             "submodule": "mixins"
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 98,
-            "description": "A list of all video IDs used in this mixing (a new one is created for each recording).\nAccessible to consuming frame.",
+            "line": 99,
+            "description": "A list of all video IDs used in this mixin (a new one is created for each recording).\nAccessible to consuming frame.",
             "itemtype": "property",
             "name": "videoList",
             "type": "List",
+            "access": "private",
+            "tagname": "",
             "class": "Video-record",
             "module": "exp-player",
             "submodule": "mixins"
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 105,
+            "line": 107,
             "description": "Whether recording is stopped already, meaning it doesn't need to be re-stopped when\ndestroying frame. This should be set to true by the consuming frame when video is\nstopped.",
             "itemtype": "property",
             "name": "stoppedRecording",
             "type": "Boolean",
+            "access": "private",
+            "tagname": "",
             "class": "Video-record",
             "module": "exp-player",
             "submodule": "mixins"
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 113,
+            "line": 116,
             "description": "JQuery string to identify the recorder element.",
             "itemtype": "property",
-            "name": "[recorderElement='#recorder']",
+            "name": "recorderElement",
             "type": "String",
+            "default": "'#recorder'",
+            "access": "private",
+            "tagname": "",
             "class": "Video-record",
             "module": "exp-player",
             "submodule": "mixins"
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 119,
+            "line": 124,
             "description": "Whether recorder has been set up yet. Automatically set when doing setup.\nAccessible to consuming frame.",
             "itemtype": "property",
             "name": "recorderReady",
             "type": "Boolean",
+            "access": "private",
+            "tagname": "",
             "class": "Video-record",
             "module": "exp-player",
             "submodule": "mixins"
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 126,
+            "line": 132,
             "description": "Maximum recording length in seconds. Can be overridden by consuming frame.",
             "itemtype": "property",
             "name": "maxRecordingLength",
             "type": "Number",
-            "default": "100000000",
+            "default": "7200",
             "class": "Video-record",
             "module": "exp-player",
             "submodule": "mixins"
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 133,
-            "description": "Whether to autosave recordings. Can be overridden by consuming frame.",
+            "line": 139,
+            "description": "Whether to autosave recordings. Can be overridden by consuming frame.\nTODO: eventually use this to set up non-recording option for previewing",
             "itemtype": "property",
             "name": "autosave",
             "type": "Number",
             "default": "1",
+            "access": "private",
+            "tagname": "",
             "class": "Video-record",
             "module": "exp-player",
             "submodule": "mixins"
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 140,
+            "line": 148,
             "description": "Whether to do audio-only (vs also video) recording. Can be overridden by consuming frame.",
             "itemtype": "property",
             "name": "audioOnly",
@@ -5897,40 +5540,44 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 147,
+            "line": 155,
             "description": "Whether to use the camera in this frame. Consuming frame should set this property\nto override if needed.",
             "itemtype": "property",
-            "name": "[doUseCamera=true]",
+            "name": "doUseCamera",
             "type": "Boolean",
+            "default": "true",
             "class": "Video-record",
             "module": "exp-player",
             "submodule": "mixins"
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 154,
+            "line": 163,
             "description": "Whether to start recording ASAP (only applies if doUseCamera). Consuming frame\nshould set to override if needed.",
             "itemtype": "property",
-            "name": "[startRecordingAutomatically=false]",
+            "name": "startRecordingAutomatically",
             "type": "Boolean",
+            "default": "false",
             "class": "Video-record",
             "module": "exp-player",
             "submodule": "mixins"
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 161,
+            "line": 171,
             "description": "A video ID to use for the current recording. Format is\n`videoStream_<experimentId>_<frameId>_<sessionId>_timestampMS_RRR`\nwhere RRR are random numeric digits.",
             "itemtype": "property",
             "name": "videoId",
             "type": "String",
+            "access": "private",
+            "tagname": "",
             "class": "Video-record",
             "module": "exp-player",
             "submodule": "mixins"
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 181,
+            "line": 192,
             "description": "Extend any base time event capture with information about the recorded video",
             "itemtype": "method",
             "name": "makeTimeEvent",
@@ -5954,7 +5601,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 197,
+            "line": 208,
             "description": "Set up a video recorder instance",
             "itemtype": "method",
             "name": "setupRecorder",
@@ -5975,7 +5622,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 235,
+            "line": 246,
             "description": "Pause the recorder (and capture timing events). For webRTC recorder, this is\njust a placeholder and doesn't actually pause the recording. If webRTC used,\nincludes extra data actuallyPaused: false. This is for backwards compatibility\nwith frames that pause/resume recording, and should not be used going forward -\ninstead stop/start and make separate clips if needed.",
             "itemtype": "method",
             "name": "pauseRecorder",
@@ -5993,7 +5640,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 255,
+            "line": 266,
             "description": "Resume a paused recording. For webRTC recorder, this is just a placeholder and\ndoesn't actually pause the recording. If webRTC used, includes extra data\nwasActuallyPaused: false. This is for backwards compatibility\nwith frames that pause/resume recording, and should not be used going forward -\ninstead stop/start and make separate clips if needed.",
             "itemtype": "method",
             "name": "resumeRecorder",
@@ -6003,7 +5650,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 273,
+            "line": 284,
             "description": "Start recording",
             "itemtype": "method",
             "name": "startRecorder",
@@ -6016,7 +5663,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 296,
+            "line": 307,
             "description": "Stop the recording",
             "itemtype": "method",
             "name": "stopRecorder",
@@ -6029,7 +5676,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 311,
+            "line": 322,
             "description": "Destroy recorder and stop accessing webcam",
             "itemtype": "method",
             "name": "destroyRecorder",
@@ -6039,7 +5686,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 348,
+            "line": 359,
             "description": "When video recorder has been installed",
             "itemtype": "event",
             "name": "recorderReady",
@@ -6049,7 +5696,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 361,
+            "line": 372,
             "description": "Observer that starts recording once recorder is ready. Override to do additional\nstuff at this point!",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -6059,7 +5706,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 377,
+            "line": 388,
             "description": "Hide the recorder from display. Useful if you would like to keep recording without extra UI elements to\n  distract the user.",
             "itemtype": "method",
             "name": "hideRecorder",
@@ -6069,7 +5716,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 386,
+            "line": 397,
             "description": "Show the recorder to the user. Useful if you want to temporarily show a hidden recorder- eg to let the user fix\n  a problem with video capture settings",
             "itemtype": "method",
             "name": "showRecorder",
@@ -6114,7 +5761,7 @@
             "file": "app/randomizers/permute.js",
             "line": 143,
             "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
+            "itemtype": "attribute",
             "name": "conditions",
             "params": [
                 {
@@ -6206,7 +5853,7 @@
             "file": "app/randomizers/random-parameter-set.js",
             "line": 491,
             "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
+            "itemtype": "attribute",
             "name": "conditions",
             "params": [
                 {
@@ -6261,7 +5908,7 @@
             "file": "app/randomizers/select.js",
             "line": 124,
             "description": "Parameters captured and sent to the server",
-            "itemtype": "method",
+            "itemtype": "attribute",
             "name": "conditions",
             "params": [
                 {

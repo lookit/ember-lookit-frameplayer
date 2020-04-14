@@ -513,28 +513,29 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         name: 'ExpLookitGeometryAlternation',
         description: 'Frame to implement specific test trial structure for geometry alternation experiment. Includes announcement and alternation (test) phases. During "alternation," two streams of triangles are shown, in rectangles on the left and right of the screen: one one side both size and shape change, on the other only size changes. Frame is displayed fullscreen and video recording is conducted during test.',
         data: {
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {Boolean} leftSequence Sequence of images shown on the left
-             * @param {Boolean} rightSequence Sequence of images shown on the right
-             * @param {String} videoID The ID of any video recorded during this frame
-             * @param {Boolean} hasBeenPaused whether this trial was paused
-             * @param {Object} eventTimings
-             * @return {Object} The payload sent to the server
-             */
             type: 'object',
             properties: {
+               /**
+                * Sequence of images shown on the left
+                * @method leftSequence
+                */
                 leftSequence: {
                     type: 'Object'
                 },
+               /**
+                * Sequence of images shown on the right
+                * @method rightSequence
+                */
                 rightSequence: {
                     type: 'Object'
                 },
                 videoId: {
                     type: 'string'
                 },
+               /**
+                * Whether this trial was paused
+                * @method hasBeenPaused
+                */
                 hasBeenPaused: {
                     type: 'boolean'
                 }
@@ -828,6 +829,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
      * Observer that starts recording once recorder is ready. Override to do additional
      * stuff at this point!
      * @method whenPossibleToRecord
+     * @private
      */
     whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
         if (this.get('doRecording')) {
@@ -845,6 +847,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     /**
      * Observer that starts recording once sessionrecorder is ready.
      * @method whenPossibleToRecordSession
+     * @private
      */
     whenPossibleToRecordSession: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
         if (this.get('startSessionRecording')) {
