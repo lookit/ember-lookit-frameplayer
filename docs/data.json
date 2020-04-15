@@ -822,7 +822,7 @@
             "namespace": "",
             "file": "app/components/exp-lookit-video-consent/component.js",
             "line": 16,
-            "description": "Video consent frame for Lookit studies, with consent document displayed at left and instructions to start recording, read a statement out loud, and send. A standard consent\ndocument is displayed, with additional study-specific information provided by the researcher, in accordance with the Lookit terms of use.\n\nResearchers can select from the following named templates:\n\n`consent_001`: Original Lookit consent document (2019)\n`consent_002`: Added optional GDPR section and research subject rights statement\n\nTo look up the exact text of the consent document, see https://github.com/lookit/ember-lookit-frameplayer/blob/master/app/components/exp-lookit-video-consent/template.hbs\n\nThe consent document can be downloaded as PDF document by participant.\n\n```json\n\"frames\": {\n    \"video-consent\": {\n        \"kind\": \"exp-lookit-video-consent\",\n        \"template\": \"consent_002\",\n        \"PIName\": \"Jane Smith\",\n        \"institution\": \"Science University\",\n        \"PIContact\": \"Jane Smith at 123 456 7890\",\n        \"purpose\": \"Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.\",\n        \"procedures\": \"Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.\",\n        \"payment\": \"After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.\",\n        \"datause\": \"We are primarily interested in your child's emotional reactions to the images and sounds. A research assistant will watch your video to measure the precise amount of delight in your child's face as he or she sees each cat picture.\",\n        \"gdpr\": false,\n        \"research_rights_statement\": \"You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the [IRB NAME], [INSTITUTION], [ADDRESS/CONTACT]\"\n    }\n}\n```",
+            "description": "Video consent frame for Lookit studies, with consent document displayed at left and instructions to start recording, read a statement out loud, and send. A standard consent\ndocument is displayed, with additional study-specific information provided by the researcher, in accordance with the Lookit terms of use.\n\nResearchers can select from the following named templates:\n\n`consent_001`: Original Lookit consent document (2019)\n`consent_002`: Added optional GDPR section and research subject rights statement\n\nTo look up the exact text of the consent document, see https://github.com/lookit/ember-lookit-frameplayer/blob/master/app/components/exp-lookit-video-consent/template.hbs\n\nThe consent document can be downloaded as PDF document by participant.\n\n```json\n\"frames\": {\n    \"video-consent\": {\n        \"kind\": \"exp-lookit-video-consent\",\n        \"template\": \"consent_002\",\n        \"PIName\": \"Jane Smith\",\n        \"institution\": \"Science University\",\n        \"PIContact\": \"Jane Smith at 123 456 7890\",\n        \"purpose\": \"Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.\",\n        \"procedures\": \"Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.\",\n        \"payment\": \"After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.\",\n        \"datause\": \"We are primarily interested in your child's emotional reactions to the images and sounds. A research assistant will watch your video to measure the precise amount of delight in your child's face as he or she sees each cat picture.\",\n        \"gdpr\": false,\n        \"research_rights_statement\": \"You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the [IRB NAME], [INSTITUTION], [ADDRESS/CONTACT]\",\n        \"additional_segments\": [\n                {\n                    \"title\": \"US Patriot Act Disclosure\",\n                    \"text\": \"[EXAMPLE ONLY, PLEASE REMOVE ADDITIONAL_SEGMENTS UNLESS YOU NEED THEM.] Lookit is a U.S. organization and all information gathered from the website is stored on servers based in the U.S. Therefore, your video recordings are subject to U.S. laws, such as the US Patriot Act. This act allows authorities access to the records of internet service providers. If you choose to participate in this study, you understand that your video recording will be stored and accessed in the USA. The security and privacy policy for Lookit can be found at the following link: <a href='https://lookit.mit.edu/privacy/' target='_blank'>https://lookit.mit.edu/privacy/</a>.\"\n                }\n            ]\n        }\n}\n```",
             "extends": "Exp-frame-base",
             "uses": [
                 "Video-record"
@@ -4094,7 +4094,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 127,
+            "line": 133,
             "description": "When participant downloads consent form",
             "itemtype": "event",
             "name": "downloadConsentForm",
@@ -4104,7 +4104,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 137,
+            "line": 143,
             "description": "Name of PI running this study",
             "itemtype": "property",
             "name": "PIName",
@@ -4115,7 +4115,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 146,
+            "line": 152,
             "description": "Name of institution running this study (if ambiguous, list institution whose IRB approved the study)",
             "itemtype": "property",
             "name": "institution",
@@ -4126,7 +4126,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 155,
+            "line": 161,
             "description": "Contact information for PI or lab in case of participant questions or concerns. This will directly follow the phrase \"please contact\", so format accordingly: e.g., \"the XYZ lab at xyz@science.edu\" or \"Mary Smith at 123 456 7890\".",
             "itemtype": "property",
             "name": "PIContact",
@@ -4137,7 +4137,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 164,
+            "line": 170,
             "description": "Brief description of purpose of study - 1-2 sentences that describe what you are trying to find out. Language should be as straightforward and accessible as possible! E.g., \"Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.\"",
             "itemtype": "property",
             "name": "purpose",
@@ -4148,7 +4148,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 173,
+            "line": 179,
             "description": "Brief description of study procedures, including any risks or a statement that there are no anticipated risks. We add a statement about the duration (from your study definition) to the start (e.g., \"This study takes about 10 minutes to complete\"), so you don't need to include that. It can be in third person or addressed to the parent. E.g., \"Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.\"",
             "itemtype": "property",
             "name": "procedures",
@@ -4159,7 +4159,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 182,
+            "line": 188,
             "description": "Statement about payment/compensation for participation, including a statement that there are no additional benefits anticipated to the participant. E.g., \"After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.\"",
             "itemtype": "property",
             "name": "payment",
@@ -4170,7 +4170,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 191,
+            "line": 197,
             "description": "Study-specific data use statement (optional). This will follow the following more general text: \"The research group led by [PIName] at [institution] will have access to video and other data collected during this session. We will also have access to your account profile, demographic survey, and the child profile for the child who is participating, including changes you make in the future to any of this information. We may study your child’s responses in connection with his or her previous responses to this or other studies run by our group, siblings’ responses to this or other studies run by our group, or demographic survey responses.\"\nYou may want to note what measures you will actually be coding for (looking time, facial expressions, parent-child interaction, etc.) and other more specific information about your use of data from this study here. For instance, you would note if you were building a corpus of naturalistic data that may be used to answer a variety of questions (rather than just collecting data for a single planned study).",
             "itemtype": "property",
             "name": "datause",
@@ -4181,7 +4181,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 201,
+            "line": 207,
             "description": "Whether to include a section on GDPR; only used in template consent_002 + .",
             "itemtype": "property",
             "name": "gdpr",
@@ -4193,7 +4193,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 212,
+            "line": 218,
             "description": "List of types of personal information collected, for GDPR section only. Do not include special category information, which is listed separately.",
             "itemtype": "property",
             "name": "gdpr_personal_data",
@@ -4204,7 +4204,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 221,
+            "line": 227,
             "description": "List of types of special category information collected, for GDPR section only. Include all that apply: racial or ethnic origin; political opinions; religious or philosophical beliefs; trade union membership; processing of genetic data; biometric data; health data; and/or sex life or sexual orientation information",
             "itemtype": "property",
             "name": "gdpr_sensitive_data",
@@ -4215,8 +4215,8 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 230,
-            "description": "Statement about rights of research subjects and how to contact IRB.  Used only in template consent_002+. For instance, MIT's standard language is: You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Chairman of the Committee on the Use of Humans as Experimental Subjects, M.I.T., Room E25-143B, 77 Massachusetts Ave, Cambridge, MA 02139, phone 1-617-253 6787.",
+            "line": 236,
+            "description": "Statement about rights of research subjects and how to contact IRB.  Used only in template consent_002+. For instance, MIT's standard language is: You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact [CONTACT INFO].",
             "itemtype": "property",
             "name": "research_rights_statement",
             "type": "String",
@@ -4226,7 +4226,18 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 239,
+            "line": 245,
+            "description": "List of additional custom sections of the consent form, e.g. US Patriot Act Disclosure. These are subject to Lookit approval and in general can only add information that was true anyway but that your IRB needs included; please contact us before submitting your study to check.",
+            "itemtype": "property",
+            "name": "research_rights_statement",
+            "type": "String",
+            "class": "Exp-lookit-video-consent",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video-consent/component.js",
+            "line": 267,
             "description": "Which consent document template to use. If you are setting up a new study,\nuse the most recent (highest number) of these options. Options: consent_001,\nconsent_002.",
             "itemtype": "property",
             "name": "template",
@@ -4237,7 +4248,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 266,
+            "line": 294,
             "description": "the exact text shown in the consent document during this frame",
             "itemtype": "attribute",
             "name": "consentFormText",

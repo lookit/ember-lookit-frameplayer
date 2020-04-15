@@ -152,8 +152,14 @@ The consent document can be downloaded as PDF document by participant.
         &quot;payment&quot;: &quot;After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child&#x27;s data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.&quot;,
         &quot;datause&quot;: &quot;We are primarily interested in your child&#x27;s emotional reactions to the images and sounds. A research assistant will watch your video to measure the precise amount of delight in your child&#x27;s face as he or she sees each cat picture.&quot;,
         &quot;gdpr&quot;: false,
-        &quot;research_rights_statement&quot;: &quot;You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the [IRB NAME], [INSTITUTION], [ADDRESS/CONTACT]&quot;
-    }
+        &quot;research_rights_statement&quot;: &quot;You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the [IRB NAME], [INSTITUTION], [ADDRESS/CONTACT]&quot;,
+        &quot;additional_segments&quot;: [
+                {
+                    &quot;title&quot;: &quot;US Patriot Act Disclosure&quot;,
+                    &quot;text&quot;: &quot;[EXAMPLE ONLY, PLEASE REMOVE ADDITIONAL_SEGMENTS UNLESS YOU NEED THEM.] Lookit is a U.S. organization and all information gathered from the website is stored on servers based in the U.S. Therefore, your video recordings are subject to U.S. laws, such as the US Patriot Act. This act allows authorities access to the records of internet service providers. If you choose to participate in this study, you understand that your video recording will be stored and accessed in the USA. The security and privacy policy for Lookit can be found at the following link: &lt;a href=&#x27;https://lookit.mit.edu/privacy/&#x27; target=&#x27;_blank&#x27;&gt;https://lookit.mit.edu/privacy/&lt;/a&gt;.&quot;
+                }
+            ]
+        }
 }
 &#x60;&#x60;&#x60;
 
@@ -341,12 +347,34 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         },
 
         /**
-        Statement about rights of research subjects and how to contact IRB.  Used only in template consent_002+. For instance, MIT&#x27;s standard language is: You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Chairman of the Committee on the Use of Humans as Experimental Subjects, M.I.T., Room E25-143B, 77 Massachusetts Ave, Cambridge, MA 02139, phone 1-617-253 6787.
+        Statement about rights of research subjects and how to contact IRB.  Used only in template consent_002+. For instance, MIT&#x27;s standard language is: You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact [CONTACT INFO].
         @property {String} research_rights_statement
         */
         research_rights_statement: {
             type: &#x27;string&#x27;,
             description: &#x27; Statement about rights of research subjects and how to contact IRB&#x27;
+        },
+
+        /**
+        List of additional custom sections of the consent form, e.g. US Patriot Act Disclosure. These are subject to Lookit approval and in general can only add information that was true anyway but that your IRB needs included; please contact us before submitting your study to check.
+        @property {String} research_rights_statement
+        */
+        additional_segments: {
+            type: &#x27;array&#x27;,
+            description: &#x27;List of additional sections (objects with title and text fields) to include at end of form&#x27;,
+            items: {
+                type: &#x27;object&#x27;,
+                properties: {
+                    &#x27;title&#x27;: {
+                        type: &#x27;string&#x27;
+                    },
+                    &#x27;text&#x27;: {
+                        type: &#x27;string&#x27;
+                    }
+                },
+                required: [&#x27;title&#x27;, &#x27;text&#x27;]
+            },
+            default: []
         },
 
         /**
@@ -376,7 +404,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 videoList: {
                     type: &#x27;list&#x27;
                 },
-               /**
+                /**
                 * the exact text shown in the consent document during this frame
                 * @attribute consentFormText
                 */
