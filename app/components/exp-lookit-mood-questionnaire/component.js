@@ -133,56 +133,56 @@ export default ExpFrameBaseComponent.extend(Validations, {
         data: {
             type: 'object',
             properties: {
-               /**
+                /**
                 * Rating for CHILD on tired - rested scale, '1' to '7' where '7' is rested
                 * @attribute rested
                 */
                 rested: {
                     type: 'string'
                 },
-               /**
+                /**
                 * Rating for CHILD on sick - healthy scale, '1' to '7' where '7' is healthy
                 * @attribute healthy
                 */
                 healthy: {
                     type: 'string'
                 },
-               /**
+                /**
                 * Rating for CHILD on fussy - happy scale, '1' to '7' where '7' is happy
                 * @attribute childHappy
                 */
                 childHappy: {
                     type: 'string'
                 },
-               /**
+                /**
                 * Rating for CHILD on calm - active scale, '1' to '7' where '7' is active
                 * @attribute active
                 */
                 active: {
                     type: 'string'
                 },
-               /**
+                /**
                 * Rating for PARENT on tired - energetic scale, '1' to '7' where '7' is energetic
                 * @attribute energetic
                 */
                 energetic: {
                     type: 'string'
                 },
-               /**
+                /**
                 * Rating for PARENT on overwhelmed - on top of stuff scale, '1' to '7' where '7' is on top of stuff
                 * @attribute ontopofstuff
                 */
                 ontopofstuff: {
                     type: 'string'
                 },
-               /**
+                /**
                 * Rating for PARENT on upset - happy scale, '1' to '7' where '7' is happy
                 * @attribute parentHappy
                 */
                 parentHappy: {
                     type: 'string'
                 },
-               /**
+                /**
                 * how long since the child woke up from nap, HH:mm
                 * @attribute napWakeUp
                 */
@@ -190,21 +190,21 @@ export default ExpFrameBaseComponent.extend(Validations, {
                     type: 'string',
                     default: null
                 },
-               /**
+                /**
                 * whether the child has a typical nap schedule: 'no', 'yes', or 'yes-overdue' if child is overdue for nap
                 * @attribute usualNapSchedule
                 */
                 usualNapSchedule: {
                     type: 'string'
                 },
-               /**
+                /**
                 * only valid if usualNapSchedule is 'yes';  how long until child is due to sleep again, HH:mm
                 * @attribute nextNap
                 */
                 nextNap: {
                     type: 'string'
                 },
-               /**
+                /**
                 * how long since the child ate/drank, HH:mm
                 * @attribute lastEat
                 */
@@ -212,7 +212,7 @@ export default ExpFrameBaseComponent.extend(Validations, {
                     type: 'string',
                     default: null
                 },
-               /**
+                /**
                 * what the child was doing before this (free response)
                 * @attribute doingBefore
                 */

@@ -543,7 +543,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         data: {
             type: 'object',
             properties: {
-               /**
+                /**
                 * Sources of videos (potentially) shown during this trial: [source of test video, source of alternate test video].
                 * @attribute videosShown
                 */
@@ -554,42 +554,42 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 videoId: {
                     type: 'string'
                 },
-               /**
+                /**
                 * URL of image shown on right (given as a property of the frame)
                 * @attribute rightImage
                 */
                 rightImage: {
                     type: 'string'
                 },
-               /**
+                /**
                 * URL of image shown on left (given as a property of the frame)
                 * @attribute leftImage
                 */
                 leftImage: {
                     type: 'string'
                 },
-               /**
+                /**
                 * URL of image shown at center (given as a property of the frame)
                 * @attribute centerImage
                 */
                 centerImage: {
                     type: 'string'
                 },
-               /**
+                /**
                 * seconds to display images/loop videos (given as a property of the frame), if using time-based limit
                 * @attribute testLength
                 */
                 testLength: {
                     type: 'number'
                 },
-               /**
+                /**
                 * test audio file played, if any
                 * @attribute testAudio
                 */
                 testAudio: {
                     type: 'string'
                 },
-               /**
+                /**
                 * location of stimuli
                 * @attribute baseDir
                 */

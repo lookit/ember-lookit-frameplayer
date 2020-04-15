@@ -393,7 +393,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         data: {
             type: 'object',
             properties: {
-               /**
+                /**
                 * Sources of videos (potentially) shown during this trial: [source of test video, source of alternate test video].
                 * @attribute videosShown
                 */

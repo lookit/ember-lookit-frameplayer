@@ -463,7 +463,7 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
      * @attribute generatedProperties
      */
 
-     /**
+    /**
      * Type of frame: EXIT (exit survey), CONSENT (consent or assent frame), or DEFAULT
      * (anything else)
      * @attribute frameType

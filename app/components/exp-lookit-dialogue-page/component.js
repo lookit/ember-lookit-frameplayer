@@ -429,7 +429,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 videoId: {
                     type: 'string'
                 },
-               /**
+                /**
                 * Which image is selected at
                 *   the end of the trial, or null if none is. This indicates the
                 *   final selected choice for a choice trial.
@@ -438,7 +438,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 currentlyHighlighted: {
                     type: 'string'
                 },
-               /**
+                /**
                 * Trial number as passed to this frame
                 * @attribute nTrial
                 * @type number
@@ -446,7 +446,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 nTrial: {
                     type: 'number'
                 },
-               /**
+                /**
                 * Phase number as passed to this frame
                 * @attribute nPhase
                 */

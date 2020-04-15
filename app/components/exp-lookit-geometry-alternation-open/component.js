@@ -369,14 +369,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         data: {
             type: 'object',
             properties: {
-               /**
+                /**
                 * True to use big fat triangle as context figure, or false to use small skinny triangle as context. [same as passed to this frame]
                 * @attribute context
                 */
                 context: {
                     type: 'boolean'
                 },
-               /**
+                /**
                 * Whether to put the shape+size alternating stream on the left (other stream alternates only in size) [same as passed to this frame]
                 * @attribute altOnLeft
                 */
@@ -386,7 +386,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 videoId: {
                     type: 'string'
                 },
-               /**
+                /**
                 * whether this trial was paused
                 * @attribute hasBeenPaused
                 */

@@ -479,14 +479,14 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
                 videoList: {
                     type: 'list'
                 },
-               /**
+                /**
                 * the exact text shown in the assent document during this frame
                 * @attribute assentFormText
                 */
                 assentFormText: {
                     type: 'string'
                 },
-               /**
+                /**
                 * The child's response to the assent question - Yes or No
                 * @attribute childResponse
                 */

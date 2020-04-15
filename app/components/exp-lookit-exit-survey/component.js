@@ -112,7 +112,7 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
         data: {
             type: 'object',
             properties: {
-               /**
+                /**
                 * Child's birthdate as entered into exit survey; timestamp string starting YYYY-mm-dd.
                 * @attribute birthDate
                 */
@@ -120,21 +120,21 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
                     type: 'string',
                     default: null
                 },
-               /**
+                /**
                 * Whether data can be shared with Databrary: 'yes' or 'no'
                 * @attribute databraryShare
                 */
                 databraryShare: {
                     type: 'string'
                 },
-               /**
+                /**
                 * Video privacy level: 'private', 'scientific', or 'public'
                 * @attribute useOfMedia
                 */
                 useOfMedia: {
                     type: 'string'
                 },
-               /**
+                /**
                 * Whether the the box to withdraw video data is checked
                 * @attribute withdrawal
                 */
@@ -142,7 +142,7 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
                     type: 'boolean',
                     default: false
                 },
-               /**
+                /**
                 * Freeform comments entered by parent
                 * @attribute feedback
                 */

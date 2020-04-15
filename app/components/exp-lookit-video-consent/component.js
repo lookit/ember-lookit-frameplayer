@@ -263,7 +263,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 videoList: {
                     type: 'list'
                 },
-               /**
+                /**
                 * the exact text shown in the consent document during this frame
                 * @attribute consentFormText
                 */

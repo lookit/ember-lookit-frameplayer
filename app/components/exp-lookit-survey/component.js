@@ -574,14 +574,14 @@ export default ExpFrameBaseComponent.extend({
         data: {
             type: 'object',
             properties: {
-               /**
+                /**
                 * The same formSchema that was provided as a parameter to this frame, for ease of analysis if randomizing or iterating on experimental design.
                 * @attribute formSchema
                 */
                 formSchema: {
                     type: 'object'
                 },
-               /**
+                /**
                 * Data corresponding to the fields defined in formSchema['schema']['properties']. The keys of formData are the FIELDNAMEs used there, and the values are the participant's responses. Note that if the participant does not answer a question, that key may be absent, rather than being present with a null value.
                 * @attribute formData
                 */
