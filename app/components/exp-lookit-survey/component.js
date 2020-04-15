@@ -572,20 +572,19 @@ export default ExpFrameBaseComponent.extend({
         name: 'ExpLookitSurvey',
         description: 'A basic survey frame.',
         data: {
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {Object} formSchema The same formSchema that was provided as a parameter to this frame, for ease of analysis if randomizing or iterating on experimental design.
-             * @param {Object} formData Data corresponding to the fields defined in formSchema['schema']['properties']. The keys of formData are the FIELDNAMEs used there, and the values are the participant's responses. Note that if the participant does not answer a question, that key may be absent, rather than being present with a null value.
-             * @param {Object} eventTimings Only events captured during this frame are 'nextFrame'/'previousFrame'; example eventTimings value: `[{u'eventType': u'nextFrame', u'timestamp': u'2016-08-03T00:45:37.157Z'}]`
-             * @return {Object} The payload sent to the server
-             */
             type: 'object',
             properties: {
+                /**
+                * The same formSchema that was provided as a parameter to this frame, for ease of analysis if randomizing or iterating on experimental design.
+                * @attribute formSchema
+                */
                 formSchema: {
                     type: 'object'
                 },
+                /**
+                * Data corresponding to the fields defined in formSchema['schema']['properties']. The keys of formData are the FIELDNAMEs used there, and the values are the participant's responses. Note that if the participant does not answer a question, that key may be absent, rather than being present with a null value.
+                * @attribute formData
+                */
                 formData: {
                     type: 'object'
                 }

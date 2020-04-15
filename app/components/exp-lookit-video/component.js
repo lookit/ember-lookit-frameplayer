@@ -392,16 +392,11 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         description: 'Component that plays a video',
         data: {
             type: 'object',
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {Array} videosShown Sources of videos (potentially) shown during this trial: [source of test video, source of alternate test video].
-             * @param {Object} eventTimings
-             * @param {String} videoID The ID of any webcam video recorded during this frame
-             * @return {Object} The payload sent to the server
-             */
             properties: {
+                /**
+                * Sources of videos (potentially) shown during this trial: [source of test video, source of alternate test video].
+                * @attribute videosShown
+                */
                 videosShown: {
                     type: 'string',
                     default: []

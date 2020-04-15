@@ -179,24 +179,14 @@ as shown below, in addition to the parameters described under 'properties'.</p>
     <ul class="api-class-tabs">
         <li class="api-class-tab index"><a href="#index">Index</a></li>
 
-            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
             <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+            <li class="api-class-tab attrs"><a href="#attrs">Data collected</a></li>
     </ul>
 
     <div>
         <div id="index" class="api-class-tabpanel index">
             <h2 class="off-left">Item Index</h2>
 
-                <div class="index-section methods">
-                    <h3>Methods</h3>
-
-                    <ul class="index-list methods">
-                            <li class="index-item method">
-                                <a href="#method_conditions">conditions</a>
-
-                            </li>
-                    </ul>
-                </div>
 
                 <div class="index-section properties">
                     <h3>Properties</h3>
@@ -217,67 +207,18 @@ as shown below, in addition to the parameters described under 'properties'.</p>
                     </ul>
                 </div>
 
+                <div class="index-section attrs">
+                    <h3>Data collected</h3>
+
+                    <ul class="index-list attrs">
+                            <li class="index-item attr">
+                                <a href="#attr_conditions">conditions</a>
+                            </li>
+                    </ul>
+                </div>
 
         </div>
 
-            <div id="methods" class="api-class-tabpanel">
-                <h2 class="off-left">Methods</h2>
-
-<div id="method_conditions" class="method item">
-    <h3 class="name"><code>conditions</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>whichFrames</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/app_randomizers_select.js.html#l124"><code>app&#x2F;randomizers&#x2F;select.js:124</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Parameters captured and sent to the server</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">whichFrames</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
-
-
-                    <div class="param-description">
-                        <p>the index/indices of the frame(s) used</p>
-
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-            </div>
 
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
@@ -376,6 +317,42 @@ randomizer.)</p>
 </div>
             </div>
 
+            <div id="attrs" class="api-class-tabpanel">
+                <h2 class="off-left">Data keys collected</h2>
+                These are the fields that will be captured by this frame and sent back to the Lookit server.
+                Each of these fields will correspond to one row of the CSV frame data for a given response - the
+                row will have <code>key</code> set to the data key name, and <code>value</code> set to the value for this response.
+                Equivalently, this data will be available in the <code>exp_data</code> field of the response JSON data.
+                    <div id="attr_conditions" class="attr item">
+                        <a name="config_conditions"></a> 
+                        <h3 class="name"><code>conditions</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_randomizers_select.js.html#l124"><code>app&#x2F;randomizers&#x2F;select.js:124</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Parameters captured and sent to the server</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+            </div>
 
     </div>
 </div>

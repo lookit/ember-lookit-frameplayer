@@ -458,18 +458,29 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
     },
 
     /**
-     * The base class does not define any data to save to the server. It does, however, capture some basic event
-     *   timing data. (such as when the user clicks the "next" button)
-     *
-     * This section slightly breaks YUIDoc conventions- rather than being a literal guide to using the code, the
-     *   "parameters" here are abstract descriptions of what data is captured.
-     *
-     * Each frame that extends ExpFrameBase will send an array `eventTimings`
-     * back to the server upon completion. This array is an ordered list (oldest
-     * to newest) of every EVENT that happened during the frame. Each event is
+     * Any properties generated via a custom generateProperties function provided to this
+     * frame (e.g., a score you computed to decide on feedback). In general will be null.
+     * @attribute generatedProperties
+     */
+
+    /**
+     * Type of frame: EXIT (exit survey), CONSENT (consent or assent frame), or DEFAULT
+     * (anything else)
+     * @attribute frameType
+     */
+
+    /**
+     * Ordered list of events captured during this frame (oldest to newest). Each event is
      * represented as an object with at least the properties
-     * `{'eventType': EVENTNAME, 'timestamp': TIMESTAMP}`. Frame-specific events
-     * may define additional properties that are sent.
+     * `{'eventType': EVENTNAME, 'timestamp': TIMESTAMP}`.
+     * See Events tab for details of events that might be captured.
+     * @attribute eventTimings
+     */
+
+    /**
+     * Each frame that extends ExpFrameBase will send at least an array `eventTimings`,
+     * a frame type, and any generateProperties back to the server upon completion.
+     * Individual frames may define additional properties that are sent.
      *
      * @param {Array} eventTimings
      * @method serializeContent

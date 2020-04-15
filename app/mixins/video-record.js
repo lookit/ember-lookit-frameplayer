@@ -89,13 +89,15 @@ export default Ember.Mixin.create({
      * The recorder object, accessible to the consuming frame. Includes properties
      * recorder.nWebcams, recorder.hasCamAccess, recorder.micChecked, recorder.connected.
      * @property {VideoRecorder} recorder
+     * @private
      */
     recorder: null,
 
     /**
-     * A list of all video IDs used in this mixing (a new one is created for each recording).
+     * A list of all video IDs used in this mixin (a new one is created for each recording).
      * Accessible to consuming frame.
      * @property {List} videoList
+     * @private
      */
     videoList: null,
 
@@ -104,12 +106,15 @@ export default Ember.Mixin.create({
      * destroying frame. This should be set to true by the consuming frame when video is
      * stopped.
      * @property {Boolean} stoppedRecording
+     * @private
      */
     stoppedRecording: false,
 
     /**
      * JQuery string to identify the recorder element.
-     * @property {String} [recorderElement='#recorder']
+     * @property {String} recorderElement
+     * @default '#recorder'
+     * @private
      */
     recorderElement: '#recorder',
 
@@ -117,20 +122,23 @@ export default Ember.Mixin.create({
      * Whether recorder has been set up yet. Automatically set when doing setup.
      * Accessible to consuming frame.
      * @property {Boolean} recorderReady
+     * @private
      */
     recorderReady: false,
 
     /**
      * Maximum recording length in seconds. Can be overridden by consuming frame.
      * @property {Number} maxRecordingLength
-     * @default 100000000
+     * @default 7200
      */
-    maxRecordingLength: 100000000,
+    maxRecordingLength: 7200,
 
     /**
      * Whether to autosave recordings. Can be overridden by consuming frame.
+     * TODO: eventually use this to set up non-recording option for previewing
      * @property {Number} autosave
      * @default 1
+     * @private
      */
     autosave: 1,
 
@@ -144,14 +152,16 @@ export default Ember.Mixin.create({
     /**
      * Whether to use the camera in this frame. Consuming frame should set this property
      * to override if needed.
-     * @property {Boolean} [doUseCamera=true]
+     * @property {Boolean} doUseCamera
+     * @default true
      */
     doUseCamera: true,
 
     /**
      * Whether to start recording ASAP (only applies if doUseCamera). Consuming frame
      * should set to override if needed.
-     * @property {Boolean} [startRecordingAutomatically=false]
+     * @property {Boolean} startRecordingAutomatically
+     * @default false
      */
     startRecordingAutomatically: false,
 
@@ -161,6 +171,7 @@ export default Ember.Mixin.create({
      * where RRR are random numeric digits.
      *
      * @property {String} videoId
+     * @private
      */
     videoId: '',
 

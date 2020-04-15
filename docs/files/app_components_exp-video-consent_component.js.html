@@ -116,7 +116,7 @@ import layout from &#x27;./template&#x27;;
 import ExpLookitVideoConsent from &#x27;../exp-lookit-video-consent/component&#x27;;
 import VideoRecord from &#x27;../../mixins/video-record&#x27;;
 
-/**
+/*
  * @module exp-player
  * @submodule frames
  */
@@ -161,7 +161,7 @@ Consent document can be downloaded as PDF document by participant.
 
 @class Exp-video-consent
 @extends Exp-lookit-video-consent
-
+@deprecated
 @uses Video-record
 */
 
@@ -169,7 +169,7 @@ export default ExpLookitVideoConsent.extend(VideoRecord, {
     layout,
 
     frameSchemaProperties: {
-        /**
+        /*
         Title of the consent document
         @property {String} title
         @default &#x27;Consent to participate in behavioral research: &lt;br&gt; Inference and induction study&#x27;
@@ -179,7 +179,7 @@ export default ExpLookitVideoConsent.extend(VideoRecord, {
             default: &#x27;Consent to participate in behavioral research: &lt;br&gt; Inference and induction study&#x27;
         },
 
-        /**
+        /*
         Array of paragraphs of the consent document, each with title and text.
         @property {Array} blocks
             @param {String} title
@@ -202,7 +202,7 @@ export default ExpLookitVideoConsent.extend(VideoRecord, {
             default: []
         },
 
-        /**
+        /*
         Text the user is asked to read aloud to consent
         @property {String} prompt
         @default &#x27;I consent to participate in this study&#x27;
@@ -217,16 +217,6 @@ export default ExpLookitVideoConsent.extend(VideoRecord, {
         name: &#x27;Video Consent Form&#x27;,
         description: &#x27;A video consent form.&#x27;,
         data: {
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {String} consentFormText the exact text shown in the consent document during this frame
-             * @param {String} videoID The ID of any webcam video recorded during this frame
-             * @param {List} videoList a list of webcam video IDs in case there are &gt;1
-             * @param {Object} eventTimings
-             * @return {Object} The payload sent to the server
-             */
             type: &#x27;object&#x27;,
             properties: {
                 videoId: {

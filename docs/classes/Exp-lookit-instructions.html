@@ -280,10 +280,6 @@ required to be played before moving on).</p>
                                 <a href="#method_resumeRecorder">resumeRecorder</a>
 
                             </li>
-                            <li class="index-item method">
-                                <a href="#method_serializeContent">serializeContent</a>
-
-                            </li>
                             <li class="index-item method inherited">
                                 <a href="#method_setupRecorder">setupRecorder</a>
 
@@ -312,22 +308,10 @@ required to be played before moving on).</p>
 
                     <ul class="index-list properties extends">
                             <li class="index-item property inherited">
-                                <a href="#property_[doUseCamera=true]">[doUseCamera=true]</a>
-
-                            </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_[recorderElement=&#x27;#recorder&#x27;]">[recorderElement=&#x27;#recorder&#x27;]</a>
-
-                            </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_[startRecordingAutomatically=false]">[startRecordingAutomatically=false]</a>
-
-                            </li>
-                            <li class="index-item property inherited">
                                 <a href="#property_audioOnly">audioOnly</a>
 
                             </li>
-                            <li class="index-item property inherited">
+                            <li class="index-item property private inherited">
                                 <a href="#property_autosave">autosave</a>
 
                             </li>
@@ -340,6 +324,10 @@ required to be played before moving on).</p>
 
                             </li>
                             <li class="index-item property inherited">
+                                <a href="#property_doUseCamera">doUseCamera</a>
+
+                            </li>
+                            <li class="index-item property inherited">
                                 <a href="#property_maxRecordingLength">maxRecordingLength</a>
 
                             </li>
@@ -347,11 +335,15 @@ required to be played before moving on).</p>
                                 <a href="#property_nextButtonText">nextButtonText</a>
 
                             </li>
-                            <li class="index-item property inherited">
+                            <li class="index-item property private inherited">
                                 <a href="#property_recorder">recorder</a>
 
                             </li>
-                            <li class="index-item property inherited">
+                            <li class="index-item property private inherited">
+                                <a href="#property_recorderElement">recorderElement</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
                                 <a href="#property_recorderReady">recorderReady</a>
 
                             </li>
@@ -364,14 +356,18 @@ required to be played before moving on).</p>
 
                             </li>
                             <li class="index-item property inherited">
+                                <a href="#property_startRecordingAutomatically">startRecordingAutomatically</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
                                 <a href="#property_stoppedRecording">stoppedRecording</a>
 
                             </li>
-                            <li class="index-item property inherited">
+                            <li class="index-item property private inherited">
                                 <a href="#property_videoId">videoId</a>
 
                             </li>
-                            <li class="index-item property inherited">
+                            <li class="index-item property private inherited">
                                 <a href="#property_videoList">videoList</a>
 
                             </li>
@@ -429,7 +425,7 @@ required to be played before moving on).</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_destroyRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l306"><code>app&#x2F;mixins&#x2F;video-record.js:306</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l317"><code>app&#x2F;mixins&#x2F;video-record.js:317</code></a>
         </p>
 
 
@@ -459,7 +455,7 @@ required to be played before moving on).</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_hideRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l373"><code>app&#x2F;mixins&#x2F;video-record.js:373</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l384"><code>app&#x2F;mixins&#x2F;video-record.js:384</code></a>
         </p>
 
 
@@ -502,7 +498,7 @@ required to be played before moving on).</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_makeTimeEvent">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l178"><code>app&#x2F;mixins&#x2F;video-record.js:178</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l189"><code>app&#x2F;mixins&#x2F;video-record.js:189</code></a>
         </p>
 
 
@@ -573,7 +569,7 @@ required to be played before moving on).</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_pauseRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l232"><code>app&#x2F;mixins&#x2F;video-record.js:232</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l243"><code>app&#x2F;mixins&#x2F;video-record.js:243</code></a>
         </p>
 
 
@@ -624,7 +620,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_resumeRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l252"><code>app&#x2F;mixins&#x2F;video-record.js:252</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l263"><code>app&#x2F;mixins&#x2F;video-record.js:263</code></a>
         </p>
 
 
@@ -640,72 +636,6 @@ instead stop/start and make separate clips if needed.
     </div>
 
 
-
-
-</div>
-<div id="method_serializeContent" class="method item">
-    <h3 class="name"><code>serializeContent</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>showWarning</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/app_components_exp-lookit-instructions_component.js.html#l285"><code>app&#x2F;components&#x2F;exp-lookit-instructions&#x2F;component.js:285</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Parameters captured and sent to the server</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">showWarning</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-
-                    <div class="param-description">
-                        <p>whether the warning about sound being played is currently shown</p>
-
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
-                    <p>The payload sent to the server</p>
-
-            </div>
-        </div>
 
 
 </div>
@@ -733,7 +663,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_setupRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l197"><code>app&#x2F;mixins&#x2F;video-record.js:197</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l208"><code>app&#x2F;mixins&#x2F;video-record.js:208</code></a>
         </p>
 
 
@@ -787,7 +717,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_showRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l382"><code>app&#x2F;mixins&#x2F;video-record.js:382</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l393"><code>app&#x2F;mixins&#x2F;video-record.js:393</code></a>
         </p>
 
 
@@ -821,7 +751,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_startRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l270"><code>app&#x2F;mixins&#x2F;video-record.js:270</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l281"><code>app&#x2F;mixins&#x2F;video-record.js:281</code></a>
         </p>
 
 
@@ -861,7 +791,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_stopRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l291"><code>app&#x2F;mixins&#x2F;video-record.js:291</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l302"><code>app&#x2F;mixins&#x2F;video-record.js:302</code></a>
         </p>
 
 
@@ -898,7 +828,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_whenPossibleToRecord">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l357"><code>app&#x2F;mixins&#x2F;video-record.js:357</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l368"><code>app&#x2F;mixins&#x2F;video-record.js:368</code></a>
         </p>
 
 
@@ -919,80 +849,6 @@ stuff at this point!
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
 
-<div id="property_[doUseCamera=true]" class="property item inherited">
-    <h3 class="name"><code>[doUseCamera=true]</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/Video-record.html#property_[doUseCamera=true]">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l144"><code>app&#x2F;mixins&#x2F;video-record.js:144</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        Whether to use the camera in this frame. Consuming frame should set this property
-to override if needed.
-    </div>
-
-
-
-</div>
-<div id="property_[recorderElement=&#x27;#recorder&#x27;]" class="property item inherited">
-    <h3 class="name"><code>[recorderElement=&#x27;#recorder&#x27;]</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/Video-record.html#property_[recorderElement=&#x27;#recorder&#x27;]">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l110"><code>app&#x2F;mixins&#x2F;video-record.js:110</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        JQuery string to identify the recorder element.
-    </div>
-
-
-
-</div>
-<div id="property_[startRecordingAutomatically=false]" class="property item inherited">
-    <h3 class="name"><code>[startRecordingAutomatically=false]</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/Video-record.html#property_[startRecordingAutomatically=false]">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l151"><code>app&#x2F;mixins&#x2F;video-record.js:151</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        Whether to start recording ASAP (only applies if doUseCamera). Consuming frame
-should set to override if needed.
-    </div>
-
-
-
-</div>
 <div id="property_audioOnly" class="property item inherited">
     <h3 class="name"><code>audioOnly</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
@@ -1004,7 +860,7 @@ should set to override if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_audioOnly">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l137"><code>app&#x2F;mixins&#x2F;video-record.js:137</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l145"><code>app&#x2F;mixins&#x2F;video-record.js:145</code></a>
         </p>
 
 
@@ -1018,18 +874,19 @@ should set to override if needed.
 
 
 </div>
-<div id="property_autosave" class="property item inherited">
+<div id="property_autosave" class="property item private inherited">
     <h3 class="name"><code>autosave</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
 
 
+        <span class="flag private">private</span>
 
 
 
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_autosave">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l130"><code>app&#x2F;mixins&#x2F;video-record.js:130</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l136"><code>app&#x2F;mixins&#x2F;video-record.js:136</code></a>
         </p>
 
 
@@ -1037,71 +894,12 @@ should set to override if needed.
 
     <div class="description">
         Whether to autosave recordings. Can be overridden by consuming frame.
+TODO: eventually use this to set up non-recording option for previewing
     </div>
 
         <p><strong>Default:</strong> 1</p>
 
 
-</div>
-<div id="property_blocks" class="property item">
-    <h3 class="name"><code>blocks</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-instructions_component.js.html#l214"><code>app&#x2F;components&#x2F;exp-lookit-instructions&#x2F;component.js:214</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Array of objects specifying text/images of instructions to display under webcam view (if webcam is shown)</p>
-
-    </div>
-
-
-
-        <h4>Sub-properties:</h4>
-
-        <ul class="params-list">
-            <li class="param">
-                    <code class="param-name">title</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>Title of this section</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">text</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>Paragraph text of this section</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">listblocks</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
-
-                <div class="param-description">
-                    <p>Object specifying bulleted points for this section. Each object is of the form:
-{text: 'text of bullet point', image: {src: 'url', alt: 'alt-text'}}. Images are optional.</p>
-
-                </div>
-
-            </li>
-        </ul>
 </div>
 <div id="property_blocks" class="property item">
     <h3 class="name"><code>blocks</code></h3>
@@ -1174,6 +972,92 @@ should set to override if needed.
             </li>
         </ul>
 </div>
+<div id="property_blocks" class="property item">
+    <h3 class="name"><code>blocks</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-instructions_component.js.html#l214"><code>app&#x2F;components&#x2F;exp-lookit-instructions&#x2F;component.js:214</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Array of objects specifying text/images of instructions to display under webcam view (if webcam is shown)</p>
+
+    </div>
+
+
+
+        <h4>Sub-properties:</h4>
+
+        <ul class="params-list">
+            <li class="param">
+                    <code class="param-name">title</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                    <p>Title of this section</p>
+
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">text</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                    <p>Paragraph text of this section</p>
+
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">listblocks</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+                <div class="param-description">
+                    <p>Object specifying bulleted points for this section. Each object is of the form:
+{text: 'text of bullet point', image: {src: 'url', alt: 'alt-text'}}. Images are optional.</p>
+
+                </div>
+
+            </li>
+        </ul>
+</div>
+<div id="property_doUseCamera" class="property item inherited">
+    <h3 class="name"><code>doUseCamera</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#property_doUseCamera">Video-record </a> (click for formatted description):
+        <a href="../files/app_mixins_video-record.js.html#l152"><code>app&#x2F;mixins&#x2F;video-record.js:152</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Whether to use the camera in this frame. Consuming frame should set this property
+to override if needed.
+    </div>
+
+        <p><strong>Default:</strong> true</p>
+
+
+</div>
 <div id="property_maxRecordingLength" class="property item inherited">
     <h3 class="name"><code>maxRecordingLength</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
@@ -1185,7 +1069,7 @@ should set to override if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_maxRecordingLength">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l123"><code>app&#x2F;mixins&#x2F;video-record.js:123</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l129"><code>app&#x2F;mixins&#x2F;video-record.js:129</code></a>
         </p>
 
 
@@ -1195,7 +1079,7 @@ should set to override if needed.
         Maximum recording length in seconds. Can be overridden by consuming frame.
     </div>
 
-        <p><strong>Default:</strong> 100000000</p>
+        <p><strong>Default:</strong> 7200</p>
 
 
 </div>
@@ -1225,11 +1109,12 @@ should set to override if needed.
 
 
 </div>
-<div id="property_recorder" class="property item inherited">
+<div id="property_recorder" class="property item private inherited">
     <h3 class="name"><code>recorder</code></h3>
     <span class="type">VideoRecorder</span>
 
 
+        <span class="flag private">private</span>
 
 
 
@@ -1250,18 +1135,45 @@ recorder.nWebcams, recorder.hasCamAccess, recorder.micChecked, recorder.connecte
 
 
 </div>
-<div id="property_recorderReady" class="property item inherited">
+<div id="property_recorderElement" class="property item private inherited">
+    <h3 class="name"><code>recorderElement</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#property_recorderElement">Video-record </a> (click for formatted description):
+        <a href="../files/app_mixins_video-record.js.html#l113"><code>app&#x2F;mixins&#x2F;video-record.js:113</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        JQuery string to identify the recorder element.
+    </div>
+
+        <p><strong>Default:</strong> &#x27;#recorder&#x27;</p>
+
+
+</div>
+<div id="property_recorderReady" class="property item private inherited">
     <h3 class="name"><code>recorderReady</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
 
 
+        <span class="flag private">private</span>
 
 
 
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_recorderReady">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l116"><code>app&#x2F;mixins&#x2F;video-record.js:116</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l121"><code>app&#x2F;mixins&#x2F;video-record.js:121</code></a>
         </p>
 
 
@@ -1327,8 +1239,8 @@ Accessible to consuming frame.
 
 
 </div>
-<div id="property_stoppedRecording" class="property item inherited">
-    <h3 class="name"><code>stoppedRecording</code></h3>
+<div id="property_startRecordingAutomatically" class="property item inherited">
+    <h3 class="name"><code>startRecordingAutomatically</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
 
 
@@ -1337,8 +1249,35 @@ Accessible to consuming frame.
 
     <div class="meta">
                 <p>Inherited from
+                <a href="../classes/Video-record.html#property_startRecordingAutomatically">Video-record </a> (click for formatted description):
+        <a href="../files/app_mixins_video-record.js.html#l160"><code>app&#x2F;mixins&#x2F;video-record.js:160</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Whether to start recording ASAP (only applies if doUseCamera). Consuming frame
+should set to override if needed.
+    </div>
+
+        <p><strong>Default:</strong> false</p>
+
+
+</div>
+<div id="property_stoppedRecording" class="property item private inherited">
+    <h3 class="name"><code>stoppedRecording</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>Inherited from
                 <a href="../classes/Video-record.html#property_stoppedRecording">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l102"><code>app&#x2F;mixins&#x2F;video-record.js:102</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l104"><code>app&#x2F;mixins&#x2F;video-record.js:104</code></a>
         </p>
 
 
@@ -1353,18 +1292,19 @@ stopped.
 
 
 </div>
-<div id="property_videoId" class="property item inherited">
+<div id="property_videoId" class="property item private inherited">
     <h3 class="name"><code>videoId</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
 
 
+        <span class="flag private">private</span>
 
 
 
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_videoId">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l158"><code>app&#x2F;mixins&#x2F;video-record.js:158</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l168"><code>app&#x2F;mixins&#x2F;video-record.js:168</code></a>
         </p>
 
 
@@ -1379,25 +1319,26 @@ where RRR are random numeric digits.
 
 
 </div>
-<div id="property_videoList" class="property item inherited">
+<div id="property_videoList" class="property item private inherited">
     <h3 class="name"><code>videoList</code></h3>
     <span class="type">List</span>
 
 
+        <span class="flag private">private</span>
 
 
 
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_videoList">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l95"><code>app&#x2F;mixins&#x2F;video-record.js:95</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l96"><code>app&#x2F;mixins&#x2F;video-record.js:96</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        A list of all video IDs used in this mixing (a new one is created for each recording).
+        A list of all video IDs used in this mixin (a new one is created for each recording).
 Accessible to consuming frame.
     </div>
 
@@ -1485,7 +1426,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Video-record.html#event_recorderReady">Video-record</a>:
-                            <a href="../files/app_mixins_video-record.js.html#l344"><code>app&#x2F;mixins&#x2F;video-record.js:344</code></a>
+                            <a href="../files/app_mixins_video-record.js.html#l355"><code>app&#x2F;mixins&#x2F;video-record.js:355</code></a>
                             </p>
                     
                     

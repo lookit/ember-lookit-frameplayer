@@ -537,29 +537,32 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         name: &#x27;ExpLookitDialoguePage&#x27;,
         description: &#x27;Frame for a storybook page with dialogue spoken by characters&#x27;,
         data: {
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {String} videoID The ID of any video recorded during this frame
-             * @param {List} videoList a list of webcam video IDs in case there are &gt;1
-             * @param {Object} eventTimings
-             * @param {String} currentlyHighlighted which image is selected at
-             *   the end of the trial, or null if none is. This indicates the
-             *   final selected choice for a choice trial.
-             * @return {Object} The payload sent to the server
-             */
             type: &#x27;object&#x27;,
             properties: {
                 videoId: {
                     type: &#x27;string&#x27;
                 },
+                /**
+                * Which image is selected at
+                *   the end of the trial, or null if none is. This indicates the
+                *   final selected choice for a choice trial.
+                * @attribute currentlyHighlighted
+                */
                 currentlyHighlighted: {
                     type: &#x27;string&#x27;
                 },
+                /**
+                * Trial number as passed to this frame
+                * @attribute nTrial
+                * @type number
+                */
                 nTrial: {
                     type: &#x27;number&#x27;
                 },
+                /**
+                * Phase number as passed to this frame
+                * @attribute nPhase
+                */
                 nPhase: {
                     type: &#x27;number&#x27;
                 },

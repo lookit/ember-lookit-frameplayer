@@ -297,15 +297,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         description: 'Frame to display a basic storybook page trial, with images and audio',
         data: {
             type: 'object',
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {Object} eventTimings
-             * @param {String} videoID The ID of any webcam video recorded during this frame
-             * @param {List} videoList a list of webcam video IDs in case there are >1
-             * @return {Object} The payload sent to the server
-             */
             properties: {
                 videoId: {
                     type: 'string'

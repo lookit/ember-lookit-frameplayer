@@ -371,7 +371,15 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         description: &#x27;Video configuration frame showing webcam view at right and instructions for checking video quality for preferential looking setup at left, with pictures.&#x27;,
         data: {
             type: &#x27;object&#x27;,
-            properties: {}
+            properties: {
+                videoId: {
+                    type: &#x27;string&#x27;
+
+                },
+                videoList: {
+                    type: &#x27;list&#x27;
+                }
+            }
         }
     },
 
