@@ -154,7 +154,18 @@
 
 
 <div class="box intro">
-    <p>A frame that to explain any blinding procedures to parents, and offer them the option to preview stimuli before the study. Two buttons allow the user to move forward: one goes to the next frame (if the parent wants to preview stimuli), and one skips the next frame and goes to the one after that (if the parent declins). Therefore, this frame should be followed by an Exp-video-preview frame.</p>
+    <p>A frame that to explain any blinding procedures to parents, and offer them the option
+to preview stimuli before the study.</p>
+<p>First, text and/or images (provided in <code>blocks</code>) are displayed - for instance, to
+explain to the parent that they will be asked not to look at the videos during the study
+but can preview them now. Then the parent can choose either to preview stimuli (which
+also begins a video recording, so researchers can verify the child was not also
+watching) or to skip to the next frame.</p>
+<p>Stimuli can be any mix of images, video, or audio. Parents are not required to play through the
+entire audio/video segment since the goal is only to allow them to preview if they want to.</p>
+<p>Stimuli can be specified using relative paths and including a <code>baseDir</code> value (see
+<a href="https://lookit.readthedocs.io/en/develop/researchers-prep-stimuli.html#directory-structure">https://lookit.readthedocs.io/en/develop/researchers-prep-stimuli.html#directory-structure</a>)
+in the frame configuration. Full paths are required for images within <code>blocks</code>.</p>
 <pre class="code prettyprint"><code class="language-json">"frames": {
    "my-video-preview-explanation": {
        "kind": "exp-lookit-stimuli-preview",
@@ -1314,7 +1325,7 @@ does not end in a slash, one will be added.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l113"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:113</code></a>
+        <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l127"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:127</code></a>
         </p>
 
 
@@ -1652,7 +1663,7 @@ to be on one line.)</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l218"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:218</code></a>
+        <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l232"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:232</code></a>
         </p>
 
 
@@ -1746,7 +1757,7 @@ generated for this randomizer.</li>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l163"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:163</code></a>
+        <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l177"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:177</code></a>
         </p>
 
 
@@ -1772,7 +1783,7 @@ generated for this randomizer.</li>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l228"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:228</code></a>
+        <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l242"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:242</code></a>
         </p>
 
 
@@ -1967,7 +1978,7 @@ just used for attempts to leave the study early</li>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l103"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:103</code></a>
+        <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l117"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:117</code></a>
         </p>
 
 
@@ -1993,7 +2004,7 @@ just used for attempts to leave the study early</li>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l173"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:173</code></a>
+        <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l187"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:187</code></a>
         </p>
 
 
@@ -2070,7 +2081,7 @@ should set to override if needed.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l183"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:183</code></a>
+        <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l197"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:197</code></a>
         </p>
 
 
@@ -2483,7 +2494,7 @@ expanded out to
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l271"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:271</code></a>
+                            <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l285"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:285</code></a>
                             </p>
                     
                     
@@ -2557,7 +2568,7 @@ expanded out to
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l280"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:280</code></a>
+                            <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l294"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:294</code></a>
                             </p>
                     
                     
@@ -2630,7 +2641,7 @@ expanded out to
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l257"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:257</code></a>
+                            <a href="../files/app_components_exp-lookit-stimuli-preview_component.js.html#l271"><code>app&#x2F;components&#x2F;exp-lookit-stimuli-preview&#x2F;component.js:271</code></a>
                             </p>
                     
                     
