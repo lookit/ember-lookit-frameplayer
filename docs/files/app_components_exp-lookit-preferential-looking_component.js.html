@@ -50,7 +50,7 @@
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
                             <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
-                            <li><a href="../classes/Exp-lookit-preview-explanation.html">Exp-lookit-preview-explanation</a></li>
+                            <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
                             <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
                             <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-text.html">Exp-lookit-text</a></li>
@@ -60,7 +60,6 @@
                             <li><a href="../classes/Exp-lookit-webcam-display.html">Exp-lookit-webcam-display</a></li>
                             <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
                             <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
-                            <li><a href="../classes/Exp-video-preview.html">Exp-video-preview</a></li>
                             <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
                             <li><a href="../classes/Full-screen.html">Full-screen</a></li>
                             <li><a href="../classes/Media-reload.html">Media-reload</a></li>
@@ -653,7 +652,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         data: {
             type: &#x27;object&#x27;,
             properties: {
-                /**
+               /**
                 * Sources of videos (potentially) shown during this trial: [source of test video, source of alternate test video].
                 * @attribute videosShown
                 */
@@ -664,42 +663,42 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 videoId: {
                     type: &#x27;string&#x27;
                 },
-                /**
+               /**
                 * URL of image shown on right (given as a property of the frame)
                 * @attribute rightImage
                 */
                 rightImage: {
                     type: &#x27;string&#x27;
                 },
-                /**
+               /**
                 * URL of image shown on left (given as a property of the frame)
                 * @attribute leftImage
                 */
                 leftImage: {
                     type: &#x27;string&#x27;
                 },
-                /**
+               /**
                 * URL of image shown at center (given as a property of the frame)
                 * @attribute centerImage
                 */
                 centerImage: {
                     type: &#x27;string&#x27;
                 },
-                /**
+               /**
                 * seconds to display images/loop videos (given as a property of the frame), if using time-based limit
                 * @attribute testLength
                 */
                 testLength: {
                     type: &#x27;number&#x27;
                 },
-                /**
+               /**
                 * test audio file played, if any
                 * @attribute testAudio
                 */
                 testAudio: {
                     type: &#x27;string&#x27;
                 },
-                /**
+               /**
                 * location of stimuli
                 * @attribute baseDir
                 */

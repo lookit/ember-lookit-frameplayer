@@ -515,16 +515,16 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         data: {
             type: 'object',
             properties: {
-               /**
+                /**
                 * Sequence of images shown on the left
-                * @method leftSequence
+                * @attribute leftSequence
                 */
                 leftSequence: {
                     type: 'Object'
                 },
-               /**
+                /**
                 * Sequence of images shown on the right
-                * @method rightSequence
+                * @attribute rightSequence
                 */
                 rightSequence: {
                     type: 'Object'
@@ -532,9 +532,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 videoId: {
                     type: 'string'
                 },
-               /**
+                /**
                 * Whether this trial was paused
-                * @method hasBeenPaused
+                * @attribute hasBeenPaused
                 */
                 hasBeenPaused: {
                     type: 'boolean'
