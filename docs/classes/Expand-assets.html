@@ -29,21 +29,19 @@
                     <div id="api-tabview-panel">
                         <h2 class="off-left">Collections</h2>
                         <ul id="api-modules" class="apis modules">
-                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
                             <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
                             <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
                             <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
                             <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
-                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
                         </ul>
                         <h2 class="off-left">All elements</h2>
                               <div id="api-tabview-filter">
                       <input type="search" id="api-filter" placeholder="Type to filter">
                     </div>
                         <ul id="api-classes" class="apis classes">
-                            <li><a href="../classes/Exp-exit-survey.html">Exp-exit-survey</a></li>
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
@@ -52,18 +50,16 @@
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
                             <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
-                            <li><a href="../classes/Exp-lookit-preview-explanation.html">Exp-lookit-preview-explanation</a></li>
+                            <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
                             <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
                             <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-text.html">Exp-lookit-text</a></li>
                             <li><a href="../classes/Exp-lookit-video.html">Exp-lookit-video</a></li>
                             <li><a href="../classes/Exp-lookit-video-assent.html">Exp-lookit-video-assent</a></li>
                             <li><a href="../classes/Exp-lookit-video-consent.html">Exp-lookit-video-consent</a></li>
-                            <li><a href="../classes/Exp-player.html">Exp-player</a></li>
+                            <li><a href="../classes/Exp-lookit-webcam-display.html">Exp-lookit-webcam-display</a></li>
                             <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
                             <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
-                            <li><a href="../classes/Exp-video-consent.html">Exp-video-consent</a></li>
-                            <li><a href="../classes/Exp-video-preview.html">Exp-video-preview</a></li>
                             <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
                             <li><a href="../classes/Full-screen.html">Full-screen</a></li>
                             <li><a href="../classes/Media-reload.html">Media-reload</a></li>
@@ -125,9 +121,10 @@
 
 
 <div class="box intro">
-    <p>Allow users to provide audio/video and image source values as either relative paths
-within a base directory or as full paths.</p>
-<p>When adding this mixin to a frame, you will need to define a property of the frame
+    <p>Reference for DEVELOPERS of new frames only!
+Mixin to allow users to provide audio/video and image source values as either relative paths
+within a base directory or as full paths.
+When adding this mixin to a frame, you will need to define a property of the frame
 <code>assetsToExpand</code>, which indicates which parameters might be source objects that need
 expansion. <code>assetsToExpand</code> should be an object with keys <code>image</code>, <code>video</code>, and <code>audio</code>,
 and each value should be an Array of parameter names that provide sources for resources
@@ -139,35 +136,31 @@ of the corresponding type. E.g.,</p>
    }
 </code></pre>
 <p>This is defined directly within your frame, e.g.:</p>
-<pre class="code prettyprint"><code>   export default ExpFrameBaseComponent.extend(ExpandAssets, {
-       ...
-       type: 'exp-my-cool-frame',
-       assetsToExpand:     {
-           'image': ['leftObjectPic', 'rightObjectPic'],
-           'audio': ['introAudio', 'testAudio'],
-           'video': ['objectDemoVideo']
-           },
-       ...,
-       meta: {...},
-       actions: {...}
-   });
+<pre class="code prettyprint"><code>    export default ExpFrameBaseComponent.extend(ExpandAssets, {
+        ...
+        type: 'exp-my-cool-frame',
+        assetsToExpand:     {
+            'image': ['leftObjectPic', 'rightObjectPic'],
+            'audio': ['introAudio', 'testAudio'],
+            'video': ['objectDemoVideo']
+            },
+        ...,
+        meta: {...},
+        actions: {...}
+    });
 </code></pre>
 <p>The <em>user</em> of your frame can then optionally provide <code>baseDir</code>, <code>audioTypes</code>, and
-<code>videoTypes</code> parameters to indicate how to expand relative paths.</p>
-<p>How expansion works:</p>
+<code>videoTypes</code> parameters to indicate how to expand relative paths.
+How expansion works:</p>
 <ul>
-<li>
-<p><strong>Images</strong>: Suppose the list <code>assetsToExpand['image']</code> contains <code>centerStimulus</code>. If
+<li><strong>Images</strong>: Suppose the list <code>assetsToExpand['image']</code> contains <code>centerStimulus</code>. If
 <code>centerStimulus</code> is provided as a full URL (with <code>://</code> in it), nothing will happen to
 it. But if <code>centerStimulus</code> is a string that is not a full URL, it will be transformed
-during the <code>didReceiveAttrs</code> hook to <code>baseDir + 'img/' + centerStimulus</code>.</p>
-</li>
-<li>
-<p><strong>Audio</strong>: Suppose the list <code>assetsToExpand['audio']</code> contains <code>utterance1</code>. If
+during the <code>didReceiveAttrs</code> hook to <code>baseDir + 'img/' + centerStimulus</code>.</li>
+<li><strong>Audio</strong>: Suppose the list <code>assetsToExpand['audio']</code> contains <code>utterance1</code>. If
 <code>utterance1</code> is a nonempty string (rather than an object/Array), e.g., <code>goodmorning</code>,
 and <code>audioTypes</code> has been set to <code>['typeA', 'typeB']</code>,
-then <code>utterance1</code> will be expanded out to</p>
-</li>
+then <code>utterance1</code> will be expanded out to</li>
 </ul>
 <pre class="code prettyprint"><code>        [
             {
@@ -181,14 +174,13 @@ then <code>utterance1</code> will be expanded out to</p>
         ]
 </code></pre>
 <ul>
-<li><strong>Video</strong>: Same as audio, but using the types from <code>videoTypes</code>.</li>
-</ul>
-<p><strong>Important</strong>: During the <code>didReceiveAttrs</code> hook, your frame will acquire new properties <code>[parameterName]_parsed</code>
+<li><strong>Video</strong>: Same as audio, but using the types from <code>videoTypes</code>.
+<strong>Important</strong>: During the <code>didReceiveAttrs</code> hook, your frame will acquire new properties <code>[parameterName]_parsed</code>
 for each of the parameters named in <code>assetsToExpand</code>. These properties will hold the
 expanded values. E.g., in the example above, you would now have a <code>centerStimulus_parsed</code>
 property. This is what you should use for showing/playing images/audio/video in your
-frame template.</p>
-<p><strong>Advanced use</strong>: the property names in <code>assetsToExpand</code> can be either full parameter names
+frame template.
+<strong>Advanced use</strong>: the property names in <code>assetsToExpand</code> can be either full parameter names
 as in the examples above, or can be of the form <code>parameterName/subProperty</code>. If using
 the <code>parameterName/subProperty</code> syntax, instead of processing the parameter <code>parameterName</code>,
 we will expect that that parameter is either an object with property <code>subProperty</code>
@@ -197,7 +189,8 @@ be expanded). The original value of the <code>parameterName</code> parameter may
 mutated as assets are expanded. However, your frame will still also acquire a new
 property <code>[parameterName]_parsed</code> which you should use for accessing the processed
 values. This avoids potential problems with the template being rendered using the original
-values and not updated.</p>
+values and not updated.</li>
+</ul>
 
 </div>
 
@@ -259,7 +252,7 @@ values and not updated.</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_mixins_expand-assets.js.html#l92"><code>app&#x2F;mixins&#x2F;expand-assets.js:92</code></a>
+        <a href="../files/app_mixins_expand-assets.js.html#l95"><code>app&#x2F;mixins&#x2F;expand-assets.js:95</code></a>
         </p>
 
 
@@ -284,7 +277,7 @@ values and not updated.</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_mixins_expand-assets.js.html#l120"><code>app&#x2F;mixins&#x2F;expand-assets.js:120</code></a>
+        <a href="../files/app_mixins_expand-assets.js.html#l123"><code>app&#x2F;mixins&#x2F;expand-assets.js:123</code></a>
         </p>
 
 
@@ -324,7 +317,7 @@ expanded out to</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_mixins_expand-assets.js.html#l100"><code>app&#x2F;mixins&#x2F;expand-assets.js:100</code></a>
+        <a href="../files/app_mixins_expand-assets.js.html#l103"><code>app&#x2F;mixins&#x2F;expand-assets.js:103</code></a>
         </p>
 
 
@@ -358,7 +351,7 @@ does not end in a slash, one will be added.</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_mixins_expand-assets.js.html#l148"><code>app&#x2F;mixins&#x2F;expand-assets.js:148</code></a>
+        <a href="../files/app_mixins_expand-assets.js.html#l151"><code>app&#x2F;mixins&#x2F;expand-assets.js:151</code></a>
         </p>
 
 

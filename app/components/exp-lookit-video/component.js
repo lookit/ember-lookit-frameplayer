@@ -396,9 +396,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 /**
                 * Sources of videos (potentially) shown during this trial: [source of test video, source of alternate test video].
                 * @attribute videosShown
+                * @type array
                 */
                 videosShown: {
-                    type: 'string',
+                    type: 'array',
                     default: []
                 },
                 videoId: {

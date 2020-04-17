@@ -12,6 +12,9 @@ let {
  */
 
 /**
+ *
+ * Reference for DEVELOPERS of new frames only!
+ *
  * A mixin that can be used to add basic support for video recording to a particular experiment frame
  *
  * By default, the recorder will be installed when this frame loads, but recording
@@ -158,9 +161,13 @@ export default Ember.Mixin.create({
                 _this.send('setTimeEvent', 'videoStreamConnection', {
                     status: status
                 });
+                _this.notifyPropertyChange('whenPossibleToRecordSession');
             }
         });
-        _this.get('session').set('recorder', sessionRecorder);
+        this.set('sessionRecorder', sessionRecorder);
+        this.send('setTimeEvent', 'setupSessionVideoRecorder', {
+            sessionVideoId: sessionVideoId,
+        });
         return installPromise;
     },
 
@@ -172,7 +179,12 @@ export default Ember.Mixin.create({
     startSessionRecorder() {
         const sessionRecorder = this.get('sessionRecorder');
         if (sessionRecorder) {
-            return sessionRecorder.record();
+            var _this = this;
+            return sessionRecorder.record().then(() => {
+                _this.send('setTimeEvent', 'startRecording', {
+                    sessionPipeId: sessionRecorder.get('pipeVideoName')
+                });
+            });
         } else {
             return Ember.RSVP.reject();
         }
@@ -240,7 +252,6 @@ export default Ember.Mixin.create({
                 });
             }
         }
-        _this.send('setTimeEvent', 'destroyingElement');
         _this._super(...arguments);
     },
 
@@ -250,9 +261,9 @@ export default Ember.Mixin.create({
      * @method whenPossibleToRecord
      */
     whenPossibleToRecordSession: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
-        if (this.get('startSessionRecording')) {
-            var _this = this;
-            if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
+        if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
+            if (this.get('startSessionRecording')) {
+                var _this = this;
                 this.startSessionRecorder().then(() => {
                     _this.send('setTimeEvent', 'startedSessionRecording');
                     _this.set('sessionRecorderReady', false);
