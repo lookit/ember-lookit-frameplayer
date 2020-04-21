@@ -1,0 +1,92 @@
+<div class="exp-lookit-stimuli-preview">
+
+    <div class="row recorder-container video-recorder-hidden">
+        <div id="recorder" class="col-xs-12">
+        </div>
+    </div>
+
+    <div class="row exp-text">
+
+        <div class="vertical-pad"></div>
+
+        <div class="col-md-8 col-md-offset-2">
+
+            {{#if prompt}}
+
+                {{#each blocks as |prompt|}}
+                    {{exp-text-block block=prompt}}
+                {{/each}}
+
+            {{else}}
+                {{currentVideo.caption}}
+
+            {{/if}}
+
+            <br> <br>
+
+        </div>
+
+        {{#unless prompt}}
+
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 text-center preview-container">
+                    {{#if currentVideo.image}}
+                        <img class="exp-lookit-preview-image" src={{currentVideo.image}} alt="Image preview">
+                    {{/if}}
+
+                    {{#if currentVideo.audio}}
+                        <audio controls style="width: 100%;">
+                            {{#each currentVideo.audio as |audsource|}}
+                                <source src={{audsource.src}} type={{audsource.type}}>
+                            {{/each}}
+                            Your browser does not support the audio tag.
+                        </audio>
+                    {{/if}}
+
+                    {{#if currentVideo.video}}
+                        <video class="exp-lookit-preview-video" controls style="width: 100%;">
+                            {{#each currentVideo.video as |vidsource|}}
+                                <source src={{vidsource.src}} type={{vidsource.type}}>
+                            {{/each}}
+                            Your browser does not support the video tag.
+                        </video>
+                    {{/if}}
+                </div>
+            </div>
+
+        {{/unless}}
+    </div>
+
+    {{#if prompt}}
+
+        <div class="row exp-controls col-md-12">
+            {{#if showPreviousButton}}
+                <button class="btn btn-default pull-left" {{ action 'previous' }} > Previous</button>
+            {{/if}}
+            <button class="btn btn-primary pull-right" {{ action 'next' }} >  {{skipButtonText}} </button>
+        </div>
+
+        <div class="exp-controls col-md-12 row">
+            <button class="btn btn-success pull-right" disabled={{disableRecord}} {{action 'accept'}}>{{previewButtonText}}</button>
+        </div>
+    {{/if}}
+
+    {{#unless prompt}}
+        <div class="row exp-controls">
+            <div class="col-md-12 text-center">
+                <button disabled={{noPrev}} {{action 'previousVideo'}} class="btn btn-primary pull-left">
+                    {{previousStimulusText}}
+                </button>
+                {{#if noNext}}
+                    <button {{action 'finish'}} class="btn btn-success pull-right"> Continue</button>
+                {{else}}
+                    <button {{action 'nextVideo'}} class="btn btn-success pull-right"> {{nextStimulusText}}</button>
+                {{/if}}
+            </div>
+        </div>
+
+    {{/unless}}
+
+
+</div>
+

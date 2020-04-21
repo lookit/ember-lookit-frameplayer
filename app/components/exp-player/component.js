@@ -8,12 +8,13 @@ let {
     $
 } = Ember;
 
-/**
+// Use regular comment syntax here to exclude from docs for clarity
+/*
  * @module exp-player
  * @submodule components
  */
 
-/**
+/*
  * Experiment player: a component that renders a series of frames that define an experiment
  *
  * Sample usage:
@@ -151,6 +152,8 @@ export default Ember.Component.extend(FullScreen, {
         });
         var [frameConfigs, conditions] = parser.parse();
         this.set('frames', frameConfigs); // When player loads, convert structure to list of frames
+
+        $('head title').html(this.get('experiment.name'));
 
         var session = this.get('session');
         session.set('conditions', conditions);

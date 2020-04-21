@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-/**
+/* OMIT *
  * @module exp-player
  * @submodule services
  */

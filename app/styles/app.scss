@@ -21,10 +21,19 @@
 @import "components/exp-lookit-video-assent";
 @import "components/exp-lookit-survey";
 @import "components/exp-lookit-observation";
+@import "components/exp-lookit-webcam-display";
+@import "components/exp-lookit-image";
+@import "components/exp-lookit-change-detection";
 @import "components/radio-group";
+@import "components/exp-lookit-stimuli-preview";
 
 // Physics study only
 @import "components/exp-exit-survey";
+
+#experiment-player {
+    font-size: large;
+    background-color: #FFFFFF !important;
+}
 
 .exp-text-large {
     font-size: 2em;
@@ -93,6 +102,10 @@ p#pipeClickPowered {
 
 .recorder-container #recorder {
     height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: auto;
 }
 
 .video-recorder-hidden {
@@ -101,11 +114,6 @@ p#pipeClickPowered {
     z-index: -1;
     position: absolute;
 }
-
-#experiment-player {
-    background-color: #FFFFFF !important;
-}
-
 
 
 /* PARTICIPATE */
@@ -126,3 +134,6 @@ p#pipeClickPowered {
     margin: auto;
 }
 
+.btn {
+    font-size: large;
+}
