@@ -10,6 +10,9 @@ let {
  */
 
 /**
+ *
+ * Reference for DEVELOPERS of new frames only!
+ *
  * Allow components to specify fullscreen capabilities based on minimal configuration options
  * @class Full-screen
  */

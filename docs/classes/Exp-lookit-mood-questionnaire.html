@@ -29,21 +29,19 @@
                     <div id="api-tabview-panel">
                         <h2 class="off-left">Collections</h2>
                         <ul id="api-modules" class="apis modules">
-                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
                             <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
                             <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
                             <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
                             <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
-                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
                         </ul>
                         <h2 class="off-left">All elements</h2>
                               <div id="api-tabview-filter">
                       <input type="search" id="api-filter" placeholder="Type to filter">
                     </div>
                         <ul id="api-classes" class="apis classes">
-                            <li><a href="../classes/Exp-exit-survey.html">Exp-exit-survey</a></li>
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
@@ -52,18 +50,16 @@
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
                             <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
-                            <li><a href="../classes/Exp-lookit-preview-explanation.html">Exp-lookit-preview-explanation</a></li>
+                            <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
                             <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
                             <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-text.html">Exp-lookit-text</a></li>
                             <li><a href="../classes/Exp-lookit-video.html">Exp-lookit-video</a></li>
                             <li><a href="../classes/Exp-lookit-video-assent.html">Exp-lookit-video-assent</a></li>
                             <li><a href="../classes/Exp-lookit-video-consent.html">Exp-lookit-video-consent</a></li>
-                            <li><a href="../classes/Exp-player.html">Exp-player</a></li>
+                            <li><a href="../classes/Exp-lookit-webcam-display.html">Exp-lookit-webcam-display</a></li>
                             <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
                             <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
-                            <li><a href="../classes/Exp-video-consent.html">Exp-video-consent</a></li>
-                            <li><a href="../classes/Exp-video-preview.html">Exp-video-preview</a></li>
                             <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
                             <li><a href="../classes/Full-screen.html">Full-screen</a></li>
                             <li><a href="../classes/Media-reload.html">Media-reload</a></li>
@@ -399,7 +395,7 @@ to all questions are required to move on.</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Session-record.html#method_destroySessionRecorder">Session-record</a>:
-        <a href="../files/app_mixins_session-record.js.html#l196"><code>app&#x2F;mixins&#x2F;session-record.js:196</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l208"><code>app&#x2F;mixins&#x2F;session-record.js:208</code></a>
         </p>
 
 
@@ -429,7 +425,7 @@ to all questions are required to move on.</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#method_exitFullscreen">Full-screen</a>:
-        <a href="../files/app_mixins_full-screen.js.html#l139"><code>app&#x2F;mixins&#x2F;full-screen.js:139</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l142"><code>app&#x2F;mixins&#x2F;full-screen.js:142</code></a>
         </p>
 
 
@@ -614,7 +610,7 @@ Individual frames may define additional properties that are sent.</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Session-record.html#method_setupRecorder">Session-record</a>:
-        <a href="../files/app_mixins_session-record.js.html#l120"><code>app&#x2F;mixins&#x2F;session-record.js:120</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l123"><code>app&#x2F;mixins&#x2F;session-record.js:123</code></a>
         </p>
 
 
@@ -670,7 +666,7 @@ Individual frames may define additional properties that are sent.</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#method_showFullscreen">Full-screen</a>:
-        <a href="../files/app_mixins_full-screen.js.html#l106"><code>app&#x2F;mixins&#x2F;full-screen.js:106</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l109"><code>app&#x2F;mixins&#x2F;full-screen.js:109</code></a>
         </p>
 
 
@@ -706,7 +702,7 @@ Individual frames may define additional properties that are sent.</p>
                 Session-record
             </a>
             but overwritten in
-        <a href="../files/app_mixins_session-record.js.html#l167"><code>app&#x2F;mixins&#x2F;session-record.js:167</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l174"><code>app&#x2F;mixins&#x2F;session-record.js:174</code></a>
         </p>
 
 
@@ -743,7 +739,7 @@ Individual frames may define additional properties that are sent.</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Session-record.html#method_whenPossibleToRecord">Session-record</a>:
-        <a href="../files/app_mixins_session-record.js.html#l247"><code>app&#x2F;mixins&#x2F;session-record.js:247</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l258"><code>app&#x2F;mixins&#x2F;session-record.js:258</code></a>
         </p>
 
 
@@ -775,7 +771,7 @@ stuff at this point!
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#property_displayFullscreenOverride">Full-screen </a> (click for formatted description):
-        <a href="../files/app_mixins_full-screen.js.html#l165"><code>app&#x2F;mixins&#x2F;full-screen.js:165</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l168"><code>app&#x2F;mixins&#x2F;full-screen.js:168</code></a>
         </p>
 
 
@@ -800,7 +796,7 @@ generally used that way.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Session-record.html#property_endSessionRecording">Session-record </a> (click for formatted description):
-        <a href="../files/app_mixins_session-record.js.html#l92"><code>app&#x2F;mixins&#x2F;session-record.js:92</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l95"><code>app&#x2F;mixins&#x2F;session-record.js:95</code></a>
         </p>
 
 
@@ -826,7 +822,7 @@ generally used that way.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#property_fsButtonID">Full-screen </a> (click for formatted description):
-        <a href="../files/app_mixins_full-screen.js.html#l25"><code>app&#x2F;mixins&#x2F;full-screen.js:25</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l28"><code>app&#x2F;mixins&#x2F;full-screen.js:28</code></a>
         </p>
 
 
@@ -851,7 +847,7 @@ generally used that way.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#property_fullScreenElementId">Full-screen </a> (click for formatted description):
-        <a href="../files/app_mixins_full-screen.js.html#l17"><code>app&#x2F;mixins&#x2F;full-screen.js:17</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l20"><code>app&#x2F;mixins&#x2F;full-screen.js:20</code></a>
         </p>
 
 
@@ -1122,7 +1118,7 @@ just used for attempts to leave the study early</li>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Session-record.html#property_sessionAudioOnly">Session-record </a> (click for formatted description):
-        <a href="../files/app_mixins_session-record.js.html#l102"><code>app&#x2F;mixins&#x2F;session-record.js:102</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l105"><code>app&#x2F;mixins&#x2F;session-record.js:105</code></a>
         </p>
 
 
@@ -1147,7 +1143,7 @@ just used for attempts to leave the study early</li>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Session-record.html#property_startSessionRecording">Session-record </a> (click for formatted description):
-        <a href="../files/app_mixins_session-record.js.html#l85"><code>app&#x2F;mixins&#x2F;session-record.js:85</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l88"><code>app&#x2F;mixins&#x2F;session-record.js:88</code></a>
         </p>
 
 
@@ -1625,7 +1621,7 @@ just used for attempts to leave the study early</li>
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Full-screen.html#event_enteredFullscreen">Full-screen</a>:
-                            <a href="../files/app_mixins_full-screen.js.html#l78"><code>app&#x2F;mixins&#x2F;full-screen.js:78</code></a>
+                            <a href="../files/app_mixins_full-screen.js.html#l81"><code>app&#x2F;mixins&#x2F;full-screen.js:81</code></a>
                             </p>
                     
                     
@@ -1649,7 +1645,7 @@ just used for attempts to leave the study early</li>
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Session-record.html#event_hasCamAccess">Session-record</a>:
-                            <a href="../files/app_mixins_session-record.js.html#l46"><code>app&#x2F;mixins&#x2F;session-record.js:46</code></a>
+                            <a href="../files/app_mixins_session-record.js.html#l49"><code>app&#x2F;mixins&#x2F;session-record.js:49</code></a>
                             </p>
                     
                     
@@ -1689,7 +1685,7 @@ just used for attempts to leave the study early</li>
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Full-screen.html#event_leftFullscreen">Full-screen</a>:
-                            <a href="../files/app_mixins_full-screen.js.html#l90"><code>app&#x2F;mixins&#x2F;full-screen.js:90</code></a>
+                            <a href="../files/app_mixins_full-screen.js.html#l93"><code>app&#x2F;mixins&#x2F;full-screen.js:93</code></a>
                             </p>
                     
                     
@@ -1713,7 +1709,7 @@ just used for attempts to leave the study early</li>
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Exp-frame-base.html#event_nextFrame">Exp-frame-base</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l545"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:545</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l543"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:543</code></a>
                             </p>
                     
                     
@@ -1738,7 +1734,7 @@ just used for attempts to leave the study early</li>
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Exp-frame-base.html#event_previousFrame">Exp-frame-base</a>:
-                            <a href="../files/app_components_exp-frame-base_component.js.html#l600"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:600</code></a>
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l598"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:598</code></a>
                             </p>
                     
                     
@@ -1763,7 +1759,7 @@ just used for attempts to leave the study early</li>
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Session-record.html#event_sessionRecorderReady">Session-record</a>:
-                            <a href="../files/app_mixins_session-record.js.html#l215"><code>app&#x2F;mixins&#x2F;session-record.js:215</code></a>
+                            <a href="../files/app_mixins_session-record.js.html#l227"><code>app&#x2F;mixins&#x2F;session-record.js:227</code></a>
                             </p>
                     
                     
@@ -1787,7 +1783,7 @@ just used for attempts to leave the study early</li>
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Session-record.html#event_stoppingCapture">Session-record</a>:
-                            <a href="../files/app_mixins_session-record.js.html#l61"><code>app&#x2F;mixins&#x2F;session-record.js:61</code></a>
+                            <a href="../files/app_mixins_session-record.js.html#l64"><code>app&#x2F;mixins&#x2F;session-record.js:64</code></a>
                             </p>
                     
                     
@@ -1811,7 +1807,7 @@ just used for attempts to leave the study early</li>
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Session-record.html#event_videoStreamConnection">Session-record</a>:
-                            <a href="../files/app_mixins_session-record.js.html#l53"><code>app&#x2F;mixins&#x2F;session-record.js:53</code></a>
+                            <a href="../files/app_mixins_session-record.js.html#l56"><code>app&#x2F;mixins&#x2F;session-record.js:56</code></a>
                             </p>
                     
                     

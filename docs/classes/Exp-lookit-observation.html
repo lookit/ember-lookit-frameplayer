@@ -29,21 +29,19 @@
                     <div id="api-tabview-panel">
                         <h2 class="off-left">Collections</h2>
                         <ul id="api-modules" class="apis modules">
-                            <li class="module-sidebar-components"><a href="../modules/components.html">components</a></li>
                             <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
                             <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
                             <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
                             <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
-                            <li class="module-sidebar-services"><a href="../modules/services.html">services</a></li>
                         </ul>
                         <h2 class="off-left">All elements</h2>
                               <div id="api-tabview-filter">
                       <input type="search" id="api-filter" placeholder="Type to filter">
                     </div>
                         <ul id="api-classes" class="apis classes">
-                            <li><a href="../classes/Exp-exit-survey.html">Exp-exit-survey</a></li>
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
@@ -52,18 +50,16 @@
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
                             <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
-                            <li><a href="../classes/Exp-lookit-preview-explanation.html">Exp-lookit-preview-explanation</a></li>
+                            <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
                             <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
                             <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-text.html">Exp-lookit-text</a></li>
                             <li><a href="../classes/Exp-lookit-video.html">Exp-lookit-video</a></li>
                             <li><a href="../classes/Exp-lookit-video-assent.html">Exp-lookit-video-assent</a></li>
                             <li><a href="../classes/Exp-lookit-video-consent.html">Exp-lookit-video-consent</a></li>
-                            <li><a href="../classes/Exp-player.html">Exp-player</a></li>
+                            <li><a href="../classes/Exp-lookit-webcam-display.html">Exp-lookit-webcam-display</a></li>
                             <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
                             <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
-                            <li><a href="../classes/Exp-video-consent.html">Exp-video-consent</a></li>
-                            <li><a href="../classes/Exp-video-preview.html">Exp-video-preview</a></li>
                             <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
                             <li><a href="../classes/Full-screen.html">Full-screen</a></li>
                             <li><a href="../classes/Media-reload.html">Media-reload</a></li>
@@ -396,7 +392,7 @@ interview and allow the parent to control recording.</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_destroyRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l317"><code>app&#x2F;mixins&#x2F;video-record.js:317</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l322"><code>app&#x2F;mixins&#x2F;video-record.js:322</code></a>
         </p>
 
 
@@ -426,7 +422,7 @@ interview and allow the parent to control recording.</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_hideRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l384"><code>app&#x2F;mixins&#x2F;video-record.js:384</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l388"><code>app&#x2F;mixins&#x2F;video-record.js:388</code></a>
         </p>
 
 
@@ -469,7 +465,7 @@ interview and allow the parent to control recording.</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_makeTimeEvent">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l189"><code>app&#x2F;mixins&#x2F;video-record.js:189</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l192"><code>app&#x2F;mixins&#x2F;video-record.js:192</code></a>
         </p>
 
 
@@ -540,7 +536,7 @@ interview and allow the parent to control recording.</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_pauseRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l243"><code>app&#x2F;mixins&#x2F;video-record.js:243</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l246"><code>app&#x2F;mixins&#x2F;video-record.js:246</code></a>
         </p>
 
 
@@ -591,7 +587,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_resumeRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l263"><code>app&#x2F;mixins&#x2F;video-record.js:263</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l266"><code>app&#x2F;mixins&#x2F;video-record.js:266</code></a>
         </p>
 
 
@@ -688,7 +684,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_showRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l393"><code>app&#x2F;mixins&#x2F;video-record.js:393</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l397"><code>app&#x2F;mixins&#x2F;video-record.js:397</code></a>
         </p>
 
 
@@ -722,7 +718,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_startRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l281"><code>app&#x2F;mixins&#x2F;video-record.js:281</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l284"><code>app&#x2F;mixins&#x2F;video-record.js:284</code></a>
         </p>
 
 
@@ -762,7 +758,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_stopRecorder">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l302"><code>app&#x2F;mixins&#x2F;video-record.js:302</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l307"><code>app&#x2F;mixins&#x2F;video-record.js:307</code></a>
         </p>
 
 
@@ -799,7 +795,7 @@ instead stop/start and make separate clips if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#method_whenPossibleToRecord">Video-record</a>:
-        <a href="../files/app_mixins_video-record.js.html#l368"><code>app&#x2F;mixins&#x2F;video-record.js:368</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l372"><code>app&#x2F;mixins&#x2F;video-record.js:372</code></a>
         </p>
 
 
@@ -831,7 +827,7 @@ stuff at this point!
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_audioOnly">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l145"><code>app&#x2F;mixins&#x2F;video-record.js:145</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l148"><code>app&#x2F;mixins&#x2F;video-record.js:148</code></a>
         </p>
 
 
@@ -857,7 +853,7 @@ stuff at this point!
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_autosave">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l136"><code>app&#x2F;mixins&#x2F;video-record.js:136</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l139"><code>app&#x2F;mixins&#x2F;video-record.js:139</code></a>
         </p>
 
 
@@ -943,7 +939,7 @@ TODO: eventually use this to set up non-recording option for previewing
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_doUseCamera">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l152"><code>app&#x2F;mixins&#x2F;video-record.js:152</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l155"><code>app&#x2F;mixins&#x2F;video-record.js:155</code></a>
         </p>
 
 
@@ -1021,7 +1017,7 @@ to override if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_maxRecordingLength">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l129"><code>app&#x2F;mixins&#x2F;video-record.js:129</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l132"><code>app&#x2F;mixins&#x2F;video-record.js:132</code></a>
         </p>
 
 
@@ -1073,7 +1069,7 @@ to override if needed.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_recorder">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l88"><code>app&#x2F;mixins&#x2F;video-record.js:88</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l91"><code>app&#x2F;mixins&#x2F;video-record.js:91</code></a>
         </p>
 
 
@@ -1099,7 +1095,7 @@ recorder.nWebcams, recorder.hasCamAccess, recorder.micChecked, recorder.connecte
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_recorderElement">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l113"><code>app&#x2F;mixins&#x2F;video-record.js:113</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l116"><code>app&#x2F;mixins&#x2F;video-record.js:116</code></a>
         </p>
 
 
@@ -1125,7 +1121,7 @@ recorder.nWebcams, recorder.hasCamAccess, recorder.micChecked, recorder.connecte
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_recorderReady">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l121"><code>app&#x2F;mixins&#x2F;video-record.js:121</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l124"><code>app&#x2F;mixins&#x2F;video-record.js:124</code></a>
         </p>
 
 
@@ -1261,7 +1257,7 @@ any positive number to require that many seconds of recording</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_stoppedRecording">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l104"><code>app&#x2F;mixins&#x2F;video-record.js:104</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l107"><code>app&#x2F;mixins&#x2F;video-record.js:107</code></a>
         </p>
 
 
@@ -1288,7 +1284,7 @@ stopped.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_videoId">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l168"><code>app&#x2F;mixins&#x2F;video-record.js:168</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l171"><code>app&#x2F;mixins&#x2F;video-record.js:171</code></a>
         </p>
 
 
@@ -1315,7 +1311,7 @@ where RRR are random numeric digits.
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Video-record.html#property_videoList">Video-record </a> (click for formatted description):
-        <a href="../files/app_mixins_video-record.js.html#l96"><code>app&#x2F;mixins&#x2F;video-record.js:96</code></a>
+        <a href="../files/app_mixins_video-record.js.html#l99"><code>app&#x2F;mixins&#x2F;video-record.js:99</code></a>
         </p>
 
 
@@ -1346,7 +1342,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Video-record.html#event_hasCamAccess">Video-record</a>:
-                            <a href="../files/app_mixins_video-record.js.html#l53"><code>app&#x2F;mixins&#x2F;video-record.js:53</code></a>
+                            <a href="../files/app_mixins_video-record.js.html#l56"><code>app&#x2F;mixins&#x2F;video-record.js:56</code></a>
                             </p>
                     
                     
@@ -1436,7 +1432,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Video-record.html#event_pauseVideo">Video-record</a>:
-                            <a href="../files/app_mixins_video-record.js.html#l68"><code>app&#x2F;mixins&#x2F;video-record.js:68</code></a>
+                            <a href="../files/app_mixins_video-record.js.html#l71"><code>app&#x2F;mixins&#x2F;video-record.js:71</code></a>
                             </p>
                     
                     
@@ -1460,7 +1456,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Video-record.html#event_recorderReady">Video-record</a>:
-                            <a href="../files/app_mixins_video-record.js.html#l355"><code>app&#x2F;mixins&#x2F;video-record.js:355</code></a>
+                            <a href="../files/app_mixins_video-record.js.html#l359"><code>app&#x2F;mixins&#x2F;video-record.js:359</code></a>
                             </p>
                     
                     
@@ -1534,7 +1530,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Video-record.html#event_stoppingCapture">Video-record</a>:
-                            <a href="../files/app_mixins_video-record.js.html#l80"><code>app&#x2F;mixins&#x2F;video-record.js:80</code></a>
+                            <a href="../files/app_mixins_video-record.js.html#l83"><code>app&#x2F;mixins&#x2F;video-record.js:83</code></a>
                             </p>
                     
                     
@@ -1558,7 +1554,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Video-record.html#event_unpauseVideo">Video-record</a>:
-                            <a href="../files/app_mixins_video-record.js.html#l74"><code>app&#x2F;mixins&#x2F;video-record.js:74</code></a>
+                            <a href="../files/app_mixins_video-record.js.html#l77"><code>app&#x2F;mixins&#x2F;video-record.js:77</code></a>
                             </p>
                     
                     
@@ -1582,7 +1578,7 @@ Accessible to consuming frame.
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Video-record.html#event_videoStreamConnection">Video-record</a>:
-                            <a href="../files/app_mixins_video-record.js.html#l60"><code>app&#x2F;mixins&#x2F;video-record.js:60</code></a>
+                            <a href="../files/app_mixins_video-record.js.html#l63"><code>app&#x2F;mixins&#x2F;video-record.js:63</code></a>
                             </p>
                     
                     

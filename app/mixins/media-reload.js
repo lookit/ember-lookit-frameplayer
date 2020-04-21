@@ -6,9 +6,12 @@ import Ember from 'ember';
  */
 
 /**
+ *
+ * Reference for DEVELOPERS of new frames only!
+ *
  * Allow any media-containing frame to correctly reset.
  * Fix LEI-93, an issue where the second of two consecutive videos did not play correctly.
-
+ *
  * Due to an internal ember quirk/optimization, the component instance is not destroyed if two of the same thing are
  *  used in a row, which means the same video tag was being dynamically reassigned- something HTML does not normally
  * allow. The page needs to be manually told to load the correct new video.

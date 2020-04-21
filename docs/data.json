@@ -7,15 +7,6 @@
         "version": "0.0.0"
     },
     "files": {
-        "app/components/exp-exit-survey/component.js": {
-            "name": "app/components/exp-exit-survey/component.js",
-            "modules": {},
-            "classes": {
-                "Exp-exit-survey": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
         "app/components/exp-frame-base/component.js": {
             "name": "app/components/exp-frame-base/component.js",
             "modules": {
@@ -32,6 +23,15 @@
             "modules": {},
             "classes": {
                 "Exp-frame-select": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "app/components/exp-lookit-change-detection/component.js": {
+            "name": "app/components/exp-lookit-change-detection/component.js",
+            "modules": {},
+            "classes": {
+                "Exp-lookit-change-detection": 1
             },
             "fors": {},
             "namespaces": {}
@@ -72,6 +72,13 @@
             "fors": {},
             "namespaces": {}
         },
+        "app/components/exp-lookit-image-audio/component.js": {
+            "name": "app/components/exp-lookit-image-audio/component.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "app/components/exp-lookit-instructions/component.js": {
             "name": "app/components/exp-lookit-instructions/component.js",
             "modules": {},
@@ -108,11 +115,18 @@
             "fors": {},
             "namespaces": {}
         },
-        "app/components/exp-lookit-preview-explanation/component.js": {
-            "name": "app/components/exp-lookit-preview-explanation/component.js",
+        "app/components/exp-lookit-single-image/component.js": {
+            "name": "app/components/exp-lookit-single-image/component.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "app/components/exp-lookit-stimuli-preview/component.js": {
+            "name": "app/components/exp-lookit-stimuli-preview/component.js",
             "modules": {},
             "classes": {
-                "Exp-lookit-preview-explanation": 1
+                "Exp-lookit-stimuli-preview": 1
             },
             "fors": {},
             "namespaces": {}
@@ -171,14 +185,19 @@
             "fors": {},
             "namespaces": {}
         },
+        "app/components/exp-lookit-webcam-display/component.js": {
+            "name": "app/components/exp-lookit-webcam-display/component.js",
+            "modules": {},
+            "classes": {
+                "Exp-lookit-webcam-display": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "app/components/exp-player/component.js": {
             "name": "app/components/exp-player/component.js",
-            "modules": {
-                "components": 1
-            },
-            "classes": {
-                "Exp-player": 1
-            },
+            "modules": {},
+            "classes": {},
             "fors": {},
             "namespaces": {}
         },
@@ -196,24 +215,6 @@
             "modules": {},
             "classes": {
                 "Exp-video-config-quality": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "app/components/exp-video-consent/component.js": {
-            "name": "app/components/exp-video-consent/component.js",
-            "modules": {},
-            "classes": {
-                "Exp-video-consent": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "app/components/exp-video-preview/component.js": {
-            "name": "app/components/exp-video-preview/component.js",
-            "modules": {},
-            "classes": {
-                "Exp-video-preview": 1
             },
             "fors": {},
             "namespaces": {}
@@ -303,9 +304,7 @@
         },
         "app/services/video-recorder.js": {
             "name": "app/services/video-recorder.js",
-            "modules": {
-                "services": 1
-            },
+            "modules": {},
             "classes": {
                 "video-recorder": 1
             },
@@ -327,36 +326,32 @@
             "name": "exp-player",
             "submodules": {
                 "frames": 1,
-                "components": 1,
                 "mixins": 1,
-                "randomizers": 1,
-                "services": 1
+                "randomizers": 1
             },
             "elements": {},
             "classes": {
-                "Exp-exit-survey": 1,
                 "Exp-frame-base": 1,
                 "Exp-frame-select": 1,
+                "Exp-lookit-change-detection": 1,
                 "Exp-lookit-dialogue-page": 1,
                 "Exp-lookit-exit-survey": 1,
                 "Exp-lookit-geometry-alternation": 1,
                 "Exp-lookit-geometry-alternation-open": 1,
+                "Exp-lookit-story-page": 1,
                 "Exp-lookit-instructions": 1,
                 "Exp-lookit-mood-questionnaire": 1,
                 "Exp-lookit-observation": 1,
                 "Exp-lookit-preferential-looking": 1,
-                "Exp-lookit-preview-explanation": 1,
-                "Exp-lookit-story-page": 1,
+                "Exp-lookit-stimuli-preview": 1,
                 "Exp-lookit-survey": 1,
                 "Exp-lookit-text": 1,
                 "Exp-lookit-video": 1,
                 "Exp-lookit-video-assent": 1,
                 "Exp-lookit-video-consent": 1,
-                "Exp-player": 1,
+                "Exp-lookit-webcam-display": 1,
                 "Exp-video-config": 1,
                 "Exp-video-config-quality": 1,
-                "Exp-video-consent": 1,
-                "Exp-video-preview": 1,
                 "Expand-assets": 1,
                 "Full-screen": 1,
                 "Media-reload": 1,
@@ -382,51 +377,34 @@
             "classes": {
                 "Exp-frame-base": 1,
                 "Exp-frame-select": 1,
+                "Exp-lookit-change-detection": 1,
                 "Exp-lookit-dialogue-page": 1,
                 "Exp-lookit-exit-survey": 1,
                 "Exp-lookit-geometry-alternation": 1,
                 "Exp-lookit-geometry-alternation-open": 1,
+                "Exp-lookit-story-page": 1,
                 "Exp-lookit-instructions": 1,
                 "Exp-lookit-mood-questionnaire": 1,
                 "Exp-lookit-observation": 1,
                 "Exp-lookit-preferential-looking": 1,
-                "Exp-lookit-preview-explanation": 1,
-                "Exp-lookit-story-page": 1,
+                "Exp-lookit-stimuli-preview": 1,
                 "Exp-lookit-survey": 1,
                 "Exp-lookit-text": 1,
                 "Exp-lookit-video": 1,
                 "Exp-lookit-video-assent": 1,
                 "Exp-lookit-video-consent": 1,
+                "Exp-lookit-webcam-display": 1,
                 "Exp-video-config": 1,
-                "Exp-video-config-quality": 1,
-                "Exp-video-preview": 1
+                "Exp-video-config-quality": 1
             },
             "fors": {},
             "is_submodule": 1,
             "namespaces": {},
             "module": "exp-player",
             "namespace": "",
-            "file": "app/components/exp-video-preview/component.js",
-            "line": 16,
-            "description": "Reusable frames that can be used as part of user-defined experiments. This is the main reference for researchers\n  looking to build their own experiment definitions on the experimenter platform.",
-            "tag": "main",
-            "itemtype": "main"
-        },
-        "components": {
-            "name": "components",
-            "submodules": {},
-            "elements": {},
-            "classes": {
-                "Exp-player": 1
-            },
-            "fors": {},
-            "is_submodule": 1,
-            "namespaces": {},
-            "module": "exp-player",
-            "namespace": "",
-            "file": "app/components/exp-player/component.js",
-            "line": 16,
-            "description": "Reusable components for UI rendering and interactivity",
+            "file": "app/components/exp-video-config-quality/component.js",
+            "line": 17,
+            "description": "Reusable frames that can be used as part of Lookit studies. This is the main reference\n  for researchers writing their own study protocols on Lookit.",
             "tag": "main",
             "itemtype": "main"
         },
@@ -448,7 +426,7 @@
             "namespace": "",
             "file": "app/mixins/video-record.js",
             "line": 14,
-            "description": "Mixins that can be used to add functionality to specific frames",
+            "description": "Reference for DEVELOPERS of new frames only (not Lookit researchers writing their\nstudy protocols on the site)!\n\nMixins that can be used to add specific functionality to frames",
             "tag": "main",
             "itemtype": "main"
         },
@@ -471,46 +449,9 @@
             "description": "Reusable randomizers that can be used as part of user-defined experiments.\nRandomizers allow researchers to specify how to select which frames or\nsequences of frames to use as part of a particular session of a given\nexperiment, for instance in order to counterbalance stimuli used across\nsubjects, assign subjects randomly to different experimental conditions, or\nimplement a longitudinal design where the frames used in this study depend on\nthe frames used in the participant's last session.",
             "tag": "main",
             "itemtype": "main"
-        },
-        "services": {
-            "name": "services",
-            "submodules": {},
-            "elements": {},
-            "classes": {
-                "video-recorder": 1
-            },
-            "fors": {},
-            "is_submodule": 1,
-            "namespaces": {},
-            "module": "exp-player",
-            "namespace": "",
-            "file": "app/services/video-recorder.js",
-            "line": 76,
-            "description": "Services used to provide centralized functionality",
-            "tag": "main",
-            "itemtype": "main"
         }
     },
     "classes": {
-        "Exp-exit-survey": {
-            "name": "Exp-exit-survey",
-            "shortname": "Exp-exit-survey",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "exp-player",
-            "file": "app/components/exp-exit-survey/component.js",
-            "line": 16,
-            "description": "This is the exit survey used by \"Your baby the physicist\". Use the updated frame {{#crossLink \"Exp-lookit-exit-survey\"}}{{/crossLink}} instead.",
-            "extends": "Exp-frame-base",
-            "uses": [
-                "Validations",
-                "Full-screen"
-            ],
-            "deprecated": true
-        },
         "Exp-frame-base": {
             "name": "Exp-frame-base",
             "shortname": "Exp-frame-base",
@@ -545,6 +486,27 @@
             "line": 9,
             "description": "Frame that allows you to specify a list of possible frames to show, plus an index or\n list of indices of which ones to actually show. The frame(s) will be inserted into the\n sequence of frames for this study on the fly, so that you can use a custom\n <a href=\"../classes/Exp-frame-base.html#property_generateProperties\" class=\"crosslink\">generateProperties</a>\n function to select which frame(s) to show.\n\nThis frame serves as a wrapper for the randomizer <a href=\"../classes/Select.html\" class=\"crosslink\">select</a>,\n which is evaluated during experiment parsing and cannot be modified on the fly.\n\nFor more information about making study behavior conditional on data collected,\n see <a href=\"https://lookit.readthedocs.io/en/develop/researchers-create-experiment.html#conditional-logic\">the Lookit docs</a>.\n\nExample usage:\n ```json\n        \"study-procedure\": {\n            \"kind\": \"exp-frame-select\",\n            \"frameOptions\": [\n                {\n                    \"kind\": \"exp-lookit-text\",\n                    \"blocks\": [\n                        {\n                            \"emph\": true,\n                            \"text\": \"Cats are great\"\n                        },\n                        {\n                            \"text\": \"We are measuring how much your child loves cats now. Beep boop!\"\n                        }\n                    ]\n                },\n                {\n                    \"kind\": \"exp-lookit-text\",\n                    \"blocks\": [{\n                            \"emph\": true,\n                            \"text\": \"Your child is not eligible for this study\"\n                        },\n                        {\n                            \"text\": \"Either you do not have any cats or your child does not love cats.\"\n                        }\n                    ]\n                }\n            ],\n            \"generateProperties\": \"function(expData, sequence, child, pastSessions) {var formData = expData['0-eligibility-survey'].formData; if (formData.nCats >= 1 && formData.loveCats == 'yes') { console.log('eligible'); return { 'whichFrames': 0, 'ELIGIBLE': true } } else { console.log('ineligible'); return { 'whichFrames': 1,  'ELIGIBLE': false } } }\"\n        }\n```\n\n**Warning:** to avoid unpredictable behavior, this frame does not itself use any\n <a href=\"../classes/Exp-frame-base.html#property_selectNextFrame\" class=\"crosslink\">selectNextFrame</a> passed to it.\n (Frames within the `frameOptions` list are welcome to make use of `selectNextFrame`, though!)\n\nData will be stored for this frame so that any ``generatedProperties`` are available\n for future use; however, it will proceed immediately upon loading to the first frame\n that is specified (or the next frame in the original sequence, if it turns out that `whichFrames` is an empty\n list).\n\nIn `expData`, the frame keys for all frames generated by this frame will be prefixed\n by this frame's ID, with an index within `whichFrames` appended to the end of the ID.\n For instance, if this frame's ID is `1-study-procedure`, and it generates three frames,\n we would have keys `1-study-procedure`, `1-study-procedure-0`, `1-study-procedure-1`, and\n `1-study-procedure-2`.",
             "extends": "Exp-frame-base"
+        },
+        "Exp-lookit-change-detection": {
+            "name": "Exp-lookit-change-detection",
+            "shortname": "Exp-lookit-change-detection",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "submodule": "frames",
+            "namespace": "",
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 30,
+            "description": "Frame for a preferential looking \"alternation\" or \"change detection\" paradigm trial,\n in which separate streams of images are displayed on the left and right of the screen.\n Typically, on one side images would be alternating between two categories - e.g., images\n of 8 vs. 16 dots, images of cats vs. dogs - and on the other side the images would all\n be in the same category.\n\nThe frame starts with an optional brief \"announcement\" segment, where an attention-getter\n video is displayed and audio is played. During this segment, the trial can be paused\n and restarted.\n\nIf `doRecording` is true (default), then we wait for recording to begin before the\n actual test trial can begin. We also always wait for all images to pre-load, so that\n there are no delays in loading images that affect the timing of presentation.\n\nYou can customize the appearance of the frame: background color overall, color of the\n two rectangles that contain the image streams, and border of those rectangles. You can\n also specify how long to present the images for, how long to clear the screen in between\n image pairs, and how long the test trial should be altogether.\n\nYou provide four lists of images to use in this frame: `leftImagesA`, `leftImagesB`,\n `rightImagesA`, and `rightImagesB`. The left stream will alternate between images in\n `leftImagesA` and `leftImagesB`. The right stream will alternate between images in\n `rightImagesA` and `rightImagesB`. They are either presented in random order (default)\n within those lists, or can be presented in the exact order listed by setting\n `randomizeImageOrder` to false.\n\nThe timing of all image presentations and the specific images presented is recorded in\n the event data.\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\n needs to include a manual \"next\" button so that there's a user interaction\n event to trigger fullscreen mode. (Browsers don't allow switching to fullscreen\n without a user event.) If the user leaves fullscreen, that event is recorded, but the\n trial is not paused.\n\nSpecifying media locations:\n\nFor any parameters that expect a list of audio/video sources, you can EITHER provide\n a list of src/type pairs with full paths like this:\n ```json\n    [\n        {\n            'src': 'http://.../video1.mp4',\n            'type': 'video/mp4'\n        },\n        {\n            'src': 'http://.../video1.webm',\n            'type': 'video/webm'\n        }\n    ]\n ```\n OR you can provide a single string 'stub', which will be expanded\n based on the parameter baseDir and the media types expected - either audioTypes or\n videoTypes as appropriate. For example, if you provide the audio source `intro`\n and baseDir is https://mystimuli.org/mystudy/, with audioTypes ['mp3', 'ogg'], then this\n will be expanded to:\n ```json\n                  [\n                         {\n                             src: 'https://mystimuli.org/mystudy/mp3/intro.mp3',\n                             type: 'audio/mp3'\n                         },\n                         {\n                             src: 'https://mystimuli.org/mystudy/ogg/intro.ogg',\n                             type: 'audio/ogg'\n                         }\n                 ]\n ```\n This allows you to simplify your JSON document a bit and also easily switch to a\n new version of your stimuli without changing every URL. You can mix source objects with\n full URLs and those using stubs within the same directory. However, any stimuli\n specified using stubs MUST be\n organized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.\n\nExample usage:\n```json\n \"frames\": {\n    \"alt-trial\": {\n        \"kind\": \"exp-lookit-change-detection\",\n        \"baseDir\": \"https://www.mit.edu/~kimscott/placeholderstimuli/\",\n        \"videoTypes\": [\"mp4\", \"webm\"],\n        \"audioTypes\": [\"mp3\", \"ogg\"],\n        \"trialLength\": 15,\n        \"attnLength\": 2,\n        \"fsAudio\": \"sample_1\",\n        \"unpauseAudio\": \"return_after_pause\",\n        \"pauseAudio\": \"pause\",\n        \"videoSources\": \"attentiongrabber\",\n        \"musicSources\": \"music_01\",\n        \"audioSources\": \"video_01\",\n        \"endAudioSources\": \"all_done\",\n        \"border\": \"thick solid black\",\n        \"leftImagesA\": [\"apple.jpg\", \"orange.jpg\"],\n        \"rightImagesA\": [\"square.png\", \"tall.png\", \"wide.png\"],\n        \"leftImagesB\": [\"apple.jpg\", \"orange.jpg\"],\n        \"rightImagesB\": [\"apple.jpg\", \"orange.jpg\"],\n        \"startWithA\": true,\n        \"randomizeImageOrder\": true,\n        \"displayMs\": 500,\n        \"blankMs\": 250,\n        \"containerColor\": \"white\",\n        \"backgroundColor\": \"#abc\",\n    }\n }\n```",
+            "extends": "Exp-frame-base",
+            "uses": [
+                "Full-screen",
+                "Video-record",
+                "Expand-assets"
+            ]
         },
         "Exp-lookit-dialogue-page": {
             "name": "Exp-lookit-dialogue-page",
@@ -629,6 +591,27 @@
                 "Expand-assets"
             ]
         },
+        "Exp-lookit-story-page": {
+            "name": "Exp-lookit-story-page",
+            "shortname": "Exp-lookit-story-page",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "submodule": "frames",
+            "namespace": "",
+            "file": "app/components/exp-lookit-story-page/component.js",
+            "line": 19,
+            "description": "Frame to implement a basic \"storybook page\" trial, with images placed on the\nscreen within a display area and a sequence of audio files played.\nOptionally, images may be highlighted at specified times during the audio\nfiles.\n\nWebcam recording may be turned on or off; if on, the page is not displayed\nor audio started until recording begins.\n\nFrame is displayed fullscreen, but is not paused or otherwise disabled if the\nuser leaves fullscreen. A button appears prompting the user to return to\nfullscreen mode.\n\nThe parent may press 'next' to proceed, or the study may proceed\nautomatically when audio finishes (autoProceed). Optionally, if using autoProceed,\nthe frame may be displayed for a minimum duration, so that e.g. it lasts exactly 10\nseconds from start of audio even though the audio is only 2 seconds long. If using this\nfeature a progress bar may be displayed.\n\nAny number of images may be placed on the screen, and their position\nspecified. (Aspect ratio will be the same as the original image.)\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\nneeds to include a manual \"next\" button so that there's a user interaction\nevent to trigger fullscreen mode. (Browsers don't allow us to switch to FS\nwithout a user event.)\n\n```json\n\"frames\": {\n   \"story-intro-1\": {\n           \"doRecording\": false,\n           \"autoProceed\": true,\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/ingroupobligations/\",\n           \"audioTypes\": [\"mp3\", \"ogg\"],\n           \"parentTextBlock\": {\n               \"title\": \"Parents!\",\n               \"text\": \"some instructions\",\n               \"emph\": true,\n               \"css\": {\n                   \"color\": \"red\",\n                   \"font-size\": \"12px\"\n               }\n           },\n           \"images\": [\n               {\n                   \"id\": \"leftA\",\n                   \"src\": \"flurps1.jpg\",\n                   \"left\": \"10\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               },\n               {\n                   \"id\": \"rightA\",\n                   \"src\": \"zazzes1.jpg\",\n                   \"left\": \"60\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               }\n           ],\n           \"kind\": \"exp-lookit-story-page\",\n           \"audioSources\": [\n               {\n                   \"audioId\": \"firstAudio\",\n                   \"sources\": \"intro1\",\n                   \"highlights\": [\n                       {\"range\": [3.017343,    5.600283], \"image\":     \"leftA\"},\n                       {\"range\": [5.752911,    8.899402], \"image\":     \"rightA\"}\n                   ]\n               }\n           ]\n       }\n}\n\n```",
+            "extends": "Exp-frame-base",
+            "uses": [
+                "Full-screen",
+                "Video-record",
+                "Expand-assets"
+            ]
+        },
         "Exp-lookit-instructions": {
             "name": "Exp-lookit-instructions",
             "shortname": "Exp-lookit-instructions",
@@ -699,9 +682,9 @@
                 "Expand-assets"
             ]
         },
-        "Exp-lookit-preview-explanation": {
-            "name": "Exp-lookit-preview-explanation",
-            "shortname": "Exp-lookit-preview-explanation",
+        "Exp-lookit-stimuli-preview": {
+            "name": "Exp-lookit-stimuli-preview",
+            "shortname": "Exp-lookit-stimuli-preview",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -710,30 +693,14 @@
             "module": "exp-player",
             "submodule": "frames",
             "namespace": "",
-            "file": "app/components/exp-lookit-preview-explanation/component.js",
-            "line": 9,
-            "description": "A frame that to explain any blinding procedures to parents, and offer them the option to preview stimuli before the study. Two buttons allow the user to move forward: one goes to the next frame (if the parent wants to preview stimuli), and one skips the next frame and goes to the one after that (if the parent declins). Therefore, this frame should be followed by an {{#crossLink \"Exp-video-preview\"}}{{/crossLink}} frame.\n\n```json\n\"frames\": {\n   \"my-video-preview-explanation\": {\n       \"introBlock\": {\n           \"text\": \"During the videos, we'll ask that you hold your child over your shoulder like this, so that you're facing face away from the screen.\"\n       },\n       \"image\": {\n           \"alt\": \"Father holding child looking over his shoulder\",\n           \"src\": \"https://s3.amazonaws.com/lookitcontents/exp-physics/OverShoulder.jpg\"\n       },\n       \"kind\": \"exp-lookit-preview-explanation\",\n       \"skipButtonText\": \"Skip preview\",\n       \"previewButtonText\": \"I'd like to preview the videos\",\n       \"blocks\": [\n           {\n               \"text\": \"The reason we ask this is that your child is learning from you all the time. Even if he or she can't see where you're looking, you may unconsciously shift towards one side or the other and influence your child's attention. We want to make sure we're measuring your child's preferences, not yours!\"\n           },\n           {\n               \"text\": \"If you'd like to see the videos your child will be shown, you can take a look ahead of time now. It's important that you preview the videos without your child, so that the videos will still be new to them.\"\n           }\n       ],\n       \"showPreviousButton\": true\n   }\n}\n\n```",
-            "extends": "Exp-frame-base"
-        },
-        "Exp-lookit-story-page": {
-            "name": "Exp-lookit-story-page",
-            "shortname": "Exp-lookit-story-page",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "exp-player",
-            "submodule": "frames",
-            "namespace": "",
-            "file": "app/components/exp-lookit-story-page/component.js",
-            "line": 19,
-            "description": "Frame to implement a basic \"storybook page\" trial, with images placed on the\nscreen within a display area and a sequence of audio files played.\nOptionally, images may be highlighted at specified times during the audio\nfiles.\n\nWebcam recording may be turned on or off; if on, the page is not displayed\nor audio started until recording begins.\n\nFrame is displayed fullscreen, but is not paused or otherwise disabled if the\nuser leaves fullscreen. A button appears prompting the user to return to\nfullscreen mode.\n\nThe parent may press 'next' to proceed, or the study may proceed\nautomatically when audio finishes (autoProceed). Optionally, if using autoProceed,\nthe frame may be displayed for a minimum duration, so that e.g. it lasts exactly 10\nseconds from start of audio even though the audio is only 2 seconds long. If using this\nfeature a progress bar may be displayed.\n\nAny number of images may be placed on the screen, and their position\nspecified. (Aspect ratio will be the same as the original image.)\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\nneeds to include a manual \"next\" button so that there's a user interaction\nevent to trigger fullscreen mode. (Browsers don't allow us to switch to FS\nwithout a user event.)\n\n```json\n\"frames\": {\n   \"story-intro-1\": {\n           \"doRecording\": false,\n           \"autoProceed\": true,\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/ingroupobligations/\",\n           \"audioTypes\": [\"mp3\", \"ogg\"],\n           \"parentTextBlock\": {\n               \"title\": \"Parents!\",\n               \"text\": \"some instructions\",\n               \"emph\": true,\n               \"css\": {\n                   \"color\": \"red\",\n                   \"font-size\": \"12px\"\n               }\n           },\n           \"images\": [\n               {\n                   \"id\": \"leftA\",\n                   \"src\": \"flurps1.jpg\",\n                   \"left\": \"10\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               },\n               {\n                   \"id\": \"rightA\",\n                   \"src\": \"zazzes1.jpg\",\n                   \"left\": \"60\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               }\n           ],\n           \"kind\": \"exp-lookit-story-page\",\n           \"audioSources\": [\n               {\n                   \"audioId\": \"firstAudio\",\n                   \"sources\": \"intro1\",\n                   \"highlights\": [\n                       {\"range\": [3.017343,    5.600283], \"image\":     \"leftA\"},\n                       {\"range\": [5.752911,    8.899402], \"image\":     \"rightA\"}\n                   ]\n               }\n           ]\n       }\n}\n\n```",
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 16,
+            "description": "A frame that to explain any blinding procedures to parents, and offer them the option to preview stimuli before the study. Two buttons allow the user to move forward: one goes to the next frame (if the parent wants to preview stimuli), and one skips the next frame and goes to the one after that (if the parent declins). Therefore, this frame should be followed by an {{#crossLink \"Exp-video-preview\"}}{{/crossLink}} frame.\n\n```json\n\"frames\": {\n   \"my-video-preview-explanation\": {\n       \"kind\": \"exp-lookit-stimuli-preview\",\n       \"skipButtonText\": \"Skip preview\",\n       \"previewButtonText\": \"I'd like to preview the videos\",\n       \"blocks\": [\n           {\n                \"text\": \"During the videos, we'll ask that you hold your child over your shoulder like this, so that you're facing face away from the screen.\"\n           },\n           {\n               \"image\": {\n                   \"alt\": \"Father holding child looking over his shoulder\",\n                   \"src\": \"https://raw.githubusercontent.com/kimberscott/placeholder-stimuli/master/img/OverShoulder.jpg\"\n               }\n           },\n           {\n               \"text\": \"This is because your child is learning from you all the time, and may pick up on even very small cues about what you think. But if you can't see the stimuli, we're definitely only measuring your child's own beliefs.\"\n           },\n           {\n               \"text\": \"If you'd like to see the videos your child will be shown, you can take a look ahead of time now. It's important that you preview the videos without your child, so that the videos will still be new to them.\"\n           }\n       ],\n       \"showPreviousButton\": true,\n       \"baseDir\": \"https://raw.githubusercontent.com/kimberscott/placeholder-stimuli/master/\",\n       \"videoTypes\": [\"webm\", \"mp4\"],\n       \"audioTypes\": [\"mp3\", \"ogg\"],\n       \"stimuli\": [\n          {\n            \"caption\": \"At the start of each section, we will play a video like this that shows a common household object, like a book or an apple.\",\n            \"video\": \"cropped_book\"\n          },\n          {\n            \"caption\": \"Your child will be looking at images like this, and we'll ask him or her to describe each one.\",\n            \"image\": \"square.png\"\n          },\n          {\n            \"caption\": \"Between sections, we will play audio like this so you know where you are in the study.\",\n            \"audio\": \"sample_1\"\n          }\n        ]\n   }\n}\n\n```",
             "extends": "Exp-frame-base",
             "uses": [
-                "Full-screen",
+                "Expand-assets",
                 "Video-record",
-                "Expand-assets"
+                "Media-reload"
             ]
         },
         "Exp-lookit-survey": {
@@ -828,20 +795,21 @@
                 "Video-record"
             ]
         },
-        "Exp-player": {
-            "name": "Exp-player",
-            "shortname": "Exp-player",
+        "Exp-lookit-webcam-display": {
+            "name": "Exp-lookit-webcam-display",
+            "shortname": "Exp-lookit-webcam-display",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
             "module": "exp-player",
-            "submodule": "components",
+            "submodule": "frames",
             "namespace": "",
-            "file": "app/components/exp-player/component.js",
-            "line": 16,
-            "description": "Experiment player: a component that renders a series of frames that define an experiment\n\nSample usage:\n```handlebars\n{{exp-player\n  experiment=experiment\n  session=session\n  pastSessions=pastSessions\n  saveHandler=(action 'saveSession')\n  frameIndex=0\n  fullScreenElementId='expContainer'}}\n```"
+            "file": "app/components/exp-lookit-webcam-display/component.js",
+            "line": 11,
+            "description": "A frame to display the user's webcam stream, along with a small amount of optional text.\nExpected use is as a break during an experiment, e.g. to check positioning, but could\nalso be used as a lightweight frame for data collection.\n\nNot fullscreen by default, but can be displayed fullscreen as shown in example below.\nCan optionally record video.\n\n\n```\n   \"frames\": {\n       \"webcam-display-break\": {\n           \"kind\": \"exp-lookit-webcam-display\",\n           \"blocks\": [\n               {\n                   \"title\": \"Here is a short break\",\n                   \"listblocks\": [\n                       {\n                           \"text\": \"You can check that your child is still visible\"\n                       },\n                       {\n                           \"text\": \"You can make some silly faces\"\n                       }\n                   ]\n               }\n           ],\n           \"nextButtonText\": \"Next\",\n           \"showPreviousButton\": false,\n           \"displayFullscreenOverride\": true,\n           \"startRecordingAutomatically\": false\n       }\n   }\n```",
+            "extends": "Video-record"
         },
         "Exp-video-config": {
             "name": "Exp-video-config",
@@ -875,46 +843,6 @@
             "description": "Video configuration frame showing webcam view at right and instructions for checking\nvideo quality for preferential looking setup at left. Default content is hard-coded to\nprovide a reasonable set of instructions for preferential looking setups, so the frame can\nbe used as follows with no parameters besides `kind`:\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\"\n    }\n}\n```\n\nOptionally,\nparticipants can be required to check off each item before they can proceed to the next\nframe. If `requireItemConfirmation` is true (default), then the 'next' button will\nappear disabled until the participant has checked off all buttons, although if they click\nit anyway they will get an informative warning and the instructions section will scroll\nto the first unchecked item.\n\nParticipants can also be optionally required to create and view a short recording, e.g. to\ncheck their child will be audible or their child's eyes will be visible in a particular position.\n\nYou can also customize any or all text and images as in the following example.\n\n```json\n\"frames\": {\n    \"video-quality\": {\n        \"kind\": \"exp-video-config-quality\",\n        \"title\": \"Webcam setup for preferential looking\",\n        \"introText\": \"We'll be analyzing where your child chooses to look during the videos--but only if we can tell where that is! Please check each of the following to ensure we're able to use your video:\",\n        \"requireItemConfirmation\": true,\n        \"completedItemText\": \"Did it!\",\n        \"instructionBlocks\": [\n                    {\n                        \"text\": \"<strong>Make sure the webcam you're using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is looking to the left or right!\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/centering.png\",\n                            \"alt\": \"Example images of using centered external webcam on monitor or built-in webcam on laptop.\"\n                        }\n                    },\n                    {\n                        \"text\": \"<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there's just one monitor, you're all set!)\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/monitors.png\",\n                            \"alt\": \"Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen.\"\n                        }\n                    },\n                    {\n                        \"text\": \"Check the lighting by making sure you can <strong>clearly see your own eyes</strong> on the webcam view to the right. You may need to either turn on a light or reduce light coming from behind you.\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/lighting.png\",\n                            \"alt\": \"Example images showing good lighting, room too dark, and backlit scene where eyes are not visible.\"\n                        }\n                    },\n                    {\n                        \"text\": \"If it's practical, <strong>minimize exciting things</strong> that are visible behind or to the side of the screen--for instance, by facing a wall instead of the kitchen. (If this isn't practical for you, don't worry about it--just check the box!)\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/distractions.png\",\n                            \"alt\": \"Example images showing a child and puppy next to the computer, versus a computer just on its own.\"\n                        }\n                    },\n                    {\n                        \"text\": \"During the study, we'll ask that you sit facing away from the monitor, holding your child over your shoulder, like this. (More on that in a moment!) <strong>Make sure the webcam is angled up or down enough that your child's eyes are visible in this position</strong>. If you're not sure if your child's eyes will be visible, you can make a short recording to check!\",\n                        \"image\": {\n                            \"src\": \"https://s3.amazonaws.com/lookitcontents/website/over_shoulder.jpg\",\n                            \"alt\": \"Example image showing a dad holding his child looking over his shoulder.\"\n                        }\n                    }\n                ],\n            \"requireTestVideo\": true,\n            \"showRecordMenu\": true,\n            \"recordingInstructionText\": \"You should be able to see your camera view above. You can create and view a short recording to see how your setup looks.\"\n    }\n}\n```",
             "extends": "Video-record"
         },
-        "Exp-video-consent": {
-            "name": "Exp-video-consent",
-            "shortname": "Exp-video-consent",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "exp-player",
-            "namespace": "",
-            "file": "app/components/exp-video-consent/component.js",
-            "line": 11,
-            "description": "Video consent frame for Lookit studies UNDER INITIAL MIT PROTOCOL ONLY, with consent document displayed at left and instructions to start recording, read a statement out loud, and send.\nThis version allows custom specification of consent form text.\nFor studies by researchers who have signed the Lookit Usage Agreement and have approval from their own IRB,\nplease use an {{#crossLink \"Exp-lookit-video-consent\"}}{{/crossLink}}  frame instead.\nConsent document can be downloaded as PDF document by participant.\n\n```json\n\"frames\": {\n    \"video-consent\": {\n        \"blocks\": [\n            {\n                 \"text\": \"Observing your child's behavior during this experimental session will help us to understand how infants and children use evidence to learn and make predictions about the world.\",\n                \"title\": \"About the study\"\n            },\n            {\n                \"text\": \"Your and your child's participation in this session are completely voluntary. If you and your child choose to participate, you may stop the session at any point with no penalty. Please pause or stop the session if your child becomes very fussy or does not want to participate. If this is a study with multiple sessions, there are no penalties for not completing all sessions.\",\n                \"title\": \"Participation\"\n            },\n            {\n                \"text\": \"During the session, you and your child will be recorded via your computer's webcam and microphone while watching a video or completing an activity. Video recordings and other data you enter are sent securely to our lab. At the end of the session, or when you end it early, you will be prompted to choose a privacy level for your webcam recordings. \",\n                \"title\": \"Webcam recording\"\n            },\n            {\n                \"text\": \"Recordings and survey responses will be stored on a password-protected server and accessed only by the Lookit researchers working on this study and any other groups you allow when selecting a privacy level. A researcher may transcribe responses or record information such as where you or your child is looking. Data will not be used to identify you or your child. The results of the research may be presented at scientific meetings or published in scientific journals, but no video clips will be shared unless you allow this when selecting a privacy level.\\n\\nRaw data may also be published when it can not identify children; for instance, we may publish children’s looking times to the left versus right of the screen, or parent comments with children’s names removed. We may also study your child’s responses in connection with his or her previous responses to this or other studies, siblings’ responses, or demographic survey responses. We never publish children’s birthdates or names, and we never publish your demographic data in conjunction with your child’s video.\",\n                \"title\": \"Use of data\"\n            },\n            {\n                \"text\": \"If you or your child have any questions or concerns about this research, you may contact Professor Laura Schulz: {contact}\",\n                \"title\": \"Contact information\"\n            }\n        ],\n        \"prompt\": \"\\\"I have read and understand the consent document. I am this child's parent or legal guardian and we both agree to participate in this study.\\\"\",\n        \"kind\": \"exp-video-consent\"\n    }\n}\n```",
-            "extends": "Exp-lookit-video-consent",
-            "deprecated": true,
-            "uses": [
-                "Video-record"
-            ]
-        },
-        "Exp-video-preview": {
-            "name": "Exp-video-preview",
-            "shortname": "Exp-video-preview",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "exp-player",
-            "submodule": "frames",
-            "namespace": "",
-            "file": "app/components/exp-video-preview/component.js",
-            "line": 16,
-            "description": "A frame that displays a series of videos to preview, without collecting data as a live experiment. User can go through these at their own pace and video controls are shown. Webcam video is recorded starting once the user presses a button to actually display the videos, so that researchers can check that the participant (infant/child) did not see the videos ahead of time.\n```json\n\"frames\": {\n   \"my-sample-frame\": {\n       \"id\": \"video-preview\",\n       \"kind\": \"exp-video-preview\",\n       \"text\": \"Here are the videos your child will see in this study. You can watch them ahead of time--please just don't show your child yet!\",\n       \"prompt\": \"My child can NOT see the screen. Start the preview!\",\n       \"baseDir\": \"https://url.com/\",\n       \"videoTypes\": [\"webm\", \"mp4\"],\n       \"videos\": [\n          {\n            \"caption\": \"User-facing text that appears below the video\",\n            \"sources\": \"example_intro\"\n          },\n          {\n            \"caption\": \"User-facing text that appears below the video\",\n            \"imgSrc\": \"caterpillar_picture\"\n          }\n        ]\n   }\n }\n\n```",
-            "extends": "Exp-frame-base",
-            "uses": [
-                "Expand-assets",
-                "Video-record",
-                "Media-reload"
-            ]
-        },
         "Expand-assets": {
             "name": "Expand-assets",
             "shortname": "Expand-assets",
@@ -923,20 +851,21 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [
+                "Exp-lookit-change-detection",
                 "Exp-lookit-dialogue-page",
                 "Exp-lookit-geometry-alternation",
                 "Exp-lookit-geometry-alternation-open",
-                "Exp-lookit-preferential-looking",
                 "Exp-lookit-story-page",
-                "Exp-lookit-video",
-                "Exp-video-preview"
+                "Exp-lookit-preferential-looking",
+                "Exp-lookit-stimuli-preview",
+                "Exp-lookit-video"
             ],
             "module": "exp-player",
             "submodule": "mixins",
             "namespace": "",
             "file": "app/mixins/expand-assets.js",
             "line": 8,
-            "description": "Allow users to provide audio/video and image source values as either relative paths\nwithin a base directory or as full paths.\n\nWhen adding this mixin to a frame, you will need to define a property of the frame\n`assetsToExpand`, which indicates which parameters might be source objects that need\nexpansion. `assetsToExpand` should be an object with keys `image`, `video`, and `audio`,\nand each value should be an Array of parameter names that provide sources for resources\nof the corresponding type. E.g.,\n```\n   {\n       'image': ['leftObjectPic', 'rightObjectPic'],\n       'audio': ['introAudio', 'testAudio'],\n       'video': ['objectDemoVideo']\n   }\n```\n\nThis is defined directly within your frame, e.g.:\n```\n   export default ExpFrameBaseComponent.extend(ExpandAssets, {\n       ...\n       type: 'exp-my-cool-frame',\n       assetsToExpand:     {\n           'image': ['leftObjectPic', 'rightObjectPic'],\n           'audio': ['introAudio', 'testAudio'],\n           'video': ['objectDemoVideo']\n           },\n       ...,\n       meta: {...},\n       actions: {...}\n   });\n```\n\n\n\nThe *user* of your frame can then optionally provide `baseDir`, `audioTypes`, and\n`videoTypes` parameters to indicate how to expand relative paths.\n\nHow expansion works:\n- **Images**: Suppose the list `assetsToExpand['image']` contains `centerStimulus`. If\n  `centerStimulus` is provided as a full URL (with `://` in it), nothing will happen to\n  it. But if `centerStimulus` is a string that is not a full URL, it will be transformed\n  during the `didReceiveAttrs` hook to `baseDir + 'img/' + centerStimulus`.\n\n- **Audio**: Suppose the list `assetsToExpand['audio']` contains `utterance1`. If\n  `utterance1` is a nonempty string (rather than an object/Array), e.g., `goodmorning`,\n  and `audioTypes` has been set to `['typeA', 'typeB']`,\n  then `utterance1` will be expanded out to\n```\n        [\n            {\n                src: 'baseDir' + 'typeA/goodmorning.typeA',\n                type: 'audio/typeA'\n            },\n            {\n                src: 'baseDir' + 'typeB/goodmorning.typeB',\n                type: 'audio/typeB'\n            }\n        ]\n```\n\n- **Video**: Same as audio, but using the types from `videoTypes`.\n\n**Important**: During the `didReceiveAttrs` hook, your frame will acquire new properties `[parameterName]_parsed`\nfor each of the parameters named in `assetsToExpand`. These properties will hold the\nexpanded values. E.g., in the example above, you would now have a `centerStimulus_parsed`\nproperty. This is what you should use for showing/playing images/audio/video in your\nframe template.\n\n**Advanced use**: the property names in `assetsToExpand` can be either full parameter names\nas in the examples above, or can be of the form `parameterName/subProperty`. If using\nthe `parameterName/subProperty` syntax, instead of processing the parameter `parameterName`,\nwe will expect that that parameter is either an object with property `subProperty`\n(which will be expanded) or an Array of objects with property `subProperty` (which will\nbe expanded). The original value of the `parameterName` parameter may in this case be\nmutated as assets are expanded. However, your frame will still also acquire a new\nproperty `[parameterName]_parsed` which you should use for accessing the processed\nvalues. This avoids potential problems with the template being rendered using the original\nvalues and not updated."
+            "description": "Reference for DEVELOPERS of new frames only!\nMixin to allow users to provide audio/video and image source values as either relative paths\n within a base directory or as full paths.\nWhen adding this mixin to a frame, you will need to define a property of the frame\n `assetsToExpand`, which indicates which parameters might be source objects that need\n expansion. `assetsToExpand` should be an object with keys `image`, `video`, and `audio`,\n and each value should be an Array of parameter names that provide sources for resources\n of the corresponding type. E.g.,\n ```\n    {\n        'image': ['leftObjectPic', 'rightObjectPic'],\n        'audio': ['introAudio', 'testAudio'],\n        'video': ['objectDemoVideo']\n    }\n ```\nThis is defined directly within your frame, e.g.:\n```\n    export default ExpFrameBaseComponent.extend(ExpandAssets, {\n        ...\n        type: 'exp-my-cool-frame',\n        assetsToExpand:     {\n            'image': ['leftObjectPic', 'rightObjectPic'],\n            'audio': ['introAudio', 'testAudio'],\n            'video': ['objectDemoVideo']\n            },\n        ...,\n        meta: {...},\n        actions: {...}\n    });\n```\n\n\nThe *user* of your frame can then optionally provide `baseDir`, `audioTypes`, and\n `videoTypes` parameters to indicate how to expand relative paths.\nHow expansion works:\n - **Images**: Suppose the list `assetsToExpand['image']` contains `centerStimulus`. If\n   `centerStimulus` is provided as a full URL (with `://` in it), nothing will happen to\n   it. But if `centerStimulus` is a string that is not a full URL, it will be transformed\n   during the `didReceiveAttrs` hook to `baseDir + 'img/' + centerStimulus`.\n- **Audio**: Suppose the list `assetsToExpand['audio']` contains `utterance1`. If\n   `utterance1` is a nonempty string (rather than an object/Array), e.g., `goodmorning`,\n   and `audioTypes` has been set to `['typeA', 'typeB']`,\n   then `utterance1` will be expanded out to\n ```\n         [\n             {\n                 src: 'baseDir' + 'typeA/goodmorning.typeA',\n                 type: 'audio/typeA'\n             },\n             {\n                 src: 'baseDir' + 'typeB/goodmorning.typeB',\n                 type: 'audio/typeB'\n             }\n         ]\n ```\n- **Video**: Same as audio, but using the types from `videoTypes`.\n**Important**: During the `didReceiveAttrs` hook, your frame will acquire new properties `[parameterName]_parsed`\n for each of the parameters named in `assetsToExpand`. These properties will hold the\n expanded values. E.g., in the example above, you would now have a `centerStimulus_parsed`\n property. This is what you should use for showing/playing images/audio/video in your\n frame template.\n**Advanced use**: the property names in `assetsToExpand` can be either full parameter names\n as in the examples above, or can be of the form `parameterName/subProperty`. If using\n the `parameterName/subProperty` syntax, instead of processing the parameter `parameterName`,\n we will expect that that parameter is either an object with property `subProperty`\n (which will be expanded) or an Array of objects with property `subProperty` (which will\n be expanded). The original value of the `parameterName` parameter may in this case be\n mutated as assets are expanded. However, your frame will still also acquire a new\n property `[parameterName]_parsed` which you should use for accessing the processed\n values. This avoids potential problems with the template being rendered using the original\n values and not updated."
         },
         "Full-screen": {
             "name": "Full-screen",
@@ -946,14 +875,14 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [
-                "Exp-exit-survey",
                 "Exp-frame-base",
+                "Exp-lookit-change-detection",
                 "Exp-lookit-dialogue-page",
                 "Exp-lookit-exit-survey",
                 "Exp-lookit-geometry-alternation",
                 "Exp-lookit-geometry-alternation-open",
-                "Exp-lookit-preferential-looking",
                 "Exp-lookit-story-page",
+                "Exp-lookit-preferential-looking",
                 "Exp-lookit-video"
             ],
             "module": "exp-player",
@@ -961,7 +890,7 @@
             "namespace": "",
             "file": "app/mixins/full-screen.js",
             "line": 12,
-            "description": "Allow components to specify fullscreen capabilities based on minimal configuration options"
+            "description": "Reference for DEVELOPERS of new frames only!\nAllow components to specify fullscreen capabilities based on minimal configuration options"
         },
         "Media-reload": {
             "name": "Media-reload",
@@ -972,15 +901,15 @@
             "plugin_for": [],
             "extension_for": [
                 "Exp-lookit-preferential-looking",
-                "Exp-lookit-video",
-                "Exp-video-preview"
+                "Exp-lookit-stimuli-preview",
+                "Exp-lookit-video"
             ],
             "module": "exp-player",
             "submodule": "mixins",
             "namespace": "",
             "file": "app/mixins/media-reload.js",
             "line": 8,
-            "description": "Allow any media-containing frame to correctly reset.\nFix LEI-93, an issue where the second of two consecutive videos did not play correctly.\n\nDue to an internal ember quirk/optimization, the component instance is not destroyed if two of the same thing are\n used in a row, which means the same video tag was being dynamically reassigned- something HTML does not normally\nallow. The page needs to be manually told to load the correct new video.\n\nSee commentary here: http://stackoverflow.com/a/18454389/1422268"
+            "description": "Reference for DEVELOPERS of new frames only!\nAllow any media-containing frame to correctly reset.\n Fix LEI-93, an issue where the second of two consecutive videos did not play correctly.\nDue to an internal ember quirk/optimization, the component instance is not destroyed if two of the same thing are\n  used in a row, which means the same video tag was being dynamically reassigned- something HTML does not normally\n allow. The page needs to be manually told to load the correct new video.\nSee commentary here: http://stackoverflow.com/a/18454389/1422268"
         },
         "Session-record": {
             "name": "Session-record",
@@ -997,7 +926,7 @@
             "namespace": "",
             "file": "app/mixins/session-record.js",
             "line": 14,
-            "description": "A mixin that can be used to add basic support for video recording to a particular experiment frame\n\nBy default, the recorder will be installed when this frame loads, but recording\nwill not start automatically. To override either of these settings, set\nthe properties `doUseCamera` and/or `startRecordingAutomatically` in the consuming\nframe.\n\nYou will also need to set `sessionRecorderElement` if the recorder is to be housed other than\nin an element identified by the ID `recorder`.\n\nThe properties `recorder`, `sessionRecorderReady`, and\n`sessionVideoId` become available to the consuming frame. The recorder object has fields\nthat give information about its state: `hasWebCam`, 'hasCamAccess`, `recording`,\n`connected`, and `micChecked` - for details, see services/video-recorder.js. These\ncan be accessed from the consuming frame as e.g. `this.get('recorder').get('hasWebCam')`.\n\nIf starting recording automatically, the function `whenPossibleToRecord` will be called\nonce recording is possible, and will start recording. If you want to do other things\nat this point, like proceeding to a test trial, you can override this function in your\nframe.\n\nSee 'methods' for the functions you can use on a frame that extends VideoRecord.\n\nEvents recorded in a frame that extends VideoRecord will automatically have additional\nfields sessionVideoId (video filename), pipeId (temporary filename initially assigned by\nthe recording service),\nand streamTime (when in the video they happened, in s)."
+            "description": "Reference for DEVELOPERS of new frames only!\nA mixin that can be used to add basic support for video recording to a particular experiment frame\nBy default, the recorder will be installed when this frame loads, but recording\n will not start automatically. To override either of these settings, set\n the properties `doUseCamera` and/or `startRecordingAutomatically` in the consuming\n frame.\nYou will also need to set `sessionRecorderElement` if the recorder is to be housed other than\n in an element identified by the ID `recorder`.\nThe properties `recorder`, `sessionRecorderReady`, and\n `sessionVideoId` become available to the consuming frame. The recorder object has fields\n that give information about its state: `hasWebCam`, 'hasCamAccess`, `recording`,\n `connected`, and `micChecked` - for details, see services/video-recorder.js. These\n can be accessed from the consuming frame as e.g. `this.get('recorder').get('hasWebCam')`.\nIf starting recording automatically, the function `whenPossibleToRecord` will be called\n once recording is possible, and will start recording. If you want to do other things\n at this point, like proceeding to a test trial, you can override this function in your\n frame.\nSee 'methods' for the functions you can use on a frame that extends VideoRecord.\nEvents recorded in a frame that extends VideoRecord will automatically have additional\n fields sessionVideoId (video filename), pipeId (temporary filename initially assigned by\n the recording service),\n and streamTime (when in the video they happened, in s)."
         },
         "Video-record": {
             "name": "Video-record",
@@ -1007,23 +936,23 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [
+                "Exp-lookit-change-detection",
                 "Exp-lookit-dialogue-page",
                 "Exp-lookit-geometry-alternation",
                 "Exp-lookit-geometry-alternation-open",
-                "Exp-lookit-preferential-looking",
                 "Exp-lookit-story-page",
+                "Exp-lookit-preferential-looking",
+                "Exp-lookit-stimuli-preview",
                 "Exp-lookit-video",
                 "Exp-lookit-video-assent",
-                "Exp-lookit-video-consent",
-                "Exp-video-consent",
-                "Exp-video-preview"
+                "Exp-lookit-video-consent"
             ],
             "module": "exp-player",
             "submodule": "mixins",
             "namespace": "",
             "file": "app/mixins/video-record.js",
             "line": 14,
-            "description": "A mixin that can be used to add basic support for video recording across frames\n\nBy default, the recorder will be installed when this frame loads, but recording\nwill not start automatically. To override either of these settings, set\nthe properties `doUseCamera` and/or `startRecordingAutomatically` in the consuming\nframe.\n\nYou will also need to set `recorderElement` if the recorder is to be housed other than\nin an element identified by the ID `recorder`.\n\nThe properties `recorder`, `videoList`, `stoppedRecording`, `recorderReady`, and\n`videoId` become available to the consuming frame. The recorder object has fields\nthat give information about its state: `hasWebCam`, 'hasCamAccess`, `recording`,\n`connected`, and `micChecked` - for details, see services/video-recorder.js. These\ncan be accessed from the consuming frame as e.g. `this.get('recorder').get('hasWebCam')`.\n\nIf starting recording automatically, the function `whenPossibleToRecord` will be called\nonce recording is possible, and will start recording. If you want to do other things\nat this point, like proceeding to a test trial, you can override this function in your\nframe.\n\nSee 'methods' for the functions you can use on a frame that extends VideoRecord.\n\nEvents recorded in a frame that extends VideoRecord will automatically have additional\nfields videoId (video filename), pipeId (temporary filename initially assigned by\nthe recording service),\nand streamTime (when in the video they happened, in s).\n\nSetting up the camera is handled in didInsertElement, and making sure recording is\nstopped is handled in willDestroyElement (Ember hooks that fire during the component\nlifecycle). It is very important (in general, but especially when using this mixin)\nthat you call `this._super(...arguments);` in any functions where your frame overrides\nhooks like this, so that the mixin's functions get called too!"
+            "description": "Reference for DEVELOPERS of new frames only!\nA mixin that can be used to add basic support for video recording across frames\nBy default, the recorder will be installed when this frame loads, but recording\n will not start automatically. To override either of these settings, set\n the properties `doUseCamera` and/or `startRecordingAutomatically` in the consuming\n frame.\nYou will also need to set `recorderElement` if the recorder is to be housed other than\n in an element identified by the ID `recorder`.\nThe properties `recorder`, `videoList`, `stoppedRecording`, `recorderReady`, and\n `videoId` become available to the consuming frame. The recorder object has fields\n that give information about its state: `hasWebCam`, 'hasCamAccess`, `recording`,\n `connected`, and `micChecked` - for details, see services/video-recorder.js. These\n can be accessed from the consuming frame as e.g. `this.get('recorder').get('hasWebCam')`.\nIf starting recording automatically, the function `whenPossibleToRecord` will be called\n once recording is possible, and will start recording. If you want to do other things\n at this point, like proceeding to a test trial, you can override this function in your\n frame.\nSee 'methods' for the functions you can use on a frame that extends VideoRecord.\nEvents recorded in a frame that extends VideoRecord will automatically have additional\n fields videoId (video filename), pipeId (temporary filename initially assigned by\n the recording service),\n and streamTime (when in the video they happened, in s).\nSetting up the camera is handled in didInsertElement, and making sure recording is\n stopped is handled in willDestroyElement (Ember hooks that fire during the component\n lifecycle). It is very important (in general, but especially when using this mixin)\n that you call `this._super(...arguments);` in any functions where your frame overrides\n hooks like this, so that the mixin's functions get called too!"
         },
         "Permute": {
             "name": "Permute",
@@ -1079,7 +1008,6 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "exp-player",
-            "submodule": "services",
             "namespace": "",
             "file": "app/services/video-recorder.js",
             "line": 76,
@@ -1204,7 +1132,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 545,
+            "line": 543,
             "description": "Move to next frame",
             "itemtype": "event",
             "name": "nextFrame",
@@ -1214,7 +1142,7 @@
         },
         {
             "file": "app/components/exp-frame-base/component.js",
-            "line": 600,
+            "line": 598,
             "description": "Move to previous frame",
             "itemtype": "event",
             "name": "previousFrame",
@@ -1252,6 +1180,362 @@
             "name": "whichFrames",
             "type": "Number",
             "class": "Exp-frame-select",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 233,
+            "description": "Whether to do webcam recording on this frame",
+            "itemtype": "property",
+            "name": "doRecording",
+            "type": "Boolean",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 243,
+            "description": "minimum amount of time to show attention-getter in seconds. If 0, attention-getter\nsegment is skipped.",
+            "itemtype": "property",
+            "name": "attnLength",
+            "type": "Number",
+            "default": "0",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 255,
+            "description": "length of alternation trial in seconds. This refers only to the section of the\ntrial where the alternating image streams are presented - it does not count\nany announcement phase.",
+            "itemtype": "property",
+            "name": "trialLength",
+            "type": "Number",
+            "default": "60",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 268,
+            "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\ninstructions during attention-getter video",
+            "itemtype": "property",
+            "name": "audioSources",
+            "type": "Object[]",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 279,
+            "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\nmusic during trial",
+            "itemtype": "property",
+            "name": "musicSources",
+            "type": "Object[]",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 290,
+            "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\naudio after completion of trial (optional; used for last\ntrial \"okay to open your eyes now\" announcement)",
+            "itemtype": "property",
+            "name": "endAudioSources",
+            "type": "Object[]",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 302,
+            "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\nattention-getter video (should be loopable)",
+            "itemtype": "property",
+            "name": "videoSources",
+            "type": "Object[]",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 313,
+            "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\naudio played upon pausing study",
+            "itemtype": "property",
+            "name": "pauseAudio",
+            "type": "Object[]",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 324,
+            "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\naudio played upon unpausing study",
+            "itemtype": "property",
+            "name": "unpauseAudio",
+            "type": "Object[]",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 335,
+            "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\naudio played when study is paused due to not being fullscreen",
+            "itemtype": "property",
+            "name": "fsAudio",
+            "type": "Object[]",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 346,
+            "description": "Whether to start with the 'A' image list on both left and right. If true, both\nsides start with their respective A image lists; if false, both lists start with\ntheir respective B image lists.",
+            "itemtype": "property",
+            "name": "startWithA",
+            "type": "Boolean",
+            "default": "true",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 359,
+            "description": "Whether to randomize image presentation order within the lists leftImagesA,\nleftImagesB, rightImagesA, and rightImagesB. If true (default), the order\nof presentation is randomized. Each time all the images in one list have been\npresented, the order is randomized again for the next 'round.' If false, the\norder of presentation is as written in the list. Once all images are presented,\nwe loop back around to the first image and start again.\n\nExample of randomization: suppose we have defined\n```\nleftImagesA: ['apple', 'banana', 'cucumber'],\nleftImagesB: ['aardvark', 'bat'],\nrandomizeImageOrder: true,\nstartWithA: true\n```\n\nAnd suppose the timing is such that we end up with 10 images total. Here is a\npossible sequence of images shown on the left:\n\n['banana', 'aardvark', 'apple', 'bat', 'cucumber', 'bat', 'cucumber', 'aardvark', 'apple', 'bat']",
+            "itemtype": "property",
+            "name": "randomizeImageOrder",
+            "type": "Boolean",
+            "default": "true",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 388,
+            "description": "Amount of time to display each image, in milliseconds",
+            "itemtype": "property",
+            "name": "displayMs",
+            "type": "Number",
+            "default": "750",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 399,
+            "description": "Amount of time for blank display between each image, in milliseconds",
+            "itemtype": "property",
+            "name": "blankMs",
+            "type": "Number",
+            "default": "750",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 410,
+            "description": "Format of border to display around alternation streams, if any. See\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/border for syntax.",
+            "itemtype": "property",
+            "name": "border",
+            "type": "String",
+            "default": "'thin solid gray'",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 422,
+            "description": "Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value\nfor acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or\nrgb hex values (e.g. '#800080' - include the '#')",
+            "itemtype": "property",
+            "name": "backgroundColor",
+            "type": "String",
+            "default": "'white'",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 435,
+            "description": "Color of image stream container, if different from overall background.\nDefaults to backgroundColor if one is provided.\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/color_value\nfor acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or\nrgb hex values (e.g. '#800080' - include the '#')",
+            "itemtype": "property",
+            "name": "containerColor",
+            "type": "String",
+            "default": "'white'",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 450,
+            "description": "Set A of images to display on left of screen. Left stream will alternate between\nimages from set A and from set B. Elements of list can be full URLs or relative\npaths starting from `baseDir`.",
+            "itemtype": "property",
+            "name": "leftImagesA",
+            "type": "String[]",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 465,
+            "description": "Set B of images to display on left of screen. Left stream will alternate between\nimages from set A and from set B. Elements of list can be full URLs or relative\npaths starting from `baseDir`.",
+            "itemtype": "property",
+            "name": "leftImagesB",
+            "type": "String[]",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 480,
+            "description": "Set A of images to display on right of screen. Right stream will alternate between\nimages from set A and from set B. Elements of list can be full URLs or relative\npaths starting from `baseDir`.",
+            "itemtype": "property",
+            "name": "rightImagesA",
+            "type": "String[]",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 495,
+            "description": "Set B of images to display on right of screen. Right stream will alternate between\nimages from set A and from set B. Elements of list can be full URLs or relative\npaths starting from `baseDir`.",
+            "itemtype": "property",
+            "name": "rightImagesA",
+            "type": "String[]",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 518,
+            "description": "Sequence of images shown on the left",
+            "itemtype": "method",
+            "name": "leftSequence",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 525,
+            "description": "Sequence of images shown on the right",
+            "itemtype": "method",
+            "name": "rightSequence",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 535,
+            "description": "Whether this trial was paused",
+            "itemtype": "method",
+            "name": "hasBeenPaused",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 583,
+            "description": "Just before stopping webcam video capture",
+            "itemtype": "event",
+            "name": "stoppingCapture",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 610,
+            "description": "Immediately before starting intro/announcement segment",
+            "itemtype": "event",
+            "name": "startIntro",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 634,
+            "description": "Immediately before starting test trial segment",
+            "itemtype": "event",
+            "name": "startTestTrial",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 672,
+            "description": "Records each time images are cleared from display",
+            "itemtype": "event",
+            "name": "clearImages",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 707,
+            "description": "Immediately after making images visible",
+            "itemtype": "event",
+            "name": "presentImages",
+            "params": [
+                {
+                    "name": "left",
+                    "description": "url of left image",
+                    "type": "String"
+                },
+                {
+                    "name": "right",
+                    "description": "url of right image",
+                    "type": "String"
+                }
+            ],
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 828,
+            "description": "Observer that starts recording once recorder is ready. Override to do additional\nstuff at this point!",
+            "itemtype": "method",
+            "name": "whenPossibleToRecord",
+            "access": "private",
+            "tagname": "",
+            "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-change-detection/component.js",
+            "line": 847,
+            "description": "Observer that starts recording once sessionrecorder is ready.",
+            "itemtype": "method",
+            "name": "whenPossibleToRecordSession",
+            "access": "private",
+            "tagname": "",
+            "class": "Exp-lookit-change-detection",
             "module": "exp-player",
             "submodule": "frames"
         },
@@ -2372,6 +2656,149 @@
             "submodule": "frames"
         },
         {
+            "file": "app/components/exp-lookit-image-audio/component.js",
+            "line": 133,
+            "description": "Whether to do webcam recording (will wait for webcam\nconnection before starting audio if so)",
+            "itemtype": "property",
+            "name": "doRecording",
+            "type": "Boolean",
+            "class": "Exp-lookit-story-page",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-image-audio/component.js",
+            "line": 143,
+            "description": "Whether to proceed automatically after audio (and hide\nreplay/next buttons)",
+            "itemtype": "property",
+            "name": "autoProceed",
+            "type": "Boolean",
+            "class": "Exp-lookit-story-page",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-image-audio/component.js",
+            "line": 154,
+            "description": "[Only used if autoProceed is true] Minimum duration of frame in seconds.\nFrame will auto-proceed after this much time has elapsed and all audio\nhas completed.",
+            "itemtype": "property",
+            "name": "durationSeconds",
+            "type": "Number",
+            "class": "Exp-lookit-story-page",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-image-audio/component.js",
+            "line": 166,
+            "description": "[Only used if autoProceed is true and durationSeconds set] Whether to\nshow a progress bar based on durationSeconds in the parent text area.",
+            "itemtype": "property",
+            "name": "showProgressBar",
+            "type": "Number",
+            "class": "Exp-lookit-story-page",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-image-audio/component.js",
+            "line": 177,
+            "description": "Array of objects describing audio to play at the start of\nthis frame. Each element describes a separate audio segment.",
+            "itemtype": "property",
+            "name": "audioSources",
+            "type": "Object[]",
+            "class": "Exp-lookit-story-page",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "audioId",
+                    "description": "unique string identifying this\n     audio segment",
+                    "type": "String"
+                },
+                {
+                    "name": "sources",
+                    "description": "Array of {src: 'url', type:\n     'MIMEtype'} objects with audio sources for this segment\n\nCan also give a single string `filename`, which will\nbe expanded out to the appropriate array based on `baseDir`\nand `audioTypes` values; see `audioTypes`.",
+                    "type": "Object[]"
+                },
+                {
+                    "name": "highlights",
+                    "description": "Array of {'range': [startT,\n     endT], 'image': 'imageId'} objects, where the imageId\n     values correspond to the ids given in images",
+                    "type": "Object[]"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-image-audio/component.js",
+            "line": 228,
+            "description": "Text block to display to parent.  (Each field is optional)",
+            "itemtype": "property",
+            "name": "parentTextBlock",
+            "type": "Object",
+            "class": "Exp-lookit-story-page",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "title",
+                    "description": "title to display",
+                    "type": "String"
+                },
+                {
+                    "name": "text",
+                    "description": "paragraph of text",
+                    "type": "String"
+                },
+                {
+                    "name": "emph",
+                    "description": "whether to bold this paragraph",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "css",
+                    "description": "object specifying any css properties\n     to apply to this section, and their values - e.g.\n     {'color': 'red', 'font-size': '12px'}",
+                    "type": "Object"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-image-audio/component.js",
+            "line": 258,
+            "description": "Array of images to display and information about their placement",
+            "itemtype": "property",
+            "name": "images",
+            "type": "Object[]",
+            "class": "Exp-lookit-story-page",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "id",
+                    "description": "unique ID for this image",
+                    "type": "String"
+                },
+                {
+                    "name": "src",
+                    "description": "URL of image source. This can be a full\n    URL, or relative to baseDir (see baseDir).",
+                    "type": "String"
+                },
+                {
+                    "name": "left",
+                    "description": "left margin, as percentage of story area width",
+                    "type": "String"
+                },
+                {
+                    "name": "width",
+                    "description": "image width, as percentage of story area width",
+                    "type": "String"
+                },
+                {
+                    "name": "top",
+                    "description": "top margin, as percentage of story area height",
+                    "type": "String"
+                }
+            ]
+        },
+        {
             "file": "app/components/exp-lookit-instructions/component.js",
             "line": 116,
             "description": "Whether to display the user's webcam",
@@ -3221,25 +3648,46 @@
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-preview-explanation/component.js",
-            "line": 46,
-            "description": "Whether to show a 'previous' button",
+            "file": "app/components/exp-lookit-single-image/component.js",
+            "line": 110,
+            "description": "Whether to do webcam recording (will wait for webcam\nconnection before starting audio if so)",
             "itemtype": "property",
-            "name": "showPreviousButton",
+            "name": "doRecording",
             "type": "Boolean",
-            "default": "true",
-            "class": "Exp-lookit-preview-explanation",
+            "class": "Exp-lookit-story-page",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-preview-explanation/component.js",
-            "line": 56,
-            "description": "Array of text blocks (paragraphs) to display after the image.",
+            "file": "app/components/exp-lookit-single-image/component.js",
+            "line": 121,
+            "description": "Duration of frame in seconds. If set and positive, there will be no next button\ndisplayed and the experiment will auto-proceed after the duration elapses.",
             "itemtype": "property",
-            "name": "blocks",
+            "name": "durationSeconds",
+            "type": "Number",
+            "class": "Exp-lookit-story-page",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-single-image/component.js",
+            "line": 133,
+            "description": "[Only used if durationSeconds set] Whether to\nshow a progress bar based on durationSeconds in the parent text area.",
+            "itemtype": "property",
+            "name": "showProgressBar",
+            "type": "Number",
+            "class": "Exp-lookit-story-page",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-single-image/component.js",
+            "line": 144,
+            "description": "Text block to display to parent.  (Each field is optional)",
+            "itemtype": "property",
+            "name": "parentTextBlock",
             "type": "Object",
-            "class": "Exp-lookit-preview-explanation",
+            "class": "Exp-lookit-story-page",
             "module": "exp-player",
             "submodule": "frames",
             "subprops": [
@@ -3257,81 +3705,251 @@
                     "name": "emph",
                     "description": "whether to bold this paragraph",
                     "type": "Boolean"
+                },
+                {
+                    "name": "css",
+                    "description": "object specifying any css properties\n     to apply to this section, and their values - e.g.\n     {'color': 'red', 'font-size': '12px'}",
+                    "type": "Object"
                 }
             ]
         },
         {
-            "file": "app/components/exp-lookit-preview-explanation/component.js",
-            "line": 82,
-            "description": "Object specifying first block of text (pre-image) to display.",
+            "file": "app/components/exp-lookit-single-image/component.js",
+            "line": 174,
+            "description": "Array of images to display and information about their placement",
             "itemtype": "property",
-            "name": "introBlock",
-            "type": "Object",
-            "class": "Exp-lookit-preview-explanation",
+            "name": "images",
+            "type": "Object[]",
+            "class": "Exp-lookit-story-page",
             "module": "exp-player",
             "submodule": "frames",
             "subprops": [
                 {
-                    "name": "title",
-                    "description": "title to display",
+                    "name": "id",
+                    "description": "unique ID for this image",
                     "type": "String"
                 },
                 {
-                    "name": "text",
-                    "description": "paragraph of text",
+                    "name": "src",
+                    "description": "URL of image source. This can be a full\n    URL, or relative to baseDir (see baseDir).",
                     "type": "String"
                 },
                 {
-                    "name": "emph",
-                    "description": "whether to bold this paragraph",
-                    "type": "Boolean"
+                    "name": "left",
+                    "description": "left margin, as percentage of story area width",
+                    "type": "String"
+                },
+                {
+                    "name": "width",
+                    "description": "image width, as percentage of story area width",
+                    "type": "String"
+                },
+                {
+                    "name": "top",
+                    "description": "top margin, as percentage of story area height",
+                    "type": "String"
                 }
             ]
         },
         {
-            "file": "app/components/exp-lookit-preview-explanation/component.js",
-            "line": 104,
-            "description": "Image to display after the intro block. (Displayed centered,\nwith border, max height 220px.) E.g., a picture of a parent\nholding a child looking over their shoulder.",
+            "file": "app/components/exp-lookit-single-image/component.js",
+            "line": 210,
+            "description": "Image to display and information about its placement",
             "itemtype": "property",
-            "name": "image",
-            "type": "Object",
-            "class": "Exp-lookit-preview-explanation",
+            "name": "images",
+            "type": "Object[]",
+            "class": "Exp-lookit-story-page",
             "module": "exp-player",
             "submodule": "frames",
             "subprops": [
                 {
                     "name": "src",
-                    "description": "URL of image",
+                    "description": "URL of image source. This can be a full\n    URL, or relative to baseDir (see baseDir).",
+                    "type": "String"
+                },
+                {
+                    "name": "left",
+                    "description": "left margin, as percentage of story area width",
+                    "type": "String"
+                },
+                {
+                    "name": "width",
+                    "description": "image width, as percentage of story area width",
+                    "type": "String"
+                },
+                {
+                    "name": "top",
+                    "description": "top margin, as percentage of story area height",
+                    "type": "String"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 103,
+            "description": "Whether to show a 'previous' button",
+            "itemtype": "property",
+            "name": "showPreviousButton",
+            "type": "Boolean",
+            "default": "true",
+            "class": "Exp-lookit-stimuli-preview",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 113,
+            "description": "Array of text blocks to display as an introduction to the preview. Should be a list\nof objects that can be passed to exp-text-block; each can have any of the\nproperties below.",
+            "itemtype": "property",
+            "name": "blocks",
+            "type": "Array",
+            "class": "Exp-lookit-stimuli-preview",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "title",
+                    "description": "title to display",
+                    "type": "String"
+                },
+                {
+                    "name": "text",
+                    "description": "paragraph of text",
+                    "type": "String"
+                },
+                {
+                    "name": "emph",
+                    "description": "whether to bold this paragraph",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "image",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "src",
+                    "description": "URL of image (must be full URL)",
                     "type": "String"
                 },
                 {
                     "name": "alt",
                     "description": "alt-text",
                     "type": "String"
+                },
+                {
+                    "name": "listblocks",
+                    "description": "Object specifying bulleted points for this section\n     These will themselves be passed to exp-text-block and can include images,\n     etc.",
+                    "type": "Object[]"
                 }
             ]
         },
         {
-            "file": "app/components/exp-lookit-preview-explanation/component.js",
-            "line": 125,
-            "description": "Text to display on the button to go to the next frame",
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 163,
+            "description": "Text on the preview button user clicks to proceed to stimuli/images",
             "itemtype": "property",
             "name": "previewButtonText",
             "type": "String",
             "default": "'I\\'d like to preview the videos'",
-            "class": "Exp-lookit-preview-explanation",
+            "class": "Exp-lookit-stimuli-preview",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-preview-explanation/component.js",
-            "line": 135,
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 173,
             "description": "Text to display on the button to skip the next frame",
             "itemtype": "property",
             "name": "skipButtonText",
             "type": "String",
             "default": "'Skip preview'",
-            "class": "Exp-lookit-preview-explanation",
+            "class": "Exp-lookit-stimuli-preview",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 183,
+            "description": "A series of preview stimuli to display within a single frame, defined as an array of objects.\nGenerally each item of the list will include ONE of image, video, or audio\n(depending on the stimulus type), plus a caption.",
+            "itemtype": "property",
+            "name": "stimuli",
+            "type": "Array",
+            "class": "Exp-lookit-stimuli-preview",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "caption",
+                    "description": "Some text to appear under this video",
+                    "type": "String"
+                },
+                {
+                    "name": "video",
+                    "description": "String indicating video URL. This can be relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects.",
+                    "type": "Object[]"
+                },
+                {
+                    "name": "audio",
+                    "description": "String indicating audio URL. This can be relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects.",
+                    "type": "Object[]"
+                },
+                {
+                    "name": "image",
+                    "description": "URL of image to display (optional; each preview video should designate either video or image). Can be full path or relative to baseDir.",
+                    "type": "String"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 218,
+            "description": "Text on the button to proceed to the next example video/image",
+            "itemtype": "property",
+            "name": "nextStimulusText",
+            "type": "String",
+            "class": "Exp-lookit-stimuli-preview",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 228,
+            "description": "Text on the button to proceed to the previous example video/image",
+            "itemtype": "property",
+            "name": "previousStimulusText",
+            "type": "String",
+            "class": "Exp-lookit-stimuli-preview",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 257,
+            "description": "User clicks on start preview button",
+            "itemtype": "event",
+            "name": "startPreview",
+            "class": "Exp-lookit-stimuli-preview",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 271,
+            "description": "User clicks to move to next stimulus",
+            "itemtype": "event",
+            "name": "nextStimulus",
+            "class": "Exp-lookit-stimuli-preview",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-stimuli-preview/component.js",
+            "line": 280,
+            "description": "User clicks to move to previous stimulus",
+            "itemtype": "event",
+            "name": "previousStimulus",
+            "class": "Exp-lookit-stimuli-preview",
             "module": "exp-player",
             "submodule": "frames"
         },
@@ -3871,13 +4489,14 @@
             "description": "Sources of videos (potentially) shown during this trial: [source of test video, source of alternate test video].",
             "itemtype": "attribute",
             "name": "videosShown",
+            "type": "array",
             "class": "Exp-lookit-video",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 603,
+            "line": 604,
             "description": "Start of EACH calibration segment",
             "itemtype": "event",
             "name": "startCalibration",
@@ -4257,19 +4876,82 @@
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-player/component.js",
+            "file": "app/components/exp-lookit-webcam-display/component.js",
             "line": 55,
+            "description": "Array of blocks for {{#crossLink \"Exp-text-block\"}}{{/crossLink}}, specifying text/images of instructions to display",
+            "itemtype": "property",
+            "name": "blocks",
+            "type": "Object[]",
+            "class": "Exp-lookit-webcam-display",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "title",
+                    "description": "Title of this section",
+                    "type": "String"
+                },
+                {
+                    "name": "text",
+                    "description": "Paragraph text of this section",
+                    "type": "String"
+                },
+                {
+                    "name": "listblocks",
+                    "description": "Object specifying bulleted points for this section. Each object is of the form:\n  {text: 'text of bullet point', image: {src: 'url', alt: 'alt-text'}}. Images are optional.",
+                    "type": "Object[]"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-webcam-display/component.js",
+            "line": 101,
+            "description": "Whether to automatically begin recording upon frame load",
+            "itemtype": "property",
+            "name": "startRecordingAutomatically",
+            "type": "Boolean",
+            "default": "false",
+            "class": "Exp-lookit-webcam-display",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-webcam-display/component.js",
+            "line": 111,
+            "description": "Text to display on the 'next frame' button",
+            "itemtype": "property",
+            "name": "nextButtonText",
+            "type": "String",
+            "default": "'Next'",
+            "class": "Exp-lookit-webcam-display",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-webcam-display/component.js",
+            "line": 121,
+            "description": "Whether to show a 'previous' button",
+            "itemtype": "property",
+            "name": "showPreviousButton",
+            "type": "Boolean",
+            "default": "true",
+            "class": "Exp-lookit-webcam-display",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-player/component.js",
+            "line": 56,
             "description": "The message to display in the early exit modal. Newer browsers may not respect this message.",
             "itemtype": "property",
             "name": "messageEarlyExitModal",
             "type": "String|null",
-            "class": "Exp-player",
-            "module": "exp-player",
-            "submodule": "components"
+            "class": "Exp-video-config",
+            "module": "exp-player"
         },
         {
             "file": "app/components/exp-player/component.js",
-            "line": 61,
+            "line": 62,
             "description": "Customize what happens when the user exits the page",
             "itemtype": "method",
             "name": "beforeUnload",
@@ -4284,9 +4966,8 @@
                 "description": "If string is provided, triggers a modal to confirm user wants to leave page",
                 "type": "String|null"
             },
-            "class": "Exp-player",
-            "module": "exp-player",
-            "submodule": "components"
+            "class": "Exp-video-config",
+            "module": "exp-player"
         },
         {
             "file": "app/components/exp-video-config/component.js",
@@ -4419,80 +5100,8 @@
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-video-preview/component.js",
-            "line": 107,
-            "description": "A series of preview videos to display within a single frame, defined as an array of objects.",
-            "itemtype": "property",
-            "name": "videos",
-            "type": "Array",
-            "class": "Exp-video-preview",
-            "module": "exp-player",
-            "submodule": "frames",
-            "subprops": [
-                {
-                    "name": "caption",
-                    "description": "Some text to appear under this video",
-                    "type": "String"
-                },
-                {
-                    "name": "sources",
-                    "description": "String indicating video path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects.",
-                    "type": "Object[]"
-                },
-                {
-                    "name": "imgSrc",
-                    "description": "URL of image to display (optional; each preview video should designate either sources or imgSrc). Can be full path or relative to baseDir.",
-                    "type": "String"
-                }
-            ]
-        },
-        {
-            "file": "app/components/exp-video-preview/component.js",
-            "line": 136,
-            "description": "Text on the button prompt asking the user to continue to the videos",
-            "itemtype": "property",
-            "name": "prompt",
-            "type": "String",
-            "class": "Exp-video-preview",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-video-preview/component.js",
-            "line": 146,
-            "description": "Informational text to display to the user before videos are shown, along with button to continue",
-            "itemtype": "property",
-            "name": "text",
-            "type": "String",
-            "class": "Exp-video-preview",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-video-preview/component.js",
-            "line": 156,
-            "description": "Text on the button to proceed to the next example video/image",
-            "itemtype": "property",
-            "name": "nextStimulusText",
-            "type": "String",
-            "class": "Exp-video-preview",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-video-preview/component.js",
-            "line": 166,
-            "description": "Text on the button to proceed to the previous example video/image",
-            "itemtype": "property",
-            "name": "previousStimulusText",
-            "type": "String",
-            "class": "Exp-video-preview",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
             "file": "app/mixins/expand-assets.js",
-            "line": 92,
+            "line": 95,
             "description": "Object describing which properties may need expansion",
             "itemtype": "property",
             "name": "assetsToExpand",
@@ -4505,7 +5114,7 @@
         },
         {
             "file": "app/mixins/expand-assets.js",
-            "line": 100,
+            "line": 103,
             "description": "Base directory for where to find stimuli. Any image src\nvalues that are not full paths will be expanded by prefixing\nwith `baseDir` + `img/`. Any audio/video src values provided as\nstrings rather than objects with `src` and `type` will be\nexpanded out to `baseDir/avtype/[stub].avtype`, where the potential\navtypes are given by `audioTypes` and `videoTypes`.\n\nbaseDir should include a trailing slash\n(e.g., `http://stimuli.org/myexperiment/`); if a value is provided that\ndoes not end in a slash, one will be added.",
             "itemtype": "property",
             "name": "baseDir",
@@ -4517,7 +5126,7 @@
         },
         {
             "file": "app/mixins/expand-assets.js",
-            "line": 120,
+            "line": 123,
             "description": "List of audio types to expect for any audio specified just\nwith a string rather than with a list of src/type objects.\nIf audioTypes is `['typeA', 'typeB']` and an audio source\nis given as `intro`, the audio source will be\nexpanded out to\n\n\n    [\n        {\n            src: 'baseDir' + 'typeA/intro.typeA',\n            type: 'audio/typeA'\n        },\n        {\n            src: 'baseDir' + 'typeB/intro.typeB',\n            type: 'audio/typeB'\n        }\n    ]",
             "itemtype": "property",
             "name": "audioTypes",
@@ -4529,7 +5138,7 @@
         },
         {
             "file": "app/mixins/expand-assets.js",
-            "line": 148,
+            "line": 151,
             "description": "List of video types to expect for any audio specified just\nwith a string rather than with a list of src/type objects.\nIf videoTypes is `['typeA', 'typeB']` and a video source\nis given as `intro`, the video source will be\nexpanded out to\n\n\n    [\n        {\n            src: 'baseDir' + 'typeA/intro.typeA',\n            type: 'video/typeA'\n        },\n        {\n            src: 'baseDir' + 'typeB/intro.typeB',\n            type: 'video/typeB'\n        }\n    ]",
             "itemtype": "property",
             "name": "videoTypes",
@@ -4541,7 +5150,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 17,
+            "line": 20,
             "description": "The element ID of the thing to make full screen (video element, div, etc)",
             "itemtype": "property",
             "name": "fullScreenElementId",
@@ -4554,7 +5163,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 25,
+            "line": 28,
             "description": "The element ID of a button to show if the user leaves fullscreen mode",
             "itemtype": "property",
             "name": "fsButtonID",
@@ -4567,7 +5176,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 78,
+            "line": 81,
             "description": "Upon detecting change to fullscreen mode",
             "itemtype": "event",
             "name": "enteredFullscreen",
@@ -4577,7 +5186,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 90,
+            "line": 93,
             "description": "Upon detecting change out of fullscreen mode",
             "itemtype": "event",
             "name": "leftFullscreen",
@@ -4587,7 +5196,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 106,
+            "line": 109,
             "description": "Make a specified element fullscreen",
             "itemtype": "method",
             "name": "showFullscreen",
@@ -4597,7 +5206,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 139,
+            "line": 142,
             "description": "Exit fullscreen mode",
             "itemtype": "method",
             "name": "exitFullscreen",
@@ -4607,7 +5216,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 165,
+            "line": 168,
             "description": "Whether to display this frame as fullscreen, even though it is not\ngenerally used that way.",
             "itemtype": "property",
             "name": "displayFullscreenOverride",
@@ -4618,7 +5227,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 46,
+            "line": 49,
             "description": "When recorder detects a change in camera access",
             "itemtype": "event",
             "name": "hasCamAccess",
@@ -4635,7 +5244,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 53,
+            "line": 56,
             "description": "When recorder detects a change in video stream connection status",
             "itemtype": "event",
             "name": "videoStreamConnection",
@@ -4652,7 +5261,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 61,
+            "line": 64,
             "description": "Just before stopping webcam video capture",
             "itemtype": "event",
             "name": "stoppingCapture",
@@ -4662,7 +5271,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 85,
+            "line": 88,
             "description": "Whether to start a session (multi-frame) recording as soon as possible upon loading this frame. This allows you to conduct video recording across multiple frames, simply specifying which frame to start and end on. Individual frames may also provide frame-specific recording capabilities; it is best NOT to conduct both a multiframe 'session' recording and frame-specific recording simultaneously as multiple video streams will eat up bandwidth. If you decide to use session recording, turn off recording for any frames that would otherwise record. There can be multiple session recordings in an experiment, e.g. from frames 1-3 and 5-10.",
             "itemtype": "property",
             "name": "startSessionRecording",
@@ -4674,7 +5283,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 92,
+            "line": 95,
             "description": "Whether to end any session (multi-frame) recording at the end of this frame.",
             "itemtype": "property",
             "name": "endSessionRecording",
@@ -4686,7 +5295,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 102,
+            "line": 105,
             "description": "Whether to do audio-only (vs also video) recording for session (multiframe) recording. Only used if starting session recording this frame.",
             "itemtype": "property",
             "name": "sessionAudioOnly",
@@ -4698,7 +5307,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 120,
+            "line": 123,
             "description": "Set up a video recorder instance",
             "itemtype": "method",
             "name": "setupRecorder",
@@ -4719,7 +5328,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 167,
+            "line": 174,
             "description": "Start recording",
             "itemtype": "method",
             "name": "startSessionRecorder",
@@ -4732,7 +5341,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 181,
+            "line": 193,
             "description": "Stop recording",
             "itemtype": "method",
             "name": "startSessionRecorder",
@@ -4745,7 +5354,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 196,
+            "line": 208,
             "description": "Destroy recorder and stop accessing webcam",
             "itemtype": "method",
             "name": "destroySessionRecorder",
@@ -4755,7 +5364,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 215,
+            "line": 227,
             "description": "When session video recorder has been installed",
             "itemtype": "event",
             "name": "sessionRecorderReady",
@@ -4765,7 +5374,7 @@
         },
         {
             "file": "app/mixins/session-record.js",
-            "line": 247,
+            "line": 258,
             "description": "Observer that starts recording once session recorder is ready. Override to do additional\nstuff at this point!",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -4775,7 +5384,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 53,
+            "line": 56,
             "description": "When recorder detects a change in camera access",
             "itemtype": "event",
             "name": "hasCamAccess",
@@ -4792,7 +5401,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 60,
+            "line": 63,
             "description": "When recorder detects a change in video stream connection status",
             "itemtype": "event",
             "name": "videoStreamConnection",
@@ -4809,7 +5418,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 68,
+            "line": 71,
             "description": "When pausing study, immediately before request to pause webcam recording",
             "itemtype": "event",
             "name": "pauseVideo",
@@ -4819,7 +5428,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 74,
+            "line": 77,
             "description": "When unpausing study, immediately before request to resume webcam recording",
             "itemtype": "event",
             "name": "unpauseVideo",
@@ -4829,7 +5438,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 80,
+            "line": 83,
             "description": "Just before stopping webcam video capture",
             "itemtype": "event",
             "name": "stoppingCapture",
@@ -4839,7 +5448,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 88,
+            "line": 91,
             "description": "The recorder object, accessible to the consuming frame. Includes properties\nrecorder.nWebcams, recorder.hasCamAccess, recorder.micChecked, recorder.connected.",
             "itemtype": "property",
             "name": "recorder",
@@ -4852,7 +5461,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 96,
+            "line": 99,
             "description": "A list of all video IDs used in this mixin (a new one is created for each recording).\nAccessible to consuming frame.",
             "itemtype": "property",
             "name": "videoList",
@@ -4865,7 +5474,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 104,
+            "line": 107,
             "description": "Whether recording is stopped already, meaning it doesn't need to be re-stopped when\ndestroying frame. This should be set to true by the consuming frame when video is\nstopped.",
             "itemtype": "property",
             "name": "stoppedRecording",
@@ -4878,7 +5487,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 113,
+            "line": 116,
             "description": "JQuery string to identify the recorder element.",
             "itemtype": "property",
             "name": "recorderElement",
@@ -4892,7 +5501,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 121,
+            "line": 124,
             "description": "Whether recorder has been set up yet. Automatically set when doing setup.\nAccessible to consuming frame.",
             "itemtype": "property",
             "name": "recorderReady",
@@ -4905,7 +5514,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 129,
+            "line": 132,
             "description": "Maximum recording length in seconds. Can be overridden by consuming frame.",
             "itemtype": "property",
             "name": "maxRecordingLength",
@@ -4917,7 +5526,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 136,
+            "line": 139,
             "description": "Whether to autosave recordings. Can be overridden by consuming frame.\nTODO: eventually use this to set up non-recording option for previewing",
             "itemtype": "property",
             "name": "autosave",
@@ -4931,7 +5540,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 145,
+            "line": 148,
             "description": "Whether to do audio-only (vs also video) recording. Can be overridden by consuming frame.",
             "itemtype": "property",
             "name": "audioOnly",
@@ -4943,7 +5552,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 152,
+            "line": 155,
             "description": "Whether to use the camera in this frame. Consuming frame should set this property\nto override if needed.",
             "itemtype": "property",
             "name": "doUseCamera",
@@ -4955,7 +5564,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 160,
+            "line": 163,
             "description": "Whether to start recording ASAP (only applies if doUseCamera). Consuming frame\nshould set to override if needed.",
             "itemtype": "property",
             "name": "startRecordingAutomatically",
@@ -4967,7 +5576,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 168,
+            "line": 171,
             "description": "A video ID to use for the current recording. Format is\n`videoStream_<experimentId>_<frameId>_<sessionId>_timestampMS_RRR`\nwhere RRR are random numeric digits.",
             "itemtype": "property",
             "name": "videoId",
@@ -4980,7 +5589,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 189,
+            "line": 192,
             "description": "Extend any base time event capture with information about the recorded video",
             "itemtype": "method",
             "name": "makeTimeEvent",
@@ -5025,7 +5634,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 243,
+            "line": 246,
             "description": "Pause the recorder (and capture timing events). For webRTC recorder, this is\njust a placeholder and doesn't actually pause the recording. If webRTC used,\nincludes extra data actuallyPaused: false. This is for backwards compatibility\nwith frames that pause/resume recording, and should not be used going forward -\ninstead stop/start and make separate clips if needed.",
             "itemtype": "method",
             "name": "pauseRecorder",
@@ -5043,7 +5652,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 263,
+            "line": 266,
             "description": "Resume a paused recording. For webRTC recorder, this is just a placeholder and\ndoesn't actually pause the recording. If webRTC used, includes extra data\nwasActuallyPaused: false. This is for backwards compatibility\nwith frames that pause/resume recording, and should not be used going forward -\ninstead stop/start and make separate clips if needed.",
             "itemtype": "method",
             "name": "resumeRecorder",
@@ -5053,7 +5662,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 281,
+            "line": 284,
             "description": "Start recording",
             "itemtype": "method",
             "name": "startRecorder",
@@ -5066,7 +5675,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 302,
+            "line": 307,
             "description": "Stop the recording",
             "itemtype": "method",
             "name": "stopRecorder",
@@ -5079,7 +5688,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 317,
+            "line": 322,
             "description": "Destroy recorder and stop accessing webcam",
             "itemtype": "method",
             "name": "destroyRecorder",
@@ -5089,7 +5698,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 355,
+            "line": 359,
             "description": "When video recorder has been installed",
             "itemtype": "event",
             "name": "recorderReady",
@@ -5099,7 +5708,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 368,
+            "line": 372,
             "description": "Observer that starts recording once recorder is ready. Override to do additional\nstuff at this point!",
             "itemtype": "method",
             "name": "whenPossibleToRecord",
@@ -5109,7 +5718,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 384,
+            "line": 388,
             "description": "Hide the recorder from display. Useful if you would like to keep recording without extra UI elements to\n  distract the user.",
             "itemtype": "method",
             "name": "hideRecorder",
@@ -5119,7 +5728,7 @@
         },
         {
             "file": "app/mixins/video-record.js",
-            "line": 393,
+            "line": 397,
             "description": "Show the recorder to the user. Useful if you want to temporarily show a hidden recorder- eg to let the user fix\n  a problem with video capture settings",
             "itemtype": "method",
             "name": "showRecorder",
@@ -5361,8 +5970,7 @@
                 "type": "Promise"
             },
             "class": "video-recorder",
-            "module": "exp-player",
-            "submodule": "services"
+            "module": "exp-player"
         },
         {
             "file": "app/services/video-recorder.js",
@@ -5375,8 +5983,7 @@
                 "type": "Promise"
             },
             "class": "video-recorder",
-            "module": "exp-player",
-            "submodule": "services"
+            "module": "exp-player"
         },
         {
             "file": "app/services/video-recorder.js",
@@ -5389,8 +5996,7 @@
                 "type": "Date|null"
             },
             "class": "video-recorder",
-            "module": "exp-player",
-            "submodule": "services"
+            "module": "exp-player"
         },
         {
             "file": "app/services/video-recorder.js",
@@ -5399,8 +6005,7 @@
             "itemtype": "method",
             "name": "stop",
             "class": "video-recorder",
-            "module": "exp-player",
-            "submodule": "services"
+            "module": "exp-player"
         },
         {
             "file": "app/services/video-recorder.js",
@@ -5409,8 +6014,7 @@
             "itemtype": "method",
             "name": "destroy",
             "class": "video-recorder",
-            "module": "exp-player",
-            "submodule": "services"
+            "module": "exp-player"
         }
     ],
     "warnings": []

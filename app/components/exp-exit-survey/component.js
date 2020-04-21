@@ -13,7 +13,8 @@ import FullScreen from '../../mixins/full-screen';
  * @submodule frames
  */
 
-/**
+// Use regular comment syntax here to exclude from docs for clarity
+/*
 This is the exit survey used by "Your baby the physicist". Use the updated frame {{#crossLink "Exp-lookit-exit-survey"}}{{/crossLink}} instead.
 
 @class Exp-exit-survey
