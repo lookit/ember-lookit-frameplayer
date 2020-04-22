@@ -46,10 +46,12 @@
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
+                            <li><a href="../classes/Exp-lookit-image-audio.html">Exp-lookit-image-audio</a></li>
                             <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
                             <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
+                            <li><a href="../classes/Exp-lookit-single-image.html">Exp-lookit-single-image</a></li>
                             <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
                             <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
                             <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
@@ -684,6 +686,10 @@ custom formatting, time-pickers, dependencies, and question groups.</p>
                     <h3>Properties</h3>
 
                     <ul class="index-list properties extends">
+                            <li class="index-item property private inherited">
+                                <a href="#property_displayFullscreen">displayFullscreen</a>
+
+                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_displayFullscreenOverride">displayFullscreenOverride</a>
 
@@ -845,7 +851,7 @@ custom formatting, time-pickers, dependencies, and question groups.</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#method_exitFullscreen">Full-screen</a>:
-        <a href="../files/app_mixins_full-screen.js.html#l142"><code>app&#x2F;mixins&#x2F;full-screen.js:142</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l149"><code>app&#x2F;mixins&#x2F;full-screen.js:149</code></a>
         </p>
 
 
@@ -1086,7 +1092,7 @@ Individual frames may define additional properties that are sent.</p>
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#method_showFullscreen">Full-screen</a>:
-        <a href="../files/app_mixins_full-screen.js.html#l109"><code>app&#x2F;mixins&#x2F;full-screen.js:109</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l116"><code>app&#x2F;mixins&#x2F;full-screen.js:116</code></a>
         </p>
 
 
@@ -1180,6 +1186,32 @@ stuff at this point!
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
 
+<div id="property_displayFullscreen" class="property item private inherited">
+    <h3 class="name"><code>displayFullscreen</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Full-screen.html#property_displayFullscreen">Full-screen </a> (click for formatted description):
+        <a href="../files/app_mixins_full-screen.js.html#l27"><code>app&#x2F;mixins&#x2F;full-screen.js:27</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Whether to display this frame fullscreen
+    </div>
+
+        <p><strong>Default:</strong> false</p>
+
+
+</div>
 <div id="property_displayFullscreenOverride" class="property item inherited">
     <h3 class="name"><code>displayFullscreenOverride</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
@@ -1191,17 +1223,19 @@ stuff at this point!
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#property_displayFullscreenOverride">Full-screen </a> (click for formatted description):
-        <a href="../files/app_mixins_full-screen.js.html#l168"><code>app&#x2F;mixins&#x2F;full-screen.js:168</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l175"><code>app&#x2F;mixins&#x2F;full-screen.js:175</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        Whether to display this frame as fullscreen, even though it is not
-generally used that way.
+        Set to <code>true</code> to display this frame in fullscreen mode, even if the frame type
+is not always displayed fullscreen. (For instance, you might use this to keep
+a survey between test trials in fullscreen mode.)
     </div>
 
+        <p><strong>Default:</strong> false</p>
 
 
 </div>
@@ -1306,7 +1340,7 @@ desired field described at  <a href="http://www.alpacajs.org/documentation.html"
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/Full-screen.html#property_fsButtonID">Full-screen </a> (click for formatted description):
-        <a href="../files/app_mixins_full-screen.js.html#l28"><code>app&#x2F;mixins&#x2F;full-screen.js:28</code></a>
+        <a href="../files/app_mixins_full-screen.js.html#l35"><code>app&#x2F;mixins&#x2F;full-screen.js:35</code></a>
         </p>
 
 
@@ -1841,7 +1875,7 @@ just used for attempts to leave the study early</li>
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Full-screen.html#event_enteredFullscreen">Full-screen</a>:
-                            <a href="../files/app_mixins_full-screen.js.html#l81"><code>app&#x2F;mixins&#x2F;full-screen.js:81</code></a>
+                            <a href="../files/app_mixins_full-screen.js.html#l88"><code>app&#x2F;mixins&#x2F;full-screen.js:88</code></a>
                             </p>
                     
                     
@@ -1905,7 +1939,7 @@ just used for attempts to leave the study early</li>
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/Full-screen.html#event_leftFullscreen">Full-screen</a>:
-                            <a href="../files/app_mixins_full-screen.js.html#l93"><code>app&#x2F;mixins&#x2F;full-screen.js:93</code></a>
+                            <a href="../files/app_mixins_full-screen.js.html#l100"><code>app&#x2F;mixins&#x2F;full-screen.js:100</code></a>
                             </p>
                     
                     

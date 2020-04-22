@@ -46,10 +46,12 @@
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
+                            <li><a href="../classes/Exp-lookit-image-audio.html">Exp-lookit-image-audio</a></li>
                             <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
                             <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
+                            <li><a href="../classes/Exp-lookit-single-image.html">Exp-lookit-single-image</a></li>
                             <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
                             <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
                             <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
@@ -199,17 +201,24 @@ let {
  }
 
  * &#x60;&#x60;&#x60;
- * @class Exp-lookit-story-page
+ * @class Exp-lookit-image-audio
  * @extends Exp-frame-base
  * @uses Full-screen
  * @uses Video-record
  * @uses Expand-assets
  */
 
+// See https://stackoverflow.com/a/56266358
+const isColor = (strColor) =&gt; {
+    const s = new Option().style;
+    s.color = strColor;
+    return s.color !== &#x27;&#x27;;
+};
+
 export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
     type: &#x27;exp-lookit-story-page&#x27;,
     layout: layout,
-    displayFullscreen: true, // force fullscreen for all uses of this component
+    displayFullscreen: true,
     fullScreenElementId: &#x27;experiment-player&#x27;, // which element to send fullscreen
     fsButtonID: &#x27;fsButton&#x27;, // ID of button to go to fullscreen
 
@@ -231,6 +240,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     timerStart: null,
     finishedAllAudio: false,
     minDurationAchieved: false,
+    noParentText: false,
 
     assetsToExpand: {
         &#x27;audio&#x27;: [&#x27;audioSources/sources&#x27;],
@@ -281,6 +291,18 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         showProgressBar: {
             type: &#x27;boolean&#x27;,
             description: &#x27;Whether to show a progress bar based on durationSeconds&#x27;
+        },
+
+        /**
+         * [Only used if next button is also displayed] Whether to
+         * show a previous button to allow the participant to go to the previous frame
+         *
+         * @property {Number} showPreviousButton
+         */
+        showPreviousButton: {
+            type: &#x27;boolean&#x27;,
+            default: true,
+            description: &#x27;Whether to show a previous button (used only if showing Next button)&#x27;
         },
 
         /**
@@ -371,6 +393,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          *   @param {String} id unique ID for this image
          *   @param {String} src URL of image source. This can be a full
          *     URL, or relative to baseDir (see baseDir).
+         *   @param {String} alt alt-text for image in case it doesn&#x27;t load and for
+         *     screen readers
          *   @param {String} left left margin, as percentage of story area width
          *   @param {String} width image width, as percentage of story area width
          *   @param {String} top top margin, as percentage of story area height
@@ -387,6 +411,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     &#x27;src&#x27;: {
                         anyOf: imageAssetOptions
                     },
+                    &#x27;alt&#x27;: {
+                        type: &#x27;string&#x27;
+                    },
                     &#x27;left&#x27;: {
                         type: &#x27;string&#x27;
                     },
@@ -398,12 +425,40 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     }
                 }
             }
+        },
+        /**
+         * Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+         * for acceptable syntax: can use color names (&#x27;blue&#x27;, &#x27;red&#x27;, &#x27;green&#x27;, etc.), or
+         * rgb hex values (e.g. &#x27;#800080&#x27; - include the &#x27;#&#x27;)
+         *
+         * @property {String} backgroundColor
+         * @default &#x27;black&#x27;
+         */
+        backgroundColor: {
+            type: &#x27;string&#x27;,
+            description: &#x27;Color of background&#x27;,
+            default: &#x27;black&#x27;
+        },
+        /**
+         * Color of area where images are shown, if different from overall background.
+         * Defaults to backgroundColor if one is provided. See
+         * https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+         * for acceptable syntax: can use color names (&#x27;blue&#x27;, &#x27;red&#x27;, &#x27;green&#x27;, etc.), or
+         * rgb hex values (e.g. &#x27;#800080&#x27; - include the &#x27;#&#x27;)
+         *
+         * @property {String} pageColor
+         * @default &#x27;white&#x27;
+         */
+        pageColor: {
+            type: &#x27;string&#x27;,
+            description: &#x27;Color of image area&#x27;,
+            default: &#x27;white&#x27;
         }
     },
 
     meta: {
-        name: &#x27;ExpLookitStoryPage&#x27;,
-        description: &#x27;Frame to display a basic storybook page trial, with images and audio&#x27;,
+        name: &#x27;ExpLookitImageAudio&#x27;,
+        description: &#x27;General frame to display images and/or audio&#x27;,
         data: {
             type: &#x27;object&#x27;,
             properties: {
@@ -412,6 +467,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 },
                 videoList: {
                     type: &#x27;list&#x27;
+                },
+                /**
+                * Array of images used in this frame [same as passed to this frame, but
+                * may reflect random assignment for this particular participant]
+                * @attribute images
+                */
+                images: {
+                    type: &#x27;array&#x27;
                 }
             },
         }
@@ -439,7 +502,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             var _this = this;
             if (this.get(&#x27;sessionRecorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;sessionRecorderReady&#x27;)) {
                 this.startSessionRecorder().then(() =&gt; {
-                    _this.send(&#x27;setTimeEvent&#x27;, &#x27;startedSessionRecording&#x27;);
                     _this.set(&#x27;sessionRecorderReady&#x27;, false);
                     _this.set(&#x27;currentAudioIndex&#x27;, -1);
                     _this.send(&#x27;playNextAudioSegment&#x27;);
@@ -484,7 +546,13 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         finish() {
             var _this = this;
-            this.send(&#x27;setTimeEvent&#x27;, &#x27;finish called&#x27;);
+            /**
+             * Trial is complete and attempting to move to next frame; may wait for recording
+             * to catch up before proceeding.
+             *
+             * @event trialComplete
+             */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;trialComplete&#x27;);
 
             if (this.get(&#x27;doRecording&#x27;)) {
                 this.stopRecorder().then(() =&gt; {
@@ -503,9 +571,19 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             if (this.currentAudioIndex == 0) { // Starting first audio segment: start timer &amp; progress bar
                 if (this.get(&#x27;durationSeconds&#x27;)) {
                     let _this = this;
-                    this.send(&#x27;setTimeEvent&#x27;, &#x27;setting timer&#x27;);
+                    /**
+                    * Timer for set-duration trial begins
+                    *
+                    * @event startTimer
+                    */
+                    this.send(&#x27;setTimeEvent&#x27;, &#x27;startTimer&#x27;);
                     this.set(&#x27;pageTimer&#x27;, window.setTimeout(function() {
-                            _this.send(&#x27;setTimeEvent&#x27;, &#x27;timer ended&#x27;);
+                            /**
+                            * Timer for set-duration trial ends
+                            *
+                            * @event endTimer
+                            */
+                            _this.send(&#x27;setTimeEvent&#x27;, &#x27;endTimer&#x27;);
                             _this.set(&#x27;minDurationAchieved&#x27;, true);
                             if (_this.get(&#x27;finishedAllAudio&#x27;)) {
                                 _this.send(&#x27;finish&#x27;);
@@ -514,10 +592,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     if (this.get(&#x27;showProgressBar&#x27;)) {
                         this.set(&#x27;timerStart&#x27;, new Date().getTime());
                         let timerStart = _this.get(&#x27;timerStart&#x27;);
-                        let durationSeconds = _this.get(&#x27;durationSeconds&#x27;) * 10;
+                        let durationSeconds = _this.get(&#x27;durationSeconds&#x27;);
                         this.set(&#x27;progressTimer&#x27;, window.setInterval(function() {
                             let now = new Date().getTime();
-                            var prctDone =  (now - timerStart) / durationSeconds;
+                            var prctDone =  (now - timerStart) / (durationSeconds * 10);
                             $(&#x27;.progress-bar&#x27;).css(&#x27;width&#x27;, prctDone + &#x27;%&#x27;);
                         }, 100));
                     }
@@ -528,6 +606,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             if (this.currentAudioIndex &lt; this.get(&#x27;audioSources&#x27;).length) {
 
                 $(&#x27;#&#x27; + this.get(&#x27;audioSources&#x27;)[this.currentAudioIndex].audioId)[0].play().then(() =&gt; {
+                    /**
+                     * When an audio segment starts playing
+                     *
+                     * @event startAudioSegment
+                     * @param {Number} currentAudioIndex the index of the current audio segment, starting from 0
+                     */
                     this.send(&#x27;setTimeEvent&#x27;, &#x27;startAudioSegment&#x27;, {&#x27;currentAudioIndex&#x27;: this.currentAudioIndex});
                 });
             } else {
@@ -546,11 +630,38 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         this._super(...arguments);
 
         // Apply user-provided CSS to parent text block
-        var parentTextBlock = this.get(&#x27;parentTextBlock&#x27;) || {};
-        var css = parentTextBlock.css || {};
-        $(&#x27;#parenttext&#x27;).css(css);
+        if (Object.keys(this.get(&#x27;parentTextBlock&#x27;)).length) {
+            var parentTextBlock = this.get(&#x27;parentTextBlock&#x27;) || {};
+            var css = parentTextBlock.css || {};
+            $(&#x27;#parenttext&#x27;).css(css);
+        } else {
+            this.set(&#x27;noParentText&#x27;, true);
+            if (this.get(&#x27;autoProceed&#x27;)) {
+                this.set(&#x27;noStoryControls&#x27;, true);
+            }
+        }
 
-        this.send(&#x27;showFullscreen&#x27;);
+        // Apply user-provided CSS to images
+        $.each(this.get(&#x27;images_parsed&#x27;), function(idx, image) {
+            if (!image.fill) {
+
+                $(&#x27;#&#x27; + image.id).css({&#x27;left&#x27;: &#x60;${image.left}%&#x60;, &#x27;width&#x27;: &#x60;${image.width}%&#x60;, &#x27;top&#x27;: &#x60;${image.top}%&#x60;, &#x27;height&#x27;: &#x60;${image.height}%&#x60;});
+            }
+        });
+
+        // Apply background colors
+        if (isColor(this.get(&#x27;backgroundColor&#x27;))) {
+            $(&#x27;div.exp-lookit-image-audio&#x27;).css(&#x27;background-color&#x27;, this.get(&#x27;backgroundColor&#x27;));
+        } else {
+            console.warn(&#x27;Invalid background color provided; not applying.&#x27;);
+        }
+
+        if (isColor(this.get(&#x27;pageColor&#x27;))) {
+            $(&#x27;div.exp-lookit-image-audio div#image-area&#x27;).css(&#x27;background-color&#x27;, this.get(&#x27;pageColor&#x27;));
+        } else {
+            console.warn(&#x27;Invalid page color provided; not applying.&#x27;);
+        }
+
         $(&#x27;#nextbutton&#x27;).prop(&#x27;disabled&#x27;, true);
 
         // If not recording, go to audio right away! Otherwise will be triggered when
@@ -572,6 +683,19 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         if ((this.get(&#x27;doRecording&#x27;) || this.get(&#x27;startSessionRecording&#x27;)) &amp;&amp; this.get(&#x27;currentAudioIndex&#x27;) == -1) {
             $(&#x27;.story-image-container&#x27;).hide();
         }
+    },
+
+    // Supply image IDs if they&#x27;re missing. This happens BEFORE assignment of
+    didReceiveAttrs() {
+        this._super(...arguments);
+        var N = 1;
+        $.each(this.get(&#x27;images&#x27;), function(idx, image) {
+            if (!image.hasOwnProperty(&#x27;id&#x27;)) {
+                image.id = &#x60;image_${N}&#x60;;
+            }
+            N++;
+        });
+
     }
 
 });

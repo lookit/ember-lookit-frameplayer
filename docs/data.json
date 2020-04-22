@@ -75,7 +75,9 @@
         "app/components/exp-lookit-image-audio/component.js": {
             "name": "app/components/exp-lookit-image-audio/component.js",
             "modules": {},
-            "classes": {},
+            "classes": {
+                "Exp-lookit-image-audio": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -118,7 +120,9 @@
         "app/components/exp-lookit-single-image/component.js": {
             "name": "app/components/exp-lookit-single-image/component.js",
             "modules": {},
-            "classes": {},
+            "classes": {
+                "Exp-lookit-single-image": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -338,12 +342,14 @@
                 "Exp-lookit-exit-survey": 1,
                 "Exp-lookit-geometry-alternation": 1,
                 "Exp-lookit-geometry-alternation-open": 1,
-                "Exp-lookit-story-page": 1,
+                "Exp-lookit-image-audio": 1,
                 "Exp-lookit-instructions": 1,
                 "Exp-lookit-mood-questionnaire": 1,
                 "Exp-lookit-observation": 1,
                 "Exp-lookit-preferential-looking": 1,
+                "Exp-lookit-single-image": 1,
                 "Exp-lookit-stimuli-preview": 1,
+                "Exp-lookit-story-page": 1,
                 "Exp-lookit-survey": 1,
                 "Exp-lookit-text": 1,
                 "Exp-lookit-video": 1,
@@ -382,12 +388,14 @@
                 "Exp-lookit-exit-survey": 1,
                 "Exp-lookit-geometry-alternation": 1,
                 "Exp-lookit-geometry-alternation-open": 1,
-                "Exp-lookit-story-page": 1,
+                "Exp-lookit-image-audio": 1,
                 "Exp-lookit-instructions": 1,
                 "Exp-lookit-mood-questionnaire": 1,
                 "Exp-lookit-observation": 1,
                 "Exp-lookit-preferential-looking": 1,
+                "Exp-lookit-single-image": 1,
                 "Exp-lookit-stimuli-preview": 1,
+                "Exp-lookit-story-page": 1,
                 "Exp-lookit-survey": 1,
                 "Exp-lookit-text": 1,
                 "Exp-lookit-video": 1,
@@ -591,9 +599,9 @@
                 "Expand-assets"
             ]
         },
-        "Exp-lookit-story-page": {
-            "name": "Exp-lookit-story-page",
-            "shortname": "Exp-lookit-story-page",
+        "Exp-lookit-image-audio": {
+            "name": "Exp-lookit-image-audio",
+            "shortname": "Exp-lookit-image-audio",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -602,7 +610,7 @@
             "module": "exp-player",
             "submodule": "frames",
             "namespace": "",
-            "file": "app/components/exp-lookit-story-page/component.js",
+            "file": "app/components/exp-lookit-image-audio/component.js",
             "line": 19,
             "description": "Frame to implement a basic \"storybook page\" trial, with images placed on the\nscreen within a display area and a sequence of audio files played.\nOptionally, images may be highlighted at specified times during the audio\nfiles.\n\nWebcam recording may be turned on or off; if on, the page is not displayed\nor audio started until recording begins.\n\nFrame is displayed fullscreen, but is not paused or otherwise disabled if the\nuser leaves fullscreen. A button appears prompting the user to return to\nfullscreen mode.\n\nThe parent may press 'next' to proceed, or the study may proceed\nautomatically when audio finishes (autoProceed). Optionally, if using autoProceed,\nthe frame may be displayed for a minimum duration, so that e.g. it lasts exactly 10\nseconds from start of audio even though the audio is only 2 seconds long. If using this\nfeature a progress bar may be displayed.\n\nAny number of images may be placed on the screen, and their position\nspecified. (Aspect ratio will be the same as the original image.)\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\nneeds to include a manual \"next\" button so that there's a user interaction\nevent to trigger fullscreen mode. (Browsers don't allow us to switch to FS\nwithout a user event.)\n\n```json\n\"frames\": {\n   \"story-intro-1\": {\n           \"doRecording\": false,\n           \"autoProceed\": true,\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/ingroupobligations/\",\n           \"audioTypes\": [\"mp3\", \"ogg\"],\n           \"parentTextBlock\": {\n               \"title\": \"Parents!\",\n               \"text\": \"some instructions\",\n               \"emph\": true,\n               \"css\": {\n                   \"color\": \"red\",\n                   \"font-size\": \"12px\"\n               }\n           },\n           \"images\": [\n               {\n                   \"id\": \"leftA\",\n                   \"src\": \"flurps1.jpg\",\n                   \"left\": \"10\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               },\n               {\n                   \"id\": \"rightA\",\n                   \"src\": \"zazzes1.jpg\",\n                   \"left\": \"60\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               }\n           ],\n           \"kind\": \"exp-lookit-story-page\",\n           \"audioSources\": [\n               {\n                   \"audioId\": \"firstAudio\",\n                   \"sources\": \"intro1\",\n                   \"highlights\": [\n                       {\"range\": [3.017343,    5.600283], \"image\":     \"leftA\"},\n                       {\"range\": [5.752911,    8.899402], \"image\":     \"rightA\"}\n                   ]\n               }\n           ]\n       }\n}\n\n```",
             "extends": "Exp-frame-base",
@@ -682,6 +690,27 @@
                 "Expand-assets"
             ]
         },
+        "Exp-lookit-single-image": {
+            "name": "Exp-lookit-single-image",
+            "shortname": "Exp-lookit-single-image",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "submodule": "frames",
+            "namespace": "",
+            "file": "app/components/exp-lookit-single-image/component.js",
+            "line": 16,
+            "description": "Frame to implement a basic \"storybook page\" trial, with images placed on the\nscreen within a display area and a sequence of audio files played.\nOptionally, images may be highlighted at specified times during the audio\nfiles.\n\nWebcam recording may be turned on or off; if on, the page is not displayed\nor audio started until recording begins.\n\nFrame is displayed fullscreen, but is not paused or otherwise disabled if the\nuser leaves fullscreen. A button appears prompting the user to return to\nfullscreen mode.\n\nThe parent may press 'next' to proceed, or the study may proceed\nautomatically when audio finishes (autoProceed). Optionally, if using autoProceed,\nthe frame may be displayed for a minimum duration, so that e.g. it lasts exactly 10\nseconds from start of audio even though the audio is only 2 seconds long. If using this\nfeature a progress bar may be displayed.\n\nAny number of images may be placed on the screen, and their position\nspecified. (Aspect ratio will be the same as the original image.)\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\nneeds to include a manual \"next\" button so that there's a user interaction\nevent to trigger fullscreen mode. (Browsers don't allow us to switch to FS\nwithout a user event.)\n\n```json\n\"frames\": {\n   \"story-intro-1\": {\n           \"doRecording\": false,\n           \"autoProceed\": true,\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/ingroupobligations/\",\n           \"audioTypes\": [\"mp3\", \"ogg\"],\n           \"parentTextBlock\": {\n               \"title\": \"Parents!\",\n               \"text\": \"some instructions\",\n               \"emph\": true,\n               \"css\": {\n                   \"color\": \"red\",\n                   \"font-size\": \"12px\"\n               }\n           },\n           \"images\": [\n               {\n                   \"id\": \"leftA\",\n                   \"src\": \"flurps1.jpg\",\n                   \"left\": \"10\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               },\n               {\n                   \"id\": \"rightA\",\n                   \"src\": \"zazzes1.jpg\",\n                   \"left\": \"60\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               }\n           ],\n           \"kind\": \"exp-lookit-story-page\",\n           \"audioSources\": [\n               {\n                   \"audioId\": \"firstAudio\",\n                   \"sources\": \"intro1\",\n                   \"highlights\": [\n                       {\"range\": [3.017343,    5.600283], \"image\":     \"leftA\"},\n                       {\"range\": [5.752911,    8.899402], \"image\":     \"rightA\"}\n                   ]\n               }\n           ]\n       }\n}\n\n```",
+            "extends": "Exp-lookit-image-audio",
+            "uses": [
+                "Full-screen",
+                "Video-record",
+                "Expand-assets"
+            ]
+        },
         "Exp-lookit-stimuli-preview": {
             "name": "Exp-lookit-stimuli-preview",
             "shortname": "Exp-lookit-stimuli-preview",
@@ -701,6 +730,27 @@
                 "Expand-assets",
                 "Video-record",
                 "Media-reload"
+            ]
+        },
+        "Exp-lookit-story-page": {
+            "name": "Exp-lookit-story-page",
+            "shortname": "Exp-lookit-story-page",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "submodule": "frames",
+            "namespace": "",
+            "file": "app/components/exp-lookit-story-page/component.js",
+            "line": 19,
+            "description": "Frame to implement a basic \"storybook page\" trial, with images placed on the\nscreen within a display area and a sequence of audio files played.\nOptionally, images may be highlighted at specified times during the audio\nfiles.\n\nWebcam recording may be turned on or off; if on, the page is not displayed\nor audio started until recording begins.\n\nFrame is displayed fullscreen, but is not paused or otherwise disabled if the\nuser leaves fullscreen. A button appears prompting the user to return to\nfullscreen mode.\n\nThe parent may press 'next' to proceed, or the study may proceed\nautomatically when audio finishes (autoProceed). Optionally, if using autoProceed,\nthe frame may be displayed for a minimum duration, so that e.g. it lasts exactly 10\nseconds from start of audio even though the audio is only 2 seconds long. If using this\nfeature a progress bar may be displayed.\n\nAny number of images may be placed on the screen, and their position\nspecified. (Aspect ratio will be the same as the original image.)\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\nneeds to include a manual \"next\" button so that there's a user interaction\nevent to trigger fullscreen mode. (Browsers don't allow us to switch to FS\nwithout a user event.)\n\n```json\n\"frames\": {\n   \"story-intro-1\": {\n           \"doRecording\": false,\n           \"autoProceed\": true,\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/ingroupobligations/\",\n           \"audioTypes\": [\"mp3\", \"ogg\"],\n           \"parentTextBlock\": {\n               \"title\": \"Parents!\",\n               \"text\": \"some instructions\",\n               \"emph\": true,\n               \"css\": {\n                   \"color\": \"red\",\n                   \"font-size\": \"12px\"\n               }\n           },\n           \"images\": [\n               {\n                   \"id\": \"leftA\",\n                   \"src\": \"flurps1.jpg\",\n                   \"left\": \"10\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               },\n               {\n                   \"id\": \"rightA\",\n                   \"src\": \"zazzes1.jpg\",\n                   \"left\": \"60\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               }\n           ],\n           \"kind\": \"exp-lookit-story-page\",\n           \"audioSources\": [\n               {\n                   \"audioId\": \"firstAudio\",\n                   \"sources\": \"intro1\",\n                   \"highlights\": [\n                       {\"range\": [3.017343,    5.600283], \"image\":     \"leftA\"},\n                       {\"range\": [5.752911,    8.899402], \"image\":     \"rightA\"}\n                   ]\n               }\n           ]\n       }\n}\n\n```",
+            "extends": "Exp-frame-base",
+            "uses": [
+                "Full-screen",
+                "Video-record",
+                "Expand-assets"
             ]
         },
         "Exp-lookit-survey": {
@@ -855,9 +905,11 @@
                 "Exp-lookit-dialogue-page",
                 "Exp-lookit-geometry-alternation",
                 "Exp-lookit-geometry-alternation-open",
-                "Exp-lookit-story-page",
+                "Exp-lookit-image-audio",
                 "Exp-lookit-preferential-looking",
+                "Exp-lookit-single-image",
                 "Exp-lookit-stimuli-preview",
+                "Exp-lookit-story-page",
                 "Exp-lookit-video"
             ],
             "module": "exp-player",
@@ -881,8 +933,10 @@
                 "Exp-lookit-exit-survey",
                 "Exp-lookit-geometry-alternation",
                 "Exp-lookit-geometry-alternation-open",
-                "Exp-lookit-story-page",
+                "Exp-lookit-image-audio",
                 "Exp-lookit-preferential-looking",
+                "Exp-lookit-single-image",
+                "Exp-lookit-story-page",
                 "Exp-lookit-video"
             ],
             "module": "exp-player",
@@ -940,9 +994,11 @@
                 "Exp-lookit-dialogue-page",
                 "Exp-lookit-geometry-alternation",
                 "Exp-lookit-geometry-alternation-open",
-                "Exp-lookit-story-page",
+                "Exp-lookit-image-audio",
                 "Exp-lookit-preferential-looking",
+                "Exp-lookit-single-image",
                 "Exp-lookit-stimuli-preview",
+                "Exp-lookit-story-page",
                 "Exp-lookit-video",
                 "Exp-lookit-video-assent",
                 "Exp-lookit-video-consent"
@@ -1427,7 +1483,7 @@
             "file": "app/components/exp-lookit-change-detection/component.js",
             "line": 518,
             "description": "Sequence of images shown on the left",
-            "itemtype": "method",
+            "itemtype": "attribute",
             "name": "leftSequence",
             "class": "Exp-lookit-change-detection",
             "module": "exp-player",
@@ -1437,7 +1493,7 @@
             "file": "app/components/exp-lookit-change-detection/component.js",
             "line": 525,
             "description": "Sequence of images shown on the right",
-            "itemtype": "method",
+            "itemtype": "attribute",
             "name": "rightSequence",
             "class": "Exp-lookit-change-detection",
             "module": "exp-player",
@@ -1447,7 +1503,7 @@
             "file": "app/components/exp-lookit-change-detection/component.js",
             "line": 535,
             "description": "Whether this trial was paused",
-            "itemtype": "method",
+            "itemtype": "attribute",
             "name": "hasBeenPaused",
             "class": "Exp-lookit-change-detection",
             "module": "exp-player",
@@ -2657,56 +2713,67 @@
         },
         {
             "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 133,
+            "line": 141,
             "description": "Whether to do webcam recording (will wait for webcam\nconnection before starting audio if so)",
             "itemtype": "property",
             "name": "doRecording",
             "type": "Boolean",
-            "class": "Exp-lookit-story-page",
+            "class": "Exp-lookit-image-audio",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 143,
+            "line": 151,
             "description": "Whether to proceed automatically after audio (and hide\nreplay/next buttons)",
             "itemtype": "property",
             "name": "autoProceed",
             "type": "Boolean",
-            "class": "Exp-lookit-story-page",
+            "class": "Exp-lookit-image-audio",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 154,
+            "line": 162,
             "description": "[Only used if autoProceed is true] Minimum duration of frame in seconds.\nFrame will auto-proceed after this much time has elapsed and all audio\nhas completed.",
             "itemtype": "property",
             "name": "durationSeconds",
             "type": "Number",
-            "class": "Exp-lookit-story-page",
+            "class": "Exp-lookit-image-audio",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 166,
+            "line": 174,
             "description": "[Only used if autoProceed is true and durationSeconds set] Whether to\nshow a progress bar based on durationSeconds in the parent text area.",
             "itemtype": "property",
             "name": "showProgressBar",
             "type": "Number",
-            "class": "Exp-lookit-story-page",
+            "class": "Exp-lookit-image-audio",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 177,
+            "line": 185,
+            "description": "[Only used if next button is also displayed] Whether to\nshow a previous button to allow the participant to go to the previous frame",
+            "itemtype": "property",
+            "name": "showPreviousButton",
+            "type": "Number",
+            "class": "Exp-lookit-image-audio",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-image-audio/component.js",
+            "line": 197,
             "description": "Array of objects describing audio to play at the start of\nthis frame. Each element describes a separate audio segment.",
             "itemtype": "property",
             "name": "audioSources",
             "type": "Object[]",
-            "class": "Exp-lookit-story-page",
+            "class": "Exp-lookit-image-audio",
             "module": "exp-player",
             "submodule": "frames",
             "subprops": [
@@ -2729,12 +2796,12 @@
         },
         {
             "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 228,
+            "line": 248,
             "description": "Text block to display to parent.  (Each field is optional)",
             "itemtype": "property",
             "name": "parentTextBlock",
             "type": "Object",
-            "class": "Exp-lookit-story-page",
+            "class": "Exp-lookit-image-audio",
             "module": "exp-player",
             "submodule": "frames",
             "subprops": [
@@ -2762,12 +2829,12 @@
         },
         {
             "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 258,
+            "line": 278,
             "description": "Array of images to display and information about their placement",
             "itemtype": "property",
             "name": "images",
             "type": "Object[]",
-            "class": "Exp-lookit-story-page",
+            "class": "Exp-lookit-image-audio",
             "module": "exp-player",
             "submodule": "frames",
             "subprops": [
@@ -2779,6 +2846,11 @@
                 {
                     "name": "src",
                     "description": "URL of image source. This can be a full\n    URL, or relative to baseDir (see baseDir).",
+                    "type": "String"
+                },
+                {
+                    "name": "alt",
+                    "description": "alt-text for image in case it doesn't load and for\n    screen readers",
                     "type": "String"
                 },
                 {
@@ -2797,6 +2869,87 @@
                     "type": "String"
                 }
             ]
+        },
+        {
+            "file": "app/components/exp-lookit-image-audio/component.js",
+            "line": 318,
+            "description": "Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value\nfor acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or\nrgb hex values (e.g. '#800080' - include the '#')",
+            "itemtype": "property",
+            "name": "backgroundColor",
+            "type": "String",
+            "default": "'black'",
+            "class": "Exp-lookit-image-audio",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-image-audio/component.js",
+            "line": 331,
+            "description": "Color of area where images are shown, if different from overall background.\nDefaults to backgroundColor if one is provided. See\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/color_value\nfor acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or\nrgb hex values (e.g. '#800080' - include the '#')",
+            "itemtype": "property",
+            "name": "pageColor",
+            "type": "String",
+            "default": "'white'",
+            "class": "Exp-lookit-image-audio",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-image-audio/component.js",
+            "line": 360,
+            "description": "Array of images used in this frame [same as passed to this frame, but\nmay reflect random assignment for this particular participant]",
+            "itemtype": "attribute",
+            "name": "images",
+            "class": "Exp-lookit-image-audio",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-image-audio/component.js",
+            "line": 438,
+            "description": "Trial is complete and attempting to move to next frame; may wait for recording\nto catch up before proceeding.",
+            "itemtype": "event",
+            "name": "trialComplete",
+            "class": "Exp-lookit-image-audio",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-image-audio/component.js",
+            "line": 463,
+            "description": "Timer for set-duration trial begins",
+            "itemtype": "event",
+            "name": "startTimer",
+            "class": "Exp-lookit-image-audio",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-image-audio/component.js",
+            "line": 470,
+            "description": "Timer for set-duration trial ends",
+            "itemtype": "event",
+            "name": "endTimer",
+            "class": "Exp-lookit-image-audio",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-image-audio/component.js",
+            "line": 498,
+            "description": "When an audio segment starts playing",
+            "itemtype": "event",
+            "name": "startAudioSegment",
+            "params": [
+                {
+                    "name": "currentAudioIndex",
+                    "description": "the index of the current audio segment, starting from 0",
+                    "type": "Number"
+                }
+            ],
+            "class": "Exp-lookit-image-audio",
+            "module": "exp-player",
+            "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-instructions/component.js",
@@ -3654,40 +3807,52 @@
             "itemtype": "property",
             "name": "doRecording",
             "type": "Boolean",
-            "class": "Exp-lookit-story-page",
+            "class": "Exp-lookit-single-image",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-single-image/component.js",
             "line": 121,
-            "description": "Duration of frame in seconds. If set and positive, there will be no next button\ndisplayed and the experiment will auto-proceed after the duration elapses.",
+            "description": "Duration of frame in seconds. If set and positive, there will be no next button\ndisplayed and the experiment will auto-proceed after the duration elapses.\nDefault is -1: next button is displayed and parent chooses when to proceed.",
             "itemtype": "property",
             "name": "durationSeconds",
             "type": "Number",
-            "class": "Exp-lookit-story-page",
+            "default": "-1",
+            "class": "Exp-lookit-single-image",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-single-image/component.js",
-            "line": 133,
+            "line": 135,
             "description": "[Only used if durationSeconds set] Whether to\nshow a progress bar based on durationSeconds in the parent text area.",
             "itemtype": "property",
             "name": "showProgressBar",
             "type": "Number",
-            "class": "Exp-lookit-story-page",
+            "class": "Exp-lookit-single-image",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-single-image/component.js",
-            "line": 144,
-            "description": "Text block to display to parent.  (Each field is optional)",
+            "line": 147,
+            "description": "[Only used if next button is also displayed] Whether to\nshow a previous button to allow the participant to go to the previous frame",
+            "itemtype": "property",
+            "name": "showPreviousButton",
+            "type": "Number",
+            "class": "Exp-lookit-single-image",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-single-image/component.js",
+            "line": 159,
+            "description": "Text to display to parent.  Each field is optional. If the `parentTextBlock`\nis an empty object `{}`, no parent text block is displayed at all at the bottom\nof the screen. Otherwise, even if the title and text are empty, the block will\nbe displayed as usual without any text.",
             "itemtype": "property",
             "name": "parentTextBlock",
             "type": "Object",
-            "class": "Exp-lookit-story-page",
+            "class": "Exp-lookit-single-image",
             "module": "exp-player",
             "submodule": "frames",
             "subprops": [
@@ -3715,20 +3880,15 @@
         },
         {
             "file": "app/components/exp-lookit-single-image/component.js",
-            "line": 174,
-            "description": "Array of images to display and information about their placement",
+            "line": 193,
+            "description": "Image to display and information about its placement",
             "itemtype": "property",
             "name": "images",
             "type": "Object[]",
-            "class": "Exp-lookit-story-page",
+            "class": "Exp-lookit-single-image",
             "module": "exp-player",
             "submodule": "frames",
             "subprops": [
-                {
-                    "name": "id",
-                    "description": "unique ID for this image",
-                    "type": "String"
-                },
                 {
                     "name": "src",
                     "description": "URL of image source. This can be a full\n    URL, or relative to baseDir (see baseDir).",
@@ -3753,36 +3913,47 @@
         },
         {
             "file": "app/components/exp-lookit-single-image/component.js",
-            "line": 210,
-            "description": "Image to display and information about its placement",
+            "line": 221,
+            "description": "Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value\nfor acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or\nrgb hex values (e.g. '#800080' - include the '#')",
             "itemtype": "property",
-            "name": "images",
-            "type": "Object[]",
-            "class": "Exp-lookit-story-page",
+            "name": "backgroundColor",
+            "type": "String",
+            "default": "'black'",
+            "class": "Exp-lookit-single-image",
             "module": "exp-player",
-            "submodule": "frames",
-            "subprops": [
-                {
-                    "name": "src",
-                    "description": "URL of image source. This can be a full\n    URL, or relative to baseDir (see baseDir).",
-                    "type": "String"
-                },
-                {
-                    "name": "left",
-                    "description": "left margin, as percentage of story area width",
-                    "type": "String"
-                },
-                {
-                    "name": "width",
-                    "description": "image width, as percentage of story area width",
-                    "type": "String"
-                },
-                {
-                    "name": "top",
-                    "description": "top margin, as percentage of story area height",
-                    "type": "String"
-                }
-            ]
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-single-image/component.js",
+            "line": 234,
+            "description": "Color of area where images are shown, if different from overall background.\nDefaults to backgroundColor if one is provided. See\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/color_value\nfor acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or\nrgb hex values (e.g. '#800080' - include the '#')",
+            "itemtype": "property",
+            "name": "pageColor",
+            "type": "String",
+            "default": "'white'",
+            "class": "Exp-lookit-single-image",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-single-image/component.js",
+            "line": 272,
+            "description": "Timer for set-duration trial begins",
+            "itemtype": "event",
+            "name": "startTimer",
+            "class": "Exp-lookit-single-image",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-single-image/component.js",
+            "line": 279,
+            "description": "Timer for set-duration trial ends",
+            "itemtype": "event",
+            "name": "endTimer",
+            "class": "Exp-lookit-single-image",
+            "module": "exp-player",
+            "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-stimuli-preview/component.js",
@@ -5163,7 +5334,21 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 28,
+            "line": 27,
+            "description": "Whether to display this frame fullscreen",
+            "itemtype": "property",
+            "name": "displayFullscreen",
+            "type": "Boolean",
+            "default": "false",
+            "access": "private",
+            "tagname": "",
+            "class": "Full-screen",
+            "module": "exp-player",
+            "submodule": "mixins"
+        },
+        {
+            "file": "app/mixins/full-screen.js",
+            "line": 35,
             "description": "The element ID of a button to show if the user leaves fullscreen mode",
             "itemtype": "property",
             "name": "fsButtonID",
@@ -5176,7 +5361,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 81,
+            "line": 88,
             "description": "Upon detecting change to fullscreen mode",
             "itemtype": "event",
             "name": "enteredFullscreen",
@@ -5186,7 +5371,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 93,
+            "line": 100,
             "description": "Upon detecting change out of fullscreen mode",
             "itemtype": "event",
             "name": "leftFullscreen",
@@ -5196,7 +5381,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 109,
+            "line": 116,
             "description": "Make a specified element fullscreen",
             "itemtype": "method",
             "name": "showFullscreen",
@@ -5206,7 +5391,7 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 142,
+            "line": 149,
             "description": "Exit fullscreen mode",
             "itemtype": "method",
             "name": "exitFullscreen",
@@ -5216,11 +5401,12 @@
         },
         {
             "file": "app/mixins/full-screen.js",
-            "line": 168,
-            "description": "Whether to display this frame as fullscreen, even though it is not\ngenerally used that way.",
+            "line": 175,
+            "description": "Set to `true` to display this frame in fullscreen mode, even if the frame type\nis not always displayed fullscreen. (For instance, you might use this to keep\na survey between test trials in fullscreen mode.)",
             "itemtype": "property",
             "name": "displayFullscreenOverride",
             "type": "String",
+            "default": "false",
             "class": "Full-screen",
             "module": "exp-player",
             "submodule": "mixins"

@@ -90,12 +90,19 @@ let {
  }
 
  * ```
- * @class Exp-lookit-story-page
+ * @class Exp-lookit-image-audio
  * @extends Exp-frame-base
  * @uses Full-screen
  * @uses Video-record
  * @uses Expand-assets
  */
+
+// See https://stackoverflow.com/a/56266358
+const isColor = (strColor) => {
+    const s = new Option().style;
+    s.color = strColor;
+    return s.color !== '';
+};
 
 export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
     type: 'exp-lookit-story-page',
@@ -122,6 +129,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     timerStart: null,
     finishedAllAudio: false,
     minDurationAchieved: false,
+    noParentText: false,
 
     assetsToExpand: {
         'audio': ['audioSources/sources'],
@@ -172,6 +180,18 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         showProgressBar: {
             type: 'boolean',
             description: 'Whether to show a progress bar based on durationSeconds'
+        },
+
+        /**
+         * [Only used if next button is also displayed] Whether to
+         * show a previous button to allow the participant to go to the previous frame
+         *
+         * @property {Number} showPreviousButton
+         */
+        showPreviousButton: {
+            type: 'boolean',
+            default: true,
+            description: 'Whether to show a previous button (used only if showing Next button)'
         },
 
         /**
@@ -262,6 +282,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          *   @param {String} id unique ID for this image
          *   @param {String} src URL of image source. This can be a full
          *     URL, or relative to baseDir (see baseDir).
+         *   @param {String} alt alt-text for image in case it doesn't load and for
+         *     screen readers
          *   @param {String} left left margin, as percentage of story area width
          *   @param {String} width image width, as percentage of story area width
          *   @param {String} top top margin, as percentage of story area height
@@ -278,6 +300,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     'src': {
                         anyOf: imageAssetOptions
                     },
+                    'alt': {
+                        type: 'string'
+                    },
                     'left': {
                         type: 'string'
                     },
@@ -289,12 +314,40 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     }
                 }
             }
+        },
+        /**
+         * Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+         * for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
+         * rgb hex values (e.g. '#800080' - include the '#')
+         *
+         * @property {String} backgroundColor
+         * @default 'black'
+         */
+        backgroundColor: {
+            type: 'string',
+            description: 'Color of background',
+            default: 'black'
+        },
+        /**
+         * Color of area where images are shown, if different from overall background.
+         * Defaults to backgroundColor if one is provided. See
+         * https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+         * for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
+         * rgb hex values (e.g. '#800080' - include the '#')
+         *
+         * @property {String} pageColor
+         * @default 'white'
+         */
+        pageColor: {
+            type: 'string',
+            description: 'Color of image area',
+            default: 'white'
         }
     },
 
     meta: {
-        name: 'ExpLookitStoryPage',
-        description: 'Frame to display a basic storybook page trial, with images and audio',
+        name: 'ExpLookitImageAudio',
+        description: 'General frame to display images and/or audio',
         data: {
             type: 'object',
             properties: {
@@ -303,6 +356,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 },
                 videoList: {
                     type: 'list'
+                },
+                /**
+                * Array of images used in this frame [same as passed to this frame, but
+                * may reflect random assignment for this particular participant]
+                * @attribute images
+                */
+                images: {
+                    type: 'array'
                 }
             },
         }
@@ -330,7 +391,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             var _this = this;
             if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
                 this.startSessionRecorder().then(() => {
-                    _this.send('setTimeEvent', 'startedSessionRecording');
                     _this.set('sessionRecorderReady', false);
                     _this.set('currentAudioIndex', -1);
                     _this.send('playNextAudioSegment');
@@ -375,7 +435,13 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         finish() {
             var _this = this;
-            this.send('setTimeEvent', 'finish called');
+            /**
+             * Trial is complete and attempting to move to next frame; may wait for recording
+             * to catch up before proceeding.
+             *
+             * @event trialComplete
+             */
+            this.send('setTimeEvent', 'trialComplete');
 
             if (this.get('doRecording')) {
                 this.stopRecorder().then(() => {
@@ -394,9 +460,19 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             if (this.currentAudioIndex == 0) { // Starting first audio segment: start timer & progress bar
                 if (this.get('durationSeconds')) {
                     let _this = this;
-                    this.send('setTimeEvent', 'setting timer');
+                    /**
+                    * Timer for set-duration trial begins
+                    *
+                    * @event startTimer
+                    */
+                    this.send('setTimeEvent', 'startTimer');
                     this.set('pageTimer', window.setTimeout(function() {
-                            _this.send('setTimeEvent', 'timer ended');
+                            /**
+                            * Timer for set-duration trial ends
+                            *
+                            * @event endTimer
+                            */
+                            _this.send('setTimeEvent', 'endTimer');
                             _this.set('minDurationAchieved', true);
                             if (_this.get('finishedAllAudio')) {
                                 _this.send('finish');
@@ -405,10 +481,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     if (this.get('showProgressBar')) {
                         this.set('timerStart', new Date().getTime());
                         let timerStart = _this.get('timerStart');
-                        let durationSeconds = _this.get('durationSeconds') * 10;
+                        let durationSeconds = _this.get('durationSeconds');
                         this.set('progressTimer', window.setInterval(function() {
                             let now = new Date().getTime();
-                            var prctDone =  (now - timerStart) / durationSeconds;
+                            var prctDone =  (now - timerStart) / (durationSeconds * 10);
                             $('.progress-bar').css('width', prctDone + '%');
                         }, 100));
                     }
@@ -419,6 +495,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             if (this.currentAudioIndex < this.get('audioSources').length) {
 
                 $('#' + this.get('audioSources')[this.currentAudioIndex].audioId)[0].play().then(() => {
+                    /**
+                     * When an audio segment starts playing
+                     *
+                     * @event startAudioSegment
+                     * @param {Number} currentAudioIndex the index of the current audio segment, starting from 0
+                     */
                     this.send('setTimeEvent', 'startAudioSegment', {'currentAudioIndex': this.currentAudioIndex});
                 });
             } else {
@@ -437,9 +519,37 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         this._super(...arguments);
 
         // Apply user-provided CSS to parent text block
-        var parentTextBlock = this.get('parentTextBlock') || {};
-        var css = parentTextBlock.css || {};
-        $('#parenttext').css(css);
+        if (Object.keys(this.get('parentTextBlock')).length) {
+            var parentTextBlock = this.get('parentTextBlock') || {};
+            var css = parentTextBlock.css || {};
+            $('#parenttext').css(css);
+        } else {
+            this.set('noParentText', true);
+            if (this.get('autoProceed')) {
+                this.set('noStoryControls', true);
+            }
+        }
+
+        // Apply user-provided CSS to images
+        $.each(this.get('images_parsed'), function(idx, image) {
+            if (!image.fill) {
+
+                $('#' + image.id).css({'left': `${image.left}%`, 'width': `${image.width}%`, 'top': `${image.top}%`, 'height': `${image.height}%`});
+            }
+        });
+
+        // Apply background colors
+        if (isColor(this.get('backgroundColor'))) {
+            $('div.exp-lookit-image-audio').css('background-color', this.get('backgroundColor'));
+        } else {
+            console.warn('Invalid background color provided; not applying.');
+        }
+
+        if (isColor(this.get('pageColor'))) {
+            $('div.exp-lookit-image-audio div#image-area').css('background-color', this.get('pageColor'));
+        } else {
+            console.warn('Invalid page color provided; not applying.');
+        }
 
         this.send('showFullscreen');
         $('#nextbutton').prop('disabled', true);
@@ -463,6 +573,19 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         if ((this.get('doRecording') || this.get('startSessionRecording')) && this.get('currentAudioIndex') == -1) {
             $('.story-image-container').hide();
         }
+    },
+
+    // Supply image IDs if they're missing. This happens BEFORE assignment of
+    didReceiveAttrs() {
+        this._super(...arguments);
+        var N = 1;
+        $.each(this.get('images'), function(idx, image) {
+            if (!image.hasOwnProperty('id')) {
+                image.id = `image_${N}`;
+            }
+            N++;
+        });
+
     }
 
 });

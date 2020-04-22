@@ -46,10 +46,12 @@
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
+                            <li><a href="../classes/Exp-lookit-image-audio.html">Exp-lookit-image-audio</a></li>
                             <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
                             <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
+                            <li><a href="../classes/Exp-lookit-single-image.html">Exp-lookit-single-image</a></li>
                             <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
                             <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
                             <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
@@ -196,8 +198,8 @@ let {
  }
 
  * &#x60;&#x60;&#x60;
- * @class Exp-lookit-story-page
- * @extends Exp-frame-base
+ * @class Exp-lookit-single-image
+ * @extends Exp-lookit-image-audio
  * @uses Full-screen
  * @uses Video-record
  * @uses Expand-assets
@@ -230,8 +232,10 @@ export default ExpLookitImageAudio.extend({
         /**
          * Duration of frame in seconds. If set and positive, there will be no next button
          * displayed and the experiment will auto-proceed after the duration elapses.
+         * Default is -1: next button is displayed and parent chooses when to proceed.
          *
          * @property {Number} durationSeconds
+         * @default -1
          */
         durationSeconds: {
             type: &#x27;number&#x27;,
@@ -247,11 +251,27 @@ export default ExpLookitImageAudio.extend({
          */
         showProgressBar: {
             type: &#x27;boolean&#x27;,
-            description: &#x27;Whether to show a progress bar based on durationSeconds&#x27;
+            description: &#x27;Whether to show a progress bar based on durationSeconds&#x27;,
+            default: false
         },
 
         /**
-         * Text block to display to parent.  (Each field is optional)
+         * [Only used if next button is also displayed] Whether to
+         * show a previous button to allow the participant to go to the previous frame
+         *
+         * @property {Number} showPreviousButton
+         */
+        showPreviousButton: {
+            type: &#x27;boolean&#x27;,
+            default: true,
+            description: &#x27;Whether to show a previous button (used only if showing Next button)&#x27;
+        },
+
+        /**
+         * Text to display to parent.  Each field is optional. If the &#x60;parentTextBlock&#x60;
+         * is an empty object &#x60;{}&#x60;, no parent text block is displayed at all at the bottom
+         * of the screen. Otherwise, even if the title and text are empty, the block will
+         * be displayed as usual without any text.
          *
          * @property {Object} parentTextBlock
          *   @param {String} title title to display
@@ -280,41 +300,6 @@ export default ExpLookitImageAudio.extend({
             },
             default: {}
         },
-        /**
-         * Array of images to display and information about their placement
-         *
-         * @property {Object[]} images
-         *   @param {String} id unique ID for this image
-         *   @param {String} src URL of image source. This can be a full
-         *     URL, or relative to baseDir (see baseDir).
-         *   @param {String} left left margin, as percentage of story area width
-         *   @param {String} width image width, as percentage of story area width
-         *   @param {String} top top margin, as percentage of story area height
-
-         */
-        images: {
-            type: &#x27;array&#x27;,
-            items: {
-                type: &#x27;object&#x27;,
-                properties: {
-                    &#x27;id&#x27;: {
-                        type: &#x27;string&#x27;
-                    },
-                    &#x27;src&#x27;: {
-                        anyOf: imageAssetOptions
-                    },
-                    &#x27;left&#x27;: {
-                        type: &#x27;string&#x27;
-                    },
-                    &#x27;width&#x27;: {
-                        type: &#x27;string&#x27;
-                    },
-                    &#x27;top&#x27;: {
-                        type: &#x27;string&#x27;
-                    }
-                }
-            }
-        },
 
         /**
          * Image to display and information about its placement
@@ -342,22 +327,35 @@ export default ExpLookitImageAudio.extend({
                         type: &#x27;string&#x27;
                     }
                 }
-            }
-    },
-
-    meta: {
-        name: &#x27;ExpLookitSingleImage&#x27;,
-        description: &#x27;Frame to display a single image&#x27;,
-        data: {
-            type: &#x27;object&#x27;,
-            properties: {
-                videoId: {
-                    type: &#x27;string&#x27;
-                },
-                videoList: {
-                    type: &#x27;list&#x27;
-                }
             },
+
+        /**
+         * Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+         * for acceptable syntax: can use color names (&#x27;blue&#x27;, &#x27;red&#x27;, &#x27;green&#x27;, etc.), or
+         * rgb hex values (e.g. &#x27;#800080&#x27; - include the &#x27;#&#x27;)
+         *
+         * @property {String} backgroundColor
+         * @default &#x27;black&#x27;
+         */
+        backgroundColor: {
+            type: &#x27;string&#x27;,
+            description: &#x27;Color of background&#x27;,
+            default: &#x27;black&#x27;
+        },
+        /**
+         * Color of area where images are shown, if different from overall background.
+         * Defaults to backgroundColor if one is provided. See
+         * https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+         * for acceptable syntax: can use color names (&#x27;blue&#x27;, &#x27;red&#x27;, &#x27;green&#x27;, etc.), or
+         * rgb hex values (e.g. &#x27;#800080&#x27; - include the &#x27;#&#x27;)
+         *
+         * @property {String} pageColor
+         * @default &#x27;white&#x27;
+         */
+        pageColor: {
+            type: &#x27;string&#x27;,
+            description: &#x27;Color of image area&#x27;,
+            default: &#x27;white&#x27;
         }
     },
 
@@ -365,8 +363,6 @@ export default ExpLookitImageAudio.extend({
 
         finish() {
             var _this = this;
-            this.send(&#x27;setTimeEvent&#x27;, &#x27;finish called&#x27;);
-
             if (this.get(&#x27;doRecording&#x27;)) {
                 this.stopRecorder().then(() =&gt; {
                     _this.set(&#x27;stoppedRecording&#x27;, true);
@@ -384,19 +380,29 @@ export default ExpLookitImageAudio.extend({
             if (this.currentAudioIndex == 0) { // Starting first audio segment: start timer &amp; progress bar
                 if (this.get(&#x27;durationSeconds&#x27;) &amp;&amp; this.get(&#x27;durationSeconds&#x27;) &gt; 0) {
                     let _this = this;
-                    this.send(&#x27;setTimeEvent&#x27;, &#x27;setting timer&#x27;);
+                    /**
+                    * Timer for set-duration trial begins
+                    *
+                    * @event startTimer
+                    */
+                    this.send(&#x27;setTimeEvent&#x27;, &#x27;startTimer&#x27;);
                     this.set(&#x27;pageTimer&#x27;, window.setTimeout(function() {
-                            _this.send(&#x27;setTimeEvent&#x27;, &#x27;timer ended&#x27;);
+                            /**
+                            * Timer for set-duration trial ends
+                            *
+                            * @event endTimer
+                            */
+                            _this.send(&#x27;setTimeEvent&#x27;, &#x27;endTimer&#x27;);
                             _this.set(&#x27;minDurationAchieved&#x27;, true);
                             _this.send(&#x27;finish&#x27;);
                         }, _this.get(&#x27;durationSeconds&#x27;) * 1000));
                     if (this.get(&#x27;showProgressBar&#x27;)) {
                         this.set(&#x27;timerStart&#x27;, new Date().getTime());
                         let timerStart = _this.get(&#x27;timerStart&#x27;);
-                        let durationSeconds = _this.get(&#x27;durationSeconds&#x27;) * 10;
+                        let durationSeconds = _this.get(&#x27;durationSeconds&#x27;);
                         this.set(&#x27;progressTimer&#x27;, window.setInterval(function() {
                             let now = new Date().getTime();
-                            var prctDone =  (now - timerStart) / durationSeconds;
+                            var prctDone =  (now - timerStart) / (durationSeconds * 10);
                             $(&#x27;.progress-bar&#x27;).css(&#x27;width&#x27;, prctDone + &#x27;%&#x27;);
                         }, 100));
                     }
@@ -409,7 +415,6 @@ export default ExpLookitImageAudio.extend({
     },
 
     didInsertElement() {
-
         this._super(...arguments);
         if (this.get(&#x27;durationSeconds&#x27;) &amp;&amp; this.get(&#x27;durationSeconds&#x27;) &gt; 0) {
             $(&#x27;#nextbutton&#x27;).prop(&#x27;disabled&#x27;, true);
@@ -421,7 +426,12 @@ export default ExpLookitImageAudio.extend({
     didReceiveAttrs() {
         this._super(...arguments);
 
-        this.set(&#x27;images&#x27;, [this.get(&#x27;image&#x27;)]);
+        let image = this.get(&#x27;image&#x27;);
+        if (!image.hasOwnProperty(&#x27;id&#x27;)) {
+            image.id = &#x27;image_1&#x27;;
+        }
+
+        this.set(&#x27;images&#x27;, [image]);
         this.set(&#x27;autoProceed&#x27;, this.get(&#x27;durationSeconds&#x27;) &gt; 0);
         this.expandAssets();
     }

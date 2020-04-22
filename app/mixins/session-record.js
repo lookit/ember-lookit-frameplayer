@@ -181,7 +181,7 @@ export default Ember.Mixin.create({
         if (sessionRecorder) {
             var _this = this;
             return sessionRecorder.record().then(() => {
-                _this.send('setTimeEvent', 'startRecording', {
+                _this.send('setTimeEvent', 'startSessionRecording', {
                     sessionPipeId: sessionRecorder.get('pipeVideoName')
                 });
             });

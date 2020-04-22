@@ -5,6 +5,7 @@ $exp-lookit-story-page-controls-height: 20; // in vh
 $exp-lookit-story-page-parent-text-color: #f8f3bf;
 $exp-lookit-story-page-width: (100 - 2*$exp-lookit-story-page-side-margin) * 1vw;
 $exp-lookit-story-page-height: (100 - $exp-lookit-story-page-top-margin - $exp-lookit-story-page-controls-height) * 1vh;
+$exp-lookit-story-page-height-no-controls: (100 - $exp-lookit-story-page-top-margin) * 1vh;
 $exp-lookit-preferential-looking-AR: 2;
 $exp-lookit-preferential-looking-picwidth: 30;
 $exp-lookit-preferential-looking-picmargin: 2;
@@ -16,6 +17,7 @@ $exp-pref-look-right-rect: 81.25%;
 {
     margin:0;
     padding:0;
+    cursor: auto !important;
 }
 
 .exp-lookit-image-audio, #experiment-player.player-fullscreen .exp-lookit-image-audio {
@@ -25,131 +27,130 @@ $exp-pref-look-right-rect: 81.25%;
     position: fixed;
     top: 0; bottom: 0;
     left: 0; right: 0;
+
+    // Outside div for the "story page"
+    #image-area {
+        background-color: white;
+        overflow: hidden;
+        position: fixed;
+        width: $exp-lookit-story-page-width;
+        height: 1/$exp-lookit-story-page-AR * $exp-lookit-story-page-width;
+        max-height: $exp-lookit-story-page-height;
+        max-width: $exp-lookit-story-page-AR * $exp-lookit-story-page-height;
+        margin: auto;
+        margin-top: 0; top: $exp-lookit-story-page-top-margin * 1vh;
+        left:0;right:0; /* horizontal center */
+
+        &.image-area-no-controls {
+            max-height: $exp-lookit-story-page-height-no-controls;
+            max-width: $exp-lookit-story-page-AR * $exp-lookit-story-page-height-no-controls;
+            top: 50%; /* Vertical center */
+            transform: translate(0,-50%);
+        }
+
+        // Container immediately around the image. By default fills space.
+        div.story-image-container {
+            position:relative;
+            display: block;
+            padding:0;
+            max-height:100%;
+            max-width: 100%;
+            border-radius: 15px;
+            border:5px solid transparent; // to avoid rearranging upon adding the highlight
+
+            &.image-fill {
+                height:100%;
+                width:100%;
+            }
+
+            &.highlight {
+                border: 5px solid green;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.6);
+            }
+
+            // The actual image
+            img.story-image {
+                position:relative;
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: contain;
+                object-position: center;
+                max-height: 100%;
+                max-width: 100%;
+                margin: auto;
+                vertical-align: center;
+            }
+
+        }
+    }
+
+    // Progress bar
+    div.progress {
+        height: 3vh !important;
+    }
+
+    // Fullscreen button
+    #fsButton {
+        margin-left: auto;
+        margin-right: auto;
+        min-height: 75px;
+        min-width: 100px;
+        margin-top: 5%;
+        padding: 20px;
+        position: relative;
+        display: block;
+        font-size: x-large;
+    }
+
+
+    // Navigation buttons
+    #story-controls button{
+        display: inline-block;
+        position: fixed;
+        padding: 0px; margin: 0px;
+        font-size: x-large;
+        width: 20vw;
+        margin-left: auto;
+        margin-right: auto;
+        min-width: 100px;
+        min-height: 50px;
+        bottom: 2vh;
+        height: $exp-lookit-story-page-controls-height * 0.5vh;
+        bottom: $exp-lookit-story-page-controls-height * 0.25vh;
+    }
+
+    button.right {
+        right: 1vw;
+    }
+
+    button.left {
+        left: 1vw;
+    }
+
+    #parenttext {
+        font-size: x-large;
+        right: 0; left: 0;
+        width: 50vw;
+        text-align: center;
+        margin: auto;
+        height: ($exp-lookit-story-page-controls-height - 4) * 1vh;
+        bottom: 2vh;
+        position: fixed;
+        background-color: $exp-lookit-story-page-parent-text-color;
+        color: black;
+        border-radius: 15px;
+    }
+
+    // Initial waiting for webcam connection display
+    #waitForVideo {
+        font-size: x-large;
+        margin-top: 40%;
+    }
+
 }
 
-.exp-lookit-image-audio #image-area, #experiment-player.player-fullscreen .exp-lookit-image-audio #image-area {
-    background-color: white;
-    overflow:hidden;
-    position: fixed;
-    width: $exp-lookit-story-page-width;
-    height: 1/$exp-lookit-story-page-AR * $exp-lookit-story-page-width;
-    max-height: $exp-lookit-story-page-height;
-    max-width: $exp-lookit-story-page-AR * $exp-lookit-story-page-height;
-    margin: auto;
-    margin-top: 0; top: $exp-lookit-story-page-top-margin * 1vh;
-    left:0;right:0; /* horizontal center */
-}
 
-// For the preferential looking sections
-.exp-lookit-image-audio-pref #image-area, #experiment-player.player-fullscreen .exp-lookit-image-audio-pref #image-area{
-    overflow:hidden;
-    position:fixed;
-    width: 100vw;
-    height: 30vw;
-    max-height: 100vh;
-    max-width: (100 / $exp-lookit-preferential-looking-picwidth) * 100vh;
-    margin: auto;
-    top:0;bottom:0; /* vertical center */
-    left:0;right:0; /* horizontal center */
-}
-
-.exp-lookit-image-audio div.story-image-container,  #experiment-player.player-fullscreen div.story-image-container {
-    position: absolute;
-    display: block;
-    height: auto;
-    padding: 10px;
-    border-radius: 15px;
-    border:5px solid transparent; // to avoid rearranging upon adding the highlight
-}
-
-.exp-lookit-image-audio img.story-image {
-    max-width: 100%;
-    max-height: 100%;
-    vertical-align: center;
-    margin: auto;
-}
-
-// TODO: working on maximizing but not overflowing container
-.exp-lookit-image-audio .story-image-container.image-fill * {
-    width: 100% !important;
-    height: 100% !important;
-    max-height: 100%;
-    max-width: 100%;
-    margin: auto;
-}
-
-.exp-lookit-image-audio .story-image-container.highlight,  #experiment-player.player-fullscreen .exp-lookit-image-audio .story-image-container.highlight  {
-    border: 5px solid green;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.6);
-}
-
-.exp-lookit-image-audio * {
-    cursor: auto !important;
-}
-
-.exp-lookit-image-audio #story-controls button, #experiment-player.player-fullscreen .exp-lookit-image-audio #story-controls button {
-    display: inline-block;
-    position: fixed;
-    padding: 0px; margin: 0px;
-    font-size: x-large;
-    width: 20vw;
-    margin-left: auto;
-    margin-right: auto;
-    min-width: 100px;
-    min-height: 50px;
-    bottom: 2vh;
-    height: $exp-lookit-story-page-controls-height * 0.5vh;
-    bottom: $exp-lookit-story-page-controls-height * 0.25vh;
-}
-
-.exp-lookit-image-audio button.right {
-    right: 1vw;
-}
-
-.exp-lookit-image-audio button.left {
-    left: 1vw;
-}
-
-.exp-lookit-image-audio #parenttext, #experiment-player.player-fullscreen .exp-lookit-image-audio #parenttext {
-    font-size: x-large;
-    right: 0; left: 0;
-    width: 50vw;
-    text-align: center;
-    margin: auto;
-    height: ($exp-lookit-story-page-controls-height - 4) * 1vh;
-    bottom: 2vh;
-    position: fixed;
-    background-color: $exp-lookit-story-page-parent-text-color;
-    color: black;
-    border-radius: 15px;
-}
-
-.exp-lookit-image-audio #waitForVideo, #experiment-player.player-fullscreen .exp-lookit-image-audio #waitForVideo {
-    font-size: x-large;
-    margin-top: 40%;
-}
-
-.exp-lookit-image-audio #fsButton {
-    margin-left: auto;
-    margin-right: auto;
-    min-height: 75px;
-    min-width: 100px;
-    margin-top: 5%;
-    padding: 20px;
-    position: relative;
-    display: block;
-    font-size: x-large;
-}
-
-.exp-lookit-image-audio div.progress {
-    height: 3vh !important;
-}
-
-#experiment-player:not(.player-fullscreen) .exp-lookit-preferential-looking #allstimuli {
-    width:100%;
-}
-
-
+// Pieces not used yet, for the preferential looking sections
 
 @mixin pic-container($left-pos) {
     min-width: $exp-lookit-preferential-looking-picwidth * 1%;
@@ -179,4 +180,16 @@ $exp-pref-look-right-rect: 81.25%;
     margin: auto;
     position: absolute;
     top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.exp-lookit-image-audio-pref #image-area, #experiment-player.player-fullscreen .exp-lookit-image-audio-pref #image-area{
+    overflow:hidden;
+    position:fixed;
+    width: 100vw;
+    height: 30vw;
+    max-height: 100vh;
+    max-width: (100 / $exp-lookit-preferential-looking-picwidth) * 100vh;
+    margin: auto;
+    top:0;bottom:0; /* vertical center */
+    left:0;right:0; /* horizontal center */
 }

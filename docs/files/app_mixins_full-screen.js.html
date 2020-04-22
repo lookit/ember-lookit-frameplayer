@@ -46,10 +46,12 @@
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
+                            <li><a href="../classes/Exp-lookit-image-audio.html">Exp-lookit-image-audio</a></li>
                             <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
                             <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
+                            <li><a href="../classes/Exp-lookit-single-image.html">Exp-lookit-single-image</a></li>
                             <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
                             <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
                             <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
@@ -132,6 +134,13 @@ export default Ember.Mixin.create({
      * @private
      */
     fullScreenElementId: &#x27;experiment-player&#x27;,
+
+    /**
+     * Whether to display this frame fullscreen
+     * @property {Boolean} displayFullscreen
+     * @default false
+     * @private
+     */
     displayFullscreen: false,
 
     /**
@@ -275,10 +284,12 @@ export default Ember.Mixin.create({
 
     frameSchemaProperties: {
         /**
-         * Whether to display this frame as fullscreen, even though it is not
-         * generally used that way.
+         * Set to &#x60;true&#x60; to display this frame in fullscreen mode, even if the frame type
+         * is not always displayed fullscreen. (For instance, you might use this to keep
+         * a survey between test trials in fullscreen mode.)
          *
          * @property {String} displayFullscreenOverride
+         * @default false
          */
         displayFullscreenOverride: {
             type: &#x27;boolean&#x27;,

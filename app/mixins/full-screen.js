@@ -23,6 +23,13 @@ export default Ember.Mixin.create({
      * @private
      */
     fullScreenElementId: 'experiment-player',
+
+    /**
+     * Whether to display this frame fullscreen
+     * @property {Boolean} displayFullscreen
+     * @default false
+     * @private
+     */
     displayFullscreen: false,
 
     /**
@@ -166,10 +173,12 @@ export default Ember.Mixin.create({
 
     frameSchemaProperties: {
         /**
-         * Whether to display this frame as fullscreen, even though it is not
-         * generally used that way.
+         * Set to `true` to display this frame in fullscreen mode, even if the frame type
+         * is not always displayed fullscreen. (For instance, you might use this to keep
+         * a survey between test trials in fullscreen mode.)
          *
          * @property {String} displayFullscreenOverride
+         * @default false
          */
         displayFullscreenOverride: {
             type: 'boolean',

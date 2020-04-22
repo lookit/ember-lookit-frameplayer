@@ -87,8 +87,8 @@ let {
  }
 
  * ```
- * @class Exp-lookit-story-page
- * @extends Exp-frame-base
+ * @class Exp-lookit-single-image
+ * @extends Exp-lookit-image-audio
  * @uses Full-screen
  * @uses Video-record
  * @uses Expand-assets
@@ -121,8 +121,10 @@ export default ExpLookitImageAudio.extend({
         /**
          * Duration of frame in seconds. If set and positive, there will be no next button
          * displayed and the experiment will auto-proceed after the duration elapses.
+         * Default is -1: next button is displayed and parent chooses when to proceed.
          *
          * @property {Number} durationSeconds
+         * @default -1
          */
         durationSeconds: {
             type: 'number',
@@ -138,11 +140,27 @@ export default ExpLookitImageAudio.extend({
          */
         showProgressBar: {
             type: 'boolean',
-            description: 'Whether to show a progress bar based on durationSeconds'
+            description: 'Whether to show a progress bar based on durationSeconds',
+            default: false
         },
 
         /**
-         * Text block to display to parent.  (Each field is optional)
+         * [Only used if next button is also displayed] Whether to
+         * show a previous button to allow the participant to go to the previous frame
+         *
+         * @property {Number} showPreviousButton
+         */
+        showPreviousButton: {
+            type: 'boolean',
+            default: true,
+            description: 'Whether to show a previous button (used only if showing Next button)'
+        },
+
+        /**
+         * Text to display to parent.  Each field is optional. If the `parentTextBlock`
+         * is an empty object `{}`, no parent text block is displayed at all at the bottom
+         * of the screen. Otherwise, even if the title and text are empty, the block will
+         * be displayed as usual without any text.
          *
          * @property {Object} parentTextBlock
          *   @param {String} title title to display
@@ -171,41 +189,6 @@ export default ExpLookitImageAudio.extend({
             },
             default: {}
         },
-        /**
-         * Array of images to display and information about their placement
-         *
-         * @property {Object[]} images
-         *   @param {String} id unique ID for this image
-         *   @param {String} src URL of image source. This can be a full
-         *     URL, or relative to baseDir (see baseDir).
-         *   @param {String} left left margin, as percentage of story area width
-         *   @param {String} width image width, as percentage of story area width
-         *   @param {String} top top margin, as percentage of story area height
-
-         */
-        images: {
-            type: 'array',
-            items: {
-                type: 'object',
-                properties: {
-                    'id': {
-                        type: 'string'
-                    },
-                    'src': {
-                        anyOf: imageAssetOptions
-                    },
-                    'left': {
-                        type: 'string'
-                    },
-                    'width': {
-                        type: 'string'
-                    },
-                    'top': {
-                        type: 'string'
-                    }
-                }
-            }
-        },
 
         /**
          * Image to display and information about its placement
@@ -233,22 +216,35 @@ export default ExpLookitImageAudio.extend({
                         type: 'string'
                     }
                 }
-            }
-    },
-
-    meta: {
-        name: 'ExpLookitSingleImage',
-        description: 'Frame to display a single image',
-        data: {
-            type: 'object',
-            properties: {
-                videoId: {
-                    type: 'string'
-                },
-                videoList: {
-                    type: 'list'
-                }
             },
+
+        /**
+         * Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+         * for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
+         * rgb hex values (e.g. '#800080' - include the '#')
+         *
+         * @property {String} backgroundColor
+         * @default 'black'
+         */
+        backgroundColor: {
+            type: 'string',
+            description: 'Color of background',
+            default: 'black'
+        },
+        /**
+         * Color of area where images are shown, if different from overall background.
+         * Defaults to backgroundColor if one is provided. See
+         * https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+         * for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
+         * rgb hex values (e.g. '#800080' - include the '#')
+         *
+         * @property {String} pageColor
+         * @default 'white'
+         */
+        pageColor: {
+            type: 'string',
+            description: 'Color of image area',
+            default: 'white'
         }
     },
 
@@ -256,8 +252,6 @@ export default ExpLookitImageAudio.extend({
 
         finish() {
             var _this = this;
-            this.send('setTimeEvent', 'finish called');
-
             if (this.get('doRecording')) {
                 this.stopRecorder().then(() => {
                     _this.set('stoppedRecording', true);
@@ -275,19 +269,29 @@ export default ExpLookitImageAudio.extend({
             if (this.currentAudioIndex == 0) { // Starting first audio segment: start timer & progress bar
                 if (this.get('durationSeconds') && this.get('durationSeconds') > 0) {
                     let _this = this;
-                    this.send('setTimeEvent', 'setting timer');
+                    /**
+                    * Timer for set-duration trial begins
+                    *
+                    * @event startTimer
+                    */
+                    this.send('setTimeEvent', 'startTimer');
                     this.set('pageTimer', window.setTimeout(function() {
-                            _this.send('setTimeEvent', 'timer ended');
+                            /**
+                            * Timer for set-duration trial ends
+                            *
+                            * @event endTimer
+                            */
+                            _this.send('setTimeEvent', 'endTimer');
                             _this.set('minDurationAchieved', true);
                             _this.send('finish');
                         }, _this.get('durationSeconds') * 1000));
                     if (this.get('showProgressBar')) {
                         this.set('timerStart', new Date().getTime());
                         let timerStart = _this.get('timerStart');
-                        let durationSeconds = _this.get('durationSeconds') * 10;
+                        let durationSeconds = _this.get('durationSeconds');
                         this.set('progressTimer', window.setInterval(function() {
                             let now = new Date().getTime();
-                            var prctDone =  (now - timerStart) / durationSeconds;
+                            var prctDone =  (now - timerStart) / (durationSeconds * 10);
                             $('.progress-bar').css('width', prctDone + '%');
                         }, 100));
                     }
@@ -300,7 +304,6 @@ export default ExpLookitImageAudio.extend({
     },
 
     didInsertElement() {
-
         this._super(...arguments);
         if (this.get('durationSeconds') && this.get('durationSeconds') > 0) {
             $('#nextbutton').prop('disabled', true);
@@ -312,7 +315,12 @@ export default ExpLookitImageAudio.extend({
     didReceiveAttrs() {
         this._super(...arguments);
 
-        this.set('images', [this.get('image')]);
+        let image = this.get('image');
+        if (!image.hasOwnProperty('id')) {
+            image.id = 'image_1';
+        }
+
+        this.set('images', [image]);
         this.set('autoProceed', this.get('durationSeconds') > 0);
         this.expandAssets();
     }
