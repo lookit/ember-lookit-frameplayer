@@ -21,8 +21,9 @@ Researchers can select from the following named templates:
 
 `consent_001`: Original Lookit consent document (2019)
 `consent_002`: Added optional GDPR section and research subject rights statement
+`consent_003`: Same as consent_002 except that the 'Payment' section is renamed 'Benefits, risks, and payment' for institutions that prefer that
 
-To look up the exact text of the consent document, see https://github.com/lookit/ember-lookit-frameplayer/blob/master/app/components/exp-lookit-video-consent/template.hbs
+To look up the exact text of each consent template for your IRB protocol, please see https://github.com/lookit/research-resources/tree/master/Legal
 
 The consent document can be downloaded as PDF document by participant.
 
@@ -30,13 +31,13 @@ The consent document can be downloaded as PDF document by participant.
 "frames": {
     "video-consent": {
         "kind": "exp-lookit-video-consent",
-        "template": "consent_002",
+        "template": "consent_003",
         "PIName": "Jane Smith",
         "institution": "Science University",
         "PIContact": "Jane Smith at 123 456 7890",
         "purpose": "Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.",
-        "procedures": "Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.",
-        "payment": "After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.",
+        "procedures": "Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses.",
+        "payment": "After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience. There are no anticipated risks associated with participating.",
         "datause": "We are primarily interested in your child's emotional reactions to the images and sounds. A research assistant will watch your video to measure the precise amount of delight in your child's face as he or she sees each cat picture.",
         "gdpr": false,
         "research_rights_statement": "You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the [IRB NAME], [INSTITUTION], [ADDRESS/CONTACT]",
@@ -177,7 +178,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         },
 
         /**
-        Brief description of study procedures, including any risks or a statement that there are no anticipated risks. We add a statement about the duration (from your study definition) to the start (e.g., "This study takes about 10 minutes to complete"), so you don't need to include that. It can be in third person or addressed to the parent. E.g., "Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating."
+        Brief description of study procedures. For consent templates 001 and 002, this should include any risks or a statement that there are no anticipated risks. (For consent template 003, that is included in `payment`). We add a statement about the duration (from your study definition) to the start (e.g., "This study takes about 10 minutes to complete"), so you don't need to include that. It can be in third person or addressed to the parent. E.g., "Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating."
         @property {String} procedures
         */
         procedures: {
@@ -186,7 +187,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         },
 
         /**
-        Statement about payment/compensation for participation, including a statement that there are no additional benefits anticipated to the participant. E.g., "After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience."
+        Statement about payment/compensation for participation, including a statement that there are no additional benefits anticipated to the participant. E.g., "After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience." For consent template 003, this section is titled Benefits, risks, and payment; it should include information about risks as well.
         @property {String} payment
         */
         payment: {
@@ -267,11 +268,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         /**
         Which consent document template to use. If you are setting up a new study,
         use the most recent (highest number) of these options. Options: consent_001,
-        consent_002.
+        consent_002, consent_003.
         @property {String} template
         */
         template: {
             type: 'string',
+            enum: ['consent_001', 'consent_002', 'consent_003'],
             description: 'Which consent document template to use',
             default: 'consent_001'
         }
