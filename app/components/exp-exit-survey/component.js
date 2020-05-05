@@ -8,18 +8,20 @@ import moment from 'moment';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 import FullScreen from '../../mixins/full-screen';
 
-/**
+/*
  * @module exp-player
  * @submodule frames
  */
 
-/**
+// Use regular comment syntax here to exclude from docs for clarity
+/*
 This is the exit survey used by "Your baby the physicist". Use the updated frame {{#crossLink "Exp-lookit-exit-survey"}}{{/crossLink}} instead.
 
 @class Exp-exit-survey
 @extends Exp-frame-base
 @uses Validations
 @uses Full-screen
+@deprecated
 */
 
 const Validations = buildValidations({

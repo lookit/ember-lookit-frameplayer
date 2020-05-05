@@ -59,6 +59,13 @@
                         <p class="exp-text-medium"> Publication of results </p>
                         <p> The results of the research may be presented at scientific meetings or published in scientific journals. Raw data (for instance, looking times to the left and right of the screen) may be published when it cannot identify children. We never publish children's birthdates or names, and we never publish your demographic data in conjunction with your child's video. </p>
 
+                        {{#if additional_segments}}
+                            {{#each additional_segments as |segment|}}
+                                <p class="exp-text-medium"> {{segment.title}} </p>
+                                <p> {{exp-format segment.text}} </p>
+                            {{/each}}
+                        {{/if}}
+
                         <p class="exp-text-medium"> Researcher contact information </p>
                         <p> This study is run by {{PIName}} at {{institution}}. If you or your child have any questions or concerns about this study, or in the very unlikely event of a research-related injury, please contact {{PIContact}}. </p>
                         <p>If you or your child have any questions or concerns about the Lookit platform, please contact Kim Scott at kimscott@mit.edu or 617 324 4859.</p>
@@ -110,6 +117,13 @@
                         <p class="exp-text-medium"> Publication of results </p>
                         <p> The results of the research may be presented at scientific meetings or published in scientific journals. Raw data (for instance, looking times to the left and right of the screen) may be published when it cannot identify children. We never publish children's birthdates or names, and we never publish your demographic data in conjunction with your child's video. </p>
 
+                        {{#if additional_segments}}
+                            {{#each additional_segments as |segment|}}
+                                <p class="exp-text-medium"> {{segment.title}} </p>
+                                <p> {{exp-format segment.text}} </p>
+                            {{/each}}
+                        {{/if}}
+
                         <p class="exp-text-medium"> Rights of research subjects </p>
                         <p> {{research_rights_statement}} </p>
 
@@ -119,6 +133,7 @@
 
                             <p>Your personal information will be transferred to the United States. You understand that the data protection and privacy laws of the United States may not offer you the same level of protection as those in your country of origin.</p>
                         {{/if}}
+
 
                         <p class="exp-text-medium"> Researcher contact information </p>
                         <p> This study is run by {{PIName}} at {{institution}}. If you or your child have any questions or concerns about this study, or in the very unlikely event of a research-related injury, please contact {{PIContact}}. </p>

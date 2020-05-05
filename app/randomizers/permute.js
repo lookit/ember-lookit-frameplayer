@@ -143,7 +143,7 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
     /**
      * Parameters captured and sent to the server
      *
-     * @method conditions
+     * @attribute conditions
      * @param {Object[]} frameList the list of frames used, in the final shuffled order
      */
     return [frames, {'frameList': array}];

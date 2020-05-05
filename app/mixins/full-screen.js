@@ -10,6 +10,9 @@ let {
  */
 
 /**
+ *
+ * Reference for DEVELOPERS of new frames only!
+ *
  * Allow components to specify fullscreen capabilities based on minimal configuration options
  * @class Full-screen
  */
@@ -17,6 +20,7 @@ export default Ember.Mixin.create({
     /**
      *  The element ID of the thing to make full screen (video element, div, etc)
      * @property {String} fullScreenElementId
+     * @private
      */
     fullScreenElementId: 'experiment-player',
     displayFullscreen: false,
@@ -24,6 +28,7 @@ export default Ember.Mixin.create({
     /**
      * The element ID of a button to show if the user leaves fullscreen mode
      * @property {String} fsButtonID
+     * @private
      */
     fsButtonID: false,
 

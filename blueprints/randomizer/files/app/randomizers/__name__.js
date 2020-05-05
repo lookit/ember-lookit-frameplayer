@@ -82,7 +82,7 @@ var randomizer = function(/*frameId, frameConfig, pastSessions, resolveFrame*/) 
     /**
      * Parameters captured and sent to the server
      *
-     * @method conditions
+     * @attribute conditions
      * @param {Number} exampleConditionNumber which condition was chosen
      * @param {Array} exampleConditionObject which images were shown
      */

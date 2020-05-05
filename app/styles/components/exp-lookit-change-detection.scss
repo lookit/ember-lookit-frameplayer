@@ -1,0 +1,131 @@
+$exp-alternation-cal-width: 12%;
+$exp-alternation-left-rect: 18.75%;
+$exp-alternation-right-rect: 81.25%;
+
+.exp-lookit-change-detection #allstimuli, #experiment-player.player-fullscreen .exp-lookit-change-detection #allstimuli {
+    overflow:hidden;
+    width: 100vw;
+    //height: 56.25vw; /* 100/56.25 = 1.778 */
+    max-height: 100vh;
+    //max-width: 177.78vh; /* 16/9 = 1.778 */
+    margin: auto !important;
+    top:0;bottom:0; /* vertical center */
+    left:0;right:0; /* horizontal center */
+    position:absolute;
+}
+
+.exp-lookit-change-detection {
+
+    // This is the container...
+    #allstimuli div.stream-container {
+        width: 39%;
+        height: 90%;
+        top: 5%;
+        border: thin solid gray;
+        position: absolute;
+        display: block;
+    }
+
+    div#left-stream-container {
+        left: 1%;
+    }
+
+    div#right-stream-container {
+        margin-left: 60%;
+    }
+
+    // This is what needs to be maximized within it...
+    img.stim-image {
+        object-fit: contain;
+        width: 100%;
+        height: 100%;
+        max-height:100%;
+        max-width:100%;
+        vertical-align: center;
+        margin: auto;
+    }
+
+    margin:0;
+    padding:0;
+
+    * {
+        margin:0;
+        padding:0;
+    }
+
+    video.attn {
+        margin:auto;
+        max-height: 30%;
+    }
+
+    .pause-instructions {
+        display: block;
+        position: relative;
+        margin-left: auto;
+        margin-right:auto;
+        text-align: center;
+        font-size: 3em;
+        font-weight: bold;
+    }
+
+    button {
+        margin-left: auto;
+        margin-right: auto;
+        min-height: 75px;
+        min-width: 300px;
+        position: relative;
+        display: block;
+        font-size: 1em;
+        padding: 10px;
+        height: 10%;
+        width: 30%;
+    }
+
+    #player-calibration-video {
+        width: $exp-alternation-cal-width;
+        max-height: 300px;
+        position: absolute;
+        margin: auto;
+        top: 0; left: 0; bottom: 0; right: 0;
+    }
+
+    #player-calibration-video.center {
+        margin-left: 50% - $exp-alternation-cal-width/2;
+    }
+
+    #player-calibration-video.left {
+        margin-left: $exp-alternation-left-rect - $exp-alternation-cal-width/2;
+    }
+
+    #player-calibration-video.right {
+        margin-left: $exp-alternation-right-rect - $exp-alternation-cal-width/2;
+    }
+
+}
+
+#experiment-player:not(.player-fullscreen) .exp-lookit-change-detection {
+    video {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+        width: 50%;
+        max-width: 250px;
+        position: relative;
+        display: block;
+    }
+
+    #alternation-container {
+        overflow:hidden;
+        width: 100vw;
+        max-height: 56.25vw; /* 100/56.25 = 1.778 */
+        margin: auto;
+        top:0;bottom:0; /* vertical center */
+        left:0;right:0; /* horizontal center */
+    }
+
+    #allstimuli {
+        width: 100%;
+        height: 90vh;
+        top: 50vh;
+    }
+}
