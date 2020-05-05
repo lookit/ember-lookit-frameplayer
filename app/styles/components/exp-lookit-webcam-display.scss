@@ -1,0 +1,67 @@
+.exp-lookit-webcam-display {
+
+    .webcam-row, .exp-text {
+        height: 40vh;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 5vh;
+        margin-bottom: 0;
+        padding: 0;
+    }
+
+    .webcam-row {
+        width: max-content;
+    }
+
+    .exp-text {
+        overflow-y: auto;
+        clear: both;
+        width: max-content;
+    }
+
+    .text-container {
+        display: inline-block;
+    }
+
+    li {
+        margin-bottom: 20px;
+    }
+
+    .recorder {
+        padding: 0px;
+        margin-bottom: 1em;
+        background-color: #ccc;
+        clear:both !important;
+        height: 100%;
+        width: max-content;
+    }
+
+    .recorder-container {
+        height: 100%;
+        display: inline-block;
+    }
+
+    .exp-lookit-observation-controls {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+}
+
+:fullscreen .exp-lookit-webcam-display {
+    max-width: 65em;
+    margin-left:auto;
+    margin-right:auto;
+
+    .webcam-row {
+        height: 40vh;
+        margin-top: 10vh;
+    }
+
+    .exp-text {
+        height: 30vh;
+        margin-top: 5vh;
+    }
+
+}

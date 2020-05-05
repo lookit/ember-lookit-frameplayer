@@ -124,7 +124,7 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame) {
     /**
      * Parameters captured and sent to the server
      *
-     * @method conditions
+     * @attribute conditions
      * @param {Object[]} whichFrames the index/indices of the frame(s) used
      */
     return [frames, {'whichFrames': frameConfig.whichFrames}];

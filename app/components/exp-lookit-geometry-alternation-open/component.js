@@ -367,28 +367,29 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         name: 'ExpLookitGeometryAlternation',
         description: 'Frame to implement specific test trial structure for geometry alternation experiment. Includes announcement, calibration, and alternation (test) phases. During "alternation," two streams of triangles are shown, in rectangles on the left and right of the screen: one one side both size and shape change, on the other only size changes. Frame is displayed fullscreen and video recording is conducted during calibration/test.',
         data: {
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {Boolean} context True to use big fat triangle as context figure, or false to use small skinny triangle as context. [same as passed to this frame]
-             * @param {Boolean} altOnLeft Whether to put the shape+size alternating stream on the left (other stream alternates only in size) [same as passed to this frame]
-             * @param {String} videoID The ID of any video recorded during this frame
-             * @param {Boolean} hasBeenPaused whether this trial was paused
-             * @param {Object} eventTimings
-             * @return {Object} The payload sent to the server
-             */
             type: 'object',
             properties: {
+                /**
+                * True to use big fat triangle as context figure, or false to use small skinny triangle as context. [same as passed to this frame]
+                * @attribute context
+                */
                 context: {
                     type: 'boolean'
                 },
+                /**
+                * Whether to put the shape+size alternating stream on the left (other stream alternates only in size) [same as passed to this frame]
+                * @attribute altOnLeft
+                */
                 altOnLeft: {
                     type: 'boolean'
                 },
                 videoId: {
                     type: 'string'
                 },
+                /**
+                * whether this trial was paused
+                * @attribute hasBeenPaused
+                */
                 hasBeenPaused: {
                     type: 'boolean'
                 }

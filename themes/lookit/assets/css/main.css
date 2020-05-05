@@ -797,10 +797,24 @@ li.module-sidebar-exp-player {
 }
 
 .class-screenshot {
-  border: medium solid #369;
-  display:inline;
-  max-height: 30em;
+  max-height: 60vh;
+  height: 60vh;
   min-height: 0em;
+  max-width: 80vw;
   box-shadow: 7px 7px 10px #bbb;
-  margin-left: 10%;
+  margin-left: 0;
+}
+
+.class-screenshot video {
+  max-height: 100%;
+  max-width: 100%;
+
+}
+
+.class-screenshot img {
+  display: block;
+  margin: auto;
+  max-height: 100%;
+  max-width: 100%;
+
 }

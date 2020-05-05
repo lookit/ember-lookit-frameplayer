@@ -71,14 +71,21 @@ export default ExpFrameBaseComponent.extend({ //list any mixins here before the 
         description: 'TODO: a description of this frame goes here.',
         data: {
              /**
-             * Parameters captured and sent to the server
+             * What the child responded about the cat
              *
-             * @method serializeContent
-             * @param {String} whatTheChildThoughtAboutTheCat Child response to cat
+             * @attribute whatTheChildThoughtAboutTheCat
+             * @type string
              */
             type: 'object',
             properties: {
-                // define data to be sent to the server here
+                // define data to be sent to the server here.
+
+                /**
+                 * What the child responded about the cat
+                 *
+                 * @attribute whatTheChildThoughtAboutTheCat
+                 * @type string
+                 */
                 whatTheChildThoughtAboutTheCat: {
                     type: 'string'
                 }
