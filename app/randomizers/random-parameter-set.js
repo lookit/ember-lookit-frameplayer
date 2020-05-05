@@ -491,7 +491,7 @@ var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame, chil
     /**
      * Parameters captured and sent to the server
      *
-     * @method conditions
+     * @attribute conditions
      * @param {Number} conditionNum the index of the parameterSet chosen
      * @param {Object} parameterSet the parameterSet chosen
      */

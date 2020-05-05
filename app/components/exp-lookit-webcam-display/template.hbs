@@ -1,0 +1,36 @@
+{{! template-lint-disable unused-block-params }}
+
+<div class="exp-lookit-webcam-display">
+
+    <div class="row webcam-row">
+        <div class="row recorder-container">
+            <div id="recorder" class="recorder col-xs-12">
+            </div>
+        </div>
+    </div>
+
+    <div class="row exp-text">
+        <div class="text-container">
+            {{#each blocks as |block idx|}}
+                {{exp-text-block block=block}}
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="row exp-lookit-observation-controls">
+        <div class="col-sm-12 pull-down">
+            {{#if showPreviousButton}}
+                <button class="btn btn-default pull-left" {{ action 'previous' }}>
+                    Previous
+                </button>
+            {{/if}}
+
+            <button id="nextbutton" class="btn btn-success pull-right" {{ action 'proceed' }}>
+                {{exp-format nextButtonText}}
+            </button>
+
+        </div>
+    </div>
+</div>
+
+

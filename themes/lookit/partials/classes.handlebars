@@ -48,11 +48,44 @@
     </div>
 {{/if}}
 
+{{#eq submodule "frames"}}
+{{#noteq name "Exp-frame-base"}}
+{{#noteq name "Exp-frame-select"}}
+<div id="examples" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#screenshot">Screenshot</a></li>
+        <li class="api-class-tab methods"><a href="#video">Video</a></li>
+    </ul>
+    <div>
+        <div id="screenshot" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-screenshot">
+                <img src="../assets/screenshots/{{name}}.png">
+            </div>
+        </div>
+
+        <div id="video" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-video">
+                <video controls poster="../assets/screenshots/{{name}}.png" >
+                    <source src="../assets/framevideos/{{name}}.mp4" type='video/mp4'>
+                    No video available for this frame.
+                </video>
+            </div>
+        </div>
+    </div>
+</div>
+{{/noteq}}
+{{/noteq}}
+{{/eq}}
+
+
+
+
+<div class="box intro">
+    {{{classDescription}}}
+</div>
+
 <div>
-
-    <img src="../assets/screenshots/{{name}}.png" class="class-screenshot">
-
-      {{#example}}
+  {{#example}}
       <div class="example">
           <h4>Example:</h4>
           <div class="example-content">
@@ -60,10 +93,6 @@
           </div>
       </div>
   {{/example}}
-</div>
-
-<div class="box intro">
-    {{{classDescription}}}
 </div>
 
 {{#is_constructor}}
@@ -84,7 +113,7 @@
             <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
         {{/if}}
         {{#if attrs}}
-            <li class="api-class-tab attrs"><a href="#attrs">Attributes</a></li>
+            <li class="api-class-tab attrs"><a href="#attrs">Data collected</a></li>
         {{/if}}
         {{#if events}}
             <li class="api-class-tab events"><a href="#events">Events</a></li>
@@ -139,7 +168,7 @@
 
             {{#if attrs}}
                 <div class="index-section attrs">
-                    <h3>Attributes</h3>
+                    <h3>Data collected</h3>
 
                     <ul class="index-list attrs{{#if extends}} extends{{/if}}">
                         {{#attrs}}
@@ -195,8 +224,11 @@
 
         {{#if attrs}}
             <div id="attrs" class="api-class-tabpanel">
-                <h2 class="off-left">Attributes</h2>
-
+                <h2 class="off-left">Data keys collected</h2>
+                These are the fields that will be captured by this frame and sent back to the Lookit server.
+                Each of these fields will correspond to one row of the CSV frame data for a given response - the
+                row will have `key` set to the data key name, and `value` set to the value for this response.
+                Equivalently, this data will be available in the `exp_data` field of the response JSON data.
                 {{#attrs}}
                     {{>attrs}}
                 {{/attrs}}

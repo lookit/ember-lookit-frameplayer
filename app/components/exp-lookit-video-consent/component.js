@@ -37,10 +37,16 @@ The consent document can be downloaded as PDF document by participant.
         "purpose": "Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.",
         "procedures": "Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.",
         "payment": "After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.",
-        "datause": "We are primarily interested in your child's emotional reactions to the images and sounds. A research assistant will watch your video to measure the precise amount of delight in your child's face as he or she sees each cat picture."
+        "datause": "We are primarily interested in your child's emotional reactions to the images and sounds. A research assistant will watch your video to measure the precise amount of delight in your child's face as he or she sees each cat picture.",
         "gdpr": false,
-        "research_rights_statement": "You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Chairman of the Committee on the Use of Humans as Experimental Subjects, M.I.T., Room E25-143B, 77 Massachusetts Ave, Cambridge, MA 02139, phone 1-617-253 6787.""
-    }
+        "research_rights_statement": "You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the [IRB NAME], [INSTITUTION], [ADDRESS/CONTACT]",
+        "additional_segments": [
+                {
+                    "title": "US Patriot Act Disclosure",
+                    "text": "[EXAMPLE ONLY, PLEASE REMOVE ADDITIONAL_SEGMENTS UNLESS YOU NEED THEM.] Lookit is a U.S. organization and all information gathered from the website is stored on servers based in the U.S. Therefore, your video recordings are subject to U.S. laws, such as the US Patriot Act. This act allows authorities access to the records of internet service providers. If you choose to participate in this study, you understand that your video recording will be stored and accessed in the USA. The security and privacy policy for Lookit can be found at the following link: <a href='https://lookit.mit.edu/privacy/' target='_blank'>https://lookit.mit.edu/privacy/</a>."
+                }
+            ]
+        }
 }
 ```
 
@@ -228,12 +234,34 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         },
 
         /**
-        Statement about rights of research subjects and how to contact IRB.  Used only in template consent_002+. For instance, MIT's standard language is: You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Chairman of the Committee on the Use of Humans as Experimental Subjects, M.I.T., Room E25-143B, 77 Massachusetts Ave, Cambridge, MA 02139, phone 1-617-253 6787.
+        Statement about rights of research subjects and how to contact IRB.  Used only in template consent_002+. For instance, MIT's standard language is: You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact [CONTACT INFO].
         @property {String} research_rights_statement
         */
         research_rights_statement: {
             type: 'string',
             description: ' Statement about rights of research subjects and how to contact IRB'
+        },
+
+        /**
+        List of additional custom sections of the consent form, e.g. US Patriot Act Disclosure. These are subject to Lookit approval and in general can only add information that was true anyway but that your IRB needs included; please contact us before submitting your study to check.
+        @property {String} research_rights_statement
+        */
+        additional_segments: {
+            type: 'array',
+            description: 'List of additional sections (objects with title and text fields) to include at end of form',
+            items: {
+                type: 'object',
+                properties: {
+                    'title': {
+                        type: 'string'
+                    },
+                    'text': {
+                        type: 'string'
+                    }
+                },
+                required: ['title', 'text']
+            },
+            default: []
         },
 
         /**
@@ -255,16 +283,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         name: 'Video Consent Form',
         description: 'A video consent form.',
         data: {
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {String} consentFormText the exact text shown in the consent document during this frame
-             * @param {String} videoID The ID of any webcam video recorded during this frame
-             * @param {List} videoList a list of webcam video IDs in case there are >1
-             * @param {Object} eventTimings
-             * @return {Object} The payload sent to the server
-             */
             type: 'object',
             properties: {
                 videoId: {
@@ -273,6 +291,10 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 videoList: {
                     type: 'list'
                 },
+                /**
+                * the exact text shown in the consent document during this frame
+                * @attribute consentFormText
+                */
                 consentFormText: {
                     type: 'string'
                 }
