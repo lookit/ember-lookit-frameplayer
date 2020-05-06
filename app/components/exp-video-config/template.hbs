@@ -22,13 +22,20 @@
             <div id="recorder" class="col-xs-12"></div>
         </div>
 
-        <div class="row select-source">
-            <div class="select" onchange={{action 'processSelectedMic' value="target.value"}}>
-                <label for="audioSource">Microphone: </label><select id="audioSource"></select>
-            </div>
+        <div class="col-md-1">
+            <button id="reloadButton" class="btn btn-default" {{action 'reloadRecorderButton'}}><i class="fa fa-refresh"></i></button>
+        </div>
 
-            <div class="select" onchange={{action 'processSelectedCam' value="target.value"}}>
-                <label for="videoSource">Camera: </label><select id="videoSource"></select>
+        <div class="col-md-11">
+            <div class="row select-source">
+
+                <div class="select" onchange={{action 'processSelectedMic' value="target.value"}}>
+                    <label for="audioSource">Microphone: </label><select id="audioSource"></select>
+                </div>
+
+                <div class="select" onchange={{action 'processSelectedCam' value="target.value"}}>
+                    <label for="videoSource">Camera: </label><select id="videoSource"></select>
+                </div>
             </div>
         </div>
 
@@ -47,8 +54,11 @@
         {{#unless showWebCamWarning }}
 
             <ol>
+
                 <li>
-                    Make sure you can see yourself to the left! You will need to allow lookit.mit.edu to access your webcam and microphone.
+                    Make sure you can see yourself to the left!
+
+                    You may need to click "Allow" so that we can access your webcam and microphone. On Firefox, make sure to also check "Remember this decision"!
 
                     {{#if hasCamAccess}}
                         <div class="statusBox border checkComplete">
@@ -60,16 +70,13 @@
                         </div>
                     {{/if}}
 
-                    <div class="statusBox">
-                        <button id="reloadButton" class="btn btn-default" {{action 'reloadRecorderButton'}}>
-                            {{#if hasCamAccess}}
-                                Redetect webcam
-                            {{else}}
-                                Detect webcam
-                            {{/if}}
-                            <i class="fa fa-refresh"></i>
-                        </button>
-                    </div>
+
+                </li>
+
+                <li>
+
+                    Make sure your webcam settings got saved by clicking <button id="reloadButton" class="btn btn-default {{if checkedWebcamPermissions "checkComplete" ""}}" {{action 'reloadRecorderButtonAndRecordCheck'}}>reload webcam</button>.
+                    Your webcam should re-appear WITHOUT you having to allow access again. (If you do see a dialogue, click "Remember this decision" or "Always allow" and try again!)
 
                 </li>
 
@@ -91,10 +98,25 @@
         {{/unless}}
 
 
-        {{#if (and showWarning (not micChecked))}}
-            <div class="reload-warning">
-                * Please check that your recording audio is loud enough first. Make some noise!
-            </div>
+        {{#if showWarning }}
+
+            {{#if (not hasCamAccess)}}
+                <div class="reload-warning">
+                    * We don't seem to have camera access. Are you on a computer (not a phone or tablet), and using Chrome or Firefox? If so, see the troubleshooting info below.
+                </div>
+            {{else}}
+                {{#if (not checkedWebcamPermissions)}}
+                    <div class="reload-warning">
+                        * Please press the 'reload webcam' button first to make sure it shows up again without making you click to allow.
+                    </div>
+                {{/if}}
+                {{#if (not micChecked)}}
+                    <div class="reload-warning">
+                        * Please check that your recording audio is loud enough first. Make some noise!
+                    </div>
+                {{/if}}
+            {{/if}}
+
         {{/if}}
 
         <button id="nextbutton" disabled={{if (not hasCamAccess) true false}} class="btn btn-success pull-right" {{ action 'checkAudioThenNext' }} >
@@ -125,7 +147,7 @@
                         <img class="screenshot" src="assets/webrtc_chrome_initialprompt.png" alt="Chrome permissions prompt">
                     </li>
                     <li>
-                        If you didn't see that prompt, or if you clicked "Block," you can change the settings by clicking on the green lock icon next to the URL. You'll see that Camera and Microphone are set to "Ask" or "Block." Set them both to "Allow," and then refresh this page.
+                        If you didn't see that prompt, or if you clicked "Block," you can change the settings by clicking on the green lock icon next to the URL. Set Camera and Microphone (and Sound if it's shown) all to "Allow," and then refresh this page.
                         <img class="screenshot" src="assets/webrtc_chrome_fix_step1.png" alt="Editing microphone and camera permissions in Chrome, step 1">
                     </li>
 

@@ -39,8 +39,11 @@ hard-coded, to provide a general-purpose technical setup frame.
 export default ExpFrameBaseComponent.extend(VideoRecord, {
     layout,
     showWarning: false,
+    showWebcamPermWarning: false,
+    checkedWebcamPermissions: false,
     micChecked: Em.computed.alias('recorder.micChecked'),
     hasCamAccess: Em.computed.alias('recorder.hasCamAccess'),
+
 
     populateDropdowns() {
         const micSelect = $('select#audioSource')[0];
@@ -87,9 +90,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     actions: {
 
         checkAudioThenNext() {
-            if (!this.get('micChecked')) {
+            if (!this.get('checkedWebcamPermissions') || !this.get('micChecked') || !this.get('hasCamAccess')) {
                 this.set('showWarning', true);
-            } else if (this.get('hasCamAccess')) {
+            } else {
                 this.send('next');
             }
         },
@@ -98,6 +101,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             this.set('showWarning', false);
             this.populateDropdowns();
             this.reloadRecorder();
+        },
+
+        reloadRecorderButtonAndRecordCheck() {
+            this.send('reloadRecorderButton');
+            this.set('checkedWebcamPermissions', true);
         },
 
         processSelectedMic() {
