@@ -64,23 +64,86 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         return !this.get('recorder.hasCamAccess') || this.get('recorder.recording');
     }),
     startedRecording: false,
+    hasCheckedVideo: false,
+    hasMadeVideo: false,
+    showWarning: false,
+
+    startRecorderAndUpdateDisplay() {
+        this.set('startedRecording', true); // keep track of if ANY recorder has been set up yet
+        this.startRecorder().then(() => {
+            // Require at least 2 s recording
+            setTimeout(function() {
+                $('#stopbutton').prop('disabled', false);
+            }, 2000);
+            $('#recordingIndicator').show();
+            $('#recordingText').text('Recording');
+        }, () => {
+            $('#recordingText').text('Error starting recorder');
+            $('#recordbutton').prop('disabled', false);
+        });
+    },
 
     actions: {
         record() {
-            this.startRecorder().then(() => {
-                this.set('startedRecording', true);
-                // Require at least 3 s recording
-                setTimeout(function() {
-                    $('#submitbutton').prop('disabled', false);
-                }, 3000);
+
+            $('#recordingStatus').show();
+            $('#recordingText').text('Starting recorder...');
+            $('[id^=pipeMenu]').hide();
+            $('#recordbutton').prop('disabled', true);
+            $('#playbutton').prop('disabled', true);
+            this.set('showWarning', false);
+            this.set('hasCheckedVideo', false);
+            this.set('hasMadeVideo', false);
+
+            if (this.get('startedRecording')) {
+                if (this.get('recorder') && this.get('recorder').get('recorder')) {
+                    this.get('recorder').get('recorder').pause();
+                }
+                this.destroyRecorder(); // Need to destroy between recordings or else the same video ID is sent as payload.
+                // Don't destroy after stopRecorder call because then can't replay.
+                var _this = this;
+                this.setupRecorder(_this.$(_this.get('recorderElement'))).then(() => {
+                    _this.startRecorderAndUpdateDisplay();
+                }, () => {
+                    $('#recordingText').text('Error starting recorder');
+                    $('#recordbutton').prop('disabled', false);
+                });
+            } else {
+                this.startRecorderAndUpdateDisplay(); // First time - can use current recorder
+            }
+
+        },
+        stop() {
+            $('#recordingText').text('Stopping and uploading...');
+            $('#recordingIndicator').hide();
+            $('#stopbutton').prop('disabled', true);
+            var _this = this;
+
+            this.stopRecorder().finally(() => {
+                _this.set('stoppedRecording', true);
+                _this.set('hasMadeVideo', true);
+                $('#recordingText').text('Not recording');
+                $('#playbutton').prop('disabled', false);
+                $('#recordbutton').prop('disabled', false);
             });
+
+        },
+        playvideo() {
+            $('#recordingText').text('');
+            $('#recordingStatus').hide();
+            this.get('recorder').get('recorder').playVideo();
+            $('[id^=pipeMenu]').show();
+            this.set('hasCheckedVideo', true);
         },
         finish() {
-            this.stopRecorder().finally(() => {
+
+            if (!this.get('hasMadeVideo') || !this.get('hasCheckedVideo')) {
+                this.set('showWarning', true);
+            } else {
                 this.session.set('completedConsentFrame', true);
-                this.set('stoppedRecording', true);
                 this.send('next');
-            });
+            }
+
         },
         download() {
             // Get the text of the consent form to process. Split into lines, and remove
@@ -318,10 +381,16 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     didInsertElement() {
         this._super(...arguments);
-        let validTemplateNames = ['consent_001', 'consent_002'];
+        let validTemplateNames = ['consent_001', 'consent_002', 'consent_003'];
         if (!validTemplateNames.includes(this.get('template'))) {
             console.warn('Invalid consent form specified. \'template\' parameter of \'exp-lookit-video-consent\' frame should be one of: ' + validTemplateNames.join(' '));
         }
         this.set('consentFormText', $('#consent-form-text').text());
+        $('#recordingIndicator').hide();
+        $('#recordingText').text('Not recording yet');
+        $('[id^=pipeMenu]').hide();
+        $('#recordbutton').prop('disabled', false);
+        $('#stopbutton').prop('disabled', true);
+        $('#playbutton').prop('disabled', true);
     }
 });

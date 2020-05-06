@@ -1,5 +1,5 @@
 <div class="row exp-lookit-video-consent">
-    <div class="col-md-7">
+    <div class="col-sm-7">
 
         <div class="video-consent-numbered-direction">
             <span class="video-consent-number">1.</span>
@@ -68,21 +68,26 @@
     </div>
 
 
-    <div class="col-md-5">
+    <div class="col-sm-5">
 
         <div class="video-consent-numbered-direction">
             <span class="video-consent-number">2.</span>
             <span class="video-consent-direction">
                 Click to
-                <button class="center" disabled={{disableRecord}} class="btn btn-primary pull-left" {{ action 'record' }}>
-                    start consent recording...
+                <button class="center" id="recordbutton" disabled={{disableRecord}} class="btn btn-primary pull-left" {{ action 'record' }}>
+                    start consent recording... <i class="fa fa-video-camera"></i>
                 </button>
             </span>
 
         </div>
 
         <div class="row recorder-container">
-            <div id="recorder" class="col-xs-12"></div>
+            <div id="recorder" class="recorder col-xs-12">
+                <span id="recordingStatus">
+                    <i class="fa fa-circle text-danger Blink" id="recordingIndicator"></i>
+                    <span id="recordingText"> Recording... </span>
+                </span>
+            </div>
         </div>
 
         <div class="video-consent-numbered-direction">
@@ -93,7 +98,6 @@
         <div class="well video-consent-prompt">
             <span class="breaklines exp-lookit-video-consent-prompt">"I have read and understand the consent document. I am this child's parent or legal guardian and we both agree to participate in this study."</span>
         </div>
-
 
         {{#if prompt_all_adults}}
             <div class="video-consent-numbered-direction">
@@ -115,10 +119,42 @@
                 {{/if}}
             </span>
             <span class="video-consent-direction">
-                When you're done, click to
-                <button id="submitbutton" disabled="disabled" class="btn btn-success pull-right" {{ action 'finish' }}>submit!</button>
+                Click to
+                <button id="stopbutton" disabled="disabled" class="btn btn-primary pull-right" {{ action 'stop' }}>stop recording <i class="fa fa-stop"></i></button>
             </span>
         </div>
+
+        <div class="video-consent-numbered-direction">
+            <span class="video-consent-number">
+                {{#if prompt_all_adults}}
+                    6.
+                {{else}}
+                    5.
+                {{/if}}
+            </span>
+            <span class="video-consent-direction">
+                <button id="playbutton" disabled="disabled" class="btn btn-primary pull-right" {{ action 'playvideo' }}>Play the consent video <i class="fa fa-play"></i></button> to make sure your video was recorded. (If not, you can try again!)
+            </span>
+        </div>
+
+        {{#if showWarning}}
+
+            {{#if (not hasMadeVideo)}}
+                <p class="warning">
+                    Please make a consent recording to continue.
+                </p>
+            {{else}}
+
+                {{#if (not hasCheckedVideo)}}
+                    <p class="warning">
+                        Please play your video to make sure you can hear the consent statement!
+                    </p>
+                {{/if}}
+            {{/if}}
+
+        {{/if}}
+
+        <button id="submitbutton" class="btn btn-success pull-right  {{if (and hasMadeVideo hasCheckedVideo) '' 'disabled'}}" {{ action 'finish' }}>Submit</button>
 
     </div>
 </div>
