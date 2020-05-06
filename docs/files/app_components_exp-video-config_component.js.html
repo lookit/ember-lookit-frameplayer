@@ -46,7 +46,7 @@
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
-                            <li><a href="../classes/Exp-lookit-image-audio.html">Exp-lookit-image-audio</a></li>
+                            <li><a href="../classes/Exp-lookit-image-audio-base.html">Exp-lookit-image-audio-base</a></li>
                             <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
@@ -150,6 +150,8 @@ hard-coded, to provide a general-purpose technical setup frame.
 export default ExpFrameBaseComponent.extend(VideoRecord, {
     layout,
     showWarning: false,
+    showWebcamPermWarning: false,
+    checkedWebcamPermissions: false,
     micChecked: Em.computed.alias(&#x27;recorder.micChecked&#x27;),
     hasCamAccess: Em.computed.alias(&#x27;recorder.hasCamAccess&#x27;),
 
@@ -198,9 +200,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     actions: {
 
         checkAudioThenNext() {
-            if (!this.get(&#x27;micChecked&#x27;)) {
+            if (!this.get(&#x27;checkedWebcamPermissions&#x27;) || !this.get(&#x27;micChecked&#x27;) || !this.get(&#x27;hasCamAccess&#x27;)) {
                 this.set(&#x27;showWarning&#x27;, true);
-            } else if (this.get(&#x27;hasCamAccess&#x27;)) {
+            } else {
                 this.send(&#x27;next&#x27;);
             }
         },
@@ -209,6 +211,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             this.set(&#x27;showWarning&#x27;, false);
             this.populateDropdowns();
             this.reloadRecorder();
+        },
+
+        reloadRecorderButtonAndRecordCheck() {
+            this.send(&#x27;reloadRecorderButton&#x27;);
+            this.set(&#x27;checkedWebcamPermissions&#x27;, true);
         },
 
         processSelectedMic() {

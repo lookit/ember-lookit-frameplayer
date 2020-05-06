@@ -187,6 +187,17 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         },
 
         /**
+        Whether to include an addition step #4 prompting any other adults present to read a statement of consent (I have read and understand the consent document. I also agree to participate in this study.)
+        @property {String} prompt_all_adults
+        @default false
+        */
+        prompt_all_adults: {
+            type: 'string',
+            description: 'Whether to include instructions for any additional adults to consent',
+            default: false
+        },
+
+        /**
         Statement about payment/compensation for participation, including a statement that there are no additional benefits anticipated to the participant. E.g., "After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience." For consent template 003, this section is titled Benefits, risks, and payment; it should include information about risks as well.
         @property {String} payment
         */

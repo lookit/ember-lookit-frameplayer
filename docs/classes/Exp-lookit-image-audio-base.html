@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Exp-lookit-image-audio - ember-lookit-frameplayer</title>
+    <title>Exp-lookit-image-audio-base - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -46,7 +46,7 @@
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
-                            <li><a href="../classes/Exp-lookit-image-audio.html">Exp-lookit-image-audio</a></li>
+                            <li><a href="../classes/Exp-lookit-image-audio-base.html">Exp-lookit-image-audio-base</a></li>
                             <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
@@ -105,7 +105,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>Exp-lookit-image-audio Class</h1>
+<h1>Exp-lookit-image-audio-base Class</h1>
 <div class="box meta">
         <div class="uses">
             Uses
@@ -121,7 +121,7 @@
         </div>
 
         <div class="foundat">
-            Defined in: <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l19"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:19</code></a>
+            Defined in: <a href="../files/app_components_exp-lookit-image-audio-base_component.js.html#l19"><code>app&#x2F;components&#x2F;exp-lookit-image-audio-base&#x2F;component.js:19</code></a>
         </div>
 
             Collection: <a href="../modules/frames.html">frames</a><br>
@@ -137,14 +137,14 @@
     <div>
         <div id="screenshot" class="api-class-tabpanel">
             <div class="class-screenshot" id="example-screenshot">
-                <img src="../assets/screenshots/Exp-lookit-image-audio.png">
+                <img src="../assets/screenshots/Exp-lookit-image-audio-base.png">
             </div>
         </div>
 
         <div id="video" class="api-class-tabpanel">
             <div class="class-screenshot" id="example-video">
-                <video controls poster="../assets/screenshots/Exp-lookit-image-audio.png" >
-                    <source src="../assets/framevideos/Exp-lookit-image-audio.mp4" type='video/mp4'>
+                <video controls poster="../assets/screenshots/Exp-lookit-image-audio-base.png" >
+                    <source src="../assets/framevideos/Exp-lookit-image-audio-base.mp4" type='video/mp4'>
                     No video available for this frame.
                 </video>
             </div>
@@ -208,16 +208,11 @@ without a user event.)</p>
                }
            ],
            "kind": "exp-lookit-story-page",
-           "audioSources": [
-               {
-                   "audioId": "firstAudio",
-                   "sources": "intro1",
-                   "highlights": [
+           "audio": "intro1",
+           "highlights": [
                        {"range": [3.017343,    5.600283], "image":     "leftA"},
                        {"range": [5.752911,    8.899402], "image":     "rightA"}
                    ]
-               }
-           ]
        }
 }
 
@@ -318,12 +313,12 @@ without a user event.)</p>
                                 <a href="#property_assetsToExpand">assetsToExpand</a>
 
                             </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_audioOnly">audioOnly</a>
+                            <li class="index-item property">
+                                <a href="#property_audio audio sources for this frame.!~YUIDOC_LINE~!!~YUIDOC_LINE~!This can either be an array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects, e.g.!~YUIDOC_LINE~!listing equivalent .mp3 and .ogg files, or can be a single string &#x60;filename&#x60;!~YUIDOC_LINE~!which will be expanded based on &#x60;baseDir&#x60; and &#x60;audioTypes&#x60; values (see &#x60;audioTypes&#x60;).">audio audio sources for this frame.!~YUIDOC_LINE~!!~YUIDOC_LINE~!This can either be an array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects, e.g.!~YUIDOC_LINE~!listing equivalent .mp3 and .ogg files, or can be a single string &#x60;filename&#x60;!~YUIDOC_LINE~!which will be expanded based on &#x60;baseDir&#x60; and &#x60;audioTypes&#x60; values (see &#x60;audioTypes&#x60;).</a>
 
                             </li>
-                            <li class="index-item property">
-                                <a href="#property_audioSources">audioSources</a>
+                            <li class="index-item property inherited">
+                                <a href="#property_audioOnly">audioOnly</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -1228,6 +1223,31 @@ stuff at this point!
 
 
 </div>
+<div id="property_audio audio sources for this frame.!~YUIDOC_LINE~!!~YUIDOC_LINE~!This can either be an array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects, e.g.!~YUIDOC_LINE~!listing equivalent .mp3 and .ogg files, or can be a single string &#x60;filename&#x60;!~YUIDOC_LINE~!which will be expanded based on &#x60;baseDir&#x60; and &#x60;audioTypes&#x60; values (see &#x60;audioTypes&#x60;)." class="property item">
+    <h3 class="name"><code>audio audio sources for this frame.!~YUIDOC_LINE~!!~YUIDOC_LINE~!This can either be an array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects, e.g.!~YUIDOC_LINE~!listing equivalent .mp3 and .ogg files, or can be a single string &#x60;filename&#x60;!~YUIDOC_LINE~!which will be expanded based on &#x60;baseDir&#x60; and &#x60;audioTypes&#x60; values (see &#x60;audioTypes&#x60;).</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-image-audio-base_component.js.html#l194"><code>app&#x2F;components&#x2F;exp-lookit-image-audio-base&#x2F;component.js:194</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Audio file to play at the start of this frame.</p>
+
+    </div>
+
+
+
+</div>
 <div id="property_audioOnly" class="property item inherited">
     <h3 class="name"><code>audioOnly</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
@@ -1252,73 +1272,6 @@ stuff at this point!
         <p><strong>Default:</strong> 0</p>
 
 
-</div>
-<div id="property_audioSources" class="property item">
-    <h3 class="name"><code>audioSources</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p> Specific to this element.
-                Defined in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l197"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:197</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Array of objects describing audio to play at the start of
-this frame. Each element describes a separate audio segment.</p>
-
-    </div>
-
-
-
-        <h4>Sub-properties:</h4>
-
-        <ul class="params-list">
-            <li class="param">
-                    <code class="param-name">audioId</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-                <div class="param-description">
-                    <p>unique string identifying this
-audio segment</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">sources</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
-
-                <div class="param-description">
-                    <p>Array of {src: 'url', type:
-'MIMEtype'} objects with audio sources for this segment</p>
-<p>Can also give a single string <code>filename</code>, which will
-be expanded out to the appropriate array based on <code>baseDir</code>
-and <code>audioTypes</code> values; see <code>audioTypes</code>.</p>
-
-                </div>
-
-            </li>
-            <li class="param">
-                    <code class="param-name">highlights</code>
-                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
-
-                <div class="param-description">
-                    <p>Array of {'range': [startT,
-endT], 'image': 'imageId'} objects, where the imageId
-values correspond to the ids given in images</p>
-
-                </div>
-
-            </li>
-        </ul>
 </div>
 <div id="property_audioTypes" class="property item inherited">
     <h3 class="name"><code>audioTypes</code></h3>
@@ -1372,7 +1325,7 @@ expanded out to
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l151"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:151</code></a>
+        <a href="../files/app_components_exp-lookit-image-audio-base_component.js.html#l148"><code>app&#x2F;components&#x2F;exp-lookit-image-audio-base&#x2F;component.js:148</code></a>
         </p>
 
 
@@ -1425,7 +1378,7 @@ TODO: eventually use this to set up non-recording option for previewing
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l318"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:318</code></a>
+        <a href="../files/app_components_exp-lookit-image-audio-base_component.js.html#l278"><code>app&#x2F;components&#x2F;exp-lookit-image-audio-base&#x2F;component.js:278</code></a>
         </p>
 
 
@@ -1546,7 +1499,7 @@ a survey between test trials in fullscreen mode.)
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l141"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:141</code></a>
+        <a href="../files/app_components_exp-lookit-image-audio-base_component.js.html#l138"><code>app&#x2F;components&#x2F;exp-lookit-image-audio-base&#x2F;component.js:138</code></a>
         </p>
 
 
@@ -1598,7 +1551,7 @@ to override if needed.
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l162"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:162</code></a>
+        <a href="../files/app_components_exp-lookit-image-audio-base_component.js.html#l159"><code>app&#x2F;components&#x2F;exp-lookit-image-audio-base&#x2F;component.js:159</code></a>
         </p>
 
 
@@ -1791,7 +1744,7 @@ to be on one line.)</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l278"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:278</code></a>
+        <a href="../files/app_components_exp-lookit-image-audio-base_component.js.html#l238"><code>app&#x2F;components&#x2F;exp-lookit-image-audio-base&#x2F;component.js:238</code></a>
         </p>
 
 
@@ -1907,7 +1860,7 @@ screen readers</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l331"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:331</code></a>
+        <a href="../files/app_components_exp-lookit-image-audio-base_component.js.html#l291"><code>app&#x2F;components&#x2F;exp-lookit-image-audio-base&#x2F;component.js:291</code></a>
         </p>
 
 
@@ -2006,7 +1959,7 @@ generated for this randomizer.</li>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l248"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:248</code></a>
+        <a href="../files/app_components_exp-lookit-image-audio-base_component.js.html#l208"><code>app&#x2F;components&#x2F;exp-lookit-image-audio-base&#x2F;component.js:208</code></a>
         </p>
 
 
@@ -2247,7 +2200,7 @@ just used for attempts to leave the study early</li>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l185"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:185</code></a>
+        <a href="../files/app_components_exp-lookit-image-audio-base_component.js.html#l182"><code>app&#x2F;components&#x2F;exp-lookit-image-audio-base&#x2F;component.js:182</code></a>
         </p>
 
 
@@ -2273,7 +2226,7 @@ show a previous button to allow the participant to go to the previous frame</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l174"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:174</code></a>
+        <a href="../files/app_components_exp-lookit-image-audio-base_component.js.html#l171"><code>app&#x2F;components&#x2F;exp-lookit-image-audio-base&#x2F;component.js:171</code></a>
         </p>
 
 
@@ -2575,7 +2528,7 @@ expanded out to
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l360"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:360</code></a>
+                            <a href="../files/app_components_exp-lookit-image-audio-base_component.js.html#l320"><code>app&#x2F;components&#x2F;exp-lookit-image-audio-base&#x2F;component.js:320</code></a>
                             </p>
                     
                     
@@ -2606,7 +2559,7 @@ expanded out to
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l470"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:470</code></a>
+                            <a href="../files/app_components_exp-lookit-image-audio-base_component.js.html#l430"><code>app&#x2F;components&#x2F;exp-lookit-image-audio-base&#x2F;component.js:430</code></a>
                             </p>
                     
                     
@@ -2850,7 +2803,7 @@ expanded out to
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l498"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:498</code></a>
+                            <a href="../files/app_components_exp-lookit-image-audio-base_component.js.html#l456"><code>app&#x2F;components&#x2F;exp-lookit-image-audio-base&#x2F;component.js:456</code></a>
                             </p>
                     
                     
@@ -2892,7 +2845,7 @@ expanded out to
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l463"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:463</code></a>
+                            <a href="../files/app_components_exp-lookit-image-audio-base_component.js.html#l423"><code>app&#x2F;components&#x2F;exp-lookit-image-audio-base&#x2F;component.js:423</code></a>
                             </p>
                     
                     
@@ -2944,7 +2897,7 @@ expanded out to
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_components_exp-lookit-image-audio_component.js.html#l438"><code>app&#x2F;components&#x2F;exp-lookit-image-audio&#x2F;component.js:438</code></a>
+                            <a href="../files/app_components_exp-lookit-image-audio-base_component.js.html#l398"><code>app&#x2F;components&#x2F;exp-lookit-image-audio-base&#x2F;component.js:398</code></a>
                             </p>
                     
                     

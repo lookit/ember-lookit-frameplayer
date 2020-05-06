@@ -44,7 +44,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     micChecked: Em.computed.alias('recorder.micChecked'),
     hasCamAccess: Em.computed.alias('recorder.hasCamAccess'),
 
-
     populateDropdowns() {
         const micSelect = $('select#audioSource')[0];
         const camSelect = $('select#videoSource')[0];

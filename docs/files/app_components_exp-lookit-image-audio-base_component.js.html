@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>app/components/exp-lookit-single-image/component.js - ember-lookit-frameplayer</title>
+    <title>app/components/exp-lookit-image-audio-base/component.js - ember-lookit-frameplayer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
@@ -105,15 +105,18 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: app/components/exp-lookit-single-image/component.js</h1>
+<h1 class="file-heading">File: app/components/exp-lookit-image-audio-base/component.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 import Ember from &#x27;ember&#x27;;
-import { imageAssetOptions } from &#x27;../../mixins/expand-assets&#x27;;
-//import { observer } from &#x27;@ember/object&#x27;;
-
-import ExpLookitImageAudioBase from &#x27;../exp-lookit-image-audio/component&#x27;;
+import layout from &#x27;./template&#x27;;
+import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
+import FullScreen from &#x27;../../mixins/full-screen&#x27;;
+import VideoRecord from &#x27;../../mixins/video-record&#x27;;
+import ExpandAssets from &#x27;../../mixins/expand-assets&#x27;;
+import { audioAssetOptions, imageAssetOptions } from &#x27;../../mixins/expand-assets&#x27;;
+import { observer } from &#x27;@ember/object&#x27;;
 
 let {
     $
@@ -184,40 +187,65 @@ let {
                 }
             ],
             &quot;kind&quot;: &quot;exp-lookit-story-page&quot;,
-            &quot;audioSources&quot;: [
-                {
-                    &quot;audioId&quot;: &quot;firstAudio&quot;,
-                    &quot;sources&quot;: &quot;intro1&quot;,
-                    &quot;highlights&quot;: [
+            &quot;audio&quot;: &quot;intro1&quot;,
+            &quot;highlights&quot;: [
                         {&quot;range&quot;: [3.017343,    5.600283], &quot;image&quot;:     &quot;leftA&quot;},
                         {&quot;range&quot;: [5.752911,    8.899402], &quot;image&quot;:     &quot;rightA&quot;}
                     ]
-                }
-            ]
         }
  }
 
  * &#x60;&#x60;&#x60;
- * @class Exp-lookit-single-image
- * @extends Exp-lookit-image-audio
+ * @class Exp-lookit-image-audio-base
+ * @extends Exp-frame-base
  * @uses Full-screen
  * @uses Video-record
  * @uses Expand-assets
  */
 
-export default ExpLookitImageAudioBase.extend({
-    type: &#x27;exp-lookit-single-image&#x27;,
+// See https://stackoverflow.com/a/56266358
+const isColor = (strColor) =&gt; {
+    const s = new Option().style;
+    s.color = strColor;
+    return s.color !== &#x27;&#x27;;
+};
 
-    autoProceed: false,
-    audioSources: [],
+export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
+    type: &#x27;exp-lookit-story-page&#x27;,
+    layout: layout,
+    displayFullscreen: true, // force fullscreen for all uses of this component
+    fullScreenElementId: &#x27;experiment-player&#x27;, // which element to send fullscreen
+    fsButtonID: &#x27;fsButton&#x27;, // ID of button to go to fullscreen
+
+    // Track state of experiment
+    completedAudio: false,
+    completedAttn: false,
+    currentSegment: &#x27;intro&#x27;, // &#x27;calibration&#x27;, &#x27;test&#x27;, &#x27;finalaudio&#x27; (mutually exclusive)
+    previousSegment: &#x27;intro&#x27;, // used when pausing/unpausing - refers to segment that study was paused during
+
+    currentAudioIndex: -1, // during initial sequential audio, holds an index into audioSources
+
+    // Override setting in VideoRecord mixin - only use camera if doing recording
+    doUseCamera: Ember.computed.alias(&#x27;doRecording&#x27;),
+    // Don&#x27;t need to override startRecordingAutomatically as we override the observer
+    // whenPossibleToRecord directly.
+
+    pageTimer: null,
+    progressTimer: null,
+    timerStart: null,
+    finishedAllAudio: false,
+    minDurationAchieved: false,
+    noParentText: false,
 
     assetsToExpand: {
-        &#x27;audio&#x27;: [],
+        &#x27;audio&#x27;: [&#x27;audio&#x27;],
         &#x27;video&#x27;: [],
         &#x27;image&#x27;: [&#x27;images/src&#x27;]
     },
 
     frameSchemaProperties: {
+        // TODO: may need to remove these docs since properties can&#x27;t be used directly by
+        // frames inheriting from this one
         /**
          * Whether to do webcam recording (will wait for webcam
          * connection before starting audio if so)
@@ -226,33 +254,40 @@ export default ExpLookitImageAudioBase.extend({
          */
         doRecording: {
             type: &#x27;boolean&#x27;,
-            description: &#x27;Whether to do webcam recording (will wait for webcam connection before starting audio if so)&#x27;
+            description: &#x27;Whether to do webcam recording (will wait for webcam connection before starting audio if so&#x27;
+        },
+        /**
+         * Whether to proceed automatically after audio (and hide
+         * replay/next buttons)
+         *
+         * @property {Boolean} autoProceed
+         */
+        autoProceed: {
+            type: &#x27;boolean&#x27;,
+            description: &#x27;Whether to proceed automatically after audio (and hide replay/next buttons)&#x27;
         },
 
         /**
-         * Duration of frame in seconds. If set and positive, there will be no next button
-         * displayed and the experiment will auto-proceed after the duration elapses.
-         * Default is -1: next button is displayed and parent chooses when to proceed.
+         * [Only used if autoProceed is true] Minimum duration of frame in seconds.
+         * Frame will auto-proceed after this much time has elapsed and all audio
+         * has completed.
          *
          * @property {Number} durationSeconds
-         * @default -1
          */
         durationSeconds: {
             type: &#x27;number&#x27;,
-            description: &#x27;Minimum duration of frame in seconds if autoproceeding&#x27;,
-            default: -1
+            description: &#x27;Minimum duration of frame in seconds if autoproceeding&#x27;
         },
 
         /**
-         * [Only used if durationSeconds set] Whether to
+         * [Only used if autoProceed is true and durationSeconds set] Whether to
          * show a progress bar based on durationSeconds in the parent text area.
          *
          * @property {Number} showProgressBar
          */
         showProgressBar: {
             type: &#x27;boolean&#x27;,
-            description: &#x27;Whether to show a progress bar based on durationSeconds&#x27;,
-            default: false
+            description: &#x27;Whether to show a progress bar based on durationSeconds&#x27;
         },
 
         /**
@@ -268,10 +303,21 @@ export default ExpLookitImageAudioBase.extend({
         },
 
         /**
-         * Text to display to parent.  Each field is optional. If the &#x60;parentTextBlock&#x60;
-         * is an empty object &#x60;{}&#x60;, no parent text block is displayed at all at the bottom
-         * of the screen. Otherwise, even if the title and text are empty, the block will
-         * be displayed as usual without any text.
+         * Audio file to play at the start of this frame.
+         *
+         * @property {Object[]} audio audio sources for this frame.
+         *
+         * This can either be an array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects, e.g.
+         * listing equivalent .mp3 and .ogg files, or can be a single string &#x60;filename&#x60;
+         * which will be expanded based on &#x60;baseDir&#x60; and &#x60;audioTypes&#x60; values (see &#x60;audioTypes&#x60;).
+         */
+        audio: {
+            anyOf: audioAssetOptions,
+            description: &#x27;Audio to play as this frame begins&#x27;,
+            default: []
+        },
+        /**
+         * Text block to display to parent.  (Each field is optional)
          *
          * @property {Object} parentTextBlock
          *   @param {String} title title to display
@@ -300,22 +346,33 @@ export default ExpLookitImageAudioBase.extend({
             },
             default: {}
         },
-
         /**
-         * Image to display and information about its placement
+         * Array of images to display and information about their placement
          *
          * @property {Object[]} images
+         *   @param {String} id unique ID for this image
          *   @param {String} src URL of image source. This can be a full
          *     URL, or relative to baseDir (see baseDir).
+         *   @param {String} alt alt-text for image in case it doesn&#x27;t load and for
+         *     screen readers
          *   @param {String} left left margin, as percentage of story area width
          *   @param {String} width image width, as percentage of story area width
          *   @param {String} top top margin, as percentage of story area height
+
          */
-        image: {
+        images: {
+            type: &#x27;array&#x27;,
+            items: {
                 type: &#x27;object&#x27;,
                 properties: {
+                    &#x27;id&#x27;: {
+                        type: &#x27;string&#x27;
+                    },
                     &#x27;src&#x27;: {
                         anyOf: imageAssetOptions
+                    },
+                    &#x27;alt&#x27;: {
+                        type: &#x27;string&#x27;
                     },
                     &#x27;left&#x27;: {
                         type: &#x27;string&#x27;
@@ -327,8 +384,8 @@ export default ExpLookitImageAudioBase.extend({
                         type: &#x27;string&#x27;
                     }
                 }
-            },
-
+            }
+        },
         /**
          * Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
          * for acceptable syntax: can use color names (&#x27;blue&#x27;, &#x27;red&#x27;, &#x27;green&#x27;, etc.), or
@@ -359,10 +416,104 @@ export default ExpLookitImageAudioBase.extend({
         }
     },
 
+    meta: {
+        name: &#x27;ExpLookitImageAudio&#x27;,
+        description: &#x27;General frame to display images and/or audio&#x27;,
+        data: {
+            type: &#x27;object&#x27;,
+            properties: {
+                videoId: {
+                    type: &#x27;string&#x27;
+                },
+                videoList: {
+                    type: &#x27;list&#x27;
+                },
+                /**
+                * Array of images used in this frame [same as passed to this frame, but
+                * may reflect random assignment for this particular participant]
+                * @attribute images
+                */
+                images: {
+                    type: &#x27;array&#x27;
+                }
+            },
+        }
+    },
+
+    // Override to do a bit extra when recording (single-frame)
+    whenPossibleToRecord: observer(&#x27;recorder.hasCamAccess&#x27;, &#x27;recorderReady&#x27;, function() {
+        if (this.get(&#x27;doRecording&#x27;)) {
+            var _this = this;
+            if (this.get(&#x27;recorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;recorderReady&#x27;)) {
+                this.startRecorder().then(() =&gt; {
+                    _this.set(&#x27;currentAudioIndex&#x27;, -1);
+                    _this.send(&#x27;playNextAudioSegment&#x27;);
+                    _this.set(&#x27;recorderReady&#x27;, false);
+                    $(&#x27;#waitForVideo&#x27;).hide();
+                    $(&#x27;.story-image-container&#x27;).show();
+                });
+            }
+        }
+    }),
+
+    // Override to do a bit extra when starting session recorder
+    whenPossibleToRecordSession: observer(&#x27;sessionRecorder.hasCamAccess&#x27;, &#x27;sessionRecorderReady&#x27;, function() {
+        if (this.get(&#x27;startSessionRecording&#x27;)) {
+            var _this = this;
+            if (this.get(&#x27;sessionRecorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;sessionRecorderReady&#x27;)) {
+                this.startSessionRecorder().then(() =&gt; {
+                    _this.set(&#x27;sessionRecorderReady&#x27;, false);
+                    _this.set(&#x27;currentAudioIndex&#x27;, -1);
+                    _this.send(&#x27;playNextAudioSegment&#x27;);
+                    $(&#x27;#waitForVideo&#x27;).hide();
+                    $(&#x27;.story-image-container&#x27;).show();
+                });
+            }
+        }
+    }),
+
     actions: {
+
+        // During playing audio
+        updateCharacterHighlighting() {
+
+            var highlights = this.get(&#x27;highlights&#x27;);
+
+            if (highlights) {
+                var t = $(&#x27;#player-audio&#x27;)[0].currentTime;
+
+                $(&#x27;.story-image-container&#x27;).removeClass(&#x27;highlight&#x27;);
+
+                highlights.forEach(function (h) {
+                    if (t &gt; h.range[0] &amp;&amp; t &lt; h.range[1]) {
+                        $(&#x27;#&#x27; + h.image).addClass(&#x27;highlight&#x27;);
+                    }
+                });
+            }
+        },
+
+        replay() {
+            // pause any current audio, and set times to 0
+            $(&#x27;audio&#x27;).each(function() {
+                this.pause();
+                this.currentTime = 0;
+            });
+            // reset to index -1 as at start of study
+            this.set(&#x27;currentAudioIndex&#x27;, -1);
+            // restart audio
+            this.send(&#x27;playNextAudioSegment&#x27;);
+        },
 
         finish() {
             var _this = this;
+            /**
+             * Trial is complete and attempting to move to next frame; may wait for recording
+             * to catch up before proceeding.
+             *
+             * @event trialComplete
+             */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;trialComplete&#x27;);
+
             if (this.get(&#x27;doRecording&#x27;)) {
                 this.stopRecorder().then(() =&gt; {
                     _this.set(&#x27;stoppedRecording&#x27;, true);
@@ -378,7 +529,7 @@ export default ExpLookitImageAudioBase.extend({
         playNextAudioSegment() {
             this.set(&#x27;currentAudioIndex&#x27;, this.get(&#x27;currentAudioIndex&#x27;) + 1);
             if (this.currentAudioIndex == 0) { // Starting first audio segment: start timer &amp; progress bar
-                if (this.get(&#x27;durationSeconds&#x27;) &amp;&amp; this.get(&#x27;durationSeconds&#x27;) &gt; 0) {
+                if (this.get(&#x27;durationSeconds&#x27;)) {
                     let _this = this;
                     /**
                     * Timer for set-duration trial begins
@@ -394,7 +545,9 @@ export default ExpLookitImageAudioBase.extend({
                             */
                             _this.send(&#x27;setTimeEvent&#x27;, &#x27;endTimer&#x27;);
                             _this.set(&#x27;minDurationAchieved&#x27;, true);
-                            _this.send(&#x27;finish&#x27;);
+                            if (_this.get(&#x27;finishedAllAudio&#x27;)) {
+                                _this.send(&#x27;finish&#x27;);
+                            }
                         }, _this.get(&#x27;durationSeconds&#x27;) * 1000));
                     if (this.get(&#x27;showProgressBar&#x27;)) {
                         this.set(&#x27;timerStart&#x27;, new Date().getTime());
@@ -409,31 +562,99 @@ export default ExpLookitImageAudioBase.extend({
                 } else {
                     this.set(&#x27;minDurationAchieved&#x27;, true);
                 }
+
+                $(&#x27;#player-audio&#x27;)[0].play().then(() =&gt; {
+                    /**
+                     * When an audio segment starts playing
+                     *
+                     * @event startAudioSegment
+                     * @param {Number} currentAudioIndex the index of the current audio segment, starting from 0
+                     */
+                    this.send(&#x27;setTimeEvent&#x27;, &#x27;startAudioSegment&#x27;, {&#x27;currentAudioIndex&#x27;: this.currentAudioIndex});
+                });
+            } else {
+                this.set(&#x27;finishedAllAudio&#x27;, true);
+                if (this.get(&#x27;autoProceed&#x27;) &amp;&amp; this.get(&#x27;minDurationAchieved&#x27;)) {
+                    this.send(&#x27;finish&#x27;);
+                } else {
+                    $(&#x27;#nextbutton&#x27;).prop(&#x27;disabled&#x27;, false);
+                }
             }
         }
-
     },
 
     didInsertElement() {
+
         this._super(...arguments);
-        if (this.get(&#x27;durationSeconds&#x27;) &amp;&amp; this.get(&#x27;durationSeconds&#x27;) &gt; 0) {
-            $(&#x27;#nextbutton&#x27;).prop(&#x27;disabled&#x27;, true);
+
+        // Apply user-provided CSS to parent text block
+        if (Object.keys(this.get(&#x27;parentTextBlock&#x27;)).length) {
+            var parentTextBlock = this.get(&#x27;parentTextBlock&#x27;) || {};
+            var css = parentTextBlock.css || {};
+            $(&#x27;#parenttext&#x27;).css(css);
         } else {
-            $(&#x27;#nextbutton&#x27;).prop(&#x27;disabled&#x27;, false);
+            this.set(&#x27;noParentText&#x27;, true);
+            if (this.get(&#x27;autoProceed&#x27;)) {
+                this.set(&#x27;noStoryControls&#x27;, true);
+            }
+        }
+
+        // Apply user-provided CSS to images
+        $.each(this.get(&#x27;images_parsed&#x27;), function(idx, image) {
+            if (!image.fill) {
+
+                $(&#x27;#&#x27; + image.id).css({&#x27;left&#x27;: &#x60;${image.left}%&#x60;, &#x27;width&#x27;: &#x60;${image.width}%&#x60;, &#x27;top&#x27;: &#x60;${image.top}%&#x60;, &#x27;height&#x27;: &#x60;${image.height}%&#x60;});
+            }
+        });
+
+        // Apply background colors
+        if (isColor(this.get(&#x27;backgroundColor&#x27;))) {
+            $(&#x27;div.exp-lookit-image-audio&#x27;).css(&#x27;background-color&#x27;, this.get(&#x27;backgroundColor&#x27;));
+        } else {
+            console.warn(&#x27;Invalid background color provided; not applying.&#x27;);
+        }
+
+        if (isColor(this.get(&#x27;pageColor&#x27;))) {
+            $(&#x27;div.exp-lookit-image-audio div#image-area&#x27;).css(&#x27;background-color&#x27;, this.get(&#x27;pageColor&#x27;));
+        } else {
+            console.warn(&#x27;Invalid page color provided; not applying.&#x27;);
+        }
+
+        this.send(&#x27;showFullscreen&#x27;);
+        $(&#x27;#nextbutton&#x27;).prop(&#x27;disabled&#x27;, true);
+
+        // If not recording, go to audio right away! Otherwise will be triggered when
+        // recording starts.
+        if (!(this.get(&#x27;doRecording&#x27;) || this.get(&#x27;startSessionRecording&#x27;))) {
+            this.send(&#x27;playNextAudioSegment&#x27;);
+        }
+
+    },
+
+    willDestroyElement() {
+        window.clearInterval(this.get(&#x27;pageTimer&#x27;));
+        window.clearInterval(this.get(&#x27;progressTimer&#x27;));
+        this._super(...arguments);
+    },
+
+    // Hide story once rendered (as long as story hasn&#x27;t started yet anyway)
+    didRender() {
+        if ((this.get(&#x27;doRecording&#x27;) || this.get(&#x27;startSessionRecording&#x27;)) &amp;&amp; this.get(&#x27;currentAudioIndex&#x27;) == -1) {
+            $(&#x27;.story-image-container&#x27;).hide();
         }
     },
 
+    // Supply image IDs if they&#x27;re missing. This happens BEFORE assignment of
     didReceiveAttrs() {
         this._super(...arguments);
+        var N = 1;
+        $.each(this.get(&#x27;images&#x27;), function(idx, image) {
+            if (!image.hasOwnProperty(&#x27;id&#x27;)) {
+                image.id = &#x60;image_${N}&#x60;;
+            }
+            N++;
+        });
 
-        let image = this.get(&#x27;image&#x27;);
-        if (!image.hasOwnProperty(&#x27;id&#x27;)) {
-            image.id = &#x27;image_1&#x27;;
-        }
-
-        this.set(&#x27;images&#x27;, [image]);
-        this.set(&#x27;autoProceed&#x27;, this.get(&#x27;durationSeconds&#x27;) &gt; 0);
-        this.expandAssets();
     }
 
 });

@@ -72,11 +72,11 @@
             "fors": {},
             "namespaces": {}
         },
-        "app/components/exp-lookit-image-audio/component.js": {
-            "name": "app/components/exp-lookit-image-audio/component.js",
+        "app/components/exp-lookit-image-audio-base/component.js": {
+            "name": "app/components/exp-lookit-image-audio-base/component.js",
             "modules": {},
             "classes": {
-                "Exp-lookit-image-audio": 1
+                "Exp-lookit-image-audio-base": 1
             },
             "fors": {},
             "namespaces": {}
@@ -119,6 +119,13 @@
         },
         "app/components/exp-lookit-single-image/component.js": {
             "name": "app/components/exp-lookit-single-image/component.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "app/components/exp-lookit-single-image-audio/component.js": {
+            "name": "app/components/exp-lookit-single-image-audio/component.js",
             "modules": {},
             "classes": {
                 "Exp-lookit-single-image": 1
@@ -342,7 +349,7 @@
                 "Exp-lookit-exit-survey": 1,
                 "Exp-lookit-geometry-alternation": 1,
                 "Exp-lookit-geometry-alternation-open": 1,
-                "Exp-lookit-image-audio": 1,
+                "Exp-lookit-image-audio-base": 1,
                 "Exp-lookit-instructions": 1,
                 "Exp-lookit-mood-questionnaire": 1,
                 "Exp-lookit-observation": 1,
@@ -388,7 +395,7 @@
                 "Exp-lookit-exit-survey": 1,
                 "Exp-lookit-geometry-alternation": 1,
                 "Exp-lookit-geometry-alternation-open": 1,
-                "Exp-lookit-image-audio": 1,
+                "Exp-lookit-image-audio-base": 1,
                 "Exp-lookit-instructions": 1,
                 "Exp-lookit-mood-questionnaire": 1,
                 "Exp-lookit-observation": 1,
@@ -599,9 +606,9 @@
                 "Expand-assets"
             ]
         },
-        "Exp-lookit-image-audio": {
-            "name": "Exp-lookit-image-audio",
-            "shortname": "Exp-lookit-image-audio",
+        "Exp-lookit-image-audio-base": {
+            "name": "Exp-lookit-image-audio-base",
+            "shortname": "Exp-lookit-image-audio-base",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -610,9 +617,9 @@
             "module": "exp-player",
             "submodule": "frames",
             "namespace": "",
-            "file": "app/components/exp-lookit-image-audio/component.js",
+            "file": "app/components/exp-lookit-image-audio-base/component.js",
             "line": 19,
-            "description": "Frame to implement a basic \"storybook page\" trial, with images placed on the\nscreen within a display area and a sequence of audio files played.\nOptionally, images may be highlighted at specified times during the audio\nfiles.\n\nWebcam recording may be turned on or off; if on, the page is not displayed\nor audio started until recording begins.\n\nFrame is displayed fullscreen, but is not paused or otherwise disabled if the\nuser leaves fullscreen. A button appears prompting the user to return to\nfullscreen mode.\n\nThe parent may press 'next' to proceed, or the study may proceed\nautomatically when audio finishes (autoProceed). Optionally, if using autoProceed,\nthe frame may be displayed for a minimum duration, so that e.g. it lasts exactly 10\nseconds from start of audio even though the audio is only 2 seconds long. If using this\nfeature a progress bar may be displayed.\n\nAny number of images may be placed on the screen, and their position\nspecified. (Aspect ratio will be the same as the original image.)\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\nneeds to include a manual \"next\" button so that there's a user interaction\nevent to trigger fullscreen mode. (Browsers don't allow us to switch to FS\nwithout a user event.)\n\n```json\n\"frames\": {\n   \"story-intro-1\": {\n           \"doRecording\": false,\n           \"autoProceed\": true,\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/ingroupobligations/\",\n           \"audioTypes\": [\"mp3\", \"ogg\"],\n           \"parentTextBlock\": {\n               \"title\": \"Parents!\",\n               \"text\": \"some instructions\",\n               \"emph\": true,\n               \"css\": {\n                   \"color\": \"red\",\n                   \"font-size\": \"12px\"\n               }\n           },\n           \"images\": [\n               {\n                   \"id\": \"leftA\",\n                   \"src\": \"flurps1.jpg\",\n                   \"left\": \"10\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               },\n               {\n                   \"id\": \"rightA\",\n                   \"src\": \"zazzes1.jpg\",\n                   \"left\": \"60\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               }\n           ],\n           \"kind\": \"exp-lookit-story-page\",\n           \"audioSources\": [\n               {\n                   \"audioId\": \"firstAudio\",\n                   \"sources\": \"intro1\",\n                   \"highlights\": [\n                       {\"range\": [3.017343,    5.600283], \"image\":     \"leftA\"},\n                       {\"range\": [5.752911,    8.899402], \"image\":     \"rightA\"}\n                   ]\n               }\n           ]\n       }\n}\n\n```",
+            "description": "Frame to implement a basic \"storybook page\" trial, with images placed on the\nscreen within a display area and a sequence of audio files played.\nOptionally, images may be highlighted at specified times during the audio\nfiles.\n\nWebcam recording may be turned on or off; if on, the page is not displayed\nor audio started until recording begins.\n\nFrame is displayed fullscreen, but is not paused or otherwise disabled if the\nuser leaves fullscreen. A button appears prompting the user to return to\nfullscreen mode.\n\nThe parent may press 'next' to proceed, or the study may proceed\nautomatically when audio finishes (autoProceed). Optionally, if using autoProceed,\nthe frame may be displayed for a minimum duration, so that e.g. it lasts exactly 10\nseconds from start of audio even though the audio is only 2 seconds long. If using this\nfeature a progress bar may be displayed.\n\nAny number of images may be placed on the screen, and their position\nspecified. (Aspect ratio will be the same as the original image.)\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\nneeds to include a manual \"next\" button so that there's a user interaction\nevent to trigger fullscreen mode. (Browsers don't allow us to switch to FS\nwithout a user event.)\n\n```json\n\"frames\": {\n   \"story-intro-1\": {\n           \"doRecording\": false,\n           \"autoProceed\": true,\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/ingroupobligations/\",\n           \"audioTypes\": [\"mp3\", \"ogg\"],\n           \"parentTextBlock\": {\n               \"title\": \"Parents!\",\n               \"text\": \"some instructions\",\n               \"emph\": true,\n               \"css\": {\n                   \"color\": \"red\",\n                   \"font-size\": \"12px\"\n               }\n           },\n           \"images\": [\n               {\n                   \"id\": \"leftA\",\n                   \"src\": \"flurps1.jpg\",\n                   \"left\": \"10\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               },\n               {\n                   \"id\": \"rightA\",\n                   \"src\": \"zazzes1.jpg\",\n                   \"left\": \"60\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               }\n           ],\n           \"kind\": \"exp-lookit-story-page\",\n           \"audio\": \"intro1\",\n           \"highlights\": [\n                       {\"range\": [3.017343,    5.600283], \"image\":     \"leftA\"},\n                       {\"range\": [5.752911,    8.899402], \"image\":     \"rightA\"}\n                   ]\n       }\n}\n\n```",
             "extends": "Exp-frame-base",
             "uses": [
                 "Full-screen",
@@ -701,9 +708,9 @@
             "module": "exp-player",
             "submodule": "frames",
             "namespace": "",
-            "file": "app/components/exp-lookit-single-image/component.js",
+            "file": "app/components/exp-lookit-single-image-audio/component.js",
             "line": 16,
-            "description": "Frame to implement a basic \"storybook page\" trial, with images placed on the\nscreen within a display area and a sequence of audio files played.\nOptionally, images may be highlighted at specified times during the audio\nfiles.\n\nWebcam recording may be turned on or off; if on, the page is not displayed\nor audio started until recording begins.\n\nFrame is displayed fullscreen, but is not paused or otherwise disabled if the\nuser leaves fullscreen. A button appears prompting the user to return to\nfullscreen mode.\n\nThe parent may press 'next' to proceed, or the study may proceed\nautomatically when audio finishes (autoProceed). Optionally, if using autoProceed,\nthe frame may be displayed for a minimum duration, so that e.g. it lasts exactly 10\nseconds from start of audio even though the audio is only 2 seconds long. If using this\nfeature a progress bar may be displayed.\n\nAny number of images may be placed on the screen, and their position\nspecified. (Aspect ratio will be the same as the original image.)\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\nneeds to include a manual \"next\" button so that there's a user interaction\nevent to trigger fullscreen mode. (Browsers don't allow us to switch to FS\nwithout a user event.)\n\n```json\n\"frames\": {\n   \"story-intro-1\": {\n           \"doRecording\": false,\n           \"autoProceed\": true,\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/ingroupobligations/\",\n           \"audioTypes\": [\"mp3\", \"ogg\"],\n           \"parentTextBlock\": {\n               \"title\": \"Parents!\",\n               \"text\": \"some instructions\",\n               \"emph\": true,\n               \"css\": {\n                   \"color\": \"red\",\n                   \"font-size\": \"12px\"\n               }\n           },\n           \"images\": [\n               {\n                   \"id\": \"leftA\",\n                   \"src\": \"flurps1.jpg\",\n                   \"left\": \"10\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               },\n               {\n                   \"id\": \"rightA\",\n                   \"src\": \"zazzes1.jpg\",\n                   \"left\": \"60\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               }\n           ],\n           \"kind\": \"exp-lookit-story-page\",\n           \"audioSources\": [\n               {\n                   \"audioId\": \"firstAudio\",\n                   \"sources\": \"intro1\",\n                   \"highlights\": [\n                       {\"range\": [3.017343,    5.600283], \"image\":     \"leftA\"},\n                       {\"range\": [5.752911,    8.899402], \"image\":     \"rightA\"}\n                   ]\n               }\n           ]\n       }\n}\n\n```",
+            "description": "TODO\nFrame to implement a basic \"storybook page\" trial, with images placed on the\nscreen within a display area and a sequence of audio files played.\nOptionally, images may be highlighted at specified times during the audio\nfiles.\n\nWebcam recording may be turned on or off; if on, the page is not displayed\nor audio started until recording begins.\n\nFrame is displayed fullscreen, but is not paused or otherwise disabled if the\nuser leaves fullscreen. A button appears prompting the user to return to\nfullscreen mode.\n\nThe parent may press 'next' to proceed, or the study may proceed\nautomatically when audio finishes (autoProceed). Optionally, if using autoProceed,\nthe frame may be displayed for a minimum duration, so that e.g. it lasts exactly 10\nseconds from start of audio even though the audio is only 2 seconds long. If using this\nfeature a progress bar may be displayed.\n\nAny number of images may be placed on the screen, and their position\nspecified. (Aspect ratio will be the same as the original image.)\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\nneeds to include a manual \"next\" button so that there's a user interaction\nevent to trigger fullscreen mode. (Browsers don't allow us to switch to FS\nwithout a user event.)\n\n```json\n\"frames\": {\n   \"story-intro-1\": {\n           \"doRecording\": false,\n           \"autoProceed\": true,\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/ingroupobligations/\",\n           \"audioTypes\": [\"mp3\", \"ogg\"],\n           \"parentTextBlock\": {\n               \"title\": \"Parents!\",\n               \"text\": \"some instructions\",\n               \"emph\": true,\n               \"css\": {\n                   \"color\": \"red\",\n                   \"font-size\": \"12px\"\n               }\n           },\n           \"images\": [\n               {\n                   \"id\": \"leftA\",\n                   \"src\": \"flurps1.jpg\",\n                   \"left\": \"10\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               },\n               {\n                   \"id\": \"rightA\",\n                   \"src\": \"zazzes1.jpg\",\n                   \"left\": \"60\",\n                   \"width\": \"30\",\n                   \"top\": \"34.47\"\n               }\n           ],\n           \"kind\": \"exp-lookit-story-page\",\n           \"audioSources\": [\n               {\n                   \"audioId\": \"firstAudio\",\n                   \"sources\": \"intro1\",\n                   \"highlights\": [\n                       {\"range\": [3.017343,    5.600283], \"image\":     \"leftA\"},\n                       {\"range\": [5.752911,    8.899402], \"image\":     \"rightA\"}\n                   ]\n               }\n           ]\n       }\n}\n\n```",
             "extends": "Exp-lookit-image-audio",
             "uses": [
                 "Full-screen",
@@ -839,7 +846,7 @@
             "namespace": "",
             "file": "app/components/exp-lookit-video-consent/component.js",
             "line": 16,
-            "description": "Video consent frame for Lookit studies, with consent document displayed at left and instructions to start recording, read a statement out loud, and send. A standard consent\ndocument is displayed, with additional study-specific information provided by the researcher, in accordance with the Lookit terms of use.\n\nResearchers can select from the following named templates:\n\n`consent_001`: Original Lookit consent document (2019)\n`consent_002`: Added optional GDPR section and research subject rights statement\n\nTo look up the exact text of the consent document, see https://github.com/lookit/ember-lookit-frameplayer/blob/master/app/components/exp-lookit-video-consent/template.hbs\n\nThe consent document can be downloaded as PDF document by participant.\n\n```json\n\"frames\": {\n    \"video-consent\": {\n        \"kind\": \"exp-lookit-video-consent\",\n        \"template\": \"consent_002\",\n        \"PIName\": \"Jane Smith\",\n        \"institution\": \"Science University\",\n        \"PIContact\": \"Jane Smith at 123 456 7890\",\n        \"purpose\": \"Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.\",\n        \"procedures\": \"Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.\",\n        \"payment\": \"After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.\",\n        \"datause\": \"We are primarily interested in your child's emotional reactions to the images and sounds. A research assistant will watch your video to measure the precise amount of delight in your child's face as he or she sees each cat picture.\",\n        \"gdpr\": false,\n        \"research_rights_statement\": \"You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the [IRB NAME], [INSTITUTION], [ADDRESS/CONTACT]\",\n        \"additional_segments\": [\n                {\n                    \"title\": \"US Patriot Act Disclosure\",\n                    \"text\": \"[EXAMPLE ONLY, PLEASE REMOVE ADDITIONAL_SEGMENTS UNLESS YOU NEED THEM.] Lookit is a U.S. organization and all information gathered from the website is stored on servers based in the U.S. Therefore, your video recordings are subject to U.S. laws, such as the US Patriot Act. This act allows authorities access to the records of internet service providers. If you choose to participate in this study, you understand that your video recording will be stored and accessed in the USA. The security and privacy policy for Lookit can be found at the following link: <a href='https://lookit.mit.edu/privacy/' target='_blank'>https://lookit.mit.edu/privacy/</a>.\"\n                }\n            ]\n        }\n}\n```",
+            "description": "Video consent frame for Lookit studies, with consent document displayed at left and instructions to start recording, read a statement out loud, and send. A standard consent\ndocument is displayed, with additional study-specific information provided by the researcher, in accordance with the Lookit terms of use.\n\nResearchers can select from the following named templates:\n\n`consent_001`: Original Lookit consent document (2019)\n`consent_002`: Added optional GDPR section and research subject rights statement\n`consent_003`: Same as consent_002 except that the 'Payment' section is renamed 'Benefits, risks, and payment' for institutions that prefer that\n\nTo look up the exact text of each consent template for your IRB protocol, please see https://github.com/lookit/research-resources/tree/master/Legal\n\nThe consent document can be downloaded as PDF document by participant.\n\n```json\n\"frames\": {\n    \"video-consent\": {\n        \"kind\": \"exp-lookit-video-consent\",\n        \"template\": \"consent_003\",\n        \"PIName\": \"Jane Smith\",\n        \"institution\": \"Science University\",\n        \"PIContact\": \"Jane Smith at 123 456 7890\",\n        \"purpose\": \"Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.\",\n        \"procedures\": \"Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses.\",\n        \"payment\": \"After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience. There are no anticipated risks associated with participating.\",\n        \"datause\": \"We are primarily interested in your child's emotional reactions to the images and sounds. A research assistant will watch your video to measure the precise amount of delight in your child's face as he or she sees each cat picture.\",\n        \"gdpr\": false,\n        \"research_rights_statement\": \"You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the [IRB NAME], [INSTITUTION], [ADDRESS/CONTACT]\",\n        \"additional_segments\": [\n                {\n                    \"title\": \"US Patriot Act Disclosure\",\n                    \"text\": \"[EXAMPLE ONLY, PLEASE REMOVE ADDITIONAL_SEGMENTS UNLESS YOU NEED THEM.] Lookit is a U.S. organization and all information gathered from the website is stored on servers based in the U.S. Therefore, your video recordings are subject to U.S. laws, such as the US Patriot Act. This act allows authorities access to the records of internet service providers. If you choose to participate in this study, you understand that your video recording will be stored and accessed in the USA. The security and privacy policy for Lookit can be found at the following link: <a href='https://lookit.mit.edu/privacy/' target='_blank'>https://lookit.mit.edu/privacy/</a>.\"\n                }\n            ]\n        }\n}\n```",
             "extends": "Exp-frame-base",
             "uses": [
                 "Video-record"
@@ -905,7 +912,7 @@
                 "Exp-lookit-dialogue-page",
                 "Exp-lookit-geometry-alternation",
                 "Exp-lookit-geometry-alternation-open",
-                "Exp-lookit-image-audio",
+                "Exp-lookit-image-audio-base",
                 "Exp-lookit-preferential-looking",
                 "Exp-lookit-single-image",
                 "Exp-lookit-stimuli-preview",
@@ -933,7 +940,7 @@
                 "Exp-lookit-exit-survey",
                 "Exp-lookit-geometry-alternation",
                 "Exp-lookit-geometry-alternation-open",
-                "Exp-lookit-image-audio",
+                "Exp-lookit-image-audio-base",
                 "Exp-lookit-preferential-looking",
                 "Exp-lookit-single-image",
                 "Exp-lookit-story-page",
@@ -994,7 +1001,7 @@
                 "Exp-lookit-dialogue-page",
                 "Exp-lookit-geometry-alternation",
                 "Exp-lookit-geometry-alternation-open",
-                "Exp-lookit-image-audio",
+                "Exp-lookit-image-audio-base",
                 "Exp-lookit-preferential-looking",
                 "Exp-lookit-single-image",
                 "Exp-lookit-stimuli-preview",
@@ -2712,96 +2719,79 @@
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 141,
+            "file": "app/components/exp-lookit-image-audio-base/component.js",
+            "line": 138,
             "description": "Whether to do webcam recording (will wait for webcam\nconnection before starting audio if so)",
             "itemtype": "property",
             "name": "doRecording",
             "type": "Boolean",
-            "class": "Exp-lookit-image-audio",
+            "class": "Exp-lookit-image-audio-base",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 151,
+            "file": "app/components/exp-lookit-image-audio-base/component.js",
+            "line": 148,
             "description": "Whether to proceed automatically after audio (and hide\nreplay/next buttons)",
             "itemtype": "property",
             "name": "autoProceed",
             "type": "Boolean",
-            "class": "Exp-lookit-image-audio",
+            "class": "Exp-lookit-image-audio-base",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 162,
+            "file": "app/components/exp-lookit-image-audio-base/component.js",
+            "line": 159,
             "description": "[Only used if autoProceed is true] Minimum duration of frame in seconds.\nFrame will auto-proceed after this much time has elapsed and all audio\nhas completed.",
             "itemtype": "property",
             "name": "durationSeconds",
             "type": "Number",
-            "class": "Exp-lookit-image-audio",
+            "class": "Exp-lookit-image-audio-base",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 174,
+            "file": "app/components/exp-lookit-image-audio-base/component.js",
+            "line": 171,
             "description": "[Only used if autoProceed is true and durationSeconds set] Whether to\nshow a progress bar based on durationSeconds in the parent text area.",
             "itemtype": "property",
             "name": "showProgressBar",
             "type": "Number",
-            "class": "Exp-lookit-image-audio",
+            "class": "Exp-lookit-image-audio-base",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 185,
+            "file": "app/components/exp-lookit-image-audio-base/component.js",
+            "line": 182,
             "description": "[Only used if next button is also displayed] Whether to\nshow a previous button to allow the participant to go to the previous frame",
             "itemtype": "property",
             "name": "showPreviousButton",
             "type": "Number",
-            "class": "Exp-lookit-image-audio",
+            "class": "Exp-lookit-image-audio-base",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 197,
-            "description": "Array of objects describing audio to play at the start of\nthis frame. Each element describes a separate audio segment.",
+            "file": "app/components/exp-lookit-image-audio-base/component.js",
+            "line": 194,
+            "description": "Audio file to play at the start of this frame.",
             "itemtype": "property",
-            "name": "audioSources",
+            "name": "audio audio sources for this frame.!~YUIDOC_LINE~!!~YUIDOC_LINE~!This can either be an array of {src: 'url', type: 'MIMEtype'} objects, e.g.!~YUIDOC_LINE~!listing equivalent .mp3 and .ogg files, or can be a single string `filename`!~YUIDOC_LINE~!which will be expanded based on `baseDir` and `audioTypes` values (see `audioTypes`).",
             "type": "Object[]",
-            "class": "Exp-lookit-image-audio",
+            "class": "Exp-lookit-image-audio-base",
             "module": "exp-player",
-            "submodule": "frames",
-            "subprops": [
-                {
-                    "name": "audioId",
-                    "description": "unique string identifying this\n     audio segment",
-                    "type": "String"
-                },
-                {
-                    "name": "sources",
-                    "description": "Array of {src: 'url', type:\n     'MIMEtype'} objects with audio sources for this segment\n\nCan also give a single string `filename`, which will\nbe expanded out to the appropriate array based on `baseDir`\nand `audioTypes` values; see `audioTypes`.",
-                    "type": "Object[]"
-                },
-                {
-                    "name": "highlights",
-                    "description": "Array of {'range': [startT,\n     endT], 'image': 'imageId'} objects, where the imageId\n     values correspond to the ids given in images",
-                    "type": "Object[]"
-                }
-            ]
+            "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 248,
+            "file": "app/components/exp-lookit-image-audio-base/component.js",
+            "line": 208,
             "description": "Text block to display to parent.  (Each field is optional)",
             "itemtype": "property",
             "name": "parentTextBlock",
             "type": "Object",
-            "class": "Exp-lookit-image-audio",
+            "class": "Exp-lookit-image-audio-base",
             "module": "exp-player",
             "submodule": "frames",
             "subprops": [
@@ -2828,13 +2818,13 @@
             ]
         },
         {
-            "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 278,
+            "file": "app/components/exp-lookit-image-audio-base/component.js",
+            "line": 238,
             "description": "Array of images to display and information about their placement",
             "itemtype": "property",
             "name": "images",
             "type": "Object[]",
-            "class": "Exp-lookit-image-audio",
+            "class": "Exp-lookit-image-audio-base",
             "module": "exp-player",
             "submodule": "frames",
             "subprops": [
@@ -2871,72 +2861,72 @@
             ]
         },
         {
-            "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 318,
+            "file": "app/components/exp-lookit-image-audio-base/component.js",
+            "line": 278,
             "description": "Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value\nfor acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or\nrgb hex values (e.g. '#800080' - include the '#')",
             "itemtype": "property",
             "name": "backgroundColor",
             "type": "String",
             "default": "'black'",
-            "class": "Exp-lookit-image-audio",
+            "class": "Exp-lookit-image-audio-base",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 331,
+            "file": "app/components/exp-lookit-image-audio-base/component.js",
+            "line": 291,
             "description": "Color of area where images are shown, if different from overall background.\nDefaults to backgroundColor if one is provided. See\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/color_value\nfor acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or\nrgb hex values (e.g. '#800080' - include the '#')",
             "itemtype": "property",
             "name": "pageColor",
             "type": "String",
             "default": "'white'",
-            "class": "Exp-lookit-image-audio",
+            "class": "Exp-lookit-image-audio-base",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 360,
+            "file": "app/components/exp-lookit-image-audio-base/component.js",
+            "line": 320,
             "description": "Array of images used in this frame [same as passed to this frame, but\nmay reflect random assignment for this particular participant]",
             "itemtype": "attribute",
             "name": "images",
-            "class": "Exp-lookit-image-audio",
+            "class": "Exp-lookit-image-audio-base",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 438,
+            "file": "app/components/exp-lookit-image-audio-base/component.js",
+            "line": 398,
             "description": "Trial is complete and attempting to move to next frame; may wait for recording\nto catch up before proceeding.",
             "itemtype": "event",
             "name": "trialComplete",
-            "class": "Exp-lookit-image-audio",
+            "class": "Exp-lookit-image-audio-base",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 463,
+            "file": "app/components/exp-lookit-image-audio-base/component.js",
+            "line": 423,
             "description": "Timer for set-duration trial begins",
             "itemtype": "event",
             "name": "startTimer",
-            "class": "Exp-lookit-image-audio",
+            "class": "Exp-lookit-image-audio-base",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 470,
+            "file": "app/components/exp-lookit-image-audio-base/component.js",
+            "line": 430,
             "description": "Timer for set-duration trial ends",
             "itemtype": "event",
             "name": "endTimer",
-            "class": "Exp-lookit-image-audio",
+            "class": "Exp-lookit-image-audio-base",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-image-audio/component.js",
-            "line": 498,
+            "file": "app/components/exp-lookit-image-audio-base/component.js",
+            "line": 456,
             "description": "When an audio segment starts playing",
             "itemtype": "event",
             "name": "startAudioSegment",
@@ -2947,7 +2937,7 @@
                     "type": "Number"
                 }
             ],
-            "class": "Exp-lookit-image-audio",
+            "class": "Exp-lookit-image-audio-base",
             "module": "exp-player",
             "submodule": "frames"
         },
@@ -3956,6 +3946,195 @@
             "submodule": "frames"
         },
         {
+            "file": "app/components/exp-lookit-single-image-audio/component.js",
+            "line": 106,
+            "description": "Whether to proceed automatically after audio (and hide\nreplay/next buttons). If true: the next, previous, and replay buttons are\nhidden, and the frame auto-advances after (a) the audio segment (if any)\ncompletes AND (b) the durationSeconds is acheived. If false: the next, previous,\nand replay buttons (as applicable) are displayed. It becomes possible to\npress 'next' only once the audio segment, if any, is finished. TODO implement",
+            "itemtype": "property",
+            "name": "autoProceed",
+            "type": "Boolean",
+            "class": "Exp-lookit-single-image",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-single-image-audio/component.js",
+            "line": 121,
+            "description": "Whether to do webcam recording (will wait for webcam\nconnection before starting audio if so)",
+            "itemtype": "property",
+            "name": "doRecording",
+            "type": "Boolean",
+            "class": "Exp-lookit-single-image",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-single-image-audio/component.js",
+            "line": 132,
+            "description": "Duration of frame in seconds. If set and positive, there will be no next button\ndisplayed and the experiment will auto-proceed after the duration elapses.\nDefault is -1: next button is displayed and parent chooses when to proceed.",
+            "itemtype": "property",
+            "name": "durationSeconds",
+            "type": "Number",
+            "default": "-1",
+            "class": "Exp-lookit-single-image",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-single-image-audio/component.js",
+            "line": 146,
+            "description": "[Only used if durationSeconds set] Whether to\nshow a progress bar based on durationSeconds in the parent text area.",
+            "itemtype": "property",
+            "name": "showProgressBar",
+            "type": "Number",
+            "class": "Exp-lookit-single-image",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-single-image-audio/component.js",
+            "line": 158,
+            "description": "[Only used if next button is also displayed] Whether to\nshow a previous button to allow the participant to go to the previous frame",
+            "itemtype": "property",
+            "name": "showPreviousButton",
+            "type": "Number",
+            "class": "Exp-lookit-single-image",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-single-image-audio/component.js",
+            "line": 170,
+            "description": "Text to display to parent.  Each field is optional. If the `parentTextBlock`\nis an empty object `{}`, no parent text block is displayed at all at the bottom\nof the screen. Otherwise, even if the title and text are empty, the block will\nbe displayed as usual without any text.",
+            "itemtype": "property",
+            "name": "parentTextBlock",
+            "type": "Object",
+            "class": "Exp-lookit-single-image",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "title",
+                    "description": "title to display",
+                    "type": "String"
+                },
+                {
+                    "name": "text",
+                    "description": "paragraph of text",
+                    "type": "String"
+                },
+                {
+                    "name": "emph",
+                    "description": "whether to bold this paragraph",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "css",
+                    "description": "object specifying any css properties\n     to apply to this section, and their values - e.g.\n     {'color': 'red', 'font-size': '12px'}",
+                    "type": "Object"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-single-image-audio/component.js",
+            "line": 204,
+            "description": "Image to display and information about its placement",
+            "itemtype": "property",
+            "name": "images",
+            "type": "Object[]",
+            "class": "Exp-lookit-single-image",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "src",
+                    "description": "URL of image source. This can be a full\n    URL, or relative to baseDir (see baseDir).",
+                    "type": "String"
+                },
+                {
+                    "name": "left",
+                    "description": "left margin, as percentage of story area width",
+                    "type": "String"
+                },
+                {
+                    "name": "width",
+                    "description": "image width, as percentage of story area width",
+                    "type": "String"
+                },
+                {
+                    "name": "top",
+                    "description": "top margin, as percentage of story area height",
+                    "type": "String"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-single-image-audio/component.js",
+            "line": 232,
+            "description": "Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value\nfor acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or\nrgb hex values (e.g. '#800080' - include the '#')",
+            "itemtype": "property",
+            "name": "backgroundColor",
+            "type": "String",
+            "default": "'black'",
+            "class": "Exp-lookit-single-image",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-single-image-audio/component.js",
+            "line": 245,
+            "description": "Color of area where images are shown, if different from overall background.\nDefaults to backgroundColor if one is provided. See\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/color_value\nfor acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or\nrgb hex values (e.g. '#800080' - include the '#')",
+            "itemtype": "property",
+            "name": "pageColor",
+            "type": "String",
+            "default": "'white'",
+            "class": "Exp-lookit-single-image",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-single-image-audio/component.js",
+            "line": 260,
+            "description": "Array of objects describing audio to play at the start of\nthis frame. Each element describes a separate audio segment.",
+            "itemtype": "property",
+            "name": "audioSources",
+            "type": "Object[]",
+            "class": "Exp-lookit-single-image",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "audioId",
+                    "description": "unique string identifying this\n     audio segment",
+                    "type": "String"
+                },
+                {
+                    "name": "sources",
+                    "description": "Array of {src: 'url', type:\n     'MIMEtype'} objects with audio sources for this segment\n\nCan also give a single string `filename`, which will\nbe expanded out to the appropriate array based on `baseDir`\nand `audioTypes` values; see `audioTypes`.",
+                    "type": "Object[]"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-single-image-audio/component.js",
+            "line": 313,
+            "description": "Timer for set-duration trial begins",
+            "itemtype": "event",
+            "name": "startTimer",
+            "class": "Exp-lookit-single-image",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-single-image-audio/component.js",
+            "line": 320,
+            "description": "Timer for set-duration trial ends",
+            "itemtype": "event",
+            "name": "endTimer",
+            "class": "Exp-lookit-single-image",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
             "file": "app/components/exp-lookit-stimuli-preview/component.js",
             "line": 103,
             "description": "Whether to show a 'previous' button",
@@ -4884,7 +5063,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 133,
+            "line": 134,
             "description": "When participant downloads consent form",
             "itemtype": "event",
             "name": "downloadConsentForm",
@@ -4894,7 +5073,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 143,
+            "line": 144,
             "description": "Name of PI running this study",
             "itemtype": "property",
             "name": "PIName",
@@ -4905,7 +5084,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 152,
+            "line": 153,
             "description": "Name of institution running this study (if ambiguous, list institution whose IRB approved the study)",
             "itemtype": "property",
             "name": "institution",
@@ -4916,7 +5095,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 161,
+            "line": 162,
             "description": "Contact information for PI or lab in case of participant questions or concerns. This will directly follow the phrase \"please contact\", so format accordingly: e.g., \"the XYZ lab at xyz@science.edu\" or \"Mary Smith at 123 456 7890\".",
             "itemtype": "property",
             "name": "PIContact",
@@ -4927,7 +5106,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 170,
+            "line": 171,
             "description": "Brief description of purpose of study - 1-2 sentences that describe what you are trying to find out. Language should be as straightforward and accessible as possible! E.g., \"Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails.\"",
             "itemtype": "property",
             "name": "purpose",
@@ -4938,8 +5117,8 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 179,
-            "description": "Brief description of study procedures, including any risks or a statement that there are no anticipated risks. We add a statement about the duration (from your study definition) to the start (e.g., \"This study takes about 10 minutes to complete\"), so you don't need to include that. It can be in third person or addressed to the parent. E.g., \"Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.\"",
+            "line": 180,
+            "description": "Brief description of study procedures. For consent templates 001 and 002, this should include any risks or a statement that there are no anticipated risks. (For consent template 003, that is included in `payment`). We add a statement about the duration (from your study definition) to the start (e.g., \"This study takes about 10 minutes to complete\"), so you don't need to include that. It can be in third person or addressed to the parent. E.g., \"Your child will be shown pictures of lots of different cats, along with noises that cats make like meowing and purring. We are interested in which pictures and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing your child's responses. There are no anticipated risks associated with participating.\"",
             "itemtype": "property",
             "name": "procedures",
             "type": "String",
@@ -4949,8 +5128,20 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 188,
-            "description": "Statement about payment/compensation for participation, including a statement that there are no additional benefits anticipated to the participant. E.g., \"After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.\"",
+            "line": 189,
+            "description": "Whether to include an addition step #4 prompting any other adults present to read a statement of consent (I have read and understand the consent document. I also agree to participate in this study.)",
+            "itemtype": "property",
+            "name": "prompt_all_adults",
+            "type": "String",
+            "default": "false",
+            "class": "Exp-lookit-video-consent",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video-consent/component.js",
+            "line": 200,
+            "description": "Statement about payment/compensation for participation, including a statement that there are no additional benefits anticipated to the participant. E.g., \"After you finish the study, we will email you a $5 BabyStore gift card within approximately three days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.\" For consent template 003, this section is titled Benefits, risks, and payment; it should include information about risks as well.",
             "itemtype": "property",
             "name": "payment",
             "type": "String",
@@ -4960,7 +5151,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 197,
+            "line": 209,
             "description": "Study-specific data use statement (optional). This will follow the following more general text: \"The research group led by [PIName] at [institution] will have access to video and other data collected during this session. We will also have access to your account profile, demographic survey, and the child profile for the child who is participating, including changes you make in the future to any of this information. We may study your child’s responses in connection with his or her previous responses to this or other studies run by our group, siblings’ responses to this or other studies run by our group, or demographic survey responses.\"\nYou may want to note what measures you will actually be coding for (looking time, facial expressions, parent-child interaction, etc.) and other more specific information about your use of data from this study here. For instance, you would note if you were building a corpus of naturalistic data that may be used to answer a variety of questions (rather than just collecting data for a single planned study).",
             "itemtype": "property",
             "name": "datause",
@@ -4971,7 +5162,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 207,
+            "line": 219,
             "description": "Whether to include a section on GDPR; only used in template consent_002 + .",
             "itemtype": "property",
             "name": "gdpr",
@@ -4983,7 +5174,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 218,
+            "line": 230,
             "description": "List of types of personal information collected, for GDPR section only. Do not include special category information, which is listed separately.",
             "itemtype": "property",
             "name": "gdpr_personal_data",
@@ -4994,7 +5185,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 227,
+            "line": 239,
             "description": "List of types of special category information collected, for GDPR section only. Include all that apply: racial or ethnic origin; political opinions; religious or philosophical beliefs; trade union membership; processing of genetic data; biometric data; health data; and/or sex life or sexual orientation information",
             "itemtype": "property",
             "name": "gdpr_sensitive_data",
@@ -5005,7 +5196,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 236,
+            "line": 248,
             "description": "Statement about rights of research subjects and how to contact IRB.  Used only in template consent_002+. For instance, MIT's standard language is: You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact [CONTACT INFO].",
             "itemtype": "property",
             "name": "research_rights_statement",
@@ -5016,7 +5207,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 245,
+            "line": 257,
             "description": "List of additional custom sections of the consent form, e.g. US Patriot Act Disclosure. These are subject to Lookit approval and in general can only add information that was true anyway but that your IRB needs included; please contact us before submitting your study to check.",
             "itemtype": "property",
             "name": "research_rights_statement",
@@ -5027,8 +5218,8 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 267,
-            "description": "Which consent document template to use. If you are setting up a new study,\nuse the most recent (highest number) of these options. Options: consent_001,\nconsent_002.",
+            "line": 279,
+            "description": "Which consent document template to use. If you are setting up a new study,\nuse the most recent (highest number) of these options. Options: consent_001,\nconsent_002, consent_003.",
             "itemtype": "property",
             "name": "template",
             "type": "String",
@@ -5038,7 +5229,7 @@
         },
         {
             "file": "app/components/exp-lookit-video-consent/component.js",
-            "line": 294,
+            "line": 307,
             "description": "the exact text shown in the consent document during this frame",
             "itemtype": "attribute",
             "name": "consentFormText",
@@ -5142,7 +5333,7 @@
         },
         {
             "file": "app/components/exp-video-config/component.js",
-            "line": 120,
+            "line": 127,
             "description": "Text to show as the introduction to the troubleshooting tips section",
             "itemtype": "property",
             "name": "troubleshootingIntro",

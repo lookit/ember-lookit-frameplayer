@@ -11,57 +11,57 @@
 
             <div class="well video-consent-doc" id="consent-form-text">
 
-              {{#if (eq template 'consent_001')}}
+                {{#if (eq template 'consent_001')}}
 
-                  <ConsentTemplate001
-                      @experiment={{experiment}}
-                      @PIName={{PIName}}
-                      @institution={{institution}}
-                      @purpose={{purpose}}
-                      @payment={{payment}}
-                      @procedures={{procedures}}
-                      @datause={{datause}}
-                      @additional_segments={{additional_segments}}
-                      @PIContact={{PIContact}}
-                  />
+                    <ConsentTemplate001
+                        @experiment={{experiment}}
+                        @PIName={{PIName}}
+                        @institution={{institution}}
+                        @purpose={{purpose}}
+                        @payment={{payment}}
+                        @procedures={{procedures}}
+                        @datause={{datause}}
+                        @additional_segments={{additional_segments}}
+                        @PIContact={{PIContact}}
+                    />
 
-              {{else if (eq template 'consent_002')}}
+                {{else if (eq template 'consent_002')}}
 
-                  <ConsentTemplate002
-                      @experiment={{experiment}}
-                      @PIName={{PIName}}
-                      @institution={{institution}}
-                      @purpose={{purpose}}
-                      @payment={{payment}}
-                      @procedures={{procedures}}
-                      @datause={{datause}}
-                      @additional_segments={{additional_segments}}
-                      @research_rights_statement={{research_rights_statement}}
-                      @gdpr={{gdpr}}
-                      @gdpr_personal_data={{gdpr_personal_data}}
-                      @gdpr_sensitive_data={{gdpr_sensitive_data}}
-                      @PIContact={{PIContact}}
-                  />
+                    <ConsentTemplate002
+                        @experiment={{experiment}}
+                        @PIName={{PIName}}
+                        @institution={{institution}}
+                        @purpose={{purpose}}
+                        @payment={{payment}}
+                        @procedures={{procedures}}
+                        @datause={{datause}}
+                        @additional_segments={{additional_segments}}
+                        @research_rights_statement={{research_rights_statement}}
+                        @gdpr={{gdpr}}
+                        @gdpr_personal_data={{gdpr_personal_data}}
+                        @gdpr_sensitive_data={{gdpr_sensitive_data}}
+                        @PIContact={{PIContact}}
+                    />
 
-              {{else if (eq template 'consent_003')}}
+                {{else if (eq template 'consent_003')}}
 
-                  <ConsentTemplate003
-                      @experiment={{experiment}}
-                      @PIName={{PIName}}
-                      @institution={{institution}}
-                      @purpose={{purpose}}
-                      @payment={{payment}}
-                      @procedures={{procedures}}
-                      @datause={{datause}}
-                      @additional_segments={{additional_segments}}
-                      @research_rights_statement={{research_rights_statement}}
-                      @gdpr={{gdpr}}
-                      @gdpr_personal_data={{gdpr_personal_data}}
-                      @gdpr_sensitive_data={{gdpr_sensitive_data}}
-                      @PIContact={{PIContact}}
-                  />
+                    <ConsentTemplate003
+                        @experiment={{experiment}}
+                        @PIName={{PIName}}
+                        @institution={{institution}}
+                        @purpose={{purpose}}
+                        @payment={{payment}}
+                        @procedures={{procedures}}
+                        @datause={{datause}}
+                        @additional_segments={{additional_segments}}
+                        @research_rights_statement={{research_rights_statement}}
+                        @gdpr={{gdpr}}
+                        @gdpr_personal_data={{gdpr_personal_data}}
+                        @gdpr_sensitive_data={{gdpr_sensitive_data}}
+                        @PIContact={{PIContact}}
+                    />
 
-              {{/if}}
+                {{/if}}
 
             </div>
         </div>
@@ -94,10 +94,28 @@
             <span class="breaklines exp-lookit-video-consent-prompt">"I have read and understand the consent document. I am this child's parent or legal guardian and we both agree to participate in this study."</span>
         </div>
 
+
+        {{#if prompt_all_adults}}
+            <div class="video-consent-numbered-direction">
+                <span class="video-consent-number">4.</span>
+                <span class="video-consent-direction">Is another adult there too? If so, each additional adult should read out loud:</span>
+            </div>
+
+            <div class="well video-consent-prompt">
+                <span class="breaklines exp-lookit-video-consent-prompt">"I have read and understand the consent document. I also agree to participate in this study." </span>
+            </div>
+        {{/if}}
+
         <div class="video-consent-numbered-direction">
-            <span class="video-consent-number">4.</span>
+            <span class="video-consent-number">
+                {{#if prompt_all_adults}}
+                    5.
+                {{else}}
+                    4.
+                {{/if}}
+            </span>
             <span class="video-consent-direction">
-                Click to
+                When you're done, click to
                 <button id="submitbutton" disabled="disabled" class="btn btn-success pull-right" {{ action 'finish' }}>submit!</button>
             </span>
         </div>
