@@ -14,7 +14,7 @@
         {{/if}}
 
         {{#each images_parsed as |image|}}
-            <div id="{{image.id}}" class="story-image-container {{if image.fill "image-fill"}}">
+            <div id="{{image.id}}" class="story-image-container {{if image.fill "image-fill"}} {{if image.position image.position}}">
                 <img src={{image.src}} class="story-image " alt={{image.alt}}>
             </div>
         {{/each}}

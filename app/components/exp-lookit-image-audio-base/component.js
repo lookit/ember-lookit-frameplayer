@@ -286,6 +286,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     },
                     'top': {
                         type: 'string'
+                    },
+                    'position': {
+                        type: 'string',
+                        enum: ['left', 'center', 'right']
                     }
                 }
             }
@@ -418,7 +422,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             $('#nextbutton').text('Sending recording...');
             $('#nextbutton').prop('disabled', true);
             this.set('nextButtonDisableTimer', window.setTimeout(function() {
-                   $('#nextbutton').prop('disabled', false);
+                    $('#nextbutton').prop('disabled', false);
                 }, 5000));
 
             this.stopRecorder().then(() => {
@@ -538,7 +542,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         // Apply user-provided CSS to images
         $.each(this.get('images_parsed'), function(idx, image) {
             if (!image.fill) {
-
                 $('#' + image.id).css({'left': `${image.left}%`, 'width': `${image.width}%`, 'top': `${image.top}%`, 'height': `${image.height}%`});
             }
         });
@@ -586,8 +589,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     didReceiveAttrs() {
         this._super(...arguments);
         var N = 1;
+        var allImageIds =  this.get('images') ? this.get('images').map(im => im.hasOwnProperty('id') ? im.id : null) : [];
         $.each(this.get('images'), function(idx, image) {
             if (!image.hasOwnProperty('id')) {
+                while (allImageIds.includes(`image_${N}`)) {
+                    N++;
+                }
                 image.id = `image_${N}`;
             }
             N++;

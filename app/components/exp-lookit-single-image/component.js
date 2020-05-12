@@ -88,7 +88,7 @@ let {
 
  * ```
  * @class Exp-lookit-single-image
- * @extends Exp-lookit-image-audio
+ * @extends Exp-lookit-image-audio-base
  * @uses Full-screen
  * @uses Video-record
  * @uses Expand-assets
@@ -196,6 +196,8 @@ export default ExpLookitImageAudioBase.extend({
          * @property {Object[]} images
          *   @param {String} src URL of image source. This can be a full
          *     URL, or relative to baseDir (see baseDir).
+         *   @param {String} alt alt-text for image in case it doesn't load and for
+         *     screen readers
          *   @param {String} left left margin, as percentage of story area width
          *   @param {String} width image width, as percentage of story area width
          *   @param {String} top top margin, as percentage of story area height
@@ -213,6 +215,9 @@ export default ExpLookitImageAudioBase.extend({
                         type: 'string'
                     },
                     'top': {
+                        type: 'string'
+                    },
+                    'alt': {
                         type: 'string'
                     }
                 }

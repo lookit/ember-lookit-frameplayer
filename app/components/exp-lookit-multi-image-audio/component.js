@@ -88,7 +88,7 @@ let {
  }
 
  * ```
- * @class Exp-lookit-single-image-audio
+ * @class Exp-lookit-multi-image-audio
  * @extends Exp-lookit-image-audio-base
  * @uses Full-screen
  * @uses Video-record
@@ -218,9 +218,10 @@ export default ExpLookitImageAudioBase.extend({
         },
 
         /**
-         * Image to display and information about its placement
+         * Array of images to display and information about their placement
          *
          * @property {Object[]} images
+         *   @param {String} id unique ID for this image
          *   @param {String} src URL of image source. This can be a full
          *     URL, or relative to baseDir (see baseDir).
          *   @param {String} alt alt-text for image in case it doesn't load and for
@@ -228,12 +229,21 @@ export default ExpLookitImageAudioBase.extend({
          *   @param {String} left left margin, as percentage of story area width
          *   @param {String} width image width, as percentage of story area width
          *   @param {String} top top margin, as percentage of story area height
+
          */
-        image: {
+        images: {
+            type: 'array',
+            items: {
                 type: 'object',
                 properties: {
+                    'id': {
+                        type: 'string'
+                    },
                     'src': {
                         anyOf: imageAssetOptions
+                    },
+                    'alt': {
+                        type: 'string'
                     },
                     'left': {
                         type: 'string'
@@ -244,11 +254,13 @@ export default ExpLookitImageAudioBase.extend({
                     'top': {
                         type: 'string'
                     },
-                    'alt': {
-                        type: 'string'
+                    'position': {
+                        type: 'string',
+                        enum: ['left', 'center', 'right']
                     }
                 }
-            },
+            }
+        },
 
         /**
          * Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
@@ -318,18 +330,6 @@ export default ExpLookitImageAudioBase.extend({
     didInsertElement() {
         this._super(...arguments);
         $('#nextbutton').prop('disabled', this.get('durationSeconds') && this.get('durationSeconds') > 0);
-    },
-
-    didReceiveAttrs() {
-        this._super(...arguments);
-
-        let image = this.get('image');
-        if (!image.hasOwnProperty('id')) {
-            image.id = 'image_1';
-        }
-
-        this.set('images', [image]);
-        this.expandAssets();
     }
 
 });

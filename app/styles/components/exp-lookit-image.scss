@@ -9,15 +9,23 @@ $exp-lookit-story-page-height-no-controls: (100 - $exp-lookit-story-page-top-mar
 $exp-lookit-preferential-looking-AR: 2;
 $exp-lookit-preferential-looking-picwidth: 30;
 $exp-lookit-preferential-looking-picmargin: 2;
-$exp-pref-look-cal-width: 12%;
-$exp-pref-look-left-rect: 18.75%;
-$exp-pref-look-right-rect: 81.25%;
 
 .exp-lookit-image-audio, .exp-lookit-image-audio *
 {
     margin:0;
     padding:0;
     cursor: auto !important;
+}
+
+// Pieces not used yet, for the preferential looking sections
+
+@mixin pic-container($left-pos) {
+    min-width: $exp-lookit-preferential-looking-picwidth * 1%;
+    max-width: $exp-lookit-preferential-looking-picwidth * 1%;
+    left: $left-pos;
+    height:100%;
+    min-height:100%;
+    max-height:100%;
 }
 
 .exp-lookit-image-audio, #experiment-player.player-fullscreen .exp-lookit-image-audio {
@@ -50,7 +58,7 @@ $exp-pref-look-right-rect: 81.25%;
 
         // Container immediately around the image. By default fills space.
         div.story-image-container {
-            position:relative;
+            position:absolute;
             display: block;
             padding:0;
             max-height:100%;
@@ -68,6 +76,18 @@ $exp-pref-look-right-rect: 81.25%;
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.6);
             }
 
+            &.left {
+                @include pic-container($exp-lookit-preferential-looking-picmargin * 1%);
+            }
+
+            &.right {
+                @include pic-container((100 - $exp-lookit-preferential-looking-picmargin - $exp-lookit-preferential-looking-picwidth) * 1%);
+            }
+
+            &.center {
+                @include pic-container(((100 - $exp-lookit-preferential-looking-picwidth) / 2) * 1%);
+            }
+
             // The actual image
             img.story-image {
                 position:relative;
@@ -80,6 +100,7 @@ $exp-pref-look-right-rect: 81.25%;
                 margin: auto;
                 vertical-align: center;
             }
+
 
         }
     }
@@ -185,46 +206,10 @@ $exp-pref-look-right-rect: 81.25%;
 }
 
 
-// Pieces not used yet, for the preferential looking sections
-
-@mixin pic-container($left-pos) {
-    min-width: $exp-lookit-preferential-looking-picwidth * 1%;
-    max-width: $exp-lookit-preferential-looking-picwidth * 1%;
-    left: $left-pos;
-    min-height: 100%;
-    max-height: 100%;
-    top: 0;
-    position: absolute;
-}
-
-.exp-lookit-image-audio #left-container {
-    @include pic-container($exp-lookit-preferential-looking-picmargin * 1%);
-}
-
-.exp-lookit-image-audio #right-container {
-    @include pic-container((100 - $exp-lookit-preferential-looking-picmargin - $exp-lookit-preferential-looking-picwidth) * 1%);
-}
-
-.exp-lookit-image-audio #center-container {
-    @include pic-container(((100 - $exp-lookit-preferential-looking-picwidth) / 2) * 1%);
-}
-
 .exp-lookit-image-audio img.stim-image {
     max-width: 100%;
     max-height: 100%;
     margin: auto;
     position: absolute;
     top: 0; left: 0; bottom: 0; right: 0;
-}
-
-.exp-lookit-image-audio-pref #image-area, #experiment-player.player-fullscreen .exp-lookit-image-audio-pref #image-area{
-    overflow:hidden;
-    position:fixed;
-    width: 100vw;
-    height: 30vw;
-    max-height: 100vh;
-    max-width: (100 / $exp-lookit-preferential-looking-picwidth) * 100vh;
-    margin: auto;
-    top:0;bottom:0; /* vertical center */
-    left:0;right:0; /* horizontal center */
 }
