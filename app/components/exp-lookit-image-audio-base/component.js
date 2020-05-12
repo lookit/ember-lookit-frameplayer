@@ -76,21 +76,16 @@ let {
                 }
             ],
             "kind": "exp-lookit-story-page",
-            "audioSources": [
-                {
-                    "audioId": "firstAudio",
-                    "sources": "intro1",
-                    "highlights": [
+            "audio": "intro1",
+            "highlights": [
                         {"range": [3.017343,    5.600283], "image":     "leftA"},
                         {"range": [5.752911,    8.899402], "image":     "rightA"}
                     ]
-                }
-            ]
         }
  }
 
  * ```
- * @class Exp-lookit-image-audio
+ * @class Exp-lookit-image-audio-base
  * @extends Exp-frame-base
  * @uses Full-screen
  * @uses Video-record
@@ -117,7 +112,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     currentSegment: 'intro', // 'calibration', 'test', 'finalaudio' (mutually exclusive)
     previousSegment: 'intro', // used when pausing/unpausing - refers to segment that study was paused during
 
-    currentAudioIndex: -1, // during initial sequential audio, holds an index into audioSources
+    startedAudio: false, // whether we've started playing audio yet
 
     // Override setting in VideoRecord mixin - only use camera if doing recording
     doUseCamera: Ember.computed.alias('doRecording'),
@@ -126,18 +121,21 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
     pageTimer: null,
     progressTimer: null,
+    nextButtonDisableTimer: null,
     timerStart: null,
     finishedAllAudio: false,
     minDurationAchieved: false,
     noParentText: false,
 
     assetsToExpand: {
-        'audio': ['audioSources/sources'],
+        'audio': ['audio'],
         'video': [],
         'image': ['images/src']
     },
 
     frameSchemaProperties: {
+        // TODO: may need to remove these docs since properties can't be used directly by
+        // frames inheriting from this one, or set up hack for inheritance
         /**
          * Whether to do webcam recording (will wait for webcam
          * connection before starting audio if so)
@@ -153,10 +151,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          * replay/next buttons)
          *
          * @property {Boolean} autoProceed
+         * @default false
          */
         autoProceed: {
             type: 'boolean',
-            description: 'Whether to proceed automatically after audio (and hide replay/next buttons)'
+            description: 'Whether to proceed automatically after audio (and hide replay/next buttons)',
+            default: false
         },
 
         /**
@@ -195,55 +195,30 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         },
 
         /**
-         * Array of objects describing audio to play at the start of
-         * this frame. Each element describes a separate audio segment.
+         * [Only used if next button is also displayed] Whether to
+         * show a previous button to allow the participant to go to the previous frame
          *
-         * @property {Object[]} audioSources
-         *   @param {String} audioId unique string identifying this
-         *      audio segment
-         *   @param {Object[]} sources Array of {src: 'url', type:
-         *      'MIMEtype'} objects with audio sources for this segment
-         *
-         * Can also give a single string `filename`, which will
-         * be expanded out to the appropriate array based on `baseDir`
-         * and `audioTypes` values; see `audioTypes`.
-         *
-         *   @param {Object[]} highlights Array of {'range': [startT,
-         *      endT], 'image': 'imageId'} objects, where the imageId
-         *      values correspond to the ids given in images
+         * @property {Number} showPreviousButton
          */
-        audioSources: {
-            type: 'array',
-            description: 'List of objects specifying audio src and type for audio played during test trial',
-            default: [],
-            items: {
-                type: 'object',
-                properties: {
-                    'audioId': {
-                        type: 'string'
-                    },
-                    'sources': {
-                        anyOf: audioAssetOptions
-                    },
-                    'highlights': {
-                        type: 'array',
-                        items: {
-                            type: 'object',
-                            properties: {
-                                'range': {
-                                    type: 'array',
-                                    items: {
-                                        type: 'number'
-                                    }
-                                },
-                                'image': {
-                                    'type': 'string'
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        showReplayButton: {
+            type: 'boolean',
+            default: true,
+            description: 'Whether to show a replay button (used only if showing Next button)'
+        },
+
+        /**
+         * Audio file to play at the start of this frame.
+         *
+         * @property {Object[]} audio audio sources for this frame.
+         *
+         * This can either be an array of {src: 'url', type: 'MIMEtype'} objects, e.g.
+         * listing equivalent .mp3 and .ogg files, or can be a single string `filename`
+         * which will be expanded based on `baseDir` and `audioTypes` values (see `audioTypes`).
+         */
+        audio: {
+            anyOf: audioAssetOptions,
+            description: 'Audio to play as this frame begins',
+            default: []
         },
         /**
          * Text block to display to parent.  (Each field is optional)
@@ -375,8 +350,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             var _this = this;
             if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
                 this.startRecorder().then(() => {
-                    _this.set('currentAudioIndex', -1);
-                    _this.send('playNextAudioSegment');
+                    _this.set('startedAudio', false);
+                    _this.send('playAudio');
                     _this.set('recorderReady', false);
                     $('#waitForVideo').hide();
                     $('.story-image-container').show();
@@ -392,8 +367,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
                 this.startSessionRecorder().then(() => {
                     _this.set('sessionRecorderReady', false);
-                    _this.set('currentAudioIndex', -1);
-                    _this.send('playNextAudioSegment');
+                    _this.set('startedAudio', false);
+                    _this.send('playAudio');
                     $('#waitForVideo').hide();
                     $('.story-image-container').show();
                 });
@@ -401,116 +376,146 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         }
     }),
 
+    updateCharacterHighlighting() {
+
+        var highlights = this.get('highlights');
+
+        if (highlights) {
+            var t = $('#player-audio')[0].currentTime;
+
+            $('.story-image-container').removeClass('highlight');
+
+            highlights.forEach(function (h) {
+                if (t > h.range[0] && t < h.range[1]) {
+                    $('#' + h.image).addClass('highlight');
+                }
+            });
+        }
+    },
+
+    replay() {
+        // pause any current audio, and set times to 0
+        $('audio').each(function() {
+            this.pause();
+            this.currentTime = 0;
+        });
+        this.set('startedAudio', false);
+        // restart audio
+        this.send('playAudio');
+    },
+
+    finish() {
+        var _this = this;
+        /**
+         * Trial is complete and attempting to move to next frame; may wait for recording
+         * to catch up before proceeding.
+         *
+         * @event trialComplete
+         */
+        this.send('setTimeEvent', 'trialComplete');
+
+        if (this.get('doRecording')) {
+            $('#nextbutton').text('Sending recording...');
+            $('#nextbutton').prop('disabled', true);
+            this.set('nextButtonDisableTimer', window.setTimeout(function() {
+                   $('#nextbutton').prop('disabled', false);
+                }, 5000));
+
+            this.stopRecorder().then(() => {
+                _this.set('stoppedRecording', true);
+                _this.send('next');
+            }, () => {
+                _this.send('next');
+            });
+        } else {
+            _this.send('next');
+        }
+    },
+
+    finishedAudio() {
+        this.set('finishedAllAudio', true);
+        if (this.get('minDurationAchieved')) {
+            this.readyToFinish();
+        }
+    },
+
+    readyToFinish() {
+        if (this.get('autoProceed')) {
+            this.send('finish');
+        } else {
+            $('#nextbutton').prop('disabled', false);
+        }
+    },
+
+    playAudio() {
+        this.set('startedAudio', true);
+        if (this.get('durationSeconds') && this.get('durationSeconds') > 0) {
+            let _this = this;
+            /**
+            * Timer for set-duration trial begins
+            *
+            * @event startTimer
+            */
+            this.send('setTimeEvent', 'startTimer');
+            this.set('pageTimer', window.setTimeout(function() {
+                    /**
+                    * Timer for set-duration trial ends
+                    *
+                    * @event endTimer
+                    */
+                    _this.send('setTimeEvent', 'endTimer');
+                    _this.set('minDurationAchieved', true);
+                    if (_this.get('finishedAllAudio')) {
+                        _this.readyToFinish();
+                    }
+                }, _this.get('durationSeconds') * 1000));
+            if (this.get('showProgressBar')) {
+                this.set('timerStart', new Date().getTime());
+                let timerStart = _this.get('timerStart');
+                let durationSeconds = _this.get('durationSeconds');
+                this.set('progressTimer', window.setInterval(function() {
+                    let now = new Date().getTime();
+                    var prctDone =  (now - timerStart) / (durationSeconds * 10);
+                    $('.progress-bar').css('width', prctDone + '%');
+                }, 100));
+            }
+        } else {
+            this.set('minDurationAchieved', true);
+        }
+
+        $('#player-audio')[0].play().then(() => {
+            /**
+             * When an audio segment starts playing
+             *
+             * @event startAudio
+             */
+            this.send('setTimeEvent', 'startAudio');
+        });
+    },
+
     actions: {
+
+        // Use functions (which can be inherited) for each action
 
         // During playing audio
         updateCharacterHighlighting() {
-
-            var thisAudioData = this.get('audioSources')[this.currentAudioIndex];
-
-            if (thisAudioData.highlights) {
-                var t = $('#' + thisAudioData.audioId)[0].currentTime;
-
-                $('.story-image-container').removeClass('highlight');
-
-                thisAudioData.highlights.forEach(function (h) {
-                    if (t > h.range[0] && t < h.range[1]) {
-                        $('#' + h.image).addClass('highlight');
-                    }
-                });
-            }
+            this.updateCharacterHighlighting();
         },
 
         replay() {
-            // pause any current audio, and set times to 0
-            $('audio').each(function() {
-                this.pause();
-                this.currentTime = 0;
-            });
-            // reset to index -1 as at start of study
-            this.set('currentAudioIndex', -1);
-            // restart audio
-            this.send('playNextAudioSegment');
+            this.replay();
         },
 
         finish() {
-            var _this = this;
-            /**
-             * Trial is complete and attempting to move to next frame; may wait for recording
-             * to catch up before proceeding.
-             *
-             * @event trialComplete
-             */
-            this.send('setTimeEvent', 'trialComplete');
-
-            if (this.get('doRecording')) {
-                this.stopRecorder().then(() => {
-                    _this.set('stoppedRecording', true);
-                    _this.send('next');
-                }, () => {
-                    _this.send('next');
-                });
-            } else {
-                _this.send('next');
-            }
+            this.finish();
         },
 
-        playNextAudioSegment() {
-            this.set('currentAudioIndex', this.get('currentAudioIndex') + 1);
-            if (this.currentAudioIndex == 0) { // Starting first audio segment: start timer & progress bar
-                if (this.get('durationSeconds')) {
-                    let _this = this;
-                    /**
-                    * Timer for set-duration trial begins
-                    *
-                    * @event startTimer
-                    */
-                    this.send('setTimeEvent', 'startTimer');
-                    this.set('pageTimer', window.setTimeout(function() {
-                            /**
-                            * Timer for set-duration trial ends
-                            *
-                            * @event endTimer
-                            */
-                            _this.send('setTimeEvent', 'endTimer');
-                            _this.set('minDurationAchieved', true);
-                            if (_this.get('finishedAllAudio')) {
-                                _this.send('finish');
-                            }
-                        }, _this.get('durationSeconds') * 1000));
-                    if (this.get('showProgressBar')) {
-                        this.set('timerStart', new Date().getTime());
-                        let timerStart = _this.get('timerStart');
-                        let durationSeconds = _this.get('durationSeconds');
-                        this.set('progressTimer', window.setInterval(function() {
-                            let now = new Date().getTime();
-                            var prctDone =  (now - timerStart) / (durationSeconds * 10);
-                            $('.progress-bar').css('width', prctDone + '%');
-                        }, 100));
-                    }
-                } else {
-                    this.set('minDurationAchieved', true);
-                }
-            }
-            if (this.currentAudioIndex < this.get('audioSources').length) {
+        playAudio() {
+            this.playAudio();
+        },
 
-                $('#' + this.get('audioSources')[this.currentAudioIndex].audioId)[0].play().then(() => {
-                    /**
-                     * When an audio segment starts playing
-                     *
-                     * @event startAudioSegment
-                     * @param {Number} currentAudioIndex the index of the current audio segment, starting from 0
-                     */
-                    this.send('setTimeEvent', 'startAudioSegment', {'currentAudioIndex': this.currentAudioIndex});
-                });
-            } else {
-                this.set('finishedAllAudio', true);
-                if (this.get('autoProceed') && this.get('minDurationAchieved')) {
-                    this.send('finish');
-                } else {
-                    $('#nextbutton').prop('disabled', false);
-                }
-            }
+        finishedAudio() {
+            this.finishedAudio();
         }
     },
 
@@ -557,7 +562,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         // If not recording, go to audio right away! Otherwise will be triggered when
         // recording starts.
         if (!(this.get('doRecording') || this.get('startSessionRecording'))) {
-            this.send('playNextAudioSegment');
+            this.send('playAudio');
         }
 
     },
@@ -565,17 +570,19 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     willDestroyElement() {
         window.clearInterval(this.get('pageTimer'));
         window.clearInterval(this.get('progressTimer'));
+        window.clearInterval(this.get('nextButtonDisableTimer'));
+
         this._super(...arguments);
     },
 
     // Hide story once rendered (as long as story hasn't started yet anyway)
     didRender() {
-        if ((this.get('doRecording') || this.get('startSessionRecording')) && this.get('currentAudioIndex') == -1) {
+        if ((this.get('doRecording') || this.get('startSessionRecording')) && !this.get('startedAudio')) {
             $('.story-image-container').hide();
         }
     },
 
-    // Supply image IDs if they're missing. This happens BEFORE assignment of
+    // Supply image IDs if they're missing.
     didReceiveAttrs() {
         this._super(...arguments);
         var N = 1;

@@ -44,31 +44,35 @@
         </button>
     {{/unless}}
 
-    {{#each audioSources_parsed as |audioSourceObject|}}
-        <audio class="player-audio" id={{audioSourceObject.audioId}} onended={{action 'playNextAudioSegment'}} ontimeupdate={{action 'updateCharacterHighlighting'}}>
-            {{#each audioSourceObject.sources as |stream|}}
+    {{#if audio_parsed}}
+        <audio class="player-audio" id="player-audio" onended={{action 'finishedAudio'}} ontimeupdate={{action 'updateCharacterHighlighting'}}>
+            {{#each audio_parsed as |stream|}}
                 <source src="{{stream.src}}" type="{{stream.type}}">
             {{/each}}
         </audio>
-    {{/each}}
+    {{/if}}
 
     {{#unless noStoryControls}}
 
         <div id="story-controls">
             {{#unless autoProceed}}
-                {{#unless autoProceed}}
-                    <button id="previousbutton" class="btn btn-primary left" {{ action 'previous' }} >
-                        Previous
-                    </button>
-                {{/unless}}
-                {{#if audioSources_parsed}}
-                    <button id="replaybutton" class="btn btn-primary left"  {{ action 'replay' }}> Replay</button>
-                {{/if}}
+                <div class="button-container left">
+                    {{#if showPreviousButton}}
+                        <button id="previousbutton" class="btn btn-primary" {{ action 'previous' }} >
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </button>
+                    {{/if}}
+                    {{#if (and showReplayButton audio_parsed)}}
+                        <button id="replaybutton" class="btn btn-primary"  {{ action 'replay' }}>
+                            <i class="fa fa-repeat"></i> Replay
+                        </button>
+                    {{/if}}
+                </div>
             {{/unless}}
 
             {{#unless noParentText}}
                 <div id="parenttext">
-                    {{#if (and autoProceed showProgressBar)}}
+                    {{#if showProgressBar}}
                         <div class="progress" id="progressbar">
                             <div class="progress-bar bg-info progress-bar-striped" role="progressbar" style="width:0%" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
@@ -78,9 +82,11 @@
             {{/unless}}
 
             {{#unless autoProceed}}
-                <button id="nextbutton" class="btn btn-success right" {{ action 'finish' }} >
-                    Next
-                </button>
+                <div class="button-container right">
+                    <button id="nextbutton" class="btn btn-success fill" {{ action 'finish' }} >
+                        Next <i class="fa fa-arrow-right"></i>
+                    </button>
+                </div>
             {{/unless}}
 
 

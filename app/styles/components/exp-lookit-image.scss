@@ -104,11 +104,10 @@ $exp-pref-look-right-rect: 81.25%;
 
 
     // Navigation buttons
-    #story-controls button{
+    #story-controls .button-container {
         display: inline-block;
         position: fixed;
         padding: 0px; margin: 0px;
-        font-size: x-large;
         width: 20vw;
         margin-left: auto;
         margin-right: auto;
@@ -117,14 +116,50 @@ $exp-pref-look-right-rect: 81.25%;
         bottom: 2vh;
         height: $exp-lookit-story-page-controls-height * 0.5vh;
         bottom: $exp-lookit-story-page-controls-height * 0.25vh;
+
+        &.right {
+            right: 1vw;
+        }
+
+        &.left {
+            left: 1vw;
+        }
     }
 
-    button.right {
-        right: 1vw;
-    }
+    // Navigation buttons
+    #story-controls button {
+        padding: 0px; margin: 0px;
+        font-size: x-large;
+        margin-left: auto;
+        margin-right: auto;
+        min-height: 50px;
+        height: $exp-lookit-story-page-controls-height * 0.5vh;
+        bottom: $exp-lookit-story-page-controls-height * 0.25vh;
 
-    button.left {
-        left: 1vw;
+        &.fill {
+            width: 100%;
+        }
+
+        // Fix positions for easier recognition
+        &#replaybutton {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 1em;
+            top: 50%;
+            clear: both;
+        }
+
+        &#previousbutton {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 1em;
+            clear: both;
+            margin-bottom: 1em;
+        }
+
+
     }
 
     #parenttext {

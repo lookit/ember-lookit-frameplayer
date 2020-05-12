@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { imageAssetOptions } from '../../mixins/expand-assets';
+import { imageAssetOptions, audioAssetOptions } from '../../mixins/expand-assets';
 //import { observer } from '@ember/object';
 
 import ExpLookitImageAudioBase from '../exp-lookit-image-audio-base/component';
@@ -14,6 +14,7 @@ let {
  */
 
 /**
+ * TODO
  * Frame to implement a basic "storybook page" trial, with images placed on the
  * screen within a display area and a sequence of audio files played.
  * Optionally, images may be highlighted at specified times during the audio
@@ -100,13 +101,25 @@ export default ExpLookitImageAudioBase.extend({
     autoProceed: false,
     audioSources: [],
 
-    assetsToExpand: {
-        'audio': [],
-        'video': [],
-        'image': ['images/src']
-    },
-
     frameSchemaProperties: {
+
+        /**
+         * Whether to proceed automatically after audio (and hide
+         * replay/next buttons). If true: the next, previous, and replay buttons are
+         * hidden, and the frame auto-advances after (a) the audio segment (if any)
+         * completes AND (b) the durationSeconds is achieved. If false: the next, previous,
+         * and replay buttons (as applicable) are displayed. It becomes possible to
+         * press 'next' only once the audio segment, if any, is finished. TODO implement
+         *
+         * @property {Boolean} autoProceed
+         * @default false
+         */
+        autoProceed: {
+            type: 'boolean',
+            description: 'Whether to proceed automatically after audio (and hide replay/next buttons)',
+            default: false
+        },
+
         /**
          * Whether to do webcam recording (will wait for webcam
          * connection before starting audio if so)
@@ -119,16 +132,18 @@ export default ExpLookitImageAudioBase.extend({
         },
 
         /**
-         * Duration of frame in seconds. If set and positive, there will be no next button
-         * displayed and the experiment will auto-proceed after the duration elapses.
-         * Default is -1: next button is displayed and parent chooses when to proceed.
+         * Minimum duration of frame in seconds. If set and positive, then it will only
+         * be possible to proceed to the next frame after both the audio completes AND
+         * this duration is acheived. (If `autoProceed` is true, the experiment will
+         * proceed automatically then; otherwise the Next button will be enabled at that
+         * point.)
          *
          * @property {Number} durationSeconds
          * @default -1
          */
         durationSeconds: {
             type: 'number',
-            description: 'Minimum duration of frame in seconds if autoproceeding',
+            description: 'Minimum duration of frame in seconds',
             default: -1
         },
 
@@ -154,6 +169,18 @@ export default ExpLookitImageAudioBase.extend({
             type: 'boolean',
             default: true,
             description: 'Whether to show a previous button (used only if showing Next button)'
+        },
+
+        /**
+         * [Only used if next button is also displayed] Whether to
+         * show a previous button to allow the participant to go to the previous frame
+         *
+         * @property {Number} showPreviousButton
+         */
+        showReplayButton: {
+            type: 'boolean',
+            default: true,
+            description: 'Whether to show a replay button (used only if showing Next button)'
         },
 
         /**
@@ -245,63 +272,47 @@ export default ExpLookitImageAudioBase.extend({
             type: 'string',
             description: 'Color of image area',
             default: 'white'
+        },
+
+        /**
+         * Audio file to play at the start of this frame.
+         *
+         * @property {Object[]} audio audio sources for this frame.
+         *
+         * This can either be an array of {src: 'url', type: 'MIMEtype'} objects, e.g.
+         * listing equivalent .mp3 and .ogg files, or can be a single string `filename`
+         * which will be expanded based on `baseDir` and `audioTypes` values (see `audioTypes`).
+         */
+        audio: {
+            anyOf: audioAssetOptions,
+            description: 'Audio to play as this frame begins',
+            default: []
         }
     },
 
     actions: {
 
+        replay() {
+            this.replay();
+        },
+
         finish() {
             this.finish();
         },
 
-        finishedAudio() {
-            this.finishedAudio();
+        playAudio() {
+            this.playAudio();
         },
 
-        playAudio() { // TODO: combine / use parent fn
-            this.set('startedAudio', true);
-            if (this.get('durationSeconds') && this.get('durationSeconds') > 0) {
-                let _this = this;
-                /**
-                * Timer for set-duration trial begins
-                *
-                * @event startTimer
-                */
-                this.send('setTimeEvent', 'startTimer');
-                this.set('pageTimer', window.setTimeout(function() {
-                        /**
-                        * Timer for set-duration trial ends
-                        *
-                        * @event endTimer
-                        */
-                        _this.send('setTimeEvent', 'endTimer');
-                        _this.set('minDurationAchieved', true);
-                        _this.send('finish');
-                    }, _this.get('durationSeconds') * 1000));
-                if (this.get('showProgressBar')) {
-                    this.set('timerStart', new Date().getTime());
-                    let timerStart = _this.get('timerStart');
-                    let durationSeconds = _this.get('durationSeconds');
-                    this.set('progressTimer', window.setInterval(function() {
-                        let now = new Date().getTime();
-                        var prctDone =  (now - timerStart) / (durationSeconds * 10);
-                        $('.progress-bar').css('width', prctDone + '%');
-                    }, 100));
-                }
-            } else {
-                this.set('minDurationAchieved', true);
-            }
+        finishedAudio() {
+            this.finishedAudio();
         }
 
     },
 
     didInsertElement() {
         this._super(...arguments);
-        if (this.get('durationSeconds') && this.get('durationSeconds') > 0) {
-            $('#nextbutton').prop('disabled', true);
-        } else {
-            $('#nextbutton').prop('disabled', false);
-        }
+        $('#nextbutton').prop('disabled', this.get('durationSeconds') && this.get('durationSeconds') > 0);
     },
 
     didReceiveAttrs() {
@@ -313,8 +324,6 @@ export default ExpLookitImageAudioBase.extend({
         }
 
         this.set('images', [image]);
-        this.set('autoProceed', this.get('durationSeconds') > 0);
-        this.set('showProgressBar', this.get('showProgressBar') && this.get('autoProceed'));
         this.expandAssets();
     }
 
