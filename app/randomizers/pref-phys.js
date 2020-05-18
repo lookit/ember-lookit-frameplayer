@@ -1,4 +1,3 @@
-// jscs:disable
 import Ember from 'ember';
 
 // http://stackoverflow.com/a/12646864

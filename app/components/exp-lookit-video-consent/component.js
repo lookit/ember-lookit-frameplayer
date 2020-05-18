@@ -166,9 +166,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             });
 
             // Prep PDF - need to set font before splitting lines
-            // jscs:disable requireCapitalizedConstructors
             var consentPDF = new jsPDF();
-            // jscs:enable requireCapitalizedConstructors
             consentPDF.setFont('times');
             consentPDF.setFontSize(12);
             var timeString = moment().format('MMMM Do YYYY, h:mm:ss a'); // for header
