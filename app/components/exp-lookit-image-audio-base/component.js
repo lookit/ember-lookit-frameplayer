@@ -422,8 +422,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             $('#nextbutton').text('Sending recording...');
             $('#nextbutton').prop('disabled', true);
             this.set('nextButtonDisableTimer', window.setTimeout(function() {
-                    $('#nextbutton').prop('disabled', false);
-                }, 5000));
+                $('#nextbutton').prop('disabled', false);
+            }, 5000));
 
             this.stopRecorder().then(() => {
                 _this.set('stoppedRecording', true);
@@ -462,17 +462,17 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             */
             this.send('setTimeEvent', 'startTimer');
             this.set('pageTimer', window.setTimeout(function() {
-                    /**
+                /**
                     * Timer for set-duration trial ends
                     *
                     * @event endTimer
                     */
-                    _this.send('setTimeEvent', 'endTimer');
-                    _this.set('minDurationAchieved', true);
-                    if (_this.get('finishedAllAudio')) {
-                        _this.readyToFinish();
-                    }
-                }, _this.get('durationSeconds') * 1000));
+                _this.send('setTimeEvent', 'endTimer');
+                _this.set('minDurationAchieved', true);
+                if (_this.get('finishedAllAudio')) {
+                    _this.readyToFinish();
+                }
+            }, _this.get('durationSeconds') * 1000));
             if (this.get('showProgressBar')) {
                 this.set('timerStart', new Date().getTime());
                 let timerStart = _this.get('timerStart');

@@ -218,7 +218,7 @@ export default Ember.Mixin.create({
         const pipeLoc = Ember.getOwner(this).resolveRegistration('config:environment').pipeLoc;
         const pipeEnv = Ember.getOwner(this).resolveRegistration('config:environment').pipeEnv;
         const installPromise = recorder.install(this.get('videoId'), pipeLoc, pipeEnv,
-          this.get('maxRecordingLength'), this.get('autosave'), this.get('audioOnly'));
+            this.get('maxRecordingLength'), this.get('autosave'), this.get('audioOnly'));
 
         // Track specific events for all frames that use  VideoRecorder
         var _this = this;

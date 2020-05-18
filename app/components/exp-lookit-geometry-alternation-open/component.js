@@ -553,14 +553,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         // Start presenting triangles and set to stop after trial length
         _this.presentTriangles(_this.settings.LshapesStart,
-                                        _this.settings.RshapesStart,
-                                        _this.settings.LsizeBaseStart,
-                                        _this.settings.RsizeBaseStart);
+            _this.settings.RshapesStart,
+            _this.settings.LsizeBaseStart,
+            _this.settings.RsizeBaseStart);
         window.setTimeout(function() {
-                window.clearTimeout(_this.get('stimTimer'));
-                _this.clearTriangles();
-                _this.endTrial();
-            }, _this.settings.trialLength * 1000);
+            window.clearTimeout(_this.get('stimTimer'));
+            _this.clearTriangles();
+            _this.endTrial();
+        }, _this.settings.trialLength * 1000);
     },
 
     // When triangles have been shown for time indicated: play end-audio if
@@ -601,19 +601,19 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          * @param {Number} RSize size of right triangle, relative to standard ('standard' sizes are set so that areas of skinny & fat triangles are equal), in terms of side length (e.g. for a rectangle, 2 would mean take a 1x3 rectangle and make it a 2x6 rectangle, quadrupling the area)
          */
         this.send('setTimeEvent', 'presentTriangles', {
-                Lshape: Lshape,
-                LX: LX,
-                LY: LY,
-                LRot: LRot,
-                LFlip: LFlip,
-                LSize: LSize,
-                Rshape: Rshape,
-                RX: RX,
-                RY: RY,
-                RRot: RRot,
-                RFlip: RFlip,
-                RSize: RSize
-            });
+            Lshape: Lshape,
+            LX: LX,
+            LY: LY,
+            LRot: LRot,
+            LFlip: LFlip,
+            LSize: LSize,
+            Rshape: Rshape,
+            RX: RX,
+            RY: RY,
+            RRot: RRot,
+            RFlip: RFlip,
+            RSize: RSize
+        });
 
         var leftTriangle = `${this.triangleBases[Lshape]}
             transform=" translate(${LX}, ${LY})
@@ -643,33 +643,33 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     presentTriangles(Lshapes, Rshapes, LsizeBase, RsizeBase) {
         // select X and Y positions for each shape
         var LX = this.getRandom(this.settings.XRange[0],
-                                this.settings.XRange[1]);
+            this.settings.XRange[1]);
         var RX = this.getRandom(this.settings.XRange[0],
-                                this.settings.XRange[1]);
+            this.settings.XRange[1]);
         var LY = this.getRandom(this.settings.YRange[0],
-                                this.settings.YRange[1]);
+            this.settings.YRange[1]);
         var RY = this.getRandom(this.settings.YRange[0],
-                                this.settings.YRange[1]);
+            this.settings.YRange[1]);
         // select rotation, flip, size per shape
         var LRot = this.getRandom(this.settings.rotRange[0],
-                                  this.settings.rotRange[1]);
+            this.settings.rotRange[1]);
         var RRot = this.getRandom(this.settings.rotRange[0],
-                                  this.settings.rotRange[1]);
+            this.settings.rotRange[1]);
         var LFlip = this.getRandomElement(this.settings.flipVals);
         var RFlip = this.getRandomElement(this.settings.flipVals);
         var LSize = this.getRandom(this.settings.sizeRange[0],
-                                   this.settings.sizeRange[1]) * LsizeBase[0];
+            this.settings.sizeRange[1]) * LsizeBase[0];
         var RSize = this.getRandom(this.settings.sizeRange[0],
-                                   this.settings.sizeRange[1]) * RsizeBase[0];
+            this.settings.sizeRange[1]) * RsizeBase[0];
 
         var _this = this;
         _this.clearTriangles();
         _this.set('stimTimer', window.setTimeout(function() {
             _this.drawTriangles(Lshapes[0], LX, LY, LRot, LFlip, LSize,
-                            Rshapes[0], RX, RY, RRot, RFlip, RSize);
+                Rshapes[0], RX, RY, RRot, RFlip, RSize);
             _this.set('stimTimer', window.setTimeout(function() {
                 _this.presentTriangles(Lshapes.reverse(), Rshapes.reverse(),
-                                    LsizeBase.reverse(), RsizeBase.reverse());
+                    LsizeBase.reverse(), RsizeBase.reverse());
             }, _this.settings.msTriangles));
         }, _this.settings.msBlank));
     },

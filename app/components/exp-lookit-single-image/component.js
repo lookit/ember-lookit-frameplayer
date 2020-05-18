@@ -203,25 +203,25 @@ export default ExpLookitImageAudioBase.extend({
          *   @param {String} top top margin, as percentage of story area height
          */
         image: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        anyOf: imageAssetOptions
-                    },
-                    'left': {
-                        type: 'string'
-                    },
-                    'width': {
-                        type: 'string'
-                    },
-                    'top': {
-                        type: 'string'
-                    },
-                    'alt': {
-                        type: 'string'
-                    }
+            type: 'object',
+            properties: {
+                'src': {
+                    anyOf: imageAssetOptions
+                },
+                'left': {
+                    type: 'string'
+                },
+                'width': {
+                    type: 'string'
+                },
+                'top': {
+                    type: 'string'
+                },
+                'alt': {
+                    type: 'string'
                 }
-            },
+            }
+        },
 
         /**
          * Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
@@ -274,15 +274,15 @@ export default ExpLookitImageAudioBase.extend({
                 */
                 this.send('setTimeEvent', 'startTimer');
                 this.set('pageTimer', window.setTimeout(function() {
-                        /**
+                    /**
                         * Timer for set-duration trial ends
                         *
                         * @event endTimer
                         */
-                        _this.send('setTimeEvent', 'endTimer');
-                        _this.set('minDurationAchieved', true);
-                        _this.send('finish');
-                    }, _this.get('durationSeconds') * 1000));
+                    _this.send('setTimeEvent', 'endTimer');
+                    _this.set('minDurationAchieved', true);
+                    _this.send('finish');
+                }, _this.get('durationSeconds') * 1000));
                 if (this.get('showProgressBar')) {
                     this.set('timerStart', new Date().getTime());
                     let timerStart = _this.get('timerStart');

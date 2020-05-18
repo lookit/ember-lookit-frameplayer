@@ -415,20 +415,20 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             return this.get('attnSources_parsed');
         } else {
             switch (this.get('currentTask')) {
-                case 'announce':
-                    return this.get('attnSources_parsed');
-                case 'intro':
-                    return this.get('introSources_parsed');
-                case 'test':
-                    if (this.get('useAlternate')) {
-                        if (this.get('altSources').length) {
-                            return this.get('altSources_parsed');
-                        } else { // default to playing same test video again
-                            return this.get('sources_parsed');
-                        }
-                    } else {
+            case 'announce':
+                return this.get('attnSources_parsed');
+            case 'intro':
+                return this.get('introSources_parsed');
+            case 'test':
+                if (this.get('useAlternate')) {
+                    if (this.get('altSources').length) {
+                        return this.get('altSources_parsed');
+                    } else { // default to playing same test video again
                         return this.get('sources_parsed');
                     }
+                } else {
+                    return this.get('sources_parsed');
+                }
             }
         }
         return [];
@@ -559,11 +559,11 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         // Actual starting audio is handled by autoplay on the template.
         var _this = this; // Require at least attnLength duration of announcement phase
         this.set('announceTimer', window.setTimeout(function() {
-                _this.set('completedAnnouncementTime', true);
-                if (_this.get('completedAnnouncementAudio')) {
-                    _this.set('currentTask', 'intro');
-                }
-            }, _this.get('announceLength') * 1000));
+            _this.set('completedAnnouncementTime', true);
+            if (_this.get('completedAnnouncementAudio')) {
+                _this.set('currentTask', 'intro');
+            }
+        }, _this.get('announceLength') * 1000));
     },
 
     startIntro() {
@@ -617,7 +617,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                     .catch(error => {  // eslint-disable-line no-unused-vars
                         calAudio.play();
                     }
-                );
+                    );
 
                 $('#player-calibration-video').removeClass(lastLoc);
                 $('#player-calibration-video').addClass(thisLoc);

@@ -194,9 +194,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
         //mediaObj.pause();
         mediaObj.currentTime = 0;
         mediaObj.play().then(() => {
-            }).catch(() => {
-                mediaObj.play();
-            }
+        }).catch(() => {
+            mediaObj.play();
+        }
         );
     },
 

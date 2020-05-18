@@ -230,25 +230,25 @@ export default ExpLookitImageAudioBase.extend({
          *   @param {String} top top margin, as percentage of story area height
          */
         image: {
-                type: 'object',
-                properties: {
-                    'src': {
-                        anyOf: imageAssetOptions
-                    },
-                    'left': {
-                        type: 'string'
-                    },
-                    'width': {
-                        type: 'string'
-                    },
-                    'top': {
-                        type: 'string'
-                    },
-                    'alt': {
-                        type: 'string'
-                    }
+            type: 'object',
+            properties: {
+                'src': {
+                    anyOf: imageAssetOptions
+                },
+                'left': {
+                    type: 'string'
+                },
+                'width': {
+                    type: 'string'
+                },
+                'top': {
+                    type: 'string'
+                },
+                'alt': {
+                    type: 'string'
                 }
-            },
+            }
+        },
 
         /**
          * Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value

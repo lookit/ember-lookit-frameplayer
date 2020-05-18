@@ -606,20 +606,20 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             return this.get('announcementVideo_parsed');
         } else {
             switch (this.get('currentTask')) {
-                case 'announce':
-                    return this.get('announcementVideo_parsed');
-                case 'intro':
-                    return this.get('introVideo_parsed');
-                case 'test':
-                    if (this.get('useAlternate')) {
-                        if (this.get('altTestVideo').length) {
-                            return this.get('altTestVideo_parsed');
-                        } else { // default to playing same test video again
-                            return this.get('sources_parsed');
-                        }
-                    } else {
-                        return this.get('testVideo_parsed');
+            case 'announce':
+                return this.get('announcementVideo_parsed');
+            case 'intro':
+                return this.get('introVideo_parsed');
+            case 'test':
+                if (this.get('useAlternate')) {
+                    if (this.get('altTestVideo').length) {
+                        return this.get('altTestVideo_parsed');
+                    } else { // default to playing same test video again
+                        return this.get('sources_parsed');
                     }
+                } else {
+                    return this.get('testVideo_parsed');
+                }
             }
         }
         return [];
@@ -770,11 +770,11 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         // Actual starting audio is handled by autoplay on the template.
         var _this = this; // Require at least announcementLength duration of announcement phase
         this.set('announceTimer', window.setTimeout(function() {
-                _this.set('completedAnnouncementTime', true);
-                if (_this.get('completedAnnouncementAudio')) {
-                    _this.set('currentTask', 'intro');
-                }
-            }, _this.get('announcementLength') * 1000));
+            _this.set('completedAnnouncementTime', true);
+            if (_this.get('completedAnnouncementAudio')) {
+                _this.set('currentTask', 'intro');
+            }
+        }, _this.get('announcementLength') * 1000));
     },
 
     startIntro() {
@@ -934,9 +934,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         //audioObj.pause();
         audioObj.currentTime = 0;
         audioObj.play().then(() => {
-            }).catch(() => {
-                audioObj.play();
-            }
+        }).catch(() => {
+            audioObj.play();
+        }
         );
     },
 

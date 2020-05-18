@@ -396,12 +396,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     let _this = this;
                     this.send('setTimeEvent', 'setting timer');
                     this.set('pageTimer', window.setTimeout(function() {
-                            _this.send('setTimeEvent', 'timer ended');
-                            _this.set('minDurationAchieved', true);
-                            if (_this.get('finishedAllAudio')) {
-                                _this.send('finish');
-                            }
-                        }, _this.get('durationSeconds') * 1000));
+                        _this.send('setTimeEvent', 'timer ended');
+                        _this.set('minDurationAchieved', true);
+                        if (_this.get('finishedAllAudio')) {
+                            _this.send('finish');
+                        }
+                    }, _this.get('durationSeconds') * 1000));
                     if (this.get('showProgressBar')) {
                         this.set('timerStart', new Date().getTime());
                         let timerStart = _this.get('timerStart');

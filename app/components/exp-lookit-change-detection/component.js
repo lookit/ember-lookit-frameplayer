@@ -651,10 +651,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         $('#allstimuli').show();
         _this.presentImages();
         window.setTimeout(function() {
-                window.clearTimeout(_this.get('stimTimer'));
-                _this.clearImages();
-                _this.endTrial();
-            }, _this.get('trialLength') * 1000);
+            window.clearTimeout(_this.get('stimTimer'));
+            _this.clearImages();
+            _this.endTrial();
+        }, _this.get('trialLength') * 1000);
     },
 
     // When triangles have been shown for time indicated: play end-audio if
