@@ -18,6 +18,18 @@
               <div>
                 <img style="float:right; vertical-align:middle;" src="{{projectAssets}}/css/logo.png" height="70">
                 <span>Lookit<br> component<br> docs</span>
+
+                {{#if is_release}}
+                    <p>Version: {{version}}</p>
+                {{else}}
+                    <p>Version: latest <br>({{version}})</p>
+                    <select name="select_version" onchange="location = this.value;">
+                        <option value="">--Select different version--</option>
+                        {{#each other_versions}}
+                            <option value="releases/{{this}}/">{{this}}</option>
+                        {{/each}}
+                    </select>
+                {{/if}}
               </div>
 
               </h2>

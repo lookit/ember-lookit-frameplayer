@@ -1,6 +1,6 @@
 {
   "name": "ember-lookit-frameplayer",
-  "version": "0.0.0",
+  "version": "v1.2.0",
   "description": "Ember Frame Player",
   "private": true,
   "directories": {
@@ -8,7 +8,8 @@
     "test": "tests"
   },
   "scripts": {
-    "docs": "yuidoc --lint &&    yuidoc --helpers helpers.js &&    mkdir -p themes/lookit/assets/screenshots &&    rm -f themes/lookit/assets/screenshots/* &&    cp screenshots/* themes/lookit/assets/screenshots/ &&    mkdir -p docs/assets/screenshots && rm -f docs/assets/screenshots/* &&    cp screenshots/* docs/assets/screenshots/ && mkdir -p themes/lookit/assets/framevideos && rm -f themes/lookit/assets/framevideos/* && cp framevideos/* themes/lookit/assets/framevideos/ && mkdir -p docs/assets/framevideos && rm -f docs/assets/framevideos/* && cp framevideos/* docs/assets/framevideos/",
+    "docs": "yuidoc --lint &&    yuidoc --helpers helpers.js && cp -r docs_tmp/* docs && rm -rf docs_tmp &&   mkdir -p themes/lookit/assets/screenshots &&    rm -f themes/lookit/assets/screenshots/* &&    cp screenshots/* themes/lookit/assets/screenshots/ &&    mkdir -p docs/assets/screenshots && rm -f docs/assets/screenshots/* &&    cp screenshots/* docs/assets/screenshots/ && mkdir -p themes/lookit/assets/framevideos && rm -f themes/lookit/assets/framevideos/* && cp framevideos/* themes/lookit/assets/framevideos/ && mkdir -p docs/assets/framevideos && rm -f docs/assets/framevideos/* && cp framevideos/* docs/assets/framevideos/",
+    "release-docs": "yuidoc --lint &&    yuidoc --helpers helpers.js && cp -r docs_tmp/* docs/releases/NEW && rm -rf docs_tmp &&   mkdir -p themes/lookit/assets/screenshots &&    rm -f themes/lookit/assets/screenshots/* &&    cp screenshots/* themes/lookit/assets/screenshots/ &&    mkdir -p docs/assets/screenshots && rm -f docs/assets/screenshots/* &&    cp screenshots/* docs/assets/screenshots/ && mkdir -p themes/lookit/assets/framevideos && rm -f themes/lookit/assets/framevideos/* && cp framevideos/* themes/lookit/assets/framevideos/ && mkdir -p docs/assets/framevideos && rm -f docs/assets/framevideos/* && cp framevideos/* docs/assets/framevideos/",
     "build": "ember build",
     "start": "ember server",
     "test": "yarn run check-style && ember test --ssl false",
