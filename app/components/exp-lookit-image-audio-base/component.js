@@ -122,6 +122,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     pageTimer: null,
     progressTimer: null,
     nextButtonDisableTimer: null,
+    showChoiceTimer: null,
     timerStart: null,
     finishedAllAudio: false,
     minDurationAchieved: false,
@@ -530,7 +531,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             $('.story-image-container img').removeClass('highlight');
             $('#' + imageId + ' img').addClass('highlight');
             this.set('selectedImage', imageId);
-            this.checkAndEnableProceed();
+            var _this = this;
+            this.set('showChoiceTimer', window.setTimeout(function() {
+                window.clearInterval(_this.get('showChoiceTimer'));
+                _this.checkAndEnableProceed();
+            }, 150));
+
         }
     },
 
