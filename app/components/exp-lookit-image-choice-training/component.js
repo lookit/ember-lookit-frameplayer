@@ -88,7 +88,7 @@ let {
  }
 
  * ```
- * @class Exp-lookit-image-choice
+ * @class Exp-lookit-image-choice-training
  * @extends Exp-lookit-image-audio-base
  * @uses Full-screen
  * @uses Video-record
@@ -96,11 +96,14 @@ let {
  */
 
 export default ExpLookitImageAudioBase.extend({
-    type: 'exp-lookit-image-choice',
+    type: 'exp-lookit-image-choice-training',
 
     autoProceed: false,
     audioSources: [],
-    requireCorrectChoice: false,
+
+    requireCorrectChoice: true,
+
+    canMakeChoice: false,
 
     frameSchemaProperties: {
 
@@ -267,6 +270,12 @@ export default ExpLookitImageAudioBase.extend({
                     'displayDelayMs': {
                         type: 'number',
                         minimum: 0
+                    },
+                    'correct': {
+                        type: 'boolean'
+                    },
+                    'feedbackAudio': {
+                        anyOf: audioAssetOptions
                     }
                 }
             }
@@ -326,11 +335,23 @@ export default ExpLookitImageAudioBase.extend({
             type: 'boolean',
             description: 'Whether this is a frame where the user needs to click to select one of the images before proceeding'
         },
+        /**
+         * Whether the participant can select an option before audio finishes
+         *
+         * @property {Boolean} canMakeChoiceBeforeAudioFinished
+         * @default false
+         */
+        canMakeChoiceBeforeAudioFinished: {
+            type: 'boolean',
+            description: 'Whether the participant can select an option before audio finishes',
+            default: false
+        },
 
     },
 
     didInsertElement() {
         this._super(...arguments);
+        this.set('canMakeChoice', !!this.get('canMakeChoiceBeforeAudioFinished'));
         $('#nextbutton').prop('disabled');
     },
 

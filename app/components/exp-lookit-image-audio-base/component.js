@@ -128,12 +128,17 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     minDurationAchieved: false,
     noParentText: false,
 
+    requireCorrectChoice: false,
+    correctImageSelected: false,
+    canMakeChoice: true,
+    showingFeedbackDialog: false,
+
     imageDisplayTimers: null,
 
     selectedImage: null,
 
     assetsToExpand: {
-        'audio': ['audio'],
+        'audio': ['audio', 'images/feedbackAudio'],
         'video': [],
         'image': ['images/src']
     },
@@ -302,6 +307,15 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     'displayDelayMs': {
                         type: 'number',
                         minimum: 0
+                    },
+                    'correct': {
+                        type: 'boolean'
+                    },
+                    'feedbackAudio': {
+                        anyOf: audioAssetOptions
+                    },
+                    'feedbackText': {
+                        type: 'string'
                     }
                 }
             }
@@ -333,7 +347,29 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             type: 'string',
             description: 'Color of image area',
             default: 'white'
-        }
+        },
+        /**
+         * Whether this is a frame where the user needs to click to
+         * select one of the images before proceeding
+         *
+         * @property {Boolean} isChoiceFrame
+         * @default false
+         */
+        isChoiceFrame: {
+            type: 'boolean',
+            description: 'Whether this is a frame where the user needs to click to select one of the images before proceeding'
+        },
+        /**
+         * Whether the participant can select an option before audio finishes
+         *
+         * @property {Boolean} canMakeChoiceBeforeAudioFinished
+         * @default false
+         */
+        canMakeChoiceBeforeAudioFinished: {
+            type: 'boolean',
+            description: 'Whether the participant can select an option before audio finishes',
+            default: false
+        },
     },
 
     meta: {
@@ -450,11 +486,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
     finishedAudio() {
         this.set('finishedAllAudio', true);
+        this.set('canMakeChoice', true);
         this.checkAndEnableProceed();
     },
 
     checkAndEnableProceed() {
-        if (this.get('minDurationAchieved') && this.get('finishedAllAudio') && (this.get('selectedImage') || !this.get('isChoiceFrame'))) {
+        if (this.get('minDurationAchieved') && this.get('finishedAllAudio') && !this.get('showingFeedbackDialog') && ((this.get('selectedImage') && (this.get('correctImageSelected') || !this.get('requireCorrectChoice'))) || !this.get('isChoiceFrame'))) {
             this.readyToFinish();
         }
     },
@@ -512,9 +549,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
 
-    clickImage(imageId, nonChoiceOption) {
+    clickImage(imageId, nonChoiceOption, correct, feedbackText) {
         // On a choice frame, highlight this choice
-        if (this.get('isChoiceFrame') && !nonChoiceOption) {
+        if (this.get('isChoiceFrame') && !nonChoiceOption && this.get('canMakeChoice')) {
+            this.set('finishedAllAudio', true); // Treat as if audio is finished in case making choice before audio finishes - otherwise we never satisfy that criterion
             /**
              * When one of the images is clicked during a choice frame
              *
@@ -522,19 +560,73 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
              * @param {String} imageId
              */
             this.send('setTimeEvent', 'clickImage', {
-                imageId: imageId
+                imageId: imageId,
+                correct: correct
             });
 
             $('.story-image-container img').removeClass('highlight');
             $('#' + imageId + ' img').addClass('highlight');
             this.set('selectedImage', imageId);
-            var _this = this;
-            this.set('showChoiceTimer', window.setTimeout(function() {
-                window.clearInterval(_this.get('showChoiceTimer'));
-                _this.checkAndEnableProceed();
-            }, 150));
+            this.set('correctImageSelected', correct);
+
+            if ($(`#${imageId}.story-image-container audio source`).length) {
+                // If there's audio associated with this choice,
+                $('audio').each(function() { // pause any other audio
+                    this.pause();
+                    this.currentTime = 0;
+                });
+                $(`#${imageId}.story-image-container audio`)[0].play().then(() => {
+                    /**
+                     * When image audio is started
+                     *
+                     * @event startImageAudio
+                     * @param {String} imageId
+                     */
+                    this.send('setTimeEvent', 'startImageAudio', {
+                        imageId: imageId
+                    });
+                }, () => {
+                    /**
+                     * When image audio cannot be started. In this case we treat it as if
+                     * the audio was completed (for purposes of allowing participant to
+                     * proceed)
+                     *
+                     * @event failedToStartImageAudio
+                     * @param {String} imageId
+                     */
+                    this.send('setTimeEvent', 'failedToStartImageAudio', {
+                        imageId: imageId
+                    });
+                    this.endFeedbackAudio(imageId, correct);
+                })
+
+            }
+
+            // TODO: decide
+            if (feedbackText) {
+                this.set('showingFeedbackDialog', true);
+                $(`.${imageId}.modal`).show();
+            }
+
+            else {
+                // Otherwise, just ensure that if we're moving on, the participant can see
+                // the answer highlighted briefly.
+                var _this = this;
+                this.set('showChoiceTimer', window.setTimeout(function() {
+                    window.clearInterval(_this.get('showChoiceTimer'));
+                    _this.checkAndEnableProceed();
+                }, 150));
+
+            }
 
         }
+    },
+
+    endFeedbackAudio(imageId, correct) {
+          if (!correct) { // un-highlight this incorrect answer
+              $(`#${imageId}.story-image-container img`).removeClass('highlight');
+          }
+          this.checkAndEnableProceed(); // if correct, move on
     },
 
     actions: {
@@ -562,8 +654,18 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             this.finishedAudio();
         },
 
-        clickImage(imageId, nonChoiceOption) {
-            this.clickImage(imageId, nonChoiceOption);
+        clickImage(imageId, nonChoiceOption, correct, feedbackText) {
+            this.clickImage(imageId, nonChoiceOption, correct, feedbackText);
+        },
+
+        endFeedbackAudio(imageId, correct) {
+            this.endFeedbackAudio(imageId, correct);
+        },
+
+        hideFeedbackDialog(imageId) {
+            $(`.${imageId}.modal`).hide();
+            this.set('showingFeedbackDialog', false);
+            this.checkAndEnableProceed();
         }
     },
 
@@ -634,7 +736,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         this.send('setTimeEvent', 'displayImages');
         var _this = this;
         $.each(this.get('images_parsed'), function(idx, image) {
-            console.log(image);
             if (image.hasOwnProperty('displayDelayMs')) {
                 var thisTimeout = window.setTimeout(function() {
                     $(`.story-image-container#${image.id}`).show();

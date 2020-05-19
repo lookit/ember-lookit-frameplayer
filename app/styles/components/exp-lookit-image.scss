@@ -36,6 +36,27 @@ $exp-lookit-preferential-looking-picmargin: 2;
     top: 0; bottom: 0;
     left: 0; right: 0;
 
+    .modal {
+        position: fixed !important;
+        z-index: 1050 !important;
+        margin: auto !important;
+        left: 25% !important;
+        width: 50% !important;
+        top: 25% !important;
+        height: auto !important;
+        bottom: auto !important;
+        right: auto !important;
+        font-size: larger;
+
+        .modal-body, .modal-footer {
+            padding: 0.5em;
+
+            button {
+                padding: 0.5em;
+            }
+        }
+    }
+
     // Outside div for the "story page"
     #image-area {
         background-color: white;
@@ -64,14 +85,10 @@ $exp-lookit-preferential-looking-picmargin: 2;
             max-height:100%;
             max-width: 100%;
 
-
-
             &.image-fill {
                 height:100%;
                 width:100%;
             }
-
-
 
             &.left {
                 @include pic-container($exp-lookit-preferential-looking-picmargin * 1%);
