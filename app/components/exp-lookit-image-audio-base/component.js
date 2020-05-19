@@ -100,7 +100,7 @@ const isColor = (strColor) => {
 };
 
 export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
-    type: 'exp-lookit-story-page',
+    type: 'exp-lookit-image-audio-base',
     layout: layout,
     displayFullscreen: true, // force fullscreen for all uses of this component
     fullScreenElementId: 'experiment-player', // which element to send fullscreen
@@ -126,6 +126,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     finishedAllAudio: false,
     minDurationAchieved: false,
     noParentText: false,
+
+    selectedImage: null,
 
     assetsToExpand: {
         'audio': ['audio'],
@@ -358,6 +360,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     _this.send('playAudio');
                     _this.set('recorderReady', false);
                     $('#waitForVideo').hide();
+                    /**
+                     * When images are displayed to participant
+                     *
+                     * @event displayImages
+                     */
+                    _this.send('setTimeEvent', 'displayImages');
                     $('.story-image-container').show();
                 });
             }
@@ -374,6 +382,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     _this.set('startedAudio', false);
                     _this.send('playAudio');
                     $('#waitForVideo').hide();
+                    /**
+                     * When images are displayed to participant
+                     *
+                     * @event displayImages
+                     */
+                    _this.send('setTimeEvent', 'displayImages');
                     $('.story-image-container').show();
                 });
             }
@@ -438,7 +452,11 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
     finishedAudio() {
         this.set('finishedAllAudio', true);
-        if (this.get('minDurationAchieved')) {
+        this.checkAndEnableProceed();
+    },
+
+    checkAndEnableProceed() {
+        if (this.get('minDurationAchieved') && this.get('finishedAllAudio') && (this.get('selectedImage') || !this.get('isChoiceFrame'))) {
             this.readyToFinish();
         }
     },
@@ -469,9 +487,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     */
                 _this.send('setTimeEvent', 'endTimer');
                 _this.set('minDurationAchieved', true);
-                if (_this.get('finishedAllAudio')) {
-                    _this.readyToFinish();
-                }
+                _this.checkAndEnableProceed();
             }, _this.get('durationSeconds') * 1000));
             if (this.get('showProgressBar')) {
                 this.set('timerStart', new Date().getTime());
@@ -497,6 +513,27 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         });
     },
 
+
+    clickImage(imageId) {
+        // On a choice frame, highlight this choice
+        if (this.get('isChoiceFrame')) {
+            /**
+             * When one of the images is clicked during a choice frame
+             *
+             * @event clickImage
+             * @param {String} imageId
+             */
+            this.send('setTimeEvent', 'clickImage', {
+                imageId: imageId
+            });
+
+            $('.story-image-container img').removeClass('highlight');
+            $('#' + imageId + ' img').addClass('highlight');
+            this.set('selectedImage', imageId);
+            this.checkAndEnableProceed();
+        }
+    },
+
     actions: {
 
         // Use functions (which can be inherited) for each action
@@ -520,6 +557,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         finishedAudio() {
             this.finishedAudio();
+        },
+
+        clickImage(imageId) {
+            this.clickImage(imageId);
         }
     },
 
@@ -582,6 +623,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     didRender() {
         if ((this.get('doRecording') || this.get('startSessionRecording')) && !this.get('startedAudio')) {
             $('.story-image-container').hide();
+        } else {
+            $('.story-image-container').show();
+            /**
+             * When images are displayed to participant
+             *
+             * @event displayImages
+             */
+            _this.send('setTimeEvent', 'displayImages');
         }
     },
 

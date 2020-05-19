@@ -96,7 +96,7 @@ let {
  */
 
 export default ExpLookitImageAudioBase.extend({
-    type: 'exp-lookit-single-image',
+    type: 'exp-lookit-single-image-audio',
 
     autoProceed: false,
     audioSources: [],

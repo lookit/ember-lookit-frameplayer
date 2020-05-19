@@ -88,7 +88,7 @@ let {
  }
 
  * ```
- * @class Exp-lookit-multi-image-audio
+ * @class Exp-lookit-image-choice
  * @extends Exp-lookit-image-audio-base
  * @uses Full-screen
  * @uses Video-record
@@ -96,7 +96,7 @@ let {
  */
 
 export default ExpLookitImageAudioBase.extend({
-    type: 'exp-lookit-multi-image-audio',
+    type: 'exp-lookit-image-choice',
 
     autoProceed: false,
     audioSources: [],
@@ -109,7 +109,7 @@ export default ExpLookitImageAudioBase.extend({
          * hidden, and the frame auto-advances after (a) the audio segment (if any)
          * completes AND (b) the durationSeconds is achieved. If false: the next, previous,
          * and replay buttons (as applicable) are displayed. It becomes possible to
-         * press 'next' only once the audio segment, if any, is finished. TODO implement
+         * press 'next' only once the audio segment, if any, is finished.
          *
          * @property {Boolean} autoProceed
          * @default false
@@ -304,7 +304,18 @@ export default ExpLookitImageAudioBase.extend({
             anyOf: audioAssetOptions,
             description: 'Audio to play as this frame begins',
             default: []
-        }
+        },
+        /**
+         * Whether this is a frame where the user needs to click to
+         * select one of the images before proceeding
+         *
+         * @property {Boolean} isChoiceFrame
+         * @default false
+         */
+        isChoiceFrame: {
+            type: 'boolean',
+            description: 'Whether this is a frame where the user needs to click to select one of the images before proceeding'
+        },
     },
 
     actions: {
@@ -323,6 +334,10 @@ export default ExpLookitImageAudioBase.extend({
 
         finishedAudio() {
             this.finishedAudio();
+        },
+
+        clickImage(imageId) {
+            this.clickImage(imageId);
         }
 
     },
@@ -330,6 +345,37 @@ export default ExpLookitImageAudioBase.extend({
     didInsertElement() {
         this._super(...arguments);
         $('#nextbutton').prop('disabled', this.get('durationSeconds') && this.get('durationSeconds') > 0);
-    }
+    },
+
+    meta: {
+        name: 'ExpLookitImageChoice',
+        description: 'General frame to display images and/or audio',
+        data: {
+            type: 'object',
+            properties: {
+                videoId: {
+                    type: 'string'
+                },
+                videoList: {
+                    type: 'list'
+                },
+                /**
+                * Array of images used in this frame [same as passed to this frame, but
+                * may reflect random assignment for this particular participant]
+                * @attribute images
+                */
+                images: {
+                    type: 'array'
+                },
+                /**
+                * ID of image selected at time of proceeding
+                * @attribute selectedImage
+                */
+                selectedImage: {
+                    type: 'string'
+                }
+            },
+        }
+    },
 
 });

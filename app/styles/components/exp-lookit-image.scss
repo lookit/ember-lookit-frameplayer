@@ -63,18 +63,15 @@ $exp-lookit-preferential-looking-picmargin: 2;
             padding:0;
             max-height:100%;
             max-width: 100%;
-            border-radius: 15px;
-            border:5px solid transparent; // to avoid rearranging upon adding the highlight
+
+
 
             &.image-fill {
                 height:100%;
                 width:100%;
             }
 
-            &.highlight {
-                border: 5px solid green;
-                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.6);
-            }
+
 
             &.left {
                 @include pic-container($exp-lookit-preferential-looking-picmargin * 1%);
@@ -99,6 +96,14 @@ $exp-lookit-preferential-looking-picmargin: 2;
                 max-width: 100%;
                 margin: auto;
                 vertical-align: center;
+
+                border: 5px solid transparent; // to avoid rearranging upon adding the highlight
+                border-radius: 15px;
+
+                &.highlight {
+                    border: 5px solid green;
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.6);
+                }
             }
 
 
@@ -203,13 +208,4 @@ $exp-lookit-preferential-looking-picmargin: 2;
         margin-top: 40%;
     }
 
-}
-
-
-.exp-lookit-image-audio img.stim-image {
-    max-width: 100%;
-    max-height: 100%;
-    margin: auto;
-    position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
 }
