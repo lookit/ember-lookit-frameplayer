@@ -1,5 +1,5 @@
-{{! template-lint-disable invalid-interactive}}
-{{! template-lint-disable html-comments}}
+{{! template-lint-disable no-invalid-interactive}}
+{{! template-lint-disable no-html-comments}}
 <div class="input-group exp-lookit-preferential-looking row col-md-6 ">
 
     <!--RECORDER-->
@@ -12,7 +12,8 @@
     <video id="player-calibration-video"
            class="calibration"
            autoplay
-           style="display:none;">
+           style="display:none;"
+           {{!-- template-lint-disable no-inline-styles --}}>
         {{#each calibrationVideo_parsed as |stream|}}
             <source src="{{stream.src}}" type="{{stream.type}}">
         {{/each}}
@@ -72,20 +73,20 @@
     </video>
 
     <!--STATIC IMAGES-->
-    <div id="allstimuli" style="display:none;">
+    <div id="allstimuli" style="display:none;" {{!-- template-lint-disable no-inline-styles --}}>
         {{#if leftImage}}
             <div id="left-container">
-                <img id="left-image" src={{leftImage_parsed}} class="stim-image" alt="left image">
+                <img id="left-image" src={{leftImage_parsed}} class="stim-image" alt="left stimulus">
             </div>
         {{/if}}
         {{#if rightImage}}
             <div id="right-container">
-                <img id="right-image" src={{rightImage_parsed}} class="stim-image" alt="right image">
+                <img id="right-image" src={{rightImage_parsed}} class="stim-image" alt="right stimulus">
             </div>
         {{/if}}
         {{#if centerImage}}
             <div id="center-container">
-                <img id="center-image" src={{centerImage_parsed}} class="stim-image" alt="center image">
+                <img id="center-image" src={{centerImage_parsed}} class="stim-image" alt="center stimulus">
             </div>
         {{/if}}
     </div>
@@ -103,7 +104,7 @@
 
 <!--FULLSCREEN BUTTON-->
 <div class="row col-md-6 exp-lookit-preferential-looking">
-    <button class="btn btn-success" style="display:none;" id="fsButton" {{ action 'showFullscreen'}} >
+    <button type="button" class="btn btn-success" style="display:none;" id="fsButton" {{ action 'showFullscreen'}} {{!-- template-lint-disable no-inline-styles --}}>
         please return to fullscreen
     </button>
 </div>

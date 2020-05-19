@@ -20,11 +20,11 @@
 
 <div class="row exp-controls col-md-12">
     {{#if showPreviousButton}}
-        <button class="btn btn-default pull-left" {{ action 'previous' }} > Previous</button>
+        <button type="button" class="btn btn-default pull-left" {{ action 'previous' }} > Previous</button>
     {{/if}}
-    <button class="btn btn-primary pull-right" {{ action 'next' }} > {{previewButtonText}} </button>
+    <button type="button" class="btn btn-primary pull-right" {{ action 'next' }} > {{previewButtonText}} </button>
 </div>
 
 <div class="exp-controls col-md-12 row">
-    <button id="nextbutton" class="btn btn-success pull-right" {{ action 'skipone' }} >  {{skipButtonText}} </button>
+    <button type="button" id="nextbutton" class="btn btn-success pull-right" {{ action 'skipone' }} >  {{skipButtonText}} </button>
 </div>

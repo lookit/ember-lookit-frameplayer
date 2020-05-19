@@ -1,5 +1,5 @@
-{{! template-lint-disable invalid-interactive}}
-{{! template-lint-disable html-comments}}
+{{! template-lint-disable no-invalid-interactive}}
+{{! template-lint-disable no-html-comments}}
 
 <div class="input-group exp-lookit-video row col-md-6 ">
 
@@ -13,7 +13,8 @@
     <video id="player-calibration-video"
            class="calibration"
            autoplay
-           style="display:none;">
+           style="display:none;"
+           {{!-- template-lint-disable no-inline-styles --}}>
         {{#each calibrationVideoSources_parsed as |stream|}}
             <source src="{{stream.src}}" type="{{stream.type}}">
         {{/each}}
@@ -84,7 +85,7 @@
 
 <!--FULLSCREEN BUTTON-->
 <div class="row col-md-6 exp-lookit-video">
-    <button class="btn btn-success" style="display:none;" id="fsButton" {{ action 'showFullscreen'}} >
+    <button type="button" class="btn btn-success" style="display:none;" id="fsButton" {{ action 'showFullscreen'}} {{!-- template-lint-disable no-inline-styles --}}>
         please return to fullscreen
     </button>
 </div>

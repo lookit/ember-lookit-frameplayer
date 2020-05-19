@@ -1,5 +1,5 @@
-{{! template-lint-disable invalid-interactive}}
-{{! template-lint-disable html-comments}}
+{{! template-lint-disable no-invalid-interactive}}
+{{! template-lint-disable no-html-comments}}
 
 <div class="row exp-lookit-change-detection" id="alternation-container">
 
@@ -16,8 +16,7 @@
         </video>
 
         {{#if hasBeenPaused}}
-            <audio id="player-audio"
-                   onended={{action 'endAudio'}}>
+            <audio id="player-audio" onended={{action 'endAudio'}}>
                 {{#each unpauseAudio_parsed as |stream|}}
                     <source src="{{stream.src}}" type="{{stream.type}}">
                 {{/each}}
@@ -54,7 +53,7 @@
     {{/if}}
 
     {{#unless updatedIsFullscreen}}
-        <button class="btn btn-success exp-lookit-geometry-alternation" id="fsButton" {{ action 'showFullscreen'}} >
+        <button type="button" class="btn btn-success exp-lookit-geometry-alternation" id="fsButton" {{ action 'showFullscreen'}} >
             please return to fullscreen
         </button>
     {{/unless}}

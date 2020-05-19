@@ -1,4 +1,4 @@
-{{! template-lint-disable invalid-interactive}}
+{{! template-lint-disable no-invalid-interactive}}
 
 <div class="row exp-video-config">
 
@@ -23,7 +23,7 @@
         </div>
 
         <div class="col-md-1">
-            <button id="reloadButton" class="btn btn-default" {{action 'reloadRecorderButton'}}><i class="fa fa-refresh"></i></button>
+            <button type="button" id="reloadButton" class="btn btn-default" {{action 'reloadRecorderButton'}}><i class="fa fa-refresh"></i></button>
         </div>
 
         <div class="col-md-11">
@@ -47,7 +47,7 @@
 
         {{#if showWebCamWarning }}
             <h4 class="text-warning">
-                We couldn't connect to your webcam. Please make sure you have a webcam connected and <button class="btn btn-default" {{action 'reloadRecorder'}}>click here to detect</button>. (See the troubleshooting directions below if you're having trouble!)
+                We couldn't connect to your webcam. Please make sure you have a webcam connected and <button type="button" class="btn btn-default" {{action 'reloadRecorder'}}>click here to detect</button>. (See the troubleshooting directions below if you're having trouble!)
             </h4>
         {{/if}}
 
@@ -75,7 +75,7 @@
 
                 <li>
 
-                    Make sure your webcam settings got saved by clicking <button id="reloadCheckButton" class="btn btn-default {{if checkedWebcamPermissions "checkComplete" ""}}" {{action 'reloadRecorderButtonAndRecordCheck'}}>reload webcam</button>.
+                    Make sure your webcam settings got saved by clicking <button type="button" id="reloadCheckButton" class="btn btn-default {{if checkedWebcamPermissions "checkComplete" ""}}" {{action 'reloadRecorderButtonAndRecordCheck'}}>reload webcam</button>.
                     Your webcam should re-appear WITHOUT you having to allow access again. (If you do see a dialogue, click "Remember this decision" or "Always allow" and try again!)
 
                 </li>
@@ -100,26 +100,27 @@
 
         {{#if showWarning }}
 
-            {{#if (not hasCamAccess)}}
-                <div class="reload-warning">
-                    * We don't seem to have camera access. Are you on a computer (not a phone or tablet), and using Chrome or Firefox? If so, see the troubleshooting info below.
-                </div>
-            {{else}}
-                {{#if (not checkedWebcamPermissions)}}
+            {{#if hasCamAccess}}
+                {{#unless checkedWebcamPermissions}}
                     <div class="reload-warning">
                         * Please press the 'reload webcam' button first to make sure it shows up again without making you click to allow.
                     </div>
-                {{/if}}
-                {{#if (not micChecked)}}
+                {{/unless}}
+                {{#unless micChecked}}
                     <div class="reload-warning">
                         * Please check that your recording audio is loud enough first. Make some noise!
                     </div>
-                {{/if}}
+                {{/unless}}
+            {{else}}
+
+                <div class="reload-warning">
+                    * We don't seem to have camera access. Are you on a computer (not a phone or tablet), and using Chrome or Firefox? If so, see the troubleshooting info below.
+                </div>
             {{/if}}
 
         {{/if}}
 
-        <button id="nextbutton" disabled={{if (not hasCamAccess) true false}} class="btn btn-success pull-right" {{ action 'checkAudioThenNext' }} >
+        <button type="button" id="nextbutton" disabled={{if hasCamAccess false true}} class="btn btn-success pull-right" {{ action 'checkAudioThenNext' }} >
             Next
         </button>
     </div>
@@ -160,7 +161,7 @@
                     </li>
 
                     <li>
-                        You can also refer to <a href="https://support.google.com/chrome/answer/2693767?hl=en" target="_blank" rel="noopener"> these directions from Chrome </a>.
+                        You can also refer to <a href="https://support.google.com/chrome/answer/2693767?hl=en" target="_blank" rel="noopener noreferrer"> these directions from Chrome </a>.
                     </li>
                 </ol>
             {{/acc.item}}
@@ -195,7 +196,7 @@
                         <ul>
                             <li>Make sure you're not using an Incognito window - you won't be able to save and use settings throughout the study.</li>
                             <li>Go to your Chrome settings for lookit.mit.edu here:
-                                <a href="chrome://settings/content/siteDetails?site=https://lookit.mit.edu" target="_blank" rel="noopener">chrome://settings/content/siteDetails?site=https://lookit.mit.edu</a>.
+                                <a href="chrome://settings/content/siteDetails?site=https://lookit.mit.edu" target="_blank" rel="noopener noreferrer">chrome://settings/content/siteDetails?site=https://lookit.mit.edu</a>.
                                 Set "Camera" and "Microphone" permissions to "Allow," like this. Then refresh this page.
                                 <img class="screenshot" src="assets/chrome_settings.png" alt="Chrome Lookit permissions settings">
 

@@ -23,7 +23,7 @@
         </div>
 
         <div class="col-md-4">
-            <button id="reloadButton" class="btn btn-default" {{action 'reloadRecorder'}}>
+            <button type="button" id="reloadButton" class="btn btn-default" {{action 'reloadRecorder'}}>
                 Reload webcam
                 <i class="fa fa-refresh"></i>
             </button>
@@ -86,7 +86,7 @@
                     Please try recording and viewing a video before continuing.
                 </p>
             {{/if}}
-            <button id="nextbutton" class="btn btn-success pull-right nextButton {{if readyToProceed '' 'disabled'}}" {{ action 'finish' }} > Next</button>
+            <button type="button" id="nextbutton" class="btn btn-success pull-right nextButton {{if readyToProceed '' 'disabled'}}" {{ action 'finish' }} > Next</button>
         </div>
 
     </div>

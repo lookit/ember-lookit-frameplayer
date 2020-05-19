@@ -1,12 +1,13 @@
-{{! template-lint-disable invalid-interactive}}
-{{! template-lint-disable html-comments}}
+{{! template-lint-disable no-invalid-interactive}}
+{{! template-lint-disable no-html-comments}}
 
 <div class="row exp-lookit-geometry-alternation" id="alternation-container">
 
     <video id="player-calibration-video"
            class="calibration center"
            autoplay
-           style="display:none;">
+           style="display:none;"
+           {{!-- template-lint-disable no-inline-styles --}}>
         {{#each calibrationVideoSources_parsed as |stream|}}
             <source src="{{stream.src}}" type="{{stream.type}}">
         {{/each}}
@@ -64,7 +65,7 @@
     {{/if}}
 
     {{#unless updatedIsFullscreen}}
-        <button class="btn btn-success exp-lookit-geometry-alternation" id="fsButton" {{ action 'showFullscreen'}} >
+        <button type="button" class="btn btn-success exp-lookit-geometry-alternation" id="fsButton" {{ action 'showFullscreen'}} >
             please return to fullscreen
         </button>
     {{/unless}}

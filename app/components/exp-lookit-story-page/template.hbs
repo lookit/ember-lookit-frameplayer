@@ -1,5 +1,4 @@
-{{! template-lint-disable invalid-interactive}}
-{{! template-lint-disable style-concatenation}}
+{{! template-lint-disable no-invalid-interactive}}
 
 <div class="exp-lookit-story-page" id="exp-lookit-story-page-container">
 
@@ -14,14 +13,14 @@
         {{/if}}
 
         {{#each images_parsed as |image|}}
-            <div id={{image.id}} class="story-image-container" style="left:{{image.left}}%; width:{{image.width}}%; top:{{image.top}}%;">
+            <div id={{image.id}} class="story-image-container" style="left:{{image.left}}%; width:{{image.width}}%; top:{{image.top}}%;" {{!-- template-lint-disable no-inline-styles style-concatenation--}}>
                 <img src={{image.src}} class="story-image" alt="story illustration">
             </div>
         {{/each}}
     </div>
 
     {{#unless updatedIsFullscreen}}
-        <button class="btn btn-warning exp-lookit-story-page" id="fsButton" {{ action 'showFullscreen'}} >
+        <button type="button" class="btn btn-warning exp-lookit-story-page" id="fsButton" {{ action 'showFullscreen'}} >
             please return
             <br>
             to fullscreen
@@ -38,19 +37,19 @@
 
     <div id="story-controls">
         {{#unless autoProceed}}
-            <button id="replaybutton" class="btn btn-primary left"  {{ action 'replay' }}> Replay</button>
+            <button type="button" id="replaybutton" class="btn btn-primary left"  {{ action 'replay' }}> Replay</button>
         {{/unless}}
 
         <div id="parenttext">
             {{#if (and autoProceed showProgressBar)}}
                 <div class="progress" id="progressbar">
-                    <div class="progress-bar bg-info progress-bar-striped" role="progressbar" style="width:0%" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar bg-info progress-bar-striped" role="progressbar" style="width:0%" aria-valuemin="0" aria-valuemax="100" {{!-- template-lint-disable no-inline-styles --}}></div>
                 </div>
             {{/if}}
             {{exp-text-block block=parentTextBlock}}
         </div>
         {{#unless autoProceed}}
-            <button id="nextbutton" class="btn btn-success right" {{ action 'finish' }} >
+            <button type="button" id="nextbutton" class="btn btn-success right" {{ action 'finish' }} >
                 Next
             </button>
         {{/unless}}

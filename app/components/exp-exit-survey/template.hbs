@@ -49,7 +49,7 @@
                         Researchers who are granted access must agree to maintain confidentiality and not use information
                         for commercial purposes. Data sharing will lead to faster progress in research on human development
                         and behavior. If you have any questions about the data-sharing library, please visit
-                        <a href="https://nyu.databrary.org/" target="_blank" rel="noopener">Databrary</a> or email
+                        <a href="https://nyu.databrary.org/" target="_blank" rel="noopener noreferrer">Databrary</a> or email
                         ethics@databrary.org.
                     </div>
                     {{#if showValidation}}
@@ -148,7 +148,7 @@
             <div class="progress">
                 <div class="progress-bar progress-bar-success" role="progressbar"
                      aria-valuenow={{progressValue}} aria-valuemin="0" aria-valuemax="100"
-                     style="width:{{progressValue}}%">
+                     style="width:{{progressValue}}%" {{!-- template-lint-disable no-inline-styles --}}>
                     {{progressValue}}% Complete
                 </div>
             </div>

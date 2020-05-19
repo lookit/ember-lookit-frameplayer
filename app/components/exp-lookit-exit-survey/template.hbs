@@ -50,7 +50,7 @@
                         Researchers who are granted access must agree to maintain confidentiality and not use information
                         for commercial purposes. Data sharing will lead to faster progress in research on human development
                         and behavior. If you have any questions about the data-sharing library, please visit
-                        <a href="https://nyu.databrary.org/" target="_blank" rel="noopener">Databrary</a> or email
+                        <a href="https://nyu.databrary.org/" target="_blank" rel="noopener noreferrer">Databrary</a> or email
                         ethics@databrary.org.
                     </div>
                     {{#if showValidation}}
@@ -154,7 +154,7 @@
 
             <hr>
             {{#if showShareButton}}
-                <a class="btn btn-primary pull-left" target="_blank" rel="noopener" href={{sharelink}} role="button">Share this study on Facebook!</a>
+                <a class="btn btn-primary pull-left" target="_blank" rel="noopener noreferrer" href={{sharelink}} role="button">Share this study on Facebook!</a>
             {{/if}}
             {{bs-button class="pull-right" defaultText="Exit" type="success" onClick=(action "finish")}}
         {{/if}}

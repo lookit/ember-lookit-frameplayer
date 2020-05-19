@@ -1,4 +1,3 @@
-{{! template-lint-disable invalid-interactive}}
 <div class="row exp-lookit-instructions">
     <div class="vertical-pad"></div>
 
@@ -76,12 +75,12 @@
         <div class="vertical-pad"></div>
 
         {{#if showPreviousButton}}
-            <button class="btn btn-default pull-left" {{ action 'previous' }}>
+            <button type="button" class="btn btn-default pull-left" {{ action 'previous' }}>
                 Previous
             </button>
         {{/if}}
 
-        <button id="nextbutton" class="btn btn-success pull-right" {{ action 'checkAudioThenNext' }}>
+        <button type="button" id="nextbutton" class="btn btn-success pull-right" {{ action 'checkAudioThenNext' }}>
             {{exp-format nextButtonText}}
         </button>
 

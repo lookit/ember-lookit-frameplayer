@@ -1,5 +1,4 @@
-{{! template-lint-disable invalid-interactive}}
-{{! template-lint-disable style-concatenation}}
+{{! template-lint-disable no-invalid-interactive}}
 
 <div class="exp-lookit-dialogue-page" id="exp-lookit-dialogue-page-container">
 
@@ -14,9 +13,9 @@
         {{/if}}
 
         {{#each images_parsed as |image|}}
-            <div id={{image.id}} class="story-image-positioner" style="left:{{image.left}}%; height:{{image.height}}%; bottom:{{image.bottom}}%;">
+            <div id={{image.id}} class="story-image-positioner" style="left:{{image.left}}%; height:{{image.height}}%; bottom:{{image.bottom}}%;" {{!-- template-lint-disable no-inline-styles style-concatenation --}}>
                 <div class="story-image-container" onclick={{action 'clickSpeaker' image.id}} >
-                    <p onclick={{action 'clickSpeaker' image.id}} class="image-text {{if (not completedAudio) 'disabled'}}"> {{image.text}} </p>
+                    <p onclick={{action 'clickSpeaker' image.id}} class="image-text {{unless completedAudio 'disabled'}}"> {{image.text}} </p>
                     <img src={{image.src}} class="story-image" alt="story character">
 
                     <audio class="speaker-audio" onplay={{action 'markAudioPlayed' image.id}} onended={{action 'endSpeakerAudio' image.id}}>
@@ -28,11 +27,11 @@
             </div>
         {{/each}}
 
-        <img src={{backgroundImage_parsed}} id="background-image" alt="background image">
+        <img src={{backgroundImage_parsed}} id="background-image" alt="background">
     </div>
 
     {{#unless updatedIsFullscreen}}
-        <button class="btn btn-warning exp-lookit-dialogue-page" id="fsButton" {{ action 'showFullscreen'}} >
+        <button type="button" class="btn btn-warning exp-lookit-dialogue-page" id="fsButton" {{ action 'showFullscreen'}} >
             please return
             <br>
             to fullscreen
@@ -49,13 +48,13 @@
 
     <div id="story-controls">
         {{#unless autoProceed}}
-            <button id="replaybutton" class="btn btn-primary left"  {{ action 'replay' }}> Replay</button>
+            <button type="button" id="replaybutton" class="btn btn-primary left"  {{ action 'replay' }}> Replay</button>
         {{/unless}}
         <div id="parenttext">
             {{exp-text-block block=parentTextBlock}}
         </div>
         {{#unless autoProceed}}
-            <button id="nextbutton" class="btn btn-success right" disabled={{not readyToProceed}} {{ action 'finish' }} >
+            <button type="button" id="nextbutton" class="btn btn-success right" disabled={{not readyToProceed}} {{ action 'finish' }} >
                 Next <br> (or press Enter)
             </button>
         {{/unless}}
