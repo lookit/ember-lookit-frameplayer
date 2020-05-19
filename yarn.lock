@@ -1974,18 +1974,6 @@ array-from@^2.1.1:
   resolved "https://registry.yarnpkg.com/array-from/-/array-from-2.1.1.tgz#cfe9d8c26628b9dc5aecc62a9f5d8f1f352c1195"
   integrity sha1-z+nYwmYoudxa7MYqn12PHzUsEZU=
 
-array-to-error@^1.0.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/array-to-error/-/array-to-error-1.1.1.tgz#d68812926d14097a205579a667eeaf1856a44c07"
-  integrity sha1-1ogSkm0UCXogVXmmZ+6vGFakTAc=
-  dependencies:
-    array-to-sentence "^1.1.0"
-
-array-to-sentence@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/array-to-sentence/-/array-to-sentence-1.1.0.tgz#c804956dafa53232495b205a9452753a258d39fc"
-  integrity sha1-yASVba+lMjJJWyBalFJ1OiWNOfw=
-
 array-union@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/array-union/-/array-union-2.1.0.tgz#b798420adbeb1de828d84acd8a2e23d3efe85e8d"
@@ -3079,15 +3067,15 @@ broccoli-caching-writer@^2.2.0:
     rsvp "^3.0.17"
     walk-sync "^0.2.5"
 
-broccoli-clean-css@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/broccoli-clean-css/-/broccoli-clean-css-1.1.0.tgz#9db143d9af7e0ae79c26e3ac5a9bb2d720ea19fa"
-  integrity sha1-nbFD2a9+CuecJuOsWpuy1yDqGfo=
+broccoli-clean-css@^1.1.0, broccoli-clean-css@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/broccoli-clean-css/-/broccoli-clean-css-2.0.1.tgz#1bf48a43d7626522621351c696e5f9441f628db2"
+  integrity sha1-G/SKQ9diZSJiE1HGluX5RB9ijbI=
   dependencies:
-    broccoli-persistent-filter "^1.1.6"
-    clean-css-promise "^0.1.0"
-    inline-source-map-comment "^1.0.5"
-    json-stable-stringify "^1.0.0"
+    broccoli-persistent-filter "^1.2.13"
+    clean-css-promise "^2.0.1"
+    json-stable-stringify "^1.0.1"
+    source-map-to-comment "^1.1.0"
 
 broccoli-concat@^3.2.2:
   version "3.7.3"
@@ -3358,7 +3346,7 @@ broccoli-output-wrapper@^3.2.1:
     heimdalljs-logger "^0.1.10"
     symlink-or-copy "^1.2.0"
 
-broccoli-persistent-filter@^1.1.5, broccoli-persistent-filter@^1.1.6, broccoli-persistent-filter@^1.4.3:
+broccoli-persistent-filter@^1.1.5, broccoli-persistent-filter@^1.1.6, broccoli-persistent-filter@^1.2.13, broccoli-persistent-filter@^1.4.3:
   version "1.4.6"
   resolved "https://registry.yarnpkg.com/broccoli-persistent-filter/-/broccoli-persistent-filter-1.4.6.tgz#80762d19000880a77da33c34373299c0f6a3e615"
   integrity sha512-0RejLwoC95kv4kta8KAa+FmECJCK78Qgm8SRDEK7YyU0N9Cx6KpY3UCDy9WELl3mCXLN8TokNxc7/hp3lL4lfw==
@@ -3898,7 +3886,7 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-chalk@^1.0.0, chalk@^1.1.1, chalk@^1.1.3:
+chalk@^1.1.1, chalk@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-1.1.3.tgz#a8115c55e4a702fe4d150abd3872822a7e09fc98"
   integrity sha1-qBFcVeSnAv5NFQq9OHKCKn4J/Jg=
@@ -3978,22 +3966,19 @@ clean-base-url@^1.0.0:
   resolved "https://registry.yarnpkg.com/clean-base-url/-/clean-base-url-1.0.0.tgz#c901cf0a20b972435b0eccd52d056824a4351b7b"
   integrity sha1-yQHPCiC5ckNbDszVLQVoJKQ1G3s=
 
-clean-css-promise@^0.1.0:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/clean-css-promise/-/clean-css-promise-0.1.1.tgz#43f3d2c8dfcb2bf071481252cd9b76433c08eecb"
-  integrity sha1-Q/PSyN/LK/BxSBJSzZt2QzwI7ss=
+clean-css-promise@^2.0.1:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/clean-css-promise/-/clean-css-promise-2.1.0.tgz#2a43936585d56547d7fa0913ff2156f5652d77da"
+  integrity sha512-drIjos9WjRSllp3UO/g/pB731+d0hlC/bFuqFFoE/s7kuYHD2Zvl1hQvX5Tf/JRVUxKOjmvHAPP0TJjUbkXXTQ==
   dependencies:
-    array-to-error "^1.0.0"
-    clean-css "^3.4.5"
-    pinkie-promise "^2.0.0"
+    clean-css "^4.1.9"
 
-clean-css@^3.4.5:
-  version "3.4.28"
-  resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-3.4.28.tgz#bf1945e82fc808f55695e6ddeaec01400efd03ff"
-  integrity sha1-vxlF6C/ICPVWlebd6uwBQA79A/8=
+clean-css@^4.1.9:
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-4.2.3.tgz#507b5de7d97b48ee53d84adb0160ff6216380f78"
+  integrity sha512-VcMWDN54ZN/DS+g58HYL5/n4Zrqe8vHJpGA8KdgUXFU4fuP/aHNw8eld9SyEIyabIMJX/0RaY/fplOo5hYLSFA==
   dependencies:
-    commander "2.8.x"
-    source-map "0.4.x"
+    source-map "~0.6.0"
 
 clean-up-path@^1.0.0:
   version "1.0.0"
@@ -4162,13 +4147,6 @@ commander@2.12.2:
   version "2.12.2"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.12.2.tgz#0f5946c427ed9ec0d91a46bb9def53e54650e555"
   integrity sha512-BFnaq5ZOGcDN7FlrtBT4xxkgIToalIIxwjxLWVJ8bGTpe1LroqMiqQXdA7ygc7CRvaYS+9zfPGFnJqFSayx+AA==
-
-commander@2.8.x:
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-2.8.1.tgz#06be367febfda0c330aa1e2a072d3dc9762425d4"
-  integrity sha1-Br42f+v9oMMwqh4qBy09yXYkJdQ=
-  dependencies:
-    graceful-readlink ">= 1.0.0"
 
 commander@^2.6.0:
   version "2.19.0"
@@ -7047,11 +7025,6 @@ graceful-fs@^4.2.0:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.4.tgz#2256bde14d3632958c465ebc96dc467ca07a29fb"
   integrity sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
 
-"graceful-readlink@>= 1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
-  integrity sha1-TK+tdrxi8C+gObL5Tpo906ORpyU=
-
 growly@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
@@ -7475,17 +7448,6 @@ ini@^1.3.4:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
   integrity sha512-RZY5huIKCMRWDUqZlEi72f/lmXKMvuszcMBduliQ3nnWbx9X/ZBQO7DijMEYS9EhHBb2qacRUMtC7svLwe0lcw==
-
-inline-source-map-comment@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/inline-source-map-comment/-/inline-source-map-comment-1.0.5.tgz#50a8a44c2a790dfac441b5c94eccd5462635faf6"
-  integrity sha1-UKikTCp5DfrEQbXJTszVRiY1+vY=
-  dependencies:
-    chalk "^1.0.0"
-    get-stdin "^4.0.1"
-    minimist "^1.1.1"
-    sum-up "^1.0.1"
-    xtend "^4.0.0"
 
 inquirer@^6, inquirer@^6.2.2:
   version "6.2.2"
@@ -10812,6 +10774,11 @@ source-map-support@~0.5.9:
     buffer-from "^1.0.0"
     source-map "^0.6.0"
 
+source-map-to-comment@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/source-map-to-comment/-/source-map-to-comment-1.1.0.tgz#e518c40bc7399b2e23c8e331a11635a97750e9c3"
+  integrity sha1-5RjEC8c5my4jyOMxoRY1qXdQ6cM=
+
 source-map-url@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/source-map-url/-/source-map-url-0.3.0.tgz#7ecaf13b57bcd09da8a40c5d269db33799d4aaf9"
@@ -10822,7 +10789,7 @@ source-map-url@^0.4.0:
   resolved "https://registry.yarnpkg.com/source-map-url/-/source-map-url-0.4.0.tgz#3e935d7ddd73631b97659956d55128e87b5084a3"
   integrity sha1-PpNdfd1zYxuXZZlW1VEo6HtQhKM=
 
-source-map@0.4.x, source-map@^0.4.2:
+source-map@^0.4.2:
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.4.4.tgz#eba4f5da9c0dc999de68032d8b4f76173652036b"
   integrity sha1-66T12pwNyZneaAMti092FzZSA2s=
@@ -10834,7 +10801,7 @@ source-map@^0.5.0, source-map@^0.5.6, source-map@^0.5.7, source-map@~0.5.0:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
   integrity sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=
 
-source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.1:
+source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.0, source-map@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
   integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
@@ -11143,13 +11110,6 @@ styled_string@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/styled_string/-/styled_string-0.0.1.tgz#d22782bd81295459bc4f1df18c4bad8e94dd124a"
   integrity sha1-0ieCvYEpVFm8Tx3xjEutjpTdEko=
-
-sum-up@^1.0.1:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/sum-up/-/sum-up-1.0.3.tgz#1c661f667057f63bcb7875aa1438bc162525156e"
-  integrity sha1-HGYfZnBX9jvLeHWqFDi8FiUlFW4=
-  dependencies:
-    chalk "^1.0.0"
 
 supports-color@^2.0.0:
   version "2.0.0"
