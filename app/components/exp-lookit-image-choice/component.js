@@ -229,7 +229,9 @@ export default ExpLookitImageAudioBase.extend({
          *   @param {String} left left margin, as percentage of story area width
          *   @param {String} width image width, as percentage of story area width
          *   @param {String} top top margin, as percentage of story area height
-
+         *   @param {String} position one of three presets for position - 'left', 'right', or 'center'. Takes precedence over manual positioning using left/width/top.
+         *   @param {Boolean} nonChoiceOption whether this is a static image, NOT an option participants can select (only used if this is a choice frame). Default false.
+         *   @param {Number} displayDelayMs how many milliseconds after images can be displayed to display THIS image. Useful if e.g. you'd like to display options first, then a cue image, or vice versa. Must be positive.
          */
         images: {
             type: 'array',
@@ -257,6 +259,13 @@ export default ExpLookitImageAudioBase.extend({
                     'position': {
                         type: 'string',
                         enum: ['left', 'center', 'right']
+                    },
+                    'nonChoiceOption': {
+                        type: 'boolean'
+                    },
+                    'displayDelayMs': {
+                        type: 'number',
+                        minimum: 0
                     }
                 }
             }
@@ -316,35 +325,12 @@ export default ExpLookitImageAudioBase.extend({
             type: 'boolean',
             description: 'Whether this is a frame where the user needs to click to select one of the images before proceeding'
         },
-    },
-
-    actions: {
-
-        replay() {
-            this.replay();
-        },
-
-        finish() {
-            this.finish();
-        },
-
-        playAudio() {
-            this.playAudio();
-        },
-
-        finishedAudio() {
-            this.finishedAudio();
-        },
-
-        clickImage(imageId) {
-            this.clickImage(imageId);
-        }
 
     },
 
     didInsertElement() {
         this._super(...arguments);
-        $('#nextbutton').prop('disabled', this.get('durationSeconds') && this.get('durationSeconds') > 0);
+        $('#nextbutton').prop('disabled');
     },
 
     meta: {

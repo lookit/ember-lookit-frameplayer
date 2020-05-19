@@ -13,8 +13,8 @@
         {{/if}}
 
         {{#each images_parsed as |image|}}
-            <div id="{{image.id}}" class="story-image-container {{if image.fill "image-fill"}} {{if image.position image.position}}"  onclick={{action 'clickImage' image.id}}>
-                <img src={{image.src}} class="story-image " alt={{image.alt}}>
+            <div id="{{image.id}}" class="story-image-container {{if image.fill "image-fill"}} {{if image.position image.position}}"  onclick={{action 'clickImage' image.id image.nonChoiceOption}}>
+                <img src={{image.src}} class="story-image {{if (and isChoiceFrame (not image.nonChoiceOption)) "choice-option"}}" alt={{image.alt}}>
             </div>
         {{/each}}
 

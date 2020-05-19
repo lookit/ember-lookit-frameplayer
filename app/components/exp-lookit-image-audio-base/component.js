@@ -128,6 +128,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     minDurationAchieved: false,
     noParentText: false,
 
+    imageDisplayTimers: null,
+
     selectedImage: null,
 
     assetsToExpand: {
@@ -293,6 +295,13 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     'position': {
                         type: 'string',
                         enum: ['left', 'center', 'right']
+                    },
+                    'nonChoiceOption': {
+                        type: 'boolean'
+                    },
+                    'displayDelayMs': {
+                        type: 'number',
+                        minimum: 0
                     }
                 }
             }
@@ -361,13 +370,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     _this.send('playAudio');
                     _this.set('recorderReady', false);
                     $('#waitForVideo').hide();
-                    /**
-                     * When images are displayed to participant
-                     *
-                     * @event displayImages
-                     */
-                    _this.send('setTimeEvent', 'displayImages');
-                    $('.story-image-container').show();
+                    _this.showImages();
                 });
             }
         }
@@ -383,13 +386,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     _this.set('startedAudio', false);
                     _this.send('playAudio');
                     $('#waitForVideo').hide();
-                    /**
-                     * When images are displayed to participant
-                     *
-                     * @event displayImages
-                     */
-                    _this.send('setTimeEvent', 'displayImages');
-                    $('.story-image-container').show();
+                    _this.showImages();
                 });
             }
         }
@@ -515,9 +512,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
 
-    clickImage(imageId) {
+    clickImage(imageId, nonChoiceOption) {
         // On a choice frame, highlight this choice
-        if (this.get('isChoiceFrame')) {
+        if (this.get('isChoiceFrame') && !nonChoiceOption) {
             /**
              * When one of the images is clicked during a choice frame
              *
@@ -565,8 +562,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             this.finishedAudio();
         },
 
-        clickImage(imageId) {
-            this.clickImage(imageId);
+        clickImage(imageId, nonChoiceOption) {
+            this.clickImage(imageId, nonChoiceOption);
         }
     },
 
@@ -621,8 +618,38 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         window.clearInterval(this.get('pageTimer'));
         window.clearInterval(this.get('progressTimer'));
         window.clearInterval(this.get('nextButtonDisableTimer'));
+        $.each(this.get('imageDisplayTimers'), function(idx, timeout) {
+            window.clearInterval(timeout);
+        });
 
         this._super(...arguments);
+    },
+
+    showImages() {
+        /**
+         * When images are displayed to participant
+         *
+         * @event displayImages
+         */
+        this.send('setTimeEvent', 'displayImages');
+        var _this = this;
+        $.each(this.get('images_parsed'), function(idx, image) {
+            console.log(image);
+            if (image.hasOwnProperty('displayDelayMs')) {
+                var thisTimeout = window.setTimeout(function() {
+                    $(`.story-image-container#${image.id}`).show();
+                }, image.displayDelayMs);
+                if (_this.get('imageDisplayTimers')) {
+                    _this.get('imageDisplayTimers').push(thisTimeout);
+                } else {
+                    _this.set('imageDisplayTimers', [thisTimeout]);
+                }
+            } else {
+                $(`.story-image-container#${image.id}`).show();
+            }
+
+        });
+
     },
 
     // Hide story once rendered (as long as story hasn't started yet anyway)
@@ -630,13 +657,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         if ((this.get('doRecording') || this.get('startSessionRecording')) && !this.get('startedAudio')) {
             $('.story-image-container').hide();
         } else {
-            $('.story-image-container').show();
-            /**
-             * When images are displayed to participant
-             *
-             * @event displayImages
-             */
-            _this.send('setTimeEvent', 'displayImages');
+            $(`.story-image-container`).hide();
+            this.showImages();
         }
     },
 
