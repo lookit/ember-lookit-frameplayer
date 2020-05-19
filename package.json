@@ -42,7 +42,6 @@
     "node-sass": "^4.14.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
     "broccoli-asset-rev": "^3.0.0",
     "ember-ajax": "^4.0.0",
     "ember-bootstrap-datetimepicker": "1.1.0",
