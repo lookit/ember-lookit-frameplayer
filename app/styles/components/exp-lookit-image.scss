@@ -125,6 +125,11 @@ $exp-lookit-preferential-looking-picmargin: 2;
                     border: 5px solid green;
                     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.6);
                 }
+
+                &.narration-highlight {
+                    border: 5px solid blue;
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.6);
+                }
             }
 
 

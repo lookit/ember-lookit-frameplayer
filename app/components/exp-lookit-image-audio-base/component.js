@@ -370,6 +370,32 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             description: 'Whether the participant can select an option before audio finishes',
             default: false
         },
+        /**
+         * TODO: describe
+         *   @param {Object[]} highlights Array of {'range': [startT,
+         *      endT], 'image': 'imageId'} objects, where the imageId
+         *      values correspond to the ids given in images and startT and endT are
+         * start/end times in seconds
+         *
+         */
+        highlights: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    'range': {
+                        type: 'array',
+                        items: {
+                            type: 'number'
+                        }
+                    },
+                    'image': {
+                        'type': 'string'
+                    }
+                }
+            },
+            default: []
+        }
     },
 
     meta: {
@@ -432,14 +458,35 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         var highlights = this.get('highlights');
 
-        if (highlights) {
+        if (highlights.length) {
             var t = $('#player-audio')[0].currentTime;
-
-            $('.story-image-container').removeClass('highlight');
-
+            $('.story-image-container img.story-image').removeClass('narration-highlight');
+            var _this = this;
             highlights.forEach(function (h) {
                 if (t > h.range[0] && t < h.range[1]) {
-                    $('#' + h.image).addClass('highlight');
+                    var $element = $('#' + h.image + ' img.story-image')
+                    $element.addClass('narration-highlight');
+                    _this.wiggle($element);
+                }
+            });
+        }
+    },
+
+    // Move an image up and down until the isSpeaking class is removed.
+    // Yes, this could much more naturally be done by using a CSS animation property
+    // on isSpeaking, but despite animations getting applied properly to the element,
+    // I haven't been able to get that working - because of the possibility of ember-
+    // specific problems here, I'm going with something that *works* even if it's less
+    // elegent.
+    wiggle($element) {
+        var _this = this;
+        var $parent = $element.parent();
+        if ($element.hasClass('narration-highlight')) {
+            $parent.animate({'margin-bottom': '.1%', 'margin-top': '-.1%'}, 150, function() {
+                if ($element.hasClass('narration-highlight')) {
+                    $parent.animate({'margin-bottom': '0%', 'margin-top': '0%'}, 150, function() {
+                        _this.wiggle($element);
+                    });
                 }
             });
         }
