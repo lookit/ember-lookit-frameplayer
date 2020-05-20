@@ -18,6 +18,12 @@
               <div>
                 <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
                 <span>Lookit<br> component<br> docs</span>
+
+                    <p>Version: latest <br>(v1.2.0)</p>
+                    <select name="select_version" onchange="location = this.value;">
+                        <option value="">--Select different version--</option>
+                            <option value="releases/v1.2.0/">v1.2.0</option>
+                    </select>
               </div>
 
               </h2>
@@ -46,12 +52,11 @@
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
-                            <li><a href="../classes/Exp-lookit-image-audio-base.html">Exp-lookit-image-audio-base</a></li>
+                            <li><a href="../classes/Exp-lookit-images-audio.html">Exp-lookit-images-audio</a></li>
                             <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
                             <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
-                            <li><a href="../classes/Exp-lookit-single-image.html">Exp-lookit-single-image</a></li>
                             <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
                             <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
                             <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
@@ -157,24 +162,24 @@ navigator.mediaDevices.getUserMedia = (function(origGetUserMedia) {
                 if (!LOOKIT_PREFERRED_DEVICES.mic &amp;&amp; audioTracks) {
                     var thisAudioLabel = audioTracks[0].label;
                     navigator.mediaDevices.enumerateDevices()
-                    .then(function(devices) {
-                        devices.forEach(function(device) {
-                            if (device.kind == &#x27;audioinput&#x27; &amp;&amp; device.label == thisAudioLabel) {
-                                LOOKIT_PREFERRED_DEVICES.mic = device.deviceId;
-                            }
+                        .then(function(devices) {
+                            devices.forEach(function(device) {
+                                if (device.kind == &#x27;audioinput&#x27; &amp;&amp; device.label == thisAudioLabel) {
+                                    LOOKIT_PREFERRED_DEVICES.mic = device.deviceId;
+                                }
+                            });
                         });
-                    });
                 }
                 if (!LOOKIT_PREFERRED_DEVICES.cam &amp;&amp; videoTracks) {
                     var thisVideoLabel = videoTracks[0].label;
                     navigator.mediaDevices.enumerateDevices()
-                    .then(function(devices) {
-                        devices.forEach(function(device) {
-                            if (device.kind == &#x27;videoinput&#x27; &amp;&amp; device.label == thisVideoLabel) {
-                                LOOKIT_PREFERRED_DEVICES.cam = device.deviceId;
-                            }
+                        .then(function(devices) {
+                            devices.forEach(function(device) {
+                                if (device.kind == &#x27;videoinput&#x27; &amp;&amp; device.label == thisVideoLabel) {
+                                    LOOKIT_PREFERRED_DEVICES.cam = device.deviceId;
+                                }
+                            });
                         });
-                    });
                 }
             } catch (error) {
                 console.error(&#x27;Error setting preferred mic/camera: &#x27; + error);
@@ -224,19 +229,19 @@ const VideoRecorder = Ember.Object.extend({
     // List of webcam hooks that should be added to recorder
     // See https://addpipe.com/docs#javascript-events-api
     hooks: [&#x27;onRecordingStarted&#x27;,
-            &#x27;onCamAccess&#x27;,
-            &#x27;onReadyToRecord&#x27;,
-            &#x27;onUploadDone&#x27;,
-            &#x27;userHasCamMic&#x27;,
-            &#x27;onConnectionStatus&#x27;,
-            &#x27;onMicActivityLevel&#x27;,
-            &#x27;btPlayPressed&#x27;,
-            &#x27;btRecordPressed&#x27;,
-            &#x27;btStopRecordingPressed&#x27;,
-            &#x27;btPausePressed&#x27;,
-            &#x27;onPlaybackComplete&#x27;,
-            &#x27;onConnectionClosed&#x27;,
-            &#x27;onSaveOk&#x27;
+        &#x27;onCamAccess&#x27;,
+        &#x27;onReadyToRecord&#x27;,
+        &#x27;onUploadDone&#x27;,
+        &#x27;userHasCamMic&#x27;,
+        &#x27;onConnectionStatus&#x27;,
+        &#x27;onMicActivityLevel&#x27;,
+        &#x27;btPlayPressed&#x27;,
+        &#x27;btRecordPressed&#x27;,
+        &#x27;btStopRecordingPressed&#x27;,
+        &#x27;btPausePressed&#x27;,
+        &#x27;onPlaybackComplete&#x27;,
+        &#x27;onConnectionClosed&#x27;,
+        &#x27;onSaveOk&#x27;
     ],
 
     minVolume: 1, // Volume required to pass mic check
@@ -393,10 +398,10 @@ const VideoRecorder = Ember.Object.extend({
         var _stopPromise = new Ember.RSVP.Promise((resolve, reject) =&gt; {
             // If we don&#x27;t end up uploading within 5 seconds, call reject
             _this.set(&#x27;uploadTimeout&#x27;, window.setTimeout(function() {
-                    console.warn(&#x27;waiting for upload timed out&#x27;);
-                    window.clearTimeout(_this.get(&#x27;uploadTimeout&#x27;));
-                    reject();
-                }, 5000));
+                console.warn(&#x27;waiting for upload timed out&#x27;);
+                window.clearTimeout(_this.get(&#x27;uploadTimeout&#x27;));
+                reject();
+            }, 5000));
             if (_this.get(&#x27;_isuploaded&#x27;)) {
                 window.clearTimeout(_this.get(&#x27;uploadTimeout&#x27;));
                 resolve(_this);

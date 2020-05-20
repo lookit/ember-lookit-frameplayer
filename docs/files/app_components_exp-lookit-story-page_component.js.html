@@ -18,6 +18,12 @@
               <div>
                 <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
                 <span>Lookit<br> component<br> docs</span>
+
+                    <p>Version: latest <br>(v1.2.0)</p>
+                    <select name="select_version" onchange="location = this.value;">
+                        <option value="">--Select different version--</option>
+                            <option value="releases/v1.2.0/">v1.2.0</option>
+                    </select>
               </div>
 
               </h2>
@@ -46,12 +52,11 @@
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
-                            <li><a href="../classes/Exp-lookit-image-audio-base.html">Exp-lookit-image-audio-base</a></li>
+                            <li><a href="../classes/Exp-lookit-images-audio.html">Exp-lookit-images-audio</a></li>
                             <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
                             <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
-                            <li><a href="../classes/Exp-lookit-single-image.html">Exp-lookit-single-image</a></li>
                             <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
                             <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
                             <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
@@ -507,12 +512,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     let _this = this;
                     this.send(&#x27;setTimeEvent&#x27;, &#x27;setting timer&#x27;);
                     this.set(&#x27;pageTimer&#x27;, window.setTimeout(function() {
-                            _this.send(&#x27;setTimeEvent&#x27;, &#x27;timer ended&#x27;);
-                            _this.set(&#x27;minDurationAchieved&#x27;, true);
-                            if (_this.get(&#x27;finishedAllAudio&#x27;)) {
-                                _this.send(&#x27;finish&#x27;);
-                            }
-                        }, _this.get(&#x27;durationSeconds&#x27;) * 1000));
+                        _this.send(&#x27;setTimeEvent&#x27;, &#x27;timer ended&#x27;);
+                        _this.set(&#x27;minDurationAchieved&#x27;, true);
+                        if (_this.get(&#x27;finishedAllAudio&#x27;)) {
+                            _this.send(&#x27;finish&#x27;);
+                        }
+                    }, _this.get(&#x27;durationSeconds&#x27;) * 1000));
                     if (this.get(&#x27;showProgressBar&#x27;)) {
                         this.set(&#x27;timerStart&#x27;, new Date().getTime());
                         let timerStart = _this.get(&#x27;timerStart&#x27;);

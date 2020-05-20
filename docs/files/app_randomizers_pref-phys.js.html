@@ -18,6 +18,12 @@
               <div>
                 <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
                 <span>Lookit<br> component<br> docs</span>
+
+                    <p>Version: latest <br>(v1.2.0)</p>
+                    <select name="select_version" onchange="location = this.value;">
+                        <option value="">--Select different version--</option>
+                            <option value="releases/v1.2.0/">v1.2.0</option>
+                    </select>
               </div>
 
               </h2>
@@ -46,12 +52,11 @@
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
-                            <li><a href="../classes/Exp-lookit-image-audio-base.html">Exp-lookit-image-audio-base</a></li>
+                            <li><a href="../classes/Exp-lookit-images-audio.html">Exp-lookit-images-audio</a></li>
                             <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
                             <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
-                            <li><a href="../classes/Exp-lookit-single-image.html">Exp-lookit-single-image</a></li>
                             <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
                             <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
                             <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
@@ -109,7 +114,6 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-// jscs:disable
 import Ember from &#x27;ember&#x27;;
 
 // http://stackoverflow.com/a/12646864
@@ -1391,9 +1395,9 @@ function counterbalancingLists() {
         useFallRotation: useFallRotation,
         conceptOrderRotation: conceptOrderRotation,
         objectRotations: [  gravityObjectRotation,
-                            inertiaObjectRotation,
-                            supportObjectRotation,
-                            controlObjectRotation]
+            inertiaObjectRotation,
+            supportObjectRotation,
+            controlObjectRotation]
     };
 }
 
@@ -1445,9 +1449,9 @@ function assignVideos(startType, showStay, whichObjects) {
 
     var videotypes = [&#x27;gravity&#x27;, &#x27;inertia&#x27;, &#x27;support&#x27;, &#x27;control&#x27;];
     var compTypes = [   comparisonsGravity,
-                        comparisonsInertia,
-                        comparisonsSupport,
-                        comparisonsControl ];
+        comparisonsInertia,
+        comparisonsSupport,
+        comparisonsControl ];
     // how many times does each comparison type listed need to be shown?
     var nReps = [1, 2, 1, 3];
 
@@ -1523,8 +1527,8 @@ function assignVideos(startType, showStay, whichObjects) {
 
         // choose placement of more/less surprising outcomes (balanced)
         var onLeft = [  &#x27;moreProb&#x27;, &#x27;lessProb&#x27;,
-                        &#x27;moreProb&#x27;, &#x27;lessProb&#x27;,
-                        &#x27;moreProb&#x27;, &#x27;lessProb&#x27;];
+            &#x27;moreProb&#x27;, &#x27;lessProb&#x27;,
+            &#x27;moreProb&#x27;, &#x27;lessProb&#x27;];
         onLeft = onLeft.slice(0, eventTypeList.length);
         onLeft = shuffleArray(onLeft);
 
@@ -1620,40 +1624,40 @@ function assignVideos(startType, showStay, whichObjects) {
 
 function audioSourceObjs(path, shortname) {
     return  [
-                {
-                    src: path + shortname + &#x27;.ogg&#x27;,
-                    type: &#x27;audio/ogg&#x27;
-                },
-                {
-                    src: path + shortname + &#x27;.mp3&#x27;,
-                    type: &#x27;audio/mp3&#x27;
-                }
-            ];
+        {
+            src: path + shortname + &#x27;.ogg&#x27;,
+            type: &#x27;audio/ogg&#x27;
+        },
+        {
+            src: path + shortname + &#x27;.mp3&#x27;,
+            type: &#x27;audio/mp3&#x27;
+        }
+    ];
 }
 
 function videoSourceObjs(path, shortname, organizedByType) {
     if (!organizedByType) {
         return  [
-                    {
-                        &#x27;src&#x27;: path + shortname + &#x27;.webm&#x27;,
-                        &#x27;type&#x27;: &#x27;video/webm&#x27;
-                    },
-                    {
-                        &#x27;src&#x27;: path + shortname + &#x27;.mp4&#x27;,
-                        &#x27;type&#x27;: &#x27;video/mp4&#x27;
-                    }
-                ];
+            {
+                &#x27;src&#x27;: path + shortname + &#x27;.webm&#x27;,
+                &#x27;type&#x27;: &#x27;video/webm&#x27;
+            },
+            {
+                &#x27;src&#x27;: path + shortname + &#x27;.mp4&#x27;,
+                &#x27;type&#x27;: &#x27;video/mp4&#x27;
+            }
+        ];
     } else {
         return  [
-                {
-                    &#x27;src&#x27;: path + &#x27;webm/&#x27; + shortname + &#x27;.webm&#x27;,
-                    &#x27;type&#x27;: &#x27;video/webm&#x27;
-                },
-                {
-                    &#x27;src&#x27;: path + &#x27;mp4/&#x27; + shortname + &#x27;.mp4&#x27;,
-                    &#x27;type&#x27;: &#x27;video/mp4&#x27;
-                }
-            ];
+            {
+                &#x27;src&#x27;: path + &#x27;webm/&#x27; + shortname + &#x27;.webm&#x27;,
+                &#x27;type&#x27;: &#x27;video/webm&#x27;
+            },
+            {
+                &#x27;src&#x27;: path + &#x27;mp4/&#x27; + shortname + &#x27;.mp4&#x27;,
+                &#x27;type&#x27;: &#x27;video/mp4&#x27;
+            }
+        ];
     }
 }
 
@@ -1700,8 +1704,8 @@ function toFrames(frameId, eventVideos, BASE_DIR) {
                 BASE_DIR + &#x27;audio/&#x27;,
                 musicName),
             sources: videoSourceObjs(
-		BASE_DIR + &#x27;stimuli/&#x27; + e.compType + &#x27;/&#x27;,
-		e.fname, true),
+                BASE_DIR + &#x27;stimuli/&#x27; + e.compType + &#x27;/&#x27;,
+                e.fname, true),
             altSources: videoSourceObjs(
                 BASE_DIR + &#x27;stimuli/&#x27; + e.compType + &#x27;/&#x27;,
                 e.altName, true),
@@ -1719,7 +1723,7 @@ var randomizer = function(frameId, frame, pastSessions, resolveFrame) {
 
     var BASE_DIR = &#x27;https://s3.amazonaws.com/lookitcontents/exp-physics-final/&#x27;;
 
-   // TODO: In the future, we may want to identify the specific frame # to fetch instead of generic frame name
+    // TODO: In the future, we may want to identify the specific frame # to fetch instead of generic frame name
     pastSessions = pastSessions.filter(function (session) {
         return session.get(&#x27;conditions&#x27;);
     });
@@ -1727,9 +1731,9 @@ var randomizer = function(frameId, frame, pastSessions, resolveFrame) {
     var conditions = getConditions(lastSession, frameId);
 
     var {
-	startType,
-	showStay,
-	whichObjects
+        startType,
+        showStay,
+        whichObjects
     } = conditions;
 
     var [eventVideos, ] = assignVideos(startType, showStay, whichObjects);
@@ -1740,7 +1744,7 @@ var randomizer = function(frameId, frame, pastSessions, resolveFrame) {
     // allEvents and filenames are a function of conditions (no need to store)
     var resolved = [];
     toFrames(frameId, eventVideos, BASE_DIR).forEach((frame) =&gt; {
-	return resolved.push(...resolveFrame(null, frame)[0]);
+        return resolved.push(...resolveFrame(null, frame)[0]);
     });
     return [resolved, conditions];
 };

@@ -18,6 +18,12 @@
               <div>
                 <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
                 <span>Lookit<br> component<br> docs</span>
+
+                    <p>Version: latest <br>(v1.2.0)</p>
+                    <select name="select_version" onchange="location = this.value;">
+                        <option value="">--Select different version--</option>
+                            <option value="releases/v1.2.0/">v1.2.0</option>
+                    </select>
               </div>
 
               </h2>
@@ -46,12 +52,11 @@
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
-                            <li><a href="../classes/Exp-lookit-image-audio-base.html">Exp-lookit-image-audio-base</a></li>
+                            <li><a href="../classes/Exp-lookit-images-audio.html">Exp-lookit-images-audio</a></li>
                             <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
                             <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
-                            <li><a href="../classes/Exp-lookit-single-image.html">Exp-lookit-single-image</a></li>
                             <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
                             <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
                             <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
@@ -307,9 +312,9 @@ var expandAssetsMixin = Ember.Mixin.create({
                 console.log(response);
             }
         })
-        .catch((error) =&gt; {
-            console.warn(&#x27;File not available: &#x27;, url, &#x27; - error: &#x27;, error);
-        });
+            .catch((error) =&gt; {
+                console.warn(&#x27;File not available: &#x27;, url, &#x27; - error: &#x27;, error);
+            });
     },
 
     // Utility to expand stubs into either full URLs (for images) or
@@ -324,36 +329,36 @@ var expandAssetsMixin = Ember.Mixin.create({
         };
 
         switch (type) {
-            case &#x27;image&#x27;:
-                if (typeof asset === &#x27;string&#x27; &amp;&amp; !(asset.includes(&#x27;://&#x27;))) {
-                    // Image: replace stub with full URL if needed
-                    fullAsset = this.baseDir + &#x27;img/&#x27; + asset;
-                } else if (Array.isArray(asset)) {
-                    for (var i = 0; i &lt; asset.length; i++) {
-                        var currentVal = asset[i];
-                        if (typeof currentVal === &#x27;string&#x27; &amp;&amp; !(currentVal.includes(&#x27;://&#x27;))) {
-                            asset[i] = this.baseDir + &#x27;img/&#x27; + currentVal;
-                        }
+        case &#x27;image&#x27;:
+            if (typeof asset === &#x27;string&#x27; &amp;&amp; !(asset.includes(&#x27;://&#x27;))) {
+                // Image: replace stub with full URL if needed
+                fullAsset = this.baseDir + &#x27;img/&#x27; + asset;
+            } else if (Array.isArray(asset)) {
+                for (var i = 0; i &lt; asset.length; i++) {
+                    var currentVal = asset[i];
+                    if (typeof currentVal === &#x27;string&#x27; &amp;&amp; !(currentVal.includes(&#x27;://&#x27;))) {
+                        asset[i] = this.baseDir + &#x27;img/&#x27; + currentVal;
                     }
                 }
-                return fullAsset;
-            case &#x27;audio&#x27;:
-            case &#x27;video&#x27;:
-                var types = typesDict[type];
-                // Replace any string sources with the appropriate expanded source objects
-                if (typeof asset === &#x27;string&#x27; &amp;&amp; asset) {
-                    fullAsset = [];
-                    for (var iType = 0; iType &lt; types.length; iType++) {
-                        let url = _this.baseDir + types[iType] + &#x27;/&#x27; + asset + &#x27;.&#x27; + types[iType];
-                        fullAsset.push({
-                            src: url,
-                            type: type + &#x27;/&#x27; + types[iType]
-                        });
-                    }
+            }
+            return fullAsset;
+        case &#x27;audio&#x27;:
+        case &#x27;video&#x27;:
+            var types = typesDict[type];
+            // Replace any string sources with the appropriate expanded source objects
+            if (typeof asset === &#x27;string&#x27; &amp;&amp; asset) {
+                fullAsset = [];
+                for (var iType = 0; iType &lt; types.length; iType++) {
+                    let url = _this.baseDir + types[iType] + &#x27;/&#x27; + asset + &#x27;.&#x27; + types[iType];
+                    fullAsset.push({
+                        src: url,
+                        type: type + &#x27;/&#x27; + types[iType]
+                    });
                 }
-                return fullAsset;
-            default:
-                throw &quot;Unrecognized type of asset to expand. Options are &#x27;image&#x27;, &#x27;audio&#x27;, and &#x27;video&#x27;.&quot;;
+            }
+            return fullAsset;
+        default:
+            throw &quot;Unrecognized type of asset to expand. Options are &#x27;image&#x27;, &#x27;audio&#x27;, and &#x27;video&#x27;.&quot;;
         }
     },
 

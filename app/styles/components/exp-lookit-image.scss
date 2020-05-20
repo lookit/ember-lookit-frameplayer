@@ -5,7 +5,7 @@ $exp-lookit-story-page-controls-height: 20; // in vh
 $exp-lookit-story-page-parent-text-color: #f8f3bf;
 $exp-lookit-story-page-width: (100 - 2*$exp-lookit-story-page-side-margin) * 1vw;
 $exp-lookit-story-page-height: (100 - $exp-lookit-story-page-top-margin - $exp-lookit-story-page-controls-height) * 1vh;
-$exp-lookit-story-page-height-no-controls: (100 - $exp-lookit-story-page-top-margin) * 1vh;
+$exp-lookit-story-page-height-no-controls: (100 - 2*$exp-lookit-story-page-top-margin) * 1vh;
 $exp-lookit-preferential-looking-AR: 2;
 $exp-lookit-preferential-looking-picwidth: 30;
 $exp-lookit-preferential-looking-picmargin: 2;
@@ -77,6 +77,13 @@ $exp-lookit-preferential-looking-picmargin: 2;
             transform: translate(0,-50%);
         }
 
+        &.image-area-no-controls.image-area-fullscreen {
+            max-height: 100%;
+            max-width: 100%;
+            height: 100%;
+            width: 100%;
+        }
+
         // Container immediately around the image. By default fills space.
         div.story-image-container {
             position:absolute;
@@ -85,7 +92,7 @@ $exp-lookit-preferential-looking-picmargin: 2;
             max-height:100%;
             max-width: 100%;
 
-            &.image-fill {
+            &.fill {
                 height:100%;
                 width:100%;
             }

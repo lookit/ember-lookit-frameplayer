@@ -18,6 +18,12 @@
               <div>
                 <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
                 <span>Lookit<br> component<br> docs</span>
+
+                    <p>Version: latest <br>(v1.2.0)</p>
+                    <select name="select_version" onchange="location = this.value;">
+                        <option value="">--Select different version--</option>
+                            <option value="releases/v1.2.0/">v1.2.0</option>
+                    </select>
               </div>
 
               </h2>
@@ -46,12 +52,11 @@
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
-                            <li><a href="../classes/Exp-lookit-image-audio-base.html">Exp-lookit-image-audio-base</a></li>
+                            <li><a href="../classes/Exp-lookit-images-audio.html">Exp-lookit-images-audio</a></li>
                             <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
                             <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
-                            <li><a href="../classes/Exp-lookit-single-image.html">Exp-lookit-single-image</a></li>
                             <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
                             <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
                             <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
@@ -664,14 +669,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         // Start presenting triangles and set to stop after trial length
         _this.presentTriangles(_this.settings.LshapesStart,
-                                        _this.settings.RshapesStart,
-                                        _this.settings.LsizeBaseStart,
-                                        _this.settings.RsizeBaseStart);
+            _this.settings.RshapesStart,
+            _this.settings.LsizeBaseStart,
+            _this.settings.RsizeBaseStart);
         window.setTimeout(function() {
-                window.clearTimeout(_this.get(&#x27;stimTimer&#x27;));
-                _this.clearTriangles();
-                _this.endTrial();
-            }, _this.settings.trialLength * 1000);
+            window.clearTimeout(_this.get(&#x27;stimTimer&#x27;));
+            _this.clearTriangles();
+            _this.endTrial();
+        }, _this.settings.trialLength * 1000);
     },
 
     // When triangles have been shown for time indicated: play end-audio if
@@ -712,19 +717,19 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          * @param {Number} RSize size of right triangle, relative to standard (&#x27;standard&#x27; sizes are set so that areas of skinny &amp; fat triangles are equal), in terms of side length (e.g. for a rectangle, 2 would mean take a 1x3 rectangle and make it a 2x6 rectangle, quadrupling the area)
          */
         this.send(&#x27;setTimeEvent&#x27;, &#x27;presentTriangles&#x27;, {
-                Lshape: Lshape,
-                LX: LX,
-                LY: LY,
-                LRot: LRot,
-                LFlip: LFlip,
-                LSize: LSize,
-                Rshape: Rshape,
-                RX: RX,
-                RY: RY,
-                RRot: RRot,
-                RFlip: RFlip,
-                RSize: RSize
-            });
+            Lshape: Lshape,
+            LX: LX,
+            LY: LY,
+            LRot: LRot,
+            LFlip: LFlip,
+            LSize: LSize,
+            Rshape: Rshape,
+            RX: RX,
+            RY: RY,
+            RRot: RRot,
+            RFlip: RFlip,
+            RSize: RSize
+        });
 
         var leftTriangle = &#x60;${this.triangleBases[Lshape]}
             transform=&quot; translate(${LX}, ${LY})
@@ -754,33 +759,33 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     presentTriangles(Lshapes, Rshapes, LsizeBase, RsizeBase) {
         // select X and Y positions for each shape
         var LX = this.getRandom(this.settings.XRange[0],
-                                this.settings.XRange[1]);
+            this.settings.XRange[1]);
         var RX = this.getRandom(this.settings.XRange[0],
-                                this.settings.XRange[1]);
+            this.settings.XRange[1]);
         var LY = this.getRandom(this.settings.YRange[0],
-                                this.settings.YRange[1]);
+            this.settings.YRange[1]);
         var RY = this.getRandom(this.settings.YRange[0],
-                                this.settings.YRange[1]);
+            this.settings.YRange[1]);
         // select rotation, flip, size per shape
         var LRot = this.getRandom(this.settings.rotRange[0],
-                                  this.settings.rotRange[1]);
+            this.settings.rotRange[1]);
         var RRot = this.getRandom(this.settings.rotRange[0],
-                                  this.settings.rotRange[1]);
+            this.settings.rotRange[1]);
         var LFlip = this.getRandomElement(this.settings.flipVals);
         var RFlip = this.getRandomElement(this.settings.flipVals);
         var LSize = this.getRandom(this.settings.sizeRange[0],
-                                   this.settings.sizeRange[1]) * LsizeBase[0];
+            this.settings.sizeRange[1]) * LsizeBase[0];
         var RSize = this.getRandom(this.settings.sizeRange[0],
-                                   this.settings.sizeRange[1]) * RsizeBase[0];
+            this.settings.sizeRange[1]) * RsizeBase[0];
 
         var _this = this;
         _this.clearTriangles();
         _this.set(&#x27;stimTimer&#x27;, window.setTimeout(function() {
             _this.drawTriangles(Lshapes[0], LX, LY, LRot, LFlip, LSize,
-                            Rshapes[0], RX, RY, RRot, RFlip, RSize);
+                Rshapes[0], RX, RY, RRot, RFlip, RSize);
             _this.set(&#x27;stimTimer&#x27;, window.setTimeout(function() {
                 _this.presentTriangles(Lshapes.reverse(), Rshapes.reverse(),
-                                    LsizeBase.reverse(), RsizeBase.reverse());
+                    LsizeBase.reverse(), RsizeBase.reverse());
             }, _this.settings.msTriangles));
         }, _this.settings.msBlank));
     },

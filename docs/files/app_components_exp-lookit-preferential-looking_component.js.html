@@ -18,6 +18,12 @@
               <div>
                 <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
                 <span>Lookit<br> component<br> docs</span>
+
+                    <p>Version: latest <br>(v1.2.0)</p>
+                    <select name="select_version" onchange="location = this.value;">
+                        <option value="">--Select different version--</option>
+                            <option value="releases/v1.2.0/">v1.2.0</option>
+                    </select>
               </div>
 
               </h2>
@@ -46,12 +52,11 @@
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
-                            <li><a href="../classes/Exp-lookit-image-audio-base.html">Exp-lookit-image-audio-base</a></li>
+                            <li><a href="../classes/Exp-lookit-images-audio.html">Exp-lookit-images-audio</a></li>
                             <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
                             <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
                             <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
                             <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
-                            <li><a href="../classes/Exp-lookit-single-image.html">Exp-lookit-single-image</a></li>
                             <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
                             <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
                             <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
@@ -717,20 +722,20 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             return this.get(&#x27;announcementVideo_parsed&#x27;);
         } else {
             switch (this.get(&#x27;currentTask&#x27;)) {
-                case &#x27;announce&#x27;:
-                    return this.get(&#x27;announcementVideo_parsed&#x27;);
-                case &#x27;intro&#x27;:
-                    return this.get(&#x27;introVideo_parsed&#x27;);
-                case &#x27;test&#x27;:
-                    if (this.get(&#x27;useAlternate&#x27;)) {
-                        if (this.get(&#x27;altTestVideo&#x27;).length) {
-                            return this.get(&#x27;altTestVideo_parsed&#x27;);
-                        } else { // default to playing same test video again
-                            return this.get(&#x27;sources_parsed&#x27;);
-                        }
-                    } else {
-                        return this.get(&#x27;testVideo_parsed&#x27;);
+            case &#x27;announce&#x27;:
+                return this.get(&#x27;announcementVideo_parsed&#x27;);
+            case &#x27;intro&#x27;:
+                return this.get(&#x27;introVideo_parsed&#x27;);
+            case &#x27;test&#x27;:
+                if (this.get(&#x27;useAlternate&#x27;)) {
+                    if (this.get(&#x27;altTestVideo&#x27;).length) {
+                        return this.get(&#x27;altTestVideo_parsed&#x27;);
+                    } else { // default to playing same test video again
+                        return this.get(&#x27;sources_parsed&#x27;);
                     }
+                } else {
+                    return this.get(&#x27;testVideo_parsed&#x27;);
+                }
             }
         }
         return [];
@@ -881,11 +886,11 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         // Actual starting audio is handled by autoplay on the template.
         var _this = this; // Require at least announcementLength duration of announcement phase
         this.set(&#x27;announceTimer&#x27;, window.setTimeout(function() {
-                _this.set(&#x27;completedAnnouncementTime&#x27;, true);
-                if (_this.get(&#x27;completedAnnouncementAudio&#x27;)) {
-                    _this.set(&#x27;currentTask&#x27;, &#x27;intro&#x27;);
-                }
-            }, _this.get(&#x27;announcementLength&#x27;) * 1000));
+            _this.set(&#x27;completedAnnouncementTime&#x27;, true);
+            if (_this.get(&#x27;completedAnnouncementAudio&#x27;)) {
+                _this.set(&#x27;currentTask&#x27;, &#x27;intro&#x27;);
+            }
+        }, _this.get(&#x27;announcementLength&#x27;) * 1000));
     },
 
     startIntro() {
@@ -1045,9 +1050,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         //audioObj.pause();
         audioObj.currentTime = 0;
         audioObj.play().then(() =&gt; {
-            }).catch(() =&gt; {
-                audioObj.play();
-            }
+        }).catch(() =&gt; {
+            audioObj.play();
+        }
         );
     },
 
