@@ -9,15 +9,15 @@
 
     <div id="image-area" class="{{if noStoryControls "image-area-no-controls"}} {{if (and noStoryControls maximizeDisplay) "image-area-fullscreen"}}" >
         {{#if (or doRecording startSessionRecording)}}
-            <p id='waitForVideo'> establishing video connection <br> please wait... </p>
+            <p id="waitForVideo"> establishing video connection <br> please wait... </p>
         {{/if}}
 
         {{#each images_parsed as |image|}}
-            <div id="{{image.id}}" class="story-image-container {{if image.position image.position}}"  onclick={{action 'clickImage' image.id image.nonChoiceOption image.correct image.feedbackText}}>
+            <div id={{image.id}} class="story-image-container {{if image.position image.position}}"  onclick={{action "clickImage" image.id image.nonChoiceOption image.correct image.feedbackText}}>
                 <img src={{image.src}} class="story-image {{if (and choiceRequired (not image.nonChoiceOption)) "choice-option"}}" alt={{image.alt}}>
-                <audio class="feedback-audio" onended={{action 'endFeedbackAudio' image.id image.correct}}>
+                <audio class="feedback-audio" onended={{action "endFeedbackAudio" image.id image.correct}}>
                     {{#each image.feedbackAudio as |stream|}}
-                        <source src="{{stream.src}}" type="{{stream.type}}">
+                        <source src={{stream.src}} type={{stream.type}}>
                     {{/each}}
                 </audio>
             </div>
@@ -30,7 +30,7 @@
                             <p>{{image.feedbackText}}</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" {{action 'hideFeedbackDialog' image.id}}>OK</button>
+                            <button type="button" class="btn btn-secondary" {{action "hideFeedbackDialog" image.id}}>OK</button>
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
     </div>
 
     {{#unless updatedIsFullscreen}}
-        <button type="button" class="btn btn-warning exp-lookit-story-page" id="fsButton" {{ action 'showFullscreen'}} >
+        <button type="button" class="btn btn-warning exp-lookit-story-page" id="fsButton" {{ action "showFullscreen"}} >
             please return
             <br>
             to fullscreen
@@ -48,9 +48,9 @@
     {{/unless}}
 
     {{#if audio_parsed}}
-        <audio class="player-audio" id="player-audio" onended={{action 'finishedAudio'}} ontimeupdate={{action 'updateCharacterHighlighting'}}>
+        <audio class="player-audio" id="player-audio" onended={{action "finishedAudio"}} ontimeupdate={{action "updateCharacterHighlighting"}}>
             {{#each audio_parsed as |stream|}}
-                <source src="{{stream.src}}" type="{{stream.type}}">
+                <source src={{stream.src}} type={{stream.type}}>
             {{/each}}
         </audio>
     {{/if}}
@@ -61,12 +61,12 @@
             {{#unless autoProceed}}
                 <div class="button-container left">
                     {{#if showPreviousButton}}
-                        <button type="button" id="previousbutton" class="btn btn-primary" {{ action 'previous' }} >
+                        <button type="button" id="previousbutton" class="btn btn-primary" {{ action "previous" }} >
                             <i class="fa fa-arrow-left"></i> Previous
                         </button>
                     {{/if}}
                     {{#if (and showReplayButton audio_parsed)}}
-                        <button type="button" id="replaybutton" class="btn btn-primary"  {{ action 'replay' }}>
+                        <button type="button" id="replaybutton" class="btn btn-primary"  {{ action "replay" }}>
                             <i class="fa fa-repeat"></i> Replay
                         </button>
                     {{/if}}
@@ -86,7 +86,7 @@
 
             {{#unless autoProceed}}
                 <div class="button-container right">
-                    <button type="button" id="nextbutton" class="btn btn-success fill" {{ action 'finish' }} >
+                    <button type="button" id="nextbutton" class="btn btn-success fill" {{ action "finish" }} >
                         Next <i class="fa fa-arrow-right"></i>
                     </button>
                 </div>

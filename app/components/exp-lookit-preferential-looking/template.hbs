@@ -15,31 +15,31 @@
            style="display:none;"
            {{!-- template-lint-disable no-inline-styles --}}>
         {{#each calibrationVideo_parsed as |stream|}}
-            <source src="{{stream.src}}" type="{{stream.type}}">
+            <source src={{stream.src}} type={{stream.type}}>
         {{/each}}
     </video>
 
     <!--CALIBRATION AUDIO-->
     <audio id="player-calibration-audio">
         {{#each calibrationAudio_parsed as |stream|}}
-            <source src="{{stream.src}}" type="{{stream.type}}">
+            <source src={{stream.src}} type={{stream.type}}>
         {{/each}}
     </audio>
 
     <!--ANNOUNCEMENT AUDIO-->
     {{#if (and doingAnnouncement (not isPaused))}}
         <audio id="announcement-audio"
-               onended={{action 'announcementEnded'}}
-               onplaying={{action 'announcementStarted'}}
+               onended={{action "announcementEnded"}}
+               onplaying={{action "announcementStarted"}}
                autoplay="autoplay"
         >
             {{#if hasBeenPaused}}
                 {{#each unpauseAudio_parsed as |stream|}}
-                    <source src="{{stream.src}}" type="{{stream.type}}">
+                    <source src={{stream.src}} type={{stream.type}}>
                 {{/each}}
             {{else}}
                 {{#each announcementAudio_parsed as |stream|}}
-                    <source src="{{stream.src}}" type="{{stream.type}}">
+                    <source src={{stream.src}} type={{stream.type}}>
                 {{/each}}
             {{/if}}
         </audio>
@@ -49,26 +49,26 @@
     {{#if isPaused }}
         <audio id="pause-audio" autoplay="autoplay">
             {{#each pauseAudio_parsed as |stream|}}
-                <source src="{{stream.src}}" type="{{stream.type}}">
+                <source src={{stream.src}} type={{stream.type}}>
             {{/each}}
         </audio>
     {{/if}}
 
     <!--TEST MUSIC-->
-    <audio id="exp-music" loop="{{if loopTestAudio "loop"}}">
+    <audio id="exp-music" loop={{if loopTestAudio "loop"}}>
         {{#each testAudio_parsed as |stream|}}
-            <source src="{{stream.src}}" type="{{stream.type}}">
+            <source src={{stream.src}} type={{stream.type}}>
         {{/each}}
     </audio>
 
     <!--VIDEO: ATTN, INTRO, OR TEST-->
     <video id="player-video"
-           class="{{if (or doingAnnouncement isPaused) 'attn'}} {{if doingIntro 'intro'}} {{if doingTest 'test'}}"
+           class="{{if (or doingAnnouncement isPaused) "attn"}} {{if doingIntro "intro"}} {{if doingTest "test"}}"
            autoplay="autoplay"
-           onended={{ action 'videoStopped'}}
-           onplay={{action 'videoStarted'}}>
+           onended={{ action "videoStopped"}}
+           onplay={{action "videoStarted"}}>
         {{#each videoSources as |stream|}}
-            <source src="{{stream.src}}" type="{{stream.type}}">
+            <source src={{stream.src}} type={{stream.type}}>
         {{/each}}
     </video>
 
@@ -104,7 +104,7 @@
 
 <!--FULLSCREEN BUTTON-->
 <div class="row col-md-6 exp-lookit-preferential-looking">
-    <button type="button" class="btn btn-success" style="display:none;" id="fsButton" {{ action 'showFullscreen'}} {{!-- template-lint-disable no-inline-styles --}}>
+    <button type="button" class="btn btn-success" style="display:none;" id="fsButton" {{ action "showFullscreen"}} {{!-- template-lint-disable no-inline-styles --}}>
         please return to fullscreen
     </button>
 </div>

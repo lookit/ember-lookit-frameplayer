@@ -20,12 +20,12 @@
     <div class="row exp-lookit-observation-controls">
         <div class="col-sm-12 pull-down">
             {{#if showPreviousButton}}
-                <button type="button" class="btn btn-default pull-left" {{ action 'previous' }}>
+                <button type="button" class="btn btn-default pull-left" {{ action "previous" }}>
                     Previous
                 </button>
             {{/if}}
 
-            <button type="button" id="nextbutton" class="btn btn-success pull-right" {{ action 'proceed' }}>
+            <button type="button" id="nextbutton" class="btn btn-success pull-right" {{ action "proceed" }}>
                 {{exp-format nextButtonText}}
             </button>
 

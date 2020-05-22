@@ -12,7 +12,7 @@
             {{#if prompt}}
                 {{text}}
                 <br> <br>
-                <button type="button" class="btn btn-success btn-block" disabled={{disableRecord}} {{action 'accept'}}>{{prompt}}</button>
+                <button type="button" class="btn btn-success btn-block" disabled={{disableRecord}} {{action "accept"}}>{{prompt}}</button>
                 <hr>
             {{else}}
                 {{currentVideo.caption}}
@@ -49,14 +49,14 @@
     {{#unless prompt}}
         <div class="row exp-controls">
             <div class="col-md-12 text-center">
-                {{!--<button type="button" class="btn btn-default pull-left" {{action 'next'}}>End preview</button>--}}
-                <button type="button" disabled={{noPrev}} {{action 'previousVideo'}} class="btn btn-primary pull-left">
+                {{!--<button type="button" class="btn btn-default pull-left" {{action "next"}}>End preview</button>--}}
+                <button type="button" disabled={{noPrev}} {{action "previousVideo"}} class="btn btn-primary pull-left">
                     {{previousStimulusText}}
                 </button>
                 {{#if noNext}}
-                    <button type="button" {{action 'finish'}} class="btn btn-success pull-right"> Continue</button>
+                    <button type="button" {{action "finish"}} class="btn btn-success pull-right"> Continue</button>
                 {{else}}
-                    <button type="button" {{action 'nextVideo'}} class="btn btn-success pull-right"> {{nextStimulusText}}</button>
+                    <button type="button" {{action "nextVideo"}} class="btn btn-success pull-right"> {{nextStimulusText}}</button>
                 {{/if}}
             </div>
         </div>

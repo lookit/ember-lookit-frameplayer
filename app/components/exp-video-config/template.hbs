@@ -23,17 +23,17 @@
         </div>
 
         <div class="col-md-1">
-            <button type="button" id="reloadButton" class="btn btn-default" {{action 'reloadRecorderButton'}}><i class="fa fa-refresh"></i></button>
+            <button type="button" id="reloadButton" class="btn btn-default" {{action "reloadRecorderButton"}}><i class="fa fa-refresh"></i></button>
         </div>
 
         <div class="col-md-11">
             <div class="row select-source">
 
-                <div class="select" onchange={{action 'processSelectedMic' value="target.value"}}>
+                <div class="select" onchange={{action "processSelectedMic" value="target.value"}}>
                     <label for="audioSource">Microphone: </label><select id="audioSource"></select>
                 </div>
 
-                <div class="select" onchange={{action 'processSelectedCam' value="target.value"}}>
+                <div class="select" onchange={{action "processSelectedCam" value="target.value"}}>
                     <label for="videoSource">Camera: </label><select id="videoSource"></select>
                 </div>
             </div>
@@ -47,7 +47,7 @@
 
         {{#if showWebCamWarning }}
             <h4 class="text-warning">
-                We couldn't connect to your webcam. Please make sure you have a webcam connected and <button type="button" class="btn btn-default" {{action 'reloadRecorder'}}>click here to detect</button>. (See the troubleshooting directions below if you're having trouble!)
+                We couldn't connect to your webcam. Please make sure you have a webcam connected and <button type="button" class="btn btn-default" {{action "reloadRecorder"}}>click here to detect</button>. (See the troubleshooting directions below if you're having trouble!)
             </h4>
         {{/if}}
 
@@ -75,7 +75,7 @@
 
                 <li>
 
-                    Make sure your webcam settings got saved by clicking <button type="button" id="reloadCheckButton" class="btn btn-default {{if checkedWebcamPermissions "checkComplete" ""}}" {{action 'reloadRecorderButtonAndRecordCheck'}}>reload webcam</button>.
+                    Make sure your webcam settings got saved by clicking <button type="button" id="reloadCheckButton" class="btn btn-default {{if checkedWebcamPermissions "checkComplete" ""}}" {{action "reloadRecorderButtonAndRecordCheck"}}>reload webcam</button>.
                     Your webcam should re-appear WITHOUT you having to allow access again. (If you do see a dialogue, click "Remember this decision" or "Always allow" and try again!)
 
                 </li>
@@ -120,7 +120,7 @@
 
         {{/if}}
 
-        <button type="button" id="nextbutton" disabled={{if hasCamAccess false true}} class="btn btn-success pull-right" {{ action 'checkAudioThenNext' }} >
+        <button type="button" id="nextbutton" disabled={{if hasCamAccess false true}} class="btn btn-success pull-right" {{ action "checkAudioThenNext" }} >
             Next
         </button>
     </div>

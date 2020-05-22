@@ -9,7 +9,7 @@
 
     <div id="story-area">
         {{#if (or doRecording startSessionRecording)}}
-            <p id='waitForVideo'> establishing video connection <br> please wait... </p>
+            <p id="waitForVideo"> establishing video connection <br> please wait... </p>
         {{/if}}
 
         {{#each images_parsed as |image|}}
@@ -20,7 +20,7 @@
     </div>
 
     {{#unless updatedIsFullscreen}}
-        <button type="button" class="btn btn-warning exp-lookit-story-page" id="fsButton" {{ action 'showFullscreen'}} >
+        <button type="button" class="btn btn-warning exp-lookit-story-page" id="fsButton" {{ action "showFullscreen"}} >
             please return
             <br>
             to fullscreen
@@ -28,16 +28,16 @@
     {{/unless}}
 
     {{#each audioSources_parsed as |audioSourceObject|}}
-        <audio class="player-audio" id={{audioSourceObject.audioId}} onended={{action 'playNextAudioSegment'}} ontimeupdate={{action 'updateCharacterHighlighting'}}>
+        <audio class="player-audio" id={{audioSourceObject.audioId}} onended={{action "playNextAudioSegment"}} ontimeupdate={{action "updateCharacterHighlighting"}}>
             {{#each audioSourceObject.sources as |stream|}}
-                <source src="{{stream.src}}" type="{{stream.type}}">
+                <source src={{stream.src}} type={{stream.type}}>
             {{/each}}
         </audio>
     {{/each}}
 
     <div id="story-controls">
         {{#unless autoProceed}}
-            <button type="button" id="replaybutton" class="btn btn-primary left"  {{ action 'replay' }}> Replay</button>
+            <button type="button" id="replaybutton" class="btn btn-primary left"  {{ action "replay" }}> Replay</button>
         {{/unless}}
 
         <div id="parenttext">
@@ -49,7 +49,7 @@
             {{exp-text-block block=parentTextBlock}}
         </div>
         {{#unless autoProceed}}
-            <button type="button" id="nextbutton" class="btn btn-success right" {{ action 'finish' }} >
+            <button type="button" id="nextbutton" class="btn btn-success right" {{ action "finish" }} >
                 Next
             </button>
         {{/unless}}

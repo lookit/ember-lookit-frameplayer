@@ -4,14 +4,14 @@
         <div class="video-consent-numbered-direction">
             <span class="video-consent-number">1.</span>
             <span class="video-consent-direction">Read through this consent document:</span>
-            <button type="button" id="downloadbutton" class="btn btn-outline-dark right" {{action 'download'}}>( <i class="fa fa-download"></i> Download )</button>
+            <button type="button" id="downloadbutton" class="btn btn-outline-dark right" {{action "download"}}>( <i class="fa fa-download"></i> Download )</button>
         </div>
 
         <div class="center">
 
             <div class="well video-consent-doc" id="consent-form-text">
 
-                {{#if (eq template 'consent_001')}}
+                {{#if (eq template "consent_001")}}
 
                     <ConsentTemplate001
                         @experiment={{experiment}}
@@ -25,7 +25,7 @@
                         @PIContact={{PIContact}}
                     />
 
-                {{else if (eq template 'consent_002')}}
+                {{else if (eq template "consent_002")}}
 
                     <ConsentTemplate002
                         @experiment={{experiment}}
@@ -43,7 +43,7 @@
                         @PIContact={{PIContact}}
                     />
 
-                {{else if (eq template 'consent_003')}}
+                {{else if (eq template "consent_003")}}
 
                     <ConsentTemplate003
                         @experiment={{experiment}}
@@ -74,7 +74,7 @@
             <span class="video-consent-number">2.</span>
             <span class="video-consent-direction">
                 Click to
-                <button type="button" id="recordbutton" disabled={{disableRecord}} class="btn btn-primary pull-left center" {{ action 'record' }}>
+                <button type="button" id="recordbutton" disabled={{disableRecord}} class="btn btn-primary pull-left center" {{ action "record" }}>
                     start consent recording... <i class="fa fa-video-camera"></i>
                 </button>
             </span>
@@ -120,7 +120,7 @@
             </span>
             <span class="video-consent-direction">
                 Click to
-                <button type="button" id="stopbutton" disabled="disabled" class="btn btn-primary pull-right" {{ action 'stop' }}>stop recording <i class="fa fa-stop"></i></button>
+                <button type="button" id="stopbutton" disabled="disabled" class="btn btn-primary pull-right" {{ action "stop" }}>stop recording <i class="fa fa-stop"></i></button>
             </span>
         </div>
 
@@ -133,7 +133,7 @@
                 {{/if}}
             </span>
             <span class="video-consent-direction">
-                <button type="button"  id="playbutton" disabled="disabled" class="btn btn-primary pull-right" {{ action 'playvideo' }}>Play the consent video <i class="fa fa-play"></i></button> to make sure your video was recorded. (If not, you can try again!)
+                <button type="button"  id="playbutton" disabled="disabled" class="btn btn-primary pull-right" {{ action "playvideo" }}>Play the consent video <i class="fa fa-play"></i></button> to make sure your video was recorded. (If not, you can try again!)
             </span>
         </div>
 
@@ -152,7 +152,7 @@
             {{/if}}
         {{/if}}
 
-        <button type="button" id="submitbutton" class="btn btn-success pull-right  {{if (and hasMadeVideo hasCheckedVideo) '' 'disabled'}}" {{ action 'finish' }}>Submit</button>
+        <button type="button" id="submitbutton" class="btn btn-success pull-right  {{if (and hasMadeVideo hasCheckedVideo) "" "disabled"}}" {{ action "finish" }}>Submit</button>
 
     </div>
 </div>

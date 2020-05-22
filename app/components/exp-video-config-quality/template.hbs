@@ -23,7 +23,7 @@
         </div>
 
         <div class="col-md-4">
-            <button type="button" id="reloadButton" class="btn btn-default" {{action 'reloadRecorder'}}>
+            <button type="button" id="reloadButton" class="btn btn-default" {{action "reloadRecorder"}}>
                 Reload webcam
                 <i class="fa fa-refresh"></i>
             </button>
@@ -44,7 +44,7 @@
                             {{#if requireItemConfirmation}}
                                 <div class="form-check form-check-inline">
                                     <div class="checkbox-container">
-                                        <input class="form-check-input" type="checkbox" id="checkbox-{{idx}}" value="didit-{{idx}}" onChange={{action 'checkboxChanged' idx}}>
+                                        <input class="form-check-input" type="checkbox" id="checkbox-{{idx}}" value="didit-{{idx}}" onChange={{action "checkboxChanged" idx}}>
                                         <label class="form-check-label" for="checkbox-{{idx}}">{{completedItemText}}</label>
                                     </div>
                                 </div>
@@ -86,7 +86,7 @@
                     Please try recording and viewing a video before continuing.
                 </p>
             {{/if}}
-            <button type="button" id="nextbutton" class="btn btn-success pull-right nextButton {{if readyToProceed '' 'disabled'}}" {{ action 'finish' }} > Next</button>
+            <button type="button" id="nextbutton" class="btn btn-success pull-right nextButton {{if readyToProceed "" "disabled"}}" {{ action "finish" }} > Next</button>
         </div>
 
     </div>

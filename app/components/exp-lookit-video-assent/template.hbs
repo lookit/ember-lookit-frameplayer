@@ -23,7 +23,7 @@
                 <span class="video-assent-direction">Learn about the study:</span>
             </div>
             <div class="col-xs-1">
-                <button type="button" id="downloadbutton" class="btn btn-outline-dark right" {{action 'download'}}>( <i class="fa fa-download"></i> Download)</button>
+                <button type="button" id="downloadbutton" class="btn btn-outline-dark right" {{action "download"}}>( <i class="fa fa-download"></i> Download)</button>
             </div>
         </div>
 
@@ -37,11 +37,11 @@
                         <img class="exp-lookit-assent-image" src={{currentPage.imgSrc}} alt={{currentPage.altText}}>
                     {{/if}}
 
-                    <div class="row recorder-container {{unless currentPage.showWebcam 'hidden-webcam'}}">
+                    <div class="row recorder-container {{unless currentPage.showWebcam "hidden-webcam"}}">
                         <div id="recorder" class="col-xs-12"></div>
                     </div>
 
-                    <video id="assent-video" class="exp-lookit-assent-image {{unless currentPage.video 'hidden'}}" controls onended={{action 'videoCompleted'}}>
+                    <video id="assent-video" class="exp-lookit-assent-image {{unless currentPage.video "hidden"}}" controls onended={{action "videoCompleted"}}>
                         {{#each currentPage.video as |vidsource|}}
                             <source src={{vidsource.src}} type={{vidsource.type}}>
                         {{/each}}
@@ -51,8 +51,8 @@
                 </div>
 
 
-                <div class="{{unless currentPage.audio 'hidden'}}">
-                    <audio id="assent-audio" controls onended={{action 'audioCompleted'}}>
+                <div class={{unless currentPage.audio "hidden"}}>
+                    <audio id="assent-audio" controls onended={{action "audioCompleted"}}>
                         {{#each currentPage.audio as |vidsource|}}
                             <source src={{vidsource.src}} type={{vidsource.type}} >
                         {{/each}}
@@ -76,7 +76,7 @@
         <div class="row">
 
             <div class="col-xs-2 col-xs-offset-1">
-                <button type="button" disabled={{noPrev}} {{action 'previousVideo'}} class="btn btn-primary pull-left vertical-center"><i class="fa fa-lg fa-chevron-left"></i> {{previousStimulusText}}</button>
+                <button type="button" disabled={{noPrev}} {{action "previousVideo"}} class="btn btn-primary pull-left vertical-center"><i class="fa fa-lg fa-chevron-left"></i> {{previousStimulusText}}</button>
             </div>
 
             <!--PAGE NUMBERS-->
@@ -93,7 +93,7 @@
             </div>
 
             <div class="col-xs-2">
-                <button type="button" disabled={{noNext}} {{action 'nextVideo'}} class="btn btn-success pull-right vertical-center"> {{nextStimulusText}} <i class="fa fa-lg  fa-chevron-right"></i></button>
+                <button type="button" disabled={{noNext}} {{action "nextVideo"}} class="btn btn-success pull-right vertical-center"> {{nextStimulusText}} <i class="fa fa-lg  fa-chevron-right"></i></button>
             </div>
 
         </div>
@@ -103,7 +103,7 @@
     </div>
 
     <!--ASSENT DECISION SECTION: VIDEO AND/OR QUESTION-->
-    <div class="col-xs-4 assent-decision {{unless readAllPages 'lookit-assent-inactive'}}">
+    <div class="col-xs-4 assent-decision {{unless readAllPages "lookit-assent-inactive"}}">
 
         <div class="video-assent-numbered-direction">
             <span class="video-assent-number">2.</span>
@@ -112,23 +112,23 @@
 
         <div class="well video-assent-prompt">
             <div class="question"> {{participationQuestion}} </div>
-            <button type="button" id="yesbutton" {{action 'selectNo'}} disabled="{{unless readAllPages 'disabled'}}" class="btn btn-danger pull-left {{if (eq childResponse 'No') 'active'}}">No <i class="fa fa-thumbs-down"></i></button>
-            <button type="button" id="nobutton"  {{action 'selectYes'}} disabled="{{unless readAllPages 'disabled'}}" class="btn btn-success pull-right {{if (eq childResponse 'Yes') 'active'}}"><i class="fa fa-thumbs-up"></i> Yes</button>
+            <button type="button" id="yesbutton" {{action "selectNo"}} disabled={{unless readAllPages "disabled"}} class="btn btn-danger pull-left {{if (eq childResponse "No") "active"}}">No <i class="fa fa-thumbs-down"></i></button>
+            <button type="button" id="nobutton"  {{action "selectYes"}} disabled={{unless readAllPages "disabled"}} class="btn btn-success pull-right {{if (eq childResponse "Yes") "active"}}"><i class="fa fa-thumbs-up"></i> Yes</button>
             <div> </div>
         </div>
 
-        {{#if (eq childResponse 'No')}}
+        {{#if (eq childResponse "No")}}
             <div class="no-assent-warning">
                 You have chosen not to participate. Pressing 'submit' will take you to the main Lookit page.
             </div>
         {{/if}}
 
-        <button type="button" id="submitbutton" disabled="{{unless childResponse 'disabled'}}" class="btn btn-success pull-right" {{ action 'submit' }}>submit <i class="fa fa-caret-right"></i></button>
+        <button type="button" id="submitbutton" disabled={{unless childResponse "disabled"}} class="btn btn-success pull-right" {{ action "submit" }}>submit <i class="fa fa-caret-right"></i></button>
 
 
     </div>
 
-    <div id='consent-form-full-text'>
+    <div id="consent-form-full-text">
 
         {{#each pages as |currentPage|}}
 

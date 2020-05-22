@@ -9,18 +9,18 @@
 
     <div id="story-area">
         {{#if (or startSessionRecording doRecording)}}
-            <p id='waitForVideo'> establishing video connection <br> please wait... </p>
+            <p id="waitForVideo"> establishing video connection <br> please wait... </p>
         {{/if}}
 
         {{#each images_parsed as |image|}}
-            <div id={{image.id}} class="story-image-positioner" style="left:{{image.left}}%; height:{{image.height}}%; bottom:{{image.bottom}}%;" {{!-- template-lint-disable no-inline-styles style-concatenation --}}>
-                <div class="story-image-container" onclick={{action 'clickSpeaker' image.id}} >
-                    <p onclick={{action 'clickSpeaker' image.id}} class="image-text {{unless completedAudio 'disabled'}}"> {{image.text}} </p>
+            <div id={{image.id}} class="story-image-positioner" style="left:{{image.left}}%; height:{{image.height}}%; bottom:{{image.bottom}}%;" {{!-- template-lint-disable no-inline-styles style-concatenation--}}>
+                <div class="story-image-container" onclick={{action "clickSpeaker" image.id}} >
+                    <p onclick={{action "clickSpeaker" image.id}} class="image-text {{unless completedAudio "disabled"}}"> {{image.text}} </p>
                     <img src={{image.src}} class="story-image" alt="story character">
 
-                    <audio class="speaker-audio" onplay={{action 'markAudioPlayed' image.id}} onended={{action 'endSpeakerAudio' image.id}}>
+                    <audio class="speaker-audio" onplay={{action "markAudioPlayed" image.id}} onended={{action "endSpeakerAudio" image.id}}>
                         {{#each image.imageAudio as |stream|}}
-                            <source src="{{stream.src}}" type="{{stream.type}}">
+                            <source src={{stream.src}} type={{stream.type}}>
                         {{/each}}
                     </audio>
                 </div>
@@ -31,7 +31,7 @@
     </div>
 
     {{#unless updatedIsFullscreen}}
-        <button type="button" class="btn btn-warning exp-lookit-dialogue-page" id="fsButton" {{ action 'showFullscreen'}} >
+        <button type="button" class="btn btn-warning exp-lookit-dialogue-page" id="fsButton" {{ action "showFullscreen"}} >
             please return
             <br>
             to fullscreen
@@ -39,22 +39,22 @@
     {{/unless}}
 
     {{#each audioSources_parsed as |audioSourceObject|}}
-        <audio class="player-audio" id={{audioSourceObject.audioId}} onended={{action 'playNextAudioSegment'}}>
+        <audio class="player-audio" id={{audioSourceObject.audioId}} onended={{action "playNextAudioSegment"}}>
             {{#each audioSourceObject.sources as |stream|}}
-                <source src="{{stream.src}}" type="{{stream.type}}">
+                <source src={{stream.src}} type={{stream.type}}>
             {{/each}}
         </audio>
     {{/each}}
 
     <div id="story-controls">
         {{#unless autoProceed}}
-            <button type="button" id="replaybutton" class="btn btn-primary left"  {{ action 'replay' }}> Replay</button>
+            <button type="button" id="replaybutton" class="btn btn-primary left"  {{ action "replay" }}> Replay</button>
         {{/unless}}
         <div id="parenttext">
             {{exp-text-block block=parentTextBlock}}
         </div>
         {{#unless autoProceed}}
-            <button type="button" id="nextbutton" class="btn btn-success right" disabled={{not readyToProceed}} {{ action 'finish' }} >
+            <button type="button" id="nextbutton" class="btn btn-success right" disabled={{not readyToProceed}} {{ action "finish" }} >
                 Next <br> (or press Enter)
             </button>
         {{/unless}}
