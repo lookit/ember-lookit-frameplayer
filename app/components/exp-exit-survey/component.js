@@ -154,8 +154,6 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
 
     progressValue: Ember.computed('currentSessionsCompleted', 'idealSessionsCompleted', function() {
         return Math.min(100, Math.ceil((this.get('currentSessionsCompleted') / this.get('idealSessionsCompleted')) * 100));
-    }),
-    willRender() {
-        this.send('exitFullscreen');
-    }
+    })
+
 });
