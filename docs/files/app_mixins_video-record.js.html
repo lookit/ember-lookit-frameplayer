@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>app/mixins/video-record.js - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+
+                    <p>Version: latest <br>(v1.2.0)</p>
+                    <select name="select_version" onchange="location = this.value;">
+                        <option value="">--Select different version--</option>
+                            <option value="releases/v1.2.0/">v1.2.0</option>
+                    </select>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
+                            <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
+                            <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
+                            <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
+                            <li><a href="../classes/Exp-lookit-images-audio.html">Exp-lookit-images-audio</a></li>
+                            <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
+                            <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
+                            <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
+                            <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
+                            <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
+                            <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
+                            <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-text.html">Exp-lookit-text</a></li>
+                            <li><a href="../classes/Exp-lookit-video.html">Exp-lookit-video</a></li>
+                            <li><a href="../classes/Exp-lookit-video-assent.html">Exp-lookit-video-assent</a></li>
+                            <li><a href="../classes/Exp-lookit-video-consent.html">Exp-lookit-video-consent</a></li>
+                            <li><a href="../classes/Exp-lookit-webcam-display.html">Exp-lookit-webcam-display</a></li>
+                            <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
+                            <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
+                            <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
+                            <li><a href="../classes/Full-screen.html">Full-screen</a></li>
+                            <li><a href="../classes/Media-reload.html">Media-reload</a></li>
+                            <li><a href="../classes/Permute.html">Permute</a></li>
+                            <li><a href="../classes/Random-parameter-set.html">Random-parameter-set</a></li>
+                            <li><a href="../classes/Select.html">Select</a></li>
+                            <li><a href="../classes/Session-record.html">Session-record</a></li>
+                            <li><a href="../classes/Video-record.html">Video-record</a></li>
+                            <li><a href="../classes/video-recorder.html">video-recorder</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: app/mixins/video-record.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import Ember from &#x27;ember&#x27;;
+import { observer } from &#x27;@ember/object&#x27;;
+import VideoRecorder from &#x27;../services/video-recorder&#x27;;
+
+let {
+    $
+} = Ember;
+
+/**
+ * @module exp-player
+ * @submodule mixins
+ */
+
+/**
+ *
+ * Reference for DEVELOPERS of new frames only!
+ *
+ * A mixin that can be used to add basic support for video recording across frames
+ *
+ * By default, the recorder will be installed when this frame loads, but recording
+ * will not start automatically. To override either of these settings, set
+ * the properties &#x60;doUseCamera&#x60; and/or &#x60;startRecordingAutomatically&#x60; in the consuming
+ * frame.
+ *
+ * You will also need to set &#x60;recorderElement&#x60; if the recorder is to be housed other than
+ * in an element identified by the ID &#x60;recorder&#x60;.
+ *
+ * The properties &#x60;recorder&#x60;, &#x60;videoList&#x60;, &#x60;stoppedRecording&#x60;, &#x60;recorderReady&#x60;, and
+ * &#x60;videoId&#x60; become available to the consuming frame. The recorder object has fields
+ * that give information about its state: &#x60;hasWebCam&#x60;, &#x27;hasCamAccess&#x60;, &#x60;recording&#x60;,
+ * &#x60;connected&#x60;, and &#x60;micChecked&#x60; - for details, see services/video-recorder.js. These
+ * can be accessed from the consuming frame as e.g. &#x60;this.get(&#x27;recorder&#x27;).get(&#x27;hasWebCam&#x27;)&#x60;.
+ *
+ * If starting recording automatically, the function &#x60;whenPossibleToRecord&#x60; will be called
+ * once recording is possible, and will start recording. If you want to do other things
+ * at this point, like proceeding to a test trial, you can override this function in your
+ * frame.
+ *
+ * See &#x27;methods&#x27; for the functions you can use on a frame that extends VideoRecord.
+ *
+ * Events recorded in a frame that extends VideoRecord will automatically have additional
+ * fields videoId (video filename), pipeId (temporary filename initially assigned by
+ * the recording service),
+ * and streamTime (when in the video they happened, in s).
+ *
+ * Setting up the camera is handled in didInsertElement, and making sure recording is
+ * stopped is handled in willDestroyElement (Ember hooks that fire during the component
+ * lifecycle). It is very important (in general, but especially when using this mixin)
+ * that you call &#x60;this._super(...arguments);&#x60; in any functions where your frame overrides
+ * hooks like this, so that the mixin&#x27;s functions get called too!
+ *
+ *
+ * @class Video-record
+ */
+
+/**
+ * When recorder detects a change in camera access
+ *
+ * @event hasCamAccess
+ * @param {Boolean} hasCamAccess
+ */
+
+/**
+ * When recorder detects a change in video stream connection status
+ *
+ * @event videoStreamConnection
+ * @param {String} status status of video stream connection, e.g.
+ * &#x27;NetConnection.Connect.Success&#x27; if successful
+ */
+
+/**
+ * When pausing study, immediately before request to pause webcam recording
+ *
+ * @event pauseVideo
+ */
+
+/**
+ * When unpausing study, immediately before request to resume webcam recording
+ *
+ * @event unpauseVideo
+ */
+
+/**
+ * Just before stopping webcam video capture
+ *
+ * @event stoppingCapture
+ */
+
+export default Ember.Mixin.create({
+
+    /**
+     * The recorder object, accessible to the consuming frame. Includes properties
+     * recorder.nWebcams, recorder.hasCamAccess, recorder.micChecked, recorder.connected.
+     * @property {VideoRecorder} recorder
+     * @private
+     */
+    recorder: null,
+
+    /**
+     * A list of all video IDs used in this mixin (a new one is created for each recording).
+     * Accessible to consuming frame.
+     * @property {List} videoList
+     * @private
+     */
+    videoList: null,
+
+    /**
+     * Whether recording is stopped already, meaning it doesn&#x27;t need to be re-stopped when
+     * destroying frame. This should be set to true by the consuming frame when video is
+     * stopped.
+     * @property {Boolean} stoppedRecording
+     * @private
+     */
+    stoppedRecording: false,
+
+    /**
+     * JQuery string to identify the recorder element.
+     * @property {String} recorderElement
+     * @default &#x27;#recorder&#x27;
+     * @private
+     */
+    recorderElement: &#x27;#recorder&#x27;,
+
+    /**
+     * Whether recorder has been set up yet. Automatically set when doing setup.
+     * Accessible to consuming frame.
+     * @property {Boolean} recorderReady
+     * @private
+     */
+    recorderReady: false,
+
+    /**
+     * Maximum recording length in seconds. Can be overridden by consuming frame.
+     * @property {Number} maxRecordingLength
+     * @default 7200
+     */
+    maxRecordingLength: 7200,
+
+    /**
+     * Whether to autosave recordings. Can be overridden by consuming frame.
+     * TODO: eventually use this to set up non-recording option for previewing
+     * @property {Number} autosave
+     * @default 1
+     * @private
+     */
+    autosave: 1,
+
+    /**
+     * Whether to do audio-only (vs also video) recording. Can be overridden by consuming frame.
+     * @property {Number} audioOnly
+     * @default 0
+     */
+    audioOnly: 0,
+
+    /**
+     * Whether to use the camera in this frame. Consuming frame should set this property
+     * to override if needed.
+     * @property {Boolean} doUseCamera
+     * @default true
+     */
+    doUseCamera: true,
+
+    /**
+     * Whether to start recording ASAP (only applies if doUseCamera). Consuming frame
+     * should set to override if needed.
+     * @property {Boolean} startRecordingAutomatically
+     * @default false
+     */
+    startRecordingAutomatically: false,
+
+    /**
+     * A video ID to use for the current recording. Format is
+     * &#x60;videoStream_&lt;experimentId&gt;_&lt;frameId&gt;_&lt;sessionId&gt;_timestampMS_RRR&#x60;
+     * where RRR are random numeric digits.
+     *
+     * @property {String} videoId
+     * @private
+     */
+    videoId: &#x27;&#x27;,
+
+    _generateVideoId() {
+        return [
+            &#x27;videoStream&#x27;,
+            this.get(&#x27;experiment.id&#x27;),
+            this.get(&#x27;id&#x27;),
+            this.get(&#x27;session.id&#x27;),
+            +Date.now(), // Timestamp in ms
+            Math.floor(Math.random() * 1000)
+        ].join(&#x27;_&#x27;);
+    },
+
+    /**
+     * Extend any base time event capture with information about the recorded video
+     * @method makeTimeEvent
+     * @param eventName
+     * @param extra
+     * @return {Object} Event data object
+     */
+    makeTimeEvent(eventName, extra) {
+        // All frames using this mixin will add streamTime to every server event
+        let base = this._super(eventName, extra);
+        Ember.assign(base, {
+            streamTime: this.get(&#x27;recorder&#x27;) ? this.get(&#x27;recorder&#x27;).getTime() : null
+        });
+        return base;
+    },
+
+    /**
+     * Set up a video recorder instance
+     * @method setupRecorder
+     * @param {Node} element A DOM node representing where to mount the recorder
+     * @return {Promise} A promise representing the result of installing the recorder
+     */
+    setupRecorder(element) {
+        const videoId = this._generateVideoId();
+        this.set(&#x27;videoId&#x27;, videoId);
+        const recorder = new VideoRecorder({element: element});
+        const pipeLoc = Ember.getOwner(this).resolveRegistration(&#x27;config:environment&#x27;).pipeLoc;
+        const pipeEnv = Ember.getOwner(this).resolveRegistration(&#x27;config:environment&#x27;).pipeEnv;
+        const installPromise = recorder.install(this.get(&#x27;videoId&#x27;), pipeLoc, pipeEnv,
+            this.get(&#x27;maxRecordingLength&#x27;), this.get(&#x27;autosave&#x27;), this.get(&#x27;audioOnly&#x27;));
+
+        // Track specific events for all frames that use  VideoRecorder
+        var _this = this;
+        recorder.on(&#x27;onCamAccess&#x27;, (recId, hasAccess) =&gt; {   // eslint-disable-line no-unused-vars
+            if (!(_this.get(&#x27;isDestroyed&#x27;) || _this.get(&#x27;isDestroying&#x27;))) {
+                _this.send(&#x27;setTimeEvent&#x27;, &#x27;recorder.hasCamAccess&#x27;, {
+                    hasCamAccess: hasAccess
+                });
+            }
+        });
+        recorder.on(&#x27;onConnectionStatus&#x27;, (recId, status) =&gt; {   // eslint-disable-line no-unused-vars
+            if (!(_this.get(&#x27;isDestroyed&#x27;) || _this.get(&#x27;isDestroying&#x27;))) {
+                _this.send(&#x27;setTimeEvent&#x27;, &#x27;videoStreamConnection&#x27;, {
+                    status: status
+                });
+            }
+        });
+        this.set(&#x27;recorder&#x27;, recorder);
+        this.send(&#x27;setTimeEvent&#x27;, &#x27;setupVideoRecorder&#x27;, {
+            videoId: videoId
+        });
+        return installPromise;
+    },
+
+    /**
+     * Pause the recorder (and capture timing events). For webRTC recorder, this is
+     * just a placeholder and doesn&#x27;t actually pause the recording. If webRTC used,
+     * includes extra data actuallyPaused: false. This is for backwards compatibility
+     * with frames that pause/resume recording, and should not be used going forward -
+     * instead stop/start and make separate clips if needed.
+     * @method pauseRecorder
+     * @param [skipIfMissing=false] If provided (and true), don&#x27;t raise an error if recording isn&#x27;t ready yet. Not actually used for WebRTC.
+     */
+    pauseRecorder(skipIfMissing = false) {  // eslint-disable-line no-unused-vars
+        // leave skipIfMissing param for backwards compatibility
+        const recorder = this.get(&#x27;recorder&#x27;);
+        if (recorder) {
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;pauseCapture&#x27;, {
+                actuallyPaused: false
+            });
+            // Would pause here!
+        }
+    },
+
+    /**
+     * Resume a paused recording. For webRTC recorder, this is just a placeholder and
+     * doesn&#x27;t actually pause the recording. If webRTC used, includes extra data
+     * wasActuallyPaused: false. This is for backwards compatibility
+     * with frames that pause/resume recording, and should not be used going forward -
+     * instead stop/start and make separate clips if needed.
+     * @method resumeRecorder
+     */
+    resumeRecorder() {
+        const recorder = this.get(&#x27;recorder&#x27;);
+        if (recorder) {
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;unpauseCapture&#x27;, {
+                wasActuallyPaused: false
+            });
+            // Would resume here!
+        }
+    },
+
+    /**
+     * Start recording
+     * @method startRecorder
+     * @return Promise Resolves when recording has started
+     */
+    startRecorder() {
+        const recorder = this.get(&#x27;recorder&#x27;);
+        if (recorder) {
+            return recorder.record().then(() =&gt; {
+                this.send(&#x27;setTimeEvent&#x27;, &#x27;startRecording&#x27;, {
+                    pipeId: recorder.get(&#x27;pipeVideoName&#x27;)
+                });
+                if (this.get(&#x27;videoList&#x27;) == null) {
+                    this.set(&#x27;videoList&#x27;, [this.get(&#x27;videoId&#x27;)]);
+                } else {
+                    this.set(&#x27;videoList&#x27;, this.get(&#x27;videoList&#x27;).concat([this.get(&#x27;videoId&#x27;)]));
+                }
+            });
+        } else {
+            return Ember.RSVP.resolve();
+        }
+    },
+
+    /**
+     * Stop the recording
+     * @method stopRecorder
+     * @return Promise A promise that resolves when upload is complete
+     */
+    stopRecorder() {
+        const recorder = this.get(&#x27;recorder&#x27;);
+        if (recorder &amp;&amp; recorder.get(&#x27;recording&#x27;)) {
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;stoppingCapture&#x27;);
+            return recorder.stop();
+        } else {
+            return Ember.RSVP.reject(1);
+        }
+    },
+
+    /**
+     * Destroy recorder and stop accessing webcam
+     * @method destroyRecorder
+     */
+    destroyRecorder() {
+        const recorder = this.get(&#x27;recorder&#x27;);
+        if (recorder) {
+            if (!(this.get(&#x27;isDestroyed&#x27;) || this.get(&#x27;isDestroying&#x27;))) {
+                this.send(&#x27;setTimeEvent&#x27;, &#x27;destroyingRecorder&#x27;);
+            }
+            recorder.destroy();
+        }
+    },
+
+    willDestroyElement() {
+        var _this = this;
+
+        if (_this.get(&#x27;recorder&#x27;)) {
+            window.clearTimeout(_this.get(&#x27;recorder&#x27;).get(&#x27;uploadTimeout&#x27;));
+            if (_this.get(&#x27;stoppedRecording&#x27;, true)) {
+                _this.destroyRecorder();
+            } else {
+                _this.stopRecorder().then(() =&gt; {
+                    _this.set(&#x27;stoppedRecording&#x27;, true);
+                    _this.destroyRecorder();
+                }, () =&gt; {
+                    _this.destroyRecorder();
+                });
+            }
+        }
+        _this._super(...arguments);
+    },
+
+    didInsertElement() {
+        if (this.get(&#x27;doUseCamera&#x27;)) {
+            var _this = this;
+            this.setupRecorder(this.$(this.get(&#x27;recorderElement&#x27;))).then(() =&gt; {
+                /**
+                 * When video recorder has been installed
+                 *
+                 * @event recorderReady
+                 */
+                _this.send(&#x27;setTimeEvent&#x27;, &#x27;recorderReady&#x27;);
+                _this.set(&#x27;recorderReady&#x27;, true);
+                _this.whenPossibleToRecord(); // make sure this fires
+            });
+        }
+        this._super(...arguments);
+    },
+
+    /**
+     * Observer that starts recording once recorder is ready. Override to do additional
+     * stuff at this point!
+     * @method whenPossibleToRecord
+     */
+    whenPossibleToRecord: observer(&#x27;recorder.hasCamAccess&#x27;, &#x27;recorderReady&#x27;, function() {
+        if (this.get(&#x27;doUseCamera&#x27;) &amp;&amp; this.get(&#x27;startRecordingAutomatically&#x27;)) {
+            var _this = this;
+            if (this.get(&#x27;recorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;recorderReady&#x27;)) {
+                this.startRecorder().then(() =&gt; {
+                    _this.set(&#x27;recorderReady&#x27;, false);
+                });
+            }
+        }
+    }),
+
+    /**
+     * Hide the recorder from display. Useful if you would like to keep recording without extra UI elements to
+     *   distract the user.
+     * @method hideRecorder
+     */
+    hideRecorder() {
+        $(this.get(&#x27;recorderElement&#x27;)).parent().addClass(&#x27;video-recorder-hidden&#x27;);
+    },
+
+    /**
+     * Show the recorder to the user. Useful if you want to temporarily show a hidden recorder- eg to let the user fix
+     *   a problem with video capture settings
+     * @method showRecorder
+     */
+    showRecorder() {
+        $(this.get(&#x27;recorderElement&#x27;)).parent().removeClass(&#x27;video-recorder-hidden&#x27;);
+    },
+
+    init() {
+        this._super(...arguments);
+        this.set(&#x27;videoList&#x27;, []);
+    }
+
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

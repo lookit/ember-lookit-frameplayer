@@ -1,0 +1,2814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Exp-lookit-video-assent - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+
+                    <p>Version: latest <br>(v1.2.0)</p>
+                    <select name="select_version" onchange="location = this.value;">
+                        <option value="">--Select different version--</option>
+                            <option value="releases/v1.2.0/">v1.2.0</option>
+                    </select>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
+                            <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
+                            <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
+                            <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
+                            <li><a href="../classes/Exp-lookit-images-audio.html">Exp-lookit-images-audio</a></li>
+                            <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
+                            <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
+                            <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
+                            <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
+                            <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
+                            <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
+                            <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-text.html">Exp-lookit-text</a></li>
+                            <li><a href="../classes/Exp-lookit-video.html">Exp-lookit-video</a></li>
+                            <li><a href="../classes/Exp-lookit-video-assent.html">Exp-lookit-video-assent</a></li>
+                            <li><a href="../classes/Exp-lookit-video-consent.html">Exp-lookit-video-consent</a></li>
+                            <li><a href="../classes/Exp-lookit-webcam-display.html">Exp-lookit-webcam-display</a></li>
+                            <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
+                            <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
+                            <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
+                            <li><a href="../classes/Full-screen.html">Full-screen</a></li>
+                            <li><a href="../classes/Media-reload.html">Media-reload</a></li>
+                            <li><a href="../classes/Permute.html">Permute</a></li>
+                            <li><a href="../classes/Random-parameter-set.html">Random-parameter-set</a></li>
+                            <li><a href="../classes/Select.html">Select</a></li>
+                            <li><a href="../classes/Session-record.html">Session-record</a></li>
+                            <li><a href="../classes/Video-record.html">Video-record</a></li>
+                            <li><a href="../classes/video-recorder.html">video-recorder</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1>Exp-lookit-video-assent Class</h1>
+<div class="box meta">
+        <div class="uses">
+            Uses
+            <ul class="inline commas">
+                    <li><a href="Video-record.html">Video-record</a></li>
+            </ul>
+        </div>
+
+        <div class="extends">
+            Extends <a href="../classes/Exp-frame-base.html" class="crosslink">Exp-frame-base</a>
+        </div>
+
+        <div class="foundat">
+            Defined in: <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l20"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:20</code></a>
+        </div>
+
+            Collection: <a href="../modules/frames.html">frames</a><br>
+
+</div>
+
+
+<div id="examples" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#screenshot">Screenshot</a></li>
+        <li class="api-class-tab methods"><a href="#video">Video</a></li>
+    </ul>
+    <div>
+        <div id="screenshot" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-screenshot">
+                <img src="../assets/screenshots/Exp-lookit-video-assent.png">
+            </div>
+        </div>
+
+        <div id="video" class="api-class-tabpanel">
+            <div class="class-screenshot" id="example-video">
+                <video controls poster="../assets/screenshots/Exp-lookit-video-assent.png" >
+                    <source src="../assets/framevideos/Exp-lookit-video-assent.mp4" type='video/mp4'>
+                    No video available for this frame.
+                </video>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="box intro">
+    <p>Video assent frame for Lookit studies for older children to agree to participation,
+separately from parental consent.</p>
+<p>A series of assent form "pages" is displayed, each one displaying some combination of
+(a) an image or the participant's webcam view or a video, (b) audio, and (c) text. You can
+optionally record webcam video during the whole assent procedure or on the last page.</p>
+<p>Once the family has viewed all pages, the
+child can answer a question about whether to participate. If they choose yes, they proceed;
+if they choose no, they are sent to the exit URL.</p>
+<p>You can either simply have children click on "Yes" or "No," or you can add audio/video on
+the last page that instructs them to answer verbally, and do webcam recording on that page.
+For instance, you might show a video of yourself asking "Do you want to participate in this study?
+You can say "yes" or "no." Parents, once your child has answered, please click on their answer
+to the right."</p>
+<p>In general it is expected that only one of webcam view, video, and image will be provided per
+page, although it is ok to have only text or only text plus audio. If audio or video is provided for a page,
+the participant must finish it to proceed. (If both audio and video are provided they will
+be played simultaneously and both must finish for the participant to proceed.) They only
+need to complete the audio/video for a given page once, in case they navigate using the
+previous/next buttons.</p>
+<p>This frame can optionally be shown only when the child is at least N years old, in case
+some participants will need to give assent and others will rely only on parent consent.</p>
+<p>Specifying media locations:</p>
+<p>For <code>imgSrc</code> parameters within <code>pages</code>, you can either specify complete URLs or partial URLs
+relative to a base directory <code>baseDir</code> for the frame. Images are expected to be in an
+<code>img</code> directory within the <code>baseDir</code>. For instance, in the example below,
+the first page's image is at <code>https://s3.amazonaws.com/lookitcontents/cats/img/jane_smith.jpg</code>.</p>
+<p>For any parameters that expect a list of audio/video sources, you can EITHER provide
+a list of src/type pairs with full paths like this:</p>
+<pre class="code prettyprint"><code class="language-json">    [
+        {
+            'src': 'http://.../video1.mp4',
+            'type': 'video/mp4'
+        },
+        {
+            'src': 'http://.../video1.webm',
+            'type': 'video/webm'
+        }
+    ]
+</code></pre>
+<p>OR you can provide a single string 'stub', which will be expanded
+based on the parameter baseDir and the media types expected - either audioTypes or
+videoTypes as appropriate. For example, if you provide the audio source <code>intro</code>
+and baseDir is <a href="https://mystimuli.org/mystudy/">https://mystimuli.org/mystudy/</a>, with audioTypes ['mp3', 'ogg'], then this
+will be expanded to:</p>
+<pre class="code prettyprint"><code class="language-json">                 [
+                        {
+                            src: 'https://mystimuli.org/mystudy/mp3/intro.mp3',
+                            type: 'audio/mp3'
+                        },
+                        {
+                            src: 'https://mystimuli.org/mystudy/ogg/intro.ogg',
+                            type: 'audio/ogg'
+                        }
+                ]
+</code></pre>
+<p>This allows you to simplify your JSON document a bit and also easily switch to a
+new version of your stimuli without changing every URL. You can mix source objects with
+full URLs and those using stubs within the same directory. However, any stimuli
+specified using stubs MUST be organized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.</p>
+<p>Example usage:</p>
+<pre class="code prettyprint"><code class="language-json">"frames": {
+    "video-assent": {
+        "kind": "exp-lookit-video-assent",
+            "pages": [
+                {
+                    "imgSrc": "jane_smith.png",
+                    "altText": "Jane Smith",
+                    "textBlocks": [
+                        {
+                            "text": "My name is Jane Smith. I am a scientist who studies why children love cats."
+                        }
+                    ],
+                    "audio": "narration_1"
+                },
+                {
+                    "imgSrc": "cats_game.png",
+                    "altText": "picture of sample game",
+                    "textBlocks": [
+                        {
+                            "text": "In this study, you will play a game about cats."
+                        }
+                    ]
+                },
+                {
+                    "showWebcam": true,
+                    "textBlocks": [
+                        {
+                            "text": "During the study, your webcam will record a video of you. We will watch this video later to see how much you love cats."
+                        }
+                    ]
+                }
+            ],
+            "baseDir": "https://s3.amazonaws.com/lookitcontents/cats/",
+            "videoTypes": [
+                "webm",
+                "mp4"
+            ],
+            "participationQuestion": "Do you want to participate in this study?",
+            "minimumYearsToAssent": 7
+        }
+    }
+}
+</code></pre>
+
+</div>
+
+<div>
+</div>
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+            <li class="api-class-tab attrs"><a href="#attrs">Data collected</a></li>
+            <li class="api-class-tab events"><a href="#events">Events</a></li>
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods extends">
+                            <li class="index-item method inherited">
+                                <a href="#method_destroyRecorder">destroyRecorder</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#method_destroySessionRecorder">destroySessionRecorder</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#method_exitFullscreen">exitFullscreen</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#method_hideRecorder">hideRecorder</a>
+
+                            </li>
+                            <li class="index-item method inherited inherited">
+                                <a href="#method_makeTimeEvent">makeTimeEvent</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#method_pauseRecorder">pauseRecorder</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#method_resumeRecorder">resumeRecorder</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#method_serializeContent">serializeContent</a>
+
+                            </li>
+                            <li class="index-item method inherited inherited">
+                                <a href="#method_setupRecorder">setupRecorder</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#method_showFullscreen">showFullscreen</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#method_showRecorder">showRecorder</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#method_startRecorder">startRecorder</a>
+
+                            </li>
+                            <li class="index-item method inherited inherited">
+                                <a href="#method_startSessionRecorder">startSessionRecorder</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#method_stopRecorder">stopRecorder</a>
+
+                            </li>
+                            <li class="index-item method inherited inherited">
+                                <a href="#method_whenPossibleToRecord">whenPossibleToRecord</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties extends">
+                            <li class="index-item property inherited">
+                                <a href="#property_audioOnly">audioOnly</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#property_autosave">autosave</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#property_displayFullscreen">displayFullscreen</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_displayFullscreenOverride">displayFullscreenOverride</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_doUseCamera">doUseCamera</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_endSessionRecording">endSessionRecording</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#property_fsButtonID">fsButtonID</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#property_fullScreenElementId">fullScreenElementId</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_generateProperties">generateProperties</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_maxRecordingLength">maxRecordingLength</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_minimumYearsToAssent">minimumYearsToAssent</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_nextStimulusText">nextStimulusText</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_pages">pages</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_parameters">parameters</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_participationQuestion">participationQuestion</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_previousStimulusText">previousStimulusText</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#property_recorder">recorder</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#property_recorderElement">recorderElement</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#property_recorderReady">recorderReady</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_recordLastPage">recordLastPage</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_recordWholeProcedure">recordWholeProcedure</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_selectNextFrame">selectNextFrame</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_sessionAudioOnly">sessionAudioOnly</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_startRecordingAutomatically">startRecordingAutomatically</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_startSessionRecording">startSessionRecording</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#property_stoppedRecording">stoppedRecording</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#property_videoId">videoId</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#property_videoList">videoList</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section attrs">
+                    <h3>Data collected</h3>
+
+                    <ul class="index-list attrs extends">
+                            <li class="index-item attr">
+                                <a href="#attr_assentFormText">assentFormText</a>
+                            </li>
+                            <li class="index-item attr">
+                                <a href="#attr_childResponse">childResponse</a>
+                            </li>
+                            <li class="index-item attr inherited">
+                                <a href="#attr_eventTimings">eventTimings</a>
+                            </li>
+                            <li class="index-item attr inherited">
+                                <a href="#attr_frameType">frameType</a>
+                            </li>
+                            <li class="index-item attr inherited">
+                                <a href="#attr_generatedProperties">generatedProperties</a>
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section events">
+                    <h3>Events</h3>
+
+                    <ul class="index-list events extends">
+                            <li class="index-item event">
+                                <a href="#event_assentQuestionSubmit">assentQuestionSubmit</a>
+
+                            </li>
+                            <li class="index-item event">
+                                <a href="#event_downloadConsentForm">downloadConsentForm</a>
+
+                            </li>
+                            <li class="index-item event inherited">
+                                <a href="#event_enteredFullscreen">enteredFullscreen</a>
+
+                            </li>
+                            <li class="index-item event inherited inherited">
+                                <a href="#event_hasCamAccess">hasCamAccess</a>
+
+                            </li>
+                            <li class="index-item event inherited">
+                                <a href="#event_leftFullscreen">leftFullscreen</a>
+
+                            </li>
+                            <li class="index-item event">
+                                <a href="#event_nextAssentPage">nextAssentPage</a>
+
+                            </li>
+                            <li class="index-item event inherited">
+                                <a href="#event_nextFrame">nextFrame</a>
+
+                            </li>
+                            <li class="index-item event inherited">
+                                <a href="#event_pauseVideo">pauseVideo</a>
+
+                            </li>
+                            <li class="index-item event">
+                                <a href="#event_previousAssentPage">previousAssentPage</a>
+
+                            </li>
+                            <li class="index-item event inherited">
+                                <a href="#event_previousFrame">previousFrame</a>
+
+                            </li>
+                            <li class="index-item event inherited">
+                                <a href="#event_recorderReady">recorderReady</a>
+
+                            </li>
+                            <li class="index-item event inherited">
+                                <a href="#event_sessionRecorderReady">sessionRecorderReady</a>
+
+                            </li>
+                            <li class="index-item event">
+                                <a href="#event_skipAssentDueToParticipantAge">skipAssentDueToParticipantAge</a>
+
+                            </li>
+                            <li class="index-item event inherited inherited">
+                                <a href="#event_stoppingCapture">stoppingCapture</a>
+
+                            </li>
+                            <li class="index-item event inherited">
+                                <a href="#event_unpauseVideo">unpauseVideo</a>
+
+                            </li>
+                            <li class="index-item event inherited inherited">
+                                <a href="#event_videoStreamConnection">videoStreamConnection</a>
+
+                            </li>
+                    </ul>
+                </div>
+        </div>
+
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method_destroyRecorder" class="method item inherited">
+    <h3 class="name"><code>destroyRecorder</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#method_destroyRecorder">Video-record</a>:
+        <a href="../files/app_mixins_video-record.js.html#l322"><code>app&#x2F;mixins&#x2F;video-record.js:322</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        Destroy recorder and stop accessing webcam
+    </div>
+
+
+
+
+</div>
+<div id="method_destroySessionRecorder" class="method item inherited">
+    <h3 class="name"><code>destroySessionRecorder</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Session-record.html#method_destroySessionRecorder">Session-record</a>:
+        <a href="../files/app_mixins_session-record.js.html#l208"><code>app&#x2F;mixins&#x2F;session-record.js:208</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        Destroy recorder and stop accessing webcam
+    </div>
+
+
+
+
+</div>
+<div id="method_exitFullscreen" class="method item inherited">
+    <h3 class="name"><code>exitFullscreen</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Full-screen.html#method_exitFullscreen">Full-screen</a>:
+        <a href="../files/app_mixins_full-screen.js.html#l149"><code>app&#x2F;mixins&#x2F;full-screen.js:149</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        Exit fullscreen mode
+    </div>
+
+
+
+
+</div>
+<div id="method_hideRecorder" class="method item inherited">
+    <h3 class="name"><code>hideRecorder</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#method_hideRecorder">Video-record</a>:
+        <a href="../files/app_mixins_video-record.js.html#l388"><code>app&#x2F;mixins&#x2F;video-record.js:388</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        Hide the recorder from display. Useful if you would like to keep recording without extra UI elements to
+  distract the user.
+    </div>
+
+
+
+
+</div>
+<div id="method_makeTimeEvent" class="method item inherited">
+    <h3 class="name"><code>makeTimeEvent</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>eventName</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[extra]</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+            <p>Inherited from
+            <a href="../classes/Video-record.html#method_makeTimeEvent">
+                Video-record
+            </a>
+            but overwritten in
+        <a href="../files/app_components_exp-frame-base_component.js.html#l498"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:498</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Create the time event payload for a particular frame / event. This can be overridden to add fields to every
+event sent by a particular frame</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">eventName</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name optional">[extra]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>An object with additional properties to be sent to the server</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                    <p>Event type, time, and any additional metadata provided</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_pauseRecorder" class="method item inherited">
+    <h3 class="name"><code>pauseRecorder</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code class="optional">[skipIfMissing=false]</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#method_pauseRecorder">Video-record</a>:
+        <a href="../files/app_mixins_video-record.js.html#l246"><code>app&#x2F;mixins&#x2F;video-record.js:246</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        Pause the recorder (and capture timing events). For webRTC recorder, this is
+just a placeholder and doesn't actually pause the recording. If webRTC used,
+includes extra data actuallyPaused: false. This is for backwards compatibility
+with frames that pause/resume recording, and should not be used going forward -
+instead stop/start and make separate clips if needed.
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name optional">[skipIfMissing=false]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        If provided (and true), don't raise an error if recording isn't ready yet. Not actually used for WebRTC.
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_resumeRecorder" class="method item inherited">
+    <h3 class="name"><code>resumeRecorder</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#method_resumeRecorder">Video-record</a>:
+        <a href="../files/app_mixins_video-record.js.html#l266"><code>app&#x2F;mixins&#x2F;video-record.js:266</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        Resume a paused recording. For webRTC recorder, this is just a placeholder and
+doesn't actually pause the recording. If webRTC used, includes extra data
+wasActuallyPaused: false. This is for backwards compatibility
+with frames that pause/resume recording, and should not be used going forward -
+instead stop/start and make separate clips if needed.
+    </div>
+
+
+
+
+</div>
+<div id="method_serializeContent" class="method item inherited">
+    <h3 class="name"><code>serializeContent</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>eventTimings</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Exp-frame-base.html#method_serializeContent">Exp-frame-base</a>:
+        <a href="../files/app_components_exp-frame-base_component.js.html#l480"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:480</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Each frame that extends ExpFrameBase will send at least an array <code>eventTimings</code>,
+a frame type, and any generateProperties back to the server upon completion.
+Individual frames may define additional properties that are sent.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">eventTimings</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_setupRecorder" class="method item inherited">
+    <h3 class="name"><code>setupRecorder</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>element</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+            <p>Inherited from
+            <a href="../classes/Session-record.html#method_setupRecorder">
+                Session-record
+            </a>
+            but overwritten in
+        <a href="../files/app_mixins_video-record.js.html#l208"><code>app&#x2F;mixins&#x2F;video-record.js:208</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        Set up a video recorder instance
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">element</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node" class="crosslink external" target="_blank">Node</a></span>
+
+
+                    <div class="param-description">
+                        A DOM node representing where to mount the recorder
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>:
+                    A promise representing the result of installing the recorder
+            </div>
+        </div>
+
+
+</div>
+<div id="method_showFullscreen" class="method item inherited">
+    <h3 class="name"><code>showFullscreen</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Full-screen.html#method_showFullscreen">Full-screen</a>:
+        <a href="../files/app_mixins_full-screen.js.html#l116"><code>app&#x2F;mixins&#x2F;full-screen.js:116</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        Make a specified element fullscreen
+    </div>
+
+
+
+
+</div>
+<div id="method_showRecorder" class="method item inherited">
+    <h3 class="name"><code>showRecorder</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#method_showRecorder">Video-record</a>:
+        <a href="../files/app_mixins_video-record.js.html#l397"><code>app&#x2F;mixins&#x2F;video-record.js:397</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        Show the recorder to the user. Useful if you want to temporarily show a hidden recorder- eg to let the user fix
+  a problem with video capture settings
+    </div>
+
+
+
+
+</div>
+<div id="method_startRecorder" class="method item inherited">
+    <h3 class="name"><code>startRecorder</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#method_startRecorder">Video-record</a>:
+        <a href="../files/app_mixins_video-record.js.html#l284"><code>app&#x2F;mixins&#x2F;video-record.js:284</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        Start recording
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                    Promise Resolves when recording has started
+            </div>
+        </div>
+
+
+</div>
+<div id="method_startSessionRecorder" class="method item inherited">
+    <h3 class="name"><code>startSessionRecorder</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+            <p>Inherited from
+            <a href="../classes/Session-record.html#method_startSessionRecorder">
+                Session-record
+            </a>
+            but overwritten in
+        <a href="../files/app_mixins_session-record.js.html#l174"><code>app&#x2F;mixins&#x2F;session-record.js:174</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        Start recording
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                    Promise Resolves when recording has started
+            </div>
+        </div>
+
+
+</div>
+<div id="method_stopRecorder" class="method item inherited">
+    <h3 class="name"><code>stopRecorder</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#method_stopRecorder">Video-record</a>:
+        <a href="../files/app_mixins_video-record.js.html#l307"><code>app&#x2F;mixins&#x2F;video-record.js:307</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        Stop the recording
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                    Promise A promise that resolves when upload is complete
+            </div>
+        </div>
+
+
+</div>
+<div id="method_whenPossibleToRecord" class="method item inherited">
+    <h3 class="name"><code>whenPossibleToRecord</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+            <p>Inherited from
+            <a href="../classes/Session-record.html#method_whenPossibleToRecord">
+                Session-record
+            </a>
+            but overwritten in
+        <a href="../files/app_mixins_video-record.js.html#l372"><code>app&#x2F;mixins&#x2F;video-record.js:372</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        Observer that starts recording once recorder is ready. Override to do additional
+stuff at this point!
+    </div>
+
+
+
+
+</div>
+            </div>
+
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+<div id="property_audioOnly" class="property item inherited">
+    <h3 class="name"><code>audioOnly</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#property_audioOnly">Video-record </a> (click for formatted description):
+        <a href="../files/app_mixins_video-record.js.html#l148"><code>app&#x2F;mixins&#x2F;video-record.js:148</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Whether to do audio-only (vs also video) recording. Can be overridden by consuming frame.
+    </div>
+
+        <p><strong>Default:</strong> 0</p>
+
+
+</div>
+<div id="property_autosave" class="property item private inherited">
+    <h3 class="name"><code>autosave</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#property_autosave">Video-record </a> (click for formatted description):
+        <a href="../files/app_mixins_video-record.js.html#l139"><code>app&#x2F;mixins&#x2F;video-record.js:139</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Whether to autosave recordings. Can be overridden by consuming frame.
+TODO: eventually use this to set up non-recording option for previewing
+    </div>
+
+        <p><strong>Default:</strong> 1</p>
+
+
+</div>
+<div id="property_displayFullscreen" class="property item private inherited">
+    <h3 class="name"><code>displayFullscreen</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Full-screen.html#property_displayFullscreen">Full-screen </a> (click for formatted description):
+        <a href="../files/app_mixins_full-screen.js.html#l27"><code>app&#x2F;mixins&#x2F;full-screen.js:27</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Whether to display this frame fullscreen
+    </div>
+
+        <p><strong>Default:</strong> false</p>
+
+
+</div>
+<div id="property_displayFullscreenOverride" class="property item inherited">
+    <h3 class="name"><code>displayFullscreenOverride</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Full-screen.html#property_displayFullscreenOverride">Full-screen </a> (click for formatted description):
+        <a href="../files/app_mixins_full-screen.js.html#l175"><code>app&#x2F;mixins&#x2F;full-screen.js:175</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Set to <code>true</code> to display this frame in fullscreen mode, even if the frame type
+is not always displayed fullscreen. (For instance, you might use this to keep
+a survey between test trials in fullscreen mode.)
+    </div>
+
+        <p><strong>Default:</strong> false</p>
+
+
+</div>
+<div id="property_doUseCamera" class="property item inherited">
+    <h3 class="name"><code>doUseCamera</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#property_doUseCamera">Video-record </a> (click for formatted description):
+        <a href="../files/app_mixins_video-record.js.html#l155"><code>app&#x2F;mixins&#x2F;video-record.js:155</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Whether to use the camera in this frame. Consuming frame should set this property
+to override if needed.
+    </div>
+
+        <p><strong>Default:</strong> true</p>
+
+
+</div>
+<div id="property_endSessionRecording" class="property item inherited">
+    <h3 class="name"><code>endSessionRecording</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Session-record.html#property_endSessionRecording">Session-record </a> (click for formatted description):
+        <a href="../files/app_mixins_session-record.js.html#l95"><code>app&#x2F;mixins&#x2F;session-record.js:95</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Whether to end any session (multi-frame) recording at the end of this frame.
+    </div>
+
+        <p><strong>Default:</strong> false</p>
+
+
+</div>
+<div id="property_fsButtonID" class="property item private inherited">
+    <h3 class="name"><code>fsButtonID</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Full-screen.html#property_fsButtonID">Full-screen </a> (click for formatted description):
+        <a href="../files/app_mixins_full-screen.js.html#l35"><code>app&#x2F;mixins&#x2F;full-screen.js:35</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        The element ID of a button to show if the user leaves fullscreen mode
+    </div>
+
+
+
+</div>
+<div id="property_fullScreenElementId" class="property item private inherited">
+    <h3 class="name"><code>fullScreenElementId</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Full-screen.html#property_fullScreenElementId">Full-screen </a> (click for formatted description):
+        <a href="../files/app_mixins_full-screen.js.html#l20"><code>app&#x2F;mixins&#x2F;full-screen.js:20</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        The element ID of the thing to make full screen (video element, div, etc)
+    </div>
+
+
+
+</div>
+<div id="property_generateProperties" class="property item inherited">
+    <h3 class="name"><code>generateProperties</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Exp-frame-base.html#property_generateProperties">Exp-frame-base </a> (click for formatted description):
+        <a href="../files/app_components_exp-frame-base_component.js.html#l85"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:85</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Function to generate additional properties for this frame (like {"kind": "exp-lookit-text"})
+at the time the frame is initialized. Allows behavior of study to depend on what has
+happened so far (e.g., answers on a form or to previous test trials).
+Must be a valid Javascript function, returning an object, provided as
+a string.</p>
+<p>Arguments that will be provided are: <code>expData</code>, <code>sequence</code>, <code>child</code>, <code>pastSessions</code>, <code>conditions</code>.</p>
+<p><code>expData</code>, <code>sequence</code>, and <code>conditions</code> are the same data as would be found in the session data shown
+on the Lookit experimenter interface under 'Individual Responses', except that
+they will only contain information up to this point in the study.</p>
+<p><code>expData</code> is an object consisting of <code>frameId</code>: <code>frameData</code> pairs; the data associated
+with a particular frame depends on the frame kind.</p>
+<p><code>sequence</code> is an ordered list of frameIds, corresponding to the keys in <code>expData</code>.</p>
+<p><code>conditions</code> is an object representing the data stored by any randomizer frames;
+keys are <code>frameId</code>s for randomizer frames and data stored depends on the randomizer
+used.</p>
+<p><code>child</code> is an object that has the following properties - use child.get(propertyName)
+to access:</p>
+<ul>
+<li><code>additionalInformation</code>: String; additional information field from child form</li>
+<li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
+"24" through "39", "na" (not sure or prefer not to answer),
+"&lt;24" (under 24 weeks), and "40&gt;" (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>gender</code>: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)</li>
+<li><code>givenName</code>: String, child's given name/nickname</li>
+<li><code>id</code>: String, child UUID</li>
+</ul>
+<p><code>pastSessions</code> is a list of previous response objects for this child and this study,
+ordered starting from most recent (at index 0 is this session!). Each has properties
+(access as pastSessions[i].get(propertyName)):</p>
+<ul>
+<li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
+<li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
+<li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
+<li><code>createdOn</code>: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
+<li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
+just used for attempts to leave the study early</li>
+<li><code>sequence</code>: ordered list of frameIds, corresponding to keys in expData</li>
+</ul>
+<p>Example:</p>
+<pre class="code prettyprint"><code>function(expData, sequence, child, pastSessions, conditions) {
+    return {
+       'blocks':
+            [
+                {
+                    'text': 'Name: ' + child.get('givenName')
+                },
+                {
+                    'text': 'Frame number: ' + sequence.length
+                },
+                {
+                    'text': 'N past sessions: ' + pastSessions.length
+                }
+            ]
+      };
+  }
+</code></pre>
+<p>(This example is split across lines for readability; when added to JSON it would need
+to be on one line.)</p>
+
+    </div>
+
+        <p><strong>Default:</strong> null</p>
+
+
+</div>
+<div id="property_maxRecordingLength" class="property item inherited">
+    <h3 class="name"><code>maxRecordingLength</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#property_maxRecordingLength">Video-record </a> (click for formatted description):
+        <a href="../files/app_mixins_video-record.js.html#l132"><code>app&#x2F;mixins&#x2F;video-record.js:132</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Maximum recording length in seconds. Can be overridden by consuming frame.
+    </div>
+
+        <p><strong>Default:</strong> 7200</p>
+
+
+</div>
+<div id="property_minimumYearsToAssent" class="property item">
+    <h3 class="name"><code>minimumYearsToAssent</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l452"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:452</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>How many years old the child has to be for this page to be shown. If child
+is younger, the page is skipped. Leave at 0 to always show. This is an
+age in 'calendar years' - it will line up with the child's birthday,
+regardless of leap years etc.</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_nextStimulusText" class="property item">
+    <h3 class="name"><code>nextStimulusText</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l402"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:402</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Text on the button to proceed to the next example video/image</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_pages" class="property item">
+    <h3 class="name"><code>pages</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l356"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:356</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>A list of pages of assent form text/pictures/video for the participant to read through</p>
+
+    </div>
+
+
+
+        <h4>Sub-properties:</h4>
+
+        <ul class="params-list">
+            <li class="param">
+                    <code class="param-name">altText</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                    <p>Alt-text used for the image displayed, if any</p>
+
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">video</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+                <div class="param-description">
+                    <p>(Optional) String indicating video path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects. Video will be displayed (with controls shown) and participant must complete to proceed.</p>
+
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">audio</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+                <div class="param-description">
+                    <p>(Optional) String indicating audio path relative to baseDir (see baseDir), OR Array of {src: 'url', type: 'MIMEtype'} objects. Audio will be played (with controls shown) and participant must complete to proceed.</p>
+
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">imgSrc</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+                <div class="param-description">
+                    <p>(Optional) URL of image to display; can be full path or relative to baseDir</p>
+
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">textBlocks</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+                <div class="param-description">
+                    <p>list of text blocks to show on this page, processed by exp-text-block. Can use HTML.</p>
+
+                </div>
+
+            </li>
+            <li class="param">
+                    <code class="param-name">showWebcam</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+                <div class="param-description">
+                    <p>Whether to display the participant webcam on this page</p>
+
+                </div>
+
+            </li>
+        </ul>
+</div>
+<div id="property_parameters" class="property item inherited">
+    <h3 class="name"><code>parameters</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Exp-frame-base.html#property_parameters">Exp-frame-base </a> (click for formatted description):
+        <a href="../files/app_components_exp-frame-base_component.js.html#l232"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:232</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>An object containing values for any parameters (variables) to use in this frame.
+Any property VALUES in this frame that match any of the property NAMES in <code>parameters</code>
+will be replaced by the corresponding parameter value. For example, suppose your frame
+is:</p>
+<pre class="code prettyprint"><code>{
+   'kind': 'FRAME_KIND',
+   'parameters': {
+       'FRAME_KIND': 'exp-lookit-text'
+   }
+}
+</code></pre>
+<p>Then the frame <code>kind</code> will be <code>exp-lookit-text</code>. This may be useful if you need
+to repeat values for different frame properties, especially if your frame is actually
+a randomizer or group. You may use parameters nested within objects (at any depth) or
+within lists.</p>
+<p>You can also use selectors to randomly sample from or permute
+a list defined in <code>parameters</code>. Suppose <code>STIMLIST</code> is defined in
+<code>parameters</code>, e.g. a list of potential stimuli. Rather than just using <code>STIMLIST</code>
+as a value in your frames, you can also:</p>
+<ul>
+<li>Select the Nth element (0-indexed) of the value of <code>STIMLIST</code>: (Will cause error if <code>N &gt;= THELIST.length</code>)</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#N'
+</code></pre>
+<ul>
+<li>Select (uniformly) a random element of the value of <code>STIMLIST</code>:</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#RAND'
+</code></pre>
+<ul>
+<li>Set <code>parameterName</code> to a random permutation of the value of <code>STIMLIST</code>:</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#PERM'
+</code></pre>
+<ul>
+<li>Select the next element in a random permutation of the value of <code>STIMLIST</code>, which is used across all
+substitutions in this randomizer. This allows you, for instance, to provide a list
+of possible images in your <code>parameterSet</code>, and use a different one each frame with the
+subset/order randomized per participant. If more <code>STIMLIST#UNIQ</code> parameters than
+elements of <code>STIMLIST</code> are used, we loop back around to the start of the permutation
+generated for this randomizer.</li>
+</ul>
+<pre class="code prettyprint"><code>   'parameterName': 'STIMLIST#UNIQ'
+</code></pre>
+
+    </div>
+
+        <p><strong>Default:</strong> {}</p>
+
+
+</div>
+<div id="property_participationQuestion" class="property item">
+    <h3 class="name"><code>participationQuestion</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l442"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:442</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Text of the question to ask about whether to participate. Answer options are Yes/No; No means study will stop, Yes means it will proceed.</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_previousStimulusText" class="property item">
+    <h3 class="name"><code>previousStimulusText</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l432"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:432</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Text on the button to proceed to the previous example video/image</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_recorder" class="property item private inherited">
+    <h3 class="name"><code>recorder</code></h3>
+    <span class="type">VideoRecorder</span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#property_recorder">Video-record </a> (click for formatted description):
+        <a href="../files/app_mixins_video-record.js.html#l91"><code>app&#x2F;mixins&#x2F;video-record.js:91</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        The recorder object, accessible to the consuming frame. Includes properties
+recorder.nWebcams, recorder.hasCamAccess, recorder.micChecked, recorder.connected.
+    </div>
+
+
+
+</div>
+<div id="property_recorderElement" class="property item private inherited">
+    <h3 class="name"><code>recorderElement</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#property_recorderElement">Video-record </a> (click for formatted description):
+        <a href="../files/app_mixins_video-record.js.html#l116"><code>app&#x2F;mixins&#x2F;video-record.js:116</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        JQuery string to identify the recorder element.
+    </div>
+
+        <p><strong>Default:</strong> &#x27;#recorder&#x27;</p>
+
+
+</div>
+<div id="property_recorderReady" class="property item private inherited">
+    <h3 class="name"><code>recorderReady</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#property_recorderReady">Video-record </a> (click for formatted description):
+        <a href="../files/app_mixins_video-record.js.html#l124"><code>app&#x2F;mixins&#x2F;video-record.js:124</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Whether recorder has been set up yet. Automatically set when doing setup.
+Accessible to consuming frame.
+    </div>
+
+
+
+</div>
+<div id="property_recordLastPage" class="property item">
+    <h3 class="name"><code>recordLastPage</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l412"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:412</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Whether to record webcam video on the last page</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_recordWholeProcedure" class="property item">
+    <h3 class="name"><code>recordWholeProcedure</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l422"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:422</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Whether to record webcam video during the entire assent frame (if true, overrides recordLastPage)</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_selectNextFrame" class="property item inherited">
+    <h3 class="name"><code>selectNextFrame</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Exp-frame-base.html#property_selectNextFrame">Exp-frame-base </a> (click for formatted description):
+        <a href="../files/app_components_exp-frame-base_component.js.html#l169"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:169</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Function to select which frame index to go to when using the 'next' action on this
+frame. Allows flexible looping / short-circuiting based on what has happened so far
+in the study (e.g., once the child answers N questions correctly, move on to next
+segment). Must be a valid Javascript function, returning a number from 0 through
+frames.length - 1, provided as a string.</p>
+<p>Arguments that will be provided are:
+<code>frames</code>, <code>frameIndex</code>, <code>expData</code>, <code>sequence</code>, <code>child</code>, <code>pastSessions</code></p>
+<p><code>frames</code> is an ordered list of frame configurations for this study; each element
+is an object corresponding directly to a frame you defined in the
+JSON document for this study (but with any randomizer frames resolved into the
+particular frames that will be used this time).</p>
+<p><code>frameIndex</code> is the index in <code>frames</code> of the current frame</p>
+<p><code>expData</code> is an object consisting of <code>frameId</code>: <code>frameData</code> pairs; the data associated
+with a particular frame depends on the frame kind.</p>
+<p><code>sequence</code> is an ordered list of frameIds, corresponding to the keys in <code>expData</code>.</p>
+<p><code>child</code> is an object that has the following properties - use child.get(propertyName)
+to access:</p>
+<ul>
+<li><code>additionalInformation</code>: String; additional information field from child form</li>
+<li><code>ageAtBirth</code>: String; child's gestational age at birth in weeks. Possible values are
+"24" through "39", "na" (not sure or prefer not to answer),
+"&lt;24" (under 24 weeks), and "40&gt;" (40 or more weeks).</li>
+<li><code>birthday</code>: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>gender</code>: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)</li>
+<li><code>givenName</code>: String, child's given name/nickname</li>
+<li><code>id</code>: String, child UUID</li>
+</ul>
+<p><code>pastSessions</code> is a list of previous response objects for this child and this study,
+ordered starting from most recent (at index 0 is this session!). Each has properties
+(access as pastSessions[i].get(propertyName)):</p>
+<ul>
+<li><code>completed</code>: Boolean, whether they submitted an exit survey</li>
+<li><code>completedConsentFrame</code>: Boolean, whether they got through at least a consent frame</li>
+<li><code>conditions</code>: Object representing any conditions assigned by randomizer frames</li>
+<li><code>createdOn</code>: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"</li>
+<li><code>expData</code>: Object consisting of frameId: frameData pairs</li>
+<li><code>globalEventTimings</code>: list of any events stored outside of individual frames - currently
+just used for attempts to leave the study early</li>
+<li><code>sequence</code>: ordered list of frameIds, corresponding to keys in expData</li>
+</ul>
+<p>Example that just sends us to the last frame of the study no matter what:
+<code>&#x60;&quot;function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) {return frames.length - 1;}&quot;</code>``</p>
+
+    </div>
+
+        <p><strong>Default:</strong> null</p>
+
+
+</div>
+<div id="property_sessionAudioOnly" class="property item inherited">
+    <h3 class="name"><code>sessionAudioOnly</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Session-record.html#property_sessionAudioOnly">Session-record </a> (click for formatted description):
+        <a href="../files/app_mixins_session-record.js.html#l105"><code>app&#x2F;mixins&#x2F;session-record.js:105</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Whether to do audio-only (vs also video) recording for session (multiframe) recording. Only used if starting session recording this frame.
+    </div>
+
+        <p><strong>Default:</strong> 0</p>
+
+
+</div>
+<div id="property_startRecordingAutomatically" class="property item inherited">
+    <h3 class="name"><code>startRecordingAutomatically</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#property_startRecordingAutomatically">Video-record </a> (click for formatted description):
+        <a href="../files/app_mixins_video-record.js.html#l163"><code>app&#x2F;mixins&#x2F;video-record.js:163</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Whether to start recording ASAP (only applies if doUseCamera). Consuming frame
+should set to override if needed.
+    </div>
+
+        <p><strong>Default:</strong> false</p>
+
+
+</div>
+<div id="property_startSessionRecording" class="property item inherited">
+    <h3 class="name"><code>startSessionRecording</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Session-record.html#property_startSessionRecording">Session-record </a> (click for formatted description):
+        <a href="../files/app_mixins_session-record.js.html#l88"><code>app&#x2F;mixins&#x2F;session-record.js:88</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Whether to start a session (multi-frame) recording as soon as possible upon loading this frame. This allows you to conduct video recording across multiple frames, simply specifying which frame to start and end on. Individual frames may also provide frame-specific recording capabilities; it is best NOT to conduct both a multiframe 'session' recording and frame-specific recording simultaneously as multiple video streams will eat up bandwidth. If you decide to use session recording, turn off recording for any frames that would otherwise record. There can be multiple session recordings in an experiment, e.g. from frames 1-3 and 5-10.
+    </div>
+
+        <p><strong>Default:</strong> false</p>
+
+
+</div>
+<div id="property_stoppedRecording" class="property item private inherited">
+    <h3 class="name"><code>stoppedRecording</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#property_stoppedRecording">Video-record </a> (click for formatted description):
+        <a href="../files/app_mixins_video-record.js.html#l107"><code>app&#x2F;mixins&#x2F;video-record.js:107</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        Whether recording is stopped already, meaning it doesn't need to be re-stopped when
+destroying frame. This should be set to true by the consuming frame when video is
+stopped.
+    </div>
+
+
+
+</div>
+<div id="property_videoId" class="property item private inherited">
+    <h3 class="name"><code>videoId</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#property_videoId">Video-record </a> (click for formatted description):
+        <a href="../files/app_mixins_video-record.js.html#l171"><code>app&#x2F;mixins&#x2F;video-record.js:171</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        A video ID to use for the current recording. Format is
+<code>videoStream_&lt;experimentId&gt;_&lt;frameId&gt;_&lt;sessionId&gt;_timestampMS_RRR</code>
+where RRR are random numeric digits.
+    </div>
+
+
+
+</div>
+<div id="property_videoList" class="property item private inherited">
+    <h3 class="name"><code>videoList</code></h3>
+    <span class="type">List</span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>Inherited from
+                <a href="../classes/Video-record.html#property_videoList">Video-record </a> (click for formatted description):
+        <a href="../files/app_mixins_video-record.js.html#l99"><code>app&#x2F;mixins&#x2F;video-record.js:99</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        A list of all video IDs used in this mixin (a new one is created for each recording).
+Accessible to consuming frame.
+    </div>
+
+
+
+</div>
+            </div>
+
+            <div id="attrs" class="api-class-tabpanel">
+                <h2 class="off-left">Data keys collected</h2>
+                These are the fields that will be captured by this frame and sent back to the Lookit server.
+                Each of these fields will correspond to one row of the CSV frame data for a given response - the
+                row will have <code>key</code> set to the data key name, and <code>value</code> set to the value for this response.
+                Equivalently, this data will be available in the <code>exp_data</code> field of the response JSON data.
+                    <div id="attr_assentFormText" class="attr item">
+                        <a name="config_assentFormText"></a> 
+                        <h3 class="name"><code>assentFormText</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l480"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:480</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>the exact text shown in the assent document during this frame</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_childResponse" class="attr item">
+                        <a name="config_childResponse"></a> 
+                        <h3 class="name"><code>childResponse</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l487"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:487</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>The child's response to the assent question - Yes or No</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_eventTimings" class="attr item inherited">
+                        <a name="config_eventTimings"></a> 
+                        <h3 class="name"><code>eventTimings</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/Exp-frame-base.html#attr_eventTimings">Exp-frame-base</a>:
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l472"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:472</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Ordered list of events captured during this frame (oldest to newest). Each event is
+                    represented as an object with at least the properties
+                    <code>{'eventType': EVENTNAME, 'timestamp': TIMESTAMP}</code>.
+                    See Events tab for details of events that might be captured.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_frameType" class="attr item inherited">
+                        <a name="config_frameType"></a> 
+                        <h3 class="name"><code>frameType</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/Exp-frame-base.html#attr_frameType">Exp-frame-base</a>:
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l466"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:466</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Type of frame: EXIT (exit survey), CONSENT (consent or assent frame), or DEFAULT
+                    (anything else)</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="attr_generatedProperties" class="attr item inherited">
+                        <a name="config_generatedProperties"></a> 
+                        <h3 class="name"><code>generatedProperties</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/Exp-frame-base.html#attr_generatedProperties">Exp-frame-base</a>:
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l460"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:460</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Any properties generated via a custom generateProperties function provided to this
+                    frame (e.g., a score you computed to decide on feedback). In general will be null.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+            </div>
+
+            <div id="events" class="api-class-tabpanel">
+                <h2 class="off-left">Events</h2>
+
+                    <div id="event_assentQuestionSubmit" class="events item">
+                        <h3 class="name"><code>assentQuestionSubmit</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l258"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:258</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Participant submitted assent question answer</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Event Payload:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">childResponse</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>child response submitted ('Yes' or 'No')</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="event_downloadConsentForm" class="events item">
+                        <h3 class="name"><code>downloadConsentForm</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l346"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:346</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>When participant downloads consent form</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_enteredFullscreen" class="events item inherited">
+                        <h3 class="name"><code>enteredFullscreen</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/Full-screen.html#event_enteredFullscreen">Full-screen</a>:
+                            <a href="../files/app_mixins_full-screen.js.html#l88"><code>app&#x2F;mixins&#x2F;full-screen.js:88</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Upon detecting change to fullscreen mode
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_hasCamAccess" class="events item inherited">
+                        <h3 class="name"><code>hasCamAccess</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/Session-record.html#event_hasCamAccess">
+                                    Session-record
+                                </a>
+                                but overwritten in
+                            <a href="../files/app_mixins_video-record.js.html#l56"><code>app&#x2F;mixins&#x2F;video-record.js:56</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            When recorder detects a change in camera access
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Event Payload:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">hasCamAccess</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="event_leftFullscreen" class="events item inherited">
+                        <h3 class="name"><code>leftFullscreen</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/Full-screen.html#event_leftFullscreen">Full-screen</a>:
+                            <a href="../files/app_mixins_full-screen.js.html#l100"><code>app&#x2F;mixins&#x2F;full-screen.js:100</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Upon detecting change out of fullscreen mode
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_nextAssentPage" class="events item">
+                        <h3 class="name"><code>nextAssentPage</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l224"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:224</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Participant proceeded to next assent page</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Event Payload:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">pageNumber</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>which assent page was viewed (zero-indexed)</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="event_nextFrame" class="events item inherited">
+                        <h3 class="name"><code>nextFrame</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/Exp-frame-base.html#event_nextFrame">Exp-frame-base</a>:
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l543"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:543</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Move to next frame</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_pauseVideo" class="events item inherited">
+                        <h3 class="name"><code>pauseVideo</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/Video-record.html#event_pauseVideo">Video-record</a>:
+                            <a href="../files/app_mixins_video-record.js.html#l71"><code>app&#x2F;mixins&#x2F;video-record.js:71</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            When pausing study, immediately before request to pause webcam recording
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_previousAssentPage" class="events item">
+                        <h3 class="name"><code>previousAssentPage</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l237"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:237</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Participant returned to previous assent page</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Event Payload:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">pageNumber</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>which assent page was viewed (zero-indexed)</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="event_previousFrame" class="events item inherited">
+                        <h3 class="name"><code>previousFrame</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/Exp-frame-base.html#event_previousFrame">Exp-frame-base</a>:
+                            <a href="../files/app_components_exp-frame-base_component.js.html#l598"><code>app&#x2F;components&#x2F;exp-frame-base&#x2F;component.js:598</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Move to previous frame</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_recorderReady" class="events item inherited">
+                        <h3 class="name"><code>recorderReady</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/Video-record.html#event_recorderReady">Video-record</a>:
+                            <a href="../files/app_mixins_video-record.js.html#l359"><code>app&#x2F;mixins&#x2F;video-record.js:359</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            When video recorder has been installed
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_sessionRecorderReady" class="events item inherited">
+                        <h3 class="name"><code>sessionRecorderReady</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/Session-record.html#event_sessionRecorderReady">Session-record</a>:
+                            <a href="../files/app_mixins_session-record.js.html#l227"><code>app&#x2F;mixins&#x2F;session-record.js:227</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            When session video recorder has been installed
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_skipAssentDueToParticipantAge" class="events item">
+                        <h3 class="name"><code>skipAssentDueToParticipantAge</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/app_components_exp-lookit-video-assent_component.js.html#l533"><code>app&#x2F;components&#x2F;exp-lookit-video-assent&#x2F;component.js:533</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Skip the assent form because the participant is too young to give assent</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_stoppingCapture" class="events item inherited">
+                        <h3 class="name"><code>stoppingCapture</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/Session-record.html#event_stoppingCapture">
+                                    Session-record
+                                </a>
+                                but overwritten in
+                            <a href="../files/app_mixins_video-record.js.html#l83"><code>app&#x2F;mixins&#x2F;video-record.js:83</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Just before stopping webcam video capture
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_unpauseVideo" class="events item inherited">
+                        <h3 class="name"><code>unpauseVideo</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/Video-record.html#event_unpauseVideo">Video-record</a>:
+                            <a href="../files/app_mixins_video-record.js.html#l77"><code>app&#x2F;mixins&#x2F;video-record.js:77</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            When unpausing study, immediately before request to resume webcam recording
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_videoStreamConnection" class="events item inherited">
+                        <h3 class="name"><code>videoStreamConnection</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/Session-record.html#event_videoStreamConnection">
+                                    Session-record
+                                </a>
+                                but overwritten in
+                            <a href="../files/app_mixins_video-record.js.html#l63"><code>app&#x2F;mixins&#x2F;video-record.js:63</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            When recorder detects a change in video stream connection status
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Event Payload:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">status</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>status of video stream connection, e.g.
+                    'NetConnection.Connect.Success' if successful</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+            </div>
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

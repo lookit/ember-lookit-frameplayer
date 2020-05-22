@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>app/randomizers/random-parameter-set.js - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+
+                    <p>Version: latest <br>(v1.2.0)</p>
+                    <select name="select_version" onchange="location = this.value;">
+                        <option value="">--Select different version--</option>
+                            <option value="releases/v1.2.0/">v1.2.0</option>
+                    </select>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
+                            <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
+                            <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
+                            <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
+                            <li><a href="../classes/Exp-lookit-images-audio.html">Exp-lookit-images-audio</a></li>
+                            <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
+                            <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
+                            <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
+                            <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
+                            <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
+                            <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
+                            <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-text.html">Exp-lookit-text</a></li>
+                            <li><a href="../classes/Exp-lookit-video.html">Exp-lookit-video</a></li>
+                            <li><a href="../classes/Exp-lookit-video-assent.html">Exp-lookit-video-assent</a></li>
+                            <li><a href="../classes/Exp-lookit-video-consent.html">Exp-lookit-video-consent</a></li>
+                            <li><a href="../classes/Exp-lookit-webcam-display.html">Exp-lookit-webcam-display</a></li>
+                            <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
+                            <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
+                            <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
+                            <li><a href="../classes/Full-screen.html">Full-screen</a></li>
+                            <li><a href="../classes/Media-reload.html">Media-reload</a></li>
+                            <li><a href="../classes/Permute.html">Permute</a></li>
+                            <li><a href="../classes/Random-parameter-set.html">Random-parameter-set</a></li>
+                            <li><a href="../classes/Select.html">Select</a></li>
+                            <li><a href="../classes/Session-record.html">Session-record</a></li>
+                            <li><a href="../classes/Video-record.html">Video-record</a></li>
+                            <li><a href="../classes/video-recorder.html">video-recorder</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: app/randomizers/random-parameter-set.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+* @module exp-player
+* @submodule randomizers
+*/
+
+import Ember from &#x27;ember&#x27;;
+import Substituter from &#x27;../utils/replace-values&#x27;;
+
+/**
+* Randomizer to implement flexible condition assignment and counterbalancing by
+* allowing the user to specify an arbitrary sequence of frames to create. A
+* set of parameters is randomly selected from a list of available parameterSets,
+* and these parameters are substituted in to the parameters specified in the
+* list of frames.
+*
+* For a more detailed walkthrough, please see
+* https://lookit.readthedocs.io/en/develop/experiments.html#randomizer-frames
+*
+* To use, define a frame with &#x27;kind&#x27;: &#x27;choice&#x27; and &#x27;sampler&#x27;: &#x27;random-parameter-set&#x27;,
+* as shown below, in addition to the parameters described under &#x27;properties&#x27;.
+*
+* This
+*
+&#x60;&#x60;&#x60;json
+&#x27;frames&#x27;: {
+    &#x27;test-trials&#x27;: {
+        &#x27;sampler&#x27;: &#x27;random-parameter-set&#x27;,
+        &#x27;kind&#x27;: &#x27;choice&#x27;,
+        &#x27;commonFrameProperties&#x27;: {
+            &#x27;kind&#x27;: &#x27;exp-lookit-story-page&#x27;,
+            &#x27;baseDir&#x27;: &#x27;https://s3.amazonaws.com/lookitcontents/ingroupobligations/&#x27;,
+            &#x27;audioTypes&#x27;: [&#x27;mp3&#x27;, &#x27;ogg&#x27;],
+            &#x27;doRecording&#x27;: true,
+            &#x27;autoProceed&#x27;: false,
+            &#x27;parentTextBlock&#x27;: {
+                &#x27;title&#x27;: &#x27;Parents!&#x27;,
+                &#x27;text&#x27;: &#x27;Common instructions across test trials here&#x27;,
+                &#x27;emph&#x27;: true
+            }
+        },
+        &#x27;frameList&#x27;: [
+            {
+                &#x27;images&#x27;: [
+                    {
+                        &#x27;id&#x27;: &#x27;agent&#x27;,
+                        &#x27;src&#x27;: &#x27;AGENTIMG1&#x27;,
+                        &#x27;left&#x27;: &#x27;40&#x27;,
+                        &#x27;width&#x27;: &#x27;20&#x27;,
+                        &#x27;top&#x27;: &#x27;10&#x27;
+                    },
+                    {
+                        &#x27;id&#x27;: &#x27;left&#x27;,
+                        &#x27;src&#x27;: &#x27;LEFTIMG1&#x27;,
+                        &#x27;left&#x27;: &#x27;10&#x27;,
+                        &#x27;width&#x27;: &#x27;20&#x27;,
+                        &#x27;top&#x27;: &#x27;50&#x27;
+                    },
+                    {
+                        &#x27;id&#x27;: &#x27;right&#x27;,
+                        &#x27;src&#x27;: &#x27;RIGHTIMG1&#x27;,
+                        &#x27;left&#x27;: &#x27;70&#x27;,
+                        &#x27;width&#x27;: &#x27;20&#x27;,
+                        &#x27;top&#x27;: &#x27;50&#x27;
+                    }
+                ],
+                &#x27;audioSources&#x27;: [
+                    {
+                        &#x27;audioId&#x27;: &#x27;questionaudio&#x27;,
+                        &#x27;sources&#x27;: [{&#x27;stub&#x27;: &#x27;QUESTION1AUDIO&#x27;}],
+                        &#x27;highlights&#x27;: &#x27;QUESTION1HIGHLIGHTS&#x27;
+                    }
+                ]
+            },
+            {
+                &#x27;images&#x27;: [
+                    {
+                        &#x27;id&#x27;: &#x27;agent&#x27;,
+                        &#x27;src&#x27;: &#x27;AGENTIMG2&#x27;,
+                        &#x27;left&#x27;: &#x27;40&#x27;,
+                        &#x27;width&#x27;: &#x27;20&#x27;,
+                        &#x27;top&#x27;: &#x27;10&#x27;
+                    },
+                    {
+                        &#x27;id&#x27;: &#x27;left&#x27;,
+                        &#x27;src&#x27;: &#x27;LEFTIMG2&#x27;,
+                        &#x27;left&#x27;: &#x27;10&#x27;,
+                        &#x27;width&#x27;: &#x27;20&#x27;,
+                        &#x27;top&#x27;: &#x27;50&#x27;
+                    },
+                    {
+                        &#x27;id&#x27;: &#x27;right&#x27;,
+                        &#x27;src&#x27;: &#x27;RIGHTIMG2&#x27;,
+                        &#x27;left&#x27;: &#x27;70&#x27;,
+                        &#x27;width&#x27;: &#x27;20&#x27;,
+                        &#x27;top&#x27;: &#x27;50&#x27;
+                    }
+                ],
+                &#x27;audioSources&#x27;: [
+                    {
+                        &#x27;audioId&#x27;: &#x27;questionaudio&#x27;,
+                        &#x27;sources&#x27;: [{&#x27;stub&#x27;: &#x27;QUESTION2AUDIO&#x27;}],
+                        &#x27;highlights&#x27;: &#x27;QUESTION2HIGHLIGHTS&#x27;
+                    }
+                ]
+            }
+        ],
+        &#x27;parameterSets&#x27;: [
+            {
+                &#x27;AGENTIMG1&#x27;: &#x27;flurpagent1.jpg&#x27;,
+                &#x27;LEFTIMG1&#x27;: &#x27;flurpvictim1.jpg&#x27;,
+                &#x27;RIGHTIMG1&#x27;: &#x27;zazzvictim1.jpg&#x27;,
+                &#x27;QUESTION1AUDIO&#x27;: &#x27;flurpleftmean1&#x27;,
+                &#x27;QUESTION1HIGHLIGHTS&#x27;: [
+                    {&#x27;range&#x27;: [0.399293,	3.617124], &#x27;image&#x27;: &#x27;agent&#x27;},
+                    {&#x27;range&#x27;: [5.085112,	6.811467], &#x27;image&#x27;: &#x27;left&#x27;},
+                    {&#x27;range&#x27;: [6.905418,	8.702236], &#x27;image&#x27;: &#x27;right&#x27;}
+                ],
+                &#x27;AGENTIMG2&#x27;: &#x27;flurpagent2.jpg&#x27;,
+                &#x27;LEFTIMG2&#x27;: &#x27;flurpvictim2.jpg&#x27;,
+                &#x27;RIGHTIMG2&#x27;: &#x27;zazzvictim2.jpg&#x27;,
+                &#x27;QUESTION2AUDIO&#x27;: &#x27;flurpleftinduct1&#x27;,
+                &#x27;QUESTION2HIGHLIGHTS&#x27;: [
+                    {&#x27;range&#x27;: [0.372569,	5.309110], &#x27;image&#x27;: &#x27;agent&#x27;},
+                    {&#x27;range&#x27;: [5.495395,	7.209213], &#x27;image&#x27;: &#x27;left&#x27;},
+                    {&#x27;range&#x27;: [5.495395,	7.209213], &#x27;image&#x27;: &#x27;right&#x27;},
+                    {&#x27;range&#x27;: [9.966225,	11.922212], &#x27;image&#x27;: &#x27;left&#x27;},
+                    {&#x27;range&#x27;: [12.052612,	14.008600], &#x27;image&#x27;: &#x27;right&#x27;}
+                ]
+            },
+            {
+                &#x27;AGENTIMG1&#x27;: &#x27;zazzagent1.jpg&#x27;,
+                &#x27;LEFTIMG1&#x27;: &#x27;flurpvictim1.jpg&#x27;,
+                &#x27;RIGHTIMG1&#x27;: &#x27;zazzvictim1.jpg&#x27;,
+                &#x27;QUESTION1AUDIO&#x27;: &#x27;zazzrightnice1&#x27;,
+                &#x27;QUESTION1HIGHLIGHTS&#x27;: [
+                    {&#x27;range&#x27;: [0.348454,	3.736871], &#x27;image&#x27;: &#x27;agent&#x27;},
+                    {&#x27;range&#x27;: [5.395033,	6.884975], &#x27;image&#x27;: &#x27;left&#x27;},
+                    {&#x27;range&#x27;: [6.969085,	8.975701], &#x27;image&#x27;: &#x27;right&#x27;}
+                ],
+                &#x27;AGENTIMG2&#x27;: &#x27;zazzagent2.jpg&#x27;,
+                &#x27;LEFTIMG2&#x27;: &#x27;flurpvictim2.jpg&#x27;,
+                &#x27;RIGHTIMG2&#x27;: &#x27;zazzvictim2.jpg&#x27;,
+                &#x27;QUESTION2AUDIO&#x27;: &#x27;zazzrightinduct1&#x27;,
+                &#x27;QUESTION2HIGHLIGHTS&#x27;: [
+                    {&#x27;range&#x27;: [0.572920,	5.138376], &#x27;image&#x27;: &#x27;agent&#x27;},
+                    {&#x27;range&#x27;: [5.335317,	7.089884], &#x27;image&#x27;: &#x27;left&#x27;},
+                    {&#x27;range&#x27;: [5.335317,	7.089884], &#x27;image&#x27;: &#x27;right&#x27;},
+                    {&#x27;range&#x27;: [9.721735,	11.565821], &#x27;image&#x27;: &#x27;left&#x27;},
+                    {&#x27;range&#x27;: [11.655340,	13.535233], &#x27;image&#x27;: &#x27;right&#x27;}
+                ]
+            }
+        ],
+        &#x27;parameterSetWeights&#x27;: [1, 1]
+    }
+}
+
+* &#x60;&#x60;&#x60;
+* @class Random-parameter-set
+*/
+
+function getRandomElement(arr, weights) {
+    weights = weights || Array(arr.length).fill(1);
+    var totalProb = weights.reduce((a, b) =&gt; a + b, 0);
+    var randPos = Math.random() * totalProb;
+
+    var weightSum = 0;
+    for (var i = 0; i &lt; arr.length; i++) {
+        weightSum += weights[i];
+        if (randPos &lt;= weightSum) {
+            return [i, arr[i]];
+        }
+    }
+}
+
+// TODO: in the future we may want to allow nesting of the list-object-selector syntax,
+// e.g. LISTVAR__3__4, LISTVAR1__LISTVAR2__3, LISTVAR1__1__LISTVAR2__3 - but this quickly
+// also requires appropriate processing of parentheses/order-of-operations.
+
+var randomizer = function(frameId, frameConfig, pastSessions, resolveFrame, child) {
+
+    // Data provided to randomizer (properties of frameConfig):
+
+    /**
+     * Object describing common parameters to use in EVERY frame created
+     * by this randomizer. Parameter names and values are as described in
+     * the documentation for the frameType used.
+     *
+     * @property {Object} commonFrameProperties
+     */
+
+    /**
+     * List of frames to be created by this randomizer. Each frame is an
+     * object with any necessary frame-specific properties specified. The
+     * &#x60;kind&#x60; of frame can be specified either here (per frame) or in
+     * &#x60;commonFrameProperties&#x60;. If a property is defined for a given frame both
+     * in this frame list and in &#x60;commonFrameProperties&#x60;, the value in the frame
+     * list will take precedence.
+     *
+     * (E.g., you could include &#x60;&#x27;kind&#x27;: &#x27;normal-frame&#x27;&#x60; in
+     * &#x60;commmonFrameProperties&#x60;, but for a single frame in &#x60;frameList&#x60;, include
+     * &#x60;&#x27;kind&#x27;: &#x27;special-frame&#x27;&#x60;.)
+     *
+     * Any property VALUES within any of the frames in this list which match
+     * a property NAME in the selected &#x60;parameterSet&#x60; will be replaced by the
+     * corresponding &#x60;parameterSet&#x60; value. E.g., suppose a frame in &#x60;frameList&#x60; is
+     *
+&#x60;&#x60;&#x60;
+{
+    &#x27;leftImage&#x27;: &#x27;LEFTIMAGE1&#x27;,
+    &#x27;rightImage&#x27;: &#x27;frog.jpg&#x27;,
+    &#x27;size&#x27;: &#x27;IMAGESIZE&#x27;
+}
+&#x60;&#x60;&#x60;
+     *
+     * and the row that has been selected randomly of &#x60;parameterSets&#x60; is
+     *
+&#x60;&#x60;&#x60;
+{
+    &#x27;LEFTIMAGE1&#x27;: &#x27;toad.jpg&#x27;,
+    &#x27;LEFTIMAGE2&#x27;: &#x27;dog.jpg&#x27;,
+    &#x27;IMAGESIZE&#x27;: 250
+}
+&#x60;&#x60;&#x60;
+     *
+     * Then the frame would be transformed into:
+&#x60;&#x60;&#x60;
+{
+    &#x27;leftImage&#x27;: &#x27;toad.jpg&#x27;,
+     &#x27;rightImage&#x27;: &#x27;frog.jpg&#x27;,
+     &#x27;size&#x27;: 250
+}
+&#x60;&#x60;&#x60;
+     *
+     * The same values may be applied across multiple frames. For instance,
+     * suppose &#x60;frameList&#x60; is
+
+&#x60;&#x60;&#x60;
+       [
+            {
+                &#x27;leftImage&#x27;: &#x27;LEFTIMAGE1&#x27;,
+                &#x27;rightImage&#x27;: &#x27;frog.jpg&#x27;,
+                &#x27;size&#x27;: &#x27;IMAGESIZE&#x27;
+            },
+            {
+                &#x27;leftImage&#x27;: &#x27;LEFTIMAGE2&#x27;,
+                &#x27;rightImage&#x27;: &#x27;frog.jpg&#x27;,
+                &#x27;size&#x27;: &#x27;IMAGESIZE&#x27;
+            }
+        ]
+&#x60;&#x60;&#x60;
+
+     * Then the corresponding processed frames would include the values
+&#x60;&#x60;&#x60;
+       [
+            {
+                &#x27;leftImage&#x27;: &#x27;toad.jpg&#x27;,
+                &#x27;rightImage&#x27;: &#x27;frog.jpg&#x27;,
+                &#x27;size&#x27;: 250
+            },
+            {
+                &#x27;leftImage&#x27;: &#x27;dog.jpg&#x27;,
+                &#x27;rightImage&#x27;: &#x27;frog.jpg&#x27;,
+                &#x27;size&#x27;: 250
+            }
+        ]
+&#x60;&#x60;&#x60;
+     * A property value like &#x60;IMAGESIZE&#x60; may be placed in a frame definition
+     * nested within another object (at any depth) or within a list and
+     * will still be replaced.
+     *
+     * You can also use selectors to randomly sample from or permute
+     * a list given in a &#x60;parameterSet&#x60;. Suppose &#x60;LISTVAR&#x60; is defined in
+     * a &#x60;parameterSet&#x60; as &#x60;THELIST&#x60;, e.g. a list of potential stimuli. Within frames in your &#x60;frameList&#x60;
+     * (and in &#x60;commonFrameProperties&#x60;), you can use any of the following:
+     *
+     * * Select the Nth element (0-indexed) of &#x60;THELIST&#x60;: (Will cause error if &#x60;N &gt;= THELIST.length&#x60;)
+&#x60;&#x60;&#x60;
+    &#x27;parameterName&#x27;: &#x27;LISTVAR#N&#x27;
+&#x60;&#x60;&#x60;
+     * * Select (uniformly) a random element of &#x60;THELIST&#x60;:
+&#x60;&#x60;&#x60;
+    &#x27;parameterName&#x27;: &#x27;LISTVAR#RAND&#x27;
+&#x60;&#x60;&#x60;
+    * * Set &#x60;parameterName&#x60; to a random permutation of &#x60;THELIST&#x60;:
+&#x60;&#x60;&#x60;
+    &#x27;parameterName&#x27;: &#x27;LISTVAR#PERM&#x27;
+&#x60;&#x60;&#x60;
+    * * Select the next element in a random permutation of &#x60;THELIST&#x60;, which is used across all
+    * substitutions in this randomizer. This allows you, for instance, to provide a list
+    * of possible images in your &#x60;parameterSet&#x60;, and use a different one each frame with the
+    * subset/order randomized per participant. If more &#x60;LISTVAR_UNIQ&#x60; parameters than
+    * elements of &#x60;THELIST&#x60; are used, we loop back around to the start of the permutation
+    * generated for this randomizer.
+&#x60;&#x60;&#x60;
+    &#x27;parameterName&#x27;: &#x27;LISTVAR#UNIQ&#x27;
+&#x60;&#x60;&#x60;
+     *
+     * @property {Object[]} frameList
+     */
+
+    /**
+     * Array of parameter sets to randomly select from in order to determine
+     * the parameters for each frame in this session.
+     *
+     * A single element of parameterSets will be applied to a given session.
+     *
+     * @property {Object[]} parameterSets
+     */
+
+    /**
+     * [Optional] How to select a parameterSet for a participant who has previously
+     * participated in this study. Must be one of &#x27;random&#x27; (default), &#x27;persist&#x27;, or
+     * &#x27;rotate&#x27;. Meanings:
+     *
+     * * &#x60;&quot;random&quot;&#x60;: regardless of any previous sessions from this participant, select a
+     *    parameterSet for this participant as usual (including using parameterSetWeights if
+     *    provided). Default behavior.
+     *
+     * * &#x60;&quot;persist&quot;&#x60;: Continue assigning the same participant to the same parameterSet for all
+     *    sessions.
+     *
+     * * &#x60;&quot;rotate&quot;&#x60;: The first time, assign parameterSet randomly (per parameterSetWeights if
+     *    given); after that, each time the participant participates assign them to the next
+     *    parameterSet in the list. Subtracts length of parameterSets until the &#x27;next&#x27; index
+     *    is in range.
+     *
+     * The most recent session in which the &#x60;conditions&#x60; data includes an element that looks
+     * like it was generated by this same randomizer (i.e., with key ending in &#x60;-frameId&#x60;,
+     * like &#x60;-test-trials&#x60;) will always be used for assignment. **Only sessions with a
+     * completed consent frame are considered, so that participants are not rotated through
+     * conditions simply due to refreshing the setup page.**
+     *
+     * Note: The &quot;same&quot; or &quot;next&quot; parameterSets are determined by the **index** of the
+     *    previously-selected parameterSet. That is, if you were assigned to conditionNum 0
+     *    (index 0 in parameterSets) last time, you will be assigned to conditionNum 0 again
+     *    this time if &#x60;conditionForAdditionalSessions&#x60; is &#x60;&quot;persist&quot;&#x60; and conditionNum 1 if
+     *    &#x60;conditionForAdditionalSessions&#x60; is &#x60;&quot;rotate&quot;&#x60;. So if you update the list of parameterSets
+     *    in your study - e.g. to fix a bug or clarify wording - the new values will be used
+     *    even for repeat participants. But be careful that you do not reorder them unless you
+     *    intend to, say, swap all participants to the opposite condition on a specified date!
+     *
+     *    If the previous index is now outside the range of the parameterSets list (e.g., you
+     *    used to have 6 conditions, and the participant was previously in conditionNum 5,
+     *    but then you changed parameterSets to have only 3 elements) and conditionForAdditionalSessions is
+     *    &#x60;&quot;persist&quot;&#x60;, then the participant is assigned to the last element of parameterSets.
+     *
+     * @property {String} conditionForAdditionalSessions
+     */
+
+    /**
+     * [Optional] Array of weights for parameter sets; elements correspond to
+     * elements of parameterSets. The probability of selecting an element
+     * &#x60;parameterSets[i]&#x60; is &#x60;parameterSetWeights[i]/sum(parameterSetWeights)&#x60;.
+     *
+     * If not provided, all &#x60;parameterSets&#x60; are weighted equally.
+     *
+     * This is intended to allow manual control of counterbalancing during
+     * data collection, e.g. to allow one condition to &#x27;catch up&#x27; if it was
+     * randomly selected less often.
+     *
+     * Instead of providing a single list of the same length as parameterSets,
+     * you may instead provide a list of objects specifying the weights to use within
+     * various age ranges, like this:
+     *
+&#x60;&#x60;&#x60;
+    &#x27;parameterSetWeights&#x27;: [
+        {
+            &#x27;minAge&#x27;: 0,
+            &#x27;maxAge&#x27;: 365,
+            &#x27;weights&#x27;: [1, 0, 1]
+        },
+        {
+            &#x27;minAge&#x27;: 365,
+            &#x27;maxAge&#x27;: 10000,
+            &#x27;weights&#x27;: [0, 1, 0]
+        },
+    ]
+&#x60;&#x60;&#x60;
+     * The child&#x27;s age in days will be computed, and the weights used will be based on the
+     * first element of &#x60;parameterSetWeights&#x60; where the child falls between the min and max
+     * age. In the example above, children under one year old will be assigned to either
+     * the first or third condition; children over a year will be assigned to the second condition.
+     * This may be useful for researchers who need to balance condition assignment per
+     * age bracket. As you code data and realize you are set on 3-year-olds in condition A, for
+     * instance, you can stop assigning any more 3-year-olds to that condition.
+     *
+     * @property {Number[]} parameterSetWeights
+     */
+
+    // Select a parameter set to use for this trial.
+    var parameterSet;
+    var parameterSetIndex;
+
+    // Assign based on previous sessions, if appropriate.
+    var selectedBasedOnPreviousSession = false;
+    if (frameConfig.hasOwnProperty(&#x27;conditionForAdditionalSessions&#x27;) &amp;&amp; frameConfig.conditionForAdditionalSessions != &#x27;random&#x27;) {
+        // if there are any previous sessions with the appropriate info
+        var mostRecentSession = pastSessions.find(sess =&gt; sess.get(&#x27;completedConsentFrame&#x27;) &amp;&amp; Object.keys(sess.get(&#x27;conditions&#x27;, {})).some(frId =&gt; frId.endsWith(&#x27;-&#x27; + frameId)));
+        if (mostRecentSession) {
+            let conditions = mostRecentSession.get(&#x27;conditions&#x27;);
+            let conditionKey = Object.keys(conditions).find(frId =&gt; frId.endsWith(&#x27;-&#x27; + frameId));
+            let prevCondition = conditions[conditionKey];
+            if (frameConfig.conditionForAdditionalSessions == &#x27;persist&#x27;) {
+                parameterSetIndex = prevCondition.conditionNum;
+                if (parameterSetIndex &gt;= frameConfig.parameterSets.length) {
+                    parameterSetIndex = frameConfig.parameterSets.length - 1;
+                }
+            } else if (frameConfig.conditionForAdditionalSessions == &#x27;rotate&#x27;) {
+                parameterSetIndex = prevCondition.conditionNum + 1;
+                while (parameterSetIndex &gt;= frameConfig.parameterSets.length) {
+                    parameterSetIndex = parameterSetIndex - frameConfig.parameterSets.length;
+                }
+            } else {
+                throw &#x60;Unrecognized conditionForAdditionalSessions option. Should be one of &#x27;persist&#x27;, &#x27;random&#x27;, or &#x27;rotate&#x27;.&#x60;;
+            }
+            parameterSet =  frameConfig.parameterSets[parameterSetIndex];
+            selectedBasedOnPreviousSession = true;
+        }
+    }
+
+    // Otherwise... (not assigning based on previous sessions)
+    if (!selectedBasedOnPreviousSession) {
+
+        var equalWeights = new Array(frameConfig.parameterSets.length).fill(1);
+        if (!(frameConfig.hasOwnProperty(&#x27;parameterSetWeights&#x27;))) {
+            frameConfig.parameterSetWeights = equalWeights;
+        } else {
+            if (typeof frameConfig.parameterSetWeights[0] === &#x27;object&#x27;) {
+                // Get child&#x27;s age in days
+                var childDOB;
+                try {
+                    childDOB = child.get(&#x27;birthday&#x27;);
+                    if (isNaN(childDOB)) {
+                        console.warn(&#x27;No child birthday available for randomization. Using today\&#x27;s date.&#x27;);
+                        childDOB = new Date().getTime();
+                    }
+                } catch (error) {
+                    console.warn(&#x27;No child birthday available for randomization. Using today\&#x27;s date.&#x27;);
+                    childDOB = new Date().getTime();
+                }
+                var childAgeDays = (new Date().getTime() - childDOB) / (1000 * 60 * 60 * 24);
+
+                // Find the age range this child fits in
+                var ageBasedWeightObj = frameConfig.parameterSetWeights.find(function(element) {
+                    return (element.minAge &lt;= childAgeDays &amp;&amp; childAgeDays &lt;= element.maxAge);
+                });
+                if (ageBasedWeightObj) {
+                    frameConfig.parameterSetWeights = ageBasedWeightObj.weights;
+                    console.log(&#x27;Using age-based randomization parameters&#x27;);
+                } else { // Set to equal weights if child doesn&#x27;t fall in any range given
+                    console.warn(&#x27;Child does not fall into any designated age range for randomization. Weighting parameter sets equally.&#x27;);
+                    frameConfig.parameterSetWeights = equalWeights;
+                }
+            }
+        }
+
+        var parameterData = getRandomElement(frameConfig.parameterSets, frameConfig.parameterSetWeights);
+        parameterSetIndex = parameterData[0];
+        parameterSet = parameterData[1];
+    }
+
+    var frames = [];
+    var thisFrame = {};
+
+    var substituter = new Substituter();
+
+    for (var iFrame = 0; iFrame &lt; frameConfig.frameList.length; iFrame++) {
+
+        // Assign parameters common to all frames made by this randomizer.
+        // Use deep copies to make sure that substitutions (replaceValues)
+        // don&#x27;t affect the original frameConfig values if they&#x27;re objects
+        // themselves!!
+        thisFrame = {};
+        Ember.$.extend(true, thisFrame, frameConfig.commonFrameProperties);
+
+        // Assign parameters specific to this frame (allow to override
+        // common parameters assigned above)
+        Ember.$.extend(true, thisFrame, frameConfig.frameList[iFrame]);
+
+        // Substitute any properties that can be replaced based on
+        // the parameter set.
+        thisFrame = substituter.replaceValues(thisFrame, parameterSet);
+
+        // Assign frame ID
+        //thisFrame.id = &#x60;${frameId}&#x60;;
+
+        thisFrame = resolveFrame(frameId, thisFrame)[0];
+        frames.push(...thisFrame); // spread syntax important here -- a list of frames is returned by resolveFrame.
+    }
+
+    /**
+     * Parameters captured and sent to the server
+     *
+     * @attribute conditions
+     * @param {Number} conditionNum the index of the parameterSet chosen
+     * @param {Object} parameterSet the parameterSet chosen
+     */
+
+    return [frames, {&#x27;conditionNum&#x27;: parameterSetIndex, &#x27;parameterSet&#x27;: parameterSet}];
+
+};
+
+export default randomizer;
+
+// Export helper functions to support unit testing
+export { getRandomElement, randomizer };
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

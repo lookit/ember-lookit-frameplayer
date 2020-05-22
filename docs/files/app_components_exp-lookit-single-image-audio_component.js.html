@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>app/components/exp-lookit-single-image-audio/component.js - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
+                            <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
+                            <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
+                            <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
+                            <li><a href="../classes/Exp-lookit-image-audio-base.html">Exp-lookit-image-audio-base</a></li>
+                            <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
+                            <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
+                            <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
+                            <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
+                            <li><a href="../classes/Exp-lookit-single-image.html">Exp-lookit-single-image</a></li>
+                            <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
+                            <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
+                            <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-text.html">Exp-lookit-text</a></li>
+                            <li><a href="../classes/Exp-lookit-video.html">Exp-lookit-video</a></li>
+                            <li><a href="../classes/Exp-lookit-video-assent.html">Exp-lookit-video-assent</a></li>
+                            <li><a href="../classes/Exp-lookit-video-consent.html">Exp-lookit-video-consent</a></li>
+                            <li><a href="../classes/Exp-lookit-webcam-display.html">Exp-lookit-webcam-display</a></li>
+                            <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
+                            <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
+                            <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
+                            <li><a href="../classes/Full-screen.html">Full-screen</a></li>
+                            <li><a href="../classes/Media-reload.html">Media-reload</a></li>
+                            <li><a href="../classes/Permute.html">Permute</a></li>
+                            <li><a href="../classes/Random-parameter-set.html">Random-parameter-set</a></li>
+                            <li><a href="../classes/Select.html">Select</a></li>
+                            <li><a href="../classes/Session-record.html">Session-record</a></li>
+                            <li><a href="../classes/Video-record.html">Video-record</a></li>
+                            <li><a href="../classes/video-recorder.html">video-recorder</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: app/components/exp-lookit-single-image-audio/component.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import Ember from &#x27;ember&#x27;;
+import { imageAssetOptions, audioAssetOptions } from &#x27;../../mixins/expand-assets&#x27;;
+//import { observer } from &#x27;@ember/object&#x27;;
+
+import ExpLookitImageAudioBase from &#x27;../exp-lookit-image-audio/component&#x27;;
+
+let {
+    $
+} = Ember;
+
+/**
+ * @module exp-player
+ * @submodule frames
+ */
+
+/**
+ * TODO
+ * Frame to implement a basic &quot;storybook page&quot; trial, with images placed on the
+ * screen within a display area and a sequence of audio files played.
+ * Optionally, images may be highlighted at specified times during the audio
+ * files.
+ *
+ * Webcam recording may be turned on or off; if on, the page is not displayed
+ * or audio started until recording begins.
+ *
+ * Frame is displayed fullscreen, but is not paused or otherwise disabled if the
+ * user leaves fullscreen. A button appears prompting the user to return to
+ * fullscreen mode.
+ *
+ * The parent may press &#x27;next&#x27; to proceed, or the study may proceed
+ * automatically when audio finishes (autoProceed). Optionally, if using autoProceed,
+ * the frame may be displayed for a minimum duration, so that e.g. it lasts exactly 10
+ * seconds from start of audio even though the audio is only 2 seconds long. If using this
+ * feature a progress bar may be displayed.
+ *
+ * Any number of images may be placed on the screen, and their position
+ * specified. (Aspect ratio will be the same as the original image.)
+ *
+ * This frame is displayed fullscreen; if the frame before it is not, that frame
+ * needs to include a manual &quot;next&quot; button so that there&#x27;s a user interaction
+ * event to trigger fullscreen mode. (Browsers don&#x27;t allow us to switch to FS
+ * without a user event.)
+
+&#x60;&#x60;&#x60;json
+ &quot;frames&quot;: {
+    &quot;story-intro-1&quot;: {
+            &quot;doRecording&quot;: false,
+            &quot;autoProceed&quot;: true,
+            &quot;baseDir&quot;: &quot;https://s3.amazonaws.com/lookitcontents/ingroupobligations/&quot;,
+            &quot;audioTypes&quot;: [&quot;mp3&quot;, &quot;ogg&quot;],
+            &quot;parentTextBlock&quot;: {
+                &quot;title&quot;: &quot;Parents!&quot;,
+                &quot;text&quot;: &quot;some instructions&quot;,
+                &quot;emph&quot;: true,
+                &quot;css&quot;: {
+                    &quot;color&quot;: &quot;red&quot;,
+                    &quot;font-size&quot;: &quot;12px&quot;
+                }
+            },
+            &quot;images&quot;: [
+                {
+                    &quot;id&quot;: &quot;leftA&quot;,
+                    &quot;src&quot;: &quot;flurps1.jpg&quot;,
+                    &quot;left&quot;: &quot;10&quot;,
+                    &quot;width&quot;: &quot;30&quot;,
+                    &quot;top&quot;: &quot;34.47&quot;
+                },
+                {
+                    &quot;id&quot;: &quot;rightA&quot;,
+                    &quot;src&quot;: &quot;zazzes1.jpg&quot;,
+                    &quot;left&quot;: &quot;60&quot;,
+                    &quot;width&quot;: &quot;30&quot;,
+                    &quot;top&quot;: &quot;34.47&quot;
+                }
+            ],
+            &quot;kind&quot;: &quot;exp-lookit-story-page&quot;,
+            &quot;audioSources&quot;: [
+                {
+                    &quot;audioId&quot;: &quot;firstAudio&quot;,
+                    &quot;sources&quot;: &quot;intro1&quot;,
+                    &quot;highlights&quot;: [
+                        {&quot;range&quot;: [3.017343,    5.600283], &quot;image&quot;:     &quot;leftA&quot;},
+                        {&quot;range&quot;: [5.752911,    8.899402], &quot;image&quot;:     &quot;rightA&quot;}
+                    ]
+                }
+            ]
+        }
+ }
+
+ * &#x60;&#x60;&#x60;
+ * @class Exp-lookit-single-image
+ * @extends Exp-lookit-image-audio
+ * @uses Full-screen
+ * @uses Video-record
+ * @uses Expand-assets
+ */
+
+export default ExpLookitImageAudioBase.extend({
+    type: &#x27;exp-lookit-single-image&#x27;,
+
+    autoProceed: false,
+    audioSources: [],
+
+    frameSchemaProperties: {
+
+        /**
+         * Whether to proceed automatically after audio (and hide
+         * replay/next buttons). If true: the next, previous, and replay buttons are
+         * hidden, and the frame auto-advances after (a) the audio segment (if any)
+         * completes AND (b) the durationSeconds is acheived. If false: the next, previous,
+         * and replay buttons (as applicable) are displayed. It becomes possible to
+         * press &#x27;next&#x27; only once the audio segment, if any, is finished. TODO implement
+         *
+         * @property {Boolean} autoProceed
+         */
+        autoProceed: {
+            type: &#x27;boolean&#x27;,
+            description: &#x27;Whether to proceed automatically after audio (and hide replay/next buttons)&#x27;
+        },
+
+        /**
+         * Whether to do webcam recording (will wait for webcam
+         * connection before starting audio if so)
+         *
+         * @property {Boolean} doRecording
+         */
+        doRecording: {
+            type: &#x27;boolean&#x27;,
+            description: &#x27;Whether to do webcam recording (will wait for webcam connection before starting audio if so)&#x27;
+        },
+
+        /**
+         * Duration of frame in seconds. If set and positive, there will be no next button
+         * displayed and the experiment will auto-proceed after the duration elapses.
+         * Default is -1: next button is displayed and parent chooses when to proceed.
+         *
+         * @property {Number} durationSeconds
+         * @default -1
+         */
+        durationSeconds: {
+            type: &#x27;number&#x27;,
+            description: &#x27;Minimum duration of frame in seconds if autoproceeding&#x27;,
+            default: -1
+        },
+
+        /**
+         * [Only used if durationSeconds set] Whether to
+         * show a progress bar based on durationSeconds in the parent text area.
+         *
+         * @property {Number} showProgressBar
+         */
+        showProgressBar: {
+            type: &#x27;boolean&#x27;,
+            description: &#x27;Whether to show a progress bar based on durationSeconds&#x27;,
+            default: false
+        },
+
+        /**
+         * [Only used if next button is also displayed] Whether to
+         * show a previous button to allow the participant to go to the previous frame
+         *
+         * @property {Number} showPreviousButton
+         */
+        showPreviousButton: {
+            type: &#x27;boolean&#x27;,
+            default: true,
+            description: &#x27;Whether to show a previous button (used only if showing Next button)&#x27;
+        },
+
+        /**
+         * Text to display to parent.  Each field is optional. If the &#x60;parentTextBlock&#x60;
+         * is an empty object &#x60;{}&#x60;, no parent text block is displayed at all at the bottom
+         * of the screen. Otherwise, even if the title and text are empty, the block will
+         * be displayed as usual without any text.
+         *
+         * @property {Object} parentTextBlock
+         *   @param {String} title title to display
+         *   @param {String} text paragraph of text
+         *   @param {Boolean} emph whether to bold this paragraph
+         *   @param {Object} css object specifying any css properties
+         *      to apply to this section, and their values - e.g.
+         *      {&#x27;color&#x27;: &#x27;red&#x27;, &#x27;font-size&#x27;: &#x27;12px&#x27;}
+         */
+        parentTextBlock: {
+            type: &#x27;object&#x27;,
+            properties: {
+                title: {
+                    type: &#x27;string&#x27;
+                },
+                text: {
+                    type: &#x27;string&#x27;
+                },
+                emph: {
+                    type: &#x27;boolean&#x27;
+                },
+                css: {
+                    type: &#x27;object&#x27;,
+                    default: {}
+                }
+            },
+            default: {}
+        },
+
+        /**
+         * Image to display and information about its placement
+         *
+         * @property {Object[]} images
+         *   @param {String} src URL of image source. This can be a full
+         *     URL, or relative to baseDir (see baseDir).
+         *   @param {String} left left margin, as percentage of story area width
+         *   @param {String} width image width, as percentage of story area width
+         *   @param {String} top top margin, as percentage of story area height
+         */
+        image: {
+                type: &#x27;object&#x27;,
+                properties: {
+                    &#x27;src&#x27;: {
+                        anyOf: imageAssetOptions
+                    },
+                    &#x27;left&#x27;: {
+                        type: &#x27;string&#x27;
+                    },
+                    &#x27;width&#x27;: {
+                        type: &#x27;string&#x27;
+                    },
+                    &#x27;top&#x27;: {
+                        type: &#x27;string&#x27;
+                    }
+                }
+            },
+
+        /**
+         * Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+         * for acceptable syntax: can use color names (&#x27;blue&#x27;, &#x27;red&#x27;, &#x27;green&#x27;, etc.), or
+         * rgb hex values (e.g. &#x27;#800080&#x27; - include the &#x27;#&#x27;)
+         *
+         * @property {String} backgroundColor
+         * @default &#x27;black&#x27;
+         */
+        backgroundColor: {
+            type: &#x27;string&#x27;,
+            description: &#x27;Color of background&#x27;,
+            default: &#x27;black&#x27;
+        },
+        /**
+         * Color of area where images are shown, if different from overall background.
+         * Defaults to backgroundColor if one is provided. See
+         * https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+         * for acceptable syntax: can use color names (&#x27;blue&#x27;, &#x27;red&#x27;, &#x27;green&#x27;, etc.), or
+         * rgb hex values (e.g. &#x27;#800080&#x27; - include the &#x27;#&#x27;)
+         *
+         * @property {String} pageColor
+         * @default &#x27;white&#x27;
+         */
+        pageColor: {
+            type: &#x27;string&#x27;,
+            description: &#x27;Color of image area&#x27;,
+            default: &#x27;white&#x27;
+        },
+        /**
+         * Array of objects describing audio to play at the start of
+         * this frame. Each element describes a separate audio segment.
+         *
+         * @property {Object[]} audioSources
+         *   @param {String} audioId unique string identifying this
+         *      audio segment
+         *   @param {Object[]} sources Array of {src: &#x27;url&#x27;, type:
+         *      &#x27;MIMEtype&#x27;} objects with audio sources for this segment
+         *
+         * Can also give a single string &#x60;filename&#x60;, which will
+         * be expanded out to the appropriate array based on &#x60;baseDir&#x60;
+         * and &#x60;audioTypes&#x60; values; see &#x60;audioTypes&#x60;.
+         */
+        audioSources: {
+            type: &#x27;array&#x27;,
+            description: &#x27;List of objects specifying audio src and type for audio played during test trial&#x27;,
+            default: [],
+            items: {
+                type: &#x27;object&#x27;,
+                properties: {
+                    &#x27;audioId&#x27;: {
+                        type: &#x27;string&#x27;
+                    },
+                    &#x27;sources&#x27;: {
+                        anyOf: audioAssetOptions
+                    }
+                }
+            }
+        }
+    },
+
+    actions: {
+
+        finish() {
+            var _this = this;
+            if (this.get(&#x27;doRecording&#x27;)) {
+                this.stopRecorder().then(() =&gt; {
+                    _this.set(&#x27;stoppedRecording&#x27;, true);
+                    _this.send(&#x27;next&#x27;);
+                }, () =&gt; {
+                    _this.send(&#x27;next&#x27;);
+                });
+            } else {
+                _this.send(&#x27;next&#x27;);
+            }
+        },
+
+        playNextAudioSegment() {
+            this.set(&#x27;currentAudioIndex&#x27;, this.get(&#x27;currentAudioIndex&#x27;) + 1);
+            if (this.currentAudioIndex == 0) { // Starting first audio segment: start timer &amp; progress bar
+                if (this.get(&#x27;durationSeconds&#x27;) &amp;&amp; this.get(&#x27;durationSeconds&#x27;) &gt; 0) {
+                    let _this = this;
+                    /**
+                    * Timer for set-duration trial begins
+                    *
+                    * @event startTimer
+                    */
+                    this.send(&#x27;setTimeEvent&#x27;, &#x27;startTimer&#x27;);
+                    this.set(&#x27;pageTimer&#x27;, window.setTimeout(function() {
+                            /**
+                            * Timer for set-duration trial ends
+                            *
+                            * @event endTimer
+                            */
+                            _this.send(&#x27;setTimeEvent&#x27;, &#x27;endTimer&#x27;);
+                            _this.set(&#x27;minDurationAchieved&#x27;, true);
+                            _this.send(&#x27;finish&#x27;);
+                        }, _this.get(&#x27;durationSeconds&#x27;) * 1000));
+                    if (this.get(&#x27;showProgressBar&#x27;)) {
+                        this.set(&#x27;timerStart&#x27;, new Date().getTime());
+                        let timerStart = _this.get(&#x27;timerStart&#x27;);
+                        let durationSeconds = _this.get(&#x27;durationSeconds&#x27;);
+                        this.set(&#x27;progressTimer&#x27;, window.setInterval(function() {
+                            let now = new Date().getTime();
+                            var prctDone =  (now - timerStart) / (durationSeconds * 10);
+                            $(&#x27;.progress-bar&#x27;).css(&#x27;width&#x27;, prctDone + &#x27;%&#x27;);
+                        }, 100));
+                    }
+                } else {
+                    this.set(&#x27;minDurationAchieved&#x27;, true);
+                }
+            }
+        }
+
+    },
+
+    didInsertElement() {
+        this._super(...arguments);
+        if (this.get(&#x27;durationSeconds&#x27;) &amp;&amp; this.get(&#x27;durationSeconds&#x27;) &gt; 0) {
+            $(&#x27;#nextbutton&#x27;).prop(&#x27;disabled&#x27;, true);
+        } else {
+            $(&#x27;#nextbutton&#x27;).prop(&#x27;disabled&#x27;, false);
+        }
+    },
+
+    didReceiveAttrs() {
+        this._super(...arguments);
+
+        let image = this.get(&#x27;image&#x27;);
+        if (!image.hasOwnProperty(&#x27;id&#x27;)) {
+            image.id = &#x27;image_1&#x27;;
+        }
+
+        this.set(&#x27;images&#x27;, [image]);
+        this.set(&#x27;autoProceed&#x27;, this.get(&#x27;durationSeconds&#x27;) &gt; 0);
+        this.expandAssets();
+    }
+
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

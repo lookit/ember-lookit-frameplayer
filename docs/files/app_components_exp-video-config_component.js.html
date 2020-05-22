@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>app/components/exp-video-config/component.js - ember-lookit-frameplayer</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="https://yui-s.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<div id="doc">
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-5">
+            <div id="docs-sidebar" class="sidebar apidocs">
+              <h2 style="display:inline;">
+              <div>
+                <img style="float:right; vertical-align:middle;" src="../assets/css/logo.png" height="70">
+                <span>Lookit<br> component<br> docs</span>
+
+                    <p>Version: latest <br>(v1.2.0)</p>
+                    <select name="select_version" onchange="location = this.value;">
+                        <option value="">--Select different version--</option>
+                            <option value="releases/v1.2.0/">v1.2.0</option>
+                    </select>
+              </div>
+
+              </h2>
+
+
+              <div id="api-list">
+                  <div id="api-tabview">
+              
+                    <div id="api-tabview-panel">
+                        <h2 class="off-left">Collections</h2>
+                        <ul id="api-modules" class="apis modules">
+                            <li class="module-sidebar-exp-player"><a href="../modules/exp-player.html">exp-player</a></li>
+                            <li class="module-sidebar-frames"><a href="../modules/frames.html">frames</a></li>
+                            <li class="module-sidebar-mixins"><a href="../modules/mixins.html">mixins</a></li>
+                            <li class="module-sidebar-randomizers"><a href="../modules/randomizers.html">randomizers</a></li>
+                        </ul>
+                        <h2 class="off-left">All elements</h2>
+                              <div id="api-tabview-filter">
+                      <input type="search" id="api-filter" placeholder="Type to filter">
+                    </div>
+                        <ul id="api-classes" class="apis classes">
+                            <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
+                            <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
+                            <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
+                            <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
+                            <li><a href="../classes/Exp-lookit-geometry-alternation-open.html">Exp-lookit-geometry-alternation-open</a></li>
+                            <li><a href="../classes/Exp-lookit-images-audio.html">Exp-lookit-images-audio</a></li>
+                            <li><a href="../classes/Exp-lookit-instructions.html">Exp-lookit-instructions</a></li>
+                            <li><a href="../classes/Exp-lookit-mood-questionnaire.html">Exp-lookit-mood-questionnaire</a></li>
+                            <li><a href="../classes/Exp-lookit-observation.html">Exp-lookit-observation</a></li>
+                            <li><a href="../classes/Exp-lookit-preferential-looking.html">Exp-lookit-preferential-looking</a></li>
+                            <li><a href="../classes/Exp-lookit-stimuli-preview.html">Exp-lookit-stimuli-preview</a></li>
+                            <li><a href="../classes/Exp-lookit-story-page.html">Exp-lookit-story-page</a></li>
+                            <li><a href="../classes/Exp-lookit-survey.html">Exp-lookit-survey</a></li>
+                            <li><a href="../classes/Exp-lookit-text.html">Exp-lookit-text</a></li>
+                            <li><a href="../classes/Exp-lookit-video.html">Exp-lookit-video</a></li>
+                            <li><a href="../classes/Exp-lookit-video-assent.html">Exp-lookit-video-assent</a></li>
+                            <li><a href="../classes/Exp-lookit-video-consent.html">Exp-lookit-video-consent</a></li>
+                            <li><a href="../classes/Exp-lookit-webcam-display.html">Exp-lookit-webcam-display</a></li>
+                            <li><a href="../classes/Exp-video-config.html">Exp-video-config</a></li>
+                            <li><a href="../classes/Exp-video-config-quality.html">Exp-video-config-quality</a></li>
+                            <li><a href="../classes/Expand-assets.html">Expand-assets</a></li>
+                            <li><a href="../classes/Full-screen.html">Full-screen</a></li>
+                            <li><a href="../classes/Media-reload.html">Media-reload</a></li>
+                            <li><a href="../classes/Permute.html">Permute</a></li>
+                            <li><a href="../classes/Random-parameter-set.html">Random-parameter-set</a></li>
+                            <li><a href="../classes/Select.html">Select</a></li>
+                            <li><a href="../classes/Session-record.html">Session-record</a></li>
+                            <li><a href="../classes/Video-record.html">Video-record</a></li>
+                            <li><a href="../classes/video-recorder.html">video-recorder</a></li>
+                        </ul>
+                    </div>
+              
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="yui3-u-4-5">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: app/components/exp-video-config/component.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import Em from &#x27;ember&#x27;;
+import layout from &#x27;./template&#x27;;
+
+import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
+import VideoRecord from &#x27;../../mixins/video-record&#x27;;
+import { LOOKIT_PREFERRED_DEVICES } from &#x27;../../services/video-recorder&#x27;;
+import { observer } from &#x27;@ember/object&#x27;;
+
+let {
+    $
+} = Em;
+
+/**
+ * @module exp-player
+ * @submodule frames
+ */
+
+/**
+Video configuration frame guiding user through making sure permissions are set
+appropriately and microphone is working, with troubleshooting text. Almost all content is
+hard-coded, to provide a general-purpose technical setup frame.
+
+&#x60;&#x60;&#x60;json
+&quot;frames&quot;: {
+    &quot;video-config&quot;: {
+        &quot;kind&quot;: &quot;exp-video-config&quot;,
+        &quot;troubleshootingIntro&quot;: &quot;If you&#x27;re having any trouble getting your webcam set up,
+          please feel free to call the XYZ lab at (123) 456-7890 and we&#x27;d be glad to
+          help you out!&quot;
+    }
+}
+&#x60;&#x60;&#x60;
+
+@class Exp-video-config
+@extends Exp-frame-base
+@extends Video-record
+*/
+
+export default ExpFrameBaseComponent.extend(VideoRecord, {
+    layout,
+    showWarning: false,
+    showWebcamPermWarning: false,
+    checkedWebcamPermissions: false,
+    micChecked: Em.computed.alias(&#x27;recorder.micChecked&#x27;),
+    hasCamAccess: Em.computed.alias(&#x27;recorder.hasCamAccess&#x27;),
+
+    populateDropdowns() {
+        const micSelect = $(&#x27;select#audioSource&#x27;)[0];
+        const camSelect = $(&#x27;select#videoSource&#x27;)[0];
+        const selectors = [micSelect, camSelect];
+
+        // Adapted from the example at https://github.com/webrtc/samples/blob/gh-pages/src/content/devices/input-output/js/main.js
+        navigator.mediaDevices.enumerateDevices().then(function(deviceInfos) {
+            selectors.forEach(select =&gt; {
+                while (select.firstChild) {
+                    select.removeChild(select.firstChild);
+                }
+                const blankOption = document.createElement(&#x27;option&#x27;);
+                blankOption.text = &#x27;select...&#x27;;
+                blankOption.value = 123;
+                select.appendChild(blankOption);
+            });
+            for (let i = 0; i !== deviceInfos.length; ++i) {
+                const deviceInfo = deviceInfos[i];
+                const option = document.createElement(&#x27;option&#x27;);
+                option.value = deviceInfo.deviceId;
+                if (deviceInfo.kind === &#x27;audioinput&#x27;) {
+                    option.text = deviceInfo.label || &#x60;Microphone ${micSelect.length + 1}&#x60;;
+                    if (option.value == LOOKIT_PREFERRED_DEVICES.mic) {
+                        option.selected = true;
+                    }
+                    micSelect.appendChild(option);
+                } else if (deviceInfo.kind === &#x27;videoinput&#x27;) {
+                    option.text = deviceInfo.label || &#x60;Camera ${camSelect.length + 1}&#x60;;
+                    if (option.value == LOOKIT_PREFERRED_DEVICES.cam) {
+                        option.selected = true;
+                    }
+                    camSelect.appendChild(option);
+                }
+            }
+        });
+    },
+
+    reloadRecorder() {
+        this.destroyRecorder();
+        this.setupRecorder(this.$(this.get(&#x27;recorderElement&#x27;)));
+    },
+
+    actions: {
+
+        checkAudioThenNext() {
+            if (!this.get(&#x27;checkedWebcamPermissions&#x27;) || !this.get(&#x27;micChecked&#x27;) || !this.get(&#x27;hasCamAccess&#x27;)) {
+                this.set(&#x27;showWarning&#x27;, true);
+            } else {
+                this.send(&#x27;next&#x27;);
+            }
+        },
+
+        reloadRecorderButton() {
+            this.set(&#x27;showWarning&#x27;, false);
+            this.populateDropdowns();
+            this.reloadRecorder();
+        },
+
+        reloadRecorderButtonAndRecordCheck() {
+            this.send(&#x27;reloadRecorderButton&#x27;);
+            this.set(&#x27;checkedWebcamPermissions&#x27;, true);
+        },
+
+        processSelectedMic() {
+            var selectedMicId = $(&#x27;select#audioSource&#x27;)[0].value;
+            if (selectedMicId) {
+                LOOKIT_PREFERRED_DEVICES.mic = selectedMicId;
+                this.reloadRecorder();
+            }
+        },
+
+        processSelectedCam() {
+            var selectedCamId = $(&#x27;select#videoSource&#x27;)[0].value;
+            if (selectedCamId) {
+                LOOKIT_PREFERRED_DEVICES.cam = selectedCamId;
+                this.reloadRecorder();
+            }
+        }
+    },
+    frameSchemaProperties: {
+        /**
+        Text to show as the introduction to the troubleshooting tips section
+        @property {String} troubleshootingIntro
+        @default &quot;&quot;
+        */
+        troubleshootingIntro: {
+            type: &#x27;string&#x27;,
+            description: &#x27;Text to show as introduction to troubleshooting tips section&#x27;,
+            default: &#x27;&#x27;
+        }
+    },
+
+    type: &#x27;exp-videoconfig&#x27;,
+    meta: {
+        name: &#x27;Video Recorder Configuration&#x27;,
+        description: &#x27;Frame guiding the user through setting up webcam, with no recording.&#x27;,
+        data: {
+            type: &#x27;object&#x27;,
+            properties: {}
+        }
+    },
+
+    updateOptions: observer(&#x27;hasCamAccess&#x27;, function() {
+        if (this.get(&#x27;hasCamAccess&#x27;)) {
+            this.populateDropdowns();
+        }
+    }),
+
+    didInsertElement() {
+        this._super(...arguments);
+        this.populateDropdowns();
+    }
+});
+
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
