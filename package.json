@@ -20,7 +20,7 @@
     "url": "https://github.com/lookit/ember-lookit-frameplayer.git"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=6"
   },
   "author": "",
   "license": "MIT",
