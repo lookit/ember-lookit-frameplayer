@@ -95,6 +95,7 @@ const VideoRecorder = Ember.Object.extend({
     connected: false,
     uploadTimeout: null, // timer counting from attempt to stop until we should just
     //resolve the stopPromise
+    maxUploadTimeMs: 5000,
 
     _started: false,
     _camAccess: false,
@@ -267,7 +268,7 @@ const VideoRecorder = Ember.Object.extend({
      * Stop recording and save the video to the server
      * @method stop
      */
-    stop() {
+    stop(maxUploadTimeMs = 5000) {
         var recorder = this.get('recorder');
         if (recorder) {
             try {
@@ -285,7 +286,7 @@ const VideoRecorder = Ember.Object.extend({
                 console.warn('waiting for upload timed out');
                 window.clearTimeout(_this.get('uploadTimeout'));
                 reject();
-            }, 5000));
+            }, maxUploadTimeMs));
             if (_this.get('_isuploaded')) {
                 window.clearTimeout(_this.get('uploadTimeout'));
                 resolve(_this);

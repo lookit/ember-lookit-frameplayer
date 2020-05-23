@@ -93,6 +93,15 @@ export default Ember.Mixin.create({
     startSessionRecording: false,
 
     /**
+     * Maximum time allowed for whole-session video upload before proceeding, in seconds.
+     * Can be overridden by researcher, based on tradeoff between making families wait and
+     * losing data.
+     * @property {Number} sessionMaxUploadSeconds
+     * @default 10
+     */
+    sessionMaxUploadSeconds: 10,
+
+    /**
      * Whether to end any session (multi-frame) recording at the end of this frame.
      * @property {Number} endSessionRecording
      * @default false
@@ -199,7 +208,7 @@ export default Ember.Mixin.create({
         const sessionRecorder = this.get('sessionRecorder');
         if (sessionRecorder) {
             this.send('setTimeEvent', 'stoppingCapture');
-            return sessionRecorder.stop();
+            return sessionRecorder.stop(this.get('sessionMaxUploadSeconds') * 1000);
         } else {
             return Ember.RSVP.reject();
         }

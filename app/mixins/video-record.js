@@ -137,6 +137,15 @@ export default Ember.Mixin.create({
     maxRecordingLength: 7200,
 
     /**
+     * Maximum time allowed for video upload before proceeding, in seconds.
+     * Can be overridden by researcher, based on tradeoff between making families wait and
+     * losing data.
+     * @property {Number} maxUploadSeconds
+     * @default 5
+     */
+    maxUploadSeconds: 5,
+
+    /**
      * Whether to autosave recordings. Can be overridden by consuming frame.
      * TODO: eventually use this to set up non-recording option for previewing
      * @property {Number} autosave
@@ -313,7 +322,7 @@ export default Ember.Mixin.create({
         const recorder = this.get('recorder');
         if (recorder && recorder.get('recording')) {
             this.send('setTimeEvent', 'stoppingCapture');
-            return recorder.stop();
+            return recorder.stop(this.get('maxUploadSeconds') * 1000);
         } else {
             return Ember.RSVP.reject(1);
         }
