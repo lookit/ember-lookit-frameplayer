@@ -17,7 +17,9 @@ let {
  */
 
 /**
-* Basic video display for looking measures (e.g. preferential looking, looking time).
+* Composite video display for typical looking measures trials (e.g. preferential looking,
+* looking time).
+*
 * Trial consists of four phases, each of which is optional.
 *
 * 1. Announcement: The audio in audioSources is played while the attnSources video is played centrally, looping as needed. This lasts for announceLength seconds or the duration of the audio, whichever is longer. To skip this phase, set announceLength to 0 and do not provide audioSources.
@@ -144,6 +146,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
 
     completedAnnouncementAudio: false,
     completedAnnouncementTime: false,
+    retryCalibrationAudio: false, // silly workaround for attempt to play calibration audio
+    // which may be interrupted by the pause/load calls in media-reload (and not detected
+    // as an error in Firefox) - keep track of whether we'd want to play the calibration
+    // audio upon reload, and upon resource reload, do so if appropriate
 
     doingAnnouncement: Ember.computed('videoSources', function() {
         return (this.get('currentTask') === 'announce');
@@ -529,6 +535,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         }
     },
 
+    reloadObserver: Ember.observer('reloadingMedia', function(frame) {
+        if (!frame.get('reloadingMedia')) {  // done with most recent reload
+            if (frame.get('retryCalibrationAudio')) {
+                $('#player-calibration-audio')[0].play();
+            }
+        }
+    }),
+
     segmentObserver: Ember.observer('currentTask', function(frame) {
         if (frame.get('currentTask') === 'announce') {
             frame.startAnnouncement();
@@ -599,6 +613,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             if (calList.length === 0) {
                 $('#player-calibration-video').hide();
                 _this.set('currentTask', 'test');
+                calAudio.pause();
             } else {
                 var thisLoc = calList.shift();
                 /**
@@ -609,22 +624,22 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                  */
                 _this.send('setTimeEvent', 'startCalibration',
                     {location: thisLoc});
-                calAudio.pause();
-                calAudio.currentTime = 0;
-                calAudio.play().then(
-                    _ => {  // eslint-disable-line no-unused-vars
-                    })
-                    .catch(error => {  // eslint-disable-line no-unused-vars
-                        calAudio.play();
-                    }
-                    );
 
                 $('#player-calibration-video').removeClass(lastLoc);
                 $('#player-calibration-video').addClass(thisLoc);
+
+                _this.set('retryCalibrationAudio', true);
+                calAudio.pause();
+                calAudio.currentTime = 0;
+                calAudio.play().then(() => {}, () => {
+                    calAudio.play();
+                });
+
                 calVideo.pause();
                 calVideo.currentTime = 0;
                 calVideo.play();
                 _this.set('calTimer', window.setTimeout(function() {
+                    _this.set('retryCalibrationAudio', false);
                     doCalibrationSegments(calList, thisLoc);
                 }, _this.get('calibrationLength')));
             }

@@ -22,8 +22,10 @@ import Ember from 'ember';
  */
 export default Ember.Mixin.create({
     mediaTags: ['audio', 'video'],
+    reloadingMedia: false,
 
     didRender() {
+        this.set('reloadingMedia', true);
         this._super(...arguments);
         for (var selector of this.get('mediaTags')) {
             Ember.$(selector).each(function () {
@@ -31,5 +33,6 @@ export default Ember.Mixin.create({
                 this.load();
             });
         }
+        this.set('reloadingMedia', false);
     }
 });
