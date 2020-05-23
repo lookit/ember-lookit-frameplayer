@@ -840,8 +840,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
      * @private
      */
     onSessionRecordingStarted() {
-        _this.set('recordingStarted', true);
-        _this.notifyPropertyChange('readyToStartCalibration');
+        this.set('recordingStarted', true);
+        this.notifyPropertyChange('readyToStartCalibration');
     }
 
 });

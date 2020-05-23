@@ -221,7 +221,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 $('#recordingText').text('Not recording yet');
             }
 
-           if (this.get('hideWebcam')) {
+            if (this.get('hideWebcam')) {
                 $('#webcamToggleButton').html('Show');
                 $('#hiddenWebcamMessage').show();
                 $(this.get('recorderElement') + ' div').addClass('exp-lookit-observation-hidevideo');

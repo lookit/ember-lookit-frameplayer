@@ -121,9 +121,6 @@ export default Ember.Mixin.create({
                     throw Error('Must specify element Id to make fullscreen');
                 }
 
-                var buttonId = this.get('fsButtonID');
-                var buttonSel = Ember.$(`#${buttonId}`);
-
                 var selector = Ember.$(`#${elementId}`);
                 var elem = selector[0];
                 if (elem.requestFullscreen) {

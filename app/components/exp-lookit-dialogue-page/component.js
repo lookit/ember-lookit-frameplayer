@@ -5,7 +5,6 @@ import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
 import { audioAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
-import { observer } from '@ember/object';
 
 let {
     $
