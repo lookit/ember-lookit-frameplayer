@@ -535,9 +535,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         }
     },
 
-    reloadObserver: Ember.observer('reloadingMedia', function(frame) {
-        if (!frame.get('reloadingMedia')) {  // done with most recent reload
-            if (frame.get('retryCalibrationAudio')) {
+    reloadObserver: Ember.observer('reloadingMedia', function() {
+        if (!this.get('reloadingMedia')) {  // done with most recent reload
+            console.log('finished reload');
+            if (this.get('retryCalibrationAudio')) {
                 $('#player-calibration-audio')[0].play();
             }
         }
