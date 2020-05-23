@@ -47,6 +47,7 @@
                         <ul id="api-classes" class="apis classes">
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-calibration.html">Exp-lookit-calibration</a></li>
                             <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
@@ -209,6 +210,15 @@ export default Ember.Mixin.create({
     startSessionRecording: false,
 
     /**
+     * Maximum time allowed for whole-session video upload before proceeding, in seconds.
+     * Can be overridden by researcher, based on tradeoff between making families wait and
+     * losing data.
+     * @property {Number} sessionMaxUploadSeconds
+     * @default 10
+     */
+    sessionMaxUploadSeconds: 10,
+
+    /**
      * Whether to end any session (multi-frame) recording at the end of this frame.
      * @property {Number} endSessionRecording
      * @default false
@@ -315,7 +325,7 @@ export default Ember.Mixin.create({
         const sessionRecorder = this.get(&#x27;sessionRecorder&#x27;);
         if (sessionRecorder) {
             this.send(&#x27;setTimeEvent&#x27;, &#x27;stoppingCapture&#x27;);
-            return sessionRecorder.stop();
+            return sessionRecorder.stop(this.get(&#x27;sessionMaxUploadSeconds&#x27;) * 1000);
         } else {
             return Ember.RSVP.reject();
         }
@@ -348,7 +358,7 @@ export default Ember.Mixin.create({
                 _this.send(&#x27;setTimeEvent&#x27;, &#x27;sessionRecorderReady&#x27;);
                 _this.get(&#x27;session&#x27;).set(&#x27;recordingInProgress&#x27;, true);
                 _this.set(&#x27;sessionRecorderReady&#x27;, true);
-                _this.whenPossibleToRecordSession(); // make sure this fires
+                _this.whenPossibleToRecordSessionObserver(); // make sure this fires
             });
         }
         this._super(...arguments);
@@ -372,17 +382,26 @@ export default Ember.Mixin.create({
     },
 
     /**
-     * Observer that starts recording once session recorder is ready. Override to do additional
-     * stuff at this point!
-     * @method whenPossibleToRecord
+     * Function called when session recording is started automatically. Override to do
+     * frame-specific actions at this point (e.g., beginning a test trial).
+     *
+     * @method onSessionRecordingStarted
      */
-    whenPossibleToRecordSession: observer(&#x27;sessionRecorder.hasCamAccess&#x27;, &#x27;sessionRecorderReady&#x27;, function() {
+    onSessionRecordingStarted() {
+    },
+
+    /**
+     * Observer that starts recording once session recorder is ready.
+     * @method whenPossibleToRecordSessionObserver
+     */
+    whenPossibleToRecordSessionObserver: observer(&#x27;sessionRecorder.hasCamAccess&#x27;, &#x27;sessionRecorderReady&#x27;, function() {
         if (this.get(&#x27;sessionRecorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;sessionRecorderReady&#x27;)) {
             if (this.get(&#x27;startSessionRecording&#x27;)) {
                 var _this = this;
                 this.startSessionRecorder().then(() =&gt; {
                     _this.send(&#x27;setTimeEvent&#x27;, &#x27;startedSessionRecording&#x27;);
                     _this.set(&#x27;sessionRecorderReady&#x27;, false);
+                    _this.onSessionRecordingStarted();
                 });
             }
         }

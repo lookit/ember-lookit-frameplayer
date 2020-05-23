@@ -47,6 +47,7 @@
                         <ul id="api-classes" class="apis classes">
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-calibration.html">Exp-lookit-calibration</a></li>
                             <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
@@ -891,7 +892,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     didInsertElement() {
         this._super(...arguments);
         this.set(&#x27;doingA&#x27;, this.get(&#x27;startWithA&#x27;));
-        this.send(&#x27;showFullscreen&#x27;);
         this.notifyPropertyChange(&#x27;readyToStartCalibration&#x27;);
         var _this = this;
 
@@ -942,41 +942,24 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     /**
-     * Observer that starts recording once recorder is ready. Override to do additional
-     * stuff at this point!
-     * @method whenPossibleToRecord
+     * What to do when individual-frame recording starts.
+     * @method onRecordingStarted
      * @private
      */
-    whenPossibleToRecord: observer(&#x27;recorder.hasCamAccess&#x27;, &#x27;recorderReady&#x27;, function() {
-        if (this.get(&#x27;doRecording&#x27;)) {
-            var _this = this;
-            if (this.get(&#x27;recorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;recorderReady&#x27;)) {
-                this.startRecorder().then(() =&gt; {
-                    _this.set(&#x27;recorderReady&#x27;, false);
-                    _this.set(&#x27;recordingStarted&#x27;, true);
-                    _this.notifyPropertyChange(&#x27;readyToStartCalibration&#x27;);
-                });
-            }
-        }
-    }),
+    onRecordingStarted() {
+        this.set(&#x27;recordingStarted&#x27;, true);
+        this.notifyPropertyChange(&#x27;readyToStartCalibration&#x27;);
+    },
 
     /**
-     * Observer that starts recording once sessionrecorder is ready.
-     * @method whenPossibleToRecordSession
+     * What to do when session-level recording starts.
+     * @method onSessionRecordingStarted
      * @private
      */
-    whenPossibleToRecordSession: observer(&#x27;sessionRecorder.hasCamAccess&#x27;, &#x27;sessionRecorderReady&#x27;, function() {
-        if (this.get(&#x27;startSessionRecording&#x27;)) {
-            var _this = this;
-            if (this.get(&#x27;sessionRecorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;sessionRecorderReady&#x27;)) {
-                this.startSessionRecorder().then(() =&gt; {
-                    _this.set(&#x27;sessionRecorderReady&#x27;, false);
-                    _this.set(&#x27;recordingStarted&#x27;, true);
-                    _this.notifyPropertyChange(&#x27;readyToStartCalibration&#x27;);
-                });
-            }
-        }
-    }),
+    onSessionRecordingStarted() {
+        this.set(&#x27;recordingStarted&#x27;, true);
+        this.notifyPropertyChange(&#x27;readyToStartCalibration&#x27;);
+    }
 
 });
 

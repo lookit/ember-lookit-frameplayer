@@ -47,6 +47,7 @@
                         <ul id="api-classes" class="apis classes">
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-calibration.html">Exp-lookit-calibration</a></li>
                             <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
@@ -155,10 +156,6 @@ export default Ember.Mixin.create({
      */
     fsButtonID: false,
 
-    // Note: to avoid handler being called repeatedly (bubbling
-    // up?) I&#x27;m just having components that extend FullScreen call
-    // showFullscreen themselves. --kim
-
     // These are ridiculous workarounds for rare but reproducible problems with
     // updating the isFullscreen field...
 
@@ -198,7 +195,7 @@ export default Ember.Mixin.create({
             } else {
                 $element.addClass(&#x27;player-fullscreen&#x27;);
             }
-            if (this.displayFullscreen &amp;&amp; this.fsButtonID) {
+            if (this.get(&#x27;displayFullscreen&#x27;) &amp;&amp; this.get(&#x27;fsButtonID&#x27;)) {
                 $button.hide();
             }
             /**
@@ -210,7 +207,7 @@ export default Ember.Mixin.create({
         } else { // just exited FS mode
             $element.removeClass(&#x27;player-fullscreen&#x27;);
             $element.removeClass(&#x27;player-fullscreen-override&#x27;);
-            if (this.displayFullscreen &amp;&amp; this.fsButtonID) {
+            if (this.get(&#x27;displayFullscreen&#x27;) &amp;&amp; this.get(&#x27;fsButtonID&#x27;)) {
                 $button.show();
             }
             /**
@@ -241,9 +238,6 @@ export default Ember.Mixin.create({
                     throw Error(&#x27;Must specify element Id to make fullscreen&#x27;);
                 }
 
-                var buttonId = this.get(&#x27;fsButtonID&#x27;);
-                var buttonSel = Ember.$(&#x60;#${buttonId}&#x60;);
-
                 var selector = Ember.$(&#x60;#${elementId}&#x60;);
                 var elem = selector[0];
                 if (elem.requestFullscreen) {
@@ -257,9 +251,6 @@ export default Ember.Mixin.create({
                 } else {
                     console.warn(&#x27;Your browser does not appear to support fullscreen rendering.&#x27;);
                 }
-
-                Ember.$(document).off(&#x27;webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange&#x27;);
-                Ember.$(document).on(&#x27;webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange&#x27;, this.onFullscreen.bind(this, selector, buttonSel));
             }
         },
         /**
@@ -301,7 +292,19 @@ export default Ember.Mixin.create({
             description: &#x27;Whether to override default and display this frame as fullscreen&#x27;,
             default: false
         }
-    }
+    },
+
+    didInsertElement() {
+        var buttonId = this.get(&#x27;fsButtonID&#x27;);
+        var elementId = this.get(&#x27;fullScreenElementId&#x27;);
+        var buttonSel = $(&#x60;#${buttonId}&#x60;);
+        var selector = Ember.$(&#x60;#${elementId}&#x60;);
+        Ember.$(document).off(&#x27;webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange&#x27;);
+        Ember.$(document).on(&#x27;webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange&#x27;, this.onFullscreen.bind(this, selector, buttonSel));
+        this._super(...arguments);
+    },
+
+
 
 });
 

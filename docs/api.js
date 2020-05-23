@@ -3,6 +3,7 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "Exp-frame-base",
         "Exp-frame-select",
+        "Exp-lookit-calibration",
         "Exp-lookit-change-detection",
         "Exp-lookit-dialogue-page",
         "Exp-lookit-exit-survey",

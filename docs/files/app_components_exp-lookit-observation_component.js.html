@@ -47,6 +47,7 @@
                         <ul id="api-classes" class="apis classes">
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-calibration.html">Exp-lookit-calibration</a></li>
                             <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
@@ -328,27 +329,30 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     // Override to deal with whether or not recording is starting automatically
     whenPossibleToRecord: observer(&#x27;recorder.hasCamAccess&#x27;, &#x27;recorderReady&#x27;, function() {
-        if (this.get(&#x27;startRecordingAutomatically&#x27;)) {
-            if (this.get(&#x27;recorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;recorderReady&#x27;)) {
+
+        if (this.get(&#x27;recorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;recorderReady&#x27;)) {
+            if (this.get(&#x27;startRecordingAutomatically&#x27;)) {
                 this.send(&#x27;record&#x27;);
+            } else {
+                $(&#x27;#recordButton&#x27;).show();
+                $(&#x27;#recordingText&#x27;).text(&#x27;Not recording yet&#x27;);
             }
-        } else {
-            $(&#x27;#recordButton&#x27;).show();
-            $(&#x27;#recordingText&#x27;).text(&#x27;Not recording yet&#x27;);
+
+            if (this.get(&#x27;hideWebcam&#x27;)) {
+                $(&#x27;#webcamToggleButton&#x27;).html(&#x27;Show&#x27;);
+                $(&#x27;#hiddenWebcamMessage&#x27;).show();
+                $(this.get(&#x27;recorderElement&#x27;) + &#x27; div&#x27;).addClass(&#x27;exp-lookit-observation-hidevideo&#x27;);
+                this.set(&#x27;hidden&#x27;, true);
+                /**
+                 * Webcam display hidden from participant
+                 *
+                 * @event hideWebcam
+                 */
+                this.send(&#x27;setTimeEvent&#x27;, &#x27;hideWebcam&#x27;);
+            }
         }
 
-        if (this.get(&#x27;hideWebcam&#x27;)) {
-            $(&#x27;#webcamToggleButton&#x27;).html(&#x27;Show&#x27;);
-            $(&#x27;#hiddenWebcamMessage&#x27;).show();
-            $(this.get(&#x27;recorderElement&#x27;) + &#x27; div&#x27;).addClass(&#x27;exp-lookit-observation-hidevideo&#x27;);
-            this.set(&#x27;hidden&#x27;, true);
-            /**
-             * Webcam display hidden from participant
-             *
-             * @event hideWebcam
-             */
-            this.send(&#x27;setTimeEvent&#x27;, &#x27;hideWebcam&#x27;);
-        }
+
     }),
 
     didInsertElement() { // initial state of all buttons/text

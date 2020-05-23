@@ -47,6 +47,7 @@
                         <ul id="api-classes" class="apis classes">
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-calibration.html">Exp-lookit-calibration</a></li>
                             <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
@@ -176,6 +177,10 @@ and streamTime (when in the video they happened, in s).</p>
 
                             </li>
                             <li class="index-item method">
+                                <a href="#method_onSessionRecordingStarted">onSessionRecordingStarted</a>
+
+                            </li>
+                            <li class="index-item method">
                                 <a href="#method_setupRecorder">setupRecorder</a>
 
                             </li>
@@ -188,7 +193,7 @@ and streamTime (when in the video they happened, in s).</p>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_whenPossibleToRecord">whenPossibleToRecord</a>
+                                <a href="#method_whenPossibleToRecordSessionObserver">whenPossibleToRecordSessionObserver</a>
 
                             </li>
                     </ul>
@@ -204,6 +209,10 @@ and streamTime (when in the video they happened, in s).</p>
                             </li>
                             <li class="index-item property">
                                 <a href="#property_sessionAudioOnly">sessionAudioOnly</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_sessionMaxUploadSeconds">sessionMaxUploadSeconds</a>
 
                             </li>
                             <li class="index-item property">
@@ -256,7 +265,7 @@ and streamTime (when in the video they happened, in s).</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_mixins_session-record.js.html#l208"><code>app&#x2F;mixins&#x2F;session-record.js:208</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l217"><code>app&#x2F;mixins&#x2F;session-record.js:217</code></a>
         </p>
 
 
@@ -265,6 +274,38 @@ and streamTime (when in the video they happened, in s).</p>
 
     <div class="description">
         <p>Destroy recorder and stop accessing webcam</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_onSessionRecordingStarted" class="method item">
+    <h3 class="name"><code>onSessionRecordingStarted</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/app_mixins_session-record.js.html#l267"><code>app&#x2F;mixins&#x2F;session-record.js:267</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Function called when session recording is started automatically. Override to do
+frame-specific actions at this point (e.g., beginning a test trial).</p>
 
     </div>
 
@@ -296,7 +337,7 @@ and streamTime (when in the video they happened, in s).</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_mixins_session-record.js.html#l123"><code>app&#x2F;mixins&#x2F;session-record.js:123</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l132"><code>app&#x2F;mixins&#x2F;session-record.js:132</code></a>
         </p>
 
 
@@ -356,7 +397,7 @@ and streamTime (when in the video they happened, in s).</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_mixins_session-record.js.html#l174"><code>app&#x2F;mixins&#x2F;session-record.js:174</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l183"><code>app&#x2F;mixins&#x2F;session-record.js:183</code></a>
         </p>
 
 
@@ -398,7 +439,7 @@ and streamTime (when in the video they happened, in s).</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_mixins_session-record.js.html#l193"><code>app&#x2F;mixins&#x2F;session-record.js:193</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l202"><code>app&#x2F;mixins&#x2F;session-record.js:202</code></a>
         </p>
 
 
@@ -422,8 +463,8 @@ and streamTime (when in the video they happened, in s).</p>
 
 
 </div>
-<div id="method_whenPossibleToRecord" class="method item">
-    <h3 class="name"><code>whenPossibleToRecord</code></h3>
+<div id="method_whenPossibleToRecordSessionObserver" class="method item">
+    <h3 class="name"><code>whenPossibleToRecordSessionObserver</code></h3>
 
         <span class="paren">()</span>
 
@@ -437,7 +478,7 @@ and streamTime (when in the video they happened, in s).</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/app_mixins_session-record.js.html#l258"><code>app&#x2F;mixins&#x2F;session-record.js:258</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l276"><code>app&#x2F;mixins&#x2F;session-record.js:276</code></a>
         </p>
 
 
@@ -445,8 +486,7 @@ and streamTime (when in the video they happened, in s).</p>
     </div>
 
     <div class="description">
-        <p>Observer that starts recording once session recorder is ready. Override to do additional
-stuff at this point!</p>
+        <p>Observer that starts recording once session recorder is ready.</p>
 
     </div>
 
@@ -470,7 +510,7 @@ stuff at this point!</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_mixins_session-record.js.html#l95"><code>app&#x2F;mixins&#x2F;session-record.js:95</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l104"><code>app&#x2F;mixins&#x2F;session-record.js:104</code></a>
         </p>
 
 
@@ -496,7 +536,7 @@ stuff at this point!</p>
     <div class="meta">
                 <p> Specific to this element.
                 Defined in
-        <a href="../files/app_mixins_session-record.js.html#l105"><code>app&#x2F;mixins&#x2F;session-record.js:105</code></a>
+        <a href="../files/app_mixins_session-record.js.html#l114"><code>app&#x2F;mixins&#x2F;session-record.js:114</code></a>
         </p>
 
 
@@ -508,6 +548,34 @@ stuff at this point!</p>
     </div>
 
         <p><strong>Default:</strong> 0</p>
+
+
+</div>
+<div id="property_sessionMaxUploadSeconds" class="property item">
+    <h3 class="name"><code>sessionMaxUploadSeconds</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p> Specific to this element.
+                Defined in
+        <a href="../files/app_mixins_session-record.js.html#l95"><code>app&#x2F;mixins&#x2F;session-record.js:95</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Maximum time allowed for whole-session video upload before proceeding, in seconds.
+Can be overridden by researcher, based on tradeoff between making families wait and
+losing data.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> 10</p>
 
 
 </div>
@@ -595,7 +663,7 @@ stuff at this point!</p>
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/app_mixins_session-record.js.html#l227"><code>app&#x2F;mixins&#x2F;session-record.js:227</code></a>
+                            <a href="../files/app_mixins_session-record.js.html#l236"><code>app&#x2F;mixins&#x2F;session-record.js:236</code></a>
                             </p>
                     
                     

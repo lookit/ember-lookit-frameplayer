@@ -47,6 +47,7 @@
                         <ul id="api-classes" class="apis classes">
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-calibration.html">Exp-lookit-calibration</a></li>
                             <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
@@ -117,8 +118,6 @@
 import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
 import VideoRecord from &#x27;../../mixins/video-record&#x27;;
 import layout from &#x27;./template&#x27;;
-import { observer } from &#x27;@ember/object&#x27;;
-
 /**
  * @module exp-player
  * @submodule frames
@@ -166,6 +165,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     type: &#x27;exp-lookit-observation&#x27;,
     layout: layout,
     recorderElement: &#x27;#recorder&#x27;,
+    doUseCamera: true,
 
     frameSchemaProperties: {
         /**
@@ -263,15 +263,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             required: [&#x27;videoId&#x27;]
         }
     },
-
-    // Override to deal with whether or not recording is starting automatically
-    whenPossibleToRecord: observer(&#x27;recorder.hasCamAccess&#x27;, &#x27;recorderReady&#x27;, function() {
-        if (this.get(&#x27;startRecordingAutomatically&#x27;)) {
-            if (this.get(&#x27;recorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;recorderReady&#x27;)) {
-                this.send(&#x27;record&#x27;);
-            }
-        }
-    }),
 
     actions: {
         proceed() { // make sure &#x27;next&#x27; fires while still on this frame

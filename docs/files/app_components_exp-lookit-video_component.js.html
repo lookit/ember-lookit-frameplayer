@@ -47,6 +47,7 @@
                         <ul id="api-classes" class="apis classes">
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-calibration.html">Exp-lookit-calibration</a></li>
                             <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
@@ -133,7 +134,9 @@ let {
  */
 
 /**
-* Basic video display for looking measures (e.g. preferential looking, looking time).
+* Composite video display for typical looking measures trials (e.g. preferential looking,
+* looking time).
+*
 * Trial consists of four phases, each of which is optional.
 *
 * 1. Announcement: The audio in audioSources is played while the attnSources video is played centrally, looping as needed. This lasts for announceLength seconds or the duration of the audio, whichever is longer. To skip this phase, set announceLength to 0 and do not provide audioSources.
@@ -260,6 +263,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
 
     completedAnnouncementAudio: false,
     completedAnnouncementTime: false,
+    retryCalibrationAudio: false, // silly workaround for attempt to play calibration audio
+    // which may be interrupted by the pause/load calls in media-reload (and not detected
+    // as an error in Firefox) - keep track of whether we&#x27;d want to play the calibration
+    // audio upon reload, and upon resource reload, do so if appropriate
 
     doingAnnouncement: Ember.computed(&#x27;videoSources&#x27;, function() {
         return (this.get(&#x27;currentTask&#x27;) === &#x27;announce&#x27;);
@@ -645,6 +652,15 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         }
     },
 
+    reloadObserver: Ember.observer(&#x27;reloadingMedia&#x27;, function() {
+        if (!this.get(&#x27;reloadingMedia&#x27;)) {  // done with most recent reload
+            console.log(&#x27;finished reload&#x27;);
+            if (this.get(&#x27;retryCalibrationAudio&#x27;)) {
+                $(&#x27;#player-calibration-audio&#x27;)[0].play();
+            }
+        }
+    }),
+
     segmentObserver: Ember.observer(&#x27;currentTask&#x27;, function(frame) {
         if (frame.get(&#x27;currentTask&#x27;) === &#x27;announce&#x27;) {
             frame.startAnnouncement();
@@ -715,6 +731,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             if (calList.length === 0) {
                 $(&#x27;#player-calibration-video&#x27;).hide();
                 _this.set(&#x27;currentTask&#x27;, &#x27;test&#x27;);
+                calAudio.pause();
             } else {
                 var thisLoc = calList.shift();
                 /**
@@ -725,22 +742,22 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                  */
                 _this.send(&#x27;setTimeEvent&#x27;, &#x27;startCalibration&#x27;,
                     {location: thisLoc});
-                calAudio.pause();
-                calAudio.currentTime = 0;
-                calAudio.play().then(
-                    _ =&gt; {  // eslint-disable-line no-unused-vars
-                    })
-                    .catch(error =&gt; {  // eslint-disable-line no-unused-vars
-                        calAudio.play();
-                    }
-                    );
 
                 $(&#x27;#player-calibration-video&#x27;).removeClass(lastLoc);
                 $(&#x27;#player-calibration-video&#x27;).addClass(thisLoc);
+
+                _this.set(&#x27;retryCalibrationAudio&#x27;, true);
+                calAudio.pause();
+                calAudio.currentTime = 0;
+                calAudio.play().then(() =&gt; {}, () =&gt; {
+                    calAudio.play();
+                });
+
                 calVideo.pause();
                 calVideo.currentTime = 0;
                 calVideo.play();
                 _this.set(&#x27;calTimer&#x27;, window.setTimeout(function() {
+                    _this.set(&#x27;retryCalibrationAudio&#x27;, false);
                     doCalibrationSegments(calList, thisLoc);
                 }, _this.get(&#x27;calibrationLength&#x27;)));
             }
@@ -837,7 +854,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             }
         });
 
-        this.send(&#x27;showFullscreen&#x27;);
         if (this.get(&#x27;sources_parsed&#x27;).length) {
             this.set(&#x27;videosShown&#x27;, [this.get(&#x27;sources_parsed&#x27;)[0].src, this.get(&#x27;altSources_parsed&#x27;)[0].src]);
         } else {

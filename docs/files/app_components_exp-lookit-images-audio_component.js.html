@@ -47,6 +47,7 @@
                         <ul id="api-classes" class="apis classes">
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-calibration.html">Exp-lookit-calibration</a></li>
                             <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
@@ -121,7 +122,6 @@ import FullScreen from &#x27;../../mixins/full-screen&#x27;;
 import VideoRecord from &#x27;../../mixins/video-record&#x27;;
 import ExpandAssets from &#x27;../../mixins/expand-assets&#x27;;
 import { audioAssetOptions, imageAssetOptions } from &#x27;../../mixins/expand-assets&#x27;;
-import { observer } from &#x27;@ember/object&#x27;;
 
 let {
     $
@@ -472,8 +472,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
     // Override setting in VideoRecord mixin - only use camera if doing recording
     doUseCamera: Ember.computed.alias(&#x27;doRecording&#x27;),
-    // Don&#x27;t need to override startRecordingAutomatically as we override the observer
-    // whenPossibleToRecord directly.
+    startRecordingAutomatically: Ember.computed.alias(&#x27;doRecording&#x27;),
 
     pageTimer: null,
     progressTimer: null,
@@ -870,33 +869,17 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         }
     },
 
-    // Override to do a bit extra when recording (single-frame)
-    whenPossibleToRecord: observer(&#x27;recorder.hasCamAccess&#x27;, &#x27;recorderReady&#x27;, function() {
-        if (this.get(&#x27;doRecording&#x27;)) {
-            var _this = this;
-            if (this.get(&#x27;recorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;recorderReady&#x27;)) {
-                this.startRecorder().then(() =&gt; {
-                    _this.startTrial();
-                    _this.set(&#x27;recorderReady&#x27;, false);
-                    $(&#x27;#waitForVideo&#x27;).hide();
-                });
-            }
-        }
-    }),
+    // Override to do a bit extra when starting recording
+    onRecordingStarted() {
+        this.startTrial();
+        $(&#x27;#waitForVideo&#x27;).hide();
+    },
 
     // Override to do a bit extra when starting session recorder
-    whenPossibleToRecordSession: observer(&#x27;sessionRecorder.hasCamAccess&#x27;, &#x27;sessionRecorderReady&#x27;, function() {
-        if (this.get(&#x27;startSessionRecording&#x27;)) {
-            var _this = this;
-            if (this.get(&#x27;sessionRecorder.hasCamAccess&#x27;) &amp;&amp; this.get(&#x27;sessionRecorderReady&#x27;)) {
-                this.startSessionRecorder().then(() =&gt; {
-                    _this.startTrial();
-                    _this.set(&#x27;sessionRecorderReady&#x27;, false);
-                    $(&#x27;#waitForVideo&#x27;).hide();
-                });
-            }
-        }
-    }),
+    onSessionRecordingStarted() {
+        this.startTrial();
+        $(&#x27;#waitForVideo&#x27;).hide();
+    },
 
     updateCharacterHighlighting() {
 
@@ -1294,7 +1277,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             console.warn(&#x27;Invalid page color provided; not applying.&#x27;);
         }
 
-        this.send(&#x27;showFullscreen&#x27;);
         $(&#x27;#nextbutton&#x27;).prop(&#x27;disabled&#x27;, true);
         this.checkAndEnableProceed();
     },

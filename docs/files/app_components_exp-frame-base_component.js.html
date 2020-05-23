@@ -47,6 +47,7 @@
                         <ul id="api-classes" class="apis classes">
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-calibration.html">Exp-lookit-calibration</a></li>
                             <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
@@ -741,9 +742,9 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         // Set to non-fullscreen (or FS if overriding) immediately, except for frames displayed fullscreen.
         // Note: if this is defined the same way in full-screen.js, it gets called twice
         // for reasons I don&#x27;t yet understand.
-        if (this.get(&#x27;displayFullscreenOverride&#x27;)) {
+        if (this.get(&#x27;displayFullscreenOverride&#x27;) || this.get(&#x27;displayFullscreen&#x27;)) {
             this.send(&#x27;showFullscreen&#x27;);
-        } else if (!(this.get(&#x27;displayFullscreen&#x27;))) {
+        } else {
             this.send(&#x27;exitFullscreen&#x27;);
         }
         this._super(...arguments);

@@ -47,6 +47,7 @@
                         <ul id="api-classes" class="apis classes">
                             <li><a href="../classes/Exp-frame-base.html">Exp-frame-base</a></li>
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
+                            <li><a href="../classes/Exp-lookit-calibration.html">Exp-lookit-calibration</a></li>
                             <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
@@ -448,7 +449,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
      * Observer that adds listener for play button once recorder is ready.
      * @method whenPossibleToRecord
      */
-    whenPossibleToRecord: observer(&#x27;recorder.hasCamAccess&#x27;, &#x27;recorderReady&#x27;, function() {
+    videoConfigRecordingObserver: observer(&#x27;recorder.hasCamAccess&#x27;, &#x27;recorderReady&#x27;, function() {
         // The Pipe menu takes a little while to get set up, so if we try to bind an
         // event to it e.g. upon didRender, it doesn&#x27;t end up bound. Additionally, the
         // #pipeRec and #pipePlay buttons have their behavior OVERWRITTEN by Pipe,
