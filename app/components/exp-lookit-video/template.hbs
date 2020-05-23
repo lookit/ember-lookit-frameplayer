@@ -84,8 +84,11 @@
 </div>
 
 <!--FULLSCREEN BUTTON-->
-<div class="row col-md-6 exp-lookit-video">
-    <button type="button" class="btn btn-success" style="display:none;" id="fsButton" {{ action "showFullscreen"}} {{!-- template-lint-disable no-inline-styles --}}>
-        please return to fullscreen
-    </button>
-</div>
+
+{{#unless updatedIsFullscreen}}
+    <div class="row col-md-6 exp-lookit-video">
+        <button type="button" class="btn btn-success" id="fsButton" {{ action "showFullscreen"}} {{!-- template-lint-disable no-inline-styles --}}>
+            please return to fullscreen
+        </button>
+    </div>
+{{/unless}}

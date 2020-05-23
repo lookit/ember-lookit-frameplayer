@@ -39,10 +39,6 @@ export default Ember.Mixin.create({
      */
     fsButtonID: false,
 
-    // Note: to avoid handler being called repeatedly (bubbling
-    // up?) I'm just having components that extend FullScreen call
-    // showFullscreen themselves. --kim
-
     // These are ridiculous workarounds for rare but reproducible problems with
     // updating the isFullscreen field...
 
@@ -82,7 +78,7 @@ export default Ember.Mixin.create({
             } else {
                 $element.addClass('player-fullscreen');
             }
-            if (this.displayFullscreen && this.fsButtonID) {
+            if (this.get('displayFullscreen') && this.get('fsButtonID')) {
                 $button.hide();
             }
             /**
@@ -94,7 +90,7 @@ export default Ember.Mixin.create({
         } else { // just exited FS mode
             $element.removeClass('player-fullscreen');
             $element.removeClass('player-fullscreen-override');
-            if (this.displayFullscreen && this.fsButtonID) {
+            if (this.get('displayFullscreen') && this.get('fsButtonID')) {
                 $button.show();
             }
             /**
@@ -141,9 +137,6 @@ export default Ember.Mixin.create({
                 } else {
                     console.warn('Your browser does not appear to support fullscreen rendering.');
                 }
-
-                Ember.$(document).off('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange');
-                Ember.$(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this.onFullscreen.bind(this, selector, buttonSel));
             }
         },
         /**
@@ -185,6 +178,18 @@ export default Ember.Mixin.create({
             description: 'Whether to override default and display this frame as fullscreen',
             default: false
         }
-    }
+    },
+
+    didInsertElement() {
+        var buttonId = this.get('fsButtonID');
+        var elementId = this.get('fullScreenElementId');
+        var buttonSel = $(`#${buttonId}`);
+        var selector = Ember.$(`#${elementId}`);
+        Ember.$(document).off('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange');
+        Ember.$(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this.onFullscreen.bind(this, selector, buttonSel));
+        this._super(...arguments);
+    },
+
+
 
 });
