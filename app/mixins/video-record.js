@@ -363,23 +363,32 @@ export default Ember.Mixin.create({
                  */
                 _this.send('setTimeEvent', 'recorderReady');
                 _this.set('recorderReady', true);
-                _this.whenPossibleToRecord(); // make sure this fires
+                _this.whenPossibleToRecordObserver(); // make sure this fires
             });
         }
         this._super(...arguments);
     },
 
     /**
-     * Observer that starts recording once recorder is ready. Override to do additional
-     * stuff at this point!
-     * @method whenPossibleToRecord
+     * Function called when frame recording is started automatically. Override to do
+     * frame-specific actions at this point (e.g., beginning a test trial).
+     *
+     * @method onRecordingStarted
      */
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
+    onRecordingStarted() {
+    },
+
+    /**
+     * Observer that starts recording once recorder is ready.
+     * @method whenPossibleToRecordObserver
+     */
+    whenPossibleToRecordObserver: observer('recorder.hasCamAccess', 'recorderReady', function() {
         if (this.get('doUseCamera') && this.get('startRecordingAutomatically')) {
             var _this = this;
             if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
                 this.startRecorder().then(() => {
                     _this.set('recorderReady', false);
+                    _this.onRecordingStarted();
                 });
             }
         }

@@ -232,7 +232,7 @@ export default Ember.Mixin.create({
                 _this.send('setTimeEvent', 'sessionRecorderReady');
                 _this.get('session').set('recordingInProgress', true);
                 _this.set('sessionRecorderReady', true);
-                _this.whenPossibleToRecordSession(); // make sure this fires
+                _this.whenPossibleToRecordSessionObserver(); // make sure this fires
             });
         }
         this._super(...arguments);
@@ -256,17 +256,26 @@ export default Ember.Mixin.create({
     },
 
     /**
-     * Observer that starts recording once session recorder is ready. Override to do additional
-     * stuff at this point!
-     * @method whenPossibleToRecord
+     * Function called when session recording is started automatically. Override to do
+     * frame-specific actions at this point (e.g., beginning a test trial).
+     *
+     * @method onSessionRecordingStarted
      */
-    whenPossibleToRecordSession: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
+    onSessionRecordingStarted() {
+    },
+
+    /**
+     * Observer that starts recording once session recorder is ready.
+     * @method whenPossibleToRecordSessionObserver
+     */
+    whenPossibleToRecordSessionObserver: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
         if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
             if (this.get('startSessionRecording')) {
                 var _this = this;
                 this.startSessionRecorder().then(() => {
                     _this.send('setTimeEvent', 'startedSessionRecording');
                     _this.set('sessionRecorderReady', false);
+                    _this.onSessionRecordingStarted();
                 });
             }
         }

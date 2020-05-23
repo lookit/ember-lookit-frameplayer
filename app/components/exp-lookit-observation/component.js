@@ -212,27 +212,30 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     // Override to deal with whether or not recording is starting automatically
     whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('startRecordingAutomatically')) {
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
+
+        if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
+            if (this.get('startRecordingAutomatically')) {
                 this.send('record');
+            } else {
+                $('#recordButton').show();
+                $('#recordingText').text('Not recording yet');
             }
-        } else {
-            $('#recordButton').show();
-            $('#recordingText').text('Not recording yet');
+
+           if (this.get('hideWebcam')) {
+                $('#webcamToggleButton').html('Show');
+                $('#hiddenWebcamMessage').show();
+                $(this.get('recorderElement') + ' div').addClass('exp-lookit-observation-hidevideo');
+                this.set('hidden', true);
+                /**
+                 * Webcam display hidden from participant
+                 *
+                 * @event hideWebcam
+                 */
+                this.send('setTimeEvent', 'hideWebcam');
+            }
         }
 
-        if (this.get('hideWebcam')) {
-            $('#webcamToggleButton').html('Show');
-            $('#hiddenWebcamMessage').show();
-            $(this.get('recorderElement') + ' div').addClass('exp-lookit-observation-hidevideo');
-            this.set('hidden', true);
-            /**
-             * Webcam display hidden from participant
-             *
-             * @event hideWebcam
-             */
-            this.send('setTimeEvent', 'hideWebcam');
-        }
+
     }),
 
     didInsertElement() { // initial state of all buttons/text

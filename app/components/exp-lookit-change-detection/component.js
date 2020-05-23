@@ -825,40 +825,23 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     /**
-     * Observer that starts recording once recorder is ready. Override to do additional
-     * stuff at this point!
-     * @method whenPossibleToRecord
+     * What to do when individual-frame recording starts.
+     * @method onRecordingStarted
      * @private
      */
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('doRecording')) {
-            var _this = this;
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                this.startRecorder().then(() => {
-                    _this.set('recorderReady', false);
-                    _this.set('recordingStarted', true);
-                    _this.notifyPropertyChange('readyToStartCalibration');
-                });
-            }
-        }
-    }),
+    onRecordingStarted() {
+        this.set('recordingStarted', true);
+        this.notifyPropertyChange('readyToStartCalibration');
+    },
 
     /**
-     * Observer that starts recording once sessionrecorder is ready.
-     * @method whenPossibleToRecordSession
+     * What to do when session-level recording starts.
+     * @method onSessionRecordingStarted
      * @private
      */
-    whenPossibleToRecordSession: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
-        if (this.get('startSessionRecording')) {
-            var _this = this;
-            if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
-                this.startSessionRecorder().then(() => {
-                    _this.set('sessionRecorderReady', false);
-                    _this.set('recordingStarted', true);
-                    _this.notifyPropertyChange('readyToStartCalibration');
-                });
-            }
-        }
-    }),
+    onSessionRecordingStarted() {
+        _this.set('recordingStarted', true);
+        _this.notifyPropertyChange('readyToStartCalibration');
+    }
 
 });

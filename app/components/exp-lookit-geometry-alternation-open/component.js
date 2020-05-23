@@ -814,39 +814,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         this._super(...arguments);
     },
 
-    /**
-     * Observer that starts recording once recorder is ready. Override to do additional
-     * stuff at this point!
-     * @method whenPossibleToRecord
-     */
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('doRecording')) {
-            var _this = this;
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                this.startRecorder().then(() => {
-                    _this.set('recorderReady', false);
-                    _this.set('recordingStarted', true);
-                    _this.notifyPropertyChange('readyToStartCalibration');
-                });
-            }
-        }
-    }),
+    // Override to do a bit extra when starting recording
+    onRecordingStarted() {
+        this.set('recordingStarted', true);
+    },
 
-    /**
-     * Observer that starts recording once sessionrecorder is ready.
-     * @method whenPossibleToRecordSession
-     */
-    whenPossibleToRecordSession: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
-        if (this.get('startSessionRecording')) {
-            var _this = this;
-            if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
-                this.startSessionRecorder().then(() => {
-                    _this.set('sessionRecorderReady', false);
-                    _this.set('recordingStarted', true);
-                    _this.notifyPropertyChange('readyToStartCalibration');
-                });
-            }
-        }
-    }),
+    // Override to do a bit extra when starting session recorder
+    onSessionRecordingStarted() {
+        this.set('recordingStarted', true);
+    }
 
 });

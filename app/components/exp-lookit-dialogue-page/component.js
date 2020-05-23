@@ -150,8 +150,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
     // Override setting in VideoRecord mixin - only use camera if doing recording
     doUseCamera: Ember.computed.alias('doRecording'),
-    // Don't need to override startRecordingAutomatically as we override the observer
-    // whenPossibleToRecord directly.
+    startRecordingAutomatically: Ember.computed.alias('doRecording'),
 
     // Track state of experiment
     completedAudio: false, // for main narration audio
@@ -188,34 +187,18 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         }),
 
     // Override to do a bit extra when starting recording
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('doRecording')) {
-            var _this = this;
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                this.startRecorder().then(() => {
-                    _this.set('recorderReady', false);
-                    $('#waitForVideo').hide();
-                    _this.set('currentAudioIndex', -1);
-                    _this.send('playNextAudioSegment');
-                });
-            }
-        }
-    }),
+    onRecordingStarted() {
+        $('#waitForVideo').hide();
+        this.set('currentAudioIndex', -1);
+        this.send('playNextAudioSegment');
+    },
 
     // Override to do a bit extra when starting session recorder
-    whenPossibleToRecordSession: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
-        if (this.get('startSessionRecording')) {
-            var _this = this;
-            if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
-                this.startSessionRecorder().then(() => {
-                    _this.set('sessionRecorderReady', false);
-                    $('#waitForVideo').hide();
-                    _this.set('currentAudioIndex', -1);
-                    _this.send('playNextAudioSegment');
-                });
-            }
-        }
-    }),
+    onSessionRecordingStarted() {
+        $('#waitForVideo').hide();
+        this.set('currentAudioIndex', -1);
+        this.send('playNextAudioSegment');
+    },
 
     frameSchemaProperties: {
         /**

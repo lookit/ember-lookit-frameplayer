@@ -50,6 +50,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     type: 'exp-lookit-observation',
     layout: layout,
     recorderElement: '#recorder',
+    doUseCamera: true,
 
     frameSchemaProperties: {
         /**
@@ -147,15 +148,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             required: ['videoId']
         }
     },
-
-    // Override to deal with whether or not recording is starting automatically
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('startRecordingAutomatically')) {
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                this.send('record');
-            }
-        }
-    }),
 
     actions: {
         proceed() { // make sure 'next' fires while still on this frame

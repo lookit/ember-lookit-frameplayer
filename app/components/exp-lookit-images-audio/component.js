@@ -356,8 +356,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
     // Override setting in VideoRecord mixin - only use camera if doing recording
     doUseCamera: Ember.computed.alias('doRecording'),
-    // Don't need to override startRecordingAutomatically as we override the observer
-    // whenPossibleToRecord directly.
+    startRecordingAutomatically: Ember.computed.alias('doRecording'),
 
     pageTimer: null,
     progressTimer: null,
@@ -754,33 +753,17 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         }
     },
 
-    // Override to do a bit extra when recording (single-frame)
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('doRecording')) {
-            var _this = this;
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                this.startRecorder().then(() => {
-                    _this.startTrial();
-                    _this.set('recorderReady', false);
-                    $('#waitForVideo').hide();
-                });
-            }
-        }
-    }),
+    // Override to do a bit extra when starting recording
+    onRecordingStarted() {
+        this.startTrial();
+        $('#waitForVideo').hide();
+    },
 
     // Override to do a bit extra when starting session recorder
-    whenPossibleToRecordSession: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
-        if (this.get('startSessionRecording')) {
-            var _this = this;
-            if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
-                this.startSessionRecorder().then(() => {
-                    _this.startTrial();
-                    _this.set('sessionRecorderReady', false);
-                    $('#waitForVideo').hide();
-                });
-            }
-        }
-    }),
+    onSessionRecordingStarted() {
+        this.startTrial();
+        $('#waitForVideo').hide();
+    },
 
     updateCharacterHighlighting() {
 

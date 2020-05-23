@@ -332,7 +332,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
      * Observer that adds listener for play button once recorder is ready.
      * @method whenPossibleToRecord
      */
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
+    videoConfigRecordingObserver: observer('recorder.hasCamAccess', 'recorderReady', function() {
         // The Pipe menu takes a little while to get set up, so if we try to bind an
         // event to it e.g. upon didRender, it doesn't end up bound. Additionally, the
         // #pipeRec and #pipePlay buttons have their behavior OVERWRITTEN by Pipe,
