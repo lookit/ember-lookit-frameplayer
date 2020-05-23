@@ -789,7 +789,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             musicFadeLength: 2000,
             calLength: this.get('calibrationLength')});
 
-        this.send('showFullscreen');
         this.notifyPropertyChange('readyToStartCalibration');
         this.startIntro();
     },

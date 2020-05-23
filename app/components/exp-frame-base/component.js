@@ -625,9 +625,9 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         // Set to non-fullscreen (or FS if overriding) immediately, except for frames displayed fullscreen.
         // Note: if this is defined the same way in full-screen.js, it gets called twice
         // for reasons I don't yet understand.
-        if (this.get('displayFullscreenOverride')) {
+        if (this.get('displayFullscreenOverride') || this.get('displayFullscreen')) {
             this.send('showFullscreen');
-        } else if (!(this.get('displayFullscreen'))) {
+        } else {
             this.send('exitFullscreen');
         }
         this._super(...arguments);

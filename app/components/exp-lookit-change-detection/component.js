@@ -775,7 +775,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     didInsertElement() {
         this._super(...arguments);
         this.set('doingA', this.get('startWithA'));
-        this.send('showFullscreen');
         this.notifyPropertyChange('readyToStartCalibration');
         var _this = this;
 

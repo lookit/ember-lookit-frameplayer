@@ -721,7 +721,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             }
         });
 
-        this.send('showFullscreen');
         if (this.get('sources_parsed').length) {
             this.set('videosShown', [this.get('sources_parsed')[0].src, this.get('altSources_parsed')[0].src]);
         } else {

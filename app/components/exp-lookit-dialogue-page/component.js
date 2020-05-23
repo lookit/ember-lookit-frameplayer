@@ -612,7 +612,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         var css = parentTextBlock.css || {};
         $('#parenttext').css(css);
 
-        this.send('showFullscreen');
         $('#nextbutton').prop('disabled', true);
 
         // Any animations as images are displayed at start of this phase

@@ -1178,7 +1178,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             console.warn('Invalid page color provided; not applying.');
         }
 
-        this.send('showFullscreen');
         $('#nextbutton').prop('disabled', true);
         this.checkAndEnableProceed();
     },

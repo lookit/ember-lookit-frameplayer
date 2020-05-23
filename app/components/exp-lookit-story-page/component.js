@@ -441,7 +441,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         var css = parentTextBlock.css || {};
         $('#parenttext').css(css);
 
-        this.send('showFullscreen');
         $('#nextbutton').prop('disabled', true);
 
         // If not recording, go to audio right away! Otherwise will be triggered when
