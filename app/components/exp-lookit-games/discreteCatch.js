@@ -213,11 +213,11 @@ export default class DiscreteCatch extends PaddleGames {
   dataCollection() {
     if(super.ball.state === 'start' ||  super.ball.state === 'hit' || super.ball.state === 'fall') {
 
-      super.exportData.ball_position_x.push(super.convertXvalue(super.ball.position.x));
-      super.exportData.ball_position_y.push(super.convertYvalue(super.ball.position.y));
-      super.exportData.ball_timestamp.push(super.ball.timestamp);
+      super.exportData.ball_position_x.push(parseFloat(super.convertXvalue(super.ball.position.x)));
+      super.exportData.ball_position_y.push(parseFloat(super.convertYvalue(super.ball.position.y)));
+      super.exportData.ball_timestamp.push(parseFloat(super.ball.timestamp));
       super.exportData.timestamp.push(super.getElapsedTime());
-      super.exportData.paddle_position_y.push(super.convertYvalue(super.paddle.position.y));
+      super.exportData.paddle_position_y.push(parseFloat(super.convertYvalue(super.paddle.position.y)));
       super.exportData.trial = super.currentRounds;
       super.exportData.trajectory = trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT];
       super.exportData.feedback = this.ballState();

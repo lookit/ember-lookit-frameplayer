@@ -198,7 +198,7 @@ export default class DiscreteCatchLift extends PaddleGames {
     if(super.gameState.initialTime > 0) {
 
       super.exportData.basket_x = super.convertXvalue(super.paddle.position.x);
-      super.exportData.basket_y.push(super.convertYvalue(super.paddle.position.y));
+      super.exportData.basket_y.push(parseFloat(super.convertYvalue(super.paddle.position.y)));
       super.exportData.mice_x =  super.convertXvalue(target.position.x);
       super.exportData.mice_y =  super.convertYvalue(target.position.y);
       super.exportData.trial = super.currentRounds;
