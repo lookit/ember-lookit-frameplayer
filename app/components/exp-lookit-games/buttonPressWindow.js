@@ -216,8 +216,8 @@ export default class ButtonPressWindow extends Base {
       let currentTrajectory = TfArrIndex.indexOf(TfArr[this.currentRounds]) + 1;
 
       super.exportData.trajectory = currentTrajectory;
-      super.exportData.ball_position_x.push(super.convertXvalue(super.ball.position.x));
-      super.exportData.ball_position_y.push(super.convertYvalue(super.ball.position.y));
+      super.exportData.ball_position_x.push(parseFloat(super.convertXvalue(super.ball.position.x)));
+      super.exportData.ball_position_y.push(parseFloat(super.convertYvalue(super.ball.position.y)));
       super.exportData.ball_timestamp.push(super.ball.timestamp);
       super.exportData.trial = super.currentRounds;
       super.exportData.trialType = this.context.trialType;
