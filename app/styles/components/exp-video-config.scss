@@ -1,104 +1,110 @@
-div.exp-video-config {
+.exp-video-config {
+
     margin-top: 2vh;
-}
 
-.exp-video-config h2 {
-    float:left;
-}
-
-.exp-video-config #not-recording-note {
-    color:red;
-    float:right;
-}
-
-.exp-video-config hr {
-    clear:both;
-}
-
-.exp-video-config ul li {
-    margin-top: 20px;
-}
-
-.exp-video-config .screenshot {
-    display:block;
-    margin:auto;
-}
-
-.exp-video-config .reload-warning {
-    color: red;
-}
-
-.exp-video-config ol {
-    counter-reset: item;
-    padding: 0;
-}
-
-.exp-video-config ol > li {
-    display: inline-block;
-    margin-top: 1em;
-    line-height: 1.8;
-}
-
-.exp-video-config #checkSettings {
-    padding: 1px;
-}
-
-.exp-video-config ol > li:before {
-  display: inline;
-  content: counter(item) ". ";
-  counter-increment: item;
-  width: 1.5em;
-  color: #04631c;
-  font-size: larger;
-  font-weight: bold;
-  background-color: #d4efdf;
-  border-radius:20px;
-  padding:2px 6px;
-  margin-right: .5em;
-  border: thin solid #04631c;
-}
-
-.exp-video-config p.indent {
-    margin-left: 3em;
-}
-
-.exp-video-config .statusBox {
-    width: 50%;
-    margin-left: 25%;
-    text-align: center;
-    padding: 2px;
-    margin-top: 5px;
-    border-radius: 5px;
-
-    &.border {
-        border: medium solid gray;
+    h2 {
+        float:left;
     }
 
-    button {
+    #not-recording-note {
+        color:red;
+        float:right;
+    }
+
+    hr {
+        clear:both;
+    }
+
+    ul li {
+        margin-top: 20px;
+    }
+
+    .screenshot {
+        display:block;
         margin:auto;
     }
-}
 
-.exp-video-config .checkComplete {
-    background-color: #d4efdf;
-}
-
-.exp-video-config .support-note {
-    font-size: smaller;
-    padding-top: 25px;
-}
-
-
-.exp-video-config .select-source {
-    margin-left: 2em;
-    margin-top: 0.5em;
-
-    label {
-        margin-right: 1em;
+    .reload-warning {
+        color: red;
     }
 
-}
+    ol {
+        counter-reset: item;
+        padding: 0;
+    }
 
-.exp-video-config #reloadButton {
-    margin-top: 1em;
+    ol > li {
+        display: inline-block;
+        margin-top: 1em;
+        line-height: 1.8;
+    }
+
+    #checkSettings {
+        padding: 1px;
+    }
+
+    ol > li:before {
+      display: inline;
+      content: counter(item) ". ";
+      counter-increment: item;
+      width: 1.5em;
+      color: #04631c;
+      font-size: larger;
+      font-weight: bold;
+      background-color: #d4efdf;
+      border-radius:20px;
+      padding:2px 6px;
+      margin-right: .5em;
+      border: thin solid #04631c;
+    }
+
+    p.indent {
+        margin-left: 3em;
+    }
+
+    .statusBox {
+        width: 50%;
+        margin-left: 25%;
+        text-align: center;
+        padding: 2px;
+        margin-top: 5px;
+        border-radius: 5px;
+
+        &.border {
+            border: medium solid gray;
+        }
+
+        button {
+            margin:auto;
+        }
+    }
+
+    .checkComplete {
+        background-color: #d4efdf;
+    }
+
+    .support-note {
+        font-size: smaller;
+        padding-top: 25px;
+    }
+
+
+    .select-source {
+        margin-left: 2em;
+        margin-top: 0.5em;
+
+        label {
+            margin-right: 1em;
+        }
+
+    }
+
+    #reloadButton {
+        margin-top: 1em;
+    }
+
+    select {
+        max-width: 12em;
+    }
+
 }
