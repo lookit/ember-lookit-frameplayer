@@ -1,4 +1,4 @@
-$exp-lookit-story-page-AR: 2; // aspect ratio of story page, width:height
+$exp-lookit-story-page-AR: 1.75; // aspect ratio of story page, width:height
 $exp-lookit-story-page-side-margin: 1; // in vw
 $exp-lookit-story-page-top-margin: 1; // in vh
 $exp-lookit-story-page-controls-height: 20; // in vh
@@ -10,6 +10,7 @@ $exp-lookit-preferential-looking-AR: 2;
 $exp-lookit-preferential-looking-picwidth: 30;
 $exp-lookit-preferential-looking-picmargin: 2;
 
+// Display cursor even though we're in FS mode, to allow clicking on buttons and images
 .exp-lookit-image-audio, .exp-lookit-image-audio *
 {
     margin:0;

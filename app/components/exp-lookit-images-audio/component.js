@@ -55,7 +55,7 @@ let {
  * this is a great way to do it.
  *
  * In general, the images are displayed in a designated region of the screen with aspect
- * ratio 2:1 (twice as wide as it is tall) to standardize display as much as possible
+ * ratio 7:4 (1.75 times as wide as it is tall) to standardize display as much as possible
  * across different monitors. If you want to display things truly fullscreen, you can
  * use `autoProceed` and not provide `parentText` so there's nothing at the bottom, and then
  * set `maximizeDisplay` to true.
