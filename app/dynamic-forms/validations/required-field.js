@@ -20,6 +20,6 @@ export default Ember.Object.extend({
             return;
         }
         callback({'status': true});
-
+        return;
     }
 });

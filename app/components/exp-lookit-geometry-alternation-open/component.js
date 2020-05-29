@@ -450,10 +450,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             this.stopRecorder().then(() => {
                 _this.set('stoppedRecording', true);
                 _this.send('next');
-
+                return;
             }, () => {
                 _this.send('next');
-
+                return;
             });
 
             this._super(...arguments);
