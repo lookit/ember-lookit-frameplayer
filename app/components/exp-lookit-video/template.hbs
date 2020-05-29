@@ -1,7 +1,7 @@
 {{! template-lint-disable no-invalid-interactive}}
 {{! template-lint-disable no-html-comments}}
 
-<div class="input-group exp-lookit-video row col-md-6 ">
+<div class="input-group exp-lookit-video row {{unless autoProceed cursor-display}}">
 
     <!--RECORDER-->
     <div class="row recorder-container video-recorder-hidden">
@@ -9,86 +9,111 @@
         </div>
     </div>
 
-    <!--CALIBRATION VIDEO-->
-    <video id="player-calibration-video"
-           class="calibration"
-           autoplay
-           style="display:none;"
-           {{!-- template-lint-disable no-inline-styles --}}>
-        {{#each calibrationVideoSources_parsed as |stream|}}
-            <source src={{stream.src}} type={{stream.type}}>
-        {{/each}}
-    </video>
-
-    <!--CALIBRATION AUDIO-->
-    <audio id="player-calibration-audio">
-        {{#each calibrationAudioSources_parsed as |stream|}}
-            <source src={{stream.src}} type={{stream.type}}>
-        {{/each}}
-    </audio>
-
-    <!--ANNOUNCEMENT AUDIO-->
-    {{#if (and doingAnnouncement (not isPaused))}}
-        <audio id="announcement-audio"
-               onended={{action "announcementEnded"}}
-               autoplay="autoplay"
-        >
-            {{#if hasBeenPaused}}
-                {{#each unpauseAudio_parsed as |stream|}}
-                    <source src={{stream.src}} type={{stream.type}}>
-                {{/each}}
-            {{else}}
-                {{#each audioSources_parsed as |stream|}}
-                    <source src={{stream.src}} type={{stream.type}}>
-                {{/each}}
-            {{/if}}
-        </audio>
-    {{/if}}
-
-    <!--PAUSE AUDIO-->
-    {{#if isPaused }}
-        <audio id="pause-audio" autoplay="autoplay">
-            {{#each pauseAudio_parsed as |stream|}}
-                <source src={{stream.src}} type={{stream.type}}>
-            {{/each}}
-        </audio>
-    {{/if}}
-
-    <!--TEST MUSIC-->
+    <!--TEST MUSIC/AUDIO-->
     <audio id="exp-music" loop="loop">
         {{#each musicSources_parsed as |stream|}}
             <source src={{stream.src}} type={{stream.type}}>
         {{/each}}
     </audio>
 
-    <!--VIDEO: ATTN, INTRO, OR TEST-->
-    <video id="player-video"
-           class="{{if (or doingAnnouncement isPaused) "attn"}} {{if doingIntro "intro"}} {{if doingTest "test"}}"
-           autoplay="autoplay"
-           onended={{ action "videoStopped"}}
-           onplay={{action "videoStarted"}}>
-        {{#each videoSources as |stream|}}
-            <source src={{stream.src}} type={{stream.type}}>
-        {{/each}}
-    </video>
-
-    <!--PAUSE TEXT-->
-    {{#if isPaused}}
-        <p class="pause-instructions"> Study paused </p>
-        {{#if updatedIsFullscreen}}
-            <p class="pause-instructions"> Press space to resume </p>
-            <p class="pause-instructions"> {{pauseText}} </p>
+    <div id="image-area" class="{{if maximizeVideoArea "image-area-fs"}}" >
+        {{#if (or doRecording startSessionRecording)}}
+            <p id="waitForVideo"> establishing video connection <br> please wait... </p>
         {{/if}}
-    {{/if}}
+
+        <!--VIDEO: TEST-->
+
+        <div id="test-video" class="story-image-container {{if video.position video.position}}">
+            {{#if doingTest}}
+                <video id="player-video"
+                       class="test story-image"
+                       autoplay="autoplay"
+                       onended={{ action "videoStopped"}}
+                       onplay={{action "videoStarted"}}>
+                    {{#each video_parsed.source as |stream|}}
+                        <source src={{stream.src}} type={{stream.type}}>
+                    {{/each}}
+                </video>
+            {{/if}}
+        </div>
+
+    </div>
+
+
+
+    <!--PAUSE VIDEO AND TEXT-->
+    <div id="paused-display">
+        {{#if isPaused}}
+
+            <video id="player-video"
+                   class="attn"
+                   autoplay="autoplay"
+                   loop
+                   >
+                {{#each attnSources_parsed as |stream|}}
+                    <source src={{stream.src}} type={{stream.type}}>
+                {{/each}}
+            </video>
+
+            <p class="pause-instructions"> Study paused </p>
+            {{#if updatedIsFullscreen}}
+                <p class="pause-instructions"> Press space to resume </p>
+                <p class="pause-instructions"> {{pauseText}} </p>
+            {{/if}}
+
+            <audio id="pause-audio" autoplay="autoplay">
+                {{#each pauseAudio_parsed as |stream|}}
+                    <source src={{stream.src}} type={{stream.type}}>
+                {{/each}}
+            </audio>
+
+            {{#if doingAnnouncement}}
+                <audio id="announcement-audio"
+                       onended={{action "announcementEnded"}}
+                       autoplay="autoplay"
+                >
+                    {{#if hasBeenPaused}}
+                        {{#each unpauseAudio_parsed as |stream|}}
+                            <source src={{stream.src}} type={{stream.type}}>
+                        {{/each}}
+                    {{else}}
+                    {{/if}}
+                </audio>
+            {{/if}}
+        {{/if}}
+    </div>
+
+    <!--FULLSCREEN BUTTON-->
+
+    {{#unless updatedIsFullscreen}}
+        <div class="row col-md-6 exp-lookit-video">
+            <button type="button" class="btn btn-success" id="fsButton" {{ action "showFullscreen"}} {{!-- template-lint-disable no-inline-styles --}}>
+                please return to fullscreen
+            </button>
+        </div>
+    {{/unless}}
+
+
+    {{#unless (or autoProceed parentTextBlock)}}
+
+        <div id="story-controls">
+
+            {{#unless noParentText}}
+                <div id="parenttext">
+                    {{exp-text-block block=parentTextBlock}}
+                </div>
+            {{/unless}}
+
+            {{#unless autoProceed}}
+                <div class="button-container right">
+                    <button type="button" id="nextbutton" class="btn btn-success fill" {{ action "finish" }} >
+                        Next <i class="fa fa-arrow-right"></i>
+                    </button>
+                </div>
+            {{/unless}}
+
+        </div>
+
+    {{/unless}}
 
 </div>
-
-<!--FULLSCREEN BUTTON-->
-
-{{#unless updatedIsFullscreen}}
-    <div class="row col-md-6 exp-lookit-video">
-        <button type="button" class="btn btn-success" id="fsButton" {{ action "showFullscreen"}} {{!-- template-lint-disable no-inline-styles --}}>
-            please return to fullscreen
-        </button>
-    </div>
-{{/unless}}
