@@ -49,6 +49,7 @@
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
                             <li><a href="../classes/Exp-lookit-calibration.html">Exp-lookit-calibration</a></li>
                             <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
+                            <li><a href="../classes/Exp-lookit-composite-video-trial.html">Exp-lookit-composite-video-trial</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
@@ -394,10 +395,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             this.stopRecorder().then(() =&gt; {
                 _this.set(&#x27;stoppedRecording&#x27;, true);
                 _this.send(&#x27;next&#x27;);
-                return;
+
             }, () =&gt; {
                 _this.send(&#x27;next&#x27;);
-                return;
+
             });
         } else {
             _this.send(&#x27;next&#x27;);

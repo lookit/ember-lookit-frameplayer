@@ -49,6 +49,7 @@
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
                             <li><a href="../classes/Exp-lookit-calibration.html">Exp-lookit-calibration</a></li>
                             <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
+                            <li><a href="../classes/Exp-lookit-composite-video-trial.html">Exp-lookit-composite-video-trial</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
@@ -721,7 +722,7 @@ export default ExpFrameBaseComponent.extend({
             $.each(this.session.get(&#x27;expData&#x27;), function(key, val) {
                 if (key.startsWith(_this.frameIndex + &#x27;-&#x27;)) {
                     _this.get(&#x27;form&#x27;).setValue(val.formData);
-                    return;
+
                 }
             });
 
@@ -740,7 +741,7 @@ export default ExpFrameBaseComponent.extend({
                     _this.send(&#x27;next&#x27;);
                 } else {
                     _this.get(&#x27;form&#x27;).focus();
-                    return;
+
                 }
             });
 

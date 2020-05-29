@@ -5,6 +5,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Exp-frame-select",
         "Exp-lookit-calibration",
         "Exp-lookit-change-detection",
+        "Exp-lookit-composite-video-trial",
         "Exp-lookit-dialogue-page",
         "Exp-lookit-exit-survey",
         "Exp-lookit-geometry-alternation",

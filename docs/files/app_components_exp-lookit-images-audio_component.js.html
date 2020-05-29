@@ -49,6 +49,7 @@
                             <li><a href="../classes/Exp-frame-select.html">Exp-frame-select</a></li>
                             <li><a href="../classes/Exp-lookit-calibration.html">Exp-lookit-calibration</a></li>
                             <li><a href="../classes/Exp-lookit-change-detection.html">Exp-lookit-change-detection</a></li>
+                            <li><a href="../classes/Exp-lookit-composite-video-trial.html">Exp-lookit-composite-video-trial</a></li>
                             <li><a href="../classes/Exp-lookit-dialogue-page.html">Exp-lookit-dialogue-page</a></li>
                             <li><a href="../classes/Exp-lookit-exit-survey.html">Exp-lookit-exit-survey</a></li>
                             <li><a href="../classes/Exp-lookit-geometry-alternation.html">Exp-lookit-geometry-alternation</a></li>
@@ -172,7 +173,7 @@ let {
  * this is a great way to do it.
  *
  * In general, the images are displayed in a designated region of the screen with aspect
- * ratio 2:1 (twice as wide as it is tall) to standardize display as much as possible
+ * ratio 7:4 (1.75 times as wide as it is tall) to standardize display as much as possible
  * across different monitors. If you want to display things truly fullscreen, you can
  * use &#x60;autoProceed&#x60; and not provide &#x60;parentText&#x60; so there&#x27;s nothing at the bottom, and then
  * set &#x60;maximizeDisplay&#x60; to true.
@@ -237,9 +238,9 @@ let {
             {
                 &quot;id&quot;: &quot;cats&quot;,
                 &quot;src&quot;: &quot;three_cats.JPG&quot;,
-                &quot;top&quot;: &quot;10&quot;,
-                &quot;left&quot;: &quot;30&quot;,
-                &quot;width&quot;: &quot;40&quot;
+                &quot;top&quot;: 10,
+                &quot;left&quot;: 30,
+                &quot;width&quot;: 40
             }
         ],
         &quot;baseDir&quot;: &quot;https://www.mit.edu/~kimscott/placeholderstimuli/&quot;,
@@ -660,10 +661,16 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          *     URL, or relative to baseDir (see baseDir).
          *   @param {String} alt alt-text for image in case it doesn&#x27;t load and for
          *     screen readers
-         *   @param {String} left left margin, as percentage of story area width. E.g.,
-         *     the string &#x27;20&#x27; for 20 percent.
-         *   @param {String} width image width, as percentage of story area width
-         *   @param {String} top top margin, as percentage of story area height
+         *   @param {Number} left left margin, as percentage of story area width. If not provided,
+         *     the image is centered horizontally.
+         *   @param {Number} width image width, as percentage of story area width. Note:
+         *     in general only provide one of width and height; the other will be adjusted to
+         *     preserve the image aspect ratio.
+         *   @param {Number} top top margin, as percentage of story area height. If not provided,
+         *     the image is centered vertically.
+         *   @param {Number} height image height, as percentage of story area height. Note:
+         *     in general only provide one of width and height; the other will be adjusted to
+         *     preserve the image aspect ratio.
          *   @param {String} position one of &#x27;left&#x27;, &#x27;center&#x27;, &#x27;right&#x27;, &#x27;fill&#x27; to use presets
          *     that place the image in approximately the left, center, or right third of
          *     the screen or to fill the screen as much as possible.
@@ -698,13 +705,16 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                         type: &#x27;string&#x27;
                     },
                     &#x27;left&#x27;: {
-                        type: &#x27;string&#x27;
+                        type: &#x27;number&#x27;
                     },
                     &#x27;width&#x27;: {
-                        type: &#x27;string&#x27;
+                        type: &#x27;number&#x27;
                     },
                     &#x27;top&#x27;: {
-                        type: &#x27;string&#x27;
+                        type: &#x27;number&#x27;
+                    },
+                    &#x27;height&#x27;: {
+                      type: &#x27;number&#x27;
                     },
                     &#x27;position&#x27;: {
                         type: &#x27;string&#x27;,
@@ -1259,7 +1269,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         // Apply user-provided CSS to images
         $.each(this.get(&#x27;images_parsed&#x27;), function(idx, image) {
-            if (!image.fill) {
+            if (!image.position) {
                 $(&#x27;#&#x27; + image.id).css({&#x27;left&#x27;: &#x60;${image.left}%&#x60;, &#x27;width&#x27;: &#x60;${image.width}%&#x60;, &#x27;top&#x27;: &#x60;${image.top}%&#x60;, &#x27;height&#x27;: &#x60;${image.height}%&#x60;});
             }
         });
