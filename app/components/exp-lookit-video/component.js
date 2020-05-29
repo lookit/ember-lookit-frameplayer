@@ -4,7 +4,7 @@ import ExpFrameBaseComponent from '../exp-frame-base/component';
 import FullScreen from '../../mixins/full-screen';
 import MediaReload from '../../mixins/media-reload';
 import VideoRecord from '../../mixins/video-record';
-import ExpandAssets, {imageAssetOptions} from '../../mixins/expand-assets';
+import ExpandAssets from '../../mixins/expand-assets';
 import { audioAssetOptions, videoAssetOptions } from '../../mixins/expand-assets';
 
 let {
@@ -311,15 +311,15 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                     this.readyToFinish();
                 } else {
                     if (this.get('testVideosTimesPlayed') === 1) {
-                      window.clearInterval(this.get('testTimer'));
-                      if (this.get('testLength')) {
-                        this.set('testTimer', window.setTimeout(() => {
-                          this.readyToFinish();
-                        }, this.get('testLength') * 1000));
-                      }
-                      if ($('audio#exp-music').length) {
-                        $('audio#exp-music')[0].play();
-                      }
+                        window.clearInterval(this.get('testTimer'));
+                        if (this.get('testLength')) {
+                            this.set('testTimer', window.setTimeout(() => {
+                                this.readyToFinish();
+                            }, this.get('testLength') * 1000));
+                        }
+                        if ($('audio#exp-music').length) {
+                            $('audio#exp-music')[0].play();
+                        }
                     }
                     this.send('setTimeEvent', 'startTestVideo');
                 }
@@ -327,13 +327,13 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         },
 
         videoStopped() {
-                if ((this.get('testVideosTimesPlayed') >= this.get('testCount')) && (!this.get('testLength'))) {
-                    this.readyToFinish();
-                } else {
-                    this.$('#player-video')[0].currentTime = 0;
-                    this.$('#player-video')[0].play();
-                }
-                this.send('setTimeEvent', 'videoStopped');
+            if ((this.get('testVideosTimesPlayed') >= this.get('testCount')) && (!this.get('testLength'))) {
+                this.readyToFinish();
+            } else {
+                this.$('#player-video')[0].currentTime = 0;
+                this.$('#player-video')[0].play();
+            }
+            this.send('setTimeEvent', 'videoStopped');
         },
 
         finish() { // Move to next frame altogether
@@ -389,7 +389,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             try {
                 this.resumeRecorder();
             } catch (_) {
-
+                // continue even if recorder could not be resumed
             }
         } else if (pause || !wasPaused) { // Not currently paused: pause
             window.clearInterval(this.get('testTimer'));

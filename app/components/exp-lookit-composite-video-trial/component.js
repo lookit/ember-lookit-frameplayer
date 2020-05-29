@@ -702,7 +702,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 try {
                     this.resumeRecorder();
                 } catch (_) {
-
+                    // continue even if recorder could not be resumed
                 }
             } else if (pause || !wasPaused) { // Not currently paused: pause
                 //this.showRecorder();

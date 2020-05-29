@@ -16,7 +16,7 @@
         {{/each}}
     </audio>
 
-    <div id="image-area" class="{{if maximizeVideoArea "image-area-fs"}}" >
+    <div id="image-area" class={{if maximizeVideoArea "image-area-fs"}} >
         {{#if (or doRecording startSessionRecording)}}
             <p id="waitForVideo"> establishing video connection <br> please wait... </p>
         {{/if}}
@@ -94,7 +94,7 @@
     {{/unless}}
 
 
-    {{#unless (or autoProceed parentTextBlock)}}
+    {{#if (or (not autoProceed) parentTextBlock)}}
 
         <div id="story-controls">
 
@@ -114,6 +114,6 @@
 
         </div>
 
-    {{/unless}}
+    {{/if}}
 
 </div>

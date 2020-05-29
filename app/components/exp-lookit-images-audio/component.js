@@ -596,7 +596,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                         type: 'number'
                     },
                     'height': {
-                      type: 'number'
+                        type: 'number'
                     },
                     'position': {
                         type: 'string',
