@@ -120,9 +120,9 @@ let {
             {
                 "id": "cats",
                 "src": "three_cats.JPG",
-                "top": "10",
-                "left": "30",
-                "width": "40"
+                "top": 10,
+                "left": 30,
+                "width": 40
             }
         ],
         "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
@@ -543,10 +543,16 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          *     URL, or relative to baseDir (see baseDir).
          *   @param {String} alt alt-text for image in case it doesn't load and for
          *     screen readers
-         *   @param {String} left left margin, as percentage of story area width. E.g.,
-         *     the string '20' for 20 percent.
-         *   @param {String} width image width, as percentage of story area width
-         *   @param {String} top top margin, as percentage of story area height
+         *   @param {Number} left left margin, as percentage of story area width. If not provided,
+         *     the image is centered horizontally.
+         *   @param {Number} width image width, as percentage of story area width. Note:
+         *     in general only provide one of width and height; the other will be adjusted to
+         *     preserve the image aspect ratio.
+         *   @param {Number} top top margin, as percentage of story area height. If not provided,
+         *     the image is centered vertically.
+         *   @param {Number} height image height, as percentage of story area height. Note:
+         *     in general only provide one of width and height; the other will be adjusted to
+         *     preserve the image aspect ratio.
          *   @param {String} position one of 'left', 'center', 'right', 'fill' to use presets
          *     that place the image in approximately the left, center, or right third of
          *     the screen or to fill the screen as much as possible.
@@ -581,13 +587,16 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                         type: 'string'
                     },
                     'left': {
-                        type: 'string'
+                        type: 'number'
                     },
                     'width': {
-                        type: 'string'
+                        type: 'number'
                     },
                     'top': {
-                        type: 'string'
+                        type: 'number'
+                    },
+                    'height': {
+                      type: 'number'
                     },
                     'position': {
                         type: 'string',
@@ -1142,7 +1151,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         // Apply user-provided CSS to images
         $.each(this.get('images_parsed'), function(idx, image) {
-            if (!image.fill) {
+            if (!image.position) {
                 $('#' + image.id).css({'left': `${image.left}%`, 'width': `${image.width}%`, 'top': `${image.top}%`, 'height': `${image.height}%`});
             }
         });
