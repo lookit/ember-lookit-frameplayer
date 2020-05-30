@@ -722,7 +722,7 @@ export default ExpFrameBaseComponent.extend({
             $.each(this.session.get(&#x27;expData&#x27;), function(key, val) {
                 if (key.startsWith(_this.frameIndex + &#x27;-&#x27;)) {
                     _this.get(&#x27;form&#x27;).setValue(val.formData);
-
+                    return;
                 }
             });
 
@@ -741,7 +741,7 @@ export default ExpFrameBaseComponent.extend({
                     _this.send(&#x27;next&#x27;);
                 } else {
                     _this.get(&#x27;form&#x27;).focus();
-
+                    return;
                 }
             });
 

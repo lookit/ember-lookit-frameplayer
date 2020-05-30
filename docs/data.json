@@ -45,6 +45,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "app/components/exp-lookit-composite-video-trial/component.js": {
+            "name": "app/components/exp-lookit-composite-video-trial/component.js",
+            "modules": {},
+            "classes": {
+                "Exp-lookit-composite-video-trial": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "app/components/exp-lookit-dialogue-page/component.js": {
             "name": "app/components/exp-lookit-dialogue-page/component.js",
             "modules": {},
@@ -164,15 +173,6 @@
         },
         "app/components/exp-lookit-video/component.js": {
             "name": "app/components/exp-lookit-video/component.js",
-            "modules": {},
-            "classes": {
-                "Exp-lookit-composite-video-trial": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "app/components/exp-lookit-video copy/component.js": {
-            "name": "app/components/exp-lookit-video copy/component.js",
             "modules": {},
             "classes": {
                 "Exp-lookit-video": 1
@@ -348,6 +348,7 @@
                 "Exp-frame-select": 1,
                 "Exp-lookit-calibration": 1,
                 "Exp-lookit-change-detection": 1,
+                "Exp-lookit-composite-video-trial": 1,
                 "Exp-lookit-dialogue-page": 1,
                 "Exp-lookit-exit-survey": 1,
                 "Exp-lookit-geometry-alternation": 1,
@@ -361,7 +362,6 @@
                 "Exp-lookit-story-page": 1,
                 "Exp-lookit-survey": 1,
                 "Exp-lookit-text": 1,
-                "Exp-lookit-composite-video-trial": 1,
                 "Exp-lookit-video": 1,
                 "Exp-lookit-video-assent": 1,
                 "Exp-lookit-video-consent": 1,
@@ -395,6 +395,7 @@
                 "Exp-frame-select": 1,
                 "Exp-lookit-calibration": 1,
                 "Exp-lookit-change-detection": 1,
+                "Exp-lookit-composite-video-trial": 1,
                 "Exp-lookit-dialogue-page": 1,
                 "Exp-lookit-exit-survey": 1,
                 "Exp-lookit-geometry-alternation": 1,
@@ -408,7 +409,6 @@
                 "Exp-lookit-story-page": 1,
                 "Exp-lookit-survey": 1,
                 "Exp-lookit-text": 1,
-                "Exp-lookit-composite-video-trial": 1,
                 "Exp-lookit-video": 1,
                 "Exp-lookit-video-assent": 1,
                 "Exp-lookit-video-consent": 1,
@@ -518,7 +518,7 @@
             "submodule": "frames",
             "namespace": "",
             "file": "app/components/exp-lookit-calibration/component.js",
-            "line": 19,
+            "line": 20,
             "description": "Frame to do calibration for looking direction. Shows a small video/image in a sequence\n of locations so you'll have video of the child looking to those locations at known times.\nThe attention-grabber can be either a small video or an image (see examples below of each).\n Images can be animated (spinning or bouncing).\nGenerally you will want to have video of this frame. You can set doRecording to true to\n make a video clip just for this frame, or you can use session-level recording (set\n startSessionRecording to true on this or a previous frame). If either type of recording\n is starting on this frame, it waits until recording starts to display the first calibration\n segment.\nIt can be displayed at center, left, or right of the screen. You can specify the sequence\n of positions or use the default ['center', 'left', 'right', 'center']. Each time it moves,\n the video (if any) and audio restart, and an event is recorded with the location and time (and time\n relative to any video recording) of the segment start.\nFor details about specifying media locations, please see\n https://lookit.readthedocs.io/en/develop/researchers-prep-stimuli.html?highlight=basedir#directory-structure\nThis frame is displayed fullscreen, to match the frames you will likely want to compare\n looking behavior on. If the participant leaves fullscreen, that will be\n recorded as an event, and a large \"return to fullscreen\" button will be displayed. Don't\n use video coding from any intervals where the participant isn't in fullscreen mode - the\n position of the attention-grabbers won't be as expected.\nIf the frame before it is not fullscreen, that frame\n needs to include a manual \"next\" button so that there's a user interaction\n event to trigger fullscreen mode. (Browsers don't allow us to switch to FS\n without a user event.)\nExample usage:\n\n```json\n   \"calibration-with-image\": {\n        \"kind\": \"exp-lookit-calibration\",\n        \"baseDir\": \"https://www.mit.edu/~kimscott/placeholderstimuli/\",\n        \"audioTypes\": [\n            \"ogg\",\n            \"mp3\"\n        ],\n        \"videoTypes\": [\n            \"webm\",\n            \"mp4\"\n        ],\n        \"calibrationImage\": \"peekaboo_remy.jpg\",\n        \"calibrationLength\": 3000,\n        \"calibrationPositions\": [\n            \"center\",\n            \"left\",\n            \"right\"\n        ],\n        \"calibrationAudio\": \"chimes\",\n        \"calibrationImageAnimation\": \"spin\"\n    },\n   \"calibration-with-video\": {\n        \"kind\": \"exp-lookit-calibration\",\n        \"baseDir\": \"https://www.mit.edu/~kimscott/placeholderstimuli/\",\n        \"audioTypes\": [\n            \"ogg\",\n            \"mp3\"\n        ],\n        \"videoTypes\": [\n            \"webm\",\n            \"mp4\"\n        ],\n        \"calibrationLength\": 3000,\n        \"calibrationPositions\": [\n            \"center\",\n            \"left\",\n            \"right\"\n        ],\n        \"calibrationAudio\": \"chimes\",\n        \"calibrationVideo\": \"attentiongrabber\"\n    },\n```",
             "extends": "Exp-frame-base",
             "uses": [
@@ -540,11 +540,33 @@
             "submodule": "frames",
             "namespace": "",
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 30,
+            "line": 31,
             "description": "Frame for a preferential looking \"alternation\" or \"change detection\" paradigm trial,\n in which separate streams of images are displayed on the left and right of the screen.\n Typically, on one side images would be alternating between two categories - e.g., images\n of 8 vs. 16 dots, images of cats vs. dogs - and on the other side the images would all\n be in the same category.\n\nThe frame starts with an optional brief \"announcement\" segment, where an attention-getter\n video is displayed and audio is played. During this segment, the trial can be paused\n and restarted.\n\nIf `doRecording` is true (default), then we wait for recording to begin before the\n actual test trial can begin. We also always wait for all images to pre-load, so that\n there are no delays in loading images that affect the timing of presentation.\n\nYou can customize the appearance of the frame: background color overall, color of the\n two rectangles that contain the image streams, and border of those rectangles. You can\n also specify how long to present the images for, how long to clear the screen in between\n image pairs, and how long the test trial should be altogether.\n\nYou provide four lists of images to use in this frame: `leftImagesA`, `leftImagesB`,\n `rightImagesA`, and `rightImagesB`. The left stream will alternate between images in\n `leftImagesA` and `leftImagesB`. The right stream will alternate between images in\n `rightImagesA` and `rightImagesB`. They are either presented in random order (default)\n within those lists, or can be presented in the exact order listed by setting\n `randomizeImageOrder` to false.\n\nThe timing of all image presentations and the specific images presented is recorded in\n the event data.\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\n needs to include a manual \"next\" button so that there's a user interaction\n event to trigger fullscreen mode. (Browsers don't allow switching to fullscreen\n without a user event.) If the user leaves fullscreen, that event is recorded, but the\n trial is not paused.\n\nSpecifying media locations:\n\nFor any parameters that expect a list of audio/video sources, you can EITHER provide\n a list of src/type pairs with full paths like this:\n ```json\n    [\n        {\n            'src': 'http://.../video1.mp4',\n            'type': 'video/mp4'\n        },\n        {\n            'src': 'http://.../video1.webm',\n            'type': 'video/webm'\n        }\n    ]\n ```\n OR you can provide a single string 'stub', which will be expanded\n based on the parameter baseDir and the media types expected - either audioTypes or\n videoTypes as appropriate. For example, if you provide the audio source `intro`\n and baseDir is https://mystimuli.org/mystudy/, with audioTypes ['mp3', 'ogg'], then this\n will be expanded to:\n ```json\n                  [\n                         {\n                             src: 'https://mystimuli.org/mystudy/mp3/intro.mp3',\n                             type: 'audio/mp3'\n                         },\n                         {\n                             src: 'https://mystimuli.org/mystudy/ogg/intro.ogg',\n                             type: 'audio/ogg'\n                         }\n                 ]\n ```\n This allows you to simplify your JSON document a bit and also easily switch to a\n new version of your stimuli without changing every URL. You can mix source objects with\n full URLs and those using stubs within the same directory. However, any stimuli\n specified using stubs MUST be\n organized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.\n\nExample usage:\n```json\n \"frames\": {\n    \"alt-trial\": {\n        \"kind\": \"exp-lookit-change-detection\",\n        \"baseDir\": \"https://www.mit.edu/~kimscott/placeholderstimuli/\",\n        \"videoTypes\": [\"mp4\", \"webm\"],\n        \"audioTypes\": [\"mp3\", \"ogg\"],\n        \"trialLength\": 15,\n        \"attnLength\": 2,\n        \"fsAudio\": \"sample_1\",\n        \"unpauseAudio\": \"return_after_pause\",\n        \"pauseAudio\": \"pause\",\n        \"videoSources\": \"attentiongrabber\",\n        \"musicSources\": \"music_01\",\n        \"audioSources\": \"video_01\",\n        \"endAudioSources\": \"all_done\",\n        \"border\": \"thick solid black\",\n        \"leftImagesA\": [\"apple.jpg\", \"orange.jpg\"],\n        \"rightImagesA\": [\"square.png\", \"tall.png\", \"wide.png\"],\n        \"leftImagesB\": [\"apple.jpg\", \"orange.jpg\"],\n        \"rightImagesB\": [\"apple.jpg\", \"orange.jpg\"],\n        \"startWithA\": true,\n        \"randomizeImageOrder\": true,\n        \"displayMs\": 500,\n        \"blankMs\": 250,\n        \"containerColor\": \"white\",\n        \"backgroundColor\": \"#abc\",\n    }\n }\n```",
             "extends": "Exp-frame-base",
             "uses": [
                 "Full-screen",
+                "Video-record",
+                "Expand-assets"
+            ]
+        },
+        "Exp-lookit-composite-video-trial": {
+            "name": "Exp-lookit-composite-video-trial",
+            "shortname": "Exp-lookit-composite-video-trial",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "exp-player",
+            "submodule": "frames",
+            "namespace": "",
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 19,
+            "description": "Composite video display for typical looking measures trials (e.g. preferential looking,\nlooking time). (Previously called exp-lookit-video.)\n\nTrial consists of four phases, each of which is optional.\n\n1. Announcement: The audio in audioSources is played while the attnSources video is played centrally, looping as needed. This lasts for announceLength seconds or the duration of the audio, whichever is longer. To skip this phase, set announceLength to 0 and do not provide audioSources.\n\n2. Intro: The introSources video is played centrally until it ends. To skip this phase, do not provide introSources.\n\n3. Calibration: The video in calibrationVideoSources is played (looping as needed) in each of the locations specified in calibrationPositions in turn, remaining in each position for calibrationLength ms. At the start of each position the audio in calibrationAudioSources is played once. (Audio will be paused and restarted if it is longer than calibrationLength.) Set calibrationLength to 0 to skip calibration.\n\n4. Test: The video in sources and audio in musicSources (optional) are played until either: testLength seconds have elapsed (with video looping if needed), or the video has been played testCount times. If testLength is set, it overrides testCount - for example if testCount is 1 and testLength is 30, a 10-second video will be played 3 times. If the participant pauses the study during the test phase, then after restarting the trial, the video in altSources will be used again (defaulting to the same video if altSources is not provided). To skip this phase, do not provide sources.\n\nSpecifying media locations:\nFor any parameters that expect a list of audio/video sources, you can EITHER provide\na list of src/type pairs with full paths like this:\n```json\n   [\n       {\n           'src': 'http://.../video1.mp4',\n           'type': 'video/mp4'\n       },\n       {\n           'src': 'http://.../video1.webm',\n           'type': 'video/webm'\n       }\n   ]\n```\nOR you can provide a single string 'stub', which will be expanded\nbased on the parameter baseDir and the media types expected - either audioTypes or\nvideoTypes as appropriate. For example, if you provide the audio source `intro`\nand baseDir is https://mystimuli.org/mystudy/, with audioTypes ['mp3', 'ogg'], then this\nwill be expanded to:\n```json\n                [\n                       {\n                           src: 'https://mystimuli.org/mystudy/mp3/intro.mp3',\n                           type: 'audio/mp3'\n                       },\n                       {\n                           src: 'https://mystimuli.org/mystudy/ogg/intro.ogg',\n                           type: 'audio/ogg'\n                       }\n               ]\n```\nThis allows you to simplify your JSON document a bit and also easily switch to a\nnew version of your stimuli without changing every URL. You can mix source objects with\nfull URLs and those using stubs within the same directory. However, any stimuli\nspecified using stubs MUST be\norganized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\nneeds to include a manual \"next\" button so that there's a user interaction\nevent to trigger fullscreen mode. (Browsers don't allow us to switch to FS\nwithout a user event.)\n\nExample usage:\n\n```json\n       \"sample-intermodal-trial-2\": {\n           \"kind\": \"exp-lookit-video\",\n           \"isLast\": false,\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/intermodal/\",\n           \"sources\": \"sbs_ramp_down_up_apple_c1_b1_NN\",\n           \"testCount\": 2,\n           \"altSources\": \"sbs_ramp_up_down_apple_c1_b1_NN\",\n           \"audioTypes\": [\n               \"ogg\",\n               \"mp3\"\n           ],\n           \"pauseAudio\": \"pause\",\n           \"videoTypes\": [\n               \"webm\",\n               \"mp4\"\n           ],\n           \"attnSources\": \"attentiongrabber\",\n           \"audioSources\": \"video_02\",\n           \"introSources\": \"cropped_book\",\n           \"musicSources\": \"music_02\",\n           \"unpauseAudio\": \"return_after_pause\",\n           \"calibrationLength\": 3000,\n           \"calibrationAudioSources\": \"chimes\",\n           \"calibrationVideoSources\": \"attentiongrabber\"\n       }\n\n```",
+            "extends": "Exp-frame-base",
+            "uses": [
+                "Full-screen",
+                "Media-reload",
                 "Video-record",
                 "Expand-assets"
             ]
@@ -644,7 +666,7 @@
             "submodule": "frames",
             "namespace": "",
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 19,
+            "line": 20,
             "description": "Frame to display image(s) and play audio, with optional video recording. Options allow\ncustomization for looking time, storybook, forced choice, and reaction time type trials,\nincluding training versions where children (or parents) get feedback about their responses.\n\nThis can be used in a variety of ways - for example:\n\n- Display an image for a set amount of time and measure looking time\n\n- Display two images for a set amount of time and play audio for a\nlooking-while-listening paradigm\n\n- Show a \"storybook page\" where you show images and play audio, having the parent/child\npress 'Next' to proceed. If desired,\nimages can appear and be highlighted at specific times\nrelative to audio. E.g., the audio might say \"This [image of Remy appears] is a boy\nnamed Remy. Remy has a little sister [image of Zenna appears] named Zenna.\n[Remy highlighted] Remy's favorite food is brussel sprouts, but [Zenna highlighted]\nZenna's favorite food is ice cream. [Remy and Zenna both highlighted] Remy and Zenna\nboth love tacos!\"\n\n- Play audio asking the child to choose between two images by pointing or answering\nverbally. Show text for the parent about how to help and when to press Next.\n\n- Play audio asking the child to choose between two images, and require one of those\nimages to be clicked to proceed (see \"choiceRequired\" option).\n\n- Measure reaction time as the child is asked to choose a particular option on each trial\n(e.g., a central cue image is shown first, then two options at a short delay; the child\nclicks on the one that matches the cue in some way)\n\n- Provide audio and/or text feedback on the child's (or parent's) choice before proceeding,\neither just to make the study a bit more interactive (\"Great job, you chose the color BLUE!\")\nor for initial training/familiarization to make sure they understand the task. Some\nimages can be marked as the \"correct\" answer and a correct answer required to proceed.\nIf you'd like to include some initial training questions before your test questions,\nthis is a great way to do it.\n\nIn general, the images are displayed in a designated region of the screen with aspect\nratio 7:4 (1.75 times as wide as it is tall) to standardize display as much as possible\nacross different monitors. If you want to display things truly fullscreen, you can\nuse `autoProceed` and not provide `parentText` so there's nothing at the bottom, and then\nset `maximizeDisplay` to true.\n\nWebcam recording may be turned on or off; if on, stimuli are not displayed and audio is\nnot started until recording begins. (Using the frame-specific `isRecording` property\nis good if you have a smallish number of test trials and prefer to have separate video\nclips for each. For reaction time trials or many short trials, you will likely want\nto use session recording instead - i.e. start the session recording before the first trial\nand end on the last trial - to avoid the short delays related to starting/stopping the video.)\n\nThis frame is displayed fullscreen, but is not paused or otherwise disabled if the\nuser leaves fullscreen. A button appears prompting the user to return to\nfullscreen mode.\n\nAny number of images may be placed on the screen, and their position\nspecified. (Aspect ratio will be the same as the original image.)\n\nThe examples below show a variety of usages, corresponding to those shown in the video.\n\nimage-1: Single image displayed full-screen, maximizing area on monitor, for 8 seconds.\n\nimage-2: Single image displayed at specified position, with 'next' button to move on\n\nimage-3: Image plus audio, auto-proceeding after audio completes and 4 seconds go by\n\nimage-4: Image plus audio, with 'next' button to move on\n\nimage-5: Two images plus audio question asking child to point to one of the images,\n  demonstrating different timing of image display & highlighting of images during audio\n\nimage-6: Three images with audio prompt, family has to click one of two to continue\n\nimage-7: Three images with audio prompt, family has to click correct one to continue -\n  audio feedback on incorrect answer\n\nimage-8: Three images with audio prompt, family has to click correct one to continue -\n  text feedback on incorrect answer\n\n\n\n```json\n\"frames\": {\n   \"image-1\": {\n       \"kind\": \"exp-lookit-images-audio\",\n       \"images\": [\n           {\n               \"id\": \"cats\",\n               \"src\": \"two_cats.png\",\n               \"position\": \"fill\"\n           }\n       ],\n       \"baseDir\": \"https://www.mit.edu/~kimscott/placeholderstimuli/\",\n       \"autoProceed\": true,\n       \"doRecording\": true,\n       \"durationSeconds\": 8,\n       \"maximizeDisplay\": true\n   },\n   \"image-2\": {\n       \"kind\": \"exp-lookit-images-audio\",\n       \"images\": [\n           {\n               \"id\": \"cats\",\n               \"src\": \"three_cats.JPG\",\n               \"top\": 10,\n               \"left\": 30,\n               \"width\": 40\n           }\n       ],\n       \"baseDir\": \"https://www.mit.edu/~kimscott/placeholderstimuli/\",\n       \"autoProceed\": false,\n       \"doRecording\": true,\n       \"parentTextBlock\": {\n           \"text\": \"Some explanatory text for parents\",\n           \"title\": \"For parents\"\n       }\n   },\n   \"image-3\": {\n       \"kind\": \"exp-lookit-images-audio\",\n       \"audio\": \"wheresremy\",\n       \"images\": [\n           {\n               \"id\": \"remy\",\n               \"src\": \"wheres_remy.jpg\",\n               \"position\": \"fill\"\n           }\n       ],\n       \"baseDir\": \"https://www.mit.edu/~kimscott/placeholderstimuli/\",\n       \"audioTypes\": [\n           \"mp3\",\n           \"ogg\"\n       ],\n       \"autoProceed\": true,\n       \"doRecording\": false,\n       \"durationSeconds\": 4,\n       \"parentTextBlock\": {\n           \"text\": \"Some explanatory text for parents\",\n           \"title\": \"For parents\"\n       },\n       \"showProgressBar\": true\n   },\n   \"image-4\": {\n       \"kind\": \"exp-lookit-images-audio\",\n       \"audio\": \"peekaboo\",\n       \"images\": [\n           {\n               \"id\": \"remy\",\n               \"src\": \"peekaboo_remy.jpg\",\n               \"position\": \"fill\"\n           }\n       ],\n       \"baseDir\": \"https://www.mit.edu/~kimscott/placeholderstimuli/\",\n       \"audioTypes\": [\n           \"mp3\",\n           \"ogg\"\n       ],\n       \"autoProceed\": false,\n       \"doRecording\": false,\n       \"parentTextBlock\": {\n           \"text\": \"Some explanatory text for parents\",\n           \"title\": \"For parents\"\n       }\n   },\n   \"image-5\": {\n       \"kind\": \"exp-lookit-images-audio\",\n       \"audio\": \"remyzennaintro\",\n       \"images\": [\n           {\n               \"id\": \"remy\",\n               \"src\": \"scared_remy.jpg\",\n               \"position\": \"left\"\n           },\n           {\n               \"id\": \"zenna\",\n               \"src\": \"love_zenna.jpg\",\n               \"position\": \"right\",\n               \"displayDelayMs\": 1500\n           }\n       ],\n       \"baseDir\": \"https://www.mit.edu/~kimscott/placeholderstimuli/\",\n       \"highlights\": [\n           {\n               \"range\": [\n                   0,\n                   1.5\n               ],\n               \"imageId\": \"remy\"\n           },\n           {\n               \"range\": [\n                   1.5,\n                   3\n               ],\n               \"imageId\": \"zenna\"\n           }\n       ],\n       \"autoProceed\": false,\n       \"doRecording\": true,\n       \"parentTextBlock\": {\n           \"text\": \"Some explanatory text for parents\",\n           \"title\": \"For parents\"\n       }\n   },\n   \"image-6\": {\n       \"kind\": \"exp-lookit-images-audio\",\n       \"audio\": \"matchremy\",\n       \"images\": [\n           {\n               \"id\": \"cue\",\n               \"src\": \"happy_remy.jpg\",\n               \"position\": \"center\",\n               \"nonChoiceOption\": true\n           },\n           {\n               \"id\": \"option1\",\n               \"src\": \"happy_zenna.jpg\",\n               \"position\": \"left\",\n               \"displayDelayMs\": 2000\n           },\n           {\n               \"id\": \"option2\",\n               \"src\": \"annoyed_zenna.jpg\",\n               \"position\": \"right\",\n               \"displayDelayMs\": 2000\n           }\n       ],\n       \"baseDir\": \"https://www.mit.edu/~kimscott/placeholderstimuli/\",\n       \"autoProceed\": false,\n       \"doRecording\": true,\n       \"choiceRequired\": true,\n       \"parentTextBlock\": {\n           \"text\": \"Some explanatory text for parents\",\n           \"title\": \"For parents\"\n       },\n       \"canMakeChoiceBeforeAudioFinished\": true\n   },\n   \"image-7\": {\n       \"kind\": \"exp-lookit-images-audio\",\n       \"audio\": \"matchzenna\",\n       \"images\": [\n           {\n               \"id\": \"cue\",\n               \"src\": \"sad_zenna.jpg\",\n               \"position\": \"center\",\n               \"nonChoiceOption\": true\n           },\n           {\n               \"id\": \"option1\",\n               \"src\": \"surprised_remy.jpg\",\n               \"position\": \"left\",\n               \"feedbackAudio\": \"negativefeedback\",\n               \"displayDelayMs\": 3500\n           },\n           {\n               \"id\": \"option2\",\n               \"src\": \"sad_remy.jpg\",\n               \"correct\": true,\n               \"position\": \"right\",\n               \"displayDelayMs\": 3500\n           }\n       ],\n       \"baseDir\": \"https://www.mit.edu/~kimscott/placeholderstimuli/\",\n       \"autoProceed\": false,\n       \"doRecording\": true,\n       \"choiceRequired\": true,\n       \"parentTextBlock\": {\n           \"text\": \"Some explanatory text for parents\",\n           \"title\": \"For parents\"\n       },\n       \"correctChoiceRequired\": true,\n       \"canMakeChoiceBeforeAudioFinished\": false\n   },\n   \"image-8\": {\n       \"kind\": \"exp-lookit-images-audio\",\n       \"audio\": \"matchzenna\",\n       \"images\": [\n           {\n               \"id\": \"cue\",\n               \"src\": \"sad_zenna.jpg\",\n               \"position\": \"center\",\n               \"nonChoiceOption\": true\n           },\n           {\n               \"id\": \"option1\",\n               \"src\": \"surprised_remy.jpg\",\n               \"position\": \"left\",\n               \"feedbackText\": \"Try again! Remy looks surprised in that picture. Can you find the picture where he looks sad, like Zenna?\",\n               \"displayDelayMs\": 3500\n           },\n           {\n               \"id\": \"option2\",\n               \"src\": \"sad_remy.jpg\",\n               \"correct\": true,\n               \"position\": \"right\",\n               \"feedbackText\": \"Great job! Remy is sad in that picture, just like Zenna is sad.\",\n               \"displayDelayMs\": 3500\n           }\n       ],\n       \"baseDir\": \"https://www.mit.edu/~kimscott/placeholderstimuli/\",\n       \"autoProceed\": false,\n       \"doRecording\": true,\n       \"choiceRequired\": true,\n       \"parentTextBlock\": {\n           \"text\": \"Some explanatory text for parents\",\n           \"title\": \"For parents\"\n       },\n       \"correctChoiceRequired\": true,\n       \"canMakeChoiceBeforeAudioFinished\": false\n   }\n}\n\n```",
             "extends": "Exp-frame-base",
             "uses": [
@@ -714,7 +736,7 @@
             "namespace": "",
             "file": "app/components/exp-lookit-preferential-looking/component.js",
             "line": 19,
-            "description": "Basic video display for looking measures (e.g. preferential looking, looking time).\nTrial consists of four phases, each of which is optional.\n\n1. Announcement: The audio in announcementAudio is played while the announcementVideo\nvideo is played centrally, looping as needed. This lasts for announcementLength seconds\nor the duration of the audio, whichever is longer. To skip this phase, set\nannouncementLength to 0 and do not provide announcementAudio.\n\n2. Intro: The introVideo video is played centrally until it ends. To skip this phase,\ndo not provide introVideo.\n\n3. Calibration: The video in calibrationVideo is played (looping as needed) in each of\nthe locations specified in calibrationPositions in turn, remaining in each position for\ncalibrationLength ms. At the start of each position the audio in calibrationAudio is\nplayed once. (Audio will be paused and restarted if it is longer than calibrationLength.)\nSet calibrationLength to 0 to skip calibration.\n\n4. Test: The video in testVideo and audio in testAudio (optional) are played until\neither: testLength seconds have elapsed (with video looping if needed), or the video\nhas been played testCount times. If testLength is set, it overrides testCount - for\nexample if testCount is 1 and testLength is 30, a 10-second video will be played 3 times.\nIf the participant pauses the study during the test phase, then after restarting the\ntrial, the video in altTestVideo will be used again (defaulting to the same video if\naltTestVideo is not provided).\n\nSpecifying media locations:\nFor any parameters that expect a list of audio/video sources, you can EITHER provide\na list of src/type pairs with full paths like this:\n```json\n   [\n       {\n           'src': 'http://.../video1.mp4',\n           'type': 'video/mp4'\n       },\n       {\n           'src': 'http://.../video1.webm',\n           'type': 'video/webm'\n       }\n   ]\n```\nOR you can provide a string 'stub', which will be expanded\nbased on the parameter baseDir. Expected audio/video locations will be based on either audioTypes or\nvideoTypes as appropriate; images will be expected to all be in an img/ subdirectory.\nFor example, if you provide the audio source `intro`,\nand baseDir is `https://mystimuli.org/mystudy/`, with audioTypes `['mp3', 'ogg']`, then this\nwill be expanded to:\n```json\n                [\n                       {\n                           src: 'https://mystimuli.org/mystudy/mp3/intro.mp3',\n                           type: 'audio/mp3'\n                       },\n                       {\n                           src: 'https://mystimuli.org/mystudy/ogg/intro.ogg',\n                           type: 'audio/ogg'\n                       }\n               ]\n```\nThis allows you to simplify your JSON document a bit and also easily switch to a\nnew version of your stimuli without changing every URL. You can mix source objects with\nfull URLs and those using stubs within the same directory. However, any stimuli\nspecified using stubs MUST be\norganized as expected under `baseDir/MEDIATYPE/filename.MEDIATYPE`.\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\nneeds to include a manual \"next\" button so that there's a user interaction\nevent to trigger fullscreen mode. (Browsers don't allow us to switch to FS\nwithout a user event.)\n\nExample usage:\n\n```json\n   \"sample-trial\": {\n       \"kind\": \"exp-lookit-preferential-looking\",\n       \"isLast\": false,\n       \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/labelsconcepts/\",\n       \"leftImage\": \"stapler_test_02.jpg\",\n       \"testLength\": 8,\n       \"audioTypes\": [\n           \"ogg\",\n           \"mp3\"\n       ],\n       \"pauseAudio\": \"pause\",\n       \"rightImage\": \"novel_02.jpg\",\n       \"videoTypes\": [\n           \"webm\",\n           \"mp4\"\n       ],\n       \"announcementVideo\": \"attentiongrabber\",\n       \"announcementAudio\": \"video_02\",\n       \"introVideo\": \"cropped_book\",\n       \"testAudio\": \"400Hz_tones\",\n       \"unpauseAudio\": \"return_after_pause\",\n       \"calibrationLength\": 0,\n       \"calibrationAudio\": \"chimes\",\n       \"calibrationVideo\": \"attentiongrabber\",\n       \"loopTestAudio\": false\n   }\n```",
+            "description": "Basic image display for looking measures (e.g. preferential looking, looking time).\nTrial consists of four phases, each of which is optional.\n\nThis is a composite trial very similar to exp-lookit-composite-video-trial except that\nit allows specifying either video stimuli or static images.\n\n1. Announcement: The audio in announcementAudio is played while the announcementVideo\nvideo is played centrally, looping as needed. This lasts for announcementLength seconds\nor the duration of the audio, whichever is longer. To skip this phase, set\nannouncementLength to 0 and do not provide announcementAudio.\n\n2. Intro: The introVideo video is played centrally until it ends. To skip this phase,\ndo not provide introVideo.\n\n3. Calibration: The video in calibrationVideo is played (looping as needed) in each of\nthe locations specified in calibrationPositions in turn, remaining in each position for\ncalibrationLength ms. At the start of each position the audio in calibrationAudio is\nplayed once. (Audio will be paused and restarted if it is longer than calibrationLength.)\nSet calibrationLength to 0 to skip calibration.\n\n4. Test: Test images are displayed or the video in testVideo and audio in testAudio (optional) are played until\neither: testLength seconds have elapsed (with video looping if needed), or the video\nhas been played testCount times. If testLength is set, it overrides testCount - for\nexample if testCount is 1 and testLength is 30, a 10-second video will be played 3 times.\nIf the participant pauses the study during the test phase, then after restarting the\ntrial, the video in altTestVideo will be used again (defaulting to the same video if\naltTestVideo is not provided).\n\nTo specify test images, you can provide leftImage, rightImage, and/or centerImage, or you can provide a list of\npossibleImages and give an index in that list for any of those three placements.\n\nSpecifying media locations:\nFor any parameters that expect a list of audio/video sources, you can EITHER provide\na list of src/type pairs with full paths like this:\n```json\n   [\n       {\n           'src': 'http://.../video1.mp4',\n           'type': 'video/mp4'\n       },\n       {\n           'src': 'http://.../video1.webm',\n           'type': 'video/webm'\n       }\n   ]\n```\nOR you can provide a string 'stub', which will be expanded\nbased on the parameter baseDir. Expected audio/video locations will be based on either audioTypes or\nvideoTypes as appropriate; images will be expected to all be in an img/ subdirectory.\nFor example, if you provide the audio source `intro`,\nand baseDir is `https://mystimuli.org/mystudy/`, with audioTypes `['mp3', 'ogg']`, then this\nwill be expanded to:\n```json\n                [\n                       {\n                           src: 'https://mystimuli.org/mystudy/mp3/intro.mp3',\n                           type: 'audio/mp3'\n                       },\n                       {\n                           src: 'https://mystimuli.org/mystudy/ogg/intro.ogg',\n                           type: 'audio/ogg'\n                       }\n               ]\n```\nThis allows you to simplify your JSON document a bit and also easily switch to a\nnew version of your stimuli without changing every URL. You can mix source objects with\nfull URLs and those using stubs within the same directory. However, any stimuli\nspecified using stubs MUST be\norganized as expected under `baseDir/MEDIATYPE/filename.MEDIATYPE`.\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\nneeds to include a manual \"next\" button so that there's a user interaction\nevent to trigger fullscreen mode. (Browsers don't allow us to switch to FS\nwithout a user event.)\n\nExample usage:\n\n```json\n   \"sample-trial\": {\n       \"kind\": \"exp-lookit-preferential-looking\",\n       \"isLast\": false,\n       \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/labelsconcepts/\",\n       \"leftImage\": \"stapler_test_02.jpg\",\n       \"testLength\": 8,\n       \"audioTypes\": [\n           \"ogg\",\n           \"mp3\"\n       ],\n       \"pauseAudio\": \"pause\",\n       \"rightImage\": \"novel_02.jpg\",\n       \"videoTypes\": [\n           \"webm\",\n           \"mp4\"\n       ],\n       \"announcementVideo\": \"attentiongrabber\",\n       \"announcementAudio\": \"video_02\",\n       \"introVideo\": \"cropped_book\",\n       \"testAudio\": \"400Hz_tones\",\n       \"unpauseAudio\": \"return_after_pause\",\n       \"calibrationLength\": 0,\n       \"calibrationAudio\": \"chimes\",\n       \"calibrationVideo\": \"attentiongrabber\",\n       \"loopTestAudio\": false\n   }\n```",
             "extends": "Exp-frame-base",
             "uses": [
                 "Full-screen",
@@ -797,28 +819,6 @@
             "description": "A frame to display text-only instructions, etc. to the user.\n\n```json\n\"frames\": {\n   \"study-intro\": {\n       \"blocks\": [\n           {\n               \"emph\": true,\n               \"text\": \"Important: your child does not need to be with you until the videos begin. First, let's go over what will happen!\",\n               \"title\": \"Your baby, the physicist\"\n           },\n           {\n               \"text\": \"Some introductory text about this study.\"\n           },\n           {\n               \"text\": \"Another paragraph about this study.\"\n           }\n       ],\n       \"showPreviousButton\": false,\n       \"kind\": \"exp-lookit-text\"\n   }\n}\n\n```",
             "extends": "Exp-frame-base"
         },
-        "Exp-lookit-composite-video-trial": {
-            "name": "Exp-lookit-composite-video-trial",
-            "shortname": "Exp-lookit-composite-video-trial",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "exp-player",
-            "submodule": "frames",
-            "namespace": "",
-            "file": "app/components/exp-lookit-video/component.js",
-            "line": 19,
-            "description": "TODO\n\nComposite video display for typical looking measures trials (e.g. preferential looking,\nlooking time).\nvideo:\n  source\n  loop\n  position\n\n\nThe video in sources and audio in musicSources (optional) are played until either: testLength seconds have elapsed (with video looping if needed), or the video has been played testCount times. If testLength is set, it overrides testCount - for example if testCount is 1 and testLength is 30, a 10-second video will be played 3 times. If the participant pauses the study during the test phase, then after restarting the trial, the video in altSources will be used again (defaulting to the same video if altSources is not provided). To skip this phase, do not provide sources.\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\nneeds to include a manual \"next\" button so that there's a user interaction\nevent to trigger fullscreen mode. (Browsers don't allow us to switch to FS\nwithout a user event.)\n\nExample usage:\n\n```json\n       \"sample-intermodal-trial-2\": {\n           \"kind\": \"exp-lookit-video\",\n           \"isLast\": false,\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/intermodal/\",\n           \"sources\": \"sbs_ramp_down_up_apple_c1_b1_NN\",\n           \"testCount\": 2,\n           \"audioTypes\": [\n               \"ogg\",\n               \"mp3\"\n           ],\n           \"pauseAudio\": \"pause\",\n           \"videoTypes\": [\n               \"webm\",\n               \"mp4\"\n           ],\n           \"attnSources\": \"attentiongrabber\",\n           \"introSources\": \"cropped_book\",\n           \"musicSources\": \"music_02\",\n           \"unpauseAudio\": \"return_after_pause\"\n       }\n\n```",
-            "extends": "Exp-frame-base",
-            "uses": [
-                "Full-screen",
-                "Media-reload",
-                "Video-record",
-                "Expand-assets"
-            ]
-        },
         "Exp-lookit-video": {
             "name": "Exp-lookit-video",
             "shortname": "Exp-lookit-video",
@@ -830,9 +830,9 @@
             "module": "exp-player",
             "submodule": "frames",
             "namespace": "",
-            "file": "app/components/exp-lookit-video copy/component.js",
+            "file": "app/components/exp-lookit-video/component.js",
             "line": 19,
-            "description": "Composite video display for typical looking measures trials (e.g. preferential looking,\nlooking time).\n\nTrial consists of four phases, each of which is optional.\n\n1. Announcement: The audio in audioSources is played while the attnSources video is played centrally, looping as needed. This lasts for announceLength seconds or the duration of the audio, whichever is longer. To skip this phase, set announceLength to 0 and do not provide audioSources.\n\n2. Intro: The introSources video is played centrally until it ends. To skip this phase, do not provide introSources.\n\n3. Calibration: The video in calibrationVideoSources is played (looping as needed) in each of the locations specified in calibrationPositions in turn, remaining in each position for calibrationLength ms. At the start of each position the audio in calibrationAudioSources is played once. (Audio will be paused and restarted if it is longer than calibrationLength.) Set calibrationLength to 0 to skip calibration.\n\n4. Test: The video in sources and audio in musicSources (optional) are played until either: testLength seconds have elapsed (with video looping if needed), or the video has been played testCount times. If testLength is set, it overrides testCount - for example if testCount is 1 and testLength is 30, a 10-second video will be played 3 times. If the participant pauses the study during the test phase, then after restarting the trial, the video in altSources will be used again (defaulting to the same video if altSources is not provided). To skip this phase, do not provide sources.\n\nSpecifying media locations:\nFor any parameters that expect a list of audio/video sources, you can EITHER provide\na list of src/type pairs with full paths like this:\n```json\n   [\n       {\n           'src': 'http://.../video1.mp4',\n           'type': 'video/mp4'\n       },\n       {\n           'src': 'http://.../video1.webm',\n           'type': 'video/webm'\n       }\n   ]\n```\nOR you can provide a single string 'stub', which will be expanded\nbased on the parameter baseDir and the media types expected - either audioTypes or\nvideoTypes as appropriate. For example, if you provide the audio source `intro`\nand baseDir is https://mystimuli.org/mystudy/, with audioTypes ['mp3', 'ogg'], then this\nwill be expanded to:\n```json\n                [\n                       {\n                           src: 'https://mystimuli.org/mystudy/mp3/intro.mp3',\n                           type: 'audio/mp3'\n                       },\n                       {\n                           src: 'https://mystimuli.org/mystudy/ogg/intro.ogg',\n                           type: 'audio/ogg'\n                       }\n               ]\n```\nThis allows you to simplify your JSON document a bit and also easily switch to a\nnew version of your stimuli without changing every URL. You can mix source objects with\nfull URLs and those using stubs within the same directory. However, any stimuli\nspecified using stubs MUST be\norganized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\nneeds to include a manual \"next\" button so that there's a user interaction\nevent to trigger fullscreen mode. (Browsers don't allow us to switch to FS\nwithout a user event.)\n\nExample usage:\n\n```json\n       \"sample-intermodal-trial-2\": {\n           \"kind\": \"exp-lookit-video\",\n           \"isLast\": false,\n           \"baseDir\": \"https://s3.amazonaws.com/lookitcontents/intermodal/\",\n           \"sources\": \"sbs_ramp_down_up_apple_c1_b1_NN\",\n           \"testCount\": 2,\n           \"altSources\": \"sbs_ramp_up_down_apple_c1_b1_NN\",\n           \"audioTypes\": [\n               \"ogg\",\n               \"mp3\"\n           ],\n           \"pauseAudio\": \"pause\",\n           \"videoTypes\": [\n               \"webm\",\n               \"mp4\"\n           ],\n           \"attnSources\": \"attentiongrabber\",\n           \"audioSources\": \"video_02\",\n           \"introSources\": \"cropped_book\",\n           \"musicSources\": \"music_02\",\n           \"unpauseAudio\": \"return_after_pause\",\n           \"calibrationLength\": 3000,\n           \"calibrationAudioSources\": \"chimes\",\n           \"calibrationVideoSources\": \"attentiongrabber\"\n       }\n\n```",
+            "description": "Video display frame. This may be used for displaying videos to older children or parents, as well as for\ntypical looking measures trials or as brief filler in between test trials.\n\nThis is very customizable: you can...\n  - position the video wherever you want on the screen, including specifying that it should fill the screen (while maintaining aspect ratio)\n  - choose the background color\n  - optionally specify audio that should play along with the video\n  - have the frame proceed automatically (`autoProceed`), or enable a Next button when the user can move on\n  - allow parents to press a key to pause the video (and then either restart when they un-pause, or move on to the next frame)\n\nVideo (and audio if provided) start as soon as any recording begins, or right away if there is no recording starting.\n\nIf the user pauses using the `pauseKey`, or if the user leaves fullscreen mode, the study will be paused.\nWhile paused, the video/audio are stopped and not displayed, and instead a looping `pauseVideo` and text are displayed.\n\nThere are several ways you can specify how long the trial should last. The frame will continue until\nALL of the following are true:\n  - the video has been played all the way through `requireVideoCount` times\n  - the audio has been played all the way through `requireAudioCount` times\n  - `requiredDuration` seconds have elapsed since beginning the video\n\nYou do not need to use all of these - for instance, to play the video one time and then proceed, set\n`requireVideoCount` to 1 and the others to 0. You can also specify whether the audio and video should loop (beyond\nany replaying required to reach the required counts).\n\nThis frame is displayed fullscreen; if the frame before it is not, that frame\nneeds to include a manual \"next\" button so that there's a user interaction\nevent to trigger fullscreen mode. (Browsers don't allow us to switch to FS\nwithout a user event.)\n\nExample usage: (Note - this is a bit of an odd example with both audio ('peekaboo') and audio embedded in the video.\nIn general you would probably only want one or the other!)\n\n```json\n\"play-video-twice\": {\n           \"kind\": \"exp-lookit-video\",\n           \"audio\": {\n               \"loop\": false,\n               \"source\": \"peekaboo\"\n           },\n           \"video\": {\n               \"top\": 10,\n               \"left\": 25,\n               \"loop\": true,\n               \"width\": 50,\n               \"source\": \"cropped_apple\"\n           },\n           \"backgroundColor\": \"white\",\n           \"autoProceed\": true,\n           \"parentTextBlock\": {\n               \"text\": \"If your child needs a break, just press X to pause!\"\n           },\n           \"requiredDuration\": 0,\n           \"requireAudioCount\": 0,\n           \"requireVideoCount\": 2,\n           \"restartAfterPause\": true,\n           \"pauseKey\": \"x\",\n           \"pauseKeyDescription\": \"X\",\n           \"pauseAudio\": \"pause\",\n           \"pauseVideo\": \"attentiongrabber\",\n           \"pauseText\": \"(You'll have a moment to turn around again.)\",\n           \"unpauseAudio\": \"return_after_pause\",\n           \"doRecording\": true,\n           \"baseDir\": \"https://www.mit.edu/~kimscott/placeholderstimuli/\",\n           \"audioTypes\": [\n               \"ogg\",\n               \"mp3\"\n           ],\n           \"videoTypes\": [\n               \"webm\",\n               \"mp4\"\n           ]\n       },\n\n```",
             "extends": "Exp-frame-base",
             "uses": [
                 "Full-screen",
@@ -937,6 +937,7 @@
             "extension_for": [
                 "Exp-lookit-calibration",
                 "Exp-lookit-change-detection",
+                "Exp-lookit-composite-video-trial",
                 "Exp-lookit-dialogue-page",
                 "Exp-lookit-geometry-alternation",
                 "Exp-lookit-geometry-alternation-open",
@@ -944,7 +945,6 @@
                 "Exp-lookit-preferential-looking",
                 "Exp-lookit-stimuli-preview",
                 "Exp-lookit-story-page",
-                "Exp-lookit-composite-video-trial",
                 "Exp-lookit-video"
             ],
             "module": "exp-player",
@@ -965,6 +965,7 @@
                 "Exp-frame-base",
                 "Exp-lookit-calibration",
                 "Exp-lookit-change-detection",
+                "Exp-lookit-composite-video-trial",
                 "Exp-lookit-dialogue-page",
                 "Exp-lookit-exit-survey",
                 "Exp-lookit-geometry-alternation",
@@ -972,7 +973,6 @@
                 "Exp-lookit-images-audio",
                 "Exp-lookit-preferential-looking",
                 "Exp-lookit-story-page",
-                "Exp-lookit-composite-video-trial",
                 "Exp-lookit-video"
             ],
             "module": "exp-player",
@@ -991,9 +991,9 @@
             "plugin_for": [],
             "extension_for": [
                 "Exp-lookit-calibration",
+                "Exp-lookit-composite-video-trial",
                 "Exp-lookit-preferential-looking",
                 "Exp-lookit-stimuli-preview",
-                "Exp-lookit-composite-video-trial",
                 "Exp-lookit-video"
             ],
             "module": "exp-player",
@@ -1030,6 +1030,7 @@
             "extension_for": [
                 "Exp-lookit-calibration",
                 "Exp-lookit-change-detection",
+                "Exp-lookit-composite-video-trial",
                 "Exp-lookit-dialogue-page",
                 "Exp-lookit-geometry-alternation",
                 "Exp-lookit-geometry-alternation-open",
@@ -1037,7 +1038,6 @@
                 "Exp-lookit-preferential-looking",
                 "Exp-lookit-stimuli-preview",
                 "Exp-lookit-story-page",
-                "Exp-lookit-composite-video-trial",
                 "Exp-lookit-video",
                 "Exp-lookit-video-assent",
                 "Exp-lookit-video-consent"
@@ -1280,7 +1280,7 @@
         },
         {
             "file": "app/components/exp-lookit-calibration/component.js",
-            "line": 145,
+            "line": 138,
             "description": "Whether to do any video recording during this frame. Default true. Set to false for e.g. last frame where just doing an announcement.",
             "itemtype": "property",
             "name": "doRecording",
@@ -1292,7 +1292,7 @@
         },
         {
             "file": "app/components/exp-lookit-calibration/component.js",
-            "line": 155,
+            "line": 148,
             "description": "Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value\nfor acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or\nrgb hex values (e.g. '#800080' - include the '#')",
             "itemtype": "property",
             "name": "backgroundColor",
@@ -1304,7 +1304,7 @@
         },
         {
             "file": "app/components/exp-lookit-calibration/component.js",
-            "line": 168,
+            "line": 161,
             "description": "Length of single calibration segment in ms.",
             "itemtype": "property",
             "name": "calibrationLength",
@@ -1316,7 +1316,7 @@
         },
         {
             "file": "app/components/exp-lookit-calibration/component.js",
-            "line": 179,
+            "line": 172,
             "description": "Ordered list of positions to show calibration segment in. Options are\n\"center\", \"left\", \"right\". Ignored if calibrationLength is 0.",
             "itemtype": "property",
             "name": "calibrationPositions",
@@ -1328,7 +1328,7 @@
         },
         {
             "file": "app/components/exp-lookit-calibration/component.js",
-            "line": 195,
+            "line": 188,
             "description": "Audio to play when the attention-grabber is placed at each location (will be\nplayed once from the start, but cut off if it's longer than calibrationLength).\n\nThis can either be an array of `{src: 'url', type: 'MIMEtype'}` objects for\ncalibration audio, or just a string to use the full URLs based on `baseDir`.",
             "itemtype": "property",
             "name": "calibrationAudio",
@@ -1340,7 +1340,7 @@
         },
         {
             "file": "app/components/exp-lookit-calibration/component.js",
-            "line": 210,
+            "line": 203,
             "description": "Calibration video (played from start at each calibration position). Supply\neither a calibration video or calibration image, not both.\n\nThis can be either an array of {src: 'url', type: 'MIMEtype'} objects or\njust a string like `attentiongrabber` to rely on the `baseDir` and `videoTypes`\nto generate full paths.",
             "itemtype": "property",
             "name": "calibrationVideo",
@@ -1352,7 +1352,7 @@
         },
         {
             "file": "app/components/exp-lookit-calibration/component.js",
-            "line": 226,
+            "line": 219,
             "description": "Image to use for calibration - will be placed at each location. Supply\neither a calibration video or calibration image, not both.\n\nThis can be either a full URL or just the filename (e.g. \"star.png\") to\nuse the full path based on `baseDir` (e.g. `baseDir/img/star.png`).",
             "itemtype": "property",
             "name": "calibrationImage",
@@ -1364,7 +1364,7 @@
         },
         {
             "file": "app/components/exp-lookit-calibration/component.js",
-            "line": 242,
+            "line": 235,
             "description": "Which animation to use for the calibration image. Options are 'bounce', 'spin',\nor '' (empty to not animate).",
             "itemtype": "property",
             "name": "calibrationImageAnimation",
@@ -1376,7 +1376,7 @@
         },
         {
             "file": "app/components/exp-lookit-calibration/component.js",
-            "line": 308,
+            "line": 301,
             "description": "Start of EACH calibration segment",
             "itemtype": "event",
             "name": "startCalibration",
@@ -1393,7 +1393,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 233,
+            "line": 227,
             "description": "Whether to do webcam recording on this frame",
             "itemtype": "property",
             "name": "doRecording",
@@ -1404,7 +1404,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 243,
+            "line": 237,
             "description": "minimum amount of time to show attention-getter in seconds. If 0, attention-getter\nsegment is skipped.",
             "itemtype": "property",
             "name": "attnLength",
@@ -1416,7 +1416,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 255,
+            "line": 249,
             "description": "length of alternation trial in seconds. This refers only to the section of the\ntrial where the alternating image streams are presented - it does not count\nany announcement phase.",
             "itemtype": "property",
             "name": "trialLength",
@@ -1428,7 +1428,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 268,
+            "line": 262,
             "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\ninstructions during attention-getter video",
             "itemtype": "property",
             "name": "audioSources",
@@ -1439,7 +1439,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 279,
+            "line": 273,
             "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\nmusic during trial",
             "itemtype": "property",
             "name": "musicSources",
@@ -1450,7 +1450,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 290,
+            "line": 284,
             "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\naudio after completion of trial (optional; used for last\ntrial \"okay to open your eyes now\" announcement)",
             "itemtype": "property",
             "name": "endAudioSources",
@@ -1461,7 +1461,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 302,
+            "line": 296,
             "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\nattention-getter video (should be loopable)",
             "itemtype": "property",
             "name": "videoSources",
@@ -1472,7 +1472,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 313,
+            "line": 307,
             "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\naudio played upon pausing study",
             "itemtype": "property",
             "name": "pauseAudio",
@@ -1483,7 +1483,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 324,
+            "line": 318,
             "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\naudio played upon unpausing study",
             "itemtype": "property",
             "name": "unpauseAudio",
@@ -1494,7 +1494,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 335,
+            "line": 329,
             "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\naudio played when study is paused due to not being fullscreen",
             "itemtype": "property",
             "name": "fsAudio",
@@ -1505,7 +1505,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 346,
+            "line": 340,
             "description": "Whether to start with the 'A' image list on both left and right. If true, both\nsides start with their respective A image lists; if false, both lists start with\ntheir respective B image lists.",
             "itemtype": "property",
             "name": "startWithA",
@@ -1517,7 +1517,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 359,
+            "line": 353,
             "description": "Whether to randomize image presentation order within the lists leftImagesA,\nleftImagesB, rightImagesA, and rightImagesB. If true (default), the order\nof presentation is randomized. Each time all the images in one list have been\npresented, the order is randomized again for the next 'round.' If false, the\norder of presentation is as written in the list. Once all images are presented,\nwe loop back around to the first image and start again.\n\nExample of randomization: suppose we have defined\n```\nleftImagesA: ['apple', 'banana', 'cucumber'],\nleftImagesB: ['aardvark', 'bat'],\nrandomizeImageOrder: true,\nstartWithA: true\n```\n\nAnd suppose the timing is such that we end up with 10 images total. Here is a\npossible sequence of images shown on the left:\n\n['banana', 'aardvark', 'apple', 'bat', 'cucumber', 'bat', 'cucumber', 'aardvark', 'apple', 'bat']",
             "itemtype": "property",
             "name": "randomizeImageOrder",
@@ -1529,7 +1529,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 388,
+            "line": 382,
             "description": "Amount of time to display each image, in milliseconds",
             "itemtype": "property",
             "name": "displayMs",
@@ -1541,7 +1541,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 399,
+            "line": 393,
             "description": "Amount of time for blank display between each image, in milliseconds",
             "itemtype": "property",
             "name": "blankMs",
@@ -1553,7 +1553,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 410,
+            "line": 404,
             "description": "Format of border to display around alternation streams, if any. See\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/border for syntax.",
             "itemtype": "property",
             "name": "border",
@@ -1565,7 +1565,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 422,
+            "line": 416,
             "description": "Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value\nfor acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or\nrgb hex values (e.g. '#800080' - include the '#')",
             "itemtype": "property",
             "name": "backgroundColor",
@@ -1577,7 +1577,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 435,
+            "line": 429,
             "description": "Color of image stream container, if different from overall background.\nDefaults to backgroundColor if one is provided.\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/color_value\nfor acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or\nrgb hex values (e.g. '#800080' - include the '#')",
             "itemtype": "property",
             "name": "containerColor",
@@ -1589,7 +1589,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 450,
+            "line": 444,
             "description": "Set A of images to display on left of screen. Left stream will alternate between\nimages from set A and from set B. Elements of list can be full URLs or relative\npaths starting from `baseDir`.",
             "itemtype": "property",
             "name": "leftImagesA",
@@ -1600,7 +1600,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 465,
+            "line": 459,
             "description": "Set B of images to display on left of screen. Left stream will alternate between\nimages from set A and from set B. Elements of list can be full URLs or relative\npaths starting from `baseDir`.",
             "itemtype": "property",
             "name": "leftImagesB",
@@ -1611,7 +1611,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 480,
+            "line": 474,
             "description": "Set A of images to display on right of screen. Right stream will alternate between\nimages from set A and from set B. Elements of list can be full URLs or relative\npaths starting from `baseDir`.",
             "itemtype": "property",
             "name": "rightImagesA",
@@ -1622,7 +1622,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 495,
+            "line": 489,
             "description": "Set B of images to display on right of screen. Right stream will alternate between\nimages from set A and from set B. Elements of list can be full URLs or relative\npaths starting from `baseDir`.",
             "itemtype": "property",
             "name": "rightImagesA",
@@ -1633,7 +1633,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 518,
+            "line": 512,
             "description": "Sequence of images shown on the left",
             "itemtype": "attribute",
             "name": "leftSequence",
@@ -1643,7 +1643,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 525,
+            "line": 519,
             "description": "Sequence of images shown on the right",
             "itemtype": "attribute",
             "name": "rightSequence",
@@ -1653,7 +1653,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 535,
+            "line": 529,
             "description": "Whether this trial was paused",
             "itemtype": "attribute",
             "name": "hasBeenPaused",
@@ -1663,7 +1663,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 583,
+            "line": 577,
             "description": "Just before stopping webcam video capture",
             "itemtype": "event",
             "name": "stoppingCapture",
@@ -1673,7 +1673,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 610,
+            "line": 604,
             "description": "Immediately before starting intro/announcement segment",
             "itemtype": "event",
             "name": "startIntro",
@@ -1683,7 +1683,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 634,
+            "line": 628,
             "description": "Immediately before starting test trial segment",
             "itemtype": "event",
             "name": "startTestTrial",
@@ -1693,7 +1693,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 672,
+            "line": 666,
             "description": "Records each time images are cleared from display",
             "itemtype": "event",
             "name": "clearImages",
@@ -1703,7 +1703,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 707,
+            "line": 701,
             "description": "Immediately after making images visible",
             "itemtype": "event",
             "name": "presentImages",
@@ -1725,7 +1725,7 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 827,
+            "line": 821,
             "description": "What to do when individual-frame recording starts.",
             "itemtype": "method",
             "name": "onRecordingStarted",
@@ -1737,13 +1737,321 @@
         },
         {
             "file": "app/components/exp-lookit-change-detection/component.js",
-            "line": 837,
+            "line": 831,
             "description": "What to do when session-level recording starts.",
             "itemtype": "method",
             "name": "onSessionRecordingStarted",
             "access": "private",
             "tagname": "",
             "class": "Exp-lookit-change-detection",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 177,
+            "description": "Array of objects specifying video src and type for test video (these should be the same video, but multiple sources--e.g. mp4 and webm--are generally needed for cross-browser support). If none provided, skip test phase.\n\nExample value:\n\n```[{'src': 'http://.../video1.mp4', 'type': 'video/mp4'}, {'src': 'http://.../video1.webm', 'type': 'video/webm'}]```",
+            "itemtype": "property",
+            "name": "sources",
+            "type": "Array",
+            "default": "[]",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "src",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "type",
+                    "description": "",
+                    "type": "String"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 194,
+            "description": "Array of objects specifying video src and type for alternate test video, as for sources. Alternate test video will be shown if the first test is paused, after restarting the trial. If alternate test video is also paused, we just move on. If altSources is not provided, defaults to playing same test video again (but still only one pause of test video allowed per trial).",
+            "itemtype": "property",
+            "name": "altSources",
+            "type": "Array",
+            "default": "[]",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "src",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "type",
+                    "description": "",
+                    "type": "String"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 207,
+            "description": "Array of objects specifying intro video src and type, as for sources.\nIf empty, intro segment will be skipped.",
+            "itemtype": "property",
+            "name": "introSources",
+            "type": "Array",
+            "default": "[]",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "src",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "type",
+                    "description": "",
+                    "type": "String"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 221,
+            "description": "Array of objects specifying attention-grabber video src and type, as for sources. The attention-grabber video is shown (looping) during the announcement phase and when the study is paused.",
+            "itemtype": "property",
+            "name": "attnSources",
+            "type": "Array",
+            "default": "[]",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "src",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "type",
+                    "description": "",
+                    "type": "String"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 233,
+            "description": "minimum amount of time to show attention-getter in seconds. Announcement phase (attention-getter plus audio) will last the minimum of announceLength and the duration of any announcement audio.",
+            "itemtype": "property",
+            "name": "announceLength",
+            "type": "Number",
+            "default": "2",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 244,
+            "description": "List of objects specifying intro announcement src and type. If empty and minimum announceLength is 0, announcement is skipped.\nExample: `[{'src': 'http://.../audio1.mp3', 'type': 'audio/mp3'}, {'src': 'http://.../audio1.ogg', 'type': 'audio/ogg'}]`",
+            "itemtype": "property",
+            "name": "audioSources",
+            "type": "Array",
+            "default": "[]",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "src",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "type",
+                    "description": "",
+                    "type": "String"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 258,
+            "description": "List of objects specifying music audio src and type, as for audioSources.\nIf empty, no music is played.",
+            "itemtype": "property",
+            "name": "musicSources",
+            "type": "Array",
+            "default": "[]",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "musicSources",
+                    "description": ""
+                },
+                {
+                    "name": "src",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "type",
+                    "description": "",
+                    "type": "String"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 273,
+            "description": "Length to loop test videos, in seconds. Set if you want a time-based limit. E.g., setting testLength to 20 means that the first 20 seconds of the video will be played, with shorter videos looping until they get to 20s. Leave out or set to Infinity  to play the video through to the end a set number of times instead. If a testLength is set, it overrides any value set in testCount.",
+            "itemtype": "property",
+            "name": "testLength",
+            "type": "Number",
+            "default": "Infinity",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 284,
+            "description": "Number of times to play test video before moving on. This is ignored if\ntestLength is set to a finite value.",
+            "itemtype": "property",
+            "name": "testCount",
+            "type": "Number",
+            "default": "1",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 296,
+            "description": "Whether to do any video recording during this frame. Default true. Set to false for e.g. last frame where just doing an announcement.",
+            "itemtype": "property",
+            "name": "doRecording",
+            "type": "Boolean",
+            "default": "true",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 306,
+            "description": "length of single calibration segment in ms. 0 to skip calibration.",
+            "itemtype": "property",
+            "name": "calibrationLength",
+            "type": "Number",
+            "default": "3000",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 317,
+            "description": "Ordered list of positions to show calibration segment in. Options are\n\"center\", \"left\", \"right\". Ignored if calibrationLength is 0.",
+            "itemtype": "property",
+            "name": "calibrationPositions",
+            "type": "Array",
+            "default": "[\"center\", \"left\", \"right\", \"center\"]",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 329,
+            "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\ncalibration audio (played at each calibration position).\nIgnored if calibrationLength is 0.",
+            "itemtype": "property",
+            "name": "calibrationAudioSources",
+            "type": "Object[]",
+            "default": "[]",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 342,
+            "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\ncalibration video (played from start at each calibration position).\nIgnored if calibrationLength is 0.",
+            "itemtype": "property",
+            "name": "calibrationVideoSources",
+            "type": "Object[]",
+            "default": "[]",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 355,
+            "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\naudio played upon pausing study",
+            "itemtype": "property",
+            "name": "pauseAudio",
+            "type": "Object[]",
+            "default": "[]",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 367,
+            "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\naudio played upon unpausing study",
+            "itemtype": "property",
+            "name": "unpauseAudio",
+            "type": "Object[]",
+            "default": "[]",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 379,
+            "description": "Text to show under \"Study paused / Press space to resume\" when study is paused.\nDefault: (You'll have a moment to turn around again.)",
+            "itemtype": "property",
+            "name": "pauseText",
+            "type": "String",
+            "default": "[]",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 400,
+            "description": "Sources of videos (potentially) shown during this trial: [source of test video, source of alternate test video].",
+            "itemtype": "attribute",
+            "name": "videosShown",
+            "type": "array",
+            "class": "Exp-lookit-composite-video-trial",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-composite-video-trial/component.js",
+            "line": 618,
+            "description": "Start of EACH calibration segment",
+            "itemtype": "event",
+            "name": "startCalibration",
+            "params": [
+                {
+                    "name": "location",
+                    "description": "location of calibration ball, relative to child: 'left', 'right', or 'center'",
+                    "type": "String"
+                }
+            ],
+            "class": "Exp-lookit-composite-video-trial",
             "module": "exp-player",
             "submodule": "frames"
         },
@@ -2825,7 +3133,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 386,
+            "line": 380,
             "description": "Whether to do webcam recording (will wait for webcam\nconnection before starting audio or showing images if so)",
             "itemtype": "property",
             "name": "doRecording",
@@ -2836,7 +3144,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 397,
+            "line": 391,
             "description": "Whether to proceed automatically when all conditions are met, vs. enabling\nnext button at that point. If true: the next, previous, and replay buttons are\nhidden, and the frame auto-advances after ALL of the following happen\n(a) the audio segment (if any) completes\n(b) the durationSeconds (if any) is achieved\n(c) a choice is made (if required)\n(d) that choice is correct (if required)\n(e) the choice audio (if any) completes\n(f) the choice text (if any) is dismissed\nIf false: the next, previous, and replay buttons (as applicable) are displayed.\nIt becomes possible to press 'next' only once the conditions above are met.",
             "itemtype": "property",
             "name": "autoProceed",
@@ -2848,7 +3156,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 419,
+            "line": 413,
             "description": "Minimum duration of frame in seconds. If set, then it will only\nbe possible to proceed to the next frame after both the audio completes AND\nthis duration is acheived.",
             "itemtype": "property",
             "name": "durationSeconds",
@@ -2860,7 +3168,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 434,
+            "line": 428,
             "description": "[Only used if durationSeconds set] Whether to\nshow a progress bar based on durationSeconds in the parent text area.",
             "itemtype": "property",
             "name": "showProgressBar",
@@ -2872,7 +3180,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 447,
+            "line": 441,
             "description": "[Only used if not autoProceed] Whether to\nshow a previous button to allow the participant to go to the previous frame",
             "itemtype": "property",
             "name": "showPreviousButton",
@@ -2884,7 +3192,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 460,
+            "line": 454,
             "description": "[Only used if not autoProceed AND if there is audio] Whether to\nshow a replay button to allow the participant to replay the audio",
             "itemtype": "property",
             "name": "showReplayButton",
@@ -2896,7 +3204,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 473,
+            "line": 467,
             "description": "Whether to have the image display area take up the whole screen if possible.\nThis will only apply if (a) there is no parent text and (b) there are no\ncontrol buttons (next, previous, replay) because the frame auto-proceeds.",
             "itemtype": "property",
             "name": "maximizeDisplay",
@@ -2908,7 +3216,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 487,
+            "line": 481,
             "description": "Audio file to play at the start of this frame.\nThis can either be an array of {src: 'url', type: 'MIMEtype'} objects, e.g.\nlisting equivalent .mp3 and .ogg files, or can be a single string `filename`\nwhich will be expanded based on `baseDir` and `audioTypes` values (see `audioTypes`).",
             "itemtype": "property",
             "name": "audio",
@@ -2920,7 +3228,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 502,
+            "line": 496,
             "description": "Text block to display to parent.  (Each field is optional)",
             "itemtype": "property",
             "name": "parentTextBlock",
@@ -2940,11 +3248,6 @@
                     "type": "String"
                 },
                 {
-                    "name": "emph",
-                    "description": "whether to bold this paragraph",
-                    "type": "Boolean"
-                },
-                {
                     "name": "css",
                     "description": "object specifying any css properties\n     to apply to this section, and their values - e.g.\n     {'color': 'gray', 'font-size': 'large'}",
                     "type": "Object"
@@ -2953,7 +3256,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 532,
+            "line": 522,
             "description": "Array of images to display and information about their placement. For each\nimage, you need to specify `src` (image name/URL) and placement (either by\nproviding left/width/top values, or by using a `position` preset).\n\nEverything else is optional! This is where you would say that an image should\nbe shown at a delay",
             "itemtype": "property",
             "name": "images",
@@ -3026,7 +3329,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 624,
+            "line": 614,
             "description": "Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value\nfor acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or\nrgb hex values (e.g. '#800080' - include the '#')",
             "itemtype": "property",
             "name": "backgroundColor",
@@ -3038,7 +3341,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 637,
+            "line": 627,
             "description": "Color of area where images are shown, if different from overall background.\nDefaults to backgroundColor if one is provided. See\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/color_value\nfor acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or\nrgb hex values (e.g. '#800080' - include the '#')",
             "itemtype": "property",
             "name": "pageColor",
@@ -3050,7 +3353,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 652,
+            "line": 642,
             "description": "Whether this is a frame where the user needs to click to select one of the\nimages before proceeding.",
             "itemtype": "property",
             "name": "choiceRequired",
@@ -3062,7 +3365,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 664,
+            "line": 654,
             "description": "[Only used if `choiceRequired` is true] Whether the participant has to select\none of the *correct* images before proceeding.",
             "itemtype": "property",
             "name": "correctChoiceRequired",
@@ -3074,7 +3377,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 676,
+            "line": 666,
             "description": "Whether the participant can make a choice before audio finishes. (Only relevant\nif `choiceRequired` is true.)",
             "itemtype": "property",
             "name": "canMakeChoiceBeforeAudioFinished",
@@ -3086,7 +3389,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 688,
+            "line": 678,
             "description": "Array representing times when particular images should be highlighted. Each\nelement of the array should be of the form {'range': [3.64, 7.83], 'imageId': 'myImageId'}.\nThe two `range` values are the start and end times of the highlight in seconds,\nrelative to the audio played. The `imageId` corresponds to the `id` of an\nelement of `images`.\n\nHighlights can overlap in time. Any that go longer than the audio will just\nbe ignored/cut off.\n\nOne strategy for generating a bunch of highlights for a longer story is to\nannotate using Audacity and export the labels to get the range values.",
             "itemtype": "property",
             "name": "highlights",
@@ -3109,7 +3412,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 738,
+            "line": 728,
             "description": "Array of images used in this frame [same as passed to this frame, but\nmay reflect random assignment for this particular participant]",
             "itemtype": "attribute",
             "name": "images",
@@ -3119,7 +3422,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 746,
+            "line": 736,
             "description": "ID of image selected at time of proceeding",
             "itemtype": "attribute",
             "name": "selectedImage",
@@ -3129,7 +3432,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 753,
+            "line": 743,
             "description": "Whether image selected at time of proceeding is marked as correct",
             "itemtype": "attribute",
             "name": "correctImageSelected",
@@ -3139,7 +3442,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 820,
+            "line": 810,
             "description": "When main audio segment is replayed",
             "itemtype": "event",
             "name": "replayAudio",
@@ -3149,7 +3452,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 834,
+            "line": 824,
             "description": "Trial is complete and attempting to move to next frame; may wait for recording\nto catch up before proceeding.",
             "itemtype": "event",
             "name": "trialComplete",
@@ -3159,7 +3462,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 861,
+            "line": 851,
             "description": "When main audio segment finishes playing",
             "itemtype": "event",
             "name": "finishAudio",
@@ -3169,7 +3472,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 890,
+            "line": 880,
             "description": "Timer for set-duration trial begins",
             "itemtype": "event",
             "name": "startTimer",
@@ -3179,7 +3482,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 897,
+            "line": 887,
             "description": "Timer for set-duration trial ends",
             "itemtype": "event",
             "name": "endTimer",
@@ -3189,7 +3492,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 928,
+            "line": 918,
             "description": "When main audio segment starts playing",
             "itemtype": "event",
             "name": "startAudio",
@@ -3199,7 +3502,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 935,
+            "line": 925,
             "description": "When main audio cannot be started. In this case we treat it as if\nthe audio was completed (for purposes of allowing participant to\nproceed)",
             "itemtype": "event",
             "name": "failedToStartAudio",
@@ -3209,7 +3512,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 951,
+            "line": 941,
             "description": "When images are displayed to participant (for images without any delay added)",
             "itemtype": "event",
             "name": "displayAllImages",
@@ -3219,7 +3522,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 961,
+            "line": 951,
             "description": "When a specific image is shown at a delay.",
             "itemtype": "event",
             "name": "displayImage",
@@ -3236,7 +3539,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 987,
+            "line": 977,
             "description": "When one of the image options is clicked during a choice frame",
             "itemtype": "event",
             "name": "clickImage",
@@ -3258,7 +3561,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 1022,
+            "line": 1012,
             "description": "When image/feedback audio is started",
             "itemtype": "event",
             "name": "startImageAudio",
@@ -3275,7 +3578,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 1032,
+            "line": 1022,
             "description": "When image/feedback audio cannot be started. In this case we treat it as if\nthe audio was completed (for purposes of allowing participant to\nproceed)",
             "itemtype": "event",
             "name": "failedToStartImageAudio",
@@ -3292,7 +3595,7 @@
         },
         {
             "file": "app/components/exp-lookit-images-audio/component.js",
-            "line": 1102,
+            "line": 1092,
             "description": "When the participant dismisses a feedback dialogue",
             "itemtype": "event",
             "name": "dismissFeedback",
@@ -4577,12 +4880,12 @@
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 106,
+            "line": 143,
             "description": "Object describing the video to show.",
             "itemtype": "property",
             "name": "video",
             "type": "Object",
-            "class": "Exp-lookit-composite-video-trial",
+            "class": "Exp-lookit-video",
             "module": "exp-player",
             "submodule": "frames",
             "subprops": [
@@ -4615,30 +4918,71 @@
                     "name": "position",
                     "description": "use 'fill' to fill the screen as much as possible while\n    preserving aspect ratio. This overrides left/width/top/height values if given.",
                     "type": "String"
+                },
+                {
+                    "name": "loop",
+                    "description": "whether the video should loop, even after any requireTestVideoCount\n    is satisfied",
+                    "type": "Boolean"
                 }
             ]
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 151,
-            "description": "Whether to proceed automatically when video is complete / testLength is\nachieved, vs. enabling a next button at that point.\nIf true, the frame auto-advances after ALL of the following happen\n(a) the testLength (if any) is achieved, counting from the video starting\n(b) the video is played testCount times\nIf false: a next button is displayed. It becomes possible to press 'next'\nonly once the conditions above are met.",
+            "line": 193,
+            "description": "Object describing the audio file to play along with video (optional)",
+            "itemtype": "property",
+            "name": "audio",
+            "type": "Object",
+            "default": "{'source': '', loop: false}",
+            "class": "Exp-lookit-video",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "source",
+                    "description": "Location of the audio file to play.\n  This can either be an array of {src: 'url', type: 'MIMEtype'} objects, e.g.\n  listing equivalent .mp3 and .ogg files, or can be a single string `filename`\n  which will be expanded based on `baseDir` and `audioTypes` values (see `audioTypes`).",
+                    "type": "String"
+                },
+                {
+                    "name": "loop",
+                    "description": "whether the audio should loop, even after any requireTestAudioCount\n    is satisfied",
+                    "type": "Boolean"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-video/component.js",
+            "line": 219,
+            "description": "Whether to proceed automatically when video is complete / requiredDuration is\nachieved, vs. enabling a next button at that point.\nIf true, the frame auto-advances after ALL of the following happen\n(a) the requiredDuration (if any) is achieved, counting from the video starting\n(b) the video is played requireVideoCount times\n(c) the audio is played requireAudioCount times\nIf false: a next button is displayed. It becomes possible to press 'next'\nonly once the conditions above are met.",
             "itemtype": "property",
             "name": "autoProceed",
             "type": "Boolean",
             "default": "true",
-            "class": "Exp-lookit-composite-video-trial",
+            "class": "Exp-lookit-video",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 169,
+            "line": 238,
+            "description": "Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value\nfor acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or\nrgb hex values (e.g. '#800080' - include the '#'). We recommend a light background if you need to\nsee children's eyes.",
+            "itemtype": "property",
+            "name": "backgroundColor",
+            "type": "String",
+            "default": "'white'",
+            "class": "Exp-lookit-video",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video/component.js",
+            "line": 253,
             "description": "Array of objects specifying attention-grabber video src and type, as for sources. The attention-grabber video is shown (looping) during the announcement phase and when the study is paused.",
             "itemtype": "property",
-            "name": "attnSources",
+            "name": "pauseVideo",
             "type": "Array",
             "default": "[]",
-            "class": "Exp-lookit-composite-video-trial",
+            "class": "Exp-lookit-video",
             "module": "exp-player",
             "submodule": "frames",
             "subprops": [
@@ -4656,419 +5000,250 @@
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 182,
-            "description": "List of objects specifying music audio src and type.\nIf empty, no music is played.",
+            "line": 266,
+            "description": "Key to pause the trial. Use an empty string, '', to not allow pausing using the keyboard. You can look up the names of keys at\nhttps://keycode.info. Default is the space bar (' ').",
             "itemtype": "property",
-            "name": "musicSources",
-            "type": "Array",
-            "default": "[]",
-            "class": "Exp-lookit-composite-video-trial",
+            "name": "pauseKey",
+            "type": "String",
+            "default": "' '",
+            "class": "Exp-lookit-video",
             "module": "exp-player",
-            "submodule": "frames",
-            "subprops": [
-                {
-                    "name": "musicSources",
-                    "description": ""
-                },
-                {
-                    "name": "src",
-                    "description": "",
-                    "type": "String"
-                },
-                {
-                    "name": "type",
-                    "description": "",
-                    "type": "String"
-                }
-            ]
+            "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 197,
-            "description": "Length to loop test videos, in seconds. Set if you want a time-based limit. E.g., setting testLength to 20 means that the first 20 seconds of the video will be played, with shorter videos looping until they get to 20s. Leave out or set to 0 to play the video through to the end a set number of times instead. If a testLength is set, it overrides any value set in testCount.",
+            "line": 278,
+            "description": "Parent-facing description of the key to pause the study. This is just used to display text\n\"Press {pauseKeyDescription} to resume\" when the study is paused.",
             "itemtype": "property",
-            "name": "testLength",
+            "name": "pauseKeyDescription",
+            "type": "String",
+            "default": "'space'",
+            "class": "Exp-lookit-video",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video/component.js",
+            "line": 291,
+            "description": "Whether to restart this frame upon unpausing, vs moving on to the next frame",
+            "itemtype": "property",
+            "name": "restartAfterPause",
+            "type": "Array",
+            "default": "true",
+            "class": "Exp-lookit-video",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video/component.js",
+            "line": 302,
+            "description": "Duration to require before proceeding, if any. Set if you want a time-based limit. E.g., setting requiredDuration to 20 means that the first 20 seconds of the video will be played, with shorter videos looping until they get to 20s. Leave out or set to 0 to play the video through to the end a set number of times instead.",
+            "itemtype": "property",
+            "name": "requiredDuration",
             "type": "Number",
             "default": "0",
-            "class": "Exp-lookit-composite-video-trial",
+            "class": "Exp-lookit-video",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 209,
-            "description": "Number of times to play test video before moving on. This is ignored if\ntestLength is set to a positive value.",
+            "line": 314,
+            "description": "Number of times to play test video before moving on.",
             "itemtype": "property",
-            "name": "testCount",
+            "name": "requireVideoCount",
             "type": "Number",
             "default": "1",
-            "class": "Exp-lookit-composite-video-trial",
+            "class": "Exp-lookit-video",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 221,
+            "line": 325,
+            "description": "Number of times to play test audio before moving on.",
+            "itemtype": "property",
+            "name": "requireAudioCount",
+            "type": "Number",
+            "default": "1",
+            "class": "Exp-lookit-video",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video/component.js",
+            "line": 336,
             "description": "Whether to do any video recording during this frame. Default true. Set to false for e.g. last frame where just doing an announcement.",
             "itemtype": "property",
             "name": "doRecording",
             "type": "Boolean",
             "default": "true",
-            "class": "Exp-lookit-composite-video-trial",
+            "class": "Exp-lookit-video",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 231,
+            "line": 346,
             "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\naudio played upon pausing study",
             "itemtype": "property",
             "name": "pauseAudio",
             "type": "Object[]",
             "default": "[]",
-            "class": "Exp-lookit-composite-video-trial",
+            "class": "Exp-lookit-video",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 243,
+            "line": 358,
             "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\naudio played upon unpausing study",
             "itemtype": "property",
             "name": "unpauseAudio",
             "type": "Object[]",
             "default": "[]",
-            "class": "Exp-lookit-composite-video-trial",
+            "class": "Exp-lookit-video",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 255,
+            "line": 370,
             "description": "Text to show under \"Study paused / Press space to resume\" when study is paused.\nDefault: (You'll have a moment to turn around again.)",
             "itemtype": "property",
             "name": "pauseText",
             "type": "String",
             "default": "[]",
-            "class": "Exp-lookit-composite-video-trial",
+            "class": "Exp-lookit-video",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
             "file": "app/components/exp-lookit-video/component.js",
-            "line": 276,
+            "line": 382,
+            "description": "Text block to display to parent.  (Each field is optional)",
+            "itemtype": "property",
+            "name": "parentTextBlock",
+            "type": "Object",
+            "class": "Exp-lookit-video",
+            "module": "exp-player",
+            "submodule": "frames",
+            "subprops": [
+                {
+                    "name": "title",
+                    "description": "title to display",
+                    "type": "String"
+                },
+                {
+                    "name": "text",
+                    "description": "paragraph of text",
+                    "type": "String"
+                },
+                {
+                    "name": "css",
+                    "description": "object specifying any css properties\n     to apply to this section, and their values - e.g.\n     {'color': 'gray', 'font-size': 'large'}",
+                    "type": "Object"
+                }
+            ]
+        },
+        {
+            "file": "app/components/exp-lookit-video/component.js",
+            "line": 416,
             "description": "Source of video  shown during this trial. Just stores first URL if multiple formats are offered.",
             "itemtype": "attribute",
             "name": "videoShown",
             "type": "string",
-            "class": "Exp-lookit-composite-video-trial",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 179,
-            "description": "Array of objects specifying video src and type for test video (these should be the same video, but multiple sources--e.g. mp4 and webm--are generally needed for cross-browser support). If none provided, skip test phase.\n\nExample value:\n\n```[{'src': 'http://.../video1.mp4', 'type': 'video/mp4'}, {'src': 'http://.../video1.webm', 'type': 'video/webm'}]```",
-            "itemtype": "property",
-            "name": "sources",
-            "type": "Array",
-            "default": "[]",
-            "class": "Exp-lookit-video",
-            "module": "exp-player",
-            "submodule": "frames",
-            "subprops": [
-                {
-                    "name": "src",
-                    "description": "",
-                    "type": "String"
-                },
-                {
-                    "name": "type",
-                    "description": "",
-                    "type": "String"
-                }
-            ]
-        },
-        {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 196,
-            "description": "Array of objects specifying video src and type for alternate test video, as for sources. Alternate test video will be shown if the first test is paused, after restarting the trial. If alternate test video is also paused, we just move on. If altSources is not provided, defaults to playing same test video again (but still only one pause of test video allowed per trial).",
-            "itemtype": "property",
-            "name": "altSources",
-            "type": "Array",
-            "default": "[]",
-            "class": "Exp-lookit-video",
-            "module": "exp-player",
-            "submodule": "frames",
-            "subprops": [
-                {
-                    "name": "src",
-                    "description": "",
-                    "type": "String"
-                },
-                {
-                    "name": "type",
-                    "description": "",
-                    "type": "String"
-                }
-            ]
-        },
-        {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 209,
-            "description": "Array of objects specifying intro video src and type, as for sources.\nIf empty, intro segment will be skipped.",
-            "itemtype": "property",
-            "name": "introSources",
-            "type": "Array",
-            "default": "[]",
-            "class": "Exp-lookit-video",
-            "module": "exp-player",
-            "submodule": "frames",
-            "subprops": [
-                {
-                    "name": "src",
-                    "description": "",
-                    "type": "String"
-                },
-                {
-                    "name": "type",
-                    "description": "",
-                    "type": "String"
-                }
-            ]
-        },
-        {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 223,
-            "description": "Array of objects specifying attention-grabber video src and type, as for sources. The attention-grabber video is shown (looping) during the announcement phase and when the study is paused.",
-            "itemtype": "property",
-            "name": "attnSources",
-            "type": "Array",
-            "default": "[]",
-            "class": "Exp-lookit-video",
-            "module": "exp-player",
-            "submodule": "frames",
-            "subprops": [
-                {
-                    "name": "src",
-                    "description": "",
-                    "type": "String"
-                },
-                {
-                    "name": "type",
-                    "description": "",
-                    "type": "String"
-                }
-            ]
-        },
-        {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 235,
-            "description": "minimum amount of time to show attention-getter in seconds. Announcement phase (attention-getter plus audio) will last the minimum of announceLength and the duration of any announcement audio.",
-            "itemtype": "property",
-            "name": "announceLength",
-            "type": "Number",
-            "default": "2",
             "class": "Exp-lookit-video",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 246,
-            "description": "List of objects specifying intro announcement src and type. If empty and minimum announceLength is 0, announcement is skipped.\nExample: `[{'src': 'http://.../audio1.mp3', 'type': 'audio/mp3'}, {'src': 'http://.../audio1.ogg', 'type': 'audio/ogg'}]`",
-            "itemtype": "property",
-            "name": "audioSources",
-            "type": "Array",
-            "default": "[]",
-            "class": "Exp-lookit-video",
-            "module": "exp-player",
-            "submodule": "frames",
-            "subprops": [
-                {
-                    "name": "src",
-                    "description": "",
-                    "type": "String"
-                },
-                {
-                    "name": "type",
-                    "description": "",
-                    "type": "String"
-                }
-            ]
-        },
-        {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 260,
-            "description": "List of objects specifying music audio src and type, as for audioSources.\nIf empty, no music is played.",
-            "itemtype": "property",
-            "name": "musicSources",
-            "type": "Array",
-            "default": "[]",
-            "class": "Exp-lookit-video",
-            "module": "exp-player",
-            "submodule": "frames",
-            "subprops": [
-                {
-                    "name": "musicSources",
-                    "description": ""
-                },
-                {
-                    "name": "src",
-                    "description": "",
-                    "type": "String"
-                },
-                {
-                    "name": "type",
-                    "description": "",
-                    "type": "String"
-                }
-            ]
-        },
-        {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 275,
-            "description": "Length to loop test videos, in seconds. Set if you want a time-based limit. E.g., setting testLength to 20 means that the first 20 seconds of the video will be played, with shorter videos looping until they get to 20s. Leave out or set to Infinity  to play the video through to the end a set number of times instead. If a testLength is set, it overrides any value set in testCount.",
-            "itemtype": "property",
-            "name": "testLength",
-            "type": "Number",
-            "default": "Infinity",
-            "class": "Exp-lookit-video",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 286,
-            "description": "Number of times to play test video before moving on. This is ignored if\ntestLength is set to a finite value.",
-            "itemtype": "property",
-            "name": "testCount",
-            "type": "Number",
-            "default": "1",
-            "class": "Exp-lookit-video",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 298,
-            "description": "Whether to do any video recording during this frame. Default true. Set to false for e.g. last frame where just doing an announcement.",
-            "itemtype": "property",
-            "name": "doRecording",
-            "type": "Boolean",
-            "default": "true",
-            "class": "Exp-lookit-video",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 308,
-            "description": "length of single calibration segment in ms. 0 to skip calibration.",
-            "itemtype": "property",
-            "name": "calibrationLength",
-            "type": "Number",
-            "default": "3000",
-            "class": "Exp-lookit-video",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 319,
-            "description": "Ordered list of positions to show calibration segment in. Options are\n\"center\", \"left\", \"right\". Ignored if calibrationLength is 0.",
-            "itemtype": "property",
-            "name": "calibrationPositions",
-            "type": "Array",
-            "default": "[\"center\", \"left\", \"right\", \"center\"]",
-            "class": "Exp-lookit-video",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 331,
-            "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\ncalibration audio (played at each calibration position).\nIgnored if calibrationLength is 0.",
-            "itemtype": "property",
-            "name": "calibrationAudioSources",
-            "type": "Object[]",
-            "default": "[]",
-            "class": "Exp-lookit-video",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 344,
-            "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\ncalibration video (played from start at each calibration position).\nIgnored if calibrationLength is 0.",
-            "itemtype": "property",
-            "name": "calibrationVideoSources",
-            "type": "Object[]",
-            "default": "[]",
-            "class": "Exp-lookit-video",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 357,
-            "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\naudio played upon pausing study",
-            "itemtype": "property",
-            "name": "pauseAudio",
-            "type": "Object[]",
-            "default": "[]",
-            "class": "Exp-lookit-video",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 369,
-            "description": "Sources Array of {src: 'url', type: 'MIMEtype'} objects for\naudio played upon unpausing study",
-            "itemtype": "property",
-            "name": "unpauseAudio",
-            "type": "Object[]",
-            "default": "[]",
-            "class": "Exp-lookit-video",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 381,
-            "description": "Text to show under \"Study paused / Press space to resume\" when study is paused.\nDefault: (You'll have a moment to turn around again.)",
-            "itemtype": "property",
-            "name": "pauseText",
-            "type": "String",
-            "default": "[]",
-            "class": "Exp-lookit-video",
-            "module": "exp-player",
-            "submodule": "frames"
-        },
-        {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 402,
-            "description": "Sources of videos (potentially) shown during this trial: [source of test video, source of alternate test video].",
+            "file": "app/components/exp-lookit-video/component.js",
+            "line": 428,
+            "description": "Whether the video was paused at any point during the trial",
             "itemtype": "attribute",
-            "name": "videosShown",
-            "type": "array",
+            "name": "hasBeenPaused",
+            "type": "boolean",
             "class": "Exp-lookit-video",
             "module": "exp-player",
             "submodule": "frames"
         },
         {
-            "file": "app/components/exp-lookit-video copy/component.js",
-            "line": 620,
-            "description": "Start of EACH calibration segment",
+            "file": "app/components/exp-lookit-video/component.js",
+            "line": 455,
+            "description": "When video begins playing (recorded each time video starts if played through more than once)",
             "itemtype": "event",
-            "name": "startCalibration",
-            "params": [
-                {
-                    "name": "location",
-                    "description": "location of calibration ball, relative to child: 'left', 'right', or 'center'",
-                    "type": "String"
-                }
-            ],
+            "name": "videoStarted",
+            "class": "Exp-lookit-video",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video/component.js",
+            "line": 485,
+            "description": "When video completes playback (recorded each time if played more than once)",
+            "itemtype": "event",
+            "name": "videoStopped",
+            "class": "Exp-lookit-video",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video/component.js",
+            "line": 502,
+            "description": "When audio begins playing (recorded each time video starts if played through more than once)",
+            "itemtype": "event",
+            "name": "audioStarted",
+            "class": "Exp-lookit-video",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video/component.js",
+            "line": 512,
+            "description": "When audio completes playback (recorded each time if played more than once)",
+            "itemtype": "event",
+            "name": "audioStopped",
+            "class": "Exp-lookit-video",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video/component.js",
+            "line": 534,
+            "description": "When trial is complete and begins cleanup (may then wait for video upload)",
+            "itemtype": "event",
+            "name": "trialCompleted",
+            "class": "Exp-lookit-video",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video/component.js",
+            "line": 561,
+            "description": "When trial is unpaused (actually proceeding to beginning or next frame)",
+            "itemtype": "event",
+            "name": "unpauseTrial",
+            "class": "Exp-lookit-video",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video/component.js",
+            "line": 588,
+            "description": "When all requirements for this frame are completed and next button is enabled (only recorded if\nautoProceed is false)",
+            "itemtype": "event",
+            "name": "nextButtonEnabled",
+            "class": "Exp-lookit-video",
+            "module": "exp-player",
+            "submodule": "frames"
+        },
+        {
+            "file": "app/components/exp-lookit-video/component.js",
+            "line": 636,
+            "description": "When trial is paused",
+            "itemtype": "event",
+            "name": "pauseTrial",
             "class": "Exp-lookit-video",
             "module": "exp-player",
             "submodule": "frames"

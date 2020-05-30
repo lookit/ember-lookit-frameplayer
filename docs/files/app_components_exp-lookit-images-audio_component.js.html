@@ -123,6 +123,7 @@ import FullScreen from &#x27;../../mixins/full-screen&#x27;;
 import VideoRecord from &#x27;../../mixins/video-record&#x27;;
 import ExpandAssets from &#x27;../../mixins/expand-assets&#x27;;
 import { audioAssetOptions, imageAssetOptions } from &#x27;../../mixins/expand-assets&#x27;;
+import isColor from &#x27;../../utils/is-color&#x27;;
 
 let {
     $
@@ -454,13 +455,6 @@ let {
  */
 
 
-// See https://stackoverflow.com/a/56266358
-const isColor = (strColor) =&gt; {
-    const s = new Option().style;
-    s.color = strColor;
-    return s.color !== &#x27;&#x27;;
-};
-
 export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
 
     type: &#x27;exp-lookit-images-audio&#x27;,
@@ -623,7 +617,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          * @property {Object} parentTextBlock
          *   @param {String} title title to display
          *   @param {String} text paragraph of text
-         *   @param {Boolean} emph whether to bold this paragraph
          *   @param {Object} css object specifying any css properties
          *      to apply to this section, and their values - e.g.
          *      {&#x27;color&#x27;: &#x27;gray&#x27;, &#x27;font-size&#x27;: &#x27;large&#x27;}
@@ -636,9 +629,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 },
                 text: {
                     type: &#x27;string&#x27;
-                },
-                emph: {
-                    type: &#x27;boolean&#x27;
                 },
                 css: {
                     type: &#x27;object&#x27;,
@@ -714,7 +704,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                         type: &#x27;number&#x27;
                     },
                     &#x27;height&#x27;: {
-                      type: &#x27;number&#x27;
+                        type: &#x27;number&#x27;
                     },
                     &#x27;position&#x27;: {
                         type: &#x27;string&#x27;,

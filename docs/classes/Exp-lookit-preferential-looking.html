@@ -164,8 +164,10 @@
 
 
 <div class="box intro">
-    <p>Basic video display for looking measures (e.g. preferential looking, looking time).
+    <p>Basic image display for looking measures (e.g. preferential looking, looking time).
 Trial consists of four phases, each of which is optional.</p>
+<p>This is a composite trial very similar to exp-lookit-composite-video-trial except that
+it allows specifying either video stimuli or static images.</p>
 <ol>
 <li>
 <p>Announcement: The audio in announcementAudio is played while the announcementVideo
@@ -185,7 +187,7 @@ played once. (Audio will be paused and restarted if it is longer than calibratio
 Set calibrationLength to 0 to skip calibration.</p>
 </li>
 <li>
-<p>Test: The video in testVideo and audio in testAudio (optional) are played until
+<p>Test: Test images are displayed or the video in testVideo and audio in testAudio (optional) are played until
 either: testLength seconds have elapsed (with video looping if needed), or the video
 has been played testCount times. If testLength is set, it overrides testCount - for
 example if testCount is 1 and testLength is 30, a 10-second video will be played 3 times.
@@ -194,6 +196,8 @@ trial, the video in altTestVideo will be used again (defaulting to the same vide
 altTestVideo is not provided).</p>
 </li>
 </ol>
+<p>To specify test images, you can provide leftImage, rightImage, and/or centerImage, or you can provide a list of
+possibleImages and give an index in that list for any of those three placements.</p>
 <p>Specifying media locations:
 For any parameters that expect a list of audio/video sources, you can EITHER provide
 a list of src/type pairs with full paths like this:</p>

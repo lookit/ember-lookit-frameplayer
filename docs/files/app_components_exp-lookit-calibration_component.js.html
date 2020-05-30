@@ -123,6 +123,7 @@ import FullScreen from &#x27;../../mixins/full-screen&#x27;;
 import MediaReload from &#x27;../../mixins/media-reload&#x27;;
 import VideoRecord from &#x27;../../mixins/video-record&#x27;;
 import ExpandAssets from &#x27;../../mixins/expand-assets&#x27;;
+import isColor from &#x27;../../utils/is-color&#x27;;
 import { audioAssetOptions, imageAssetOptions, videoAssetOptions } from &#x27;../../mixins/expand-assets&#x27;;
 
 let {
@@ -222,14 +223,6 @@ let {
 * @uses Video-record
 * @uses Expand-assets
 */
-
-// Todo - probably make mixin for setting background color etc.
-// See https://stackoverflow.com/a/56266358
-const isColor = (strColor) =&gt; {
-    const s = new Option().style;
-    s.color = strColor;
-    return s.color !== &#x27;&#x27;;
-};
 
 export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord, ExpandAssets, {
     layout: layout,
@@ -395,10 +388,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             this.stopRecorder().then(() =&gt; {
                 _this.set(&#x27;stoppedRecording&#x27;, true);
                 _this.send(&#x27;next&#x27;);
-
+                return;
             }, () =&gt; {
                 _this.send(&#x27;next&#x27;);
-
+                return;
             });
         } else {
             _this.send(&#x27;next&#x27;);

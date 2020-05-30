@@ -120,9 +120,9 @@ import Ember from &#x27;ember&#x27;;
 import layout from &#x27;./template&#x27;;
 import ExpFrameBaseComponent from &#x27;../exp-frame-base/component&#x27;;
 import FullScreen from &#x27;../../mixins/full-screen&#x27;;
-import MediaReload from &#x27;../../mixins/media-reload&#x27;;
 import VideoRecord from &#x27;../../mixins/video-record&#x27;;
-import ExpandAssets, {imageAssetOptions} from &#x27;../../mixins/expand-assets&#x27;;
+import ExpandAssets from &#x27;../../mixins/expand-assets&#x27;;
+import isColor from &#x27;../../utils/is-color&#x27;;
 import { audioAssetOptions, videoAssetOptions } from &#x27;../../mixins/expand-assets&#x27;;
 
 let {
@@ -135,49 +135,82 @@ let {
  */
 
 /**
-* TODO
-*
-* Composite video display for typical looking measures trials (e.g. preferential looking,
-* looking time).
- * video:
- *   source
- *   loop
- *   position
-*
-*
-* The video in sources and audio in musicSources (optional) are played until either: testLength seconds have elapsed (with video looping if needed), or the video has been played testCount times. If testLength is set, it overrides testCount - for example if testCount is 1 and testLength is 30, a 10-second video will be played 3 times. If the participant pauses the study during the test phase, then after restarting the trial, the video in altSources will be used again (defaulting to the same video if altSources is not provided). To skip this phase, do not provide sources.
-*
-* This frame is displayed fullscreen; if the frame before it is not, that frame
-* needs to include a manual &quot;next&quot; button so that there&#x27;s a user interaction
-* event to trigger fullscreen mode. (Browsers don&#x27;t allow us to switch to FS
-* without a user event.)
-*
-* Example usage:
+ * Video display frame. This may be used for displaying videos to older children or parents, as well as for
+ * typical looking measures trials or as brief filler in between test trials.
+ *
+ * This is very customizable: you can...
+ *   - position the video wherever you want on the screen, including specifying that it should fill the screen (while maintaining aspect ratio)
+ *   - choose the background color
+ *   - optionally specify audio that should play along with the video
+ *   - have the frame proceed automatically (&#x60;autoProceed&#x60;), or enable a Next button when the user can move on
+ *   - allow parents to press a key to pause the video (and then either restart when they un-pause, or move on to the next frame)
+ *
+ * Video (and audio if provided) start as soon as any recording begins, or right away if there is no recording starting.
+ *
+ * If the user pauses using the &#x60;pauseKey&#x60;, or if the user leaves fullscreen mode, the study will be paused.
+ * While paused, the video/audio are stopped and not displayed, and instead a looping &#x60;pauseVideo&#x60; and text are displayed.
+ *
+ * There are several ways you can specify how long the trial should last. The frame will continue until
+ * ALL of the following are true:
+ *   - the video has been played all the way through &#x60;requireVideoCount&#x60; times
+ *   - the audio has been played all the way through &#x60;requireAudioCount&#x60; times
+ *   - &#x60;requiredDuration&#x60; seconds have elapsed since beginning the video
+ *
+ * You do not need to use all of these - for instance, to play the video one time and then proceed, set
+ * &#x60;requireVideoCount&#x60; to 1 and the others to 0. You can also specify whether the audio and video should loop (beyond
+ * any replaying required to reach the required counts).
+ *
+ * This frame is displayed fullscreen; if the frame before it is not, that frame
+ * needs to include a manual &quot;next&quot; button so that there&#x27;s a user interaction
+ * event to trigger fullscreen mode. (Browsers don&#x27;t allow us to switch to FS
+ * without a user event.)
+ *
+ * Example usage: (Note - this is a bit of an odd example with both audio (&#x27;peekaboo&#x27;) and audio embedded in the video.
+ * In general you would probably only want one or the other!)
 
 &#x60;&#x60;&#x60;json
-        &quot;sample-intermodal-trial-2&quot;: {
+ &quot;play-video-twice&quot;: {
             &quot;kind&quot;: &quot;exp-lookit-video&quot;,
-            &quot;isLast&quot;: false,
-            &quot;baseDir&quot;: &quot;https://s3.amazonaws.com/lookitcontents/intermodal/&quot;,
-            &quot;sources&quot;: &quot;sbs_ramp_down_up_apple_c1_b1_NN&quot;,
-            &quot;testCount&quot;: 2,
+            &quot;audio&quot;: {
+                &quot;loop&quot;: false,
+                &quot;source&quot;: &quot;peekaboo&quot;
+            },
+            &quot;video&quot;: {
+                &quot;top&quot;: 10,
+                &quot;left&quot;: 25,
+                &quot;loop&quot;: true,
+                &quot;width&quot;: 50,
+                &quot;source&quot;: &quot;cropped_apple&quot;
+            },
+            &quot;backgroundColor&quot;: &quot;white&quot;,
+            &quot;autoProceed&quot;: true,
+            &quot;parentTextBlock&quot;: {
+                &quot;text&quot;: &quot;If your child needs a break, just press X to pause!&quot;
+            },
+            &quot;requiredDuration&quot;: 0,
+            &quot;requireAudioCount&quot;: 0,
+            &quot;requireVideoCount&quot;: 2,
+            &quot;restartAfterPause&quot;: true,
+            &quot;pauseKey&quot;: &quot;x&quot;,
+            &quot;pauseKeyDescription&quot;: &quot;X&quot;,
+            &quot;pauseAudio&quot;: &quot;pause&quot;,
+            &quot;pauseVideo&quot;: &quot;attentiongrabber&quot;,
+            &quot;pauseText&quot;: &quot;(You&#x27;ll have a moment to turn around again.)&quot;,
+            &quot;unpauseAudio&quot;: &quot;return_after_pause&quot;,
+            &quot;doRecording&quot;: true,
+            &quot;baseDir&quot;: &quot;https://www.mit.edu/~kimscott/placeholderstimuli/&quot;,
             &quot;audioTypes&quot;: [
                 &quot;ogg&quot;,
                 &quot;mp3&quot;
             ],
-            &quot;pauseAudio&quot;: &quot;pause&quot;,
             &quot;videoTypes&quot;: [
                 &quot;webm&quot;,
                 &quot;mp4&quot;
-            ],
-            &quot;attnSources&quot;: &quot;attentiongrabber&quot;,
-            &quot;introSources&quot;: &quot;cropped_book&quot;,
-            &quot;musicSources&quot;: &quot;music_02&quot;,
-            &quot;unpauseAudio&quot;: &quot;return_after_pause&quot;
-        }
+            ]
+        },
 
 * &#x60;&#x60;&#x60;
-* @class Exp-lookit-composite-video-trial
+* @class Exp-lookit-video
 * @extends Exp-frame-base
 * @uses Full-screen
 * @uses Media-reload
@@ -185,7 +218,7 @@ let {
 * @uses Expand-assets
 */
 
-export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord, ExpandAssets, {
+export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
     layout: layout,
     type: &#x27;exp-lookit-video&#x27;,
 
@@ -194,12 +227,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
 
     assetsToExpand: {
         &#x27;audio&#x27;: [
-            &#x27;musicSources&#x27;,
+            &#x27;audio/source&#x27;,
             &#x27;pauseAudio&#x27;,
             &#x27;unpauseAudio&#x27;
         ],
         &#x27;video&#x27;: [
-            &#x27;attnSources&#x27;,
+            &#x27;pauseVideo&#x27;,
             &#x27;video/source&#x27;
         ],
         &#x27;image&#x27;: [
@@ -212,13 +245,17 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
 
     testTimer: null, // reference to timer counting how long video has been playing, if time-based limit
 
-    testVideosTimesPlayed: 0, // how many times the test video has been played, if count-based limit
+    testVideoTimesPlayed: 0, // how many times the test video has been played (including current)
+    testAudioTimesPlayed: 0, // how many times the test audio has been played (including current)
+    satisfiedDuration: false, // whether we have completed the requiredDuration
 
     skip: false,
     hasBeenPaused: false,
     isPaused: false,
+    hasParentText: true,
+    unpausing: false,
 
-    maximizeVideoArea: Ember.computed.alias(&#x27;autoProceed&#x27;),
+    maximizeVideoArea: false,
 
     frameSchemaProperties: {
         /**
@@ -241,6 +278,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
          *     preserve the video aspect ratio.
          *   @param {String} position use &#x27;fill&#x27; to fill the screen as much as possible while
          *     preserving aspect ratio. This overrides left/width/top/height values if given.
+         *   @param {Boolean} loop whether the video should loop, even after any requireTestVideoCount
+         *     is satisfied
          */
         video: {
             type: &#x27;object&#x27;,
@@ -263,15 +302,45 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 &#x27;position&#x27;: {
                     type: &#x27;string&#x27;,
                     enum: [&#x27;fill&#x27;, &#x27;&#x27;]
+                },
+                &#x27;loop&#x27;: {
+                    type: &#x27;boolean&#x27;
                 }
             }
         },
         /**
-         * Whether to proceed automatically when video is complete / testLength is
+         * Object describing the audio file to play along with video (optional)
+         *
+         * @property {Object} audio
+         * @default {&#x27;source&#x27;: &#x27;&#x27;, loop: false}
+         * @param {String} source Location of the audio file to play.
+         *   This can either be an array of {src: &#x27;url&#x27;, type: &#x27;MIMEtype&#x27;} objects, e.g.
+         *   listing equivalent .mp3 and .ogg files, or can be a single string &#x60;filename&#x60;
+         *   which will be expanded based on &#x60;baseDir&#x60; and &#x60;audioTypes&#x60; values (see &#x60;audioTypes&#x60;).
+         * @param {Boolean} loop whether the audio should loop, even after any requireTestAudioCount
+         *     is satisfied
+         */
+        audio: {
+            type: &#x27;object&#x27;,
+            description: &#x27;Audio to play along with video&#x27;,
+            properties: {
+                &#x27;source&#x27;: {
+                    anyOf: audioAssetOptions
+                },
+                &#x27;loop&#x27;: {
+                    type: &#x27;boolean&#x27;
+                }
+            },
+            default: {}
+        },
+
+        /**
+         * Whether to proceed automatically when video is complete / requiredDuration is
          * achieved, vs. enabling a next button at that point.
          * If true, the frame auto-advances after ALL of the following happen
-         * (a) the testLength (if any) is achieved, counting from the video starting
-         * (b) the video is played testCount times
+         * (a) the requiredDuration (if any) is achieved, counting from the video starting
+         * (b) the video is played requireVideoCount times
+         * (c) the audio is played requireAudioCount times
          * If false: a next button is displayed. It becomes possible to press &#x27;next&#x27;
          * only once the conditions above are met.
          *
@@ -285,55 +354,101 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         },
 
         /**
+         * Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+         * for acceptable syntax: can use color names (&#x27;blue&#x27;, &#x27;red&#x27;, &#x27;green&#x27;, etc.), or
+         * rgb hex values (e.g. &#x27;#800080&#x27; - include the &#x27;#&#x27;). We recommend a light background if you need to
+         * see children&#x27;s eyes.
+         *
+         * @property {String} backgroundColor
+         * @default &#x27;white&#x27;
+         */
+        backgroundColor: {
+            type: &#x27;string&#x27;,
+            description: &#x27;Color of background&#x27;,
+            default: &#x27;white&#x27;
+        },
+
+        /**
         Array of objects specifying attention-grabber video src and type, as for sources. The attention-grabber video is shown (looping) during the announcement phase and when the study is paused.
-        @property {Array} attnSources
+        @property {Array} pauseVideo
             @param {String} src
             @param {String} type
         @default []
         */
-        attnSources: {
+        pauseVideo: {
             anyOf: videoAssetOptions,
             description: &#x27;List of objects specifying attention-grabber video src and type&#x27;,
             default: []
         },
 
         /**
-        List of objects specifying music audio src and type.
-        If empty, no music is played.
-        @param musicSources
-        @property {Array} musicSources
-            @param {String} src
-            @param {String} type
-        @default []
-        */
-        musicSources: {
-            anyOf: audioAssetOptions,
-            description: &#x27;List of objects specifying music audio src and type&#x27;,
-            default: &#x27;&#x27;
+         Key to pause the trial. Use an empty string, &#x27;&#x27;, to not allow pausing using the keyboard. You can look up the names of keys at
+         https://keycode.info. Default is the space bar (&#x27; &#x27;).
+         @property {string} pauseKey
+         @default &#x27; &#x27;
+         */
+        pauseKey: {
+            type: &#x27;string&#x27;,
+            description: &#x27;Key that will pause study (use \&#x27;\&#x27; to not allow pausing during video)&#x27;,
+            default: &#x27; &#x27;
         },
 
         /**
-        Length to loop test videos, in seconds. Set if you want a time-based limit. E.g., setting testLength to 20 means that the first 20 seconds of the video will be played, with shorter videos looping until they get to 20s. Leave out or set to 0 to play the video through to the end a set number of times instead. If a testLength is set, it overrides any value set in testCount.
-        @property {Number} testLength
+         Parent-facing description of the key to pause the study. This is just used to display text
+         &quot;Press {pauseKeyDescription} to resume&quot; when the study is paused.
+         @property {string} pauseKeyDescription
+         @default &#x27;space&#x27;
+         */
+        pauseKeyDescription: {
+            type: &#x27;string&#x27;,
+            description: &#x27;Parent-facing description of the key to pause the study&#x27;,
+            default: &#x27;space&#x27;
+        },
+
+
+        /**
+         Whether to restart this frame upon unpausing, vs moving on to the next frame
+         @property {Array} restartAfterPause
+         @default true
+         */
+        restartAfterPause: {
+            type: &#x27;boolean&#x27;,
+            description: &#x27;Whether to restart this frame upon unpausing, vs moving on to the next frame&#x27;,
+            default: true
+        },
+
+        /**
+        Duration to require before proceeding, if any. Set if you want a time-based limit. E.g., setting requiredDuration to 20 means that the first 20 seconds of the video will be played, with shorter videos looping until they get to 20s. Leave out or set to 0 to play the video through to the end a set number of times instead.
+        @property {Number} requiredDuration
         @default 0
         */
-        testLength: {
+        requiredDuration: {
             type: &#x27;number&#x27;,
-            description: &#x27;Length to play test video for, in seconds&#x27;,
+            description: &#x27;Minimum trial duration to require (from start of video), in seconds&#x27;,
             default: 0,
             minimum: 0
         },
 
         /**
-        Number of times to play test video before moving on. This is ignored if
-        testLength is set to a positive value.
-        @property {Number} testCount
+        Number of times to play test video before moving on.
+        @property {Number} requireVideoCount
         @default 1
         */
-        testCount: {
+        requireVideoCount: {
             type: &#x27;number&#x27;,
             description: &#x27;Number of times to play test video&#x27;,
             default: 1
+        },
+
+        /**
+         Number of times to play test audio before moving on.
+         @property {Number} requireAudioCount
+         @default 1
+         */
+        requireAudioCount: {
+            type: &#x27;number&#x27;,
+            description: &#x27;Number of times to play test audio&#x27;,
+            default: 0
         },
 
         /**
@@ -376,12 +491,37 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
          *
          * @property {String} pauseText
          * @default []
-
          */
         pauseText: {
             type: &#x27;string&#x27;,
             description: &#x27;Text to show under Study paused when study is paused.&#x27;,
             default: &quot;(You&#x27;ll have a moment to turn around again.)&quot;
+        },
+        /**
+         * Text block to display to parent.  (Each field is optional)
+         *
+         * @property {Object} parentTextBlock
+         *   @param {String} title title to display
+         *   @param {String} text paragraph of text
+         *   @param {Object} css object specifying any css properties
+         *      to apply to this section, and their values - e.g.
+         *      {&#x27;color&#x27;: &#x27;gray&#x27;, &#x27;font-size&#x27;: &#x27;large&#x27;}
+         */
+        parentTextBlock: {
+            type: &#x27;object&#x27;,
+            properties: {
+                title: {
+                    type: &#x27;string&#x27;
+                },
+                text: {
+                    type: &#x27;string&#x27;
+                },
+                css: {
+                    type: &#x27;object&#x27;,
+                    default: {}
+                }
+            },
+            default: {}
         }
     },
 
@@ -402,6 +542,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 },
                 videoId: {
                     type: &#x27;string&#x27;
+                },
+                /**
+                 * Whether the video was paused at any point during the trial
+                 * @attribute hasBeenPaused
+                 * @type boolean
+                 */
+                hasBeenPaused: {
+                    type: &#x27;boolean&#x27;
                 }
             }
         }
@@ -414,7 +562,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         this._super(...arguments);
         if (!this.checkFullscreen()) {
             if (!this.get(&#x27;isPaused&#x27;)) {
-                this.pauseStudy();
+                this.togglePauseStudy(true);
             }
         }
     },
@@ -422,44 +570,95 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
     actions: {
 
         videoStarted() {
-            if (!this.get(&#x27;isPaused&#x27;)) {
-                // Check that we haven&#x27;t played it enough times already
-                this.set(&#x27;testVideosTimesPlayed&#x27;, this.get(&#x27;testVideosTimesPlayed&#x27;) + 1);
-                if ((this.get(&#x27;testVideosTimesPlayed&#x27;) &gt; this.get(&#x27;testCount&#x27;)) &amp;&amp; (!this.get(&#x27;testLength&#x27;))) {
-                    this.readyToFinish();
+            /**
+             * When video begins playing (recorded each time video starts if played through more than once)
+             *
+             * @event videoStarted
+             */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;videoStarted&#x27;);
+            this.set(&#x27;testVideoTimesPlayed&#x27;, this.get(&#x27;testVideoTimesPlayed&#x27;) + 1);
+            if (this.get(&#x27;testVideoTimesPlayed&#x27;) === 1) {
+                window.clearInterval(this.get(&#x27;testTimer&#x27;));
+                if (this.get(&#x27;requiredDuration&#x27;)) {
+                    this.set(&#x27;testTimer&#x27;, window.setTimeout(() =&gt; {
+                        this.set(&#x27;satisfiedDuration&#x27;, true);
+                        if (this.isReadyToFinish()) {
+                            this.readyToFinish();
+                        }
+                    }, this.get(&#x27;requiredDuration&#x27;) * 1000));
                 } else {
-                    if (this.get(&#x27;testVideosTimesPlayed&#x27;) === 1) {
-                      window.clearInterval(this.get(&#x27;testTimer&#x27;));
-                      if (this.get(&#x27;testLength&#x27;)) {
-                        this.set(&#x27;testTimer&#x27;, window.setTimeout(() =&gt; {
-                          this.readyToFinish();
-                        }, this.get(&#x27;testLength&#x27;) * 1000));
-                      }
-                      if ($(&#x27;audio#exp-music&#x27;).length) {
-                        $(&#x27;audio#exp-music&#x27;)[0].play();
-                      }
+                    this.set(&#x27;satisfiedDuration&#x27;, true);
+                    if (this.isReadyToFinish()) {
+                        this.readyToFinish();
                     }
-                    this.send(&#x27;setTimeEvent&#x27;, &#x27;startTestVideo&#x27;);
+                }
+                let audio = this.get(&#x27;audio_parsed&#x27;);
+                if (audio.hasOwnProperty(&#x27;source&#x27;) &amp;&amp; audio.source.length) {
+                    $(&#x27;#player-audio&#x27;)[0].play();
                 }
             }
         },
 
         videoStopped() {
-                if ((this.get(&#x27;testVideosTimesPlayed&#x27;) &gt;= this.get(&#x27;testCount&#x27;)) &amp;&amp; (!this.get(&#x27;testLength&#x27;))) {
-                    this.readyToFinish();
-                } else {
-                    this.$(&#x27;#player-video&#x27;)[0].currentTime = 0;
-                    this.$(&#x27;#player-video&#x27;)[0].play();
-                }
-                this.send(&#x27;setTimeEvent&#x27;, &#x27;videoStopped&#x27;);
+            /**
+             * When video completes playback (recorded each time if played more than once)
+             *
+             * @event videoStopped
+             */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;videoStopped&#x27;);
+            if (this.isReadyToFinish()) {
+                this.readyToFinish();
+            }
+            // Restart the video if it&#x27;s supposed to loop OR if it&#x27;s supposed to play another time
+            if (this.get(&#x27;video.loop&#x27;) || (this.get(&#x27;testVideoTimesPlayed&#x27;) &lt; this.get(&#x27;requireVideoCount&#x27;))) {
+                this.$(&#x27;#player-video&#x27;)[0].currentTime = 0;
+                this.$(&#x27;#player-video&#x27;)[0].play();
+            }
         },
 
-        finish() { // Move to next frame altogether
+        audioStarted() {
+            /**
+             * When audio begins playing (recorded each time video starts if played through more than once)
+             *
+             * @event audioStarted
+             */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;audioStarted&#x27;);
+            this.set(&#x27;testAudioTimesPlayed&#x27;, this.get(&#x27;testAudioTimesPlayed&#x27;) + 1);
+        },
+
+        audioStopped() {
+            /**
+             * When audio completes playback (recorded each time if played more than once)
+             *
+             * @event audioStopped
+             */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;audioStopped&#x27;);
+            if (this.isReadyToFinish()) { // in case this was the last criterion for being done
+                this.readyToFinish();
+            }
+            // Restart the video if it&#x27;s supposed to loop OR if it&#x27;s supposed to play another time
+            if (this.get(&#x27;audio.loop&#x27;) || (this.get(&#x27;testAudioTimesPlayed&#x27;) &lt; this.get(&#x27;requireAudioCount&#x27;))) {
+                this.$(&#x27;#player-audio&#x27;)[0].currentTime = 0;
+                this.$(&#x27;#player-audio&#x27;)[0].play();
+            }
+        },
+
+        finish() {
+            // Move to next frame altogether
             // Call this something separate from next because stopRecorder promise needs
             // to call next AFTER recording is stopped and we don&#x27;t want this to have
             // already been destroyed at that point.
+
+            /**
+             * When trial is complete and begins cleanup (may then wait for video upload)
+             *
+             * @event trialCompleted
+             */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;trialCompleted&#x27;);
             window.clearInterval(this.get(&#x27;testTimer&#x27;));
-            this.set(&#x27;testVideosTimesPlayed&#x27;, 0);
+            this.set(&#x27;testVideoTimesPlayed&#x27;, 0);
+            this.set(&#x27;testAudioTimesPlayed&#x27;, 0);
+            this.set(&#x27;satisfiedDuration&#x27;, false);
             var _this = this;
             if (this.get(&#x27;doRecording&#x27;)) {
                 this.set(&#x27;doingTest&#x27;, false);
@@ -473,13 +672,44 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             } else {
                 _this.send(&#x27;next&#x27;);
             }
+        },
+
+        unpauseStudy() {
+            this.set(&#x27;unpausing&#x27;, false);
+            /**
+             * When trial is unpaused (actually proceeding to beginning or next frame)
+             *
+             * @event unpauseTrial
+             */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;unpauseTrial&#x27;);
+            if (this.get(&#x27;restartAfterPause&#x27;)) {
+                this.isReadyToFinish(); // enable Next button if appropriate
+                this.startVideo();
+            } else {
+                this.send(&#x27;finish&#x27;);
+            }
         }
+    },
+
+    isReadyToFinish() {
+        let ready = (this.get(&#x27;testVideoTimesPlayed&#x27;) &gt;= this.get(&#x27;requireVideoCount&#x27;)) &amp;&amp;
+            (this.get(&#x27;testAudioTimesPlayed&#x27;) &gt;= this.get(&#x27;requireAudioCount&#x27;)) &amp;&amp;
+            (this.get(&#x27;satisfiedDuration&#x27;));
+        $(&#x27;#nextbutton&#x27;).prop(&#x27;disabled&#x27;, !ready);
+        return ready;
     },
 
     readyToFinish() {
         if (this.get(&#x27;autoProceed&#x27;)) {
             this.send(&#x27;finish&#x27;);
         } else {
+            /**
+             * When all requirements for this frame are completed and next button is enabled (only recorded if
+             * autoProceed is false)
+             *
+             * @event nextButtonEnabled
+             */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;nextButtonEnabled&#x27;);
             $(&#x27;#nextbutton&#x27;).prop(&#x27;disabled&#x27;, false);
         }
     },
@@ -490,7 +720,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         this.set(&#x27;doingTest&#x27;, true);
     },
 
-    pauseStudy(pause) { // only called in FS mode
+    togglePauseStudy(pause) { // only called in FS mode
         try {
             this.set(&#x27;hasBeenPaused&#x27;, true);
         } catch (_) {
@@ -500,47 +730,74 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
 
         // Currently paused: restart
         if (!pause &amp;&amp; wasPaused) {
+            this.set(&#x27;unpausing&#x27;, true);
             this.set(&#x27;isPaused&#x27;, false);
-            // TODO: restart to beginning of test video (or not)
-            // TODO: skip
-
-            try {
-                this.resumeRecorder();
-            } catch (_) {
-
+            // Start the unpausing audio.
+            if (this.get(&#x27;unpauseAudio_parsed&#x27;, []).length) {
+                $(&#x27;#unpause-audio&#x27;)[0].currentTime = 0;
+                $(&#x27;#unpause-audio&#x27;)[0].play().catch(() =&gt; {
+                    this.send(&#x27;unpauseStudy&#x27;);
+                });
+            } else {
+                this.send(&#x27;unpauseStudy&#x27;);
             }
+
         } else if (pause || !wasPaused) { // Not currently paused: pause
             window.clearInterval(this.get(&#x27;testTimer&#x27;));
-            this.set(&#x27;testVideosTimesPlayed&#x27;, 0);
-            this.send(&#x27;setTimeEvent&#x27;, &#x27;pauseVideo&#x27;);
-            this.pauseRecorder(true);
+            if ($(&#x27;#unpause-audio&#x27;).length) {
+                $(&#x27;#unpause-audio&#x27;)[0].pause();
+            }
+            this.set(&#x27;testVideoTimesPlayed&#x27;, 0);
+            this.set(&#x27;testAudioTimesPlayed&#x27;, 0);
+            this.set(&#x27;satisfiedDuration&#x27;, false);
+            $(&#x27;#nextbutton&#x27;).prop(&#x27;disabled&#x27;, true); // disable Next while paused
+            /**
+             * When trial is paused
+             *
+             * @event pauseTrial
+             */
+            this.send(&#x27;setTimeEvent&#x27;, &#x27;pauseTrial&#x27;);
+            this.set(&#x27;doingTest&#x27;, false);
             this.set(&#x27;isPaused&#x27;, true);
+            if ($(&#x27;#pause-audio&#x27;).length &amp;&amp; $(&#x27;#pause-audio&#x27;)[0].paused) {
+                $(&#x27;#pause-audio&#x27;)[0].currentTime = 0;
+                $(&#x27;#pause-audio&#x27;)[0].play();
+            }
         }
     },
 
     didInsertElement() {
         this._super(...arguments);
 
+
         $(document).on(&#x27;keyup.pauser&#x27;, (e) =&gt; {
             if (this.checkFullscreen()) {
-                if (e.which === 32) { // space: pause/unpause study
-                    this.pauseStudy();
+                if (this.get(&#x27;pauseKey&#x27;) &amp;&amp; e.key === this.get(&#x27;pauseKey&#x27;)) { // space: pause/unpause study
+                    this.togglePauseStudy();
                 }
             }
         });
-
         $(&#x27;#nextbutton&#x27;).prop(&#x27;disabled&#x27;, true);
 
+        // Store which video actually gets played for convenience when analyzing data
         let video = this.get(&#x27;video_parsed&#x27;, {});
-
         if (video.source.length) {
             this.set(&#x27;videoShown&#x27;, video.source[0].src);
         } else {
             this.set(&#x27;videoShown&#x27;, &#x27;&#x27;);
         }
 
-        // Apply user-provided CSS to video
+        // Apply user-provided CSS to parent text block
+        let hasParentText = Object.keys(this.get(&#x27;parentTextBlock&#x27;)).length;
+        this.set(&#x27;hasParentText&#x27;, hasParentText);
+        if (hasParentText) {
+            var parentTextBlock = this.get(&#x27;parentTextBlock&#x27;) || {};
+            var css = parentTextBlock.css || {};
+            $(&#x27;#parenttext&#x27;).css(css);
+        }
+        this.set(&#x27;maximizeVideoArea&#x27;, this.get(&#x27;autoProceed&#x27;) &amp;&amp; !hasParentText);
 
+        // Apply user-provided CSS to video
         if (!video.position) {
             $(&#x27;#test-video&#x27;).css({
                 &#x27;left&#x27;: &#x60;${video.left}%&#x60;,
@@ -549,7 +806,15 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 &#x27;height&#x27;: &#x60;${video.height}%&#x60;
             });
         }
-        if (!this.get(&#x27;doRecording&#x27;) &amp;&amp; !this.get(&#x27;startSessionRecording&#x27;)) {
+
+        // Apply background color
+        if (isColor(this.get(&#x27;backgroundColor&#x27;))) {
+            $(&#x27;div.exp-lookit-video&#x27;).css(&#x27;background-color&#x27;, this.get(&#x27;backgroundColor&#x27;));
+        } else {
+            console.warn(&#x27;Invalid background color provided; not applying.&#x27;);
+        }
+
+        if (!this.get(&#x27;doRecording&#x27;) &amp;&amp; !this.get(&#x27;startSessionRecording&#x27;) &amp;&amp; !this.get(&#x27;isPaused&#x27;)) {
             this.startVideo();
         }
     },
@@ -560,19 +825,22 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         this._super(...arguments);
     },
 
-    // Override to do a bit extra when starting recording
+    // Hook for starting recording
     onRecordingStarted() {
-        this.startVideo();
+        if (!this.get(&#x27;isPaused&#x27;)) {
+            this.startVideo();
+        }
         $(&#x27;#waitForVideo&#x27;).hide();
     },
 
-    // Override to do a bit extra when starting session recorder
+    // Hook for starting session recorder
     onSessionRecordingStarted() {
-        this.startVideo();
+        if (!this.get(&#x27;isPaused&#x27;)) {
+            this.startVideo();
+        }
         $(&#x27;#waitForVideo&#x27;).hide();
     }
 });
-
     </pre>
 </div>
                     </div>
