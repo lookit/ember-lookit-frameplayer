@@ -499,7 +499,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          * @property {Object} parentTextBlock
          *   @param {String} title title to display
          *   @param {String} text paragraph of text
-         *   @param {Boolean} emph whether to bold this paragraph
          *   @param {Object} css object specifying any css properties
          *      to apply to this section, and their values - e.g.
          *      {'color': 'gray', 'font-size': 'large'}
@@ -512,9 +511,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 },
                 text: {
                     type: 'string'
-                },
-                emph: {
-                    type: 'boolean'
                 },
                 css: {
                     type: 'object',
