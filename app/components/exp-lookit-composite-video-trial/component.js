@@ -18,7 +18,7 @@ let {
 
 /**
 * Composite video display for typical looking measures trials (e.g. preferential looking,
-* looking time).
+* looking time). (Previously called exp-lookit-video.)
 *
 * Trial consists of four phases, each of which is optional.
 *

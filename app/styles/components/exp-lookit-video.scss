@@ -31,7 +31,7 @@ $exp-lookit-video-parent-text-color: white;
 
     #fsButton {
         margin: auto;
-        margin-top: 25%;
+        margin-top: 80vh;
         min-width: 300px;
         height: 3em;
         font-size: 2em;
@@ -75,11 +75,25 @@ $exp-lookit-video-parent-text-color: white;
         margin-top: 0; top: $exp-lookit-video-top-margin * 1vh;
         left:0;right:0; /* horizontal center */
 
+        #paused-display {
+            position: relative;
+            top: 20vh;
+
+            video {
+                height: 20vh;
+                margin-left: auto;
+                margin-right: auto;
+                position: relative;
+                display: block;
+            }
+        }
+
         &.image-area-fs {
             max-height: 100%;
             max-width: 100%;
             height: 100%;
             width: 100%;
+            top: 0;
         }
 
         // Container immediately around the image. By default fills space.
@@ -148,26 +162,6 @@ $exp-lookit-video-parent-text-color: white;
             width: 100%;
         }
 
-        // Fix positions for easier recognition
-        &#replaybutton {
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 1em;
-            top: 50%;
-            clear: both;
-        }
-
-        &#previousbutton {
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 1em;
-            clear: both;
-            margin-bottom: 1em;
-        }
-
-
     }
 
     #parenttext {
@@ -186,36 +180,6 @@ $exp-lookit-video-parent-text-color: white;
 
 
 }
-
-
-#experiment-player:not(.player-fullscreen) .exp-lookit-video {
-
-    width: 100% !important;
-    height: 100% !important;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-
-    video {
-        margin-left: auto;
-        margin-right: auto;
-        width: 15%;
-        position: relative;
-        display: block;
-    }
-
-    div {
-        height: 100%;
-        width: 100%;
-        padding: 0;
-        margin: 0;
-    }
-
-}
-
-
 
 
 
