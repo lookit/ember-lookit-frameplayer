@@ -17,8 +17,11 @@ let {
  */
 
 /**
-* Basic video display for looking measures (e.g. preferential looking, looking time).
+* Basic image display for looking measures (e.g. preferential looking, looking time).
 * Trial consists of four phases, each of which is optional.
+ *
+ * This is a composite trial very similar to exp-lookit-composite-video-trial except that
+ * it allows specifying either video stimuli or static images.
 *
 * 1. Announcement: The audio in announcementAudio is played while the announcementVideo
 * video is played centrally, looping as needed. This lasts for announcementLength seconds
@@ -34,13 +37,16 @@ let {
 * played once. (Audio will be paused and restarted if it is longer than calibrationLength.)
 * Set calibrationLength to 0 to skip calibration.
 *
-* 4. Test: The video in testVideo and audio in testAudio (optional) are played until
+* 4. Test: Test images are displayed or the video in testVideo and audio in testAudio (optional) are played until
 * either: testLength seconds have elapsed (with video looping if needed), or the video
 * has been played testCount times. If testLength is set, it overrides testCount - for
 * example if testCount is 1 and testLength is 30, a 10-second video will be played 3 times.
 * If the participant pauses the study during the test phase, then after restarting the
 * trial, the video in altTestVideo will be used again (defaulting to the same video if
 * altTestVideo is not provided).
+ *
+ * To specify test images, you can provide leftImage, rightImage, and/or centerImage, or you can provide a list of
+ * possibleImages and give an index in that list for any of those three placements.
 *
 * Specifying media locations:
 * For any parameters that expect a list of audio/video sources, you can EITHER provide
@@ -124,12 +130,6 @@ let {
 * @uses Video-record
 * @uses Expand-assets
 */
-
-// TODO: refactor into cleaner structure with segments announcement, intro, calibration,
-// test, with more general logic for transitions. Construct list at start since some
-// elements optional. Then proceed through - instead of setting task manually, use
-// utility to move to next task within list. For each segment, allow video/image/text
-// stimuli.
 
 export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord, ExpandAssets, {
     layout: layout,
