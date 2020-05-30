@@ -5,6 +5,7 @@ import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
 import { audioAssetOptions, videoAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
+import isColor from '../../utils/is-color';
 import { observer } from '@ember/object';
 
 let {
@@ -151,13 +152,6 @@ function shuffleArrayInPlace(array) {
  * @uses Video-record
  * @uses Expand-assets
  */
-
-// See https://stackoverflow.com/a/56266358
-const isColor = (strColor) => {
-    const s = new Option().style;
-    s.color = strColor;
-    return s.color !== '';
-};
 
 export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
 

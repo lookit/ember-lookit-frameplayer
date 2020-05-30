@@ -5,6 +5,7 @@ import FullScreen from '../../mixins/full-screen';
 import MediaReload from '../../mixins/media-reload';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
+import isColor from '../../utils/is-color';
 import { audioAssetOptions, imageAssetOptions, videoAssetOptions } from '../../mixins/expand-assets';
 
 let {
@@ -104,14 +105,6 @@ let {
 * @uses Video-record
 * @uses Expand-assets
 */
-
-// Todo - probably make mixin for setting background color etc.
-// See https://stackoverflow.com/a/56266358
-const isColor = (strColor) => {
-    const s = new Option().style;
-    s.color = strColor;
-    return s.color !== '';
-};
 
 export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord, ExpandAssets, {
     layout: layout,
