@@ -9,7 +9,9 @@
 /bower_components
 
 # misc
-/.sass-cache
+app/styles/.sass-cache
+app/styles/app.css
+app/styles/app.css.map
 /connect.lock
 /coverage/*
 /libpeerconnection.log
