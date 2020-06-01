@@ -1,6 +1,5 @@
 dist
 docs
-docs_assets
 tmp
 tests/*
 package.json

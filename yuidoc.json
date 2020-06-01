@@ -1,6 +1,6 @@
 {
     "url": "https://github.com/lookit/ember-lookit-frameplayer",
-    "projectLogo": "docs_assets/themes/lookit/assets/css/logo.png",
+    "projectLogo": "docs/themes/lookit/assets/css/logo.png",
     "options": {
         "linkNatives": "true",
         "selleck": "true",
@@ -9,6 +9,6 @@
             "app"
         ],
         "outdir": "docs_tmp/",
-        "themedir": "docs_assets/themes/lookit/"
+        "themedir": "docs/themes/lookit/"
     }
 }
