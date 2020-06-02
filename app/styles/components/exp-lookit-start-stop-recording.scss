@@ -1,0 +1,80 @@
+.exp-lookit-start-stop-recording, #experiment-player:not(.player-fullscreen) .exp-lookit-start-stop-recording
+{
+
+    width: 100% !important;
+    height: 100% !important;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: fixed;
+
+    .placeholder-wrapper {
+        height: max-content !important;
+        width: max-content !important;
+        margin-left: 50% !important;
+        margin-top: 40vh !important;
+        transform: translate(-50%, -50%);
+    }
+
+    .wait-for-video {
+        display: block;
+        margin-left: auto;
+        margin-right:auto;
+        text-align: center;
+        font-size: 2em;
+        padding-top: 1em;
+    }
+
+    #placeholder-image {
+        &.spin {
+            animation-name: spin;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+            transform-origin: center;
+        }
+        &.bounce {
+            animation-name: bounce;
+            animation-duration: 1.5s;
+            animation-iteration-count: infinite;
+            transform-origin: center;
+            animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
+        }
+    }
+
+    @keyframes spin {
+        0%   { transform: rotate(0turn); }
+        5%   { transform: rotate(0turn); }
+        95%  { transform: rotate(1turn); }
+        100% { transform: rotate(1turn); }
+    }
+
+    @keyframes bounce {
+        0%   { transform: scale(1,1)      translateY(0); }
+        10%  { transform: scale(1.1,.9)   translateY(0); }
+        30%  { transform: scale(.9,1.1)   translateY(-25%); }
+        50%  { transform: scale(1.05,.95) translateY(0); }
+        65%  { transform: scale(1,1)      translateY(-5%); }
+        80%  { transform: scale(1,1)      translateY(0); }
+        100% { transform: scale(1,1)      translateY(0); }
+    }
+
+    #placeholder-video, #placeholder-image {
+        width: 15vw;
+        max-height: 300px;
+        display: block;
+        margin: auto;
+        top: 0; left: 0; bottom: 0; right: 0;
+
+        &.center {
+            margin-left: 50% - $exp-video-cal-width/2;
+        }
+    }
+
+    // Progress bar
+    div.progress {
+        height: 3vh !important;
+    }
+
+}
