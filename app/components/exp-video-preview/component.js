@@ -8,12 +8,12 @@ import ExpandAssets from '../../mixins/expand-assets';
 import { computed } from '@ember/object';
 import { videoAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
 
+// Regular comment syntax to omit from docs
 /*
  * @module exp-player
- * @submodule frames
+ * @submodule frames-deprecated
  */
 
-// Use regular comment syntax here to exclude from docs for clarity
 /*
  * A frame that displays a series of videos to preview, without collecting data as a live experiment. User can go through these at their own pace and video controls are shown. Webcam video is recorded starting once the user presses a button to actually display the videos, so that researchers can check that the participant (infant/child) did not see the videos ahead of time.
  ```json
@@ -177,8 +177,6 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
         }
     },
     meta: {
-        name: 'ExpVideoPreview',
-        description: 'Frame that displays a series of preview videos, self-paced with controls.',
         data: {
             type: 'object',
             properties: {

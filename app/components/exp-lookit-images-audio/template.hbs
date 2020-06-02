@@ -1,0 +1,100 @@
+{{! template-lint-disable no-invalid-interactive}}
+
+<div class="exp-lookit-image-audio">
+
+    <div class="row recorder-container video-recorder-hidden">
+        <div id="recorder" class="col-xs-12">
+        </div>
+    </div>
+
+    <div id="image-area" class="{{if noStoryControls "image-area-no-controls"}} {{if (and noStoryControls maximizeDisplay) "image-area-fullscreen"}}" >
+        {{#if (or doRecording startSessionRecording)}}
+            <p id="waitForVideo"> establishing video connection <br> please wait... </p>
+        {{/if}}
+
+        {{#each images_parsed as |image|}}
+            <div id={{image.id}} class="story-image-container {{if image.position image.position}}"  onclick={{action "clickImage" image.id image.nonChoiceOption image.correct image.feedbackText}}>
+                <img src={{image.src}} class="story-image {{if (and choiceRequired (not image.nonChoiceOption)) "choice-option"}}" alt={{image.alt}}>
+                <audio class="feedback-audio" onended={{action "endFeedbackAudio" image.id image.correct}}>
+                    {{#each image.feedbackAudio as |stream|}}
+                        <source src={{stream.src}} type={{stream.type}}>
+                    {{/each}}
+                </audio>
+            </div>
+
+
+            <div class="{{image.id}} modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <p>{{image.feedbackText}}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" {{action "hideFeedbackDialog" image.id}}>OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+
+    </div>
+
+    {{#unless updatedIsFullscreen}}
+        <button type="button" class="btn btn-warning exp-lookit-story-page" id="fsButton" {{ action "showFullscreen"}} >
+            please return
+            <br>
+            to fullscreen
+        </button>
+    {{/unless}}
+
+    {{#if audio_parsed}}
+        <audio class="player-audio" id="player-audio" onended={{action "finishedAudio"}} ontimeupdate={{action "updateCharacterHighlighting"}}>
+            {{#each audio_parsed as |stream|}}
+                <source src={{stream.src}} type={{stream.type}}>
+            {{/each}}
+        </audio>
+    {{/if}}
+
+    {{#unless noStoryControls}}
+
+        <div id="story-controls">
+            {{#unless autoProceed}}
+                <div class="button-container left">
+                    {{#if showPreviousButton}}
+                        <button type="button" id="previousbutton" class="btn btn-primary" {{ action "previous" }} >
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </button>
+                    {{/if}}
+                    {{#if (and showReplayButton audio_parsed)}}
+                        <button type="button" id="replaybutton" class="btn btn-primary"  {{ action "replay" }}>
+                            <i class="fa fa-repeat"></i> Replay
+                        </button>
+                    {{/if}}
+                </div>
+            {{/unless}}
+
+            {{#unless noParentText}}
+                <div id="parenttext">
+                    {{#if showProgressBar}}
+                        <div class="progress" id="progressbar">
+                            <div class="progress-bar bg-info progress-bar-striped" role="progressbar" style="width:0%" aria-valuemin="0" aria-valuemax="100" {{!-- template-lint-disable no-inline-styles --}}></div>
+                        </div>
+                    {{/if}}
+                    {{exp-text-block block=parentTextBlock}}
+                </div>
+            {{/unless}}
+
+            {{#unless autoProceed}}
+                <div class="button-container right">
+                    <button type="button" id="nextbutton" class="btn btn-success fill" {{ action "finish" }} >
+                        Next <i class="fa fa-arrow-right"></i>
+                    </button>
+                </div>
+            {{/unless}}
+
+
+        </div>
+    {{/unless}}
+
+</div>
+

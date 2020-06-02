@@ -1,90 +1,188 @@
-$exp-video-cal-width: 12%;
-$exp-video-left-rect: 18.75%;
-$exp-video-right-rect: 81.25%;
+$exp-lookit-video-AR: 1.75; // aspect ratio of story page, width:height
+$exp-lookit-video-side-margin: 1; // in vw
+$exp-lookit-video-top-margin: 1; // in vh
+$exp-lookit-video-controls-height: 20; // in vh
+$exp-lookit-video-width: (100 - 2*$exp-lookit-video-side-margin) * 1vw;
+$exp-lookit-video-height: (100 - $exp-lookit-video-top-margin - $exp-lookit-video-controls-height) * 1vh;
+$exp-lookit-video-parent-text-color: white;
 
-.exp-lookit-video video {
-    margin:auto;
+.exp-lookit-video.cursor-display, .exp-lookit-video.cursor-display *
+{
+  cursor: auto !important;
 }
 
-.exp-lookit-video video.intro {
-    max-height: 50%;
+.exp-lookit-video, #experiment-player.player-fullscreen .exp-lookit-video {
+    background-color: white;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+
+    .pause-instructions {
+        display: block;
+        position: relative;
+        margin-left: auto;
+        margin-right:auto;
+        text-align: center;
+        font-size: 3em;
+        font-weight: bold;
+    }
+
+    #fsButton {
+        margin: auto;
+        margin-top: 80vh;
+        min-width: 300px;
+        height: 3em;
+        font-size: 2em;
+        position: relative;
+        display: block;
+    }
+
+    .recorder-container {
+      width:100%;
+      height:50vh;
+      margin: 0px;
+    }
+
+    .recorder {
+      padding: 0px;
+      margin-bottom: 1em;
+      margin-top: 1em;
+      background-color: #ccc;
+      width: 110%;
+      height:100%;
+      min-width:350px;
+      margin-left:-10%;
+    }
+
+    // Initial waiting for webcam connection display
+    #waitForVideo {
+      font-size: x-large;
+      margin-top: 40%;
+    }
+
+    // Outside div for the "story page"
+    #image-area {
+        background-color: white;
+        overflow: hidden;
+        position: fixed;
+        width: $exp-lookit-video-width;
+        height: 1/$exp-lookit-video-AR * $exp-lookit-video-width;
+        max-height: $exp-lookit-video-height;
+        max-width: $exp-lookit-video-AR * $exp-lookit-video-height;
+        margin: auto;
+        margin-top: 0; top: $exp-lookit-video-top-margin * 1vh;
+        left:0;right:0; /* horizontal center */
+
+        #paused-display {
+            position: relative;
+            top: 20vh;
+
+            video {
+                height: 20vh;
+                margin-left: auto;
+                margin-right: auto;
+                position: relative;
+                display: block;
+            }
+        }
+
+        &.image-area-fs {
+            max-height: 100%;
+            max-width: 100%;
+            height: 100%;
+            width: 100%;
+            top: 0;
+        }
+
+        // Container immediately around the image. By default fills space.
+        div.story-image-container {
+            position:absolute;
+            display: block;
+            padding:0;
+            max-height:100%;
+            max-width: 100%;
+            border: 0;
+
+            &.fill {
+              height:100%;
+              width:100%;
+            }
+
+            // The actual image
+            video.story-image {
+                position:relative;
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: contain;
+                object-position: center;
+                max-height: 100%;
+                max-width: 100%;
+                margin: auto;
+                vertical-align: center;
+            }
+        }
+    }
+
+    // Navigation buttons
+    #story-controls .button-container {
+        display: inline-block;
+        position: fixed;
+        padding: 0px; margin: 0px;
+        width: 20vw;
+        margin-left: auto;
+        margin-right: auto;
+        min-width: 100px;
+        min-height: 50px;
+        bottom: 2vh;
+        height: $exp-lookit-video-controls-height * 0.5vh;
+        bottom: $exp-lookit-video-controls-height * 0.25vh;
+
+        &.right {
+            right: 1vw;
+        }
+
+        &.left {
+            left: 1vw;
+        }
+    }
+
+    // Navigation buttons
+    #story-controls button {
+        padding: 0px; margin: 0px;
+        font-size: x-large;
+        margin-left: auto;
+        margin-right: auto;
+        min-height: 50px;
+        height: $exp-lookit-video-controls-height * 0.5vh;
+        bottom: $exp-lookit-video-controls-height * 0.25vh;
+
+        &.fill {
+            width: 100%;
+        }
+
+    }
+
+    #parenttext {
+        font-size: x-large;
+        right: 0; left: 0;
+        width: 50vw;
+        text-align: center;
+        margin: auto;
+        height: ($exp-lookit-video-controls-height - 4) * 1vh;
+        bottom: 2vh;
+        position: fixed;
+        background-color: $exp-lookit-video-parent-text-color;
+        color: black;
+        border-radius: 15px;
+    }
+
+
 }
 
-.exp-lookit-video video.test:not(.attn) {
-    max-height:80%;
-    width:100%;
-}
 
-.exp-lookit-video video.attn {
-    max-height: 30%;
-}
 
-.exp-lookit-video .pause-instructions {
-    display: block;
-    position: relative;
-    margin-left: auto;
-    margin-right:auto;
-    text-align: center;
-    font-size: 3em;
-    font-weight: bold;
-}
 
-.exp-lookit-video #fsButton, .exp-lookit-video #nextbutton {
-    margin-left: auto;
-    margin-right: auto;
-    min-height: 75px;
-    min-width: 300px;
-    position: relative;
-    display: block;
-    font-size: 2em;
-}
 
-#experiment-player:not(.player-fullscreen) .exp-lookit-video video {
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    position: relative;
-    display: block;
-}
 
-.exp-lookit-video .recorder-container {
-	width:100%;
-	height:50vh;
-	margin: 0px;
-	//position:relative;
-}
-
-.exp-lookit-video .recorder {
-	padding: 0px;
-	margin-bottom: 1em;
-	margin-top: 1em;
-	background-color: #ccc;
-	width: 110%;
-	height:100%;
-	min-width:350px;
-	margin-left:-10%;
-	//position: absolute;
-	//top:0;
-	//right:0;
-	//left:100%;
-}
-
-.exp-lookit-video #player-calibration-video {
-    width: $exp-video-cal-width;
-    max-height: 300px;
-    position: absolute;
-    margin: auto;
-    top: 0; left: 0; bottom: 0; right: 0;
-}
-
-.exp-lookit-video #player-calibration-video.center {
-    margin-left: 50% - $exp-video-cal-width/2;
-}
-
-.exp-lookit-video #player-calibration-video.left {
-    margin-left: $exp-video-left-rect - $exp-video-cal-width/2;
-}
-
-.exp-lookit-video #player-calibration-video.right {
-    margin-left: $exp-video-right-rect - $exp-video-cal-width/2;
-}

@@ -11,14 +11,14 @@
               experiment=study
               session=response
               pastSessions=pastResponses
-              saveHandler=(action 'saveResponse')
+              saveHandler=(action "saveResponse")
               frameIndex=0
-              fullScreenElementId='expContainer'
+              fullScreenElementId="expContainer"
           }}
     {{/if}}
 </div>
 
-{{#bs-modal open=showData title="Data collected during this preview session" closeAction=(action 'toggleData') as |modal|}}
+{{#bs-modal open=showData title="Data collected during this preview session" closeAction=(action "toggleData") as |modal|}}
     {{#modal.body}}
         <p>
             <strong> Note: </strong>

@@ -5,7 +5,6 @@ import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
 import { audioAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
-import { observer } from '@ember/object';
 
 let {
     $
@@ -13,10 +12,13 @@ let {
 
 /**
  * @module exp-player
- * @submodule frames
+ * @submodule frames-deprecated
  */
 
 /**
+ * This frame is deprecated and will not be included in release 2.x. For new studies, use
+ * the frame {{#crossLink "Exp-lookit-images-audio"}}{{/crossLink}} instead.
+ *
  * Frame to implement a basic "storybook page" trial, with images placed on the
  * screen within a display area and a sequence of audio files played.
  * Optionally, images may be highlighted at specified times during the audio
@@ -95,6 +97,7 @@ let {
  * @uses Full-screen
  * @uses Video-record
  * @uses Expand-assets
+ * @deprecated
  */
 
 export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
@@ -114,8 +117,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
     // Override setting in VideoRecord mixin - only use camera if doing recording
     doUseCamera: Ember.computed.alias('doRecording'),
-    // Don't need to override startRecordingAutomatically as we override the observer
-    // whenPossibleToRecord directly.
+    startRecordingAutomatically: Ember.computed.alias('doRecording'),
 
     pageTimer: null,
     progressTimer: null,
@@ -293,8 +295,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     meta: {
-        name: 'ExpLookitStoryPage',
-        description: 'Frame to display a basic storybook page trial, with images and audio',
         data: {
             type: 'object',
             properties: {
@@ -308,38 +308,21 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         }
     },
 
-    // Override to do a bit extra when recording (single-frame)
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('doRecording')) {
-            var _this = this;
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                this.startRecorder().then(() => {
-                    _this.set('currentAudioIndex', -1);
-                    _this.send('playNextAudioSegment');
-                    _this.set('recorderReady', false);
-                    $('#waitForVideo').hide();
-                    $('.story-image-container').show();
-                });
-            }
-        }
-    }),
+    // Override to do a bit extra when starting recording
+    onRecordingStarted() {
+        this.set('currentAudioIndex', -1);
+        this.send('playNextAudioSegment');
+        $('#waitForVideo').hide();
+        $('.story-image-container').show();
+    },
 
     // Override to do a bit extra when starting session recorder
-    whenPossibleToRecordSession: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
-        if (this.get('startSessionRecording')) {
-            var _this = this;
-            if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
-                this.startSessionRecorder().then(() => {
-                    _this.send('setTimeEvent', 'startedSessionRecording');
-                    _this.set('sessionRecorderReady', false);
-                    _this.set('currentAudioIndex', -1);
-                    _this.send('playNextAudioSegment');
-                    $('#waitForVideo').hide();
-                    $('.story-image-container').show();
-                });
-            }
-        }
-    }),
+    onSessionRecordingStarted() {
+        this.set('currentAudioIndex', -1);
+        this.send('playNextAudioSegment');
+        $('#waitForVideo').hide();
+        $('.story-image-container').show();
+    },
 
     actions: {
 
@@ -396,12 +379,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                     let _this = this;
                     this.send('setTimeEvent', 'setting timer');
                     this.set('pageTimer', window.setTimeout(function() {
-                            _this.send('setTimeEvent', 'timer ended');
-                            _this.set('minDurationAchieved', true);
-                            if (_this.get('finishedAllAudio')) {
-                                _this.send('finish');
-                            }
-                        }, _this.get('durationSeconds') * 1000));
+                        _this.send('setTimeEvent', 'timer ended');
+                        _this.set('minDurationAchieved', true);
+                        if (_this.get('finishedAllAudio')) {
+                            _this.send('finish');
+                        }
+                    }, _this.get('durationSeconds') * 1000));
                     if (this.get('showProgressBar')) {
                         this.set('timerStart', new Date().getTime());
                         let timerStart = _this.get('timerStart');
@@ -441,7 +424,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         var css = parentTextBlock.css || {};
         $('#parenttext').css(css);
 
-        this.send('showFullscreen');
         $('#nextbutton').prop('disabled', true);
 
         // If not recording, go to audio right away! Otherwise will be triggered when

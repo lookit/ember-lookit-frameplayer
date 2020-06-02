@@ -237,8 +237,6 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
         }
     },
     meta: {
-        name: 'ExpVideoStimuliPreview',
-        description: 'Frame that displays a series of preview stimuli, self-paced with controls.',
         data: {
             type: 'object',
             properties: {

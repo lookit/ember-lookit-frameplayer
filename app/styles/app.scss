@@ -26,6 +26,9 @@
 @import "components/exp-lookit-change-detection";
 @import "components/radio-group";
 @import "components/exp-lookit-stimuli-preview";
+@import "components/exp-lookit-calibration";
+@import "components/exp-lookit-composite-video-trial";
+@import "components/exp-lookit-start-stop-recording";
 
 // Physics study only
 @import "components/exp-exit-survey";
@@ -60,6 +63,10 @@
 
 .vertical-pad {
     height: 8vh !important;
+}
+
+.center-text {
+    text-align: center;
 }
 
 .modal-dialog {

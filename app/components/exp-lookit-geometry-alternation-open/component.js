@@ -13,10 +13,12 @@ let {
 
 /**
  * @module exp-player
- * @submodule frames
+ * @submodule frames-deprecated
  */
 
 /**
+ * This frame is a bespoke frame for a beta tester. It is deprecated and will not be
+ * included in release 2.x. For new studies, use {{#crossLink "Exp-lookit-change-detection"}}{{/crossLink}} instead.
  *
  * Frame to implement specific test trial structure for geometry alternation
  * replication study. Includes announcement, calibration, and alternation (test)
@@ -102,6 +104,7 @@ let {
  * @uses Full-screen
  * @uses Video-record
  * @uses Expand-assets
+ * @deprecated
  */
 
 export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
@@ -364,8 +367,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     meta: {
-        name: 'ExpLookitGeometryAlternation',
-        description: 'Frame to implement specific test trial structure for geometry alternation experiment. Includes announcement, calibration, and alternation (test) phases. During "alternation," two streams of triangles are shown, in rectangles on the left and right of the screen: one one side both size and shape change, on the other only size changes. Frame is displayed fullscreen and video recording is conducted during calibration/test.',
         data: {
             type: 'object',
             properties: {
@@ -553,14 +554,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         // Start presenting triangles and set to stop after trial length
         _this.presentTriangles(_this.settings.LshapesStart,
-                                        _this.settings.RshapesStart,
-                                        _this.settings.LsizeBaseStart,
-                                        _this.settings.RsizeBaseStart);
+            _this.settings.RshapesStart,
+            _this.settings.LsizeBaseStart,
+            _this.settings.RsizeBaseStart);
         window.setTimeout(function() {
-                window.clearTimeout(_this.get('stimTimer'));
-                _this.clearTriangles();
-                _this.endTrial();
-            }, _this.settings.trialLength * 1000);
+            window.clearTimeout(_this.get('stimTimer'));
+            _this.clearTriangles();
+            _this.endTrial();
+        }, _this.settings.trialLength * 1000);
     },
 
     // When triangles have been shown for time indicated: play end-audio if
@@ -601,19 +602,19 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
          * @param {Number} RSize size of right triangle, relative to standard ('standard' sizes are set so that areas of skinny & fat triangles are equal), in terms of side length (e.g. for a rectangle, 2 would mean take a 1x3 rectangle and make it a 2x6 rectangle, quadrupling the area)
          */
         this.send('setTimeEvent', 'presentTriangles', {
-                Lshape: Lshape,
-                LX: LX,
-                LY: LY,
-                LRot: LRot,
-                LFlip: LFlip,
-                LSize: LSize,
-                Rshape: Rshape,
-                RX: RX,
-                RY: RY,
-                RRot: RRot,
-                RFlip: RFlip,
-                RSize: RSize
-            });
+            Lshape: Lshape,
+            LX: LX,
+            LY: LY,
+            LRot: LRot,
+            LFlip: LFlip,
+            LSize: LSize,
+            Rshape: Rshape,
+            RX: RX,
+            RY: RY,
+            RRot: RRot,
+            RFlip: RFlip,
+            RSize: RSize
+        });
 
         var leftTriangle = `${this.triangleBases[Lshape]}
             transform=" translate(${LX}, ${LY})
@@ -643,33 +644,33 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     presentTriangles(Lshapes, Rshapes, LsizeBase, RsizeBase) {
         // select X and Y positions for each shape
         var LX = this.getRandom(this.settings.XRange[0],
-                                this.settings.XRange[1]);
+            this.settings.XRange[1]);
         var RX = this.getRandom(this.settings.XRange[0],
-                                this.settings.XRange[1]);
+            this.settings.XRange[1]);
         var LY = this.getRandom(this.settings.YRange[0],
-                                this.settings.YRange[1]);
+            this.settings.YRange[1]);
         var RY = this.getRandom(this.settings.YRange[0],
-                                this.settings.YRange[1]);
+            this.settings.YRange[1]);
         // select rotation, flip, size per shape
         var LRot = this.getRandom(this.settings.rotRange[0],
-                                  this.settings.rotRange[1]);
+            this.settings.rotRange[1]);
         var RRot = this.getRandom(this.settings.rotRange[0],
-                                  this.settings.rotRange[1]);
+            this.settings.rotRange[1]);
         var LFlip = this.getRandomElement(this.settings.flipVals);
         var RFlip = this.getRandomElement(this.settings.flipVals);
         var LSize = this.getRandom(this.settings.sizeRange[0],
-                                   this.settings.sizeRange[1]) * LsizeBase[0];
+            this.settings.sizeRange[1]) * LsizeBase[0];
         var RSize = this.getRandom(this.settings.sizeRange[0],
-                                   this.settings.sizeRange[1]) * RsizeBase[0];
+            this.settings.sizeRange[1]) * RsizeBase[0];
 
         var _this = this;
         _this.clearTriangles();
         _this.set('stimTimer', window.setTimeout(function() {
             _this.drawTriangles(Lshapes[0], LX, LY, LRot, LFlip, LSize,
-                            Rshapes[0], RX, RY, RRot, RFlip, RSize);
+                Rshapes[0], RX, RY, RRot, RFlip, RSize);
             _this.set('stimTimer', window.setTimeout(function() {
                 _this.presentTriangles(Lshapes.reverse(), Rshapes.reverse(),
-                                    LsizeBase.reverse(), RsizeBase.reverse());
+                    LsizeBase.reverse(), RsizeBase.reverse());
             }, _this.settings.msTriangles));
         }, _this.settings.msBlank));
     },
@@ -702,16 +703,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
             // Currently paused: RESUME
             if (wasPaused) {
-                try {
-                    this.resumeRecorder();
-                } catch (_) {
-                    return;
-                }
                 this.startIntro();
                 this.set('isPaused', false);
             } else { // Not currently paused: PAUSE
                 window.clearTimeout(this.get('introTimer'));
-                this.pauseRecorder(true);
                 if (this.checkFullscreen()) {
                     $('#player-pause-audio')[0].play();
                 } else {
@@ -803,7 +798,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             musicFadeLength: 2000,
             calLength: this.get('calibrationLength')});
 
-        this.send('showFullscreen');
         this.notifyPropertyChange('readyToStartCalibration');
         this.startIntro();
     },
@@ -815,39 +809,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         this._super(...arguments);
     },
 
-    /**
-     * Observer that starts recording once recorder is ready. Override to do additional
-     * stuff at this point!
-     * @method whenPossibleToRecord
-     */
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('doRecording')) {
-            var _this = this;
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                this.startRecorder().then(() => {
-                    _this.set('recorderReady', false);
-                    _this.set('recordingStarted', true);
-                    _this.notifyPropertyChange('readyToStartCalibration');
-                });
-            }
-        }
-    }),
+    // Override to do a bit extra when starting recording
+    onRecordingStarted() {
+        this.set('recordingStarted', true);
+    },
 
-    /**
-     * Observer that starts recording once sessionrecorder is ready.
-     * @method whenPossibleToRecordSession
-     */
-    whenPossibleToRecordSession: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
-        if (this.get('startSessionRecording')) {
-            var _this = this;
-            if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
-                this.startSessionRecorder().then(() => {
-                    _this.set('sessionRecorderReady', false);
-                    _this.set('recordingStarted', true);
-                    _this.notifyPropertyChange('readyToStartCalibration');
-                });
-            }
-        }
-    }),
+    // Override to do a bit extra when starting session recorder
+    onSessionRecordingStarted() {
+        this.set('recordingStarted', true);
+    }
 
 });

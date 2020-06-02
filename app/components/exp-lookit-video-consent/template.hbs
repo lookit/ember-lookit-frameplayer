@@ -1,147 +1,66 @@
-{{! template-lint-disable triple-curlies }}
-{{! template-lint-disable html-comments}}
-
 <div class="row exp-lookit-video-consent">
-    <div class="col-md-7">
+    <div class="col-sm-7">
 
         <div class="video-consent-numbered-direction">
             <span class="video-consent-number">1.</span>
             <span class="video-consent-direction">Read through this consent document:</span>
-            <button id="downloadbutton" class="btn btn-outline-dark right" {{action 'download'}}>( <i class="fa fa-download"></i> Download )</button>
+            <button type="button" id="downloadbutton" class="btn btn-outline-dark right" {{action "download"}}>( <i class="fa fa-download"></i> Download )</button>
         </div>
 
         <div class="center">
 
             <div class="well video-consent-doc" id="consent-form-text">
 
-                {{#if (eq template 'consent_001')}}
-                    <!--THIS IS THE TEXT OF THE TEMPLATE consent_001.-->
+                {{#if (eq template "consent_001")}}
 
-                    <center>
-                        <span class="exp-text-medium">
-                            Consent to participate in non-biomedical research: {{experiment.name}}
-                        </span>
-                    </center>
+                    <ConsentTemplate001
+                        @experiment={{experiment}}
+                        @PIName={{PIName}}
+                        @institution={{institution}}
+                        @purpose={{purpose}}
+                        @payment={{payment}}
+                        @procedures={{procedures}}
+                        @datause={{datause}}
+                        @additional_segments={{additional_segments}}
+                        @PIContact={{PIContact}}
+                    />
 
-                    <br>
-                    <div class="video-consent-body">
+                {{else if (eq template "consent_002")}}
 
-                        <p> Study researchers led by {{PIName}} at {{institution}} are running this study, "{{experiment.name}}," on Lookit. </p>
+                    <ConsentTemplate002
+                        @experiment={{experiment}}
+                        @PIName={{PIName}}
+                        @institution={{institution}}
+                        @purpose={{purpose}}
+                        @payment={{payment}}
+                        @procedures={{procedures}}
+                        @datause={{datause}}
+                        @additional_segments={{additional_segments}}
+                        @research_rights_statement={{research_rights_statement}}
+                        @gdpr={{gdpr}}
+                        @gdpr_personal_data={{gdpr_personal_data}}
+                        @gdpr_sensitive_data={{gdpr_sensitive_data}}
+                        @PIContact={{PIContact}}
+                    />
 
-                        <p class="exp-text-medium"> Purpose </p>
-                        <p> {{purpose}} </p>
+                {{else if (eq template "consent_003")}}
 
-                        <p class="exp-text-medium"> Procedures </p>
-                        <p> This study takes about {{experiment.duration}} to complete. {{procedures}} </p>
+                    <ConsentTemplate003
+                        @experiment={{experiment}}
+                        @PIName={{PIName}}
+                        @institution={{institution}}
+                        @purpose={{purpose}}
+                        @payment={{payment}}
+                        @procedures={{procedures}}
+                        @datause={{datause}}
+                        @additional_segments={{additional_segments}}
+                        @research_rights_statement={{research_rights_statement}}
+                        @gdpr={{gdpr}}
+                        @gdpr_personal_data={{gdpr_personal_data}}
+                        @gdpr_sensitive_data={{gdpr_sensitive_data}}
+                        @PIContact={{PIContact}}
+                    />
 
-                        <p class="exp-text-medium"> Participation </p>
-                        <p> You and your child are free to choose whether to be in this study. If you and your child choose to participate, it's okay to stop at any point during the session. Please do pause or stop the session if your child becomes very fussy or does not want to participate! If this is a study with multiple sessions, it's okay not to complete all the sessions.</p>
-
-                        <p class="exp-text-medium"> Payment </p>
-                        <p> {{payment}} </p>
-
-                        <p class="exp-text-medium"> Data collection and webcam recording </p>
-                        <p> During the session, you and your child will be recorded via your computer's webcam and microphone. Video recordings and other data you enter are sent securely to our lab. At the end of the session, you will be prompted to choose a privacy level for your webcam recordings. You will have the option to withdraw your video data at this point. </p>
-                        <p>Data is stored securely on Lookit servers and by researchers. However, there is always a small risk that data transmitted over the internet may be intercepted or that the security of stored data may be compromised.</p>
-                        <p>No video clips will be published or shared unless you allow this when selecting a privacy level. If we do not receive a consent recording (the video you'll make to the right) for this session and cannot verify that you agreed to participate, no other video from your session will be viewed.</p>
-
-                        <p class="exp-text-medium"> Use of data by study researchers </p>
-                        <p>The research group led by {{PIName}} at {{institution}} will have access to video and other data collected during this session. We will also have access to your account profile, demographic survey, and the child profile for the child who is participating, including changes you make in the future to any of this information. We may study your child's responses in connection with his or her previous responses to this or other studies run by our group, siblings' responses to this or other studies run by our group, or demographic survey responses.</p>
-                        {{#if datause}}
-                            <p>
-                                {{datause}}
-                            </p>
-                        {{/if}}
-
-                        <p class="exp-text-medium"> Use of data by Lookit </p>
-                        <p> Because this study is being run on the Lookit platform, researchers working on the Lookit project at MIT will also have access to the data collected during this session, in addition to your account data, child profiles, and demographic survey responses. This data may be used by Lookit to detect and fix technical problems or identify new features that would be helpful; provide support to study researchers; assess data quality (for instance, how well an observer can tell which direction children are looking); evaluate the site's success in reaching a diverse population; and characterize family engagement (for instance, looking at what aspects of a study make parents more interested in coming back later). </p>
-
-                        <p class="exp-text-medium"> Publication of results </p>
-                        <p> The results of the research may be presented at scientific meetings or published in scientific journals. Raw data (for instance, looking times to the left and right of the screen) may be published when it cannot identify children. We never publish children's birthdates or names, and we never publish your demographic data in conjunction with your child's video. </p>
-
-                        {{#if additional_segments}}
-                            {{#each additional_segments as |segment|}}
-                                <p class="exp-text-medium"> {{segment.title}} </p>
-                                <p> {{exp-format segment.text}} </p>
-                            {{/each}}
-                        {{/if}}
-
-                        <p class="exp-text-medium"> Researcher contact information </p>
-                        <p> This study is run by {{PIName}} at {{institution}}. If you or your child have any questions or concerns about this study, or in the very unlikely event of a research-related injury, please contact {{PIContact}}. </p>
-                        <p>If you or your child have any questions or concerns about the Lookit platform, please contact Kim Scott at kimscott@mit.edu or 617 324 4859.</p>
-
-                    </div>
-
-                {{else if (eq template 'consent_002')}}
-                    <!--THIS IS THE TEXT OF THE TEMPLATE consent_002.-->
-
-                    <center>
-                        <span class="exp-text-medium">
-                            Consent to participate in research: {{experiment.name}}
-                        </span>
-                    </center>
-
-                    <br>
-                    <div class="video-consent-body">
-
-                        <p> Researchers led by {{PIName}} at {{institution}} are running this study, "{{experiment.name}}," on Lookit. </p>
-
-                        <p class="exp-text-medium"> Purpose </p>
-                        <p> {{purpose}} </p>
-
-                        <p class="exp-text-medium"> Procedures </p>
-                        <p> This study takes about {{experiment.duration}} to complete. {{procedures}} </p>
-
-                        <p class="exp-text-medium"> Participation </p>
-                        <p> You and your child are free to choose whether to be in this study. If you and your child choose to participate, it's okay to stop at any point during the session. Please pause or stop the session if your child becomes very fussy or does not want to participate! If this is a study with multiple sessions, it's okay not to complete all the sessions.</p>
-
-                        <p class="exp-text-medium"> Payment </p>
-                        <p> {{payment}} </p>
-
-                        <p class="exp-text-medium"> Data collection and webcam recording </p>
-                        <p> During the session, you and your child will be recorded via your computer's webcam and microphone. Video recordings and other data you enter are sent securely to the Lookit platform and stored indefinitely. At the end of the session, you will be prompted to choose a privacy level for your webcam recordings. You will have the option to withdraw your video data at this point. You can view your past recordings on Lookit under "Studies" -> "Your past studies" at any time.</p>
-                        <p>Data is stored securely on Lookit servers and by researchers. However, there is always a small risk that data transmitted over the internet may be intercepted or that the security of stored data may be compromised.</p>
-                        <p>No video clips will be published or shared unless you allow this when selecting a privacy level. If we do not receive a consent recording (the video you'll make to the right) for this session and cannot verify that you agreed to participate, no other video from your session will be viewed.</p>
-
-                        <p class="exp-text-medium"> Use of data by study researchers </p>
-                        <p>The research group led by {{PIName}} at {{institution}} will have access to video and other data collected during this session. We will also have access to your account profile, demographic survey, and the child profile for the child who is participating, including changes you make in the future to any of this information. We may study your child's responses in connection with his or her previous responses to this or other studies run by our group, siblings' responses to this or other studies run by our group, or demographic survey responses.</p>
-                        {{#if datause}}
-                            <p>
-                                {{datause}}
-                            </p>
-                        {{/if}}
-
-                        <p class="exp-text-medium"> Use of data by Lookit </p>
-                        <p> Because this study is being run on the Lookit platform, researchers working on the Lookit project at MIT will also have access to the data collected during this session, in addition to your account data, child profiles, and demographic survey responses. This data may be used by Lookit to detect and fix technical problems or identify new features that would be helpful; provide support to study researchers; assess data quality (for instance, how well an observer can tell which direction children are looking); evaluate the site's success in reaching a diverse population; and characterize family engagement (for instance, looking at what aspects of a study make parents more interested in coming back later). </p>
-
-                        <p class="exp-text-medium"> Publication of results </p>
-                        <p> The results of the research may be presented at scientific meetings or published in scientific journals. Raw data (for instance, looking times to the left and right of the screen) may be published when it cannot identify children. We never publish children's birthdates or names, and we never publish your demographic data in conjunction with your child's video. </p>
-
-                        {{#if additional_segments}}
-                            {{#each additional_segments as |segment|}}
-                                <p class="exp-text-medium"> {{segment.title}} </p>
-                                <p> {{exp-format segment.text}} </p>
-                            {{/each}}
-                        {{/if}}
-
-                        <p class="exp-text-medium"> Rights of research subjects </p>
-                        <p> {{research_rights_statement}} </p>
-
-                        {{#if gdpr}}
-                            <p class="exp-text-medium"> General Data Protection Regulation (GDPR) information </p>
-                            <p> As part of your participation, we will collect certain personal information about you, including: {{gdpr_personal_data}}. In addition, we will collect special category data, your personal information that is especially sensitive: {{gdpr_sensitive_data}}</p>
-
-                            <p>Your personal information will be transferred to the United States. You understand that the data protection and privacy laws of the United States may not offer you the same level of protection as those in your country of origin.</p>
-                        {{/if}}
-
-
-                        <p class="exp-text-medium"> Researcher contact information </p>
-                        <p> This study is run by {{PIName}} at {{institution}}. If you or your child have any questions or concerns about this study, or in the very unlikely event of a research-related injury, please contact {{PIContact}}. </p>
-                        <p>If you or your child have any questions or concerns about the Lookit platform, please contact Kim Scott at kimscott@mit.edu or 617 324 4859.</p>
-
-                    </div>
-
-                    <!--END OF CONSENT TEMPLATE TEXT.-->
                 {{/if}}
 
             </div>
@@ -149,21 +68,26 @@
     </div>
 
 
-    <div class="col-md-5">
+    <div class="col-sm-5">
 
         <div class="video-consent-numbered-direction">
             <span class="video-consent-number">2.</span>
             <span class="video-consent-direction">
                 Click to
-                <button class="center" disabled={{disableRecord}} class="btn btn-primary pull-left" {{ action 'record' }}>
-                    start consent recording...
+                <button type="button" id="recordbutton" disabled={{disableRecord}} class="btn btn-primary pull-left center" {{ action "record" }}>
+                    start consent recording... <i class="fa fa-video-camera"></i>
                 </button>
             </span>
 
         </div>
 
         <div class="row recorder-container">
-            <div id="recorder" class="col-xs-12"></div>
+            <div id="recorder" class="recorder col-xs-12">
+                <span id="recordingStatus">
+                    <i class="fa fa-circle text-danger Blink" id="recordingIndicator"></i>
+                    <span id="recordingText"> Recording... </span>
+                </span>
+            </div>
         </div>
 
         <div class="video-consent-numbered-direction">
@@ -171,24 +95,64 @@
             <span class="video-consent-direction">Read the statement below <em class="video-consent-outloud"> out loud: </em></span>
         </div>
 
-        {{!--
-          <blockquote>
-            <p>
-              If you're ready to participate, please make a consent recording to get started! Press "record" and then read the statement below (in green) out loud.
-            </p>
-          </blockquote>
-          --}}
         <div class="well video-consent-prompt">
             <span class="breaklines exp-lookit-video-consent-prompt">"I have read and understand the consent document. I am this child's parent or legal guardian and we both agree to participate in this study."</span>
         </div>
 
+        {{#if prompt_all_adults}}
+            <div class="video-consent-numbered-direction">
+                <span class="video-consent-number">4.</span>
+                <span class="video-consent-direction">Is another adult there too? If so, each additional adult should read out loud:</span>
+            </div>
+
+            <div class="well video-consent-prompt">
+                <span class="breaklines exp-lookit-video-consent-prompt">"I have read and understand the consent document. I also agree to participate in this study." </span>
+            </div>
+        {{/if}}
+
         <div class="video-consent-numbered-direction">
-            <span class="video-consent-number">4.</span>
+            <span class="video-consent-number">
+                {{#if prompt_all_adults}}
+                    5.
+                {{else}}
+                    4.
+                {{/if}}
+            </span>
             <span class="video-consent-direction">
                 Click to
-                <button id="submitbutton" disabled="disabled" class="btn btn-success pull-right" {{ action 'finish' }}>submit!</button>
+                <button type="button" id="stopbutton" disabled="disabled" class="btn btn-primary pull-right" {{ action "stop" }}>stop recording <i class="fa fa-stop"></i></button>
             </span>
         </div>
+
+        <div class="video-consent-numbered-direction">
+            <span class="video-consent-number">
+                {{#if prompt_all_adults}}
+                    6.
+                {{else}}
+                    5.
+                {{/if}}
+            </span>
+            <span class="video-consent-direction">
+                <button type="button"  id="playbutton" disabled="disabled" class="btn btn-primary pull-right" {{ action "playvideo" }}>Play the consent video <i class="fa fa-play"></i></button> to make sure your video was recorded. (If not, you can try again!)
+            </span>
+        </div>
+
+        {{#if showWarning}}
+
+            {{#if hasMadeVideo}}
+                {{#unless hasCheckedVideo}}
+                    <p class="warning">
+                        Please play your video to make sure you can hear the consent statement!
+                    </p>
+                {{/unless}}
+            {{else}}
+                <p class="warning">
+                    Please make a consent recording to continue.
+                </p>
+            {{/if}}
+        {{/if}}
+
+        <button type="button" id="submitbutton" class="btn btn-success pull-right  {{if (and hasMadeVideo hasCheckedVideo) "" "disabled"}}" {{ action "finish" }}>Submit</button>
 
     </div>
 </div>

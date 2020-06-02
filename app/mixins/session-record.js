@@ -17,28 +17,22 @@ let {
  *
  * A mixin that can be used to add basic support for video recording to a particular experiment frame
  *
- * By default, the recorder will be installed when this frame loads, but recording
- * will not start automatically. To override either of these settings, set
- * the properties `doUseCamera` and/or `startRecordingAutomatically` in the consuming
- * frame.
- *
  * You will also need to set `sessionRecorderElement` if the recorder is to be housed other than
- * in an element identified by the ID `recorder`.
+ * in an element identified by the ID `sessionRecorder`.
  *
- * The properties `recorder`, `sessionRecorderReady`, and
+ * The properties `sessionRecorder`, `sessionRecorderReady`, and
  * `sessionVideoId` become available to the consuming frame. The recorder object has fields
  * that give information about its state: `hasWebCam`, 'hasCamAccess`, `recording`,
  * `connected`, and `micChecked` - for details, see services/video-recorder.js. These
  * can be accessed from the consuming frame as e.g. `this.get('recorder').get('hasWebCam')`.
  *
- * If starting recording automatically, the function `whenPossibleToRecord` will be called
- * once recording is possible, and will start recording. If you want to do other things
- * at this point, like proceeding to a test trial, you can override this function in your
- * frame.
+ * If starting recording, the function `onSessionRecordingStarted` will be called
+ * once recording begins. If you want to do other things at this point, like proceeding
+ * to a test trial, you can add this hook in your frame.
  *
- * See 'methods' for the functions you can use on a frame that extends VideoRecord.
+ * See 'methods' for the functions you can use on a frame that extends SessionRecord.
  *
- * Events recorded in a frame that extends VideoRecord will automatically have additional
+ * Events recorded in a frame that extends SessionRecord will automatically have additional
  * fields sessionVideoId (video filename), pipeId (temporary filename initially assigned by
  * the recording service),
  * and streamTime (when in the video they happened, in s).
@@ -93,6 +87,15 @@ export default Ember.Mixin.create({
     startSessionRecording: false,
 
     /**
+     * Maximum time allowed for whole-session video upload before proceeding, in seconds.
+     * Can be overridden by researcher, based on tradeoff between making families wait and
+     * losing data.
+     * @property {Number} sessionMaxUploadSeconds
+     * @default 10
+     */
+    sessionMaxUploadSeconds: 10,
+
+    /**
      * Whether to end any session (multi-frame) recording at the end of this frame.
      * @property {Number} endSessionRecording
      * @default false
@@ -145,7 +148,7 @@ export default Ember.Mixin.create({
         const pipeLoc = Ember.getOwner(this).resolveRegistration('config:environment').pipeLoc;
         const pipeEnv = Ember.getOwner(this).resolveRegistration('config:environment').pipeEnv;
         const installPromise = sessionRecorder.install(sessionVideoId, pipeLoc, pipeEnv,
-          maxRecordingLength, autosave, this.get('sessionAudioOnly'));
+            maxRecordingLength, autosave, this.get('sessionAudioOnly'));
 
         // Track specific events for all frames that use VideoRecorder
         var _this = this;
@@ -181,7 +184,7 @@ export default Ember.Mixin.create({
         if (sessionRecorder) {
             var _this = this;
             return sessionRecorder.record().then(() => {
-                _this.send('setTimeEvent', 'startRecording', {
+                _this.send('setTimeEvent', 'startSessionRecording', {
                     sessionPipeId: sessionRecorder.get('pipeVideoName')
                 });
             });
@@ -199,7 +202,7 @@ export default Ember.Mixin.create({
         const sessionRecorder = this.get('sessionRecorder');
         if (sessionRecorder) {
             this.send('setTimeEvent', 'stoppingCapture');
-            return sessionRecorder.stop();
+            return sessionRecorder.stop(this.get('sessionMaxUploadSeconds') * 1000);
         } else {
             return Ember.RSVP.reject();
         }
@@ -232,41 +235,51 @@ export default Ember.Mixin.create({
                 _this.send('setTimeEvent', 'sessionRecorderReady');
                 _this.get('session').set('recordingInProgress', true);
                 _this.set('sessionRecorderReady', true);
-                _this.whenPossibleToRecordSession(); // make sure this fires
+                _this.whenPossibleToRecordSessionObserver(); // make sure this fires
             });
         }
         this._super(...arguments);
     },
 
+    // Note: if leaving this component via 'next', that handles actually stopping the
+    // session recorder if needed and calling next once complete. This provides a
+    // fallback to stop if leaving via closing the window, etc. and also handles
+    // actually destroying the recorder any time the component is destroyed.
     willDestroyElement() {
         var _this = this;
-        if (_this.get('sessionRecorder') && _this.get('endSessionRecording')) {
-            if (!(_this.get('session').get('recordingInProgress'))) {
-                _this.destroySessionRecorder();
+        if (this.get('sessionRecorder') && this.get('endSessionRecording')) {
+            if (!(this.get('session').get('recordingInProgress'))) {
+                this.destroySessionRecorder();
             } else {
-                _this.stopSessionRecorder().then(() => {
-                    _this.set('stoppedSessionRecording', true);
-                    _this.destroySessionRecorder();
-                }, () => {
+                this.stopSessionRecorder().finally(() => {
                     _this.destroySessionRecorder();
                 });
             }
         }
-        _this._super(...arguments);
+        this._super(...arguments);
     },
 
     /**
-     * Observer that starts recording once session recorder is ready. Override to do additional
-     * stuff at this point!
-     * @method whenPossibleToRecord
+     * Function called when session recording is started automatically. Override to do
+     * frame-specific actions at this point (e.g., beginning a test trial).
+     *
+     * @method onSessionRecordingStarted
      */
-    whenPossibleToRecordSession: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
+    onSessionRecordingStarted() {
+    },
+
+    /**
+     * Observer that starts recording once session recorder is ready.
+     * @method whenPossibleToRecordSessionObserver
+     */
+    whenPossibleToRecordSessionObserver: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
         if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
             if (this.get('startSessionRecording')) {
                 var _this = this;
                 this.startSessionRecorder().then(() => {
                     _this.send('setTimeEvent', 'startedSessionRecording');
                     _this.set('sessionRecorderReady', false);
+                    _this.onSessionRecordingStarted();
                 });
             }
         }
