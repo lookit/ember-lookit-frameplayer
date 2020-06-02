@@ -13,10 +13,12 @@ let {
 
 /**
  * @module exp-player
- * @submodule frames
+ * @submodule frames-deprecated
  */
 
 /**
+ * This frame is a bespoke frame for a beta tester. It is deprecated and will not be
+ * included in release 2.x. For new studies, use {{#crossLink "Exp-lookit-change-detection"}}{{/crossLink}} instead.
  *
  * Frame to implement specific test trial structure for geometry alternation
  * experiment. Includes announcement, calibration, and alternation (test)
@@ -105,6 +107,7 @@ let {
  * @uses Full-screen
  * @uses Video-record
  * @uses Expand-assets
+ * @deprecated
  */
 
 export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {

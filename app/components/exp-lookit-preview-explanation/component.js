@@ -1,13 +1,12 @@
 import layout from './template';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 
-/*
+/**
  * @module exp-player
- * @submodule frames
+ * @submodule frames-deprecated
  */
 
-// Use regular comment syntax here to exclude from docs for clarity
-/*
+/**
  * A frame that to explain any blinding procedures to parents, and offer them the option to preview stimuli before the study. Two buttons allow the user to move forward: one goes to the next frame (if the parent wants to preview stimuli), and one skips the next frame and goes to the one after that (if the parent declins). Therefore, this frame should be followed by an {{#crossLink "Exp-video-preview"}}{{/crossLink}} frame.
 
 ```json

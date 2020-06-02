@@ -8,8 +8,8 @@
     "test": "tests"
   },
   "scripts": {
-    "docs":         "yuidoc --lint &&    yuidoc --helpers helpers.js && mkdir -p docs/docs && cp -r docs_tmp/* docs/docs               && rm -rf docs_tmp &&   mkdir -p docs/docs/assets/screenshots && rm -f docs/docs/assets/screenshots/* &&    cp docs/screenshots/* docs/docs/assets/screenshots/ && mkdir -p docs/docs/assets/framevideos && rm -f docs/docs/assets/framevideos/* && cp docs/framevideos/* docs/docs/assets/framevideos/",
-    "release-docs": "yuidoc --lint &&    yuidoc --helpers helpers.js && mkdir -p docs/docs && cp -r docs_tmp/* docs/docs/releases/NEW  && rm -rf docs_tmp &&   mkdir -p docs/docs/assets/screenshots && rm -f docs/docs/assets/screenshots/* &&    cp docs/screenshots/* docs/docs/assets/screenshots/ && mkdir -p docs/docs/assets/framevideos && rm -f docs/docs/assets/framevideos/* && cp docs/framevideos/* docs/docs/assets/framevideos/",
+    "docs":         "yuidoc --lint &&    yuidoc --helpers helpers.js && mkdir -p docs/docs              && cp -r docs_tmp/* docs/docs               && rm -rf docs_tmp &&   mkdir -p docs/docs/assets/screenshots && rm -f docs/docs/assets/screenshots/* &&    cp docs/screenshots/* docs/docs/assets/screenshots/ && mkdir -p docs/docs/assets/framevideos && rm -f docs/docs/assets/framevideos/* && cp docs/framevideos/* docs/docs/assets/framevideos/",
+    "release-docs": "yuidoc --lint &&    yuidoc --helpers helpers.js && mkdir -p docs/docs/releases/NEW && cp -r docs_tmp/* docs/docs/releases/NEW  && rm -rf docs_tmp &&   mkdir -p docs/docs/assets/screenshots && rm -f docs/docs/assets/screenshots/* &&    cp docs/screenshots/* docs/docs/assets/screenshots/ && mkdir -p docs/docs/assets/framevideos && rm -f docs/docs/assets/framevideos/* && cp docs/framevideos/* docs/docs/assets/framevideos/",
     "build": "ember build",
     "start": "ember server",
     "test": "yarn run check-style && ember test --ssl false",

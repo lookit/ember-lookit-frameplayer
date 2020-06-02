@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-/* OMIT *
+/* OMIT FROM YUIDOC *
  * @module exp-player
  * @submodule services
  */

@@ -12,10 +12,13 @@ let {
 
 /**
  * @module exp-player
- * @submodule frames
+ * @submodule frames-deprecated
  */
 
 /**
+ * This frame is deprecated and will not be included in release 2.x. For new studies, use
+ * the frame {{#crossLink "Exp-lookit-images-audio"}}{{/crossLink}} instead.
+ *
  * Frame to implement a storybook page with dialogue spoken by characters.
  * First, characters appear and any main narration audio is played.
  * Next, the user can click on the characters to play additional audio
@@ -138,6 +141,7 @@ let {
  * @uses Full-screen
  * @uses Expand-assets
  * @uses Video-record
+ * @deprecated
  */
 
 export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {

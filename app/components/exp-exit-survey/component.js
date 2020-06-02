@@ -8,14 +8,14 @@ import moment from 'moment';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 import FullScreen from '../../mixins/full-screen';
 
+// Regular comment syntax to omit from docs
 /*
  * @module exp-player
- * @submodule frames
+ * @submodule frames-deprecated
  */
 
-// Use regular comment syntax here to exclude from docs for clarity
 /*
-This is the exit survey used by "Your baby the physicist". Use the updated frame {{#crossLink "Exp-lookit-exit-survey"}}{{/crossLink}} instead.
+This is the exit survey used by "Your baby the physicist". For new studies, use the updated frame {{#crossLink "Exp-lookit-exit-survey"}}{{/crossLink}} instead.
 
 @class Exp-exit-survey
 @extends Exp-frame-base

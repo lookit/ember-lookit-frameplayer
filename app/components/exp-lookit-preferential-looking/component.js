@@ -19,9 +19,12 @@ let {
 /**
 * Basic image display for looking measures (e.g. preferential looking, looking time).
 * Trial consists of four phases, each of which is optional.
- *
- * This is a composite trial very similar to exp-lookit-composite-video-trial except that
- * it allows specifying either video stimuli or static images.
+*
+* This is a composite trial very similar to exp-lookit-composite-video-trial except that
+* it allows specifying either video stimuli or static images.
+*
+* In general it may be simpler to use a combination of exp-lookit-calibration,
+* exp-lookit-video, and exp-lookit-images-audio frames.
 *
 * 1. Announcement: The audio in announcementAudio is played while the announcementVideo
 * video is played centrally, looping as needed. This lasts for announcementLength seconds

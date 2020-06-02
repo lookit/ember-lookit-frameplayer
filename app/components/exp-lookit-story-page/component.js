@@ -12,10 +12,13 @@ let {
 
 /**
  * @module exp-player
- * @submodule frames
+ * @submodule frames-deprecated
  */
 
 /**
+ * This frame is deprecated and will not be included in release 2.x. For new studies, use
+ * the frame {{#crossLink "Exp-lookit-images-audio"}}{{/crossLink}} instead.
+ *
  * Frame to implement a basic "storybook page" trial, with images placed on the
  * screen within a display area and a sequence of audio files played.
  * Optionally, images may be highlighted at specified times during the audio
@@ -94,6 +97,7 @@ let {
  * @uses Full-screen
  * @uses Video-record
  * @uses Expand-assets
+ * @deprecated
  */
 
 export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {

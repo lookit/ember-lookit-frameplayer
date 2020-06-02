@@ -3,12 +3,12 @@ import layout from './template';
 import ExpLookitVideoConsent from '../exp-lookit-video-consent/component';
 import VideoRecord from '../../mixins/video-record';
 
+// Regular comment syntax to omit from docs
 /*
  * @module exp-player
- * @submodule frames
+ * @submodule frames-deprecated
  */
 
-// Use regular comment syntax here to exclude from docs for clarity
 /*
 Video consent frame for Lookit studies UNDER INITIAL MIT PROTOCOL ONLY, with consent document displayed at left and instructions to start recording, read a statement out loud, and send.
 This version allows custom specification of consent form text.

@@ -20,6 +20,9 @@ let {
  * Video display frame. This may be used for displaying videos to older children or parents, as well as for
  * typical looking measures trials or as brief filler in between test trials.
  *
+ * (Note: this frame replaced the previous exp-lookit-video frame, which is now called
+ *  {{#crossLink "Exp-lookit-composite-video-trial"}}{{/crossLink}}.)
+ *
  * This is very customizable: you can...
  *   - position the video wherever you want on the screen, including specifying that it should fill the screen (while maintaining aspect ratio)
  *   - choose the background color

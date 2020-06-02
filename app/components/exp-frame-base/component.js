@@ -10,19 +10,12 @@ import SessionRecord from '../../mixins/session-record';
  * @submodule frames
  */
 
-/** An abstract component for defining experimenter frames
+/** An abstract component to extend when defining new Lookit frames
  *
  * This provides common base behavior required for any experiment frame. All experiment frames must extend this one.
  *
- * This frame has no configuration options because all of its logic is internal, and is almost never directly used
- *   in an experiment. It exports no data. Sample experiment definition usage (provided for completeness):
-  ```json
-    "frames": {
-       "my-sample-frame": {
-         "kind": "exp-base-frame"
-       }
-    }
- * ```
+ * This frame has no configuration options because all of its logic is internal, and should not be directly used
+ * in an experiment.
  *
  * As a user you will almost never need to insert a component into a template directly- the platform should handle that
  *  by automatically inserting an <a href="../classes/Exp-player.html" class="crosslink">exp-player</a> component when your experiment starts.
