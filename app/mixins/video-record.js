@@ -31,10 +31,9 @@ let {
  * `connected`, and `micChecked` - for details, see services/video-recorder.js. These
  * can be accessed from the consuming frame as e.g. `this.get('recorder').get('hasWebCam')`.
  *
- * If starting recording automatically, the function `whenPossibleToRecord` will be called
- * once recording is possible, and will start recording. If you want to do other things
- * at this point, like proceeding to a test trial, you can override this function in your
- * frame.
+ * If starting recording automatically,  the function `onRecordingStarted` will be called
+ * once recording begins. If you want to do other things at this point, like proceeding
+ * to a test trial, you can add this hook in your frame.
  *
  * See 'methods' for the functions you can use on a frame that extends VideoRecord.
  *
@@ -362,6 +361,12 @@ export default Ember.Mixin.create({
     },
 
     didInsertElement() {
+        // Give any active session recorder precedence over individual-frame recording
+        if (this.get('sessionRecorder') && this.get('session').get('recordingInProgress')) {
+            console.warn('Recording on this frame was specified, but session recording is already active. Not making frame recording.');
+            this.set('doUseCamera', false);
+        }
+
         if (this.get('doUseCamera')) {
             var _this = this;
             this.setupRecorder(this.$(this.get('recorderElement'))).then(() => {
