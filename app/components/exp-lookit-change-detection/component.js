@@ -741,16 +741,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
             // Currently paused: RESUME
             if (wasPaused) {
-                try {
-                    this.resumeRecorder();
-                } catch (_) {
-                    return;
-                }
                 this.startIntro();
                 this.set('isPaused', false);
             } else { // Not currently paused: PAUSE
                 window.clearTimeout(this.get('introTimer'));
-                this.pauseRecorder(true);
                 if (this.checkFullscreen()) {
                     $('#player-pause-audio')[0].play();
                 } else {

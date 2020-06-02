@@ -697,11 +697,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 }
                 this.set('currentTask', 'announce');
 
-                try {
-                    this.resumeRecorder();
-                } catch (_) {
-                    // continue even if recorder could not be resumed
-                }
             } else if (pause || !wasPaused) { // Not currently paused: pause
                 //this.showRecorder();
                 window.clearInterval(this.get('testTimer'));
@@ -714,7 +709,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 this.send('setTimeEvent', 'pauseVideo', {
                     currentTask: this.get('currentTask')
                 });
-                this.pauseRecorder(true);
                 $('#player-calibration-video').removeClass(this.get('calibrationPositions').join(' '));
                 $('#player-calibration-video').hide();
                 this.set('isPaused', true);

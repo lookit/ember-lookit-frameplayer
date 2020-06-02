@@ -252,44 +252,6 @@ export default Ember.Mixin.create({
     },
 
     /**
-     * Pause the recorder (and capture timing events). For webRTC recorder, this is
-     * just a placeholder and doesn't actually pause the recording. If webRTC used,
-     * includes extra data actuallyPaused: false. This is for backwards compatibility
-     * with frames that pause/resume recording, and should not be used going forward -
-     * instead stop/start and make separate clips if needed.
-     * @method pauseRecorder
-     * @param [skipIfMissing=false] If provided (and true), don't raise an error if recording isn't ready yet. Not actually used for WebRTC.
-     */
-    pauseRecorder(skipIfMissing = false) {  // eslint-disable-line no-unused-vars
-        // leave skipIfMissing param for backwards compatibility
-        const recorder = this.get('recorder');
-        if (recorder) {
-            this.send('setTimeEvent', 'pauseCapture', {
-                actuallyPaused: false
-            });
-            // Would pause here!
-        }
-    },
-
-    /**
-     * Resume a paused recording. For webRTC recorder, this is just a placeholder and
-     * doesn't actually pause the recording. If webRTC used, includes extra data
-     * wasActuallyPaused: false. This is for backwards compatibility
-     * with frames that pause/resume recording, and should not be used going forward -
-     * instead stop/start and make separate clips if needed.
-     * @method resumeRecorder
-     */
-    resumeRecorder() {
-        const recorder = this.get('recorder');
-        if (recorder) {
-            this.send('setTimeEvent', 'unpauseCapture', {
-                wasActuallyPaused: false
-            });
-            // Would resume here!
-        }
-    },
-
-    /**
      * Start recording
      * @method startRecorder
      * @return Promise Resolves when recording has started
