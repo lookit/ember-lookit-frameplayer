@@ -281,6 +281,8 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
 
     session: null,
 
+    frameStartTimestamp: null, // keep track of when frame started to store duration
+
     // see https://github.com/emberjs/ember.js/issues/3908. Moved
     // to init because we were losing the first event per instance of a frame
     // when it was in didReceiveAttrs.
@@ -462,6 +464,11 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
      */
 
     /**
+     * Duration between frame being inserted and call to `next`
+     * @attribute frameDuration
+     */
+
+    /**
      * Type of frame: EXIT (exit survey), CONSENT (consent or assent frame), or DEFAULT
      * (anything else)
      * @attribute frameType
@@ -490,6 +497,11 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         serialized.generatedProperties = this.get('generatedProperties');
         serialized.eventTimings = this.get('eventTimings');
         serialized.frameType = this.get('frameType');
+        try {
+            serialized.frameDuration = (new Date().getTime() - this.get('frameStartTimestamp'))/1000;
+        } catch(e){
+            serialized.frameDuration = null;
+        }
         return serialized;
     },
 
@@ -619,6 +631,7 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         Ember.$('*').removeClass('player-fullscreen');
         Ember.$('*').removeClass('player-fullscreen-override');
         Ember.$('#application-parse-error-text').hide();
+        this.set('frameStartTimestamp', new Date().getTime());
         var $element = Ember.$(`#${this.get('fullScreenElementId')}`);
         if (this.get('displayFullscreenOverride') && !this.get('displayFullscreen')) {
             $element.addClass('player-fullscreen-override');
