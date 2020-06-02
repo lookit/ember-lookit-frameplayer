@@ -228,7 +228,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
          */
         calibrationImage: {
             anyOf: imageAssetOptions,
-            description: 'TODO',
+            description: 'Image to use for calibration',
             default: ''
         },
 
@@ -242,7 +242,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         calibrationImageAnimation: {
             type: 'string',
             enum: ['bounce', 'spin', ''],
-            description: 'TODO',
+            description: 'Which animation to use for the calibration image',
             default: 'spin'
         }
     },

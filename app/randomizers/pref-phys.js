@@ -1607,7 +1607,6 @@ var randomizer = function(frameId, frame, pastSessions, resolveFrame) {
 
     var BASE_DIR = 'https://s3.amazonaws.com/lookitcontents/exp-physics-final/';
 
-    // TODO: In the future, we may want to identify the specific frame # to fetch instead of generic frame name
     pastSessions = pastSessions.filter(function (session) {
         return session.get('conditions');
     });
