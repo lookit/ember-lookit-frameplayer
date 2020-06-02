@@ -362,7 +362,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
 
         // Apply background colors
         if (isColor(this.get('backgroundColor'))) {
-            $('div.exp-lookit-image-audio').css('background-color', this.get('backgroundColor'));
+            $('div.exp-lookit-calibration').css('background-color', this.get('backgroundColor'));
         } else {
             console.warn('Invalid background color provided; not applying.');
         }

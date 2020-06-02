@@ -457,6 +457,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
              *
              * @event videoStarted
              */
+            if (this.get('isDestroying') || this.get('isDestroyed')) {
+                return;
+            }
+
             this.send('setTimeEvent', 'videoStarted');
             this.set('testVideoTimesPlayed', this.get('testVideoTimesPlayed') + 1);
             if (this.get('testVideoTimesPlayed') === 1) {
@@ -474,14 +478,16 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                         this.readyToFinish();
                     }
                 }
-                let audio = this.get('audio_parsed');
-                if (audio.hasOwnProperty('source') && audio.source.length) {
+                if ($('#player-audio').length) {
                     $('#player-audio')[0].play();
                 }
             }
         },
 
         videoStopped() {
+            if (this.get('isDestroying') || this.get('isDestroyed')) {
+                return;
+            }
             /**
              * When video completes playback (recorded each time if played more than once)
              *
@@ -492,13 +498,16 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 this.readyToFinish();
             }
             // Restart the video if it's supposed to loop OR if it's supposed to play another time
-            if (this.get('video.loop') || (this.get('testVideoTimesPlayed') < this.get('requireVideoCount'))) {
-                this.$('#player-video')[0].currentTime = 0;
-                this.$('#player-video')[0].play();
+            if ($('#player-video').length && (this.get('video.loop') || (this.get('testVideoTimesPlayed') < this.get('requireVideoCount')))) {
+                $('#player-video')[0].currentTime = 0;
+                $('#player-video')[0].play();
             }
         },
 
         audioStarted() {
+            if (this.get('isDestroying') || this.get('isDestroyed')) {
+                return;
+            }
             /**
              * When audio begins playing (recorded each time video starts if played through more than once)
              *
@@ -509,6 +518,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         },
 
         audioStopped() {
+            if (this.get('isDestroying') || this.get('isDestroyed')) {
+                return;
+            }
             /**
              * When audio completes playback (recorded each time if played more than once)
              *
@@ -519,18 +531,21 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 this.readyToFinish();
             }
             // Restart the video if it's supposed to loop OR if it's supposed to play another time
-            if (this.get('audio.loop') || (this.get('testAudioTimesPlayed') < this.get('requireAudioCount'))) {
-                this.$('#player-audio')[0].currentTime = 0;
-                this.$('#player-audio')[0].play();
+            if ($('#player-audio').length && (this.get('audio.loop') || (this.get('testAudioTimesPlayed') < this.get('requireAudioCount')))) {
+                $('#player-audio')[0].currentTime = 0;
+                $('#player-audio')[0].play();
             }
         },
 
         finish() {
-            // Move to next frame altogether
             // Call this something separate from next because stopRecorder promise needs
             // to call next AFTER recording is stopped and we don't want this to have
             // already been destroyed at that point.
 
+            // Pause audio/video so we don't trigger started/stopped handlers while destroying
+            $('audio, video').each(function() {
+                this.pause();
+            });
             /**
              * When trial is complete and begins cleanup (may then wait for video upload)
              *

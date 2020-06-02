@@ -90,15 +90,15 @@ $exp-video-right-rect: 80%;
         margin: auto;
         top: 0; left: 0; bottom: 0; right: 0;
 
-        &.center, &.top-center, &.bottom-center {
+        &.center {
             margin-left: 50% - $exp-video-cal-width/2;
         }
 
-        &.left, &.top-left, &.bottom-left {
+        &.left {
             margin-left: $exp-video-left-rect - $exp-video-cal-width/2;
         }
 
-        &.right, &.top-right, &.bottom-right {
+        &.right {
             margin-left: $exp-video-right-rect - $exp-video-cal-width/2;
         }
     }
