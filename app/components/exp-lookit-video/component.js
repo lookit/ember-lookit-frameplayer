@@ -408,8 +408,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     meta: {
-        name: 'Video player',
-        description: 'Component that plays a video',
         data: {
             type: 'object',
             properties: {

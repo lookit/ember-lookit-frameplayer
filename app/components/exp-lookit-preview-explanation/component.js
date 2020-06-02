@@ -146,8 +146,6 @@ export default ExpFrameBaseComponent.extend({
         }
     },
     meta: {
-        name: 'ExpLookitPreviewExplanation',
-        description: 'Let parents know about blinding, give option to preview videos.',
         data: {
             type: 'object',
             properties: {

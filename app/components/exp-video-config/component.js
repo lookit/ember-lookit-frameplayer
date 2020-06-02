@@ -138,8 +138,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     type: 'exp-videoconfig',
     meta: {
-        name: 'Video Recorder Configuration',
-        description: 'Frame guiding the user through setting up webcam, with no recording.',
         data: {
             type: 'object',
             properties: {}

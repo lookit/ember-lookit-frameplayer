@@ -354,8 +354,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     frameSchemaRequired: ['PIName', 'institution', 'PIContact', 'purpose', 'procedures', 'payment', 'template'],
 
     meta: {
-        name: 'Video Consent Form',
-        description: 'A video consent form.',
         data: {
             type: 'object',
             properties: {

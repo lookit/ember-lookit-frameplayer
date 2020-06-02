@@ -291,8 +291,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     meta: {
-        name: 'ExpLookitStoryPage',
-        description: 'Frame to display a basic storybook page trial, with images and audio',
         data: {
             type: 'object',
             properties: {

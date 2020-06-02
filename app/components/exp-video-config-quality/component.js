@@ -254,8 +254,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         }
     },
     meta: {
-        name: 'Video Recorder Configuration for preferential looking',
-        description: 'Video configuration frame showing webcam view at right and instructions for checking video quality for preferential looking setup at left, with pictures.',
         data: {
             type: 'object',
             properties: {

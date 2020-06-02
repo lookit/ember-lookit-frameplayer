@@ -714,8 +714,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     meta: {
-        name: 'ExpLookitImagesAudio',
-        description: 'Frame to display images and/or audio',
         data: {
             type: 'object',
             properties: {

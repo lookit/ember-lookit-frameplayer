@@ -130,8 +130,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     },
 
     meta: {
-        name: 'ExpLookitWebcamDisplay',
-        description: 'This frame displays the participant\'s webcam and some optional text. It can be used for setup or for a quick break to check positioning.',
         data: {
             type: 'object',
             properties: {

@@ -102,8 +102,6 @@ export default ExpLookitVideoConsent.extend(VideoRecord, {
     },
 
     meta: {
-        name: 'Video Consent Form',
-        description: 'A video consent form.',
         data: {
             type: 'object',
             properties: {

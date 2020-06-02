@@ -403,8 +403,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     meta: {
-        name: 'ExpLookitDialoguePage',
-        description: 'Frame for a storybook page with dialogue spoken by characters',
         data: {
             type: 'object',
             properties: {

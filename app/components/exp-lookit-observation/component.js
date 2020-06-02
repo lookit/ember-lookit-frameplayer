@@ -193,8 +193,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     },
 
     meta: {
-        name: 'ExpLookitObservation',
-        description: 'This frame allows the participant to record an event, intended for observational studies.',
         data: {
             type: 'object',
             properties: {

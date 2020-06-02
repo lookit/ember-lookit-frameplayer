@@ -465,9 +465,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
     },
 
     meta: {
-        name: 'Video assent form',
-        description: 'A video assent form.',
-
         data: {
             type: 'object',
             properties: {

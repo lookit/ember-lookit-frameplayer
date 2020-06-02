@@ -538,8 +538,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
     },
 
     meta: {
-        name: 'ExpLookitPreferentialLooking',
-        description: 'Component that displays video or images for looking measurements',
         data: {
             type: 'object',
             properties: {
