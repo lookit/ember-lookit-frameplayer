@@ -32,6 +32,7 @@ let obstructionsURLs = [];
 let obstructionImages = [];
 let trajectoryParameters = [];
 let ball = {};
+let soundTimeStamp = 0;
 // Media mapping as Enum
 const gameSound = {
   START:0,
@@ -211,12 +212,12 @@ export default class DiscreteCatch extends PaddleGames {
    * @method dataCollection
    */
   dataCollection() {
-    if(super.ball.state === 'start' ||  super.ball.state === 'hit' || super.ball.state === 'fall') {
+    if(super.ball.state === 'hit' || super.ball.state === 'fall') {
 
       super.exportData.ball_position_x.push(parseFloat(super.convertXvalue(super.ball.position.x)));
       super.exportData.ball_position_y.push(parseFloat(super.convertYvalue(super.ball.position.y)));
       super.exportData.ball_timestamp.push(parseFloat(super.ball.timestamp));
-      super.exportData.timestamp.push(super.getElapsedTime());
+      super.exportData.timestamp = soundTimeStamp;
       super.exportData.paddle_position_y.push(parseFloat(super.convertYvalue(super.paddle.position.y)));
       super.exportData.trial = super.currentRounds;
       super.exportData.trajectory = trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT];
@@ -343,6 +344,7 @@ export default class DiscreteCatch extends PaddleGames {
       this.ballObject();
       super.ball.position.y = (1.291 )* super.Utils.SCALE;
       if (super.gameState.startTime > 0 &&   super.getElapsedTime(super.gameState.startTime) > TRAVEL_TIME ){
+        soundTimeStamp = new Date().getTime();
         sounds[gameSound.START].play();
       }
 

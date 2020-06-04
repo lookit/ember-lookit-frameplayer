@@ -196,17 +196,16 @@ export default class DiscreteCatchLift extends PaddleGames {
    */
   dataCollection() {
     if(super.gameState.initialTime > 0) {
-
-      super.exportData.basket_x = super.convertXvalue(super.paddle.position.x);
-      super.exportData.basket_y.push(parseFloat(super.convertYvalue(super.paddle.position.y)));
-      super.exportData.mice_x =  super.convertXvalue(target.position.x);
-      super.exportData.mice_y =  super.convertYvalue(target.position.y);
-      super.exportData.trial = super.currentRounds;
-      super.exportData.trialType = this.context.trialType;
-      super.exportData.mice_state.push(this.getState());
-      super.exportData.paddle_timestamp.push(super.paddle.time);
-      super.exportData.timestamp.push(super.getElapsedTime());
-
+      if(super.ball.state === 'start' || super.ball.state === 'showTarget' || super.ball.state === 'showClock') {
+        super.exportData.basket_x = super.convertXvalue(super.paddle.position.x);
+        super.exportData.basket_y.push(parseFloat(super.convertYvalue(super.paddle.position.y)));
+        super.exportData.mice_x = super.convertXvalue(target.position.x);
+        super.exportData.mice_y = super.convertYvalue(target.position.y);
+        super.exportData.trial = super.currentRounds;
+        super.exportData.trialType = this.context.trialType;
+        super.exportData.mice_state.push(this.getState());
+        super.exportData.paddle_timestamp.push(super.paddle.time);
+      }
 
     }
     super.dataCollection();
