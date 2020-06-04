@@ -471,17 +471,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
         description: 'A video assent form.',
 
         data: {
-            /**
-             * Parameters captured and sent to the server
-             *
-             * @method serializeContent
-             * @param {String} assentFormText the exact text shown in the assent document during this frame
-             * @param {String} videoID The ID of any webcam video recorded during this frame
-             * @param {List} videoList a list of webcam video IDs in case there are >1
-             * @param {String} childResponse The child's response to the assent question - Yes or No
-             * @param {Object} eventTimings
-             * @return {Object} The payload sent to the server
-             */
             type: 'object',
             properties: {
                 videoId: {
@@ -490,9 +479,17 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
                 videoList: {
                     type: 'list'
                 },
+                /**
+                * the exact text shown in the assent document during this frame
+                * @attribute assentFormText
+                */
                 assentFormText: {
                     type: 'string'
                 },
+                /**
+                * The child's response to the assent question - Yes or No
+                * @attribute childResponse
+                */
                 childResponse: {
                     type: 'string'
                 }

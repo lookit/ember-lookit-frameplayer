@@ -6,7 +6,7 @@
  * @main
  */
 
-/**
+/* OMIT *
  * Reusable components for UI rendering and interactivity
  *
  * @module exp-player
@@ -15,8 +15,8 @@
  */
 
 /**
- * Reusable frames that can be used as part of user-defined experiments. This is the main reference for researchers
- *   looking to build their own experiment definitions on the experimenter platform.
+ * Reusable frames that can be used as part of Lookit studies. This is the main reference
+ *   for researchers writing their own study protocols on Lookit.
  *
  * @module exp-player
  * @submodule frames
@@ -38,15 +38,18 @@
  */
 
 /**
- * Mixins that can be used to add functionality to specific frames
+ * Reference for DEVELOPERS of new frames only (not Lookit researchers writing their
+ * study protocols on the site)!
+ *
+ * Mixins that can be used to add specific functionality to frames
  *
  * @module exp-player
  * @submodule mixins
  * @main
  */
 
-/**
- * Services used to provide centralized functionality
+/* OMIT *
+ * Services used to provide centralized functionality. (Reference for developers only!)
  *
  * @module exp-player
  * @submodule services

@@ -32,6 +32,7 @@ let imageURLs = [];
 let images = [];
 let fireworksURLs = [];
 let STAR_SIZE = 0.03;
+let soundTimeStamp = 0;
 
 
 // Media mapping as Enum
@@ -212,13 +213,13 @@ export default class ButtonPressWindow extends Base {
   dataCollection() {
     //Set  0,1,2,3 as button pressed values (0:  no button pressed, 1 : pressed , missed target, 2 : pressed, within
     // window, 3 : hit the target)
-    if(super.ball.state === 'start' || super.ball.state === 'hit' || super.ball.state === 'fall') {
+    if(super.ball.state === 'hit' || super.ball.state === 'fall') {
       let currentTrajectory = TfArrIndex.indexOf(TfArr[this.currentRounds]) + 1;
 
       super.exportData.trajectory = currentTrajectory;
-      super.exportData.ball_position_x.push(super.convertXvalue(super.ball.position.x));
-      super.exportData.ball_position_y.push(super.convertYvalue(super.ball.position.y));
-      super.exportData.ball_timestamp.push(super.ball.timestamp);
+      super.exportData.ball_position_x.push(parseFloat(super.convertXvalue(super.ball.position.x)));
+      super.exportData.ball_position_y.push(parseFloat(super.convertYvalue(super.ball.position.y)));
+      super.exportData.ball_timestamp = soundTimeStamp;
       super.exportData.trial = super.currentRounds;
       super.exportData.trialType = this.context.trialType;
       super.exportData.timestamp.push(super.getElapsedTime());
@@ -286,7 +287,7 @@ export default class ButtonPressWindow extends Base {
     this.createTargetWindow();
     // Delay before music start
     if(super.gameState.initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(super.gameState.startTime) >= INITIAL_DELAY) {
-
+      soundTimeStamp = new Date().getTime();
       sounds[gameSound.START].play();
 
     }

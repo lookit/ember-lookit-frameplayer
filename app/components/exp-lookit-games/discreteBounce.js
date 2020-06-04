@@ -24,6 +24,7 @@ let sounds = [];
 let soundURLs = [];
 let imageURLs = [];
 let images = [];
+let soundTimeStamp = 0;
 
 // Media mapping as Enum
 const gameSound = {
@@ -191,7 +192,7 @@ export default class DiscreteBounce extends PaddleGames {
     let hitTheWall = super.wallCollision();
 
     if (super.gameState.initialTime === 0  ) {
-
+      soundTimeStamp  = new Date().getTime();
       sounds[gameSound.START].play();
     }
 
@@ -555,14 +556,14 @@ export default class DiscreteBounce extends PaddleGames {
    * @method dataCollection
    */
   dataCollection() {
-    if(super.ball.state === 'start' ||  super.ball.state === 'hit' || super.ball.state === 'bounce' || super.ball.state === 'fall') {
+    if(super.ball.state === 'hit' || super.ball.state === 'bounce' || super.ball.state === 'fall') {
 
 
-      super.exportData.ball_position_x.push(super.convertXvalue(super.ball.position.x));
-      super.exportData.ball_position_y.push(super.convertYvalue(super.ball.position.y));
+      super.exportData.ball_position_x.push(parseFloat(super.convertXvalue(super.ball.position.x)));
+      super.exportData.ball_position_y.push(parseFloat(super.convertYvalue(super.ball.position.y)));
       super.exportData.ball_timestamp.push(super.ball.timestamp);
-      super.exportData.timestamp.push(super.getElapsedTime());
-      super.exportData.paddle_position_y.push(super.convertYvalue(super.paddle.position.y));
+      super.exportData.timestamp = soundTimeStamp;
+      super.exportData.paddle_position_y.push(parseFloat(super.convertYvalue(super.paddle.position.y)));
       super.exportData.trial = super.currentRounds;
       super.exportData.trajectory = hArray[super.currentRounds];
       super.exportData.feedback = this.ballState();

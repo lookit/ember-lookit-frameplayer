@@ -28,6 +28,7 @@ let soundURLs = [];
 let imageURls = [];
 let images = [];
 let trajectoryParameters = [];
+let soundTimeStamp = 0;
 
 const gameArrayValues = {
 
@@ -364,7 +365,7 @@ export default class DiscreteButtonSpatial extends Base {
     let index = pressed.findIndex(item => item !== false);
 
     if( super.gameState.initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(super.gameState.startTime) >= INITIAL_DELAY) {
-
+      soundTimeStamp = new Date().getTime();
       sounds[gameSound.START].play();
 
     }
@@ -499,7 +500,7 @@ export default class DiscreteButtonSpatial extends Base {
    */
   dataCollection() {
 
-    if(super.ball.state === 'start' || super.ball.state === 'hit' || super.ball.state === 'fall') {
+    if(super.ball.state === 'hit' || super.ball.state === 'fall') {
 
       let target_state = pressed.findIndex(item => item !== false);
       if(keys[target_state] === undefined){
@@ -512,10 +513,10 @@ export default class DiscreteButtonSpatial extends Base {
       super.exportData.obstruction_number = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];
       super.exportData.trial = super.currentRounds;
       super.exportData.trialType = this.context.trialType;
-      super.exportData.ball_position_x.push(super.convertXvalue(super.ball.position.x));
-      super.exportData.ball_position_y.push(super.convertYvalue(super.ball.position.y));
+      super.exportData.ball_position_x.push(parseFloat(super.convertXvalue(super.ball.position.x)));
+      super.exportData.ball_position_y.push(parseFloat(super.convertYvalue(super.ball.position.y)));
       super.exportData.ball_timestamp.push(super.ball.timestamp);
-      super.exportData.timestamp.push(super.getElapsedTime());
+      super.exportData.timestamp = soundTimeStamp;
 
     }
 
