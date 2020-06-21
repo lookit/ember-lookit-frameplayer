@@ -192,7 +192,6 @@ export default class DiscreteBounce extends PaddleGames {
     let hitTheWall = super.wallCollision();
 
     if (super.gameState.initialTime === 0  ) {
-      soundTimeStamp  = new Date().getTime();
       sounds[gameSound.START].play();
     }
 
@@ -209,6 +208,7 @@ export default class DiscreteBounce extends PaddleGames {
         sounds[gameSound.START].pause();
         sounds[gameSound.START].currentTime = 0;
         super.ball.state = 'fall';
+        soundTimeStamp  = new Date().getTime();
         super.gameState.initialTime = new Date().getTime();
       }
 

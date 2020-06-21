@@ -344,7 +344,6 @@ export default class DiscreteCatch extends PaddleGames {
       this.ballObject();
       super.ball.position.y = (1.291 )* super.Utils.SCALE;
       if (super.gameState.startTime > 0 &&   super.getElapsedTime(super.gameState.startTime) > TRAVEL_TIME ){
-        soundTimeStamp = new Date().getTime();
         sounds[gameSound.START].play();
       }
 
@@ -361,6 +360,7 @@ export default class DiscreteCatch extends PaddleGames {
       if (super.gameState.initialTime > 0 && super.getElapsedTime() > jitterT) {
         sounds[gameSound.START].pause();
         sounds[gameSound.START].currentTime = 0;
+        soundTimeStamp  = new Date().getTime();
         super.gameState.initialTime  = new Date().getTime();
         super.ball.state = 'fall';
       }

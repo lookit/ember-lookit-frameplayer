@@ -365,7 +365,6 @@ export default class DiscreteButtonSpatial extends Base {
     let index = pressed.findIndex(item => item !== false);
 
     if( super.gameState.initialTime === 0 && super.currentRounds === 0  && super.getElapsedTime(super.gameState.startTime) >= INITIAL_DELAY) {
-      soundTimeStamp = new Date().getTime();
       sounds[gameSound.START].play();
 
     }
@@ -376,6 +375,7 @@ export default class DiscreteButtonSpatial extends Base {
         sounds[gameSound.START].pause();
         sounds[gameSound.START].currentTime = 0;
         sounds[gameSound.LAUNCH].play();
+        soundTimeStamp  = new Date().getTime();
         super.gameState.initialTime = new Date().getTime();
         super.ball.state = 'fall';
 
@@ -500,7 +500,7 @@ export default class DiscreteButtonSpatial extends Base {
    */
   dataCollection() {
 
-    if(super.ball.state === 'hit' || super.ball.state === 'fall') {
+    if(super.ball.state === 'fall') {
 
       let target_state = pressed.findIndex(item => item !== false);
       if(keys[target_state] === undefined){
