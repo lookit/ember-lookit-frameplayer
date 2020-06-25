@@ -223,7 +223,6 @@ export default class DiscreteCatch extends PaddleGames {
       super.exportData.trajectory = trajectoryParameters[super.currentRounds][gameRandomization.HEIGHT];
       super.exportData.feedback = this.ballState();
       super.exportData.obstruction_number = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];
-      super.exportData.paddle_timestamp.push(super.paddle.time);
       super.exportData.paddle_x = super.convertXvalue(super.paddle.position.x);
       super.exportData.trialType = this.context.trialType;
       super.exportData.paddle_center_x = super.convertXvalue(super.paddle.position.x   +  (super.paddle.dimensions.width / 2));

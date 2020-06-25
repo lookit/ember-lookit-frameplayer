@@ -567,7 +567,6 @@ export default class DiscreteBounce extends PaddleGames {
       super.exportData.trial = super.currentRounds;
       super.exportData.trajectory = hArray[super.currentRounds];
       super.exportData.feedback = this.ballState();
-      super.exportData.paddle_timestamp.push(super.paddle.time);
       super.exportData.paddle_x = super.convertXvalue(super.paddle.position.x);
       super.exportData.trialType = this.context.trialType;
       super.exportData.paddle_center_x = super.convertXvalue(super.paddle.position.x   +  (super.paddle.dimensions.width / 2));
