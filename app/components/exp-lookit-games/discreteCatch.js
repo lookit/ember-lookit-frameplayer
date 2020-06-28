@@ -359,7 +359,7 @@ export default class DiscreteCatch extends PaddleGames {
       if (super.gameState.initialTime > 0 && super.getElapsedTime() > jitterT) {
         sounds[gameSound.START].pause();
         sounds[gameSound.START].currentTime = 0;
-        soundTimeStamp  = new Date().getTime();
+        soundTimeStamp  = super.getElapsedTime();
         super.gameState.initialTime  = new Date().getTime();
         super.ball.state = 'fall';
       }

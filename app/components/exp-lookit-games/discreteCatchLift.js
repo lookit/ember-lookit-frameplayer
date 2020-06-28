@@ -176,18 +176,22 @@ export default class DiscreteCatchLift extends PaddleGames {
 
 
   getState(){
+    let state = 4;
+    if(target.state  === 'start'){
+      state =  0;
+    }else if(target.state  === 'showClock'){
+      state = 1;
+    }else if(target.state  === 'showTarget'){
 
-      if(target.state  === 'start'){
-        return 0;
-      }else if(target.state  === 'showClock'){
+      state = 2;
+    }
 
-        return 1;
-      }else if(target.state  === 'showTarget'){
+    if(this.isMiceCaught()){
 
-        return 2;
-      }
+      state = 3;
+    }
 
-      return 3;
+    return state;
   }
 
 
@@ -196,15 +200,18 @@ export default class DiscreteCatchLift extends PaddleGames {
    */
   dataCollection() {
     if(super.gameState.initialTime > 0) {
-      if(target.state === 'start' || target.state === 'showTarget' || target.state === 'showClock') {
-        super.exportData.basket_x = super.convertXvalue(super.paddle.position.x);
-        super.exportData.basket_y.push(parseFloat(super.convertYvalue(super.paddle.position.y)));
-        super.exportData.mice_x = super.convertXvalue(target.position.x);
-        super.exportData.mice_y = super.convertYvalue(target.position.y);
-        super.exportData.trial = super.currentRounds;
-        super.exportData.trialType = this.context.trialType;
-        super.exportData.mice_state.push(this.getState());
-        super.exportData.paddle_timestamp.push(super.paddle.time);
+      if(target.state === 'start' || target.state === 'showTarget' || target.state === 'showClock' || target.state === 'done') {
+        let state  = this.getState();
+        if(state != 4) {
+          super.exportData.basket_x = super.convertXvalue(super.paddle.position.x);
+          super.exportData.basket_y.push(parseFloat(super.convertYvalue(super.paddle.position.y)));
+          super.exportData.mice_x = super.convertXvalue(target.position.x);
+          super.exportData.mice_y = super.convertYvalue(target.position.y);
+          super.exportData.trial = super.currentRounds;
+          super.exportData.trialType = this.context.trialType;
+          super.exportData.mice_state.push(state);
+          super.exportData.paddle_timestamp.push(super.paddle.time);
+        }
       }
 
     }
@@ -363,7 +370,7 @@ export default class DiscreteCatchLift extends PaddleGames {
 
   collisionDetection() {
 
-    if ((target.position.y + 0.0476 * super.Utils.SCALE) - super.paddle.position.y >= 0) {
+    if (this.isMiceCaught()) {
       target.state = 'done';
       if (clockObject.state > 0) {
         if (clockObject.state < 4) {
@@ -381,4 +388,12 @@ export default class DiscreteCatchLift extends PaddleGames {
 
     }
   }
+
+  isMiceCaught(){
+
+    return (target.position.y + 0.0476 * super.Utils.SCALE) - super.paddle.position.y >= 0;
+
+  }
+
+
 }
