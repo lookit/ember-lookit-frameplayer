@@ -375,7 +375,7 @@ export default class DiscreteButtonSpatial extends Base {
         sounds[gameSound.START].pause();
         sounds[gameSound.START].currentTime = 0;
         sounds[gameSound.LAUNCH].play();
-        soundTimeStamp  = new Date().getTime();
+        soundTimeStamp = super.getElapsedTime();
         super.gameState.initialTime = new Date().getTime();
         super.ball.state = 'fall';
 
