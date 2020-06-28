@@ -208,7 +208,7 @@ export default class DiscreteBounce extends PaddleGames {
         sounds[gameSound.START].pause();
         sounds[gameSound.START].currentTime = 0;
         super.ball.state = 'fall';
-        soundTimeStamp  = new Date().getTime();
+        soundTimeStamp  = super.getElapsedTime();
         super.gameState.initialTime = new Date().getTime();
       }
 
