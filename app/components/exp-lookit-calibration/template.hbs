@@ -1,0 +1,46 @@
+{{! template-lint-disable no-invalid-interactive}}
+{{! template-lint-disable no-html-comments}}
+
+<div class="input-group exp-lookit-calibration row col-md-6 ">
+
+    <!--RECORDER-->
+    <div class="row recorder-container video-recorder-hidden">
+        <div id="recorder" class="col-xs-12">
+        </div>
+    </div>
+
+    {{#if (or doRecording startSessionRecording)}}
+        <p id="waitForVideo"> establishing video connection <br> please wait... </p>
+    {{/if}}
+
+    <!--CALIBRATION DISPLAY-->
+    {{#if calibrationVideo}}
+        <video id="player-calibration-video" class="calibration-stimulus"
+               autoplay
+               loop
+               >
+            {{#each calibrationVideo_parsed as |stream|}}
+                <source src={{stream.src}} type={{stream.type}}>
+            {{/each}}
+        </video>
+    {{else}}
+        <img id="calibration-image" class="calibration-stimulus" src={{calibrationImage_parsed}} alt="calibration stimulus">
+    {{/if}}
+
+    <!--CALIBRATION AUDIO-->
+    <audio id="player-calibration-audio">
+        {{#each calibrationAudio_parsed as |stream|}}
+            <source src={{stream.src}} type={{stream.type}}>
+        {{/each}}
+    </audio>
+
+</div>
+
+<!--FULLSCREEN BUTTON-->
+{{#unless updatedIsFullscreen}}
+    <div class="row col-md-6 exp-lookit-video">
+        <button type="button" class="btn btn-success" id="fsButton" {{ action "showFullscreen"}} {{!-- template-lint-disable no-inline-styles --}}>
+            please return to fullscreen
+        </button>
+    </div>
+{{/unless}}

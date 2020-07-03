@@ -194,9 +194,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
         //mediaObj.pause();
         mediaObj.currentTime = 0;
         mediaObj.play().then(() => {
-            }).catch(() => {
-                mediaObj.play();
-            }
+        }).catch(() => {
+            mediaObj.play();
+        }
         );
     },
 
@@ -316,9 +316,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
             });
 
             // Prep PDF - need to set font before splitting lines
-            // jscs:disable requireCapitalizedConstructors
             var consentPDF = new jsPDF();
-            // jscs:enable requireCapitalizedConstructors
             consentPDF.setFont('times');
             consentPDF.setFontSize(12);
             var timeString = moment().format('MMMM Do YYYY, h:mm:ss a'); // for header
@@ -467,9 +465,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
     },
 
     meta: {
-        name: 'Video assent form',
-        description: 'A video assent form.',
-
         data: {
             type: 'object',
             properties: {

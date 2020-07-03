@@ -1,0 +1,22 @@
+<div class="exp-lookit-start-stop-recording row">
+
+    <div class="placeholder-wrapper">
+
+        {{#if video}}
+            <video id="placeholder-video"
+                   autoplay
+                   loop
+                   >
+                {{#each video_parsed as |stream|}}
+                    <source src={{stream.src}} type={{stream.type}}>
+                {{/each}}
+            </video>
+        {{else}}
+            <img id="placeholder-image" src={{image_parsed}} alt="placeholder">
+        {{/if}}
+
+        <p class="wait-for-video"> establishing video connection <br> please wait... </p>
+
+    </div>
+
+</div>

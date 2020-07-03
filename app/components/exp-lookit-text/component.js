@@ -81,8 +81,6 @@ export default ExpFrameBaseComponent.extend({
     },
 
     meta: {
-        name: 'ExpLookitText',
-        description: 'Text-only frame for a Lookit study',
         data: {
             type: 'object',
             properties: {

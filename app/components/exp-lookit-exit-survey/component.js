@@ -107,8 +107,6 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
     },
     frameSchemaRequired: ['debriefing'],
     meta: {
-        name: 'ExpLookitExitSurvey',
-        description: 'Exit survey for Lookit.',
         data: {
             type: 'object',
             properties: {

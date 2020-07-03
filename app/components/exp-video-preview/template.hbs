@@ -12,7 +12,7 @@
             {{#if prompt}}
                 {{text}}
                 <br> <br>
-                <button class="btn btn-success btn-block" disabled={{disableRecord}} {{action 'accept'}}>{{prompt}}</button>
+                <button type="button" class="btn btn-success btn-block" disabled={{disableRecord}} {{action "accept"}}>{{prompt}}</button>
                 <hr>
             {{else}}
                 {{currentVideo.caption}}
@@ -27,11 +27,11 @@
                 <div class="col-md-10 col-md-offset-1 text-center">
                     {{#if currentVideo.imgSrc}}
 
-                        <img class="exp-lookit-preview-image" src={{currentVideo.imgSrc}} alt="Image preview">
+                        <img class="exp-lookit-preview-image" src={{currentVideo.imgSrc}} alt="Preview">
 
                     {{else}}
 
-                        <video class="exp-lookit-preview-video" controls style="width: 100%;">
+                        <video class="exp-lookit-preview-video" controls style="width: 100%;" {{!-- template-lint-disable no-inline-styles --}}>
                             {{#each currentVideo.sources as |vidsource|}}
                                 <source src={{vidsource.src}} type={{vidsource.type}}>
                             {{/each}}
@@ -49,14 +49,14 @@
     {{#unless prompt}}
         <div class="row exp-controls">
             <div class="col-md-12 text-center">
-                {{!--<button class="btn btn-default pull-left" {{action 'next'}}>End preview</button>--}}
-                <button disabled={{noPrev}} {{action 'previousVideo'}} class="btn btn-primary pull-left">
+                {{!--<button type="button" class="btn btn-default pull-left" {{action "next"}}>End preview</button>--}}
+                <button type="button" disabled={{noPrev}} {{action "previousVideo"}} class="btn btn-primary pull-left">
                     {{previousStimulusText}}
                 </button>
                 {{#if noNext}}
-                    <button {{action 'finish'}} class="btn btn-success pull-right"> Continue</button>
+                    <button type="button" {{action "finish"}} class="btn btn-success pull-right"> Continue</button>
                 {{else}}
-                    <button {{action 'nextVideo'}} class="btn btn-success pull-right"> {{nextStimulusText}}</button>
+                    <button type="button" {{action "nextVideo"}} class="btn btn-success pull-right"> {{nextStimulusText}}</button>
                 {{/if}}
             </div>
         </div>
