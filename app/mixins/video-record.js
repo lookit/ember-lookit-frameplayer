@@ -31,10 +31,9 @@ let {
  * `connected`, and `micChecked` - for details, see services/video-recorder.js. These
  * can be accessed from the consuming frame as e.g. `this.get('recorder').get('hasWebCam')`.
  *
- * If starting recording automatically, the function `whenPossibleToRecord` will be called
- * once recording is possible, and will start recording. If you want to do other things
- * at this point, like proceeding to a test trial, you can override this function in your
- * frame.
+ * If starting recording automatically,  the function `onRecordingStarted` will be called
+ * once recording begins. If you want to do other things at this point, like proceeding
+ * to a test trial, you can add this hook in your frame.
  *
  * See 'methods' for the functions you can use on a frame that extends VideoRecord.
  *
@@ -137,6 +136,15 @@ export default Ember.Mixin.create({
     maxRecordingLength: 7200,
 
     /**
+     * Maximum time allowed for video upload before proceeding, in seconds.
+     * Can be overridden by researcher, based on tradeoff between making families wait and
+     * losing data.
+     * @property {Number} maxUploadSeconds
+     * @default 5
+     */
+    maxUploadSeconds: 5,
+
+    /**
      * Whether to autosave recordings. Can be overridden by consuming frame.
      * TODO: eventually use this to set up non-recording option for previewing
      * @property {Number} autosave
@@ -218,7 +226,7 @@ export default Ember.Mixin.create({
         const pipeLoc = Ember.getOwner(this).resolveRegistration('config:environment').pipeLoc;
         const pipeEnv = Ember.getOwner(this).resolveRegistration('config:environment').pipeEnv;
         const installPromise = recorder.install(this.get('videoId'), pipeLoc, pipeEnv,
-          this.get('maxRecordingLength'), this.get('autosave'), this.get('audioOnly'));
+            this.get('maxRecordingLength'), this.get('autosave'), this.get('audioOnly'));
 
         // Track specific events for all frames that use  VideoRecorder
         var _this = this;
@@ -241,44 +249,6 @@ export default Ember.Mixin.create({
             videoId: videoId
         });
         return installPromise;
-    },
-
-    /**
-     * Pause the recorder (and capture timing events). For webRTC recorder, this is
-     * just a placeholder and doesn't actually pause the recording. If webRTC used,
-     * includes extra data actuallyPaused: false. This is for backwards compatibility
-     * with frames that pause/resume recording, and should not be used going forward -
-     * instead stop/start and make separate clips if needed.
-     * @method pauseRecorder
-     * @param [skipIfMissing=false] If provided (and true), don't raise an error if recording isn't ready yet. Not actually used for WebRTC.
-     */
-    pauseRecorder(skipIfMissing = false) {  // eslint-disable-line no-unused-vars
-        // leave skipIfMissing param for backwards compatibility
-        const recorder = this.get('recorder');
-        if (recorder) {
-            this.send('setTimeEvent', 'pauseCapture', {
-                actuallyPaused: false
-            });
-            // Would pause here!
-        }
-    },
-
-    /**
-     * Resume a paused recording. For webRTC recorder, this is just a placeholder and
-     * doesn't actually pause the recording. If webRTC used, includes extra data
-     * wasActuallyPaused: false. This is for backwards compatibility
-     * with frames that pause/resume recording, and should not be used going forward -
-     * instead stop/start and make separate clips if needed.
-     * @method resumeRecorder
-     */
-    resumeRecorder() {
-        const recorder = this.get('recorder');
-        if (recorder) {
-            this.send('setTimeEvent', 'unpauseCapture', {
-                wasActuallyPaused: false
-            });
-            // Would resume here!
-        }
     },
 
     /**
@@ -313,7 +283,7 @@ export default Ember.Mixin.create({
         const recorder = this.get('recorder');
         if (recorder && recorder.get('recording')) {
             this.send('setTimeEvent', 'stoppingCapture');
-            return recorder.stop();
+            return recorder.stop(this.get('maxUploadSeconds') * 1000);
         } else {
             return Ember.RSVP.reject(1);
         }
@@ -353,6 +323,12 @@ export default Ember.Mixin.create({
     },
 
     didInsertElement() {
+        // Give any active session recorder precedence over individual-frame recording
+        if (this.get('sessionRecorder') && this.get('session').get('recordingInProgress')) {
+            console.warn('Recording on this frame was specified, but session recording is already active. Not making frame recording.');
+            this.set('doUseCamera', false);
+        }
+
         if (this.get('doUseCamera')) {
             var _this = this;
             this.setupRecorder(this.$(this.get('recorderElement'))).then(() => {
@@ -363,23 +339,32 @@ export default Ember.Mixin.create({
                  */
                 _this.send('setTimeEvent', 'recorderReady');
                 _this.set('recorderReady', true);
-                _this.whenPossibleToRecord(); // make sure this fires
+                _this.whenPossibleToRecordObserver(); // make sure this fires
             });
         }
         this._super(...arguments);
     },
 
     /**
-     * Observer that starts recording once recorder is ready. Override to do additional
-     * stuff at this point!
-     * @method whenPossibleToRecord
+     * Function called when frame recording is started automatically. Override to do
+     * frame-specific actions at this point (e.g., beginning a test trial).
+     *
+     * @method onRecordingStarted
      */
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
+    onRecordingStarted() {
+    },
+
+    /**
+     * Observer that starts recording once recorder is ready.
+     * @method whenPossibleToRecordObserver
+     */
+    whenPossibleToRecordObserver: observer('recorder.hasCamAccess', 'recorderReady', function() {
         if (this.get('doUseCamera') && this.get('startRecordingAutomatically')) {
             var _this = this;
             if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
                 this.startRecorder().then(() => {
                     _this.set('recorderReady', false);
+                    _this.onRecordingStarted();
                 });
             }
         }

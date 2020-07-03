@@ -13,7 +13,9 @@
 /docs
 
 # misc
-/.sass-cache
+app/styles/.sass-cache
+app/styles/app.css
+app/styles/app.css.map
 /connect.lock
 /coverage/*
 /libpeerconnection.log
@@ -29,6 +31,7 @@ scripts/env
 
 migration/output/*
 
-themes/lookit/assets/screenshots/*
-
 /ssl
+
+# tools
+.idea/*

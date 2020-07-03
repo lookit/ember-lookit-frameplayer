@@ -1,0 +1,26 @@
+<div class="exp-lookit-start-stop-recording row">
+
+    <div class="placeholder-wrapper">
+
+        {{#if video}}
+            <video id="placeholder-video"
+                   autoplay
+                   loop
+                   >
+                {{#each video_parsed as |stream|}}
+                    <source src={{stream.src}} type={{stream.type}}>
+                {{/each}}
+            </video>
+        {{else}}
+            <img id="placeholder-image" src={{image_parsed}} alt="placeholder">
+        {{/if}}
+
+        <p class="wait-for-video"> <span id="progress">uploading video</span> <br> please wait... </p>
+        <div class="progress" id="progressbar">
+            <div class="progress-bar bg-info progress-bar-striped" role="progressbar" style="width:0%" aria-valuemin="0" aria-valuemax="100" {{!-- template-lint-disable no-inline-styles --}}></div>
+        </div>
+
+    </div>
+
+
+</div>

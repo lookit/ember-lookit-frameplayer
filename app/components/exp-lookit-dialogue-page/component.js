@@ -5,7 +5,6 @@ import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
 import { audioAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
-import { observer } from '@ember/object';
 
 let {
     $
@@ -13,10 +12,13 @@ let {
 
 /**
  * @module exp-player
- * @submodule frames
+ * @submodule frames-deprecated
  */
 
 /**
+ * This frame is deprecated and will not be included in release 2.x. For new studies, use
+ * the frame {{#crossLink "Exp-lookit-images-audio"}}{{/crossLink}} instead.
+ *
  * Frame to implement a storybook page with dialogue spoken by characters.
  * First, characters appear and any main narration audio is played.
  * Next, the user can click on the characters to play additional audio
@@ -139,6 +141,7 @@ let {
  * @uses Full-screen
  * @uses Expand-assets
  * @uses Video-record
+ * @deprecated
  */
 
 export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
@@ -150,8 +153,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
     // Override setting in VideoRecord mixin - only use camera if doing recording
     doUseCamera: Ember.computed.alias('doRecording'),
-    // Don't need to override startRecordingAutomatically as we override the observer
-    // whenPossibleToRecord directly.
+    startRecordingAutomatically: Ember.computed.alias('doRecording'),
 
     // Track state of experiment
     completedAudio: false, // for main narration audio
@@ -188,34 +190,18 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         }),
 
     // Override to do a bit extra when starting recording
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('doRecording')) {
-            var _this = this;
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                this.startRecorder().then(() => {
-                    _this.set('recorderReady', false);
-                    $('#waitForVideo').hide();
-                    _this.set('currentAudioIndex', -1);
-                    _this.send('playNextAudioSegment');
-                });
-            }
-        }
-    }),
+    onRecordingStarted() {
+        $('#waitForVideo').hide();
+        this.set('currentAudioIndex', -1);
+        this.send('playNextAudioSegment');
+    },
 
     // Override to do a bit extra when starting session recorder
-    whenPossibleToRecordSession: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
-        if (this.get('startSessionRecording')) {
-            var _this = this;
-            if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
-                this.startSessionRecorder().then(() => {
-                    _this.set('sessionRecorderReady', false);
-                    $('#waitForVideo').hide();
-                    _this.set('currentAudioIndex', -1);
-                    _this.send('playNextAudioSegment');
-                });
-            }
-        }
-    }),
+    onSessionRecordingStarted() {
+        $('#waitForVideo').hide();
+        this.set('currentAudioIndex', -1);
+        this.send('playNextAudioSegment');
+    },
 
     frameSchemaProperties: {
         /**
@@ -421,8 +407,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     meta: {
-        name: 'ExpLookitDialoguePage',
-        description: 'Frame for a storybook page with dialogue spoken by characters',
         data: {
             type: 'object',
             properties: {
@@ -612,7 +596,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         var css = parentTextBlock.css || {};
         $('#parenttext').css(css);
 
-        this.send('showFullscreen');
         $('#nextbutton').prop('disabled', true);
 
         // Any animations as images are displayed at start of this phase

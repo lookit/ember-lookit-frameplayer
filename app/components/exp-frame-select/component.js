@@ -141,8 +141,6 @@ export default ExpFrameBaseComponent.extend({
     },
 
     meta: {
-        name: 'ExpFrameSelect',
-        description: 'Wrapper for select randomizer',
         data: {
             type: 'object',
             properties: {

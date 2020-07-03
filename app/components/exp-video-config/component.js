@@ -39,6 +39,8 @@ hard-coded, to provide a general-purpose technical setup frame.
 export default ExpFrameBaseComponent.extend(VideoRecord, {
     layout,
     showWarning: false,
+    showWebcamPermWarning: false,
+    checkedWebcamPermissions: false,
     micChecked: Em.computed.alias('recorder.micChecked'),
     hasCamAccess: Em.computed.alias('recorder.hasCamAccess'),
 
@@ -87,9 +89,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     actions: {
 
         checkAudioThenNext() {
-            if (!this.get('micChecked')) {
+            if (!this.get('checkedWebcamPermissions') || !this.get('micChecked') || !this.get('hasCamAccess')) {
                 this.set('showWarning', true);
-            } else if (this.get('hasCamAccess')) {
+            } else {
                 this.send('next');
             }
         },
@@ -98,6 +100,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             this.set('showWarning', false);
             this.populateDropdowns();
             this.reloadRecorder();
+        },
+
+        reloadRecorderButtonAndRecordCheck() {
+            this.send('reloadRecorderButton');
+            this.set('checkedWebcamPermissions', true);
         },
 
         processSelectedMic() {
@@ -131,8 +138,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     type: 'exp-videoconfig',
     meta: {
-        name: 'Video Recorder Configuration',
-        description: 'Frame guiding the user through setting up webcam, with no recording.',
         data: {
             type: 'object',
             properties: {}
