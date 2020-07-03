@@ -31,11 +31,11 @@
             <div class="row">
                 <div class="col-md-10 col-md-offset-1 text-center preview-container">
                     {{#if currentVideo.image}}
-                        <img class="exp-lookit-preview-image" src={{currentVideo.image}} alt="Image preview">
+                        <img class="exp-lookit-preview-image" src={{currentVideo.image}} alt="Preview">
                     {{/if}}
 
                     {{#if currentVideo.audio}}
-                        <audio controls style="width: 100%;">
+                        <audio controls style="width: 100%;" {{!-- template-lint-disable no-inline-styles --}}>
                             {{#each currentVideo.audio as |audsource|}}
                                 <source src={{audsource.src}} type={{audsource.type}}>
                             {{/each}}
@@ -44,7 +44,7 @@
                     {{/if}}
 
                     {{#if currentVideo.video}}
-                        <video class="exp-lookit-preview-video" controls style="width: 100%;">
+                        <video class="exp-lookit-preview-video" controls style="width: 100%;" {{!-- template-lint-disable no-inline-styles --}}>
                             {{#each currentVideo.video as |vidsource|}}
                                 <source src={{vidsource.src}} type={{vidsource.type}}>
                             {{/each}}
@@ -61,26 +61,26 @@
 
         <div class="row exp-controls col-md-12">
             {{#if showPreviousButton}}
-                <button class="btn btn-default pull-left" {{ action 'previous' }} > Previous</button>
+                <button type="button" class="btn btn-default pull-left" {{ action "previous" }} > Previous</button>
             {{/if}}
-            <button class="btn btn-primary pull-right" {{ action 'next' }} >  {{skipButtonText}} </button>
+            <button type="button" class="btn btn-primary pull-right" {{ action "next" }} >  {{skipButtonText}} </button>
         </div>
 
         <div class="exp-controls col-md-12 row">
-            <button class="btn btn-success pull-right" disabled={{disableRecord}} {{action 'accept'}}>{{previewButtonText}}</button>
+            <button type="button" class="btn btn-success pull-right" disabled={{disableRecord}} {{action "accept"}}>{{previewButtonText}}</button>
         </div>
     {{/if}}
 
     {{#unless prompt}}
         <div class="row exp-controls">
             <div class="col-md-12 text-center">
-                <button disabled={{noPrev}} {{action 'previousVideo'}} class="btn btn-primary pull-left">
+                <button type="button" disabled={{noPrev}} {{action "previousVideo"}} class="btn btn-primary pull-left">
                     {{previousStimulusText}}
                 </button>
                 {{#if noNext}}
-                    <button {{action 'finish'}} class="btn btn-success pull-right"> Continue</button>
+                    <button type="button" {{action "finish"}} class="btn btn-success pull-right"> Continue</button>
                 {{else}}
-                    <button {{action 'nextVideo'}} class="btn btn-success pull-right"> {{nextStimulusText}}</button>
+                    <button type="button" {{action "nextVideo"}} class="btn btn-success pull-right"> {{nextStimulusText}}</button>
                 {{/if}}
             </div>
         </div>

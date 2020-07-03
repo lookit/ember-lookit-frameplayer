@@ -1,8 +1,6 @@
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 import VideoRecord from '../../mixins/video-record';
 import layout from './template';
-import { observer } from '@ember/object';
-
 /**
  * @module exp-player
  * @submodule frames
@@ -50,6 +48,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     type: 'exp-lookit-observation',
     layout: layout,
     recorderElement: '#recorder',
+    doUseCamera: true,
 
     frameSchemaProperties: {
         /**
@@ -131,8 +130,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     },
 
     meta: {
-        name: 'ExpLookitWebcamDisplay',
-        description: 'This frame displays the participant\'s webcam and some optional text. It can be used for setup or for a quick break to check positioning.',
         data: {
             type: 'object',
             properties: {
@@ -147,15 +144,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             required: ['videoId']
         }
     },
-
-    // Override to deal with whether or not recording is starting automatically
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('startRecordingAutomatically')) {
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                this.send('record');
-            }
-        }
-    }),
 
     actions: {
         proceed() { // make sure 'next' fires while still on this frame

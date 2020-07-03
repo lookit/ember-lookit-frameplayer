@@ -18,7 +18,6 @@ var randomizer = function (frame, pastSessions, resolveFrame) {
     } else {
         option = frame.options.unshift();
     }
-    // jscs: disable
     var [frames, ] = resolveFrame(option);
     return [frames, option];
 };

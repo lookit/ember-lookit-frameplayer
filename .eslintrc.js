@@ -21,6 +21,7 @@ module.exports = {
         'PipeSDK': false
     },
     rules: { // 'warn', 'error', or 'off'
-        'no-console': 'off' // allow console.log
+        'no-console': 'off', // allow console.log
+        'indent': ['warn', 4]
     }
 };

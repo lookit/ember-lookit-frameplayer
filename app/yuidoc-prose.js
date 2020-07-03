@@ -24,6 +24,15 @@
  */
 
 /**
+ * Frames someone may still be using, but that are deprecated and will not be included
+ * in future releases.
+ *
+ * @module exp-player
+ * @submodule frames-deprecated
+ * @main
+ */
+
+/**
  * Reusable randomizers that can be used as part of user-defined experiments.
  * Randomizers allow researchers to specify how to select which frames or
  * sequences of frames to use as part of a particular session of a given

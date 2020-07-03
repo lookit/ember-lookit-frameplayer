@@ -1,0 +1,127 @@
+$exp-video-cal-width: 12%;
+$exp-video-left-rect: 20%; // CENTER of calibration image, relative to image
+$exp-video-right-rect: 80%;
+
+.exp-lookit-calibration
+{
+
+    .pause-instructions {
+        display: block;
+        position: relative;
+        margin-left: auto;
+        margin-right:auto;
+        text-align: center;
+        font-size: 3em;
+        font-weight: bold;
+    }
+
+    #fsButton {
+        margin: auto;
+        margin-top: 10%;
+        min-width: 300px;
+        height: 3em;
+        position: fixed;
+        font-size: 2em;
+        left: 0;
+        right: 0;
+    }
+
+    // Initial waiting for webcam connection display
+    #waitForVideo {
+        font-size: x-large;
+        margin-top: 40%;
+    }
+
+    .recorder-container {
+      width:100%;
+      height:50vh;
+      margin: 0px;
+    }
+
+    .recorder {
+      padding: 0px;
+      margin-bottom: 1em;
+      margin-top: 1em;
+      background-color: #ccc;
+      width: 110%;
+      height:100%;
+      min-width:350px;
+      margin-left:-10%;
+    }
+
+    #calibration-image {
+        &.spin {
+            animation-name: spin;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+            transform-origin: center;
+        }
+        &.bounce {
+            animation-name: bounce;
+            animation-duration: 1.5s;
+            animation-iteration-count: infinite;
+            transform-origin: center;
+            animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
+        }
+    }
+
+    @keyframes spin {
+        0%   { transform: rotate(0turn); }
+        5%   { transform: rotate(0turn); }
+        95%  { transform: rotate(1turn); }
+        100% { transform: rotate(1turn); }
+    }
+
+    @keyframes bounce {
+        0%   { transform: scale(1,1)      translateY(0); }
+        10%  { transform: scale(1.1,.9)   translateY(0); }
+        30%  { transform: scale(.9,1.1)   translateY(-25%); }
+        50%  { transform: scale(1.05,.95) translateY(0); }
+        65%  { transform: scale(1,1)      translateY(-5%); }
+        80%  { transform: scale(1,1)      translateY(0); }
+        100% { transform: scale(1,1)      translateY(0); }
+    }
+
+    #player-calibration-video, #calibration-image {
+        width: $exp-video-cal-width;
+        max-height: 300px;
+        position: absolute;
+        margin: auto;
+        top: 0; left: 0; bottom: 0; right: 0;
+
+        &.center {
+            margin-left: 50% - $exp-video-cal-width/2;
+        }
+
+        &.left {
+            margin-left: $exp-video-left-rect - $exp-video-cal-width/2;
+        }
+
+        &.right {
+            margin-left: $exp-video-right-rect - $exp-video-cal-width/2;
+        }
+    }
+
+}
+
+
+#experiment-player:not(.player-fullscreen) .exp-lookit-calibration {
+
+    width: 100% !important;
+    height: 100% !important;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    div {
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+}
+

@@ -1,72 +1,174 @@
-.exp-lookit-video-consent .exp-lookit-video-consent-prompt {
-    display: block;
-    font-size: 1.2em;
-    font-weight: bold;
-}
+.exp-lookit-video-consent {
 
-.exp-lookit-video-consent .well.video-consent-prompt {
-    background-color: #d4efdf;
-}
-
-.exp-lookit-video-consent blockquote {
-    border-left: 8px solid #d4efdf;
-}
-
-.exp-lookit-video-consent .exp-consent-title {
-    font-weight: bold;
-}
-
-.exp-lookit-video-consent .video-consent-doc p:not(.exp-text-medium) {
-        font-size: 0.8em;
-}
-
-.exp-lookit-video-consent .video-consent-doc .exp-text-medium {
+    .exp-lookit-video-consent-prompt {
+        display: block;
         font-size: 1em;
-}
+        font-weight: bold;
+    }
 
-.exp-lookit-video-consent .video-consent-direction button {
-    display: inline;
-    float: none !important;
-    font-size: .8em;
-}
+    .well.video-consent-prompt {
+        background-color: #d4efdf;
+        padding: .5em;
+    }
 
-.exp-lookit-video-consent .video-consent-body * {
-    text-align:left;
-}
+    blockquote {
+        border-left: 8px solid #d4efdf;
+    }
 
-.exp-lookit-video-consent .video-consent-numbered-direction {
-    font-weight: bold;
-    padding-bottom: 15px;
-    padding-top: 15px;
-}
+    .exp-consent-title {
+        font-weight: bold;
+    }
 
-.exp-lookit-video-consent .video-consent-number {
-    color: #04631c;
-    font-size: 1.5em;
-    font-weight: bold;
-    background-color: #d4efdf;
-    border-radius:15px;
-    padding:2px 6px;
-    margin:2px;
-    border: thin solid #04631c;
-}
+    .video-consent-doc p:not(.exp-text-medium) {
+            font-size: 0.8em;
+    }
 
-.exp-lookit-video-consent .video-consent-direction {
-    color: #04631c;
-    font-size: 1.2em;
-    vertical-align: center;
-}
+    .video-consent-doc .exp-text-medium {
+            font-size: 1em;
+    }
 
-.exp-lookit-video-consent .video-consent-outloud {
-    font-size: 1em;
-    font-weight: bold;
-}
+    .video-consent-direction button {
+        display: inline;
+        float: none !important;
+        font-size: 1em;
+    }
 
-.exp-lookit-video-consent button.right {
-    right: 1vw;
-    position: absolute;
-}
+    .video-consent-body * {
+        text-align:left;
+    }
 
-.exp-lookit-video-consent #downloadbutton {
-    border: thin solid #cccccc;
+    .video-consent-numbered-direction {
+        font-weight: bold;
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+
+    .video-consent-number {
+        color: #04631c;
+        font-size: 1.1em;
+        font-weight: bold;
+        background-color: #d4efdf;
+        border-radius:15px;
+        padding:2px 6px;
+        margin:2px;
+        margin-right: .25em;
+        border: thin solid #04631c;
+    }
+
+    .video-consent-direction {
+        color: #04631c;
+        font-size: 1.1em;
+        vertical-align: center;
+    }
+
+    .video-consent-outloud {
+        font-size: 1em;
+        font-weight: bold;
+    }
+
+    button.right {
+        right: 1vw;
+        position: absolute;
+    }
+
+    #downloadbutton {
+        border: thin solid #cccccc;
+    }
+
+    button {
+        padding: .25em;
+    }
+
+
+    .recorder-container {
+      width:100%;
+      margin: 0px;
+      height: 20vh;
+    }
+
+    .recorder {
+      padding: 0px;
+      margin-bottom: 1em;
+      margin-top: 1em;
+      background-color: #ccc;
+      width: 110%;
+      height:100%;
+      min-width:450px;
+      margin-left:-10%;
+      clear:both !important;
+      position: relative;
+    }
+
+    .Blink {
+      animation: exp-lookit-consent-blinker 1.0s cubic-bezier(.5, 0, 1, 1) infinite alternate;
+      float:left;
+      font-size:large;
+      margin-right: .5em;
+    }
+    @keyframes exp-lookit-consent-blinker {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+    .exp-lookit-observation-controls {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    #recordingStatus {
+        position: absolute;
+        z-index: 999;
+        text-align: center;
+        margin: .25em;
+        padding: .5em;
+        border-radius: .5em;
+        background-color: white;
+        opacity: 0.6;
+    }
+
+    #recordingIndicator {
+        margin-top: .25em;
+    }
+
+
+    video[id^=pipeSmallVideo].pipeSmallNormal {
+        left: 80% !important;
+        top: 10px !important;
+        height: 20% !important;
+        width: 20% !important;
+    }
+
+    [id^=pipeMenu] {
+        width: 100% !important;
+        margin: auto;
+        border-radius: 1em;
+        background-color:none !important;
+        display: none;
+
+        [id^=pipeRec], [id^=pipePlay] {
+            display:none;
+        }
+
+        [id^=pipeCounter], .pipeTimer {
+            margin: auto;
+            color: gray;
+            position: relative;
+            margin-top: -2em;
+            height: 1.5em;
+            font-size: large;
+            background-color: white;
+            opacity: .6;
+            left: 0 !important;
+            border-radius: .5em;
+            width: 10em;
+        }
+
+    }
+
+    .warning {
+        color: red;
+        text-align: right;
+    }
+
 }

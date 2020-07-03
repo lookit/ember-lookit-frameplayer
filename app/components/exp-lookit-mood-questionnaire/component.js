@@ -128,8 +128,6 @@ export default ExpFrameBaseComponent.extend(Validations, {
         }
     },
     meta: {
-        name: 'ExpLookitMoodQuestionnaire',
-        description: 'Mood questionnaire for Lookit studies, very slightly generalized from physics version exp-mood-questionnaire',
         data: {
             type: 'object',
             properties: {

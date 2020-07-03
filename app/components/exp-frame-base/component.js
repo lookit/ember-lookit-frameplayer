@@ -10,19 +10,12 @@ import SessionRecord from '../../mixins/session-record';
  * @submodule frames
  */
 
-/** An abstract component for defining experimenter frames
+/** An abstract component to extend when defining new Lookit frames
  *
  * This provides common base behavior required for any experiment frame. All experiment frames must extend this one.
  *
- * This frame has no configuration options because all of its logic is internal, and is almost never directly used
- *   in an experiment. It exports no data. Sample experiment definition usage (provided for completeness):
-  ```json
-    "frames": {
-       "my-sample-frame": {
-         "kind": "exp-base-frame"
-       }
-    }
- * ```
+ * This frame has no configuration options because all of its logic is internal, and should not be directly used
+ * in an experiment.
  *
  * As a user you will almost never need to insert a component into a template directly- the platform should handle that
  *  by automatically inserting an <a href="../classes/Exp-player.html" class="crosslink">exp-player</a> component when your experiment starts.
@@ -67,8 +60,6 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
     },
 
     meta: { // Configuration for all fields available on the component/template
-        name: 'Base Experimenter Frame',
-        description: 'The abstract base frame for Experimenter frames.',
         data: { // Controls what and how parameters are serialized and sent to the server. Ideally there should be a validation mechanism.
             type: 'object',
             properties: {}
@@ -283,6 +274,8 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
 
     session: null,
 
+    frameStartTimestamp: null, // keep track of when frame started to store duration
+
     // see https://github.com/emberjs/ember.js/issues/3908. Moved
     // to init because we were losing the first event per instance of a frame
     // when it was in didReceiveAttrs.
@@ -464,6 +457,11 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
      */
 
     /**
+     * Duration between frame being inserted and call to `next`
+     * @attribute frameDuration
+     */
+
+    /**
      * Type of frame: EXIT (exit survey), CONSENT (consent or assent frame), or DEFAULT
      * (anything else)
      * @attribute frameType
@@ -492,6 +490,11 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         serialized.generatedProperties = this.get('generatedProperties');
         serialized.eventTimings = this.get('eventTimings');
         serialized.frameType = this.get('frameType');
+        try {
+            serialized.frameDuration = (new Date().getTime() - this.get('frameStartTimestamp'))/1000;
+        } catch(e){
+            serialized.frameDuration = null;
+        }
         return serialized;
     },
 
@@ -576,13 +579,18 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
             this.send('save');
 
             if (this.get('endSessionRecording') && this.get('sessionRecorder')) {
-                this.get('session').set('recordingInProgress', false);
                 var _this = this;
-                this.stopSessionRecorder().finally(() => {
+                if (!(this.get('session').get('recordingInProgress'))) {
                     _this.sendAction('next', iNextFrame);
                     window.scrollTo(0, 0);
-                    _this.destroySessionRecorder();
-                });
+                } else {
+                    this.get('session').set('recordingInProgress', false);
+                    this.stopSessionRecorder().finally(() => {
+                        _this.sendAction('next', iNextFrame);
+                        window.scrollTo(0, 0);
+                    });
+                }
+
             } else {
                 this.sendAction('next', iNextFrame);
                 window.scrollTo(0, 0);
@@ -616,6 +624,7 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         Ember.$('*').removeClass('player-fullscreen');
         Ember.$('*').removeClass('player-fullscreen-override');
         Ember.$('#application-parse-error-text').hide();
+        this.set('frameStartTimestamp', new Date().getTime());
         var $element = Ember.$(`#${this.get('fullScreenElementId')}`);
         if (this.get('displayFullscreenOverride') && !this.get('displayFullscreen')) {
             $element.addClass('player-fullscreen-override');
@@ -625,9 +634,9 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         // Set to non-fullscreen (or FS if overriding) immediately, except for frames displayed fullscreen.
         // Note: if this is defined the same way in full-screen.js, it gets called twice
         // for reasons I don't yet understand.
-        if (this.get('displayFullscreenOverride')) {
+        if (this.get('displayFullscreenOverride') || this.get('displayFullscreen')) {
             this.send('showFullscreen');
-        } else if (!(this.get('displayFullscreen'))) {
+        } else {
             this.send('exitFullscreen');
         }
         this._super(...arguments);

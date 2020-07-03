@@ -569,8 +569,6 @@ export default ExpFrameBaseComponent.extend({
     },
 
     meta: {
-        name: 'ExpLookitSurvey',
-        description: 'A basic survey frame.',
         data: {
             type: 'object',
             properties: {

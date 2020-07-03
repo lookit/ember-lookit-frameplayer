@@ -1,4 +1,3 @@
-// jscs:disable
 import Ember from 'ember';
 
 // http://stackoverflow.com/a/12646864
@@ -1280,9 +1279,9 @@ function counterbalancingLists() {
         useFallRotation: useFallRotation,
         conceptOrderRotation: conceptOrderRotation,
         objectRotations: [  gravityObjectRotation,
-                            inertiaObjectRotation,
-                            supportObjectRotation,
-                            controlObjectRotation]
+            inertiaObjectRotation,
+            supportObjectRotation,
+            controlObjectRotation]
     };
 }
 
@@ -1334,9 +1333,9 @@ function assignVideos(startType, showStay, whichObjects) {
 
     var videotypes = ['gravity', 'inertia', 'support', 'control'];
     var compTypes = [   comparisonsGravity,
-                        comparisonsInertia,
-                        comparisonsSupport,
-                        comparisonsControl ];
+        comparisonsInertia,
+        comparisonsSupport,
+        comparisonsControl ];
     // how many times does each comparison type listed need to be shown?
     var nReps = [1, 2, 1, 3];
 
@@ -1412,8 +1411,8 @@ function assignVideos(startType, showStay, whichObjects) {
 
         // choose placement of more/less surprising outcomes (balanced)
         var onLeft = [  'moreProb', 'lessProb',
-                        'moreProb', 'lessProb',
-                        'moreProb', 'lessProb'];
+            'moreProb', 'lessProb',
+            'moreProb', 'lessProb'];
         onLeft = onLeft.slice(0, eventTypeList.length);
         onLeft = shuffleArray(onLeft);
 
@@ -1509,40 +1508,40 @@ function assignVideos(startType, showStay, whichObjects) {
 
 function audioSourceObjs(path, shortname) {
     return  [
-                {
-                    src: path + shortname + '.ogg',
-                    type: 'audio/ogg'
-                },
-                {
-                    src: path + shortname + '.mp3',
-                    type: 'audio/mp3'
-                }
-            ];
+        {
+            src: path + shortname + '.ogg',
+            type: 'audio/ogg'
+        },
+        {
+            src: path + shortname + '.mp3',
+            type: 'audio/mp3'
+        }
+    ];
 }
 
 function videoSourceObjs(path, shortname, organizedByType) {
     if (!organizedByType) {
         return  [
-                    {
-                        'src': path + shortname + '.webm',
-                        'type': 'video/webm'
-                    },
-                    {
-                        'src': path + shortname + '.mp4',
-                        'type': 'video/mp4'
-                    }
-                ];
+            {
+                'src': path + shortname + '.webm',
+                'type': 'video/webm'
+            },
+            {
+                'src': path + shortname + '.mp4',
+                'type': 'video/mp4'
+            }
+        ];
     } else {
         return  [
-                {
-                    'src': path + 'webm/' + shortname + '.webm',
-                    'type': 'video/webm'
-                },
-                {
-                    'src': path + 'mp4/' + shortname + '.mp4',
-                    'type': 'video/mp4'
-                }
-            ];
+            {
+                'src': path + 'webm/' + shortname + '.webm',
+                'type': 'video/webm'
+            },
+            {
+                'src': path + 'mp4/' + shortname + '.mp4',
+                'type': 'video/mp4'
+            }
+        ];
     }
 }
 
@@ -1589,8 +1588,8 @@ function toFrames(frameId, eventVideos, BASE_DIR) {
                 BASE_DIR + 'audio/',
                 musicName),
             sources: videoSourceObjs(
-		BASE_DIR + 'stimuli/' + e.compType + '/',
-		e.fname, true),
+                BASE_DIR + 'stimuli/' + e.compType + '/',
+                e.fname, true),
             altSources: videoSourceObjs(
                 BASE_DIR + 'stimuli/' + e.compType + '/',
                 e.altName, true),
@@ -1608,7 +1607,6 @@ var randomizer = function(frameId, frame, pastSessions, resolveFrame) {
 
     var BASE_DIR = 'https://s3.amazonaws.com/lookitcontents/exp-physics-final/';
 
-   // TODO: In the future, we may want to identify the specific frame # to fetch instead of generic frame name
     pastSessions = pastSessions.filter(function (session) {
         return session.get('conditions');
     });
@@ -1616,9 +1614,9 @@ var randomizer = function(frameId, frame, pastSessions, resolveFrame) {
     var conditions = getConditions(lastSession, frameId);
 
     var {
-	startType,
-	showStay,
-	whichObjects
+        startType,
+        showStay,
+        whichObjects
     } = conditions;
 
     var [eventVideos, ] = assignVideos(startType, showStay, whichObjects);
@@ -1629,7 +1627,7 @@ var randomizer = function(frameId, frame, pastSessions, resolveFrame) {
     // allEvents and filenames are a function of conditions (no need to store)
     var resolved = [];
     toFrames(frameId, eventVideos, BASE_DIR).forEach((frame) => {
-	return resolved.push(...resolveFrame(null, frame)[0]);
+        return resolved.push(...resolveFrame(null, frame)[0]);
     });
     return [resolved, conditions];
 };

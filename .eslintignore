@@ -1,5 +1,13 @@
-coverage
 dist
 docs
 tmp
 tests/*
+package.json
+bower.json
+testem.js
+config/environment.js
+bower_components
+node_modules
+blueprints
+vendor
+helpers.js

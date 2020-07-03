@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-/* OMIT *
+/* OMIT FROM YUIDOC *
  * @module exp-player
  * @submodule services
  */
@@ -46,24 +46,24 @@ navigator.mediaDevices.getUserMedia = (function(origGetUserMedia) {
                 if (!LOOKIT_PREFERRED_DEVICES.mic && audioTracks) {
                     var thisAudioLabel = audioTracks[0].label;
                     navigator.mediaDevices.enumerateDevices()
-                    .then(function(devices) {
-                        devices.forEach(function(device) {
-                            if (device.kind == 'audioinput' && device.label == thisAudioLabel) {
-                                LOOKIT_PREFERRED_DEVICES.mic = device.deviceId;
-                            }
+                        .then(function(devices) {
+                            devices.forEach(function(device) {
+                                if (device.kind == 'audioinput' && device.label == thisAudioLabel) {
+                                    LOOKIT_PREFERRED_DEVICES.mic = device.deviceId;
+                                }
+                            });
                         });
-                    });
                 }
                 if (!LOOKIT_PREFERRED_DEVICES.cam && videoTracks) {
                     var thisVideoLabel = videoTracks[0].label;
                     navigator.mediaDevices.enumerateDevices()
-                    .then(function(devices) {
-                        devices.forEach(function(device) {
-                            if (device.kind == 'videoinput' && device.label == thisVideoLabel) {
-                                LOOKIT_PREFERRED_DEVICES.cam = device.deviceId;
-                            }
+                        .then(function(devices) {
+                            devices.forEach(function(device) {
+                                if (device.kind == 'videoinput' && device.label == thisVideoLabel) {
+                                    LOOKIT_PREFERRED_DEVICES.cam = device.deviceId;
+                                }
+                            });
                         });
-                    });
                 }
             } catch (error) {
                 console.error('Error setting preferred mic/camera: ' + error);
@@ -95,6 +95,7 @@ const VideoRecorder = Ember.Object.extend({
     connected: false,
     uploadTimeout: null, // timer counting from attempt to stop until we should just
     //resolve the stopPromise
+    maxUploadTimeMs: 5000,
 
     _started: false,
     _camAccess: false,
@@ -113,19 +114,19 @@ const VideoRecorder = Ember.Object.extend({
     // List of webcam hooks that should be added to recorder
     // See https://addpipe.com/docs#javascript-events-api
     hooks: ['onRecordingStarted',
-            'onCamAccess',
-            'onReadyToRecord',
-            'onUploadDone',
-            'userHasCamMic',
-            'onConnectionStatus',
-            'onMicActivityLevel',
-            'btPlayPressed',
-            'btRecordPressed',
-            'btStopRecordingPressed',
-            'btPausePressed',
-            'onPlaybackComplete',
-            'onConnectionClosed',
-            'onSaveOk'
+        'onCamAccess',
+        'onReadyToRecord',
+        'onUploadDone',
+        'userHasCamMic',
+        'onConnectionStatus',
+        'onMicActivityLevel',
+        'btPlayPressed',
+        'btRecordPressed',
+        'btStopRecordingPressed',
+        'btPausePressed',
+        'onPlaybackComplete',
+        'onConnectionClosed',
+        'onSaveOk'
     ],
 
     minVolume: 1, // Volume required to pass mic check
@@ -267,7 +268,7 @@ const VideoRecorder = Ember.Object.extend({
      * Stop recording and save the video to the server
      * @method stop
      */
-    stop() {
+    stop(maxUploadTimeMs = 5000) {
         var recorder = this.get('recorder');
         if (recorder) {
             try {
@@ -282,10 +283,10 @@ const VideoRecorder = Ember.Object.extend({
         var _stopPromise = new Ember.RSVP.Promise((resolve, reject) => {
             // If we don't end up uploading within 5 seconds, call reject
             _this.set('uploadTimeout', window.setTimeout(function() {
-                    console.warn('waiting for upload timed out');
-                    window.clearTimeout(_this.get('uploadTimeout'));
-                    reject();
-                }, 5000));
+                console.warn('waiting for upload timed out');
+                window.clearTimeout(_this.get('uploadTimeout'));
+                reject();
+            }, maxUploadTimeMs));
             if (_this.get('_isuploaded')) {
                 window.clearTimeout(_this.get('uploadTimeout'));
                 resolve(_this);
