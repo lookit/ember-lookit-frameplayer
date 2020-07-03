@@ -196,9 +196,9 @@ var expandAssetsMixin = Ember.Mixin.create({
                 console.log(response);
             }
         })
-        .catch((error) => {
-            console.warn('File not available: ', url, ' - error: ', error);
-        });
+            .catch((error) => {
+                console.warn('File not available: ', url, ' - error: ', error);
+            });
     },
 
     // Utility to expand stubs into either full URLs (for images) or
@@ -213,36 +213,36 @@ var expandAssetsMixin = Ember.Mixin.create({
         };
 
         switch (type) {
-            case 'image':
-                if (typeof asset === 'string' && !(asset.includes('://'))) {
-                    // Image: replace stub with full URL if needed
-                    fullAsset = this.baseDir + 'img/' + asset;
-                } else if (Array.isArray(asset)) {
-                    for (var i = 0; i < asset.length; i++) {
-                        var currentVal = asset[i];
-                        if (typeof currentVal === 'string' && !(currentVal.includes('://'))) {
-                            asset[i] = this.baseDir + 'img/' + currentVal;
-                        }
+        case 'image':
+            if (typeof asset === 'string' && !(asset.includes('://'))) {
+                // Image: replace stub with full URL if needed
+                fullAsset = this.baseDir + 'img/' + asset;
+            } else if (Array.isArray(asset)) {
+                for (var i = 0; i < asset.length; i++) {
+                    var currentVal = asset[i];
+                    if (typeof currentVal === 'string' && !(currentVal.includes('://'))) {
+                        asset[i] = this.baseDir + 'img/' + currentVal;
                     }
                 }
-                return fullAsset;
-            case 'audio':
-            case 'video':
-                var types = typesDict[type];
-                // Replace any string sources with the appropriate expanded source objects
-                if (typeof asset === 'string' && asset) {
-                    fullAsset = [];
-                    for (var iType = 0; iType < types.length; iType++) {
-                        let url = _this.baseDir + types[iType] + '/' + asset + '.' + types[iType];
-                        fullAsset.push({
-                            src: url,
-                            type: type + '/' + types[iType]
-                        });
-                    }
+            }
+            return fullAsset;
+        case 'audio':
+        case 'video':
+            var types = typesDict[type];
+            // Replace any string sources with the appropriate expanded source objects
+            if (typeof asset === 'string' && asset) {
+                fullAsset = [];
+                for (var iType = 0; iType < types.length; iType++) {
+                    let url = _this.baseDir + types[iType] + '/' + asset + '.' + types[iType];
+                    fullAsset.push({
+                        src: url,
+                        type: type + '/' + types[iType]
+                    });
                 }
-                return fullAsset;
-            default:
-                throw "Unrecognized type of asset to expand. Options are 'image', 'audio', and 'video'.";
+            }
+            return fullAsset;
+        default:
+            throw "Unrecognized type of asset to expand. Options are 'image', 'audio', and 'video'.";
         }
     },
 

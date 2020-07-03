@@ -17,8 +17,14 @@ let {
  */
 
 /**
-* Basic video display for looking measures (e.g. preferential looking, looking time).
+* Basic image display for looking measures (e.g. preferential looking, looking time).
 * Trial consists of four phases, each of which is optional.
+*
+* This is a composite trial very similar to exp-lookit-composite-video-trial except that
+* it allows specifying either video stimuli or static images.
+*
+* In general it may be simpler to use a combination of exp-lookit-calibration,
+* exp-lookit-video, and exp-lookit-images-audio frames.
 *
 * 1. Announcement: The audio in announcementAudio is played while the announcementVideo
 * video is played centrally, looping as needed. This lasts for announcementLength seconds
@@ -34,13 +40,16 @@ let {
 * played once. (Audio will be paused and restarted if it is longer than calibrationLength.)
 * Set calibrationLength to 0 to skip calibration.
 *
-* 4. Test: The video in testVideo and audio in testAudio (optional) are played until
+* 4. Test: Test images are displayed or the video in testVideo and audio in testAudio (optional) are played until
 * either: testLength seconds have elapsed (with video looping if needed), or the video
 * has been played testCount times. If testLength is set, it overrides testCount - for
 * example if testCount is 1 and testLength is 30, a 10-second video will be played 3 times.
 * If the participant pauses the study during the test phase, then after restarting the
 * trial, the video in altTestVideo will be used again (defaulting to the same video if
 * altTestVideo is not provided).
+ *
+ * To specify test images, you can provide leftImage, rightImage, and/or centerImage, or you can provide a list of
+ * possibleImages and give an index in that list for any of those three placements.
 *
 * Specifying media locations:
 * For any parameters that expect a list of audio/video sources, you can EITHER provide
@@ -124,12 +133,6 @@ let {
 * @uses Video-record
 * @uses Expand-assets
 */
-
-// TODO: refactor into cleaner structure with segments announcement, intro, calibration,
-// test, with more general logic for transitions. Construct list at start since some
-// elements optional. Then proceed through - instead of setting task manually, use
-// utility to move to next task within list. For each segment, allow video/image/text
-// stimuli.
 
 export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord, ExpandAssets, {
     layout: layout,
@@ -538,8 +541,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
     },
 
     meta: {
-        name: 'ExpLookitPreferentialLooking',
-        description: 'Component that displays video or images for looking measurements',
         data: {
             type: 'object',
             properties: {
@@ -606,20 +607,20 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             return this.get('announcementVideo_parsed');
         } else {
             switch (this.get('currentTask')) {
-                case 'announce':
-                    return this.get('announcementVideo_parsed');
-                case 'intro':
-                    return this.get('introVideo_parsed');
-                case 'test':
-                    if (this.get('useAlternate')) {
-                        if (this.get('altTestVideo').length) {
-                            return this.get('altTestVideo_parsed');
-                        } else { // default to playing same test video again
-                            return this.get('sources_parsed');
-                        }
-                    } else {
-                        return this.get('testVideo_parsed');
+            case 'announce':
+                return this.get('announcementVideo_parsed');
+            case 'intro':
+                return this.get('introVideo_parsed');
+            case 'test':
+                if (this.get('useAlternate')) {
+                    if (this.get('altTestVideo').length) {
+                        return this.get('altTestVideo_parsed');
+                    } else { // default to playing same test video again
+                        return this.get('sources_parsed');
                     }
+                } else {
+                    return this.get('testVideo_parsed');
+                }
             }
         }
         return [];
@@ -770,11 +771,11 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         // Actual starting audio is handled by autoplay on the template.
         var _this = this; // Require at least announcementLength duration of announcement phase
         this.set('announceTimer', window.setTimeout(function() {
-                _this.set('completedAnnouncementTime', true);
-                if (_this.get('completedAnnouncementAudio')) {
-                    _this.set('currentTask', 'intro');
-                }
-            }, _this.get('announcementLength') * 1000));
+            _this.set('completedAnnouncementTime', true);
+            if (_this.get('completedAnnouncementAudio')) {
+                _this.set('currentTask', 'intro');
+            }
+        }, _this.get('announcementLength') * 1000));
     },
 
     startIntro() {
@@ -898,11 +899,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 }
                 this.set('currentTask', 'announce');
 
-                try {
-                    this.resumeRecorder();
-                } catch (_) {
-                    return;
-                }
             } else if (pause || !wasPaused) { // Not currently paused: pause
                 //this.showRecorder();
                 window.clearInterval(this.get('testTimer'));
@@ -915,7 +911,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
                 this.send('setTimeEvent', 'pauseVideo', {
                     currentTask: this.get('currentTask')
                 });
-                this.pauseRecorder(true);
                 $('#player-calibration-video').removeClass(this.get('calibrationPositions').join(' '));
                 $('#player-calibration-video').hide();
                 if ($('audio#exp-music').length) {
@@ -934,9 +929,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         //audioObj.pause();
         audioObj.currentTime = 0;
         audioObj.play().then(() => {
-            }).catch(() => {
-                audioObj.play();
-            }
+        }).catch(() => {
+            audioObj.play();
+        }
         );
     },
 
@@ -966,7 +961,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             }
         });
 
-        this.send('showFullscreen');
         if (this.get('testVideo').length) {
             this.set('videosShown', [this.get('testVideo')[0].src, this.get('altTestVideo')[0].src]);
         } else {

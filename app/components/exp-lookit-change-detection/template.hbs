@@ -1,5 +1,5 @@
-{{! template-lint-disable invalid-interactive}}
-{{! template-lint-disable html-comments}}
+{{! template-lint-disable no-invalid-interactive}}
+{{! template-lint-disable no-html-comments}}
 
 <div class="row exp-lookit-change-detection" id="alternation-container">
 
@@ -11,35 +11,34 @@
                loop>
 
             {{#each videoSources_parsed as |stream|}}
-                <source src="{{stream.src}}" type="{{stream.type}}">
+                <source src={{stream.src}} type={{stream.type}}>
             {{/each}}
         </video>
 
         {{#if hasBeenPaused}}
-            <audio id="player-audio"
-                   onended={{action 'endAudio'}}>
+            <audio id="player-audio" onended={{action "endAudio"}}>
                 {{#each unpauseAudio_parsed as |stream|}}
-                    <source src="{{stream.src}}" type="{{stream.type}}">
+                    <source src={{stream.src}} type={{stream.type}}>
                 {{/each}}
             </audio>
         {{else}}
             <audio id="player-audio"
-                   onended={{action 'endAudio'}}>
+                   onended={{action "endAudio"}}>
                 {{#each audioSources_parsed as |stream|}}
-                    <source src="{{stream.src}}" type="{{stream.type}}">
+                    <source src={{stream.src}} type={{stream.type}}>
                 {{/each}}
             </audio>
         {{/if}}
 
         <audio id="player-pause-audio">
             {{#each pauseAudio_parsed as |stream|}}
-                <source src="{{stream.src}}" type="{{stream.type}}">
+                <source src={{stream.src}} type={{stream.type}}>
             {{/each}}
         </audio>
 
         <audio id="player-pause-audio-leftfs">
             {{#each fsAudio_parsed as |stream|}}
-                <source src="{{stream.src}}" type="{{stream.type}}">
+                <source src={{stream.src}} type={{stream.type}}>
             {{/each}}
         </audio>
 
@@ -54,7 +53,7 @@
     {{/if}}
 
     {{#unless updatedIsFullscreen}}
-        <button class="btn btn-success exp-lookit-geometry-alternation" id="fsButton" {{ action 'showFullscreen'}} >
+        <button type="button" class="btn btn-success exp-lookit-geometry-alternation" id="fsButton" {{ action "showFullscreen"}} >
             please return to fullscreen
         </button>
     {{/unless}}
@@ -71,15 +70,15 @@
     <audio id="player-music"
            loop>
         {{#each musicSources_parsed as |stream|}}
-            <source src="{{stream.src}}" type="{{stream.type}}">
+            <source src={{stream.src}} type={{stream.type}}>
         {{/each}}
     </audio>
 
     {{#if endAudioSources}}
         <audio id="player-endaudio"
-               onended={{action 'finish'}}>
+               onended={{action "finish"}}>
             {{#each endAudioSources_parsed as |stream|}}
-                <source src="{{stream.src}}" type="{{stream.type}}">
+                <source src={{stream.src}} type={{stream.type}}>
             {{/each}}
         </audio>
     {{/if}}
@@ -89,9 +88,6 @@
         <div id="recorder" class="col-xs-12">
         </div>
     </div>
-
-
-
 
 </div>
 

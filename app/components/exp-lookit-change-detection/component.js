@@ -5,6 +5,7 @@ import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
 import { audioAssetOptions, videoAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
+import isColor from '../../utils/is-color';
 import { observer } from '@ember/object';
 
 let {
@@ -151,13 +152,6 @@ function shuffleArrayInPlace(array) {
  * @uses Video-record
  * @uses Expand-assets
  */
-
-// See https://stackoverflow.com/a/56266358
-const isColor = (strColor) => {
-    const s = new Option().style;
-    s.color = strColor;
-    return s.color !== '';
-};
 
 export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
 
@@ -510,8 +504,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     meta: {
-        name: 'ExpLookitGeometryAlternation',
-        description: 'Frame to implement specific test trial structure for geometry alternation experiment. Includes announcement and alternation (test) phases. During "alternation," two streams of triangles are shown, in rectangles on the left and right of the screen: one one side both size and shape change, on the other only size changes. Frame is displayed fullscreen and video recording is conducted during test.',
         data: {
             type: 'object',
             properties: {
@@ -651,10 +643,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         $('#allstimuli').show();
         _this.presentImages();
         window.setTimeout(function() {
-                window.clearTimeout(_this.get('stimTimer'));
-                _this.clearImages();
-                _this.endTrial();
-            }, _this.get('trialLength') * 1000);
+            window.clearTimeout(_this.get('stimTimer'));
+            _this.clearImages();
+            _this.endTrial();
+        }, _this.get('trialLength') * 1000);
     },
 
     // When triangles have been shown for time indicated: play end-audio if
@@ -749,16 +741,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
             // Currently paused: RESUME
             if (wasPaused) {
-                try {
-                    this.resumeRecorder();
-                } catch (_) {
-                    return;
-                }
                 this.startIntro();
                 this.set('isPaused', false);
             } else { // Not currently paused: PAUSE
                 window.clearTimeout(this.get('introTimer'));
-                this.pauseRecorder(true);
                 if (this.checkFullscreen()) {
                     $('#player-pause-audio')[0].play();
                 } else {
@@ -775,7 +761,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     didInsertElement() {
         this._super(...arguments);
         this.set('doingA', this.get('startWithA'));
-        this.send('showFullscreen');
         this.notifyPropertyChange('readyToStartCalibration');
         var _this = this;
 
@@ -826,40 +811,23 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     /**
-     * Observer that starts recording once recorder is ready. Override to do additional
-     * stuff at this point!
-     * @method whenPossibleToRecord
+     * What to do when individual-frame recording starts.
+     * @method onRecordingStarted
      * @private
      */
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('doRecording')) {
-            var _this = this;
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                this.startRecorder().then(() => {
-                    _this.set('recorderReady', false);
-                    _this.set('recordingStarted', true);
-                    _this.notifyPropertyChange('readyToStartCalibration');
-                });
-            }
-        }
-    }),
+    onRecordingStarted() {
+        this.set('recordingStarted', true);
+        this.notifyPropertyChange('readyToStartCalibration');
+    },
 
     /**
-     * Observer that starts recording once sessionrecorder is ready.
-     * @method whenPossibleToRecordSession
+     * What to do when session-level recording starts.
+     * @method onSessionRecordingStarted
      * @private
      */
-    whenPossibleToRecordSession: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
-        if (this.get('startSessionRecording')) {
-            var _this = this;
-            if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
-                this.startSessionRecorder().then(() => {
-                    _this.set('sessionRecorderReady', false);
-                    _this.set('recordingStarted', true);
-                    _this.notifyPropertyChange('readyToStartCalibration');
-                });
-            }
-        }
-    }),
+    onSessionRecordingStarted() {
+        this.set('recordingStarted', true);
+        this.notifyPropertyChange('readyToStartCalibration');
+    }
 
 });

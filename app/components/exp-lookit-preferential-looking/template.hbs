@@ -1,5 +1,5 @@
-{{! template-lint-disable invalid-interactive}}
-{{! template-lint-disable html-comments}}
+{{! template-lint-disable no-invalid-interactive}}
+{{! template-lint-disable no-html-comments}}
 <div class="input-group exp-lookit-preferential-looking row col-md-6 ">
 
     <!--RECORDER-->
@@ -12,33 +12,34 @@
     <video id="player-calibration-video"
            class="calibration"
            autoplay
-           style="display:none;">
+           style="display:none;"
+           {{!-- template-lint-disable no-inline-styles --}}>
         {{#each calibrationVideo_parsed as |stream|}}
-            <source src="{{stream.src}}" type="{{stream.type}}">
+            <source src={{stream.src}} type={{stream.type}}>
         {{/each}}
     </video>
 
     <!--CALIBRATION AUDIO-->
     <audio id="player-calibration-audio">
         {{#each calibrationAudio_parsed as |stream|}}
-            <source src="{{stream.src}}" type="{{stream.type}}">
+            <source src={{stream.src}} type={{stream.type}}>
         {{/each}}
     </audio>
 
     <!--ANNOUNCEMENT AUDIO-->
     {{#if (and doingAnnouncement (not isPaused))}}
         <audio id="announcement-audio"
-               onended={{action 'announcementEnded'}}
-               onplaying={{action 'announcementStarted'}}
+               onended={{action "announcementEnded"}}
+               onplaying={{action "announcementStarted"}}
                autoplay="autoplay"
         >
             {{#if hasBeenPaused}}
                 {{#each unpauseAudio_parsed as |stream|}}
-                    <source src="{{stream.src}}" type="{{stream.type}}">
+                    <source src={{stream.src}} type={{stream.type}}>
                 {{/each}}
             {{else}}
                 {{#each announcementAudio_parsed as |stream|}}
-                    <source src="{{stream.src}}" type="{{stream.type}}">
+                    <source src={{stream.src}} type={{stream.type}}>
                 {{/each}}
             {{/if}}
         </audio>
@@ -48,44 +49,44 @@
     {{#if isPaused }}
         <audio id="pause-audio" autoplay="autoplay">
             {{#each pauseAudio_parsed as |stream|}}
-                <source src="{{stream.src}}" type="{{stream.type}}">
+                <source src={{stream.src}} type={{stream.type}}>
             {{/each}}
         </audio>
     {{/if}}
 
     <!--TEST MUSIC-->
-    <audio id="exp-music" loop="{{if loopTestAudio "loop"}}">
+    <audio id="exp-music" loop={{if loopTestAudio "loop"}}>
         {{#each testAudio_parsed as |stream|}}
-            <source src="{{stream.src}}" type="{{stream.type}}">
+            <source src={{stream.src}} type={{stream.type}}>
         {{/each}}
     </audio>
 
     <!--VIDEO: ATTN, INTRO, OR TEST-->
     <video id="player-video"
-           class="{{if (or doingAnnouncement isPaused) 'attn'}} {{if doingIntro 'intro'}} {{if doingTest 'test'}}"
+           class="{{if (or doingAnnouncement isPaused) "attn"}} {{if doingIntro "intro"}} {{if doingTest "test"}}"
            autoplay="autoplay"
-           onended={{ action 'videoStopped'}}
-           onplay={{action 'videoStarted'}}>
+           onended={{ action "videoStopped"}}
+           onplay={{action "videoStarted"}}>
         {{#each videoSources as |stream|}}
-            <source src="{{stream.src}}" type="{{stream.type}}">
+            <source src={{stream.src}} type={{stream.type}}>
         {{/each}}
     </video>
 
     <!--STATIC IMAGES-->
-    <div id="allstimuli" style="display:none;">
+    <div id="allstimuli" style="display:none;" {{!-- template-lint-disable no-inline-styles --}}>
         {{#if leftImage}}
             <div id="left-container">
-                <img id="left-image" src={{leftImage_parsed}} class="stim-image" alt="left image">
+                <img id="left-image" src={{leftImage_parsed}} class="stim-image" alt="left stimulus">
             </div>
         {{/if}}
         {{#if rightImage}}
             <div id="right-container">
-                <img id="right-image" src={{rightImage_parsed}} class="stim-image" alt="right image">
+                <img id="right-image" src={{rightImage_parsed}} class="stim-image" alt="right stimulus">
             </div>
         {{/if}}
         {{#if centerImage}}
             <div id="center-container">
-                <img id="center-image" src={{centerImage_parsed}} class="stim-image" alt="center image">
+                <img id="center-image" src={{centerImage_parsed}} class="stim-image" alt="center stimulus">
             </div>
         {{/if}}
     </div>
@@ -102,8 +103,10 @@
 </div>
 
 <!--FULLSCREEN BUTTON-->
-<div class="row col-md-6 exp-lookit-preferential-looking">
-    <button class="btn btn-success" style="display:none;" id="fsButton" {{ action 'showFullscreen'}} >
-        please return to fullscreen
-    </button>
-</div>
+{{#unless updatedIsFullscreen}}
+    <div class="row col-md-6 exp-lookit-preferential-looking">
+        <button type="button" class="btn btn-success" id="fsButton" {{ action "showFullscreen"}} {{!-- template-lint-disable no-inline-styles --}}>
+            please return to fullscreen
+        </button>
+    </div>
+{{/unless}}

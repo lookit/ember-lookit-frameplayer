@@ -279,8 +279,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         }
     },
     meta: {
-        name: 'ExpLookitInstructions',
-        description: 'A frame to display bulleted instructions to the user, along with an audio clip to make sure sound playback is working.',
         data: {
             type: 'object',
             properties: {

@@ -67,8 +67,6 @@ export default ExpFrameBaseComponent.extend({ //list any mixins here before the 
     frameSchemaRequired: ['showCatPicture'],
 
     meta: {
-        name: '<%= classifiedModuleName %>',
-        description: 'TODO: a description of this frame goes here.',
         data: {
              /**
              * What the child responded about the cat
