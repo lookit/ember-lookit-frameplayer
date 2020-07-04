@@ -518,9 +518,10 @@ export default class Base {
     } else {
       clearInterval(dataLoop);
       this.context.set('showInstructions', true);
+      document.exitPointerLock();
+      document.fullscreenElement.style.setProperty('cursor', 'default', 'important');
       this.context.stopRecorder().finally(() => {
           this.context.destroyRecorder();
-          document.exitPointerLock();
           this.context.send('next');
       });
     }
