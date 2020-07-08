@@ -13,8 +13,8 @@ import Utils from './utils';
  */
 
 
-const JITTER_MAX_TIME = 2000; // Max value for time Jitter randomizer
-const JITTER_MIN_TIME = 850; // Min value for time Jitter randomizer
+const JITTER_MAX_TIME = 1500; // Max value for time Jitter randomizer
+const JITTER_MIN_TIME = 800; // Min value for time Jitter randomizer
 const DATA_COLLECTION_TIME = 20; // Data collection Timeout
 let dataLoop = {}; // controlling data Collection loop
 let gameLoop = {}; // controlling main game loop
