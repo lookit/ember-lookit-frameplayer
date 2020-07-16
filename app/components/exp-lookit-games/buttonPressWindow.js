@@ -171,7 +171,7 @@ export default class ButtonPressWindow extends Base {
       trial: [],
       trialType: '',
       timestamp: [],
-      feedback: [],
+      feedback: 0,
       target_position: ''
 
     };
@@ -213,19 +213,21 @@ export default class ButtonPressWindow extends Base {
   dataCollection() {
     //Set  0,1,2,3 as button pressed values (0:  no button pressed, 1 : pressed , missed target, 2 : pressed, within
     // window, 3 : hit the target)
-    if(super.ball.state === 'fall') {
-      let currentTrajectory = TfArrIndex.indexOf(TfArr[this.currentRounds]) + 1;
+    if(super.ball.state === 'fall' || super.ball.state === 'hit' ) {
 
-      super.exportData.trajectory = currentTrajectory;
-      super.exportData.ball_position_x.push(parseFloat(super.convertXvalue(super.ball.position.x)));
-      super.exportData.ball_position_y.push(parseFloat(super.convertYvalue(super.ball.position.y)));
-      super.exportData.ball_timestamp.push(super.ball.timestamp);
-      super.exportData.trial = super.currentRounds;
-      super.exportData.trialType = this.context.trialType;
-      super.exportData.timestamp = soundTimeStamp;
-      super.exportData.feedback = this.ballState();
-      super.exportData.target_position = TARGETX.toFixed(3);
+      if(super.exportData.feedback === 0) {
+        let currentTrajectory = TfArrIndex.indexOf(TfArr[this.currentRounds]) + 1;
 
+        super.exportData.trajectory = currentTrajectory;
+        super.exportData.ball_position_x.push(parseFloat(super.convertXvalue(super.ball.position.x)));
+        super.exportData.ball_position_y.push(parseFloat(super.convertYvalue(super.ball.position.y)));
+        super.exportData.ball_timestamp.push(super.ball.timestamp);
+        super.exportData.trial = super.currentRounds;
+        super.exportData.trialType = this.context.trialType;
+        super.exportData.timestamp = soundTimeStamp;
+        super.exportData.feedback = this.ballState();
+        super.exportData.target_position = TARGETX.toFixed(3);
+      }
 
     }
     super.dataCollection();
