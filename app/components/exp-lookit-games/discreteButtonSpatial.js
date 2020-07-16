@@ -246,7 +246,7 @@ export default class DiscreteButtonSpatial extends Base {
     super.exportData = {
       game_type: 'discreteButtonSpatial',
       window:  [],
-      selected_button: []  ,
+      selected_button: 4  ,
       obstruction_number: [],
       ball_position_x: [],
       ball_position_y: [],
@@ -500,24 +500,24 @@ export default class DiscreteButtonSpatial extends Base {
    */
   dataCollection() {
 
-    if(super.ball.state === 'fall') {
+    if( super.ball.state === 'hit' || super.ball.state === 'fall' || super.ball.state === 'hit target' || super.ball.state === 'hit house') {
 
       let target_state = pressed.findIndex(item => item !== false);
       if(keys[target_state] === undefined){
         target_state = 3;
       }
 
-
-      super.exportData.window = this.getCorrectIndex()+1;
-      super.exportData.selected_button = target_state + 1;
-      super.exportData.obstruction_number = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];
-      super.exportData.trial = super.currentRounds;
-      super.exportData.trialType = this.context.trialType;
-      super.exportData.ball_position_x.push(parseFloat(super.convertXvalue(super.ball.position.x)));
-      super.exportData.ball_position_y.push(parseFloat(super.convertYvalue(super.ball.position.y)));
-      super.exportData.ball_timestamp.push(super.ball.timestamp);
-      super.exportData.timestamp = soundTimeStamp;
-
+      if(exportData.selected_button === 4) {
+        super.exportData.window = this.getCorrectIndex() + 1;
+        super.exportData.selected_button = target_state + 1;
+        super.exportData.obstruction_number = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];
+        super.exportData.trial = super.currentRounds;
+        super.exportData.trialType = this.context.trialType;
+        super.exportData.ball_position_x.push(parseFloat(super.convertXvalue(super.ball.position.x)));
+        super.exportData.ball_position_y.push(parseFloat(super.convertYvalue(super.ball.position.y)));
+        super.exportData.ball_timestamp.push(super.ball.timestamp);
+        super.exportData.timestamp = soundTimeStamp;
+      }
     }
 
     super.dataCollection();
