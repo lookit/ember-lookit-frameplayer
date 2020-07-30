@@ -154,8 +154,7 @@ export default class DiscreteCatchLift extends PaddleGames {
       trial: [],
       trialType: '',
       mice_state: [],
-      paddle_timestamp: [],
-      timestamp: []
+      paddle_timestamp: []
 
     };
 
@@ -176,7 +175,7 @@ export default class DiscreteCatchLift extends PaddleGames {
 
 
   getState(){
-    let state = 4;
+    let state = 0;
     if(target.state  === 'start'){
       state =  0;
     }else if(target.state  === 'showClock'){
@@ -191,6 +190,11 @@ export default class DiscreteCatchLift extends PaddleGames {
       state = 3;
     }
 
+    if(clockObject.state === 0){
+
+      state = 4;
+    }
+
     return state;
   }
 
@@ -201,15 +205,16 @@ export default class DiscreteCatchLift extends PaddleGames {
   dataCollection() {
     if(super.gameState.initialTime > 0) {
       if(target.state === 'start' || target.state === 'showTarget' || target.state === 'showClock' || target.state === 'done') {
-        let state  = this.getState();
-        if(state != 4) {
+        let curState  = this.getState();
+        let prevState = super.exportData.mice_state[super.exportData.mice_state.length - 1];
+        if(prevState !== 4 && prevState !== 3) {
           super.exportData.basket_x = super.convertXvalue(super.paddle.position.x);
           super.exportData.basket_y.push(parseFloat(super.convertYvalue(super.paddle.position.y)));
           super.exportData.mice_x = super.convertXvalue(target.position.x);
           super.exportData.mice_y = super.convertYvalue(target.position.y);
           super.exportData.trial = super.currentRounds;
           super.exportData.trialType = this.context.trialType;
-          super.exportData.mice_state.push(state);
+          super.exportData.mice_state.push(curState);
           super.exportData.paddle_timestamp.push(super.paddle.time);
         }
       }
