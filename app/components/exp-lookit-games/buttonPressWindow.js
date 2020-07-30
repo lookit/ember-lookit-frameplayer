@@ -19,7 +19,7 @@ let TfArr = []; // Time Flight array
 let TfArrIndex = [0.85,1,1.15];
 const TARGETX = 1.3310; // Current X position
 let jitterT = 0; // Time jitter (variates from 500 ms to 1500 ms), time between sound start and ball starting to fly
-const WINDOW_SIZE = 0.066; //Current window size
+const WINDOW_SIZE = 0.08; //Current window size
 const TARGET_SIZE = 0.02;  // Current target (star) size
 const CENTER = 1.30715;  // Appropriate star position in center
 const INITIAL_DELAY = 2.5;
@@ -167,7 +167,6 @@ export default class ButtonPressWindow extends Base {
       ball_position_x: [],
       ball_position_y: [],
       ball_timestamp: [],
-      button_pressed: [],
       trial: [],
       trialType: '',
       timestamp: [],
@@ -215,7 +214,7 @@ export default class ButtonPressWindow extends Base {
     // window, 3 : hit the target)
     if(super.ball.state === 'fall' || super.ball.state === 'hit' ) {
 
-      if(super.exportData.feedback === 0) {
+      if(super.exportData.feedback === 0 && !super.ballIsOnFloor()) {
         let currentTrajectory = TfArrIndex.indexOf(TfArr[this.currentRounds]) + 1;
 
         super.exportData.trajectory = currentTrajectory;
@@ -225,7 +224,7 @@ export default class ButtonPressWindow extends Base {
         super.exportData.trial = super.currentRounds;
         super.exportData.trialType = this.context.trialType;
         super.exportData.timestamp = soundTimeStamp;
-        super.exportData.feedback = this.ballState();
+        super.exportData.feedback = this.getBallState();
         super.exportData.target_position = TARGETX.toFixed(3);
       }
 
@@ -233,6 +232,22 @@ export default class ButtonPressWindow extends Base {
     super.dataCollection();
   }
 
+  /**
+   * Get ball state according to ballState.state parameter
+   * @returns {number} current ball state for export
+   */
+  getBallState() {
+    let ballState = 0;
+    if (super.ball.hitstate === 'good') {
+      ballState = 2;
+    } else if (super.ball.hitstate === 'very good') {
+      ballState = 1;
+    }else if (super.ball.hitstate === 'missed'){
+
+      ballState = 3;
+    }
+    return ballState;
+  }
 
   /**
    * Get current keyboard event on press button

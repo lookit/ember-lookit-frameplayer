@@ -446,7 +446,7 @@ export default class DiscreteBounce extends PaddleGames {
       let currenImpactCoord = Math.abs(super.ball.position.y - 0.6 * super.Utils.SCALE);
       if (currenImpactCoord < 0.27 * super.Utils.SCALE) {
 
-        super.ball.hitstate  = (currenImpactCoord < 0.015 * super.Utils.SCALE)?'very good':'good';
+        super.ball.hitstate  = (currenImpactCoord < 0.025 * super.Utils.SCALE)?'very good':'good';
 
       } else {
 

@@ -507,7 +507,7 @@ export default class DiscreteButtonSpatial extends Base {
         target_state = 3;
       }
 
-      if(exportData.selected_button === 4) {
+      if(super.exportData.selected_button === 4) {
         super.exportData.window = this.getCorrectIndex() + 1;
         super.exportData.selected_button = target_state + 1;
         super.exportData.obstruction_number = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];
