@@ -519,9 +519,6 @@ export default class Base {
       clearInterval(dataLoop);
       this.context.set('showInstructions', true);
       this.context.send('export');
-      document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
-      document.exitPointerLock();
-      document.fullscreenElement.style.setProperty('cursor', 'default', 'important');
       this.context.stopRecorder().finally(() => {
           this.context.destroyRecorder();
           this.context.send('next');
