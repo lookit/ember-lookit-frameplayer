@@ -361,6 +361,7 @@ export default class ButtonPressWindow extends Base {
           sounds[gameSound.CATCH_GOOD].play();
 
         } else {
+          super.ball.hitstate = 'missed';
           sounds[gameSound.FAIL].play();
 
         }
