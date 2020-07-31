@@ -535,7 +535,7 @@ export default class DiscreteButtonSpatial extends Base {
     let lastBallXLoc  =  super.exportData.ball_position_x[super.exportData.ball_position_x.length - 1];
     let lastBallYLoc  =  super.exportData.ball_position_y[super.exportData.ball_position_y.length - 1];
 
-    return lastBallXLoc === super.convertXvalue(super.ball.position.x) && lastBallYLoc === super.convertYvalue(super.ball.position.y);
+    return lastBallXLoc === parseFloat(super.convertXvalue(super.ball.position.x)) && lastBallYLoc === parseFloat(super.convertYvalue(super.ball.position.y));
 
   }
 
