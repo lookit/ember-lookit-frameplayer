@@ -146,10 +146,18 @@ export default Ember.Component.extend(FullScreen, {
         this._super(...arguments);
         this._registerHandlers();
 
+        var structure = this.get('experiment.structure');
+        if (typeof(structure) === 'string') {
+            structure = structure.replace(/(\r\n|\n|\r)/gm,'');
+            structure = JSON.parse(structure);
+        }
+
         var parser = new ExperimentParser({
-            structure: this.get('experiment.structure'),
+            structure: structure,
             pastSessions: this.get('pastSessions').toArray(),
-            child: this.get('session.child')
+            child: this.get('session.child'),
+            useGenerator: this.get('experiment.useGenerator'),
+            generator: this.get('experiment.generator')
         });
         var [frameConfigs, conditions] = parser.parse();
         this.set('frames', frameConfigs); // When player loads, convert structure to list of frames
