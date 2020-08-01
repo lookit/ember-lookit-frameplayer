@@ -30,6 +30,7 @@ let images = [];
 let trajectoryParameters = [];
 let soundTimeStamp = 0;
 
+
 const gameArrayValues = {
 
   OBSTRUCTIONS: [1,2,3],
@@ -253,6 +254,7 @@ export default class DiscreteButtonSpatial extends Base {
       ball_timestamp: [],
       trial: [],
       trialType: '',
+      finalStateTimestamp : 0,
       timestamp: []
 
     };
@@ -414,7 +416,7 @@ export default class DiscreteButtonSpatial extends Base {
 
 
     if (super.ball.state === 'hit') {
-
+      super.exportData.finalStateTimestamp = super.getElapsedTime();
       if(buttonPressDelay === 0){
         buttonPressDelay = new Date().getTime();
       }
@@ -513,7 +515,7 @@ export default class DiscreteButtonSpatial extends Base {
         super.exportData.obstruction_number = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];
         super.exportData.trial = super.currentRounds;
         super.exportData.trialType = this.context.trialType;
-        if(!this.sameLastLocations()) {
+        if(super.getElapsedTime() <= 0.5) {
           super.exportData.ball_position_x.push(parseFloat(super.convertXvalue(super.ball.position.x)));
           super.exportData.ball_position_y.push(parseFloat(super.convertYvalue(super.ball.position.y)));
           super.exportData.ball_timestamp.push(super.ball.timestamp);
@@ -526,18 +528,6 @@ export default class DiscreteButtonSpatial extends Base {
   }
 
 
-  /**
-   * Check if ball location is the same as previous one (static)
-   * @returns {boolean}
-   */
-  sameLastLocations(){
-
-    let lastBallXLoc  =  super.exportData.ball_position_x[super.exportData.ball_position_x.length - 1];
-    let lastBallYLoc  =  super.exportData.ball_position_y[super.exportData.ball_position_y.length - 1];
-
-    return lastBallXLoc === parseFloat(super.convertXvalue(super.ball.position.x)) && lastBallYLoc === parseFloat(super.convertYvalue(super.ball.position.y));
-
-  }
 
 
 }
