@@ -7,5 +7,7 @@ export default DS.Model.extend({
     ageAtBirth: DS.attr('string'),
     additionalInformation: DS.attr('string'),
     deleted: DS.attr('boolean', {default: false}),
+    languageList: DS.attr('string'),
+    conditionList: DS.attr('string'),
     user: DS.belongsTo('user')
 });

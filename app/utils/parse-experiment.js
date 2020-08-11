@@ -6,19 +6,28 @@ var urlPattern = /^(URL|JSON):(.*)$/;
 import randomizers from '../randomizers/index';
 import Substituter from './replace-values';
 
+function assert(condition, message) {
+    if (!condition) {
+        throw new Error(message || 'Assertion failed');
+    }
+}
+
 var ExperimentParser = function (context = {
     pastSessions: [],
     structure: {
         frames: {},
         sequence: []
     },
-    child: {}
+    child: {},
+    useGenerator: false,
+    generator: ''
 }) {
     this.pastSessions = context.pastSessions;
     this.frames = context.structure.frames;
     this.sequence = context.structure.sequence;
     this.child = context.child;
-
+    this.useGenerator = context.useGenerator;
+    this.generator = context.generator;
 };
 /* Modifies the data in the experiment schema definition to match
  * the format expected by exp-player
@@ -103,8 +112,8 @@ ExperimentParser.prototype._resolveFrame = function (frameId, frame) {
             var thisFrame;
             frame.frameList.forEach((fr, index) => {
                 thisFrame = {};
-                Ember.$.extend(true, thisFrame, frame.commonFrameProperties || {});
-                Ember.$.extend(true, thisFrame, fr);
+                Ember.$.extend(thisFrame, frame.commonFrameProperties || {}); // NOT deep-copying so we can recognize instances of the same list
+                Ember.$.extend(thisFrame, fr);
                 var [resolved, choice] = this._resolveFrame(null, thisFrame);
                 resolvedFrameList.push(...resolved);
                 if (choice) {
@@ -124,6 +133,43 @@ ExperimentParser.prototype._resolveFrame = function (frameId, frame) {
 ExperimentParser.prototype.parse = function (prependFrameInds = true) {
     var expFrames = [];
     var choices = {};
+
+    // First, if useGenerator & generator defined, generate the sequence & frames.
+    if (this.useGenerator) {
+        var generatedStructure = {};
+        try {
+            new Function(this.generator)();
+            try {
+                let generatorFn = new Function('return ' + this.generator)();
+                assert(typeof generatorFn === 'function');
+                generatedStructure = generatorFn(this.child, this.pastSessions);
+                try {
+                    assert(generatedStructure.hasOwnProperty('frames'));
+                    assert(generatedStructure.hasOwnProperty('sequence'));
+                } catch (error) {
+                    this.useGenerator = false;
+                    console.error(error);
+                    console.warn('Generator function does not return an object with "sequence" and "frames" fields.');
+                }
+            } catch (error) {
+                this.useGenerator = false;
+                console.error(error);
+                console.warn('Generator function does not evaluate to single function, or error upon calling function. Falling back to standard protocol definition.');
+            }
+        } catch (error) {
+            this.useGenerator = false;
+            console.error(error);
+            console.warn('Generator function provided is not valid Javascript. Falling back to standard protocol definition.');
+        } finally {
+            if (this.useGenerator) {
+                console.log('Using generator function in place of standard protocol definition.');
+                this.sequence = generatedStructure.sequence;
+                this.frames = generatedStructure.frames;
+            }
+        }
+    }
+    // After generating, process exactly as if these had been provided as a standard protocol.
+
     this.sequence.forEach((frameId, index) => {
         var [resolved, choice] = this._resolveFrame(frameId);
         expFrames.push(...resolved);
