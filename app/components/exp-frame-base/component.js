@@ -107,10 +107,15 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
      * - `ageAtBirth`: String; child's gestational age at birth in weeks. Possible values are
      *   "24" through "39", "na" (not sure or prefer not to answer),
      * "<24" (under 24 weeks), and "40>" (40 or more weeks).
-     * - `birthday`: timestamp in format "Mon Apr 10 2017 20:00:00 GMT-0400 (Eastern Daylight Time)"
+     * - `birthday`: Date object
      * - `gender`: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)
      * - `givenName`: String, child's given name/nickname
      * - `id`: String, child UUID
+     * - `languageList`: String, space-separated list of languages child is exposed to
+     * (2-letter codes)
+     * - `conditionList`: String, space-separated list of conditions/characteristics
+     * - of child from registration form, as used in criteria expression, e.g.
+     * "autism_spectrum_disorder deaf multiple_birth"
      *
      *
      * `pastSessions` is a list of previous response objects for this child and this study,
@@ -119,11 +124,13 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
      * - `completed`: Boolean, whether they submitted an exit survey
      * - `completedConsentFrame`: Boolean, whether they got through at least a consent frame
      * - `conditions`: Object representing any conditions assigned by randomizer frames
-     * - `createdOn`: timestamp in format "Thu Apr 18 2019 12:33:26 GMT-0400 (Eastern Daylight Time)"
+     * - `createdOn`: Date object
      * - `expData`: Object consisting of frameId: frameData pairs
      * - `globalEventTimings`: list of any events stored outside of individual frames - currently
      *   just used for attempts to leave the study early
      * - `sequence`: ordered list of frameIds, corresponding to keys in expData
+     * - `isPreview`: Boolean, whether this is from a preview session (possible in the event
+     *   this is an experimenter's account)
      *
      *
      * Example:

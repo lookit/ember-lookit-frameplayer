@@ -19,11 +19,13 @@ document is displayed, with additional study-specific information provided by th
 
 Researchers can select from the following named templates:
 
-`consent_001`: Original Lookit consent document (2019)
-`consent_002`: Added optional GDPR section and research subject rights statement
-`consent_003`: Same as consent_002 except that the 'Payment' section is renamed 'Benefits, risks, and payment' for institutions that prefer that
+* `consent_001`: Original Lookit consent document (2019)
 
-To look up the exact text of each consent template for your IRB protocol, please see https://github.com/lookit/research-resources/tree/master/Legal
+* `consent_002`: Added optional GDPR section and research subject rights statement
+
+* `consent_003`: Same as consent_002 except that the 'Payment' section is renamed 'Benefits, risks, and payment' for institutions that prefer that
+
+Important: To look up the exact text of each consent template for your IRB protocol, and to understand the context for each piece of text to be inserted, please see https://github.com/lookit/research-resources/tree/master/Legal
 
 The consent document can be downloaded as PDF document by participant.
 
@@ -249,11 +251,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
         /**
         Whether to include an addition step #4 prompting any other adults present to read a statement of consent (I have read and understand the consent document. I also agree to participate in this study.)
-        @property {String} prompt_all_adults
+        @property {boolean} prompt_all_adults
         @default false
         */
         prompt_all_adults: {
-            type: 'string',
+            type: 'boolean',
             description: 'Whether to include instructions for any additional adults to consent',
             default: false
         },
@@ -317,7 +319,8 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
         /**
         List of additional custom sections of the consent form, e.g. US Patriot Act Disclosure. These are subject to Lookit approval and in general can only add information that was true anyway but that your IRB needs included; please contact us before submitting your study to check.
-        @property {String} research_rights_statement
+        @property {Array} additional_segments
+        @default []
         */
         additional_segments: {
             type: 'array',
