@@ -75,7 +75,7 @@ export default class Utils{
   static get  firework_whistle(){return this.bucketSoundResources + 'firework_whistle.mp3';}
   static get  fuse(){return this.bucketSoundResources + 'fuse.mp3';}
 
-
+ 
   // Slime game Sounds
 
   static get  monsterLaunch(){return this.bucketSoundResources + 'Monster_launch.mp3';}
@@ -86,6 +86,18 @@ export default class Utils{
   //Space Junk Sounds
   static get  catchSeries(){return this.bucketSoundResources + 'catch_series.mp3';}
 
+
+  static get catchSeries_1(){return this.bucketSoundResources + 'catch_series_1.mp3';}
+  static get catchSeries_2(){return this.bucketSoundResources + 'catch_series_2.mp3';}
+  static get catchSeries_3(){return this.bucketSoundResources + 'catch_series_3.mp3';}
+  static get catchSeries_4(){return this.bucketSoundResources + 'catch_series_4.mp3';}
+  static get catchSeries_5(){return this.bucketSoundResources + 'catch_series_5.mp3';}
+  static get catchSeries_6(){return this.bucketSoundResources + 'catch_series_6.mp3';}
+  static get catchSeries_7(){return this.bucketSoundResources + 'catch_series_7.mp3';}
+  static get catchSeries_8(){return this.bucketSoundResources + 'catch_series_8.mp3';}
+  static get catchSeries_9(){return this.bucketSoundResources + 'catch_series_9.mp3';}
+  static get catchSeries_10(){return this.bucketSoundResources + 'catch_series_10.mp3';}
+  static get catchSeries_11(){return this.bucketSoundResources + 'catch_series_11.mp3';}
 
   //Image Resources
   static get  treeImage() {return this.bucketImageResource + 'tree_original.png';}

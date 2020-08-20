@@ -1,9 +1,3 @@
-/*
- * Developed by Gleb Iakovlev on 5/3/19 9:09 PM.
- * Last modified 4/29/19 9:36 PM.
- * Copyright (c) Cognoteq Software Solutions 2019.
- * All rights reserved
- */
 
 import PaddleGames from './paddleGames';
 /**
@@ -25,8 +19,10 @@ const TRAVEL_TIME = 1.3;
 const SOUND_DELAY = 1.6;
 // Media arrays for loading
 let sounds = [];
+let catchSeriesSounds = [];
 let soundURLs = [];
 let imageURls = [];
+let catchSeriesURls = [];
 let images = [];
 let obstructionsURLs = [];
 let obstructionImages = [];
@@ -83,6 +79,11 @@ export default class DiscreteCatch extends PaddleGames {
   constructor(context, document) {
     super(context, document);
     soundURLs = [super.Utils.rattleSound,super.Utils.catchSeries,super.Utils.failcatchSound];
+    catchSeriesURls = [
+      super.Utils.catchSeries_1, super.Utils.catchSeries_2, super.Utils.catchSeries_3, super.Utils.catchSeries_4,
+      super.Utils.catchSeries_5, super.Utils.catchSeries_6, super.Utils.catchSeries_7, super.Utils.catchSeries_8,
+      super.Utils.catchSeries_9, super.Utils.catchSeries_10, super.Utils.catchSeries_11
+    ];
     imageURls = [super.Utils.ironBasket,super.Utils.gear,super.Utils.basketStarsImage,super.Utils.robotImage];
     obstructionsURLs = [super.Utils.obstruction1, super.Utils.obstruction2, super.Utils.obstruction3];
 
@@ -103,6 +104,7 @@ export default class DiscreteCatch extends PaddleGames {
     }
 
     super.fillAudioArray(soundURLs,sounds);
+    super.fillAudioArray(catchSeriesURls, catchSeriesSounds);
     super.fillImageArray(imageURls,images);
     super.fillImageArray(obstructionsURLs,obstructionImages);
 
@@ -117,17 +119,6 @@ export default class DiscreteCatch extends PaddleGames {
     };
 
     document.addEventListener("mousemove",  super.onMouseMove);
-
-    //Listener for catch events, make sounds play in sections of 19 miliseconds for consecutive successful catches
-    sounds[gameSound.CATCH].addEventListener('timeupdate', function (){
-      if (this.currentTime >= (consecutiveCounts+1)*SOUND_DELAY) {
-        this.pause();
-        if(ball.hitstate === 'very good' ){
-          consecutiveCounts++;
-        }
-      }
-    }, false);
-
     sounds[gameSound.START].addEventListener('playing', super.onSoundEvent);
     sounds[gameSound.START].addEventListener('onloadeddata', this.initGame(), false);
     super.init();
@@ -404,15 +395,13 @@ export default class DiscreteCatch extends PaddleGames {
         if(consecutiveCounts === 0){
           consecutiveCounts = 2;
         }
-        sounds[gameSound.CATCH].currentTime = (SOUND_DELAY > 0 ? SOUND_DELAY + 0.16 : 0) * consecutiveCounts;
-        sounds[gameSound.CATCH].play();
+        catchSeriesSounds[consecutiveCounts].play();
         super.ball.radius = 0;
 
       }else if(super.ball.hitstate === 'good'){
         super.ball.radius = 0;
         consecutiveCounts = 0;
-        sounds[gameSound.CATCH].currentTime = consecutiveCounts;
-        sounds[gameSound.CATCH].play();
+        catchSeriesSounds[consecutiveCounts].play();
 
       }else{
         consecutiveCounts = 0;
