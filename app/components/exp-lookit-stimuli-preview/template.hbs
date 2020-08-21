@@ -67,7 +67,10 @@
         </div>
 
         <div class="exp-controls col-md-12 row">
-            <button type="button" class="btn btn-success pull-right" disabled={{disableRecord}} {{action "accept"}}>{{previewButtonText}}</button>
+            <button type="button" class="btn btn-success pull-right" disabled={{recorderSettingUp}} {{action "accept"}}>
+                {{previewButtonText}}
+                {{#if recorderSettingUp}} (please wait, setting up...){{/if}}
+            </button>
         </div>
     {{/if}}
 
