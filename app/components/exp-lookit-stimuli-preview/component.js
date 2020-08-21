@@ -20,6 +20,7 @@ import { videoAssetOptions, imageAssetOptions, audioAssetOptions } from '../../m
  "frames": {
     "my-video-preview-explanation": {
         "kind": "exp-lookit-stimuli-preview",
+        "doRecording": true,
         "skipButtonText": "Skip preview",
         "previewButtonText": "I'd like to preview the videos",
         "blocks": [
@@ -89,8 +90,8 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
         return this.get('stimuli')[this.get('videoIndex')];
     }),
 
-    disableRecord: Ember.computed('recorder.hasCamAccess', 'recorderReady', function() {
-        return !(this.get('recorder.hasCamAccess') && this.get('recorderReady'));
+    recorderSettingUp: Ember.computed('recorder.hasCamAccess', 'recorderReady', function() {
+        return (this.get('doRecording') && !(this.get('recorder.hasCamAccess') && this.get('recorderReady')));
     }),
 
     assetsToExpand: {
@@ -98,6 +99,9 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
         'video': ['stimuli/video'],
         'image': ['stimuli/image']
     },
+
+    // Override setting in VideoRecord mixin - only use camera if doing recording
+    doUseCamera: Ember.computed.alias('doRecording'),
 
     frameSchemaProperties: {
         /**
@@ -234,6 +238,16 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
             type: 'string',
             description: 'Text on the button to proceed to the previous example video/image',
             default: 'Previous'
+        },
+        /**
+         Whether to make a webcam video recording during stimulus preview (begins only if user chooses to preview stimuli). Default true.
+         @property {Boolean} doRecording
+         @default true
+         */
+        doRecording: {
+            type: 'boolean',
+            description: 'Whether to do video recording during stimulus preview',
+            default: true
         }
     },
     meta: {
@@ -259,7 +273,7 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
              */
             this.send('setTimeEvent', 'startPreview');
             this.set('prompt', false);
-            if (this.get('experiment') && this.get('id') && this.get('session') && !this.get('isLast')) {
+            if (this.get('experiment') && this.get('id') && this.get('session') && this.get('doRecording')) {
                 this.startRecorder().then(() => {
                     this.set('recordingStarted', true);
                 });
@@ -284,14 +298,18 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
             this.set('videoIndex', this.get('videoIndex') - 1);
         },
         finish() {
-            if (!this.get('recordingStopped')) {
-                this.set('recordingStopped', true);
-                var _this = this;
-                this.stopRecorder().then(() => {
-                    _this.send('next');
-                }, () => {
-                    _this.send('next');
-                });
+            if (this.get('doRecording')) {
+                if (!this.get('recordingStopped')) {
+                    this.set('recordingStopped', true);
+                    var _this = this;
+                    this.stopRecorder().then(() => {
+                        _this.send('next');
+                    }, () => {
+                        _this.send('next');
+                    });
+                } else {
+                    this.send('next');
+                }
             } else {
                 this.send('next');
             }
