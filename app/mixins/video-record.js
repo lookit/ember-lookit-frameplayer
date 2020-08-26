@@ -190,7 +190,7 @@ export default Ember.Mixin.create({
         return [
             'videoStream',
             this.get('experiment.id'),
-            this.get('id'),
+            this.get('id'), // parser enforces that id is composed of a-z, A-Z, -, ., [space]
             this.get('session.id'),
             +Date.now(), // Timestamp in ms
             Math.floor(Math.random() * 1000)
