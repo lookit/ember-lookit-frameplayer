@@ -1571,7 +1571,7 @@ function toFrames(frameId, eventVideos, BASE_DIR) {
         var musicName = allMusic[Math.floor(Math.random() * allMusic.length)];
 
         return { // all non-last frames
-            kind: 'exp-lookit-video',
+            kind: 'exp-lookit-composite-video-trial',
             id: `${frameId}`,
             audioSources: audioSourceObjs(
                 BASE_DIR + 'audio/',
