@@ -1551,7 +1551,7 @@ function toFrames(frameId, eventVideos, BASE_DIR) {
     return eventVideos.map((e) => {
         if (e.index === nVideos) { // last frame
             return {
-                kind: 'exp-lookit-video',
+                kind: 'exp-lookit-composite-video-trial',
                 id: `${frameId}`,
                 audioSources: audioSourceObjs(
                     BASE_DIR + 'audio/',
