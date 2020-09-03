@@ -186,7 +186,7 @@ export default class ButtonPressWindow extends Base {
 
     super.initGame();
 
-  }s
+  }
 
 
   setTargetBackground() {
