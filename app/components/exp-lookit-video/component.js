@@ -140,6 +140,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     unpausing: false,
 
     maximizeVideoArea: false,
+    _finishing: false,
 
     frameSchemaProperties: {
         /**
@@ -557,17 +558,20 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             this.set('testAudioTimesPlayed', 0);
             this.set('satisfiedDuration', false);
             var _this = this;
-            if (this.get('doRecording')) {
-                this.set('doingTest', false);
-                $('#waitForVideo').html('uploading video...').show();
-                this.stopRecorder().then(() => {
-                    _this.set('stoppedRecording', true);
+            if (!this.get('_finishing')) {
+                this.set('_finishing', true); // NEWLY ADDED
+                if (this.get('doRecording')) {
+                    this.set('doingTest', false);
+                    $('#waitForVideo').html('uploading video...').show();
+                    this.stopRecorder().then(() => {
+                        _this.set('stoppedRecording', true);
+                        _this.send('next');
+                    }, () => {
+                        _this.send('next');
+                    });
+                } else {
                     _this.send('next');
-                }, () => {
-                    _this.send('next');
-                });
-            } else {
-                _this.send('next');
+                }
             }
         },
 
@@ -641,6 +645,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         } else if (pause || !wasPaused) { // Not currently paused: pause
             window.clearInterval(this.get('testTimer'));
+
             if ($('#unpause-audio').length) {
                 $('#unpause-audio')[0].pause();
             }
