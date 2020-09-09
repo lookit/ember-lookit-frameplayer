@@ -16,12 +16,45 @@ let {
  * Mixin to allow parent to control frame progression by holding down a key when the child is not looking.
  * Enables "infant-controlled" study designs via parent live-coding of infant looking behavior.
  *
- * TODO:
- *   * Allow mouse rather than keyboard input
- *   * Opportunity to indicate bad trial
+ * To add this behavior to an existing frame:
+ *
+ * 1) Call `this.startParentControl()` at the point you want looking time to start being measured.
+ *    The parent will only be able to end the trial using the endTrialKey during the parent control period. Lookaway
+ *    time will only accumulate and lookaways will only be able to end the trial during the parent control period.
+ *    However, lookaways will be recorded as events throughout the frame. If the child is already looking away before
+ *    the parent control period begins, lookaway time will begin accumulating only after the first look.
+ *
+ * 2) Call `this.endParentControl()` at the point you want the parent not to be able to control frame progression anymore.
+ *    For instance, if hiding stimuli and stopping recording after completing the frame, or if pausing the frame.
+ *
+ * 3) If you need to be able to pause and re-start the frame, call `this.endParentControl()` when pausing and
+ *    `this.startParentControl()` when re-starting. Note that startParentControl will start a "fresh" looking time
+ *    measurement: looking and lookaway time will both be 0, the child will not be assumed to have already looked, etc.
+ *
+ * 4) Define a function `onLookawayCriterion` that says what should happen when the parent presses the endTrialKey or the
+ *    child reaches the lookaway criterion. E.g., this might typically move to the next frame. If needed you can access
+ *    `this.get('trialEndReason')` (either 'parentEnded' or 'lookaway') to distinguish between these two possibilities.
+ *
+ * 5) If it is possible for the frame to end by other mechanisms than the trialEndKey or reaching the lookaway criterion,
+ *    then when that happens: set the `trialEndReason` accordingly (e.g., `this.set('trialEndReason', 'ceiling')`) and
+ *    call `this.setTrialEndTime()` to calculate a total looking time based on the
+ *
+ * 6) So that your frame will capture information about looking time and the reason the trial ended, and make that
+ *    available to the researcher, add the following to your frame's `meta.data.properties`:
+ *    ```
+      totalLookingTime: {
+          type: 'number'
+      },
+      trialEndReason: {
+          type: 'string'
+      }
+      ```
+ *
+ *
  *
  * @class Infant-controlled-timing
  */
+
 
 var infantControlledTimingMixin = Ember.Mixin.create({
 
@@ -83,6 +116,38 @@ var infantControlledTimingMixin = Ember.Mixin.create({
         }
     },
 
+    /**
+     * Total looking time during this frame, in seconds.
+     * Looking time is calculated as the total time spent looking between:
+     * (1) The start of the parent control period, or the first look during that period if the child is not looking initially
+     * and
+     * (2) The end of the trial due to the parent pushing the end trial key, the child reaching the lookaway criterion,
+     * or the frame being completed without either of these happening (e.g., a video is played N times or an image is
+     * shown for N seconds).
+     * All time spent looking away, per parent coding, is excluded, regardless of the duration of the lookaway.
+     *
+     * This value will be null if the trial is not completed by any of the above mechanisms, for instance because
+     * the parent ends the study early during this frame.
+     *
+     * @attribute totalLookingTime
+     * @type number
+     */
+    totalLookingTime: null,
+    /**
+     * What caused the trial to end: 'lookaway' (the child reached the lookaway threshold), 'parentEnded' (the parent
+     * pressed the endTrialKey), or 'ceiling' (the frame ended without either of those happening).
+     *
+     * This value will be null if the trial is not completed by any of the above mechanisms, for instance because
+     * the parent ends the study early during this frame.
+     *
+     * @attribute trialEndReason
+     * @type string
+     */
+    trialEndReason: null, // Reason trial ended: lookaway, parentEnded, ceiling....
+
+    _trialStartTime: null,
+    _trialEndTime: null,
+
     _totalLookaway: 0, // Total lookaway time in ms
     _lastLookawayStart: null,
     _isLooking: true,
@@ -115,6 +180,8 @@ var infantControlledTimingMixin = Ember.Mixin.create({
                  * @event lookawayEndedTrial
                  */
                 this.send('setTimeEvent', 'lookawayEndedTrial');
+                this.set('trialEndReason', 'lookaway');
+                this.setTrialEndTime();
                 _this.onLookawayCriterion();
             }, delay));
         }
@@ -131,15 +198,29 @@ var infantControlledTimingMixin = Ember.Mixin.create({
          * @event lookawayEnd
          */
         this.send('setTimeEvent', 'lookawayEnd');
-        // If we're using total looking time and the parent-controlled segment has begun...
-        if ((this.get('lookawayType') === 'total')  && this.get('_controlPeriodStarted')) {
+        // If the parent-controlled segment has begun, track lookaway time...
+        if (this.get('_controlPeriodStarted')) {
             // Increment the total lookaway time if the child has already looked at least once during the control period
             if (this.get('_anyLookDuringControlPeriod')) {
                 this.set('_totalLookaway', this.get('_totalLookaway') + (new Date() - this.get('_lastLookawayStart')));
             } else { // Otherwise record that the child has looked, and we'll be ready the next time a lookaway starts.
+                this.set('_trialStartTime', new Date());
                 this.set('_anyLookDuringControlPeriod', true);
             }
         }
+    },
+
+    setTrialEndTime() {
+        let now = new Date();
+        this.set('_trialEndTime', now);
+        // To get total looking time could also just take last look end - trial start - total lookaway; but actually
+        // updating total lookaway time allows us to use/access totalLookaway more easily in the future
+        if (!this.get('_isLooking')) {
+            this.set('_totalLookaway', this.get('_totalLookaway') + (now - this.get('_lastLookawayStart')));
+            // Just to avoid double-adding lookaway time in case e.g. recordLookawayEnd is called after this
+            this.set('_lastLookawayStart', now);
+        }
+        this.set('totalLookingTime', ((this.get('_trialEndTime') - this.get('_trialStartTime')) - this.get('_totalLookaway')) / 1000);
     },
 
     /**
@@ -166,6 +247,7 @@ var infantControlledTimingMixin = Ember.Mixin.create({
     startParentControl() {
         this.set('_totalLookaway', 0);
         this.set('_anyLookDuringControlPeriod', this.get('_isLooking'));
+        this.set('_trialStartTime', new Date());
         this.set('_controlPeriodStarted', true);
         /**
          * When interval of parent control of trial begins - i.e., lookaways begin counting up to threshold.
@@ -185,6 +267,8 @@ var infantControlledTimingMixin = Ember.Mixin.create({
                      * @event parentEndedTrial
                      */
                     this.send('setTimeEvent', 'parentEndedTrial');
+                    this.set('trialEndReason', 'parentEnded');
+                    this.setTrialEndTime();
                     this.onLookawayCriterion();
                 }
             }
@@ -237,8 +321,8 @@ var infantControlledTimingMixin = Ember.Mixin.create({
     willDestroyElement() { // remove event handler
         $(document).off('keyup.lookaway');
         $(document).off('keydown.lookaway');
-        $('body').off('mouseup.lookaway');
-        $('body').off('mousedown.lookaway');
+        $(document).off('mouseup.lookaway');
+        $(document).off('mousedown.lookaway');
         $(document).off('keyup.parentEndTrial');
         window.clearInterval(this.get('testTimer'));
         this._super(...arguments);

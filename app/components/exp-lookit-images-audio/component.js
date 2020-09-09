@@ -861,9 +861,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     checkAndEnableProceed() {
-        if (this.get('minDurationAchieved') && this.get('finishedAllAudio') && !this.get('showingFeedbackDialog') && ((this.get('selectedImage') && (this.get('correctImageSelected') || !this.get('correctChoiceRequired'))) || !this.get('choiceRequired'))) {
+        let ready = this.get('minDurationAchieved') &&
+                    this.get('finishedAllAudio') &&
+                    !this.get('showingFeedbackDialog') &&
+                    (!this.get('choiceRequired') || (this.get('selectedImage') && (this.get('correctImageSelected') || !this.get('correctChoiceRequired'))));
+        if (ready) {
             this.readyToFinish();
         }
+        return ready;
     },
 
     readyToFinish() {

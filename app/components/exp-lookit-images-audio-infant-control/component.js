@@ -1,4 +1,4 @@
-import ExpLookitImagesAudio from '../exp-lookit-images-audio/component'
+import ExpLookitImagesAudio from '../exp-lookit-images-audio/component';
 import InfantControlledTiming from '../../mixins/infant-controlled-timing';
 
 /**
@@ -7,94 +7,83 @@ import InfantControlledTiming from '../../mixins/infant-controlled-timing';
  */
 
 /**
- * Frame to display image(s) and play audio, with optional video recording. Options allow
- * customization for looking time, storybook, forced choice, and reaction time type trials,
- * including training versions where children (or parents) get feedback about their responses.
+ * Infant-controlled version of the {{#crossLink "Exp-lookit-images-audio"}}{{/crossLink}} frame. This works the same way as
+ * exp-lookit-images-audio except that you can enable the parent to:
  *
- * This can be used in a variety of ways - for example:
+ * - end the trial by pressing the `endTrialKey` key
+ * - hold down the `lookawayKey` (or the mouse button) to indicate that the child is not looking; the trial will automatically end
+ *   after the lookaway criterion is met.
  *
- * - Display an image for a set amount of time and measure looking time
+ * You can disable either of these behaviors by setting the key to `''`.
  *
- * - Display two images for a set amount of time and play audio for a
- * looking-while-listening paradigm
+ * The frame will still end when it would have anyway if neither of these things happen! For instance, if you would have
+ * displayed an image for 30 seconds, then after 30 seconds the frame will move on, serving as a "ceiling" on looking time.
  *
- * - Show a "storybook page" where you show images and play audio, having the parent/child
- * press 'Next' to proceed. If desired,
- * images can appear and be highlighted at specific times
- * relative to audio. E.g., the audio might say "This [image of Remy appears] is a boy
- * named Remy. Remy has a little sister [image of Zenna appears] named Zenna.
- * [Remy highlighted] Remy's favorite food is brussel sprouts, but [Zenna highlighted]
- * Zenna's favorite food is ice cream. [Remy and Zenna both highlighted] Remy and Zenna
- * both love tacos!"
+ * Lookaway criterion: You have two options for how to determine when the child has looked away long enough to proceed.
+ * Set the `lookawayType` to `"total"` to accumulate lookaway time until the child has looked away for a total of
+ * `lookawayThreshold` seconds. (For instance, if the `lookawayThreshold` is 2, then the trial will end after the child
+ * looks away for 0.5s, then 1s, then 0.5s.) Set the `lookawayType` to `"continuous"` to require that the child look
+ * away for a continuous `lookawayThreshold`-second interval. (For instance, if the `lookawayThreshold` is 2, then the
+ * child might look away for 1s, 1.5s, and 1s but the trial would continue until she looked away for 2s.)
  *
- * - Play audio asking the child to choose between two images by pointing or answering
- * verbally. Show text for the parent about how to help and when to press Next.
+ * The looking time measurement begins only when the video starts, not while a video connection is established.
  *
- * - Play audio asking the child to choose between two images, and require one of those
- * images to be clicked to proceed (see "choiceRequired" option).
+ * If a `lookawayKey` is defined, lookaways are recorded the entire time the frame is running. However, the looking
+ * time measurement only starts once images are displayed (or the "delay" timer starts counting down, for images
+ * shown at a delay - but e.g., not during webcam connection). Lookaways at the very
+ * start don't count! If the child is not looking at the start, the measurement begins once they look
+ * for the first time.
  *
- * - Measure reaction time as the child is asked to choose a particular option on each trial
- * (e.g., a central cue image is shown first, then two options at a short delay; the child
- * clicks on the one that matches the cue in some way)
+ * Two pieces of data are recorded for convenience when coding or if implementing a live habituation procedure:
+ * `totalLookingTime` and `reasonTrialEnded`.
  *
- * - Provide audio and/or text feedback on the child's (or parent's) choice before proceeding,
- * either just to make the study a bit more interactive ("Great job, you chose the color BLUE!")
- * or for initial training/familiarization to make sure they understand the task. Some
- * images can be marked as the "correct" answer and a correct answer required to proceed.
- * If you'd like to include some initial training questions before your test questions,
- * this is a great way to do it.
+ * Example usage:
  *
- * In general, the images are displayed in a designated region of the screen with aspect
- * ratio 7:4 (1.75 times as wide as it is tall) to standardize display as much as possible
- * across different monitors. If you want to display things truly fullscreen, you can
- * use `autoProceed` and not provide `parentText` so there's nothing at the bottom, and then
- * set `maximizeDisplay` to true.
- *
- * Webcam recording may be turned on or off; if on, stimuli are not displayed and audio is
- * not started until recording begins. (Using the frame-specific `isRecording` property
- * is good if you have a smallish number of test trials and prefer to have separate video
- * clips for each. For reaction time trials or many short trials, you will likely want
- * to use session recording instead - i.e. start the session recording before the first trial
- * and end on the last trial - to avoid the short delays related to starting/stopping the video.)
- *
- * This frame is displayed fullscreen, but is not paused or otherwise disabled if the
- * user leaves fullscreen. A button appears prompting the user to return to
- * fullscreen mode.
- *
- * Any number of images may be placed on the screen, and their position
- * specified. (Aspect ratio will be the same as the original image.)
- *
- * image-3: Image plus audio, auto-proceeding after audio completes and 4 seconds go by
- *
- *
+ ```json
+ "play-video-twice": {
+    "kind": "exp-lookit-video-infant-control",
+    "lookawayKey": "p",
+    "lookawayType": "total",
+    "lookawayThreshold": 2,
+    "endTrialKey": "q",
 
-```json
- "frames": {
-    "image-3": {
-        "kind": "exp-lookit-images-audio",
-        "audio": "wheresremy",
-        "images": [
-            {
-                "id": "remy",
-                "src": "wheres_remy.jpg",
-                "position": "fill"
-            }
-        ],
-        "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
-        "audioTypes": [
-            "mp3",
-            "ogg"
-        ],
-        "autoProceed": true,
-        "doRecording": false,
-        "durationSeconds": 4,
-        "parentTextBlock": {
-            "text": "Some explanatory text for parents",
-            "title": "For parents"
-        },
-        "showProgressBar": false
-    }
- }
+    "audio": {
+        "loop": false,
+        "source": "peekaboo"
+    },
+    "video": {
+        "top": 10,
+        "left": 25,
+        "loop": true,
+        "width": 50,
+        "source": "cropped_apple"
+    },
+    "backgroundColor": "white",
+    "autoProceed": true,
+    "parentTextBlock": {
+        "text": "If your child needs a break, just press X to pause!"
+    },
+    "requiredDuration": 0,
+    "requireAudioCount": 0,
+    "requireVideoCount": 2,
+    "restartAfterPause": true,
+    "pauseKey": "x",
+    "pauseKeyDescription": "X",
+    "pauseAudio": "pause",
+    "pauseVideo": "attentiongrabber",
+    "pauseText": "(You'll have a moment to turn around again.)",
+    "unpauseAudio": "return_after_pause",
+    "doRecording": true,
+    "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
+    "audioTypes": [
+        "ogg",
+        "mp3"
+    ],
+    "videoTypes": [
+        "webm",
+        "mp4"
+    ]
+}
 
  * ```
  * @class Exp-lookit-images-audio-infant-control
@@ -105,6 +94,35 @@ import InfantControlledTiming from '../../mixins/infant-controlled-timing';
 
 export default ExpLookitImagesAudio.extend(InfantControlledTiming, {
 
+    meta: {
+        data: {
+            type: 'object',
+            properties: {
+                videoId: {
+                    type: 'string'
+                },
+                videoList: {
+                    type: 'list'
+                },
+                images: {
+                    type: 'array'
+                },
+                selectedImage: {
+                    type: 'string'
+                },
+                correctImageSelected: {
+                    type: 'string'
+                },
+                totalLookingTime: {
+                    type: 'number'
+                },
+                trialEndReason: {
+                    type: 'string'
+                }
+            },
+        }
+    },
+
     finish() {
         this.endParentControl();
         this._super(...arguments);
@@ -113,6 +131,15 @@ export default ExpLookitImagesAudio.extend(InfantControlledTiming, {
     startTrial() {
         this._super(...arguments);
         this.startParentControl();
+    },
+
+    checkAndEnableProceed() {
+        let ready = this._super(...arguments);
+        if (ready) {
+            this.set('trialEndReason', 'ceiling');
+            this.setTrialEndTime();
+        }
+        return ready;
     },
 
     onLookawayCriterion() {

@@ -1,4 +1,4 @@
-import ExpLookitVideo from '../exp-lookit-video/component'
+import ExpLookitVideo from '../exp-lookit-video/component';
 import InfantControlledTiming from '../../mixins/infant-controlled-timing';
 
 /**
@@ -7,82 +7,85 @@ import InfantControlledTiming from '../../mixins/infant-controlled-timing';
  */
 
 /**
- * Video display frame. This may be used for displaying videos to older children or parents, as well as for
- * typical looking measures trials or as brief filler in between test trials.
+ * Infant-controlled version of the {{#crossLink "Exp-lookit-video"}}{{/crossLink}} frame. This works the same way as
+ * exp-lookit-video except that you can enable the parent to:
  *
- * (Note: this frame replaced the previous exp-lookit-video frame, which is now called
- *  {{#crossLink "Exp-lookit-composite-video-trial"}}{{/crossLink}}.)
+ * - end the trial by pressing the `endTrialKey` key
+ * - hold down the `lookawayKey` (or the mouse button) to indicate that the child is not looking; the trial will automatically end
+ *   after the lookaway criterion is met.
  *
- * This is very customizable: you can...
- *   - position the video wherever you want on the screen, including specifying that it should fill the screen (while maintaining aspect ratio)
- *   - choose the background color
- *   - optionally specify audio that should play along with the video
- *   - have the frame proceed automatically (`autoProceed`), or enable a Next button when the user can move on
- *   - allow parents to press a key to pause the video (and then either restart when they un-pause, or move on to the next frame)
+ * You can disable either of these behaviors by setting the key to `''`.
  *
- * Video (and audio if provided) start as soon as any recording begins, or right away if there is no recording starting.
+ * The frame will still end when it would have anyway if neither of these things happen! For instance, if you would have
+ * looped the video for 30 seconds, then after 30 seconds the frame will move on, serving as a "ceiling" on looking time.
  *
- * If the user pauses using the `pauseKey`, or if the user leaves fullscreen mode, the study will be paused.
- * While paused, the video/audio are stopped and not displayed, and instead a looping `pauseVideo` and text are displayed.
+ * Lookaway criterion: You have two options for how to determine when the child has looked away long enough to proceed.
+ * Set the `lookawayType` to `"total"` to accumulate lookaway time until the child has looked away for a total of
+ * `lookawayThreshold` seconds. (For instance, if the `lookawayThreshold` is 2, then the trial will end after the child
+ * looks away for 0.5s, then 1s, then 0.5s.) Set the `lookawayType` to `"continuous"` to require that the child look
+ * away for a continuous `lookawayThreshold`-second interval. (For instance, if the `lookawayThreshold` is 2, then the
+ * child might look away for 1s, 1.5s, and 1s but the trial would continue until she looked away for 2s.)
  *
- * There are several ways you can specify how long the trial should last. The frame will continue until
- * ALL of the following are true:
- *   - the video has been played all the way through `requireVideoCount` times
- *   - the audio has been played all the way through `requireAudioCount` times
- *   - `requiredDuration` seconds have elapsed since beginning the video
+ * The looking time measurement begins only when the video starts, not while a video connection is established.
  *
- * You do not need to use all of these - for instance, to play the video one time and then proceed, set
- * `requireVideoCount` to 1 and the others to 0. You can also specify whether the audio and video should loop (beyond
- * any replaying required to reach the required counts).
+ * If a `lookawayKey` is defined, lookaways are recorded the entire time the frame is running. However, the looking
+ * time measurement only starts once video begins playing (e.g., not during webcam connection). Lookaways at the very
+ * start of the video don't count! If the child is not looking as the video begins, the measurement begins once they look
+ * for the first time.
  *
- * This frame is displayed fullscreen; if the frame before it is not, that frame
- * needs to include a manual "next" button so that there's a user interaction
- * event to trigger fullscreen mode. (Browsers don't allow us to switch to FS
- * without a user event.)
+ * If the trial is paused, parent control of the trial is also paused; the looking time measurement begins fresh when
+ * restarting.
  *
- * Example usage: (Note - this is a bit of an odd example with both audio ('peekaboo') and audio embedded in the video.
- * In general you would probably only want one or the other!)
-
+ * Two pieces of data are recorded for convenience when coding or if implementing a live habituation procedure:
+ * `totalLookingTime` and `reasonTrialEnded`.
+ *
+ * Example usage:
+ *
  ```json
  "play-video-twice": {
-            "kind": "exp-lookit-video",
-            "audio": {
-                "loop": false,
-                "source": "peekaboo"
-            },
-            "video": {
-                "top": 10,
-                "left": 25,
-                "loop": true,
-                "width": 50,
-                "source": "cropped_apple"
-            },
-            "backgroundColor": "white",
-            "autoProceed": true,
-            "parentTextBlock": {
-                "text": "If your child needs a break, just press X to pause!"
-            },
-            "requiredDuration": 0,
-            "requireAudioCount": 0,
-            "requireVideoCount": 2,
-            "restartAfterPause": true,
-            "pauseKey": "x",
-            "pauseKeyDescription": "X",
-            "pauseAudio": "pause",
-            "pauseVideo": "attentiongrabber",
-            "pauseText": "(You'll have a moment to turn around again.)",
-            "unpauseAudio": "return_after_pause",
-            "doRecording": true,
-            "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
-            "audioTypes": [
-                "ogg",
-                "mp3"
-            ],
-            "videoTypes": [
-                "webm",
-                "mp4"
-            ]
-        },
+    "kind": "exp-lookit-video-infant-control",
+    "lookawayKey": "p",
+    "lookawayType": "total",
+    "lookawayThreshold": 2,
+    "endTrialKey": "q",
+
+    "audio": {
+        "loop": false,
+        "source": "peekaboo"
+    },
+    "video": {
+        "top": 10,
+        "left": 25,
+        "loop": true,
+        "width": 50,
+        "source": "cropped_apple"
+    },
+    "backgroundColor": "white",
+    "autoProceed": true,
+    "parentTextBlock": {
+        "text": "If your child needs a break, just press X to pause!"
+    },
+    "requiredDuration": 0,
+    "requireAudioCount": 0,
+    "requireVideoCount": 2,
+    "restartAfterPause": true,
+    "pauseKey": "x",
+    "pauseKeyDescription": "X",
+    "pauseAudio": "pause",
+    "pauseVideo": "attentiongrabber",
+    "pauseText": "(You'll have a moment to turn around again.)",
+    "unpauseAudio": "return_after_pause",
+    "doRecording": true,
+    "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
+    "audioTypes": [
+        "ogg",
+        "mp3"
+    ],
+    "videoTypes": [
+        "webm",
+        "mp4"
+    ]
+}
 
  * ```
  * @class Exp-lookit-video-infant-control
@@ -91,6 +94,30 @@ import InfantControlledTiming from '../../mixins/infant-controlled-timing';
  */
 
 export default ExpLookitVideo.extend(InfantControlledTiming, {
+
+    meta: {
+        data: {
+            type: 'object',
+            properties: {
+                videoShown: {
+                    type: 'string',
+                    default: ''
+                },
+                videoId: {
+                    type: 'string'
+                },
+                hasBeenPaused: {
+                    type: 'boolean'
+                },
+                totalLookingTime: {
+                    type: 'number'
+                },
+                trialEndReason: {
+                    type: 'string'
+                }
+            }
+        }
+    },
 
     actions: {
 
@@ -121,6 +148,16 @@ export default ExpLookitVideo.extend(InfantControlledTiming, {
         }
         this._super(...arguments);
     },
+
+    isReadyToFinish() {
+        let ready = this._super(...arguments);
+        if (ready) {
+            this.set('trialEndReason', 'ceiling');
+            this.setTrialEndTime();
+        }
+        return ready;
+    },
+
 
     onLookawayCriterion() {
         this.readyToFinish();
