@@ -1,5 +1,28 @@
 import Ember from 'ember';
-import loadAll from '../utils/load-relationship';
+
+// Copied from ember-osf/utils/load-relationship.js
+function loadAll(model, relationship, dest, options = {}) {
+    var page = options.page || 1;
+    var query = {
+        'page[size]': 10,
+        page: page
+    };
+    query = Ember.assign(query, options || {});
+
+    return model.query(relationship, query).then(results => {
+        dest.pushObjects(results.toArray());
+        if (results.meta) {
+            var total = results.meta.pagination.count;
+            var pageSize = 10;
+            var remaining = total - (page * pageSize);
+            if (remaining > 0) {
+                query.page = page + 1;
+                query['page[size]'] = pageSize;
+                return loadAll(model, relationship, dest, query);
+            }
+        }
+    });
+}
 
 export default Ember.Mixin.create({
     _study: null,
@@ -27,7 +50,7 @@ export default Ember.Mixin.create({
     model(params) {
         return Ember.RSVP.Promise.resolve()
             .then(() => this._getStudy(params))
-            .then((study) => {
+            .then((study) => { // Store study to this
                 this.set('_study', study);
                 console.log('Study: ' + study.id);
                 return this._getChild(params);
@@ -42,9 +65,6 @@ export default Ember.Mixin.create({
                 return loadAll(this.get('_study'), 'responses', this.get('_pastResponses'), { 'child': this.get('_child').id });
             }).then(() => {
                 const response = this.get('_response');
-                // WARNING: it seems to be necessary to re-set the response.study property
-                // here or else response.study.id isn't available in the template if there
-                // is more than one page of past responses - but we don't know why!!
                 response.set('study', this.get('_study'));
                 response.set('child', this.get('_child'));
                 if (!this.get('_pastResponses').includes(response)) {

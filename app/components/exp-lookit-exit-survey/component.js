@@ -162,6 +162,7 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
         this._save()
             .then(()=> {
                 this.set('section1', false);
+                window.scrollTo(0, 0);
             })
             .catch(err => this.displayError(err));
     },
