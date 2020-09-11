@@ -98,7 +98,6 @@ let {
 * @class Exp-lookit-video
 * @extends Exp-frame-base
 * @uses Full-screen
-* @uses Media-reload
 * @uses Video-record
 * @uses Expand-assets
 */
@@ -463,8 +462,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             }
 
             this.send('setTimeEvent', 'videoStarted');
-            this.set('testVideoTimesPlayed', this.get('testVideoTimesPlayed') + 1);
-            if (this.get('testVideoTimesPlayed') === 1) {
+            if (this.get('testVideoTimesPlayed') === 0) {
                 window.clearInterval(this.get('testTimer'));
                 if (this.get('requiredDuration')) {
                     this.set('testTimer', window.setTimeout(() => {
@@ -495,6 +493,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
              * @event videoStopped
              */
             this.send('setTimeEvent', 'videoStopped');
+            this.set('testVideoTimesPlayed', this.get('testVideoTimesPlayed') + 1);
             if (this.isReadyToFinish()) {
                 this.readyToFinish();
             }
@@ -515,7 +514,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
              * @event audioStarted
              */
             this.send('setTimeEvent', 'audioStarted');
-            this.set('testAudioTimesPlayed', this.get('testAudioTimesPlayed') + 1);
         },
 
         audioStopped() {
@@ -528,6 +526,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
              * @event audioStopped
              */
             this.send('setTimeEvent', 'audioStopped');
+            this.set('testAudioTimesPlayed', this.get('testAudioTimesPlayed') + 1);
             if (this.isReadyToFinish()) { // in case this was the last criterion for being done
                 this.readyToFinish();
             }

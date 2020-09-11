@@ -2,7 +2,6 @@ import Ember from 'ember';
 import layout from './template';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 import FullScreen from '../../mixins/full-screen';
-import MediaReload from '../../mixins/media-reload';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
 import { audioAssetOptions, videoAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
@@ -129,12 +128,11 @@ let {
 * @class Exp-lookit-preferential-looking
 * @extends Exp-frame-base
 * @uses Full-screen
-* @uses Media-reload
 * @uses Video-record
 * @uses Expand-assets
 */
 
-export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord, ExpandAssets, {
+export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
     layout: layout,
     type: 'exp-lookit-preferential-looking',
 
@@ -736,6 +734,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
     },
 
     segmentObserver: Ember.observer('currentTask', function(frame) {
+        Ember.$('video').each(function () {
+            this.pause();
+            this.load();
+        });
         if (frame.get('currentTask') === 'announce') {
             frame.startAnnouncement();
         } else if (frame.get('currentTask') === 'intro') {
@@ -923,16 +925,13 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         });
     },
 
-    // Utility to play audio object and avoid failing to actually trigger play for
-    // dumb browser reasons / race conditions
+    // Utility to play audio object
     playAudio(audioObj) {
-        //audioObj.pause();
+        audioObj.pause();
         audioObj.currentTime = 0;
-        audioObj.play().then(() => {
-        }).catch(() => {
-            audioObj.play();
-        }
-        );
+        audioObj.play();
+        // var _this = this;
+        //.then(() => {}).catch(() => { this.playAudio(audioObj); });
     },
 
     didInsertElement() {

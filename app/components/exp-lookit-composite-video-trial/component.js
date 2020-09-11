@@ -77,7 +77,7 @@ let {
 
 ```json
         "sample-intermodal-trial-2": {
-            "kind": "exp-lookit-video",
+            "kind": "exp-lookit-composite-video-trial",
             "isLast": false,
             "baseDir": "https://s3.amazonaws.com/lookitcontents/intermodal/",
             "sources": "sbs_ramp_down_up_apple_c1_b1_NN",
@@ -728,6 +728,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         });
 
         if (this.get('sources_parsed').length) {
+            if (!this.get('altSources_parsed').length) {
+                this.set('altSources_parsed', this.get('sources_parsed'));
+            }
             this.set('videosShown', [this.get('sources_parsed')[0].src, this.get('altSources_parsed')[0].src]);
         } else {
             this.set('videosShown', []);
