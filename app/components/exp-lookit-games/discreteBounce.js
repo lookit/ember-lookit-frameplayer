@@ -571,6 +571,12 @@ export default class DiscreteBounce extends PaddleGames {
       super.exportData.paddle_x = super.convertXvalue(super.paddle.position.x);
       super.exportData.trialType = this.context.trialType;
       super.exportData.paddle_center_x = super.convertXvalue(super.paddle.position.x   +  (super.paddle.dimensions.width / 2));
+      super.exportData.scale = super.Utils.SCALE.toFixed(1);
+      super.exportData.window_height =  screen.height;
+      super.exportData.window_width = screen.width;
+      super.exportData.canvas_height = this.canvas.height;
+      super.exportData.canvas_width =  this.canvas.width;
+      super.exportData.dpi = window.devicePixelRatio;
 
 
     }
