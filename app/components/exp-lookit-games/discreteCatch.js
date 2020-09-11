@@ -219,6 +219,12 @@ export default class DiscreteCatch extends PaddleGames {
       super.exportData.paddle_center_x = super.convertXvalue(super.paddle.position.x   +  (super.paddle.dimensions.width / 2));
       super.exportData.red_dot_width =redDotMargin*2;
       super.exportData.red_dot_start_position = (1.3301 - redDotMargin).toFixed(3);
+      super.exportData.scale = super.Utils.SCALE.toFixed(1);
+      super.exportData.window_height =  screen.height;
+      super.exportData.window_width = screen.width;
+      super.exportData.canvas_height = this.canvas.height;
+      super.exportData.canvas_width =  this.canvas.width;
+      super.exportData.dpi = window.devicePixelRatio;
 
 
     }

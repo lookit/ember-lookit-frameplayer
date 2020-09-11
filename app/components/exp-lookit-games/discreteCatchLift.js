@@ -216,6 +216,12 @@ export default class DiscreteCatchLift extends PaddleGames {
           super.exportData.trialType = this.context.trialType;
           super.exportData.mice_state.push(curState);
           super.exportData.paddle_timestamp.push(super.paddle.time);
+          super.exportData.scale = super.Utils.SCALE.toFixed(1);
+          super.exportData.window_height =  screen.height;
+          super.exportData.window_width = screen.width;
+          super.exportData.canvas_height = this.canvas.height;
+          super.exportData.canvas_width =  this.canvas.width;
+          super.exportData.dpi = window.devicePixelRatio;
         }
       }
 
