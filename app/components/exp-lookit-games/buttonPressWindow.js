@@ -226,6 +226,12 @@ export default class ButtonPressWindow extends Base {
         super.exportData.timestamp = soundTimeStamp;
         super.exportData.feedback = this.getBallState();
         super.exportData.target_position = TARGETX.toFixed(3);
+        super.exportData.scale = super.Utils.SCALE.toFixed(1);
+        super.exportData.window_height =  screen.height;
+        super.exportData.window_width = screen.width;
+        super.exportData.canvas_height = this.canvas.height;
+        super.exportData.canvas_width =  this.canvas.width;
+        super.exportData.dpi = window.devicePixelRatio;
       }
 
     }

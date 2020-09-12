@@ -515,6 +515,12 @@ export default class DiscreteButtonSpatial extends Base {
         super.exportData.obstruction_number = trajectoryParameters[super.currentRounds][gameRandomization.OBSTRUCTION];
         super.exportData.trial = super.currentRounds;
         super.exportData.trialType = this.context.trialType;
+        super.exportData.scale = super.Utils.SCALE.toFixed(1);
+        super.exportData.window_height =  screen.height;
+        super.exportData.window_width = screen.width;
+        super.exportData.canvas_height = this.canvas.height;
+        super.exportData.canvas_width =  this.canvas.width;
+        super.exportData.dpi = window.devicePixelRatio;
         if(super.getElapsedTime() <= 0.5) {
           super.exportData.ball_position_x.push(parseFloat(super.convertXvalue(super.ball.position.x)));
           super.exportData.ball_position_y.push(parseFloat(super.convertYvalue(super.ball.position.y)));
