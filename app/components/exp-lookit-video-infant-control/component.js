@@ -12,7 +12,8 @@ import InfantControlledTiming from '../../mixins/infant-controlled-timing';
  *
  * - end the trial by pressing the `endTrialKey` key
  * - hold down the `lookawayKey` (or the mouse button) to indicate that the child is not looking; the trial will automatically end
- *   after the lookaway criterion is met.
+ *   after the lookaway criterion is met. If the 'lookawayTone' is not 'none' a noise is played while the child is looking
+ *   away to help the parent know the looking coding is working.
  *
  * You can disable either of these behaviors by setting the key to `''`.
  *
@@ -48,6 +49,8 @@ import InfantControlledTiming from '../../mixins/infant-controlled-timing';
     "lookawayType": "total",
     "lookawayThreshold": 2,
     "endTrialKey": "q",
+    "lookawayTone": "noise",
+    "lookawayToneVolume": 0.25,
 
     "audio": {
         "loop": false,

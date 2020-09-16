@@ -94,7 +94,7 @@ var infantControlledTimingMixin = Ember.Mixin.create({
          'mouse' to indicate that mouse down/up should be used in place of key down/up events. Use an empty string,
          '', to not record any lookaways for this trial. You can look up the names of keys at https://keycode.info.
          Default is 'w'.
-         @property {string} pauseKey
+         @property {string} lookawayKey
          @default 'w'
          */
         lookawayKey: {
@@ -107,12 +107,37 @@ var infantControlledTimingMixin = Ember.Mixin.create({
          by giving instructions like "press q when the child looks away for at least a few seconds" instead of "hold down
          w whenever the child isn't looking."  Use an empty string, '', to not allow this function
          for this trial. You can look up the names of keys at https://keycode.info. Default is 'q'.
-         @property {string} pauseKey
+         @property {string} endTrialKey
          @default 'q'
          */
         endTrialKey: {
             type: 'string',
             default: 'q'
+        },
+
+        /**
+         Type of audio to play during parent-coded lookaways - 'tone' (A 220), 'noise' (pink noise), or 'none'. These
+         tones are available at https://www.mit.edu/~kimscott/placeholderstimuli/ if you want to use them in
+         instructions.
+         @property {string} lookawayTone
+         @default 'noise'
+         */
+        lookawayTone: {
+            type: 'string',
+            enum: ['tone', 'noise', 'none'],
+            default: 'noise',
+            description: 'Type of audio to play during parent-coded lookaways'
+        },
+
+        /**
+         Volume of lookaway tone
+         @property {string} lookawayToneVolume
+         @default 0.25
+         */
+        lookawayToneVolume: {
+            type: 'number',
+            default: .25,
+            description: 'Volume of lookaway tone, as fraction of full volume (1 = full volume, 0 = silent)'
         }
     },
 
@@ -185,6 +210,10 @@ var infantControlledTimingMixin = Ember.Mixin.create({
                 _this.onLookawayCriterion();
             }, delay));
         }
+        let $lookawayTone = $('audio#lookawayTone');
+        if ($lookawayTone.length) {
+            $lookawayTone[0].play();
+        }
     },
 
     _recordLookawayEnd() {
@@ -207,6 +236,10 @@ var infantControlledTimingMixin = Ember.Mixin.create({
                 this.set('_trialStartTime', new Date());
                 this.set('_anyLookDuringControlPeriod', true);
             }
+        }
+        let $lookawayTone = $('audio#lookawayTone');
+        if ($lookawayTone.length) {
+            $lookawayTone[0].pause();
         }
     },
 
@@ -315,6 +348,21 @@ var infantControlledTimingMixin = Ember.Mixin.create({
                 }
             }
         });
+
+        try {
+            let useLookawayTone = this.get('lookawayTone') !== 'none';
+            if (useLookawayTone) {
+                const baseDir = 'https://www.mit.edu/~kimscott/placeholderstimuli/';
+                let audioElement = $('<audio id="lookawayTone" loop></audio>');
+                $(`<source src='${baseDir}mp3/${this.get('lookawayTone')}.mp3' type='audio/mp3'>`).appendTo(audioElement);
+                $(`<source src='${baseDir}ogg/${this.get('lookawayTone')}.ogg' type='audio/ogg'>`).appendTo(audioElement);
+                $('#experiment-player > div > div').append(audioElement);
+                $('audio#lookawayTone')[0].volume = this.get('lookawayToneVolume');
+            }
+        } catch (e) {
+            console.error(`Error setting lookaway tone: ${e}`);
+        }
+
         this._super(...arguments);
     },
 
