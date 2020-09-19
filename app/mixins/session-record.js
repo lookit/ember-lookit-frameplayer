@@ -195,7 +195,7 @@ export default Ember.Mixin.create({
 
     /**
      * Stop recording
-     * @method startSessionRecorder
+     * @method stopSessionRecorder
      * @return Promise Resolves when recording has started
      */
     stopSessionRecorder() {

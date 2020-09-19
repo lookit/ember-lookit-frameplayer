@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to lookit-frameplayer’s documentation! &#8212; lookit-frameplayer 1.3.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="exp-lookit-video" href="components/exp-lookit-video/doc.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-lookit-frameplayer-s-documentation">
+<h1>Welcome to lookit-frameplayer’s documentation!<a class="headerlink" href="#welcome-to-lookit-frameplayer-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>The base frame</p>
+<dl class="js class">
+<dt id="ExpFrameBase">
+<em class="property">class </em><code class="sig-name descname">ExpFrameBase</code><span class="sig-paren">(</span><em class="sig-param">generateProperties</em><span class="sig-paren">)</span><a class="headerlink" href="#ExpFrameBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>An abstract component to extend when defining new Lookit frames</p>
+<p>This provides common base behavior for all experiment frames.</p>
+<dl class="simple">
+<dt>As a user you will almost never need to insert a component into a template directly - the platform should handle that</dt><dd><p>by automatically inserting an &lt;a href=”../classes/Exp-player.html” class=”crosslink”&gt;exp-player&lt;/a&gt; component when your experiment starts.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>generateProperties</strong> (<em>String</em>) – Function to generate additional properties for this frame (like {“kind”: “exp-lookit-text”}) at the time the frame is initialized. Allows behavior of study to depend on what has happened so far (e.g., answers on a form or to previous test trials). Must be a valid Javascript function, returning an object, provided as a string. Arguments that will be provided are: <cite>expData</cite>, <cite>sequence</cite>, <cite>child</cite>, <cite>pastSessions</cite>, <cite>conditions</cite>. <cite>expData</cite>, <cite>sequence</cite>, and <cite>conditions</cite> are the same data as would be found in the session data shown on the Lookit experimenter interface under ‘Individual Responses’, except that they will only contain information up to this point in the study. <cite>expData</cite> is an object consisting of <cite>frameId</cite>: <cite>frameData</cite> pairs; the data associated with a particular frame depends on the frame kind. <cite>sequence</cite> is an ordered list of frameIds, corresponding to the keys in <cite>expData</cite>. <cite>conditions</cite> is an object representing the data stored by any randomizer frames; keys are <cite>frameId`s for randomizer frames and data stored depends on the randomizer used. `child</cite> is an object that has the following properties - use child.get(propertyName) to access: - <cite>additionalInformation</cite>: String; additional information field from child form - <cite>ageAtBirth</cite>: String; child’s gestational age at birth in weeks. Possible values are “24” through “39”, “na” (not sure or prefer not to answer), “&lt;24” (under 24 weeks), and “40&gt;” (40 or more weeks). - <cite>birthday</cite>: Date object - <cite>gender</cite>: “f” (female), “m” (male), “o” (other), or “na” (prefer not to answer) - <cite>givenName</cite>: String, child’s given name/nickname - <cite>id</cite>: String, child UUID - <cite>languageList</cite>: String, space-separated list of languages child is exposed to (2-letter codes) - <cite>conditionList</cite>: String, space-separated list of conditions/characteristics of child from registration form, as used in criteria expression, e.g. “autism_spectrum_disorder deaf multiple_birth” <cite>pastSessions</cite> is a list of previous response objects for this child and this study, ordered starting from most recent (at index 0 is this session!). Each has properties (access as pastSessions[i].get(propertyName)): - <cite>completed</cite>: Boolean, whether they submitted an exit survey - <cite>completedConsentFrame</cite>: Boolean, whether they got through at least a consent frame - <cite>conditions</cite>: Object representing any conditions assigned by randomizer frames - <cite>createdOn</cite>: Date object - <cite>expData</cite>: Object consisting of frameId: frameData pairs - <cite>globalEventTimings</cite>: list of any events stored outside of individual frames - currently just used for attempts to leave the study early - <cite>sequence</cite>: ordered list of frameIds, corresponding to keys in expData - <cite>isPreview</cite>: Boolean, whether this is from a preview session (possible in the event this is an experimenter’s account) Example: <code class="docutils literal notranslate"><span class="pre">`</span> <span class="pre">function(expData,</span> <span class="pre">sequence,</span> <span class="pre">child,</span> <span class="pre">pastSessions,</span> <span class="pre">conditions)</span> <span class="pre">{</span> <span class="pre">return</span> <span class="pre">{</span> <span class="pre">'blocks':</span> <span class="pre">[</span> <span class="pre">{</span> <span class="pre">'text':</span> <span class="pre">'Name:</span> <span class="pre">'</span> <span class="pre">+</span> <span class="pre">child.get('givenName')</span> <span class="pre">},</span> <span class="pre">{</span> <span class="pre">'text':</span> <span class="pre">'Frame</span> <span class="pre">number:</span> <span class="pre">'</span> <span class="pre">+</span> <span class="pre">sequence.length</span> <span class="pre">},</span> <span class="pre">{</span> <span class="pre">'text':</span> <span class="pre">'N</span> <span class="pre">past</span> <span class="pre">sessions:</span> <span class="pre">'</span> <span class="pre">+</span> <span class="pre">pastSessions.length</span> <span class="pre">}</span> <span class="pre">]</span> <span class="pre">};</span> <span class="pre">}</span> <span class="pre">`</span></code> (This example is split across lines for readability; when added to JSON it would need to be on one line.)</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Examples:</strong></p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span>
+      <span class="nx">component</span> <span class="nx">currentFrameTemplate</span>
+        <span class="nx">frameIndex</span><span class="o">=</span><span class="nx">frameIndex</span>
+        <span class="nx">frameConfig</span><span class="o">=</span><span class="nx">currentFrameConfig</span>
+        <span class="nx">frameContext</span><span class="o">=</span><span class="nx">currentFrameContext</span>
+
+        <span class="nx">session</span><span class="o">=</span><span class="nx">session</span>
+        <span class="nx">experiment</span><span class="o">=</span><span class="nx">experiment</span>
+
+        <span class="nx">next</span><span class="o">=</span><span class="p">(</span><span class="nx">action</span> <span class="s1">&#39;next&#39;</span><span class="p">)</span>
+        <span class="nx">exit</span><span class="o">=</span><span class="p">(</span><span class="nx">action</span> <span class="s1">&#39;exit&#39;</span><span class="p">)</span>
+        <span class="nx">previous</span><span class="o">=</span><span class="p">(</span><span class="nx">action</span> <span class="s1">&#39;previous&#39;</span><span class="p">)</span>
+        <span class="nx">saveHandler</span><span class="o">=</span><span class="p">(</span><span class="nx">action</span> <span class="s1">&#39;saveFrame&#39;</span><span class="p">)</span>
+        <span class="nx">skipone</span><span class="o">=</span><span class="p">(</span><span class="nx">action</span> <span class="s1">&#39;skipone&#39;</span><span class="p">)</span>
+        <span class="nx">extra</span><span class="o">=</span><span class="nx">extra</span>
+    <span class="p">}}</span><span class="sb">``</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>Frames:</p>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="components/exp-lookit-video/doc.html">exp-lookit-video</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="components/exp-lookit-video/doc.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components/exp-lookit-video/doc.html#recording">Recording</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components/exp-lookit-video/doc.html#pausing">Pausing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components/exp-lookit-video/doc.html#specifying-trial-duration">Specifying trial duration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components/exp-lookit-video/doc.html#display">Display</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="components/exp-lookit-composite-video-trial/doc.html">exp-lookit-composite-video-trial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="components/exp-lookit-composite-video-trial/doc.html#overview-of-phases">Overview of phases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components/exp-lookit-composite-video-trial/doc.html#display">Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components/exp-lookit-composite-video-trial/doc.html#specifying-media-locations">Specifying media locations</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Mixins:</p>
+<div class="toctree-wrapper compound">
+</div>
+<p>Randomizers:</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">lookit-frameplayer</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="components/exp-lookit-video/doc.html">exp-lookit-video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/exp-lookit-composite-video-trial/doc.html">exp-lookit-composite-video-trial</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="components/exp-lookit-video/doc.html" title="next chapter">exp-lookit-video</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, MIT.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

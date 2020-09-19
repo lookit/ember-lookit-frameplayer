@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>exp-lookit-composite-video-trial &#8212; lookit-frameplayer 1.3.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="exp-lookit-video" href="../exp-lookit-video/doc.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="exp-lookit-composite-video-trial">
+<h1>exp-lookit-composite-video-trial<a class="headerlink" href="#exp-lookit-composite-video-trial" title="Permalink to this headline">¶</a></h1>
+<dl class="js class">
+<dt id="ExpLookitCompositeVideoTrial">
+<em class="property">class </em><code class="sig-name descname">ExpLookitCompositeVideoTrial</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ExpLookitCompositeVideoTrial" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Deprecated: Researchers are advised to use the newer exp-lookit-video and exp-lookit-calibration frames.</p>
+</div>
+<p><strong>Examples:</strong></p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;sample-intermodal-trial-2&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;kind&quot;</span><span class="o">:</span> <span class="s2">&quot;exp-lookit-composite-video-trial&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;isLast&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s2">&quot;baseDir&quot;</span><span class="o">:</span> <span class="s2">&quot;https://s3.amazonaws.com/lookitcontents/intermodal/&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sources&quot;</span><span class="o">:</span> <span class="s2">&quot;sbs_ramp_down_up_apple_c1_b1_NN&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;testCount&quot;</span><span class="o">:</span> <span class="mf">2</span><span class="p">,</span>
+    <span class="s2">&quot;altSources&quot;</span><span class="o">:</span> <span class="s2">&quot;sbs_ramp_up_down_apple_c1_b1_NN&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;audioTypes&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="s2">&quot;ogg&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mp3&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;pauseAudio&quot;</span><span class="o">:</span> <span class="s2">&quot;pause&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;videoTypes&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="s2">&quot;webm&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mp4&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;attnSources&quot;</span><span class="o">:</span> <span class="s2">&quot;attentiongrabber&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;audioSources&quot;</span><span class="o">:</span> <span class="s2">&quot;video_02&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;introSources&quot;</span><span class="o">:</span> <span class="s2">&quot;cropped_book&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;musicSources&quot;</span><span class="o">:</span> <span class="s2">&quot;music_02&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;unpauseAudio&quot;</span><span class="o">:</span> <span class="s2">&quot;return_after_pause&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;calibrationLength&quot;</span><span class="o">:</span> <span class="mf">3000</span><span class="p">,</span>
+    <span class="s2">&quot;calibrationAudioSources&quot;</span><span class="o">:</span> <span class="s2">&quot;chimes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;calibrationVideoSources&quot;</span><span class="o">:</span> <span class="s2">&quot;attentiongrabber&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>Composite video display for typical looking measures trials (e.g. preferential looking,
+looking time). (Previously called exp-lookit-video.)</p>
+<div class="section" id="overview-of-phases">
+<h2>Overview of phases<a class="headerlink" href="#overview-of-phases" title="Permalink to this headline">¶</a></h2>
+<p>The trial consists of four phases, each of which is optional.</p>
+<ol class="arabic simple">
+<li><p><strong>Announcement:</strong> The audio in audioSources is played while the attnSources video is played centrally, looping as needed. This lasts for announceLength seconds or the duration of the audio, whichever is longer. To skip this phase, set announceLength to 0 and do not provide audioSources.</p></li>
+<li><p><strong>Intro:</strong> The introSources video is played centrally until it ends. To skip this phase, do not provide introSources.</p></li>
+<li><p><strong>Calibration:</strong> The video in calibrationVideoSources is played (looping as needed) in each of the locations specified in calibrationPositions in turn, remaining in each position for calibrationLength ms. At the start of each position the audio in calibrationAudioSources is played once. (Audio will be paused and restarted if it is longer than calibrationLength.) Set calibrationLength to 0 to skip calibration.</p></li>
+<li><p><strong>Test:</strong> The video in sources and audio in musicSources (optional) are played until either: testLength seconds have elapsed (with video looping if needed), or the video has been played testCount times. If testLength is set, it overrides testCount - for example if testCount is 1 and testLength is 30, a 10-second video will be played 3 times. If the participant pauses the study during the test phase, then after restarting the trial, the video in altSources will be used again (defaulting to the same video if altSources is not provided). To skip this phase, do not provide sources.</p></li>
+</ol>
+</div>
+<div class="section" id="display">
+<h2>Display<a class="headerlink" href="#display" title="Permalink to this headline">¶</a></h2>
+<p>This frame is displayed fullscreen. If the previous frame is not fullscreen, then that frame
+needs to include a manual “next” button so that there’s a user interaction
+event to trigger fullscreen mode. (Browsers don’t allow us to switch to fullscreen mode
+without a user event.)</p>
+</div>
+<div class="section" id="specifying-media-locations">
+<h2>Specifying media locations<a class="headerlink" href="#specifying-media-locations" title="Permalink to this headline">¶</a></h2>
+<p>For any parameters that expect a list of audio/video sources, you have two options:</p>
+<ol class="arabic simple">
+<li><p>You can provide a list of src/type pairs with full paths, like this:</p></li>
+</ol>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;src&#39;</span><span class="o">:</span> <span class="s1">&#39;http://.../video1.mp4&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;video/mp4&#39;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;src&#39;</span><span class="o">:</span> <span class="s1">&#39;http://.../video1.webm&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;video/webm&#39;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>2. You can provide a single string ‘stub’, which will be expanded based on the parameter <code class="docutils literal notranslate"><span class="pre">baseDir</span></code> and the media types expected (either <code class="docutils literal notranslate"><span class="pre">audioTypes</span></code> or
+<code class="docutils literal notranslate"><span class="pre">videoTypes</span></code> as appropriate).</p>
+<p>For example, if you provide the audio source
+<code class="docutils literal notranslate"><span class="pre">`intro`</span></code>, <code class="docutils literal notranslate"><span class="pre">baseDir</span></code> is <code class="docutils literal notranslate"><span class="pre">https://mystimuli.org/mystudy/</span></code>, and <code class="docutils literal notranslate"><span class="pre">audioTypes</span></code> is <code class="docutils literal notranslate"><span class="pre">['mp3',</span> <span class="pre">'ogg']</span></code>, then this
+will be expanded to:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nx">src</span><span class="o">:</span> <span class="s1">&#39;https://mystimuli.org/mystudy/mp3/intro.mp3&#39;</span><span class="p">,</span>
+            <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;audio/mp3&#39;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nx">src</span><span class="o">:</span> <span class="s1">&#39;https://mystimuli.org/mystudy/ogg/intro.ogg&#39;</span><span class="p">,</span>
+            <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;audio/ogg&#39;</span>
+        <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>This allows you to simplify your JSON document a bit and also easily switch to a
+new version of your stimuli without changing every URL. You can mix source objects with
+full URLs and those using stubs within the same directory. However, any stimuli
+specified using stubs MUST be
+organized as expected under <code class="docutils literal notranslate"><span class="pre">baseDir/MEDIATYPE/filename.MEDIATYPE</span></code>.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">lookit-frameplayer</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../exp-lookit-video/doc.html">exp-lookit-video</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">exp-lookit-composite-video-trial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview-of-phases">Overview of phases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#display">Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#specifying-media-locations">Specifying media locations</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../exp-lookit-video/doc.html" title="previous chapter">exp-lookit-video</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, MIT.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/components/exp-lookit-composite-video-trial/doc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

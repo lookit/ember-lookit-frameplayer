@@ -12,17 +12,13 @@ import SessionRecord from '../../mixins/session-record';
 
 /** An abstract component to extend when defining new Lookit frames
  *
- * This provides common base behavior required for any experiment frame. All experiment frames must extend this one.
+ * This provides common base behavior for all experiment frames.
  *
- * This frame has no configuration options because all of its logic is internal, and should not be directly used
- * in an experiment.
- *
- * As a user you will almost never need to insert a component into a template directly- the platform should handle that
+ * As a user you will almost never need to insert a component into a template directly - the platform should handle that
  *  by automatically inserting an <a href="../classes/Exp-player.html" class="crosslink">exp-player</a> component when your experiment starts.
- * However, a sample template usage is provided below for completeness.
  *
- * ```handlebars
- *  {{
+ * @example
+ {{
       component currentFrameTemplate
         frameIndex=frameIndex
         frameConfig=currentFrameConfig
@@ -37,14 +33,97 @@ import SessionRecord from '../../mixins/session-record';
         saveHandler=(action 'saveFrame')
         skipone=(action 'skipone')
         extra=extra
-    }}
- * ```
- * @class Exp-frame-base
+    }}``
+ *
+ * @class ExpFrameBase
+     * @param generateProperties{String} - Function to generate additional properties for this frame (like {"kind": "exp-lookit-text"})
+     * at the time the frame is initialized. Allows behavior of study to depend on what has
+     * happened so far (e.g., answers on a form or to previous test trials).
+     * Must be a valid Javascript function, returning an object, provided as
+     * a string.
+     *
+     *
+     * Arguments that will be provided are: `expData`, `sequence`, `child`, `pastSessions`, `conditions`.
+     *
+     *
+     * `expData`, `sequence`, and `conditions` are the same data as would be found in the session data shown
+     * on the Lookit experimenter interface under 'Individual Responses', except that
+     * they will only contain information up to this point in the study.
+     *
+     *
+     * `expData` is an object consisting of `frameId`: `frameData` pairs; the data associated
+     * with a particular frame depends on the frame kind.
+     *
+     *
+     * `sequence` is an ordered list of frameIds, corresponding to the keys in `expData`.
+     *
+     *
+     * `conditions` is an object representing the data stored by any randomizer frames;
+     * keys are `frameId`s for randomizer frames and data stored depends on the randomizer
+     * used.
+     *
+     *
+     * `child` is an object that has the following properties - use child.get(propertyName)
+     * to access:
+     * - `additionalInformation`: String; additional information field from child form
+     * - `ageAtBirth`: String; child's gestational age at birth in weeks. Possible values are
+     *   "24" through "39", "na" (not sure or prefer not to answer),
+     * "<24" (under 24 weeks), and "40>" (40 or more weeks).
+     * - `birthday`: Date object
+     * - `gender`: "f" (female), "m" (male), "o" (other), or "na" (prefer not to answer)
+     * - `givenName`: String, child's given name/nickname
+     * - `id`: String, child UUID
+     * - `languageList`: String, space-separated list of languages child is exposed to
+     * (2-letter codes)
+     * - `conditionList`: String, space-separated list of conditions/characteristics
+     * of child from registration form, as used in criteria expression, e.g.
+     * "autism_spectrum_disorder deaf multiple_birth"
+     *
+     *
+     * `pastSessions` is a list of previous response objects for this child and this study,
+     * ordered starting from most recent (at index 0 is this session!). Each has properties
+     * (access as pastSessions[i].get(propertyName)):
+     * - `completed`: Boolean, whether they submitted an exit survey
+     * - `completedConsentFrame`: Boolean, whether they got through at least a consent frame
+     * - `conditions`: Object representing any conditions assigned by randomizer frames
+     * - `createdOn`: Date object
+     * - `expData`: Object consisting of frameId: frameData pairs
+     * - `globalEventTimings`: list of any events stored outside of individual frames - currently
+     *   just used for attempts to leave the study early
+     * - `sequence`: ordered list of frameIds, corresponding to keys in expData
+     * - `isPreview`: Boolean, whether this is from a preview session (possible in the event
+     *   this is an experimenter's account)
+     *
+     *
+     * Example:
+     * ```
+     * function(expData, sequence, child, pastSessions, conditions) {
+     *     return {
+     *        'blocks':
+     *             [
+     *                 {
+     *                     'text': 'Name: ' + child.get('givenName')
+     *                 },
+     *                 {
+     *                     'text': 'Frame number: ' + sequence.length
+     *                 },
+     *                 {
+     *                     'text': 'N past sessions: ' + pastSessions.length
+     *                 }
+     *             ]
+     *       };
+     *   }
+     * ```
+     *
+     *
+     *  (This example is split across lines for readability; when added to JSON it would need
+     *  to be on one line.)
+
  *
  * @uses Full-screen
  * @uses Session-record
  */
-export default Ember.Component.extend(FullScreen, SessionRecord, {
+let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
     toast: Ember.inject.service(),
     // {String} the unique identifier for the _instance_
     id: null,
@@ -114,7 +193,7 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
      * - `languageList`: String, space-separated list of languages child is exposed to
      * (2-letter codes)
      * - `conditionList`: String, space-separated list of conditions/characteristics
-     * - of child from registration form, as used in criteria expression, e.g.
+     * of child from registration form, as used in criteria expression, e.g.
      * "autism_spectrum_disorder deaf multiple_birth"
      *
      *
@@ -649,3 +728,5 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         this._super(...arguments);
     }
 });
+
+export default ExpFrameBase;
