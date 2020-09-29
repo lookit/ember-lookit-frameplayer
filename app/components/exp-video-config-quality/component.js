@@ -103,6 +103,52 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     type: 'exp-video-config-quality',
     maxRecordingLength: 60,
+
+    /**
+     * @property {Boolean} startRecordingAutomatically
+     * @private
+     */
+
+    /**
+     * @property {Boolean} showWaitForRecordingMessage
+     * @private
+     */
+
+    /**
+     * @property {Boolean} waitForRecordingMessage
+     * @private
+     */
+
+    /**
+     * @property {Boolean} waitForRecordingMessageColor
+     * @private
+     */
+
+    /**
+     * @property {Boolean} showWaitForUploadMessage
+     * @private
+     */
+
+    /**
+     * @property {Boolean} waitForUploadMessage
+     * @private
+     */
+
+    /**
+     * @property {String} waitForUploadMessageColor
+     * @private
+     */
+
+    /**
+     * @property {String} waitForWebcamImage
+     * @private
+     */
+
+    /**
+     * @property {String} waitForWebcamVideo
+     * @private
+     */
+
     frameSchemaProperties: {
         /**
         Text to show as the introduction to the list of things to check. Can include

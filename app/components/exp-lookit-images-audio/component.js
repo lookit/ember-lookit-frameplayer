@@ -753,7 +753,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     // Override to do a bit extra when starting recording
     onRecordingStarted() {
         this.startTrial();
-        $('#waitForVideo').hide();
     },
 
     // Override to do a bit extra when starting session recorder

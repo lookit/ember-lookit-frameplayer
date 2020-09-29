@@ -191,7 +191,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
     // Override to do a bit extra when starting recording
     onRecordingStarted() {
-        $('#waitForVideo').hide();
         this.set('currentAudioIndex', -1);
         this.send('playNextAudioSegment');
     },

@@ -113,6 +113,50 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     type: 'exp-lookit-instructions',
     doUseCamera: Em.computed.alias('showWebcam'),
     frameSchemaProperties: {
+
+        // Note: don't display the following in the docs; they're not used because startRecordingAutomatically is
+        // false.
+
+        /**
+         * @property {Boolean} showWaitForRecordingMessage
+         * @private
+         */
+
+        /**
+         * @property {Boolean} waitForRecordingMessage
+         * @private
+         */
+
+        /**
+         * @property {Boolean} waitForRecordingMessageColor
+         * @private
+         */
+
+        /**
+         * @property {Boolean} showWaitForUploadMessage
+         * @private
+         */
+
+        /**
+         * @property {Boolean} waitForUploadMessage
+         * @private
+         */
+
+        /**
+         * @property {String} waitForUploadMessageColor
+         * @private
+         */
+
+        /**
+         * @property {String} waitForWebcamImage
+         * @private
+         */
+
+        /**
+         * @property {String} waitForWebcamVideo
+         * @private
+         */
+
         /**
          * Whether to display the user's webcam
          *
