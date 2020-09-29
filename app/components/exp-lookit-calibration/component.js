@@ -344,7 +344,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
     }),
 
     onRecordingStarted() {
-        $('#waitForVideo').hide();
         this.startCalibration();
     },
 
@@ -370,7 +369,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
             $('#calibration-image').addClass(this.get('calibrationImageAnimation'));
         }
         if (!(this.get('doRecording') || this.get('startSessionRecording'))) {
-            $('#waitForVideo').hide();
             this.startCalibration();
         }
     },

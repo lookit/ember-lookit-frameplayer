@@ -103,7 +103,56 @@ export default ExpFrameBaseComponent.extend(MediaReload, VideoRecord, ExpandAsse
     // Override setting in VideoRecord mixin - only use camera if doing recording
     doUseCamera: Ember.computed.alias('doRecording'),
 
+    /**
+     * @property {Boolean} startRecordingAutomatically
+     * @private
+     */
+
+    // Note: don't display the following in the docs; they're not used because startRecordingAutomatically is
+    // false.
+
+    /**
+     * @property {Boolean} showWaitForRecordingMessage
+     * @private
+     */
+
+    /**
+     * @property {Boolean} waitForRecordingMessage
+     * @private
+     */
+
+    /**
+     * @property {Boolean} waitForRecordingMessageColor
+     * @private
+     */
+
+    /**
+     * @property {Boolean} showWaitForUploadMessage
+     * @private
+     */
+
+    /**
+     * @property {Boolean} waitForUploadMessage
+     * @private
+     */
+
+    /**
+     * @property {String} waitForUploadMessageColor
+     * @private
+     */
+
+    /**
+     * @property {String} waitForWebcamImage
+     * @private
+     */
+
+    /**
+     * @property {String} waitForWebcamVideo
+     * @private
+     */
+
     frameSchemaProperties: {
+
         /**
          * Whether to show a 'previous' button
          *

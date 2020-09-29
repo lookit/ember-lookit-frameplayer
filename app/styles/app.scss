@@ -144,3 +144,32 @@ p#pipeClickPowered {
 .btn {
     font-size: large;
 }
+
+.video-record-mixin-wait-for-video {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none; // Initially hidden, only show if we actually use it!
+
+    .video-record-mixin-image {
+        margin: auto;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 25%;
+        height: 30%;
+    }
+
+  .video-record-mixin-wait-for-video-text {
+        font-size: 2em;
+        text-align: center;
+        top: 65%;
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+
+}
+

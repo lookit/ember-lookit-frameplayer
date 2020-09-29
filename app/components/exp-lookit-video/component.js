@@ -254,7 +254,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         },
 
         /**
-        Array of objects specifying attention-grabber video src and type, as for sources. The attention-grabber video is shown (looping) during the announcement phase and when the study is paused.
+        Video to show (looping) when trial is paused. As with the main video, this can either be an array of
+         {'src': 'https://...', 'type': '...'} objects (e.g. providing both webm and mp4 versions at specified URLS)
+         or a single string relative to baseDir/<EXT>/.
         @property {Array} pauseVideo
             @param {String} src
             @param {String} type
@@ -262,7 +264,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         */
         pauseVideo: {
             anyOf: videoAssetOptions,
-            description: 'List of objects specifying attention-grabber video src and type',
+            description: 'List of objects specifying video to show while trial is paused, each specifying src and type',
             default: []
         },
 
@@ -289,7 +291,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             description: 'Parent-facing description of the key to pause the study',
             default: 'space'
         },
-
 
         /**
          Whether to restart this frame upon unpausing, vs moving on to the next frame
@@ -568,10 +569,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             this.set('satisfiedDuration', false);
             var _this = this;
             if (!this.get('_finishing')) {
-                this.set('_finishing', true); // NEWLY ADDED
+                this.set('_finishing', true);
                 if (this.get('doRecording')) {
                     this.set('doingTest', false);
-                    $('#waitForVideo').html('uploading video...').show();
                     this.stopRecorder().then(() => {
                         _this.set('stoppedRecording', true);
                         _this.send('next');
@@ -749,7 +749,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         if (!this.get('isPaused')) {
             this.startVideo();
         }
-        $('#waitForVideo').hide();
     },
 
     // Hook for starting session recorder
