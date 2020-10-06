@@ -29,6 +29,7 @@
 @import "components/exp-lookit-calibration";
 @import "components/exp-lookit-composite-video-trial";
 @import "components/exp-lookit-start-stop-recording";
+@import "components/exp-lookit-instruction-video";
 
 // Physics study only
 @import "components/exp-exit-survey";
@@ -44,9 +45,6 @@
 .exp-text-medium {
     font-size: 1.5em;
 }
-.exp-text-heavy {
-    font-weight: 750;
-}
 
 .breaklines {
     white-space: pre-wrap
@@ -61,8 +59,16 @@
     max-width: 65em;
 }
 
-.vertical-pad {
+.vertical-pad, .vertical-pad-md {
     height: 8vh !important;
+}
+
+.vertical-pad-sm {
+  height: 4vh !important;
+}
+
+.vertical-pad-xs {
+  height: 2vh !important;
 }
 
 .center-text {
