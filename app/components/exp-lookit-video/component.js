@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
-import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
 import isColor from '../../utils/is-color';
@@ -100,7 +99,6 @@ let {
   },
 *
 * @extends Exp-frame-base
-* @uses Full-screen
 * @uses Video-record
 * @uses Expand-assets
 
@@ -146,7 +144,7 @@ let {
  * @default true
  *
 */
-let ExpLookitVideo = ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
+let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
     layout: layout,
     type: 'exp-lookit-video',
 
