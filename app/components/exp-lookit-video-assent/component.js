@@ -180,7 +180,52 @@ export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
 
     childResponse: false,
 
+    /**
+     * @property {Boolean} startRecordingAutomatically
+     * @private
+     */
     startRecordingAutomatically: Em.computed.alias('recordWholeProcedure'),
+
+    /**
+     * @property {Boolean} showWaitForRecordingMessage
+     * @private
+     */
+    showWaitForRecordingMessage: false,
+
+    /**
+     * @property {Boolean} waitForRecordingMessage
+     * @private
+     */
+
+    /**
+     * @property {Boolean} waitForRecordingMessageColor
+     * @private
+     */
+
+    /**
+     * @property {Boolean} showWaitForUploadMessage
+     * @private
+     */
+
+    /**
+     * @property {Boolean} waitForUploadMessage
+     * @private
+     */
+
+    /**
+     * @property {String} waitForUploadMessageColor
+     * @private
+     */
+
+    /**
+     * @property {String} waitForWebcamImage
+     * @private
+     */
+
+    /**
+     * @property {String} waitForWebcamVideo
+     * @private
+     */
 
     assetsToExpand: {
         'audio': ['pages/audio'],

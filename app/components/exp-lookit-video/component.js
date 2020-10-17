@@ -186,6 +186,7 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(FullScreen, VideoRecord, Expan
 
     /** comment some text */
     maximizeVideoArea: false,
+    _finishing: false,
 
     frameSchemaProperties: {
         video: {
@@ -250,7 +251,9 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(FullScreen, VideoRecord, Expan
         },
 
         /**
-        Array of objects specifying attention-grabber video src and type, as for sources. The attention-grabber video is shown (looping) during the announcement phase and when the study is paused.
+        Video to show (looping) when trial is paused. As with the main video, this can either be an array of
+         {'src': 'https://...', 'type': '...'} objects (e.g. providing both webm and mp4 versions at specified URLS)
+         or a single string relative to baseDir/<EXT>/.
         @property {Array} pauseVideo
             @param {String} src
             @param {String} type
@@ -258,7 +261,7 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(FullScreen, VideoRecord, Expan
         */
         pauseVideo: {
             anyOf: videoAssetOptions,
-            description: 'List of objects specifying attention-grabber video src and type',
+            description: 'List of objects specifying video to show while trial is paused, each specifying src and type',
             default: []
         },
 
@@ -285,7 +288,6 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(FullScreen, VideoRecord, Expan
             description: 'Parent-facing description of the key to pause the study',
             default: 'space'
         },
-
 
         /**
          Whether to restart this frame upon unpausing, vs moving on to the next frame
@@ -416,6 +418,15 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(FullScreen, VideoRecord, Expan
                 * @type string
                 */
                 videoShown: {
+                    type: 'string',
+                    default: ''
+                },
+                /**
+                * Source of audio played during this trial. Just stores first URL if multiple formats are offered.
+                * @attribute audioPlayed
+                * @type string
+                */
+                audioPlayed: {
                     type: 'string',
                     default: ''
                 },
@@ -554,17 +565,19 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(FullScreen, VideoRecord, Expan
             this.set('testAudioTimesPlayed', 0);
             this.set('satisfiedDuration', false);
             var _this = this;
-            if (this.get('doRecording')) {
-                this.set('doingTest', false);
-                $('#waitForVideo').html('uploading video...').show();
-                this.stopRecorder().then(() => {
-                    _this.set('stoppedRecording', true);
+            if (!this.get('_finishing')) {
+                this.set('_finishing', true);
+                if (this.get('doRecording')) {
+                    this.set('doingTest', false);
+                    this.stopRecorder().then(() => {
+                        _this.set('stoppedRecording', true);
+                        _this.send('next');
+                    }, () => {
+                        _this.send('next');
+                    });
+                } else {
                     _this.send('next');
-                }, () => {
-                    _this.send('next');
-                });
-            } else {
-                _this.send('next');
+                }
             }
         },
 
@@ -638,6 +651,7 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(FullScreen, VideoRecord, Expan
 
         } else if (pause || !wasPaused) { // Not currently paused: pause
             window.clearInterval(this.get('testTimer'));
+
             if ($('#unpause-audio').length) {
                 $('#unpause-audio')[0].pause();
             }
@@ -675,10 +689,18 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(FullScreen, VideoRecord, Expan
 
         // Store which video actually gets played for convenience when analyzing data
         let video = this.get('video_parsed', {});
-        if (video.source.length) {
+        if (video.source && video.source.length) {
             this.set('videoShown', video.source[0].src);
         } else {
             this.set('videoShown', '');
+        }
+
+        // Store which audio actually gets played for convenience when analyzing data
+        let audio = this.get('audio_parsed', {});
+        if (audio.source && audio.source.length) {
+            this.set('audioPlayed', audio.source[0].src);
+        } else {
+            this.set('audioPlayed', '');
         }
 
         // Apply user-provided CSS to parent text block
@@ -724,7 +746,6 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(FullScreen, VideoRecord, Expan
         if (!this.get('isPaused')) {
             this.startVideo();
         }
-        $('#waitForVideo').hide();
     },
 
     // Hook for starting session recorder

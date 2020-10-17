@@ -203,6 +203,49 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         }
     },
 
+    // Note: don't display the following in the docs; they're not used because startRecordingAutomatically is
+    // false.
+
+    /**
+     * @property {Boolean} showWaitForRecordingMessage
+     * @private
+     */
+
+    /**
+     * @property {Boolean} waitForRecordingMessage
+     * @private
+     */
+
+    /**
+     * @property {Boolean} waitForRecordingMessageColor
+     * @private
+     */
+
+    /**
+     * @property {Boolean} showWaitForUploadMessage
+     * @private
+     */
+
+    /**
+     * @property {Boolean} waitForUploadMessage
+     * @private
+     */
+
+    /**
+     * @property {String} waitForUploadMessageColor
+     * @private
+     */
+
+    /**
+     * @property {String} waitForWebcamImage
+     * @private
+     */
+
+    /**
+     * @property {String} waitForWebcamVideo
+     * @private
+     */
+
     frameSchemaProperties: {
         /**
         Name of PI running this study

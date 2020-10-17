@@ -184,6 +184,11 @@ export default Ember.Mixin.create({
         if (sessionRecorder) {
             var _this = this;
             return sessionRecorder.record().then(() => {
+                /**
+                 * When session video recorder has begun recording
+                 *
+                 * @event startSessionRecording
+                 */
                 _this.send('setTimeEvent', 'startSessionRecording', {
                     sessionPipeId: sessionRecorder.get('pipeVideoName')
                 });
@@ -196,12 +201,17 @@ export default Ember.Mixin.create({
     /**
      * Stop recording
      * @method stopSessionRecorder
-     * @return Promise Resolves when recording has started
+     * @return Promise Resolves when recording has been uploaded or timed out
      */
     stopSessionRecorder() {
         const sessionRecorder = this.get('sessionRecorder');
         if (sessionRecorder) {
-            this.send('setTimeEvent', 'stoppingCapture');
+            /**
+             * When session video recorder is stopped (upload may continue afterwards)
+             *
+             * @event stopSessionRecording
+             */
+            this.send('setTimeEvent', 'stopSessionRecording');
             return sessionRecorder.stop(this.get('sessionMaxUploadSeconds') * 1000);
         } else {
             return Ember.RSVP.reject();

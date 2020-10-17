@@ -8,7 +8,7 @@
     </div>
 
     <div id="image-area" class="{{if noStoryControls "image-area-no-controls"}} {{if (and noStoryControls maximizeDisplay) "image-area-fullscreen"}}" >
-        {{#if (or doRecording startSessionRecording)}}
+        {{#if startSessionRecording}}
             <p id="waitForVideo"> establishing video connection <br> please wait... </p>
         {{/if}}
 

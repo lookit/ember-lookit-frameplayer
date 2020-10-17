@@ -346,6 +346,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     fsButtonID: 'fsButton', // ID of button to go to fullscreen
 
     startedTrial: false, // whether we've started playing audio yet
+    _finishing: false, // whether we're currently trying to move to next trial (to prevent overlapping calls)
 
     // Override setting in VideoRecord mixin - only use camera if doing recording
     doUseCamera: Ember.computed.alias('doRecording'),
@@ -752,7 +753,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     // Override to do a bit extra when starting recording
     onRecordingStarted() {
         this.startTrial();
-        $('#waitForVideo').hide();
     },
 
     // Override to do a bit extra when starting session recorder
@@ -818,30 +818,32 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     finish() {
-        var _this = this;
-        /**
-         * Trial is complete and attempting to move to next frame; may wait for recording
-         * to catch up before proceeding.
-         *
-         * @event trialComplete
-         */
-        this.send('setTimeEvent', 'trialComplete');
+        if (!this.get('_finishing')) {
+            this.set('_finishing', true);
+            var _this = this;
+            /**
+             * Trial is complete and attempting to move to next frame; may wait for recording
+             * to catch up before proceeding.
+             *
+             * @event trialComplete
+             */
+            this.send('setTimeEvent', 'trialComplete');
+            if (this.get('doRecording')) {
+                $('#nextbutton').text('Sending recording...');
+                $('#nextbutton').prop('disabled', true);
+                this.set('nextButtonDisableTimer', window.setTimeout(function () {
+                    $('#nextbutton').prop('disabled', false);
+                }, 5000));
 
-        if (this.get('doRecording')) {
-            $('#nextbutton').text('Sending recording...');
-            $('#nextbutton').prop('disabled', true);
-            this.set('nextButtonDisableTimer', window.setTimeout(function() {
-                $('#nextbutton').prop('disabled', false);
-            }, 5000));
-
-            this.stopRecorder().then(() => {
-                _this.set('stoppedRecording', true);
+                this.stopRecorder().then(() => {
+                    _this.set('stoppedRecording', true);
+                    _this.send('next');
+                }, () => {
+                    _this.send('next');
+                });
+            } else {
                 _this.send('next');
-            }, () => {
-                _this.send('next');
-            });
-        } else {
-            _this.send('next');
+            }
         }
     },
 
@@ -858,9 +860,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     checkAndEnableProceed() {
-        if (this.get('minDurationAchieved') && this.get('finishedAllAudio') && !this.get('showingFeedbackDialog') && ((this.get('selectedImage') && (this.get('correctImageSelected') || !this.get('correctChoiceRequired'))) || !this.get('choiceRequired'))) {
+        let ready = this.get('minDurationAchieved') &&
+                    this.get('finishedAllAudio') &&
+                    !this.get('showingFeedbackDialog') &&
+                    (!this.get('choiceRequired') || (this.get('selectedImage') && (this.get('correctImageSelected') || !this.get('correctChoiceRequired'))));
+        if (ready) {
             this.readyToFinish();
         }
+        return ready;
     },
 
     readyToFinish() {

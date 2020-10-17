@@ -1,0 +1,60 @@
+.exp-lookit-instruction-video {
+
+    // Override max width restrictions on the expContainer
+    width: 95vw;
+    left: 2.5vw;
+    position: fixed;
+    // Make sure we can scroll down when it's narrow
+    overflow-y: auto;
+    top: 0;
+    bottom: 0;
+
+    .exp-text-medium
+    {
+        font-size: 1.3em;
+    }
+
+    video.instruction-video {
+        width: 100%;
+        max-height: 60vh;
+    }
+
+    .transcript {
+        height: 60vh;
+        overflow-y: scroll;
+        box-shadow: .5em .5em 1em gray;
+        background-color: #eee;
+        border: medium solid #aaa;
+        padding: 1em;
+        padding-top: 1.5em; // make space for overlapping title
+    }
+
+    .transcript-title {
+        font-size: 125%;
+        position: absolute;
+        display: block;
+        margin-top: -0.8em;
+        margin-left: 2em;
+        padding-left: .5em;
+        padding-right: .5em;
+        border: medium solid #aaa;
+        background-color: #eee;
+        margin-bottom: 2em;
+    }
+
+    li {
+        margin-bottom: 20px;
+
+        img.text-block-img {
+            float: right;
+            max-height: 180px;
+            border-radius: 10%;
+            border: thin solid black;
+        }
+    }
+
+    .media-warning {
+        color: red;
+    }
+
+}
