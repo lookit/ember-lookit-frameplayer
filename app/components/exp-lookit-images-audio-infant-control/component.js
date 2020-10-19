@@ -110,6 +110,9 @@ export default ExpLookitImagesAudio.extend(InfantControlledTiming, {
                 images: {
                     type: 'array'
                 },
+                audioPlayed: {
+                    type: 'string'
+                },
                 selectedImage: {
                     type: 'string'
                 },

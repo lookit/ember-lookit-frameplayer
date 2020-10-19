@@ -62,9 +62,6 @@ let {
 * ```
 * @class Exp-lookit-start-recording
 * @extends Exp-frame-base
-* @uses Full-screen
-* @uses Media-reload
-* @uses Video-record
 * @uses Expand-assets
 */
 
