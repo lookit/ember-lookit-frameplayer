@@ -23,6 +23,7 @@ let sounds = [];
 let soundURLs = [];
 let imageURLs = [];
 let images = [];
+const BOXGAP = 1.2; // Constant value to define gap between box and the paddle size
 
 // Media mapping as Enum
 const gameSound = {
@@ -163,7 +164,6 @@ export default class DiscreteCatchLift extends PaddleGames {
     target.lastTime = new Date().getTime();
     target.pizzaTimeDelay =0;
     this.setClockObject();
-    super.createPaddleBox();
     super.basketObject();
     if (super.currentRounds > 0 || (super.currentRounds === 0 && !super.paddleIsMoved())) {
       sounds[gameSound.START].play();
@@ -306,23 +306,30 @@ export default class DiscreteCatchLift extends PaddleGames {
     if (super.gameState.initialTime === 0 ) {
 
       sounds[gameSound.START].play();
+      super.gameState.initialTime = new Date().getTime();
+    }
+
+    if (target.state === 'start'){
+
+      if (super.gameState.initialTime > 0 && super.isOutsideBox(BOXGAP)){
+        super.gameState.initialTime = 0;
+        sounds[gameSound.START].pause();
+        sounds[gameSound.START].currentTime = 0;
+        paddleBoxColor = super.Utils.redColor;
+        super.createPaddleBox(paddleBoxColor);
+      }
+
+      //Randomize initial wait time here
+      if (super.gameState.initialTime > 0 && super.getElapsedTime() > jitterT) {
+        sounds[gameSound.START].pause();
+        sounds[gameSound.START].currentTime = 0;
+        target.state = 'showTarget';
+      }
+
+
     }
 
 
-    if (super.gameState.initialTime > 0 && super.paddleIsMoved() && target.state === 'start') {
-      super.gameState.initialTime = 0;
-      sounds[gameSound.START].pause();
-      sounds[gameSound.START].currentTime = 0;
-      paddleBoxColor = super.Utils.redColor;
-      super.createPaddleBox(paddleBoxColor);
-    }
-
-    //Randomize initial wait time here
-    if (target.state === 'start' && super.gameState.initialTime > 0 && super.getElapsedTime() > jitterT) {
-      sounds[gameSound.START].pause();
-      sounds[gameSound.START].currentTime = 0;
-      target.state = 'showTarget';
-    }
 
     // Add delay between showing the target (rat) and pizza (clock)
     if(target.state === 'showTarget') {
