@@ -3,15 +3,13 @@
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: {{ current_version }}
-
-
-        {% if readthedocs.v1.vcs.type == 'github' %}
+        v: {{ current_version }}
+        {% if READTHEDOCS.v1.vcs.type == 'github' %}
             <p>
             version ID:
-            <a href="https://github.com/{{ readthedocs.v1.vcs.user }}/{{ readthedocs.v1.vcs.repo }}
-                /commits/{{ readthedocs.v1.vcs.version }}">
-                {{ readthedocs.v1.vcs.commit }}</a>
+            <a href="https://github.com/{{ READTHEDOCS.v1.vcs.user }}/{{ READTHEDOCS.v1.vcs.repo }}
+                /commits/{{ READTHEDOCS.v1.vcs.version }}">
+                {{ READTHEDOCS.v1.vcs.commit }}</a>
             </p>
         {% endif %}
       <span class="fa fa-caret-down"></span>
