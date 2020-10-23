@@ -1,10 +1,6 @@
 exp-lookit-video
 ==============================================
 
-.. js:autoclass:: ExpLookitVideo
-   :members: *
-
-
 Overview
 ------------------
 
@@ -21,11 +17,20 @@ This is very customizable: you can...
  - have the frame proceed automatically (``autoProceed``), or enable a Next button when the user can move on
  - allow parents to press a key to pause the video (and then either restart when they un-pause, or move on to the next frame)
 
+What it looks like
+~~~~~~~~~~~~~~~~~~
+
+.. image:: /../images/Exp-lookit-video.png
+    :alt: Example screenshot from exp-lookit-video frame
+
 Extends:
 ~~~~~~~~~
 
-Below is information specific to this particular frame. There may also be parameters, events, and data collected that come from more general "mixins" it uses:
+Below is information specific to this particular frame. There may also be parameters, events, and data collected that come from the following more general sources:
 
+TODO: link these!
+
+- base frame
 - video-record
 - expand-assets
 
@@ -67,7 +72,7 @@ without a user event.)
 Examples
 ----------------
 
-.. code:: json
+.. code:: javascript
 
    "play-video-twice": {
       "kind": "exp-lookit-video",
@@ -107,10 +112,11 @@ Examples
           "webm",
           "mp4"
       ]
-  },
+  }
 
 Parameters
 ----------------
+
 
 Data collected
 ----------------

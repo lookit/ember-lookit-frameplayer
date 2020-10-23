@@ -40,8 +40,7 @@
     "handlebars": "^4.3.0",
     "jsdoc": "^3.6.5",
     "lodash": "~4.17.19",
-    "node-sass": "^4.14.1",
-    "sphinx-js": "^0.0.9"
+    "node-sass": "^4.14.1"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^3.0.0",
