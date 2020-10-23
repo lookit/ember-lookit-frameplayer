@@ -4,14 +4,8 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
         v: {{ current_version }}
-        {% if READTHEDOCS.v1.vcs.type == 'github' %}
-            <p>
-            version ID:
-            <a href="https://github.com/{{ READTHEDOCS.v1.vcs.user }}/{{ READTHEDOCS.v1.vcs.repo }}
-                /commits/{{ READTHEDOCS.v1.vcs.version }}">
-                {{ READTHEDOCS.v1.vcs.commit }}</a>
-            </p>
-        {% endif %}
+        <a href="https://{{ github_host|default("github.com") }}/{{ github_user }}/{{ github_repo }}/{{ github_version }}" > {{ See latest commits }}</a>
+
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
