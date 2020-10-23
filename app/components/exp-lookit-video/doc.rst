@@ -4,6 +4,8 @@ exp-lookit-video
 Overview
 ------------------
 
+
+
 Video display frame. This may be used for displaying videos to older children or parents, as well as for
 typical looking measures trials or as brief filler in between test trials.
 
@@ -11,6 +13,7 @@ typical looking measures trials or as brief filler in between test trials.
 :class:`ExpLookitCompositeVideoTrial`.)
 
 This is very customizable: you can...
+
  - position the video wherever you want on the screen, including specifying that it should fill the screen (while maintaining aspect ratio)
  - choose the background color
  - optionally specify audio that should play along with the video

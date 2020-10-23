@@ -1,10 +1,6 @@
 exp-lookit-composite-video-trial
 ==============================================
 
-.. js:autoclass:: ExpLookitCompositeVideoTrial
-  :members:
-
-
 Composite video display for typical looking measures trials (e.g. preferential looking,
 looking time). (Previously called exp-lookit-video.)
 

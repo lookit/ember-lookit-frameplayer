@@ -3,9 +3,6 @@ Welcome to lookit-frameplayer's documentation!
 
 The base frame
 
-.. js:autoclass:: ExpFrameBase
-   :members: *
-
 Frames:
 
 .. toctree::
