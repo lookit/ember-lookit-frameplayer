@@ -57,9 +57,4 @@ html_static_path = ['../images']
 # or fully qualified paths (eg. https://...)
 html_css_files = []
 
-# Since we’re documenting only JS or TS and no other languages (like C)
-primary_domain = 'js'
-
-js_source_path = '.'
-
-jsdoc_config_path = './conf.json'
+theme_navigation_depth = 4
