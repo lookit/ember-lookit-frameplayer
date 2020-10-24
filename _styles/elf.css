@@ -1,0 +1,7 @@
+.wy-side-nav-search > div.version > a, .wy-side-nav-search > div.version > a:visited {
+    color: white;
+}
+
+.wy-side-nav-search > div.version > a:hover {
+    background-color: hsla(0,0%,100%,.1);
+}
