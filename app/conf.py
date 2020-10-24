@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'lookit-frameplayer'
+project = 'Experiment runner'
 copyright = '2020, MIT'
 author = 'MIT'
 
@@ -56,4 +56,4 @@ html_static_path = ['../images', '../_styles']
 
 # These paths are either relative to html_static_path
 # or fully qualified paths (eg. https://...)
-html_css_files = ['../_styles/elf.css']
+html_css_files = ['elf.css']
