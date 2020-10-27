@@ -90,48 +90,46 @@ specified using stubs MUST be organized as expected under baseDir/MEDIATYPE/file
 Example usage:
 
 ```json
-"frames": {
-    "video-assent": {
-        "kind": "exp-lookit-video-assent",
-            "pages": [
-                {
-                    "imgSrc": "jane_smith.png",
-                    "altText": "Jane Smith",
-                    "textBlocks": [
-                        {
-                            "text": "My name is Jane Smith. I am a scientist who studies why children love cats."
-                        }
-                    ],
-                    "audio": "narration_1"
-                },
-                {
-                    "imgSrc": "cats_game.png",
-                    "altText": "picture of sample game",
-                    "textBlocks": [
-                        {
-                            "text": "In this study, you will play a game about cats."
-                        }
-                    ]
-                },
-                {
-                    "showWebcam": true,
-                    "textBlocks": [
-                        {
-                            "text": "During the study, your webcam will record a video of you. We will watch this video later to see how much you love cats."
-                        }
-                    ]
-                }
-            ],
-            "baseDir": "https://s3.amazonaws.com/lookitcontents/cats/",
-            "videoTypes": [
-                "webm",
-                "mp4"
-            ],
-            "participationQuestion": "Do you want to participate in this study?",
-            "minimumYearsToAssent": 7
-        }
-    }
-}
+ "video-assent": {
+    "kind": "exp-lookit-video-assent",
+        "pages": [
+            {
+                "imgSrc": "two_cats.JPG",
+                "altText": "two cats",
+                "textBlocks": [
+                    {
+                        "text": "My name is Jane Smith. I am a scientist who studies why children love cats."
+                    }
+                ],
+                "audio": "sample_1",
+                "type": "audio/mp3"
+            },
+            {
+                "imgSrc": "three_cats.JPG",
+                "altText": "picture of sample game",
+                "textBlocks": [
+                    {
+                        "text": "In this study, you will play a game about cats."
+                    }
+                ]
+            },
+            {
+                "showWebcam": true,
+                "textBlocks": [
+                    {
+                        "text": "During the study, your webcam will record a video of you. We will watch this video later to see how much you love cats."
+                    }
+                ]
+            }
+        ],
+        "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
+        "videoTypes": [
+            "webm",
+            "mp4"
+        ],
+        "participationQuestion": "Do you want to participate in this study?",
+        "minimumYearsToAssent": 7
+     }
 ```
 
 @class Exp-lookit-video-assent

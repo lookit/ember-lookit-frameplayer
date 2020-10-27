@@ -79,7 +79,22 @@ export default ExpFrameBaseComponent.extend(ExpandAssets, {
     fullScreenElementId: 'experiment-player',
     fsButtonID: 'fsButton',
 
+    /**
+     * @property {Boolean} startSessionRecording
+     * @private
+     */
+    /**
+     * @property {Boolean} endSessionRecording
+     * @private
+     */
     endSessionRecording: true,
+    /**
+     * Maximum time allowed for whole-session video upload before proceeding, in seconds.
+     * Can be overridden by researcher, based on tradeoff between making families wait and
+     * losing data.
+     * @property {Number} sessionMaxUploadSeconds
+     * @default 3000
+     */
     sessionMaxUploadSeconds: 3000, // 5 minutes - generous default for possibly long recording
 
     hasStartedUpload: false,
