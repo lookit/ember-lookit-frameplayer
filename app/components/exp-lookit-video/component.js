@@ -683,7 +683,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         $(document).on('keyup.pauser', (e) => {
             if (this.checkFullscreen()) {
-                if (this.get('pauseKey') && e.key === this.get('pauseKey')) { // space: pause/unpause study
+                if (this.get('pauseKey') && e.key === this.get('pauseKey')) {
+                    this.togglePauseStudy();
+                } else if (!this.get('pauseKey') && e.key === ' ' && this.get('isPaused')) {
                     this.togglePauseStudy();
                 }
             }
