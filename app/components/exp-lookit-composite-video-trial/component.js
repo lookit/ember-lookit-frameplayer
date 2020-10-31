@@ -13,12 +13,13 @@ let {
 
 /**
  * @module exp-player
- * @submodule frames
+ * @submodule frames-deprecated
  */
 
 /**
 * Composite video display for typical looking measures trials (e.g. preferential looking,
-* looking time). (Previously called exp-lookit-video.)
+* looking time). (Previously called exp-lookit-video.) This is deprecated and will not be
+ * included in release 2.x. For new studies, use {{#crossLink "Exp-lookit-video"}}{{/crossLink}} instead.
 *
 * Trial consists of four phases, each of which is optional.
 *
@@ -109,6 +110,7 @@ let {
 * @uses Media-reload
 * @uses Video-record
 * @uses Expand-assets
+ * @deprecated
 */
 
 export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord, ExpandAssets, {
