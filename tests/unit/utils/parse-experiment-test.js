@@ -23,27 +23,105 @@ var sampleBaseExperiment = {
     pastSessions: []
 };
 
-test('parser two single frames stay single frames', function(assert) {
-    var experiment = $.extend(true, {}, sampleBaseExperiment);
+
+test('parser parses two single frames and they stay single frames', function(assert) {
+    let experiment = $.extend(true, {}, sampleBaseExperiment);
     experiment.structure.sequence = ['aVideo', 'aSound'];
 
-    var parser = new ExperimentParser(experiment);
-    var result = parser.parse()[0];
+    const parser = new ExperimentParser(experiment);
+    const result = parser.parse()[0];
 
-    var expIds = result.map((item) => item.id);
+    const expIds = result.map((item) => item.id);
     assert.deepEqual(expIds, ['0-aVideo', '1-aSound']);
 });
 
+
 test('parser parses a single frame and randomizer', function(assert) {
-    var experiment = $.extend(true, {}, sampleBaseExperiment);
+    let experiment = $.extend(true, {}, sampleBaseExperiment);
     experiment.structure.sequence = ['aVideo', 'notMuchOfAChoice'];
 
-    var parser = new ExperimentParser(experiment);
-    var result = parser.parse()[0];
+    const parser = new ExperimentParser(experiment);
+    const result = parser.parse()[0];
 
-    var expIds = result.map((item) => item.id);
+    const expIds = result.map((item) => item.id);
     assert.deepEqual(expIds, ['0-aVideo', '1-notMuchOfAChoice']);
 });
+
+
+test('parser errors on frame id with _', function(assert) {
+    let experiment = {
+        structure: {
+            frames: {
+                video_frame: {
+                    kind: 'exp-video'
+                }
+            },
+            sequence: ['video_frame']
+        },
+        pastSessions: []
+    };
+
+    let parser = new ExperimentParser(experiment);
+
+    assert.throws(parser.parse, 'Underscore allowed in frame ID; should only allow alphanumeric, -, ., space');
+});
+
+test('parser errors on frame id with /', function(assert) {
+    let experiment = {
+        structure: {
+            frames: {
+                'video/frame': {
+                    kind: 'exp-video'
+                }
+            },
+            sequence: ['video/frame']
+        },
+        pastSessions: []
+    };
+
+    let parser = new ExperimentParser(experiment);
+
+    assert.throws(parser.parse, 'Slash allowed in frame ID; should only allow alphanumeric, -, ., space');
+});
+
+test('parser errors on frame id with special character', function(assert) {
+    let experiment = {
+        structure: {
+            frames: {
+                'video@frame': {
+                    kind: 'exp-video'
+                }
+            },
+            sequence: ['video@frame']
+        },
+        pastSessions: []
+    };
+
+    let parser = new ExperimentParser(experiment);
+
+    assert.throws(parser.parse, '@ allowed in frame ID; should only allow alphanumeric, -, ., space');
+});
+
+test('parser allows frame id with space, dash, ., numbers', function(assert) {
+    let experiment = {
+        structure: {
+            frames: {
+                'video-frame.3 special': {
+                    kind: 'exp-video'
+                }
+            },
+            sequence: ['video-frame.3 special']
+        },
+        pastSessions: []
+    };
+
+    const parser = new ExperimentParser(experiment);
+    const result = parser.parse()[0];
+
+    const expIds = result.map((item) => item.id);
+    assert.deepEqual(expIds, ['0-video-frame.3 special']);
+});
+
 
 test('parser applies parameters to single frame as expected', function(assert) {
 
@@ -70,13 +148,12 @@ test('parser applies parameters to single frame as expected', function(assert) {
         pastSessions: []
     };
 
-
-
     var experiment = $.extend(true, {}, simpleParameterExperiment);
     var parser = new ExperimentParser(experiment);
     var result = parser.parse()[0];
     assert.deepEqual(result[0].kind, 'exp-lookit-text', 'FRAME_TYPE parameter should be substituted in for kind');
 });
+
 
 test('parser creates frame group as expected', function(assert) {
 
@@ -133,6 +210,7 @@ test('parser creates frame group as expected', function(assert) {
                             ]);
 
 });
+
 
 test('parser applies parameters to frame group as expected', function(assert) {
 
@@ -331,7 +409,6 @@ test('parser propagates properties through randomizer as expected', function(ass
                             ]);
 
 });
-
 
 
 test('parser applies nested randomization using parameters', function(assert) {

@@ -50,6 +50,8 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
     id: null,
     kind: null,
 
+    classNames: ['lookit-frame'],
+
     extra: {},
 
     mergedProperties: ['frameSchemaProperties'],
@@ -628,6 +630,7 @@ export default Ember.Component.extend(FullScreen, SessionRecord, {
         // being triggered as part of standard frame operation or as an override to a frame
         // that is not typically fullscreen. In latter case, keep formatting as close to
         // before as possible, to enable forms etc. to work ok in fullscreen mode.
+
         Ember.$('*').removeClass('player-fullscreen');
         Ember.$('*').removeClass('player-fullscreen-override');
         Ember.$('#application-parse-error-text').hide();

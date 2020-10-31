@@ -142,6 +142,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
     // Override setting in VideoRecord mixin - only use camera if doing recording
     doUseCamera: Ember.computed.alias('doRecording'),
+    /**
+     * @property {Boolean} startRecordingAutomatically
+     * @private
+     */
     startRecordingAutomatically: Ember.computed.alias('doRecording'),
 
     assetsToExpand: {

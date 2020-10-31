@@ -1,6 +1,6 @@
 {
   "name": "ember-lookit-frameplayer",
-  "version": "v1.3.0",
+  "version": "v1.3.1",
   "description": "Ember Frame Player",
   "private": true,
   "directories": {
@@ -38,7 +38,7 @@
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "font-awesome": "~4.7.0",
     "handlebars": "^4.3.0",
-    "lodash": "~4.17.13",
+    "lodash": "~4.17.19",
     "node-sass": "^4.14.1"
   },
   "devDependencies": {

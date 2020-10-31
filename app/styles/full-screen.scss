@@ -15,11 +15,11 @@
     margin: 0;
 }
 
-#experiment-player.player-fullscreen > div > div {
+#experiment-player.player-fullscreen .lookit-frame {
     display: table;
 }
 
-#experiment-player.player-fullscreen > div > div > div  {
+#experiment-player.player-fullscreen .lookit-frame > div  {
     display: table-cell;
     text-align: center;
     vertical-align: middle;

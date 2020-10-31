@@ -4,7 +4,7 @@ import ExpFrameBaseComponent from '../exp-frame-base/component';
 import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
-import isColor from '../../utils/is-color';
+import isColor, {colorSpecToRgbaArray} from '../../utils/is-color';
 import { audioAssetOptions, videoAssetOptions } from '../../mixins/expand-assets';
 
 let {
@@ -140,6 +140,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     unpausing: false,
 
     maximizeVideoArea: false,
+    _finishing: false,
 
     frameSchemaProperties: {
         /**
@@ -253,7 +254,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         },
 
         /**
-        Array of objects specifying attention-grabber video src and type, as for sources. The attention-grabber video is shown (looping) during the announcement phase and when the study is paused.
+        Video to show (looping) when trial is paused. As with the main video, this can either be an array of
+         {'src': 'https://...', 'type': '...'} objects (e.g. providing both webm and mp4 versions at specified URLS)
+         or a single string relative to baseDir/<EXT>/.
         @property {Array} pauseVideo
             @param {String} src
             @param {String} type
@@ -261,7 +264,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         */
         pauseVideo: {
             anyOf: videoAssetOptions,
-            description: 'List of objects specifying attention-grabber video src and type',
+            description: 'List of objects specifying video to show while trial is paused, each specifying src and type',
             default: []
         },
 
@@ -288,7 +291,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             description: 'Parent-facing description of the key to pause the study',
             default: 'space'
         },
-
 
         /**
          Whether to restart this frame upon unpausing, vs moving on to the next frame
@@ -419,6 +421,15 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 * @type string
                 */
                 videoShown: {
+                    type: 'string',
+                    default: ''
+                },
+                /**
+                * Source of audio played during this trial. Just stores first URL if multiple formats are offered.
+                * @attribute audioPlayed
+                * @type string
+                */
+                audioPlayed: {
                     type: 'string',
                     default: ''
                 },
@@ -557,17 +568,19 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
             this.set('testAudioTimesPlayed', 0);
             this.set('satisfiedDuration', false);
             var _this = this;
-            if (this.get('doRecording')) {
-                this.set('doingTest', false);
-                $('#waitForVideo').html('uploading video...').show();
-                this.stopRecorder().then(() => {
-                    _this.set('stoppedRecording', true);
+            if (!this.get('_finishing')) {
+                this.set('_finishing', true);
+                if (this.get('doRecording')) {
+                    this.set('doingTest', false);
+                    this.stopRecorder().then(() => {
+                        _this.set('stoppedRecording', true);
+                        _this.send('next');
+                    }, () => {
+                        _this.send('next');
+                    });
+                } else {
                     _this.send('next');
-                }, () => {
-                    _this.send('next');
-                });
-            } else {
-                _this.send('next');
+                }
             }
         },
 
@@ -641,6 +654,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         } else if (pause || !wasPaused) { // Not currently paused: pause
             window.clearInterval(this.get('testTimer'));
+
             if ($('#unpause-audio').length) {
                 $('#unpause-audio')[0].pause();
             }
@@ -669,7 +683,9 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         $(document).on('keyup.pauser', (e) => {
             if (this.checkFullscreen()) {
-                if (this.get('pauseKey') && e.key === this.get('pauseKey')) { // space: pause/unpause study
+                if (this.get('pauseKey') && e.key === this.get('pauseKey')) {
+                    this.togglePauseStudy();
+                } else if (!this.get('pauseKey') && e.key === ' ' && this.get('isPaused')) {
                     this.togglePauseStudy();
                 }
             }
@@ -678,10 +694,18 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         // Store which video actually gets played for convenience when analyzing data
         let video = this.get('video_parsed', {});
-        if (video.source.length) {
+        if (video.source && video.source.length) {
             this.set('videoShown', video.source[0].src);
         } else {
             this.set('videoShown', '');
+        }
+
+        // Store which audio actually gets played for convenience when analyzing data
+        let audio = this.get('audio_parsed', {});
+        if (audio.source && audio.source.length) {
+            this.set('audioPlayed', audio.source[0].src);
+        } else {
+            this.set('audioPlayed', '');
         }
 
         // Apply user-provided CSS to parent text block
@@ -705,10 +729,16 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         }
 
         // Apply background color
-        if (isColor(this.get('backgroundColor'))) {
-            $('div.exp-lookit-video').css('background-color', this.get('backgroundColor'));
+        let colorSpec = this.get('backgroundColor');
+        if (isColor(colorSpec)) {
+            $('div.story-image-container, div#image-area, div.exp-lookit-video').css('background-color', this.get('backgroundColor'));
+            // Set text color so it'll be visible (black or white depending on how dark background is). Use style
+            // so this applies whenever pause text actually appears.
+            let colorSpecRGBA = colorSpecToRgbaArray(colorSpec);
+            let textColor = (colorSpecRGBA[0] + colorSpecRGBA[1] + colorSpecRGBA[2] > 128 * 3) ? 'black' : 'white';
+            $(`<style>div.exp-lookit-video p#waitForVideo, div.exp-lookit-video p.pause-instructions { color: ${textColor}; }</style>`).appendTo('div.exp-lookit-video');
         } else {
-            console.warn('Invalid background color provided; not applying.');
+            console.warn(`Invalid backgroundColor (${colorSpec}) provided; using default instead.`);
         }
 
         if (!this.get('doRecording') && !this.get('startSessionRecording') && !this.get('isPaused')) {
@@ -727,7 +757,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         if (!this.get('isPaused')) {
             this.startVideo();
         }
-        $('#waitForVideo').hide();
     },
 
     // Hook for starting session recorder

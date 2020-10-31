@@ -3,11 +3,7 @@ $exp-lookit-video-assent-highlight-color: #d4efdf;
 
 .exp-lookit-video-assent
 {
-    &.row {
-        width: 90vw;
-        left: 5vw;
-        position: fixed;
-    }
+    overflow-y: auto;
 
     .well.video-assent-prompt  {
         div {
@@ -23,7 +19,8 @@ $exp-lookit-video-assent-highlight-color: #d4efdf;
     }
 
     .video-assent-doc {
-        overflow: scroll;
+        overflow: auto;
+        height: 50vh;
 
         p {
             font-size: 1.5em;
@@ -38,19 +35,14 @@ $exp-lookit-video-assent-highlight-color: #d4efdf;
     }
 
     .exp-lookit-assent-visual-container {
-        height: 40vh;
+        height: 30vh;
     }
 
     .exp-lookit-assent-image {
         object-fit: contain;
         width: 100%;
-        height: 40vh;
-        padding: 10px;
-    }
-
-    .assent-info {
-        min-height: 65vh;
-        height: 65vh;
+        height: 30vh;
+        padding: 5px;
     }
 
     .assent-instruction-text {
@@ -136,7 +128,7 @@ $exp-lookit-video-assent-highlight-color: #d4efdf;
     }
 
     #yesbutton, #nobutton {
-        font-size: 1.5em;
+        font-size: 1.2em;
     }
 
     .no-assent-warning {

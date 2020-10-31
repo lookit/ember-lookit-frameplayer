@@ -1,0 +1,83 @@
+{{! template-lint-disable no-unused-block-params }}
+<div class="exp-lookit-instruction-video">
+
+    <div class="col-xs-12 col-lg-10 col-lg-offset-1">
+
+        <div class="vertical-pad-sm"></div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-8">
+                <h1 class="exp-text-medium">{{title}}</h1>
+                <p>{{exp-format introText}}</p>
+            </div>
+        </div>
+
+        <div class="row">
+
+            {{#if transcriptBlocks}}
+
+                <div class="col-xs-12 col-md-7">
+                    {{#if instructionsVideo}}
+                        <video class="instruction-video"
+                               controls
+                               onended={{action "mediaPlayed"}}
+                        >
+                            {{#each instructionsVideo_parsed as |mediaSource|}}
+                                <source src={{mediaSource.src}} type={{mediaSource.type}}>
+                            {{/each}}
+                        </video>
+                    {{/if}}
+                </div>
+
+                <div class="col-xs-12 col-md-5">
+                    <p class="transcript-title"> {{ transcriptTitle }} </p>
+                    <div class="transcript">
+                        {{#each transcriptBlocks as |block idx|}}
+                            {{exp-text-block block=block}}
+                        {{/each}}
+                    </div>
+                </div>
+
+            {{else}}
+
+                <div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+                    {{#if instructionsVideo}}
+                        <video class="instruction-video"
+                               controls
+                               onended={{action "mediaPlayed"}}
+                        >
+                            {{#each instructionsVideo_parsed as |mediaSource|}}
+                                <source src={{mediaSource.src}} type={{mediaSource.type}}>
+                            {{/each}}
+                        </video>
+                    {{/if}}
+                </div>
+
+            {{/if}}
+        </div>
+
+        <div class="row">
+            <div class="vertical-pad-sm"></div>
+            <div class="col-xs-12">
+                {{#if showWarning}}
+                    <div class="media-warning pull-right">
+                        {{exp-format warningText}}
+                    </div>
+                {{/if}}
+            </div>
+            <div class="col-xs-12">
+
+                {{#if showPreviousButton}}
+                    <button type="button" class="btn btn-default pull-left" {{ action "previous" }}>
+                        Previous
+                    </button>
+                {{/if}}
+                <button type="button" id="nextbutton" class="btn btn-success pull-right {{if (not hasCompletedFrame) "disabled"}}" {{ action "checkIfDoneThenNext" }}>
+                    {{exp-format nextButtonText}}
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>

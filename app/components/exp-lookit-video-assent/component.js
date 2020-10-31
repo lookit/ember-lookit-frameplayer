@@ -2,7 +2,6 @@ import Em from 'ember';
 import layout from './template';
 
 import ExpFrameBaseComponent from '../exp-frame-base/component';
-import MediaReload from '../../mixins/media-reload';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
 import { audioAssetOptions, videoAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
@@ -139,9 +138,10 @@ Example usage:
 @extends Exp-frame-base
 
 @uses Video-record
+@uses Expand-assets
 */
 
-export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAssets, {
+export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
     layout,
     frameType: 'CONSENT',
     disableRecord: Em.computed('recorder.recording', 'recorder.hasCamAccess', function () {
@@ -180,7 +180,52 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
 
     childResponse: false,
 
+    /**
+     * @property {Boolean} startRecordingAutomatically
+     * @private
+     */
     startRecordingAutomatically: Em.computed.alias('recordWholeProcedure'),
+
+    /**
+     * @property {Boolean} showWaitForRecordingMessage
+     * @private
+     */
+    showWaitForRecordingMessage: false,
+
+    /**
+     * @property {Boolean} waitForRecordingMessage
+     * @private
+     */
+
+    /**
+     * @property {Boolean} waitForRecordingMessageColor
+     * @private
+     */
+
+    /**
+     * @property {Boolean} showWaitForUploadMessage
+     * @private
+     */
+
+    /**
+     * @property {Boolean} waitForUploadMessage
+     * @private
+     */
+
+    /**
+     * @property {String} waitForUploadMessageColor
+     * @private
+     */
+
+    /**
+     * @property {String} waitForWebcamImage
+     * @private
+     */
+
+    /**
+     * @property {String} waitForWebcamVideo
+     * @private
+     */
 
     assetsToExpand: {
         'audio': ['pages/audio'],
@@ -191,7 +236,8 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
     // Utility to play audio/video object and avoid failing to actually trigger play for
     // dumb browser reasons / race conditions
     playMedia(mediaObj) {
-        //mediaObj.pause();
+        mediaObj.pause();
+        mediaObj.load();
         mediaObj.currentTime = 0;
         mediaObj.play().then(() => {
         }).catch(() => {
@@ -201,7 +247,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
     },
 
     updatePage() {
-        if (this.get('recordLastPage') && !this.get('recordWholeProcedure') && (this.get('pageIndex') == this.get('pages').length - 1)) {
+        if (this.get('recordLastPage') && !this.get('recordWholeProcedure') && (this.get('pageIndex') === this.get('pages').length - 1)) {
             this.startRecorder();
         }
         if (this.get('pageHasAudio')) {
@@ -218,7 +264,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
 
         nextVideo() {
             this.set('pageIndex', this.get('pageIndex') + 1);
-            if ((this.get('pageIndex') == this.get('pages').length - 1) && !this.get('pageHasAudio') && !this.get('pageHasVideo')) {
+            if ((this.get('pageIndex') === this.get('pages').length - 1) && !this.get('pageHasAudio') && !this.get('pageHasVideo')) {
                 this.set('readAllPages', true);
             }
             /**
@@ -265,7 +311,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
                 {childResponse: this.get('childResponse')});
 
             var _this = this;
-            if (_this.get('childResponse') == 'Yes') {
+            if (_this.get('childResponse') === 'Yes') {
                 this.stopRecorder().then(() => {
                     _this.send('next');
                 }, () => {
@@ -280,7 +326,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
             this.get('hasCompletedEachPageAudio')[this.get('pageIndex')] = true;
             this.set('hasCompletedThisPageAudio', true);
 
-            if (this.get('pageIndex') == this.get('pages').length - 1) {
+            if (this.get('pageIndex') === this.get('pages').length - 1) {
                 this.set('readAllPages', true);
             }
         },
@@ -289,7 +335,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, MediaReload, ExpandAsse
             this.get('hasCompletedEachPageVideo')[this.get('pageIndex')] = true;
             this.set('hasCompletedThisPageVideo', true);
 
-            if (this.get('pageIndex') == this.get('pages').length - 1) {
+            if (this.get('pageIndex') === this.get('pages').length - 1) {
                 this.set('readAllPages', true);
             }
         },

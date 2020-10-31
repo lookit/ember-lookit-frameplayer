@@ -346,6 +346,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     fsButtonID: 'fsButton', // ID of button to go to fullscreen
 
     startedTrial: false, // whether we've started playing audio yet
+    _finishing: false, // whether we're currently trying to move to next trial (to prevent overlapping calls)
 
     // Override setting in VideoRecord mixin - only use camera if doing recording
     doUseCamera: Ember.computed.alias('doRecording'),
@@ -367,6 +368,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     canMakeChoice: true,
     showingFeedbackDialog: false,
     selectedImage: null,
+
+    audioPlayed: null,
 
     noParentText: false,
 
@@ -726,23 +729,31 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 /**
                 * Array of images used in this frame [same as passed to this frame, but
                 * may reflect random assignment for this particular participant]
-                * @attribute images
+                * @attribute {Array} images
                 */
                 images: {
                     type: 'array'
                 },
                 /**
                 * ID of image selected at time of proceeding
-                * @attribute selectedImage
+                * @attribute {String} selectedImage
                 */
                 selectedImage: {
                     type: 'string'
                 },
                 /**
                 * Whether image selected at time of proceeding is marked as correct
-                * @attribute correctImageSelected
+                * @attribute {Boolean} correctImageSelected
                 */
                 correctImageSelected: {
+                    type: 'Boolean'
+                },
+                /**
+                * Source URL of audio played, if any. If multiple sources provided (e.g.
+                * mp4 and ogg versions) just the first is stored.
+                * @attribute {String} audioPlayed
+                */
+                audioPlayed: {
                     type: 'string'
                 }
             },
@@ -752,7 +763,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     // Override to do a bit extra when starting recording
     onRecordingStarted() {
         this.startTrial();
-        $('#waitForVideo').hide();
     },
 
     // Override to do a bit extra when starting session recorder
@@ -818,30 +828,32 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     finish() {
-        var _this = this;
-        /**
-         * Trial is complete and attempting to move to next frame; may wait for recording
-         * to catch up before proceeding.
-         *
-         * @event trialComplete
-         */
-        this.send('setTimeEvent', 'trialComplete');
+        if (!this.get('_finishing')) {
+            this.set('_finishing', true);
+            var _this = this;
+            /**
+             * Trial is complete and attempting to move to next frame; may wait for recording
+             * to catch up before proceeding.
+             *
+             * @event trialComplete
+             */
+            this.send('setTimeEvent', 'trialComplete');
+            if (this.get('doRecording')) {
+                $('#nextbutton').text('Sending recording...');
+                $('#nextbutton').prop('disabled', true);
+                this.set('nextButtonDisableTimer', window.setTimeout(function () {
+                    $('#nextbutton').prop('disabled', false);
+                }, 5000));
 
-        if (this.get('doRecording')) {
-            $('#nextbutton').text('Sending recording...');
-            $('#nextbutton').prop('disabled', true);
-            this.set('nextButtonDisableTimer', window.setTimeout(function() {
-                $('#nextbutton').prop('disabled', false);
-            }, 5000));
-
-            this.stopRecorder().then(() => {
-                _this.set('stoppedRecording', true);
+                this.stopRecorder().then(() => {
+                    _this.set('stoppedRecording', true);
+                    _this.send('next');
+                }, () => {
+                    _this.send('next');
+                });
+            } else {
                 _this.send('next');
-            }, () => {
-                _this.send('next');
-            });
-        } else {
-            _this.send('next');
+            }
         }
     },
 
@@ -858,9 +870,14 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     checkAndEnableProceed() {
-        if (this.get('minDurationAchieved') && this.get('finishedAllAudio') && !this.get('showingFeedbackDialog') && ((this.get('selectedImage') && (this.get('correctImageSelected') || !this.get('correctChoiceRequired'))) || !this.get('choiceRequired'))) {
+        let ready = this.get('minDurationAchieved') &&
+                    this.get('finishedAllAudio') &&
+                    !this.get('showingFeedbackDialog') &&
+                    (!this.get('choiceRequired') || (this.get('selectedImage') && (this.get('correctImageSelected') || !this.get('correctChoiceRequired'))));
+        if (ready) {
             this.readyToFinish();
         }
+        return ready;
     },
 
     readyToFinish() {
@@ -1119,6 +1136,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         this.set('minDurationAchieved', !(this.get('durationSeconds') > 0));
         this.set('showProgressBar', this.get('showProgressBar') && this.get('durationSeconds') > 0);
         this.set('showReplayButton', this.get('showReplayButton') && this.get('audio').length);
+
+        // Store audio source
+        let audioSources = this.get('audio_parsed');
+        if (audioSources && audioSources.length) {
+            this.set('audioPlayed', audioSources[0].src);
+        }
     },
 
     didInsertElement() {
@@ -1158,6 +1181,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         }
 
         $('#nextbutton').prop('disabled', true);
+
+        // Begin trial!
         this.checkAndEnableProceed();
     },
 
