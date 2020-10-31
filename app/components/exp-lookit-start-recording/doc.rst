@@ -35,9 +35,7 @@ Specifying where files are
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Several of the parameters for this frame can be specified either by providing a list of full URLs and file types, or
-by providing just a filename that will be interpreted relative to the ``baseDir``. These are: ``audio``
-(``source`` property), ``pauseAudio``, ``unpauseAudio``, ``pauseVideo``, and ``video`` (``source``
-property). See the :ref:`expand-assets` tool that this frame uses.
+by providing just a filename that will be interpreted relative to the ``baseDir``. See the :ref:`expand-assets` tool that this frame uses.
 
 More general functionality
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

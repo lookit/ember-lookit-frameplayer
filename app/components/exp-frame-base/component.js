@@ -631,11 +631,7 @@ let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
         },
 
         next() {
-            /**
-             * Move to next frame
-             *
-             * @event nextFrame
-             */
+
             this.send('setTimeEvent', 'nextFrame');
 
             // Determine which frame to go to next

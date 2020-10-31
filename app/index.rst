@@ -47,9 +47,11 @@ The documentation will tell you how each frame works, what data it collects, and
    components/exp-lookit-video-assent/doc.rst
    components/exp-lookit-video-consent/doc.rst
    components/exp-lookit-video-infant-control/doc.rst
-   components/exp-lookit-composite-video-trial/doc.rst
+   components/exp-lookit-webcam-display/doc.rst
    components/exp-video-config/doc.rst
    components/exp-video-config-quality/doc.rst
+
+   components/exp-lookit-composite-video-trial/doc.rst
 
 Mixins
 ------------
