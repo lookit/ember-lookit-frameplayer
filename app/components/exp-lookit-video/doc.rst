@@ -1,3 +1,5 @@
+.. _exp-lookit-video:
+
 exp-lookit-video
 ==============================================
 
@@ -79,7 +81,7 @@ More general functionality
 Below is information specific to this particular frame. There may also be available parameters, events recorded,
 and data collected that come from the following more general sources:
 
-- the :ref:`base frame` (things all frames do)
+- the :ref:`base frame<base frame>` (things all frames do)
 - :ref:`video-record`
 - :ref:`expand-assets`
 

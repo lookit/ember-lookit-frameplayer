@@ -28,8 +28,28 @@ The documentation will tell you how each frame works, what data it collects, and
    :caption: Frames
    :hidden:
 
+   components/exp-frame-select/doc.rst
+   components/exp-lookit-calibration/doc.rst
+   components/exp-lookit-change-detection/doc.rst
+   components/exp-lookit-exit-survey/doc.rst
+   components/exp-lookit-images-audio/doc.rst
+   components/exp-lookit-images-audio-infant-control/doc.rst
+   components/exp-lookit-instruction-video/doc.rst
+   components/exp-lookit-instructions/doc.rst
+   components/exp-lookit-mood-questionnaire/doc.rst
+   components/exp-lookit-observation/doc.rst
+   components/exp-lookit-start-recording/doc.rst
+   components/exp-lookit-stimuli-preview/doc.rst
+   components/exp-lookit-stop-recording/doc.rst
+   components/exp-lookit-survey/doc.rst
+   components/exp-lookit-text/doc.rst
    components/exp-lookit-video/doc.rst
+   components/exp-lookit-video-assent/doc.rst
+   components/exp-lookit-video-consent/doc.rst
+   components/exp-lookit-video-infant-control/doc.rst
    components/exp-lookit-composite-video-trial/doc.rst
+   components/exp-video-config/doc.rst
+   components/exp-video-config-quality/doc.rst
 
 Mixins
 ------------
@@ -45,6 +65,7 @@ information about what parameters to include and what data will be collected her
    :hidden:
 
    mixins/expand-assets-doc.rst
+   mixins/infant-controlled-timing-doc.rst
    mixins/video-record-doc.rst
 
 Randomizers
@@ -59,3 +80,15 @@ works and what parameters you need to give it.
    :maxdepth: 2
    :caption: Randomizers
    :hidden:
+
+Utilities
+-------------
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Utilities
+   :hidden:
+
+   components/exp-text-block/doc.rst
+

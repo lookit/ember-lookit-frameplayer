@@ -1,21 +1,20 @@
 .. _base frame:
 
-exp-frame-base
-==============================================
-
 Overview
-================
+=================
 
 
 
 
 Parameters
-===============
+=================
 
+.. _selectNextFrame:
+
+.. _generateProperties:
 
 Data collected
-----------------
-
+=================
 
 Events recorded
 =================
