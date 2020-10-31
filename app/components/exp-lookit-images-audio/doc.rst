@@ -546,6 +546,10 @@ The fields added specifically for this frame type are:
     correctImageSelected [Boolean]
         Whether image selected at time of proceeding is marked as correct
 
+    audioPlayed [String]
+        Source URL of audio played, if any. If multiple sources provided (e.g.
+        mp4 and ogg versions) just the first is stored.
+
 Events recorded
 ----------------
 

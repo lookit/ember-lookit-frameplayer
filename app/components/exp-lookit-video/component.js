@@ -3,7 +3,7 @@ import layout from './template';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
-import isColor from '../../utils/is-color';
+import isColor, {colorSpecToRgbaArray} from '../../utils/is-color';
 import { audioAssetOptions, videoAssetOptions } from '../../mixins/expand-assets';
 
 let {
@@ -678,7 +678,9 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
 
         $(document).on('keyup.pauser', (e) => {
             if (this.checkFullscreen()) {
-                if (this.get('pauseKey') && e.key === this.get('pauseKey')) { // space: pause/unpause study
+                if (this.get('pauseKey') && e.key === this.get('pauseKey')) {
+                    this.togglePauseStudy();
+                } else if (!this.get('pauseKey') && e.key === ' ' && this.get('isPaused')) {
                     this.togglePauseStudy();
                 }
             }
@@ -722,10 +724,16 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
         }
 
         // Apply background color
-        if (isColor(this.get('backgroundColor'))) {
-            $('div.exp-lookit-video').css('background-color', this.get('backgroundColor'));
+        let colorSpec = this.get('backgroundColor');
+        if (isColor(colorSpec)) {
+            $('div.story-image-container, div#image-area, div.exp-lookit-video').css('background-color', this.get('backgroundColor'));
+            // Set text color so it'll be visible (black or white depending on how dark background is). Use style
+            // so this applies whenever pause text actually appears.
+            let colorSpecRGBA = colorSpecToRgbaArray(colorSpec);
+            let textColor = (colorSpecRGBA[0] + colorSpecRGBA[1] + colorSpecRGBA[2] > 128 * 3) ? 'black' : 'white';
+            $(`<style>div.exp-lookit-video p#waitForVideo, div.exp-lookit-video p.pause-instructions { color: ${textColor}; }</style>`).appendTo('div.exp-lookit-video');
         } else {
-            console.warn('Invalid background color provided; not applying.');
+            console.warn(`Invalid backgroundColor (${colorSpec}) provided; using default instead.`);
         }
 
         if (!this.get('doRecording') && !this.get('startSessionRecording') && !this.get('isPaused')) {

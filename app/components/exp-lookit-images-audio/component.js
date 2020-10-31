@@ -369,6 +369,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     showingFeedbackDialog: false,
     selectedImage: null,
 
+    audioPlayed: null,
+
     noParentText: false,
 
     assetsToExpand: {
@@ -727,23 +729,31 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
                 /**
                 * Array of images used in this frame [same as passed to this frame, but
                 * may reflect random assignment for this particular participant]
-                * @attribute images
+                * @attribute {Array} images
                 */
                 images: {
                     type: 'array'
                 },
                 /**
                 * ID of image selected at time of proceeding
-                * @attribute selectedImage
+                * @attribute {String} selectedImage
                 */
                 selectedImage: {
                     type: 'string'
                 },
                 /**
                 * Whether image selected at time of proceeding is marked as correct
-                * @attribute correctImageSelected
+                * @attribute {Boolean} correctImageSelected
                 */
                 correctImageSelected: {
+                    type: 'Boolean'
+                },
+                /**
+                * Source URL of audio played, if any. If multiple sources provided (e.g.
+                * mp4 and ogg versions) just the first is stored.
+                * @attribute {String} audioPlayed
+                */
+                audioPlayed: {
                     type: 'string'
                 }
             },
@@ -1126,6 +1136,12 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         this.set('minDurationAchieved', !(this.get('durationSeconds') > 0));
         this.set('showProgressBar', this.get('showProgressBar') && this.get('durationSeconds') > 0);
         this.set('showReplayButton', this.get('showReplayButton') && this.get('audio').length);
+
+        // Store audio source
+        let audioSources = this.get('audio_parsed');
+        if (audioSources && audioSources.length) {
+            this.set('audioPlayed', audioSources[0].src);
+        }
     },
 
     didInsertElement() {
@@ -1165,6 +1181,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         }
 
         $('#nextbutton').prop('disabled', true);
+
+        // Begin trial!
         this.checkAndEnableProceed();
     },
 

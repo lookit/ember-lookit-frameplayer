@@ -25,6 +25,8 @@ Researchers can select from the following named templates:
 
 * `consent_003`: Same as consent_002 except that the 'Payment' section is renamed 'Benefits, risks, and payment' for institutions that prefer that
 
+* `consent_004`: Same as consent_003 except that sentences in 'Data collection and webcam recording' are rearranged to make it clearer what happens if you withdraw video data, and the prompt says to read "out loud (or in ASL)" instead of just "out loud" for accessibility.
+
 Important: To look up the exact text of each consent template for your IRB protocol, and to understand the context for each piece of text to be inserted, please see https://github.com/lookit/research-resources/tree/master/Legal
 
 The consent document can be downloaded as PDF document by participant.
@@ -386,12 +388,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         /**
         Which consent document template to use. If you are setting up a new study,
         use the most recent (highest number) of these options. Options: consent_001,
-        consent_002, consent_003.
+        consent_002, consent_003, consent_004.
         @property {String} template
         */
         template: {
             type: 'string',
-            enum: ['consent_001', 'consent_002', 'consent_003'],
+            enum: ['consent_001', 'consent_002', 'consent_003', 'consent_004'],
             description: 'Which consent document template to use',
             default: 'consent_001'
         }
@@ -423,7 +425,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     didInsertElement() {
         this._super(...arguments);
-        let validTemplateNames = ['consent_001', 'consent_002', 'consent_003'];
+        let validTemplateNames = ['consent_001', 'consent_002', 'consent_003', 'consent_004'];
         if (!validTemplateNames.includes(this.get('template'))) {
             console.warn('Invalid consent form specified. \'template\' parameter of \'exp-lookit-video-consent\' frame should be one of: ' + validTemplateNames.join(' '));
         }

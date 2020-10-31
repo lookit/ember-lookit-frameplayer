@@ -273,14 +273,15 @@ export default ExpFrameBaseComponent.extend(ExpandAssets, {
         let _frame = this;
         // See https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight#Determine_if_an_element_has_been_totally_scrolled
         if ($transcript.length) {
-            // First check if the transcript is already scrolled to end because it doesn't need to scroll
-            if ($transcript[0].scrollHeight - $transcript[0].scrollTop === $transcript[0].clientHeight) {
+            // First check if the transcript is already scrolled to end because it doesn't need to scroll. Allow slight
+            // buffer (2px) as Chrome doesn't always think we've scrolled to very bottom.
+            if ($transcript[0].scrollHeight - $transcript[0].scrollTop <= $transcript[0].clientHeight + 2) {
                 _frame.set('readTranscript', true);
                 _frame.set('showWarning', false);
             }
             // And check upon scrolling if we've reached the bottom
             $transcript.bind('scroll', function() {
-                if (this.scrollHeight - this.scrollTop === this.clientHeight) {
+                if (this.scrollHeight - this.scrollTop <= this.clientHeight + 2) {
                     _frame.set('readTranscript', true);
                     _frame.set('showWarning', false);
                 }
