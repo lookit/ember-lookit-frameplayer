@@ -12,7 +12,7 @@ let {
 
 /**
  * @module exp-player
- * @submodule frames
+ * @submodule frames-deprecated
  */
 
 /**
@@ -130,6 +130,7 @@ let {
 * @uses Full-screen
 * @uses Video-record
 * @uses Expand-assets
+ * @deprecated
 */
 
 export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
