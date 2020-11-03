@@ -1,3 +1,5 @@
+.. _exp-lookit-change-detection:
+
 exp-lookit-change-detection
 ==============================================
 

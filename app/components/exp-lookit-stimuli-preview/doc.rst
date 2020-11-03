@@ -1,3 +1,5 @@
+.. _exp-lookit-stimuli-preview:
+
 exp-lookit-stimuli-preview
 ==============================================
 

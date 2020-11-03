@@ -1,8 +1,9 @@
-exp-lookit-composite-video-trial
+exp-lookit-preferential-looking
 ==============================================
 
 This frame is deprecated and will not be included in release 2.x.
-Please see `the old docs <https://lookit.github.io/lookit-frameplayer-docs/classes/Exp-lookit-composite-video-trial.html>`__.
+Please see `the old docs <https://lookit.github.io/lookit-frameplayer-docs/classes/Exp-lookit-preferential-looking.html>`__.
+
 
 Consider instead
 ------------------

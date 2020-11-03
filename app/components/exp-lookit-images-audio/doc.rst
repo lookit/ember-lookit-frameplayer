@@ -443,7 +443,7 @@ Parameters
         be shown at a delay, or specify times to highlight particular images.
 
         :id: [String]
-            unique ID for this image
+            unique ID for this image. This must not have any spaces or special characters and cannot start with a number.
         :src: [String]
             URL of image source. This can be a full
             URL, or relative to baseDir (see baseDir).

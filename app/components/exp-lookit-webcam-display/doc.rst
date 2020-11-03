@@ -1,3 +1,5 @@
+.. _exp-video-webcam-display:
+
 exp-lookit-webcam-display
 ==============================================
 

@@ -94,3 +94,15 @@ Utilities
 
    components/exp-text-block/doc.rst
 
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Deprecated frames
+   :hidden:
+
+   components/exp-lookit-composite-video-trial/doc.rst
+   components/exp-lookit-dialogue-page/doc.rst
+   components/exp-lookit-geometry-alternation/doc.rst
+   components/exp-lookit-geometry-alternation-open/doc.rst
+   components/exp-lookit-preferential-looking/doc.rst
+   components/exp-lookit-story-page/doc.rst
