@@ -2,7 +2,7 @@ exp-lookit-composite-video-trial
 ==============================================
 
 This frame is deprecated and will not be included in release 2.x.
-Please see `the old docs <https://lookit.github.io/lookit-frameplayer-docs/classes/Exp-lookit-composite-video-trial.html>`__.
+Please see `the old docs <https://lookit.github.io/lookit-frameplayer-docs/releases/v1.3.1/classes/Exp-lookit-composite-video-trial.html>`__.
 
 Consider instead
 ------------------
