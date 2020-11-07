@@ -109,132 +109,128 @@ This frame will alternate between fruit and shapes on the left, and just fruit o
 Parameters
 ----------------
 
-.. glossary::
+doRecording [Boolean | ``true``]
+    Whether to do webcam recording on this frame
 
-    doRecording [Boolean | ``true``]
-        Whether to do webcam recording on this frame
+attnLength [Number | ``0``]
+    minimum amount of time to show attention-getter in seconds. If 0, attention-getter segment is skipped.
 
-    attnLength [Number | ``0``]
-        minimum amount of time to show attention-getter in seconds. If 0, attention-getter segment is skipped.
+trialLength [Number | ``60``]
+    length of alternation trial in seconds. This refers only to the section of the
+    trial where the alternating image streams are presented - it does not count
+    any announcement phase.
 
-    trialLength [Number | ``60``]
-        length of alternation trial in seconds. This refers only to the section of the
-        trial where the alternating image streams are presented - it does not count
-        any announcement phase.
+audioSources [String or Array | ``[]``]
+    Array of {src: 'url', type: 'MIMEtype'} objects for instructions during attention-getter video, OR
+    string relative to ``baseDir``. The entire audio file will play before moving on, even if it's longer than
+    ``attnLength``.
 
-    audioSources [String or Array | ``[]``]
-        Array of {src: 'url', type: 'MIMEtype'} objects for instructions during attention-getter video, OR
-        string relative to ``baseDir``. The entire audio file will play before moving on, even if it's longer than
-        ``attnLength``.
+musicSources [String or Array | ``[]``]
+    Array of {src: 'url', type: 'MIMEtype'} objects, OR string relative to ``baseDir``, for music during trial.
+    This will loop for the duration of the trial.
 
-    musicSources [String or Array | ``[]``]
-        Array of {src: 'url', type: 'MIMEtype'} objects, OR string relative to ``baseDir``, for music during trial.
-        This will loop for the duration of the trial.
+endAudioSources [String or Array | ``[]``]
+    Array of {src: 'url', type: 'MIMEtype'} objects for audio, OR string relative to ``baseDir``, to play
+    after completion of trial (optional; used for last trial "okay to open your eyes now" announcement)
 
-    endAudioSources [String or Array | ``[]``]
-        Array of {src: 'url', type: 'MIMEtype'} objects for audio, OR string relative to ``baseDir``, to play
-        after completion of trial (optional; used for last trial "okay to open your eyes now" announcement)
+videoSources [String or Array | ``[]``]
+    Array of {src: 'url', type: 'MIMEtype'} objects for attention-getter video, OR string relative to ``baseDir``.
+    Will play in a loop for announcement phase.
 
-    videoSources [String or Array | ``[]``]
-        Array of {src: 'url', type: 'MIMEtype'} objects for attention-getter video, OR string relative to ``baseDir``.
-        Will play in a loop for announcement phase.
+pauseAudio [String or Array | ``[]``]
+    Array of {src: 'url', type: 'MIMEtype'} objects for audio to play upon pausing study, OR string relative to
+    ``baseDir``.
 
-    pauseAudio [String or Array | ``[]``]
-        Array of {src: 'url', type: 'MIMEtype'} objects for audio to play upon pausing study, OR string relative to
-        ``baseDir``.
+unpauseAudio [String or Array | ``[]``]
+    Array of {src: 'url', type: 'MIMEtype'} objects for audio to play upon unpausing study, OR string relative to
+    ``baseDir``.
 
-    unpauseAudio [String or Array | ``[]``]
-        Array of {src: 'url', type: 'MIMEtype'} objects for audio to play upon unpausing study, OR string relative to
-        ``baseDir``.
+fsAudio [String or Array | ``[]``]
+    Array of {src: 'url', type: 'MIMEtype'} objects for audio to play upon pausing study due to leaving fullscreen
+    mode, OR string relative to ``baseDir``.
 
-    fsAudio [String or Array | ``[]``]
-        Array of {src: 'url', type: 'MIMEtype'} objects for audio to play upon pausing study due to leaving fullscreen
-        mode, OR string relative to ``baseDir``.
+startWithA [Boolean | ``true``]
+    Whether to start with the 'A' image list on both left and right. If true, both
+    sides start with their respective A image lists; if false, both lists start with
+    their respective B image lists.
 
-    startWithA [Boolean | ``true``]
-        Whether to start with the 'A' image list on both left and right. If true, both
-        sides start with their respective A image lists; if false, both lists start with
-        their respective B image lists.
+randomizeImageOrder [Boolean | ``true``]
+    Whether to randomize image presentation order within the lists ``leftImagesA``,
+    ``leftImagesB``, ``rightImagesA``, and ``rightImagesB``. If true (default), the order
+    of presentation is randomized. Each time all the images in one list have been
+    presented, the order is randomized again for the next 'round.' If false, the
+    order of presentation is as written in the list. Once all images are presented,
+    we loop back around to the first image and start again.
 
-    randomizeImageOrder [Boolean | ``true``]
-        Whether to randomize image presentation order within the lists ``leftImagesA``,
-        ``leftImagesB``, ``rightImagesA``, and ``rightImagesB``. If true (default), the order
-        of presentation is randomized. Each time all the images in one list have been
-        presented, the order is randomized again for the next 'round.' If false, the
-        order of presentation is as written in the list. Once all images are presented,
-        we loop back around to the first image and start again.
+    Example of randomization: suppose we have defined
 
-        Example of randomization: suppose we have defined
+    .. code:: javascript
 
-        .. code:: javascript
+        leftImagesA: ['apple', 'banana', 'cucumber'],
+        leftImagesB: ['aardvark', 'bat'],
+        randomizeImageOrder: true,
+        startWithA: true
 
-            leftImagesA: ['apple', 'banana', 'cucumber'],
-            leftImagesB: ['aardvark', 'bat'],
-            randomizeImageOrder: true,
-            startWithA: true
+    And suppose the timing is such that we end up with 10 images total. Here is a
+    possible sequence of images shown on the left:
 
-        And suppose the timing is such that we end up with 10 images total. Here is a
-        possible sequence of images shown on the left:
+    ``['banana', 'aardvark', 'apple', 'bat', 'cucumber', 'bat', 'cucumber', 'aardvark', 'apple', 'bat']``
 
-        ``['banana', 'aardvark', 'apple', 'bat', 'cucumber', 'bat', 'cucumber', 'aardvark', 'apple', 'bat']``
+displayMs [Number | ``750``]
+    Amount of time to display each image, in milliseconds
 
-    displayMs [Number | ``750``]
-        Amount of time to display each image, in milliseconds
+blankMs [Number | ``250``]
+    Amount of time for blank display between each image, in milliseconds
 
-    blankMs [Number | ``250``]
-        Amount of time for blank display between each image, in milliseconds
+border [String | ``thin solid gray``]
+    Format of border to display around alternation streams, if any. See
+    https://developer.mozilla.org/en-US/docs/Web/CSS/border for syntax.
 
-    border [String | ``thin solid gray``]
-        Format of border to display around alternation streams, if any. See
-        https://developer.mozilla.org/en-US/docs/Web/CSS/border for syntax.
+backgroundColor [String | ``'white'``]
+    Color of background. See `CSS specs <https://developer.mozilla.org/en-US/docs/Web/CSS/color_value>`__
+    for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
+    rgb hex values (e.g. '#800080' - include the '#')
 
-    backgroundColor [String | ``'white'``]
-        Color of background. See `CSS specs <https://developer.mozilla.org/en-US/docs/Web/CSS/color_value>`__
-        for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
-        rgb hex values (e.g. '#800080' - include the '#')
+containerColor [String | ``'white'``]
+    Color of image stream container, if different from overall background.
+    Defaults to backgroundColor if one is provided.
+    See `CSS specs <https://developer.mozilla.org/en-US/docs/Web/CSS/color_value>`__
+    for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
+    rgb hex values (e.g. '#800080' - include the '#')
 
-    containerColor [String | ``'white'``]
-        Color of image stream container, if different from overall background.
-        Defaults to backgroundColor if one is provided.
-        See `CSS specs <https://developer.mozilla.org/en-US/docs/Web/CSS/color_value>`__
-        for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
-        rgb hex values (e.g. '#800080' - include the '#')
+leftImagesA [Array | ``[]``]
+    Set A of images to display on left of screen. Left stream will alternate between
+    images from set A and from set B. Elements of list can be full URLs or relative
+    paths starting from `baseDir`.
 
-    leftImagesA [Array | ``[]``]
-        Set A of images to display on left of screen. Left stream will alternate between
-        images from set A and from set B. Elements of list can be full URLs or relative
-        paths starting from `baseDir`.
+leftImagesB [Array | ``[]``]
+    Set B of images to display on left of screen. Left stream will alternate between
+    images from set A and from set B. Elements of list can be full URLs or relative
+    paths starting from `baseDir`.
 
-    leftImagesB [Array | ``[]``]
-        Set B of images to display on left of screen. Left stream will alternate between
-        images from set A and from set B. Elements of list can be full URLs or relative
-        paths starting from `baseDir`.
+rightImagesA [Array | ``[]``]
+    Set A of images to display on right of screen. Right stream will alternate between
+    images from set A and from set B. Elements of list can be full URLs or relative
+    paths starting from `baseDir`.
 
-    rightImagesA [Array | ``[]``]
-        Set A of images to display on right of screen. Right stream will alternate between
-        images from set A and from set B. Elements of list can be full URLs or relative
-        paths starting from `baseDir`.
-
-    rightImagesB [Array | ``[]``]
-        Set B of images to display on right of screen. Right stream will alternate between
-        images from set A and from set B. Elements of list can be full URLs or relative
-        paths starting from `baseDir`.
+rightImagesB [Array | ``[]``]
+    Set B of images to display on right of screen. Right stream will alternate between
+    images from set A and from set B. Elements of list can be full URLs or relative
+    paths starting from `baseDir`.
 
 Data collected
 ----------------
 
 The fields added specifically for this frame type are:
 
-.. glossary::
+leftSequence [Array]
+    Sequence of images shown on the left
 
-    leftSequence [Array]
-        Sequence of images shown on the left
+rightSequence [Array]
+    Sequence of images shown on the right
 
-    rightSequence [Array]
-        Sequence of images shown on the right
-
-    hasBeenPaused [Boolean]
-        Whether the trial was paused at any point
+hasBeenPaused [Boolean]
+    Whether the trial was paused at any point
 
 Events recorded
 ----------------

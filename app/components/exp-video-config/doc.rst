@@ -56,10 +56,8 @@ This frame shows a friendly message offering tech support by the lab via phone.
 Parameters
 ----------------
 
-.. glossary::
-
-    troubleshootingIntro [String | ``''``]
-        Text to show as the introduction to the troubleshooting tips section
+troubleshootingIntro [String | ``''``]
+    Text to show as the introduction to the troubleshooting tips section
 
 
 Data collected

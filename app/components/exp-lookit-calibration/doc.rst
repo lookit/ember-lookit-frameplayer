@@ -51,7 +51,7 @@ Specifying where files are
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Several of the parameters for this frame can be specified either by providing a list of full URLs and file types, or
-by providing just a filename that will be interpreted relative to the ``baseDir``. See the :ref:`expand-assets` tool that this frame uses.
+by providing just a filename that will be interpreted relative to the ``baseDir``. See the :ref:`expand-assets` mixin that this frame uses.
 
 More general functionality
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -121,49 +121,47 @@ This frame will show a small video at center, left, and right, along with chimes
 Parameters
 ----------------
 
-.. glossary::
+doRecording [Boolean | ``true``]
+    Whether to do any video recording during this frame. Default true. Set to false for e.g. last frame where just doing an announcement.
 
-    doRecording [Boolean | ``true``]
-        Whether to do any video recording during this frame. Default true. Set to false for e.g. last frame where just doing an announcement.
+backgroundColor [String | ``white``]
+    Color of background. See `CSS specs <https://developer.mozilla.org/en-US/docs/Web/CSS/color_value>`__
+    for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
+    rgb hex values (e.g. '#800080' - include the '#')
 
-    backgroundColor [String | ``white``]
-        Color of background. See `CSS specs <https://developer.mozilla.org/en-US/docs/Web/CSS/color_value>`__
-        for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
-        rgb hex values (e.g. '#800080' - include the '#')
+calibrationLength [Number | ``3000``]
+    Length of each calibration segment in ms
 
-    calibrationLength [Number | ``3000``]
-        Length of each calibration segment in ms
-
-    calibrationPositions [Array | ``['center', 'left', 'right', 'center']``]
-        Ordered list of positions to show calibration segment in. Options are
-        "center", "left", "right". Ignored if calibrationLength is 0.
+calibrationPositions [Array | ``['center', 'left', 'right', 'center']``]
+    Ordered list of positions to show calibration segment in. Options are
+    "center", "left", "right". Ignored if calibrationLength is 0.
 
 
-    calibrationAudio [String or Array | ``[]``]
-        Audio to play when the attention-grabber is placed at each location (will be
-        played once from the start, but cut off if it's longer than calibrationLength).
+calibrationAudio [String or Array | ``[]``]
+    Audio to play when the attention-grabber is placed at each location (will be
+    played once from the start, but cut off if it's longer than calibrationLength).
 
-        This can either be an array of `{src: 'url', type: 'MIMEtype'}` objects for
-        calibration audio, or just a string to use the full URLs based on `baseDir`.
+    This can either be an array of `{src: 'url', type: 'MIMEtype'}` objects for
+    calibration audio, or just a string to use the full URLs based on `baseDir`.
 
-    calibrationVideo [String or Array | ``[]``]
-        Calibration video (played from start at each calibration position). Supply
-        either a calibration video or calibration image, not both.
+calibrationVideo [String or Array | ``[]``]
+    Calibration video (played from start at each calibration position). Supply
+    either a calibration video or calibration image, not both.
 
-        This can be either an array of {src: 'url', type: 'MIMEtype'} objects or
-        just a string like `attentiongrabber` to rely on the `baseDir` and `videoTypes`
-        to generate full paths.
+    This can be either an array of {src: 'url', type: 'MIMEtype'} objects or
+    just a string like `attentiongrabber` to rely on the `baseDir` and `videoTypes`
+    to generate full paths.
 
-    calibrationImage [String | ``''``]
-        Image to use for calibration - will be placed at each location. Supply
-        either a calibration video or calibration image, not both.
+calibrationImage [String | ``''``]
+    Image to use for calibration - will be placed at each location. Supply
+    either a calibration video or calibration image, not both.
 
-        This can be either a full URL or just the filename (e.g. "star.png") to
-        use the full path based on `baseDir` (e.g. `baseDir/img/star.png`).
+    This can be either a full URL or just the filename (e.g. "star.png") to
+    use the full path based on `baseDir` (e.g. `baseDir/img/star.png`).
 
-    calibrationImageAnimation [String | ``'spin'``]
-        Which animation to use for the calibration image. Options are 'bounce', 'spin',
-        or '' (empty to not animate).
+calibrationImageAnimation [String | ``'spin'``]
+    Which animation to use for the calibration image. Options are 'bounce', 'spin',
+    or '' (empty to not animate).
 
 
 Data collected

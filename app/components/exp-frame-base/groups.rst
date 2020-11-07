@@ -25,7 +25,7 @@ Example
 
 Here is an example of a frame group that just contains two text frames:
 
-.. code:: json
+.. code:: javascript
 
     "testFrameGroup": {
         "kind": "group",

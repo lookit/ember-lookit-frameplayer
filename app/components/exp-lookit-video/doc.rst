@@ -185,141 +185,137 @@ webcam video.
 Parameters
 ----------------
 
-.. glossary::
+video [Object]
+    Object describing the video to show. It can have the following properties:
 
-    video [Object]
-        Object describing the video to show. It can have the following properties:
+    :source: [String or Array]
+        The location of the main video to play. This can be either
+        an array of ``{'src': 'https://...', 'type': '...'}`` objects (e.g., to provide both
+        webm and mp4 versions at specified URLS) or a single string relative to ``baseDir/<EXT>/``.
 
-        :source: [String or Array]
-            The location of the main video to play. This can be either
-            an array of ``{'src': 'https://...', 'type': '...'}`` objects (e.g., to provide both
-            webm and mp4 versions at specified URLS) or a single string relative to ``baseDir/<EXT>/``.
+    :left: [Number]
+        left margin, as percentage of screen width. If none of left, width, top, and height is provided,
+        the image is centered horizontally at its original size.
 
-        :left: [Number]
-            left margin, as percentage of screen width. If none of left, width, top, and height is provided,
-            the image is centered horizontally at its original size.
+    :width: [Number]
+        video width, as percentage of screen width. Note: in general only provide one of width and height;
+        the other will be adjusted to preserve the video aspect ratio.
 
-        :width: [Number]
-            video width, as percentage of screen width. Note: in general only provide one of width and height;
-            the other will be adjusted to preserve the video aspect ratio.
+    :top: [Number]
+        top margin, as percentage of video area height (i.e. 100 = whole screen, unless parent text or next button are
+        shown). If no positioning parameters are provided, the image is centered vertically.
 
-        :top: [Number]
-            top margin, as percentage of video area height (i.e. 100 = whole screen, unless parent text or next button are
-            shown). If no positioning parameters are provided, the image is centered vertically.
+    :height: [Number]
+        video height, as percentage of video area height. Note: in general only provide one of width and height;
+        the other will be adjusted to preserve the video aspect ratio.
 
-        :height: [Number]
-            video height, as percentage of video area height. Note: in general only provide one of width and height;
-            the other will be adjusted to preserve the video aspect ratio.
+    :position: [String]
+        set to 'fill' to fill the screen as much as possible while preserving aspect ratio. This overrides any
+        left/width/top/height values.
 
-        :position: [String]
-            set to 'fill' to fill the screen as much as possible while preserving aspect ratio. This overrides any
-            left/width/top/height values.
+    :loop: [Boolean]
+        whether the video should loop, even after any ``requireTestVideoCount`` is satisfied.
 
-        :loop: [Boolean]
-            whether the video should loop, even after any ``requireTestVideoCount`` is satisfied.
+audio [Object | ``{}``]
+    Object describing the audio to play along with video, if any. Can have properties:
 
-    audio [Object | ``{}``]
-        Object describing the audio to play along with video, if any. Can have properties:
+    :source: [String or Object]
+        Location of the audio file to play. This can either be an array of {src: 'url', type: 'MIMEtype'} objects, e.g.
+        listing equivalent .mp3 and .ogg files, or can be a single string ``filename``
+        which will be expanded based on ``baseDir`` and ``audioTypes`` values (see ``audioTypes``).
 
-        :source: [String or Object]
-            Location of the audio file to play. This can either be an array of {src: 'url', type: 'MIMEtype'} objects, e.g.
-            listing equivalent .mp3 and .ogg files, or can be a single string ``filename``
-            which will be expanded based on ``baseDir`` and ``audioTypes`` values (see ``audioTypes``).
+    :loop: [Boolean]
+        whether the video audio loop, even after any ``requireTestAudioCount`` is satisfied.
 
-        :loop: [Boolean]
-            whether the video audio loop, even after any ``requireTestAudioCount`` is satisfied.
+autoProceed [Boolean | ``true``]
+    Whether to proceed automatically when video is complete / requiredDuration is
+    achieved, vs. enabling a next button at that point.
 
-    autoProceed [Boolean | ``true``]
-        Whether to proceed automatically when video is complete / requiredDuration is
-        achieved, vs. enabling a next button at that point.
+    If true, the frame auto-advances after ALL of the following happen
 
-        If true, the frame auto-advances after ALL of the following happen
+    (a) the requiredDuration (if any) is achieved, counting from the video starting
+    (b) the video is played requireVideoCount times
+    (c) the audio is played requireAudioCount times
 
-        (a) the requiredDuration (if any) is achieved, counting from the video starting
-        (b) the video is played requireVideoCount times
-        (c) the audio is played requireAudioCount times
+    If false: a next button is displayed. It becomes possible to press 'next'
+    only once the conditions above are met.
 
-        If false: a next button is displayed. It becomes possible to press 'next'
-        only once the conditions above are met.
+backgroundColor [String | ``'white'``]
+    Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+    for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
+    rgb hex values (e.g. '#800080' - include the '#'). We recommend a light background if you need to
+    see children's eyes.
 
-    backgroundColor [String | ``'white'``]
-        Color of background. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
-        for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
-        rgb hex values (e.g. '#800080' - include the '#'). We recommend a light background if you need to
-        see children's eyes.
+pauseVideo [String or Array]
+    Video to show (looping) when trial is paused. As with the main video source, this can either be an array of
+     ``{'src': 'https://...', 'type': '...'}`` objects (e.g. providing both webm and mp4 versions at specified URLS)
+     or a single string relative to ``baseDir/<EXT>/``.
 
-    pauseVideo [String or Array]
-        Video to show (looping) when trial is paused. As with the main video source, this can either be an array of
-         ``{'src': 'https://...', 'type': '...'}`` objects (e.g. providing both webm and mp4 versions at specified URLS)
-         or a single string relative to ``baseDir/<EXT>/``.
+pauseAudio [String or Array]
+    Audio to play [one time] upon pausing study, e.g. "Study paused." This can be either an array of
+    ``{src: 'url', type: 'MIMEtype'}`` objects or a single string relative to ``baseDir/<EXT>``.
 
-    pauseAudio [String or Array]
-        Audio to play [one time] upon pausing study, e.g. "Study paused." This can be either an array of
-        ``{src: 'url', type: 'MIMEtype'}`` objects or a single string relative to ``baseDir/<EXT>``.
+unpauseAudio [String or Array]
+    Audio to play [one time] when participant resumes the study, before actually resuming. E.g. this might give them
+    a chance to get back in position. This can be either an array of
+    ``{src: 'url', type: 'MIMEtype'}`` objects or a single string relative to ``baseDir/<EXT>``.
 
-    unpauseAudio [String or Array]
-        Audio to play [one time] when participant resumes the study, before actually resuming. E.g. this might give them
-        a chance to get back in position. This can be either an array of
-        ``{src: 'url', type: 'MIMEtype'}`` objects or a single string relative to ``baseDir/<EXT>``.
+pauseKey [String | ``' '``]
+    Key to pause the trial. Use an empty string, '', to not allow pausing using the keyboard. You can look up the names of keys at
+    https://keycode.info. Default is the space bar (' ').
 
-    pauseKey [String | ``' '``]
-        Key to pause the trial. Use an empty string, '', to not allow pausing using the keyboard. You can look up the names of keys at
-        https://keycode.info. Default is the space bar (' ').
+pauseKeyDescription [String | ``'space'``]
+    Parent-facing description of the key to pause the study. This is just used to display text
+    "Press {pauseKeyDescription} to resume" when the study is paused.
 
-    pauseKeyDescription [String | ``'space'``]
-        Parent-facing description of the key to pause the study. This is just used to display text
-        "Press {pauseKeyDescription} to resume" when the study is paused.
+restartAfterPause [Boolean | ``true``]
+    Whether to restart this frame upon unpausing, vs moving on to the next frame
 
-    restartAfterPause [Boolean | ``true``]
-        Whether to restart this frame upon unpausing, vs moving on to the next frame
+pauseText [String | "(You'll have a moment to turn around again.)"]
+    Text to show under "Study paused / Press space to resume" when study is paused.
 
-    pauseText [String | "(You'll have a moment to turn around again.)"]
-        Text to show under "Study paused / Press space to resume" when study is paused.
+requiredDuration [Number | ``0``]
+    Duration to require before proceeding, if any. Set if you want a time-based limit.
+    E.g., setting requiredDuration to 20 means that the first 20 seconds of the video will be played, with
+    shorter videos looping until they get to 20s. Leave out or set to 0 to play the video through to the end
+    a set number of times instead.
 
-    requiredDuration [Number | ``0``]
-        Duration to require before proceeding, if any. Set if you want a time-based limit.
-        E.g., setting requiredDuration to 20 means that the first 20 seconds of the video will be played, with
-        shorter videos looping until they get to 20s. Leave out or set to 0 to play the video through to the end
-        a set number of times instead.
+requireVideoCount [Number | ``1``]
+    Number of times to play test video before moving on.
 
-    requireVideoCount [Number | ``1``]
-        Number of times to play test video before moving on.
+requireAudioCount [Number | ``0``]
+    Number of times to play test audio before moving on
 
-    requireAudioCount [Number | ``0``]
-        Number of times to play test audio before moving on
+doRecording [Boolean | ``true``]
+    Whether to do any (frame-specific) video recording during this frame. Set to false for e.g. last frame where just doing an
+    announcement.
 
-    doRecording [Boolean | ``true``]
-        Whether to do any (frame-specific) video recording during this frame. Set to false for e.g. last frame where just doing an
-        announcement.
+parentTextBlock [Object | ``{}``]
+    Text block to display to parent. Can have the following fields, each optional:
 
-    parentTextBlock [Object | ``{}``]
-        Text block to display to parent. Can have the following fields, each optional:
+    :title: String
+        title to display
 
-        :title: String
-            title to display
+    :text: String
+        paragraph of text
 
-        :text: String
-            paragraph of text
-
-        :css: Object
-            object specifying any css properties to apply to this section, and their values - e.g.
-            ``{'color': 'gray', 'font-size': 'large'}``
+    :css: Object
+        object specifying any css properties to apply to this section, and their values - e.g.
+        ``{'color': 'gray', 'font-size': 'large'}``
 
 Data collected
 ----------------
 
 The fields added specifically for this frame type are:
 
-.. glossary::
+videoShown [String]
+    Source of video  shown during this trial. Just stores first URL if multiple formats are offered.
 
-    videoShown [String]
-        Source of video  shown during this trial. Just stores first URL if multiple formats are offered.
+audioPlayed [String]
+    Source of audio played during this trial. Just stores first URL if multiple formats are offered.
 
-    audioPlayed [String]
-        Source of audio played during this trial. Just stores first URL if multiple formats are offered.
-
-    hasBeenPaused [Boolean]
-        Whether the video was paused at any point during the trial
+hasBeenPaused [Boolean]
+    Whether the video was paused at any point during the trial
 
 Events recorded
 ----------------

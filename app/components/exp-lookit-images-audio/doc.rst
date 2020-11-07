@@ -38,8 +38,8 @@ This can be used in a variety of ways - for example:
 In general, the images are displayed in a designated region of the screen with aspect
 ratio 7:4 (1.75 times as wide as it is tall) to standardize display as much as possible
 across different monitors. If you want to display things truly fullscreen, you can
-use `autoProceed` and not provide `parentText` so there's nothing at the bottom, and then
-set `maximizeDisplay` to true.
+use ``autoProceed`` and not provide ``parentText`` so there's nothing at the bottom, and then
+set ``maximizeDisplay`` to true.
 
 Any number of images may be placed on the screen, and their position
 specified. (Aspect ratio will be the same as the original image.)
@@ -54,11 +54,11 @@ Recording
 ~~~~~~~~~~
 
 Webcam recording may be turned on or off; if on, stimuli are not displayed and audio is
-not started until recording begins. (Using the frame-specific `isRecording` property
+not started until recording begins. (Using the frame-specific ``doRecording`` property
 is good if you have a smallish number of test trials and prefer to have separate video
 clips for each. For reaction time trials or many short trials, you will likely want
 to use session recording instead - i.e. start the session recording before the first trial
-and end on the last trial - to avoid the short delays related to starting/stopping the video.)
+and end after the last trial - to avoid the short delays related to starting/stopping the video.)
 
 Display
 ~~~~~~~~~~
@@ -363,190 +363,177 @@ The examples below show a variety of usages.
 Parameters
 ----------------
 
-.. glossary::
+doRecording [Boolean]
+    Whether to do webcam recording (will wait for webcam
+    connection before starting audio or showing images if so)
 
-    video [Object | ``{}`` ]
-        Object describing the video to show. It can have the following properties:
+autoProceed [Boolean | ``false``]
 
-        :source: [String or Array]
-            The location of the main video to play. This can be either
-            an array of ``{'src': 'https://...', 'type': '...'}`` objects (e.g., to provide both
-            webm and mp4 versions at specified URLS) or a single string relative to ``baseDir/<EXT>/``.
+    Whether to proceed automatically when all conditions are met, vs. enabling
+    next button at that point. If true: the next, previous, and replay buttons are
+    hidden, and the frame auto-advances after ALL of the following happen
 
+    (a) the audio segment (if any) completes
+    (b) the durationSeconds (if any) is achieved
+    (c) a choice is made (if required)
+    (d) that choice is correct (if required)
+    (e) the choice audio (if any) completes
+    (f) the choice text (if any) is dismissed
 
-    doRecording [Boolean]
-        Whether to do webcam recording (will wait for webcam
-        connection before starting audio or showing images if so)
+    If false: the next, previous, and replay buttons (as applicable) are displayed.
+    It becomes possible to press 'next' only once the conditions above are met.
 
-    autoProceed [Boolean | ``false``]
+durationSeconds [Number | ``0``]
+    Minimum duration of frame in seconds. If set, then it will only
+    be possible to proceed to the next frame after both the audio completes AND
+    this duration is acheived.
 
-        Whether to proceed automatically when all conditions are met, vs. enabling
-        next button at that point. If true: the next, previous, and replay buttons are
-        hidden, and the frame auto-advances after ALL of the following happen
+showProgressBar [Boolean | ``false``]
+    [Only used if durationSeconds set] Whether to
+    show a progress bar based on durationSeconds in the parent text area.
 
-        (a) the audio segment (if any) completes
-        (b) the durationSeconds (if any) is achieved
-        (c) a choice is made (if required)
-        (d) that choice is correct (if required)
-        (e) the choice audio (if any) completes
-        (f) the choice text (if any) is dismissed
+showPreviousButton [Boolean | ``true``]
+    [Only used if not autoProceed] Whether to
+    show a previous button to allow the participant to go to the previous frame
 
-        If false: the next, previous, and replay buttons (as applicable) are displayed.
-        It becomes possible to press 'next' only once the conditions above are met.
+showReplayButton [Boolean | ``true``]
+    [Only used if not autoProceed AND if there is audio] Whether to
+    show a replay button to allow the participant to replay the audio
 
-    durationSeconds [Number | ``0``]
-        Minimum duration of frame in seconds. If set, then it will only
-        be possible to proceed to the next frame after both the audio completes AND
-        this duration is acheived.
+maximizeDisplay [Boolean | ``false``]
+    Whether to have the image display area take up the whole screen if possible.
+    This will only apply if (a) there is no parent text and (b) there are no
+    control buttons (next, previous, replay) because the frame auto-proceeds.
 
-    showProgressBar [Boolean | ``false``]
-        [Only used if durationSeconds set] Whether to
-        show a progress bar based on durationSeconds in the parent text area.
+audio [String or Array | ``[]``]
+    Audio file to play at the start of this frame.
+    This can either be an array of {src: 'url', type: 'MIMEtype'} objects, e.g.
+    listing equivalent .mp3 and .ogg files, or can be a single string `filename`
+    which will be expanded based on `baseDir` and `audioTypes` values (see `audioTypes`).
 
-    showPreviousButton [Boolean | ``true``]
-        [Only used if not autoProceed] Whether to
-        show a previous button to allow the participant to go to the previous frame
+parentTextBlock [Object | ``{}``]
+    Text block to display to parent.  (Each field is optional)
 
-    showReplayButton [Boolean | ``true``]
-        [Only used if not autoProceed AND if there is audio] Whether to
-        show a replay button to allow the participant to replay the audio
+    :title:
+        title to display
 
-    maximizeDisplay [Boolean | ``false``]
-        Whether to have the image display area take up the whole screen if possible.
-        This will only apply if (a) there is no parent text and (b) there are no
-        control buttons (next, previous, replay) because the frame auto-proceeds.
+    :text:
+        text paragraph of text
 
-    audio [String or Array | ``[]``]
-        Audio file to play at the start of this frame.
-        This can either be an array of {src: 'url', type: 'MIMEtype'} objects, e.g.
-        listing equivalent .mp3 and .ogg files, or can be a single string `filename`
-        which will be expanded based on `baseDir` and `audioTypes` values (see `audioTypes`).
+    :css:
+        object specifying any css properties to apply to this section, and their values - e.g.
+        ``{'color': 'gray', 'font-size': 'large'}``
 
-    parentTextBlock [Object | ``{}``]
-        Text block to display to parent.  (Each field is optional)
+images [Array | ``[]``]
+    Array of images to display and information about their placement. For each
+    image, you need to specify ``src`` (image name/URL) and placement (either by
+    providing left/width/top values, or by using a ``position`` preset).
+    Everything else is optional! This is where you would say that an image should
+    be shown at a delay, or specify times to highlight particular images.
 
-        :title:
-            title to display
+    :id: [String]
+        unique ID for this image. This must not have any spaces or special characters and cannot start with a number.
+    :src: [String]
+        URL of image source. This can be a full
+        URL, or relative to baseDir (see baseDir).
+    :alt: [String]
+        alt-text for image in case it doesn't load and for screen readers
+    :left: [Number]
+        left margin, as percentage of story area width. If not provided,
+        the image is centered horizontally.
+    :width: [Number]
+        image width, as percentage of story area width. Note:
+        in general only provide one of width and height; the other will be adjusted to
+        preserve the image aspect ratio.
+    :top: [Number]
+        top margin, as percentage of story area height. If not provided,
+        the image is centered vertically.
+    :height: [Number]
+        image height, as percentage of story area height. Note:
+        in general only provide one of width and height; the other will be adjusted to
+        preserve the image aspect ratio.
+    :position: [String]
+        one of 'left', 'center', 'right', 'fill' to use presets
+        that place the image in approximately the left, center, or right third of
+        the screen or to fill the screen as much as possible.
+        This overrides left/width/top values if given.
+    :nonChoiceOption: [Boolean]
+        [Only used if ``choiceRequired`` is true]
+        whether this should be treated as a non-clickable option (e.g., this is
+        a picture of a girl, and the child needs to choose whether the girl has a
+        DOG or a CAT)
+    :displayDelayMs: [Number]
+        Delay at which to show the image after trial
+        start (timing will be relative to any audio or to start of trial if no
+        audio). Optional; default is to show images immediately.
+    :feedbackAudio: [Array or String]
+        [Only used if ``choiceRequired`` is true] Audio to play upon clicking this image.
+        This can either be an array of
+        {src: 'url', type: 'MIMEtype'} objects, e.g. listing equivalent .mp3 and
+        .ogg files, or can be a single string ``filename`` which will be expanded
+        based on ``baseDir`` and ``audioTypes`` values (see ``audioTypes``).
+    :feedbackText: [String]
+        [Only used if ``choiceRequired`` is true] Text
+        to display in a dialogue window upon clicking the image.
 
-        :text:
-            text paragraph of text
+backgroundColor [String | ``'black'``]
+    Color of background. See `CSS specs <https://developer.mozilla.org/en-US/docs/Web/CSS/color_value>`__
+    for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
+    rgb hex values (e.g. '#800080' - include the '#')
 
-        :css:
-            object specifying any css properties to apply to this section, and their values - e.g.
-            ``{'color': 'gray', 'font-size': 'large'}``
+pageColor [String | ``'white'``]
+    Color of area where images are shown, if different from overall background.
+    Defaults to backgroundColor if one is provided. See
+    `CSS specs <https://developer.mozilla.org/en-US/docs/Web/CSS/color_value>`__
+    for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
+    rgb hex values (e.g. '#800080' - include the '#')
 
-    images [Array | ``[]``]
-        Array of images to display and information about their placement. For each
-        image, you need to specify ``src`` (image name/URL) and placement (either by
-        providing left/width/top values, or by using a ``position`` preset).
-        Everything else is optional! This is where you would say that an image should
-        be shown at a delay, or specify times to highlight particular images.
+choiceRequired [Boolean | ``false``]
+    Whether this is a frame where the user needs to click to select one of the
+    images before proceeding.
 
-        :id: [String]
-            unique ID for this image. This must not have any spaces or special characters and cannot start with a number.
-        :src: [String]
-            URL of image source. This can be a full
-            URL, or relative to baseDir (see baseDir).
-        :alt: [String]
-            alt-text for image in case it doesn't load and for screen readers
-        :left: [Number]
-            left margin, as percentage of story area width. If not provided,
-            the image is centered horizontally.
-        :width: [Number]
-            image width, as percentage of story area width. Note:
-            in general only provide one of width and height; the other will be adjusted to
-            preserve the image aspect ratio.
-        :top: [Number]
-            top margin, as percentage of story area height. If not provided,
-            the image is centered vertically.
-        :height: [Number]
-            image height, as percentage of story area height. Note:
-            in general only provide one of width and height; the other will be adjusted to
-            preserve the image aspect ratio.
-        :position: [String]
-            one of 'left', 'center', 'right', 'fill' to use presets
-            that place the image in approximately the left, center, or right third of
-            the screen or to fill the screen as much as possible.
-            This overrides left/width/top values if given.
-        :nonChoiceOption: [Boolean]
-            [Only used if ``choiceRequired`` is true]
-            whether this should be treated as a non-clickable option (e.g., this is
-            a picture of a girl, and the child needs to choose whether the girl has a
-            DOG or a CAT)
-        :displayDelayMs: [Number]
-            Delay at which to show the image after trial
-            start (timing will be relative to any audio or to start of trial if no
-            audio). Optional; default is to show images immediately.
-        :feedbackAudio: [Array or String]
-            [Only used if ``choiceRequired`` is true] Audio to play upon clicking this image.
-            This can either be an array of
-            {src: 'url', type: 'MIMEtype'} objects, e.g. listing equivalent .mp3 and
-            .ogg files, or can be a single string ``filename`` which will be expanded
-            based on ``baseDir`` and ``audioTypes`` values (see ``audioTypes``).
-        :feedbackText: [String]
-            [Only used if ``choiceRequired`` is true] Text
-            to display in a dialogue window upon clicking the image.
+correctChoiceRequired [Boolean | ``false``]
+    [Only used if `choiceRequired` is true] Whether the participant has to select
+    one of the *correct* images before proceeding.
 
-    backgroundColor [String | ``'black'``]
-        Color of background. See `CSS specs <https://developer.mozilla.org/en-US/docs/Web/CSS/color_value>`__
-        for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
-        rgb hex values (e.g. '#800080' - include the '#')
+canMakeChoiceBeforeAudioFinished [Boolean | ``false``]
+    Whether the participant can make a choice before audio finishes. (Only relevant
+    if `choiceRequired` is true.)
 
-    pageColor [String | ``'white'``]
-        Color of area where images are shown, if different from overall background.
-        Defaults to backgroundColor if one is provided. See
-        `CSS specs <https://developer.mozilla.org/en-US/docs/Web/CSS/color_value>`__
-        for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
-        rgb hex values (e.g. '#800080' - include the '#')
+highlights [Array | ``[]``]
+    Array representing times when particular images should be highlighted. Each
+    element of the array should be of the form ``{'range': [3.64, 7.83], 'imageId': 'myImageId'}``.
+    The two `range` values are the start and end times of the highlight in seconds,
+    relative to the audio played. The `imageId` corresponds to the `id` of an
+    element of `images`.
+    Highlights can overlap in time. Any that go longer than the audio will just
+    be ignored/cut off.
+    One strategy for generating a bunch of highlights for a longer story is to
+    annotate using Audacity and export the labels to get the range values.
 
-    choiceRequired [Boolean | ``false``]
-        Whether this is a frame where the user needs to click to select one of the
-        images before proceeding.
-
-    correctChoiceRequired [Boolean | ``false``]
-        [Only used if `choiceRequired` is true] Whether the participant has to select
-        one of the *correct* images before proceeding.
-
-    canMakeChoiceBeforeAudioFinished [Boolean | ``false``]
-        Whether the participant can make a choice before audio finishes. (Only relevant
-        if `choiceRequired` is true.)
-
-    highlights [Array | ``[]``]
-        Array representing times when particular images should be highlighted. Each
-        element of the array should be of the form ``{'range': [3.64, 7.83], 'imageId': 'myImageId'}``.
-        The two `range` values are the start and end times of the highlight in seconds,
-        relative to the audio played. The `imageId` corresponds to the `id` of an
-        element of `images`.
-        Highlights can overlap in time. Any that go longer than the audio will just
-        be ignored/cut off.
-        One strategy for generating a bunch of highlights for a longer story is to
-        annotate using Audacity and export the labels to get the range values.
-
-        :range: [Array]
-            ``[startTimeInSeconds, endTimeInSeconds]``, e.g. ``[3.64, 7.83]``
-        :imageId: [String]
-            ID of the image to highlight, corresponding to the ``id`` field of the element of ``images`` to highlight
+    :range: [Array]
+        ``[startTimeInSeconds, endTimeInSeconds]``, e.g. ``[3.64, 7.83]``
+    :imageId: [String]
+        ID of the image to highlight, corresponding to the ``id`` field of the element of ``images`` to highlight
 
 Data collected
 ----------------
 
 The fields added specifically for this frame type are:
 
-.. glossary::
+images [Array]
+    Array of images used in this frame [same as passed to this frame, but
+    may reflect random assignment for this particular participant]
 
-    images [Array]
-        Array of images used in this frame [same as passed to this frame, but
-        may reflect random assignment for this particular participant]
+selectedImage [String]
+    ID of image selected at time of proceeding
 
-    selectedImage [String]
-        ID of image selected at time of proceeding
+correctImageSelected [Boolean]
+    Whether image selected at time of proceeding is marked as correct
 
-    correctImageSelected [Boolean]
-        Whether image selected at time of proceeding is marked as correct
-
-    audioPlayed [String]
-        Source URL of audio played, if any. If multiple sources provided (e.g.
-        mp4 and ogg versions) just the first is stored.
+audioPlayed [String]
+    Source URL of audio played, if any. If multiple sources provided (e.g.
+    mp4 and ogg versions) just the first is stored.
 
 Events recorded
 ----------------

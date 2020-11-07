@@ -1,3 +1,5 @@
+.. _exp-lookit-mood-questionnaire:
+
 exp-lookit-mood-questionnaire
 ==============================================
 
@@ -65,43 +67,41 @@ Data collected
 
 The fields added specifically for this frame type are:
 
-.. glossary::
+rested [String]
+    Rating for CHILD on tired - rested scale, '1' to '7' where '7' is rested
 
-    rested [String]
-        Rating for CHILD on tired - rested scale, '1' to '7' where '7' is rested
+healthy [String]
+    Rating for CHILD on sick - healthy scale, '1' to '7' where '7' is healthy
 
-    healthy [String]
-        Rating for CHILD on sick - healthy scale, '1' to '7' where '7' is healthy
+childHappy    [String]
+    Rating for CHILD on fussy - happy scale, '1' to '7' where '7' is happy
 
-    childHappy    [String]
-        Rating for CHILD on fussy - happy scale, '1' to '7' where '7' is happy
+active [String]
+    Rating for CHILD on calm - active scale, '1' to '7' where '7' is active
 
-    active [String]
-        Rating for CHILD on calm - active scale, '1' to '7' where '7' is active
+energetic [String]
+    Rating for PARENT on tired - energetic scale, '1' to '7' where '7' is energetic
 
-    energetic [String]
-        Rating for PARENT on tired - energetic scale, '1' to '7' where '7' is energetic
+ontopofstuff [String]
+    Rating for PARENT on overwhelmed - on top of stuff scale, '1' to '7' where '7' is on top of stuff
 
-    ontopofstuff [String]
-        Rating for PARENT on overwhelmed - on top of stuff scale, '1' to '7' where '7' is on top of stuff
+parentHappy [String]
+    Rating for PARENT on upset - happy scale, '1' to '7' where '7' is happy
 
-    parentHappy [String]
-        Rating for PARENT on upset - happy scale, '1' to '7' where '7' is happy
+napWakeUp [String]
+    how long since the child woke up from nap, HH:mm
 
-    napWakeUp [String]
-        how long since the child woke up from nap, HH:mm
+usualNapSchedule [String]
+    whether the child has a typical nap schedule: 'no', 'yes', or 'yes-overdue' if child is overdue for nap
 
-    usualNapSchedule [String]
-        whether the child has a typical nap schedule: 'no', 'yes', or 'yes-overdue' if child is overdue for nap
+nextNap [String]
+    only valid if usualNapSchedule is 'yes';  how long until child is due to sleep again, HH:mm
 
-    nextNap [String]
-        only valid if usualNapSchedule is 'yes';  how long until child is due to sleep again, HH:mm
+lastEat [String]
+    how long since the child ate/drank, HH:mm
 
-    lastEat [String]
-        how long since the child ate/drank, HH:mm
-
-    doingBefore [String]
-        what the child was doing before this (free response)
+doingBefore [String]
+    what the child was doing before this (free response)
 
 
 Events recorded

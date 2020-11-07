@@ -1,3 +1,5 @@
+.. _exp-lookit-video-assent:
+
 exp-lookit-video-assent
 ==============================================
 
@@ -117,57 +119,53 @@ Example
 Parameters
 ----------------
 
-.. glossary::
+pages [Array]
+    A list of pages of assent form text/pictures/video for the participant to read through. Each has fields:
 
-    pages [Array]
-        A list of pages of assent form text/pictures/video for the participant to read through. Each has fields:
+    :altText: [String]
+        Alt-text used for the image displayed, if any
+    :video: [String or Array]
+         String indicating video path relative to baseDir, OR Array of {src: 'url', type: 'MIMEtype'} objects. Video will be displayed (with controls shown) and participant must complete to proceed.
+    :audio: [String or Array]
+        String indicating audio path relative to baseDir, OR Array of {src: 'url', type: 'MIMEtype'} objects. Audio will be played (with controls shown) and participant must complete to proceed.
+    :imgSrc: [String]
+        URL of image to display; can be full path or relative to baseDir
+    :textBlocks: [Array]
+        list of text blocks to show on this page, processed by :ref:`exp-text-block`. Can use HTML.
+    :showWebcam: [Boolean]
+        Whether to display the participant webcam on this page
 
-        :altText: [String]
-            Alt-text used for the image displayed, if any
-        :video: [String or Array]
-             String indicating video path relative to baseDir, OR Array of {src: 'url', type: 'MIMEtype'} objects. Video will be displayed (with controls shown) and participant must complete to proceed.
-        :audio: [String or Array]
-            String indicating audio path relative to baseDir, OR Array of {src: 'url', type: 'MIMEtype'} objects. Audio will be played (with controls shown) and participant must complete to proceed.
-        :imgSrc: [String]
-            URL of image to display; can be full path or relative to baseDir
-        :textBlocks: [Array]
-            list of text blocks to show on this page, processed by :ref:`exp-text-block`. Can use HTML.
-        :showWebcam: [Boolean]
-            Whether to display the participant webcam on this page
+nextStimulusText [String | ``'Next'``]
+    Text on the button to proceed to the next example video/image
 
-    nextStimulusText [String | ``'Next'``]
-        Text on the button to proceed to the next example video/image
+previousStimulusText [String | ``'Previous'``]
+    Text on the button to proceed to the previous example video/image
 
-    previousStimulusText [String | ``'Previous'``]
-        Text on the button to proceed to the previous example video/image
+recordLastPage [Boolean | ``false``]
+    Whether to record webcam video on the last page
 
-    recordLastPage [Boolean | ``false``]
-        Whether to record webcam video on the last page
+recordWholeProcedure [Boolean | ``false``]
+    Whether to record webcam video during the entire assent frame (if true, overrides recordLastPage)
 
-    recordWholeProcedure [Boolean | ``false``]
-        Whether to record webcam video during the entire assent frame (if true, overrides recordLastPage)
+participationQuestion [String | ``'Do you want to participate in this study?'``]
+     Text of the question to ask about whether to participate. Answer options are Yes/No; No means study will stop, Yes means it will proceed.
 
-    participationQuestion [String | ``'Do you want to participate in this study?'``]
-         Text of the question to ask about whether to participate. Answer options are Yes/No; No means study will stop, Yes means it will proceed.
-
-    minimumYearsToAssent [Number | ``0``]
-         How many years old the child has to be for this page to be shown. If child
-         is younger, the page is skipped. Leave at 0 to always show. This is an
-         age in 'calendar years' - it will line up with the child's birthday,
-         regardless of leap years etc.
+minimumYearsToAssent [Number | ``0``]
+     How many years old the child has to be for this page to be shown. If child
+     is younger, the page is skipped. Leave at 0 to always show. This is an
+     age in 'calendar years' - it will line up with the child's birthday,
+     regardless of leap years etc.
 
 Data collected
 ----------------
 
 The fields added specifically for this frame type are:
 
-.. glossary::
+assentFormText [String]
+    the exact text shown in the assent document during this frame
 
-    assentFormText [String]
-        the exact text shown in the assent document during this frame
-
-    childResponse [String]
-        The child's response to the assent question - Yes or No
+childResponse [String]
+    The child's response to the assent question - Yes or No
 
 Events recorded
 ----------------

@@ -92,52 +92,50 @@ Example
 Parameters
 ----------------
 
-.. glossary::
+video [Object | ``{}`` ]
+    Object describing the video to show. It can have the following properties:
 
-    video [Object | ``{}`` ]
-        Object describing the video to show. It can have the following properties:
+    :source: [String or Array]
+        The location of the main video to play. This can be either
+        an array of ``{'src': 'https://...', 'type': '...'}`` objects (e.g., to provide both
+        webm and mp4 versions at specified URLS) or a single string relative to ``baseDir/<EXT>/``.
 
-        :source: [String or Array]
-            The location of the main video to play. This can be either
-            an array of ``{'src': 'https://...', 'type': '...'}`` objects (e.g., to provide both
-            webm and mp4 versions at specified URLS) or a single string relative to ``baseDir/<EXT>/``.
+showPreviousButton [Boolean | ``true``]
+    Whether to show a 'previous' button
 
-    showPreviousButton [Boolean | ``true``]
-        Whether to show a 'previous' button
+blocks [Array]
+    Array of text blocks to display as an introduction to the preview. Should be a list
+    of objects that can be passed to :ref:`exp-text-block`; each can have any of the
+    properties below.
 
-    blocks [Array]
-        Array of text blocks to display as an introduction to the preview. Should be a list
-        of objects that can be passed to :ref:`exp-text-block`; each can have any of the
-        properties below.
+previewButtonText [String | ``'I\'d like to preview the videos'``
+    Text on the preview button user clicks to proceed to stimuli/images
 
-    previewButtonText [String | ``'I\'d like to preview the videos'``
-        Text on the preview button user clicks to proceed to stimuli/images
+skipButtonText [String | ``'Skip preview'``]
+    Text to display on the button to skip the next frame
 
-    skipButtonText [String | ``'Skip preview'``]
-        Text to display on the button to skip the next frame
+stimuli [Array]
+    An array of preview stimuli to display within a single frame, defined as an array of objects.
+    Generally each item of the list will include ONE of image, video, or audio
+    (depending on the stimulus type), plus a caption. Each item can have fields:
 
-    stimuli [Array]
-        An array of preview stimuli to display within a single frame, defined as an array of objects.
-        Generally each item of the list will include ONE of image, video, or audio
-        (depending on the stimulus type), plus a caption. Each item can have fields:
+    :caption: [String]
+        Some text to appear above this video/audio/image
+    :video: [String or Array]
+        String indicating video URL. This can be relative to baseDir, OR Array of {src: 'url', type: 'MIMEtype'} objects.
+    :audio: [String or Array]
+        String indicating audio URL. This can be relative to baseDir, OR Array of {src: 'url', type: 'MIMEtype'} objects.
+    :image: [String]
+        URL of image to display. Can be full path or relative to baseDir/img.
 
-        :caption: [String]
-            Some text to appear above this video/audio/image
-        :video: [String or Array]
-            String indicating video URL. This can be relative to baseDir, OR Array of {src: 'url', type: 'MIMEtype'} objects.
-        :audio: [String or Array]
-            String indicating audio URL. This can be relative to baseDir, OR Array of {src: 'url', type: 'MIMEtype'} objects.
-        :image: [String]
-            URL of image to display. Can be full path or relative to baseDir/img.
+nextStimulusText [String | ``'Next'``]
+    Text on the button to proceed to the next example video/image
 
-    nextStimulusText [String | ``'Next'``]
-        Text on the button to proceed to the next example video/image
+previousStimulusText [String | ``'Previous'``]
+    Text on the button to proceed to the previous example video/image
 
-    previousStimulusText [String | ``'Previous'``]
-        Text on the button to proceed to the previous example video/image
-
-    doRecording [Boolean | ``true``]
-        Whether to make a webcam video recording during stimulus preview (begins only if user chooses to preview stimuli). Default true.
+doRecording [Boolean | ``true``]
+    Whether to make a webcam video recording during stimulus preview (begins only if user chooses to preview stimuli). Default true.
 
 
 Data collected

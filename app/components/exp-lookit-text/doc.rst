@@ -1,3 +1,5 @@
+.. _exp-lookit-text:
+
 exp-lookit-text
 ==============================================
 
@@ -54,13 +56,11 @@ Examples
 Parameters
 ----------------
 
-.. glossary::
+showPreviousButton [Boolean | ``true``]
+    Whether to show a 'previous' button
 
-    showPreviousButton [Boolean | ``true``]
-        Whether to show a 'previous' button
-
-    blocks [Array]
-        Array of text blocks to display, rendered using :ref:`exp-text-block`.
+blocks [Array]
+    Array of text blocks to display, rendered using :ref:`exp-text-block`.
 
 Data collected
 ----------------

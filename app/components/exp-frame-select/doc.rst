@@ -1,3 +1,5 @@
+.. _exp-frame-select:
+
 exp-frame-select
 ==============================================
 
@@ -8,14 +10,11 @@ Frame that allows you to specify a list of possible frames to show, plus an inde
 list of indices of which ones to actually show.
 
 The frame(s) will be inserted into the sequence of frames for this study on the fly, so that you can use a custom
-:ref:`generateProperties<generateProperties>` function to select which frame(s) to show.
+:ref:`generateProperties<generateProperties>` function to select which frame(s) to show. (For more information on
+making study behavior conditional on data collected, see :ref:`conditional_logic`.)
 
 This frame serves as a wrapper for the randomizer :ref:`select<select>`,
 which is evaluated during experiment parsing and cannot be modified on the fly.
-
-For more information about making study behavior conditional on data collected,
-see
-`the Lookit docs <https://lookit.readthedocs.io/en/develop/researchers-create-experiment.html#conditional-logic>`__.
 
 Warning: no ``selectNextFrame`` available
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -90,35 +89,33 @@ the eligibility survey the "generateProperties" function is referencing!)
 Parameters
 ----------------
 
-.. glossary::
+frameOptions [Array | ``[]``]
+    List of frames that can be created by this randomizer. Each frame is an
+    object with any necessary frame-specific properties specified. The
+    'kind' of frame can be specified either here (per frame) or in
+    commonFrameProperties. If a property is defined for a given frame both
+    in this frame list and in commonFrameProperties, the value in the frame
+    list will take precedence.
 
-    frameOptions [Array | ``[]``]
-        List of frames that can be created by this randomizer. Each frame is an
-        object with any necessary frame-specific properties specified. The
-        'kind' of frame can be specified either here (per frame) or in
-        commonFrameProperties. If a property is defined for a given frame both
-        in this frame list and in commonFrameProperties, the value in the frame
-        list will take precedence.
+    (E.g., you could include 'kind': 'normal-frame' in
+    commmonFrameProperties, but for a single frame in frameOptions, include
+    'kind': 'special-frame'.)
 
-        (E.g., you could include 'kind': 'normal-frame' in
-        commmonFrameProperties, but for a single frame in frameOptions, include
-        'kind': 'special-frame'.)
+commonFrameProperties [Object | ``{}``]
+    Object describing common parameters to use in EVERY frame created
+    by this randomizer. Parameter names and values are as described in
+    the documentation for the frameType used.
 
-    commonFrameProperties [Object | ``{}``]
-        Object describing common parameters to use in EVERY frame created
-        by this randomizer. Parameter names and values are as described in
-        the documentation for the frameType used.
+whichFrames [Array or Number | ``-1``]
+    Index or indices (0-indexed) within frameOptions to actually use. This can be either a number
+    (e.g., 0 or 1 to use the first or second option respectively) or an array providing
+    an ordered list of indices to use (e.g., [0, 1] or [1, 0] to use the first then
+    second or second then first options, respectively). All indices must be integers >= 0 and
+    < frameOptions.length.
 
-    whichFrames [Array or Number | ``-1``]
-        Index or indices (0-indexed) within frameOptions to actually use. This can be either a number
-        (e.g., 0 or 1 to use the first or second option respectively) or an array providing
-        an ordered list of indices to use (e.g., [0, 1] or [1, 0] to use the first then
-        second or second then first options, respectively). All indices must be integers >= 0 and
-        < frameOptions.length.
-
-        If not provided or -1, the entire frameOptions list is used in order. (If empty
-        list is provided, however, that is respected and no frames are inserted by this
-        randomizer.)
+    If not provided or -1, the entire frameOptions list is used in order. (If empty
+    list is provided, however, that is respected and no frames are inserted by this
+    randomizer.)
 
 Data collected
 ----------------

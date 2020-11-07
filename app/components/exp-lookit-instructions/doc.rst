@@ -1,3 +1,5 @@
+.. _exp-lookit-instructions:
+
 exp-lookit-instructions
 ==============================================
 
@@ -111,35 +113,33 @@ Examples
 Parameters
 ----------------
 
-.. glossary::
+showWebcam [Boolean | ``false``]
+    Whether to display the user's webcam
 
-    showWebcam [Boolean | ``false``]
-        Whether to display the user's webcam
+blocks [Array]
+    Array of blocks to be rendered by :ref:`exp-text-block`, specifying text/images of instructions to display.
+    In addition to the standard options allowed by ``exp-text-block`` (text, title, etc.) these blocks may have a
+    field ``mediaBlock`` with fields:
 
-    blocks [Array]
-        Array of blocks to be rendered by :ref:`exp-text-block`, specifying text/images of instructions to display.
-        In addition to the standard options allowed by ``exp-text-block`` (text, title, etc.) these blocks may have a
-        field ``mediaBlock`` with fields:
+    :title: [String] Title of section
+    :text: [String] Text displayed below title
+    :warningText: [String] Warning text shown if ``mustPlay`` is true and user moves on without playing media
+    :sources: [Array] List of objects indicating where media is located, each with fields:
 
-        :title: [String] Title of section
-        :text: [String] Text displayed below title
-        :warningText: [String] Warning text shown if ``mustPlay`` is true and user moves on without playing media
-        :sources: [Array] List of objects indicating where media is located, each with fields:
+       :src: [String] URL of media file
+       :type: [String] MIMEtype of media file, e.g. ``'video/mp4'``
+    :isVideo: [Boolean] Whether this is a video file, vs. audio
+    :mustPlay: [Boolean] whether to require user to play this to move on
 
-           :src: [String] URL of media file
-           :type: [String] MIMEtype of media file, e.g. ``'video/mp4'``
-        :isVideo: [Boolean] Whether this is a video file, vs. audio
-        :mustPlay: [Boolean] whether to require user to play this to move on
+webcamBlocks [Array]
+    Array of objects specifying text/images of instructions to display under webcam view (if webcam is shown),
+    rendered by :ref:`exp-text-block`
 
-    webcamBlocks [Array]
-        Array of objects specifying text/images of instructions to display under webcam view (if webcam is shown),
-        rendered by :ref:`exp-text-block`
+showPreviousButton [Boolean | ``true``]
+    Whether to show a 'previous' button
 
-    showPreviousButton [Boolean | ``true``]
-        Whether to show a 'previous' button
-
-    nextButtonText [String | ``'Start the videos! \n (You\'ll have a moment to turn around.)'``]
-        Text to display on the 'next frame' button
+nextButtonText [String | ``'Start the videos! \n (You\'ll have a moment to turn around.)'``]
+    Text to display on the 'next frame' button
 
 Data collected
 ----------------

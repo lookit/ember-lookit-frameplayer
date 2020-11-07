@@ -1,3 +1,5 @@
+.. _exp-lookit-images-audio-infant-control:
+
 exp-lookit-images-audio-infant-control
 ==============================================
 

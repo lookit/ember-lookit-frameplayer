@@ -1,3 +1,5 @@
+.. _index:
+
 Welcome to the Lookit experiment runner's documentation!
 =========================================================
 
@@ -33,6 +35,7 @@ adjust parameters on-the-fly based on what the child has done so far:
     components/exp-frame-base/doc.rst
     components/exp-frame-base/parameters.rst
     components/exp-frame-base/groups.rst
+    components/exp-frame-base/conditional_logic.rst
 
 Specific frames
 ----------------

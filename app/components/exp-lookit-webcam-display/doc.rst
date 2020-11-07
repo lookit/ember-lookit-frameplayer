@@ -1,4 +1,4 @@
-.. _exp-video-webcam-display:
+.. _exp-lookit-webcam-display:
 
 exp-lookit-webcam-display
 ==============================================
@@ -61,19 +61,17 @@ Example
 Parameters
 ----------------
 
-.. glossary::
+blocks [Array]
+    Array of blocks specifying text/images of instructions to display, rendered by :ref:`exp-text-block`.
 
-    blocks [Array]
-        Array of blocks specifying text/images of instructions to display, rendered by :ref:`exp-text-block`.
+startRecordingAutomatically [Boolean | ``false``]
+    Whether to automatically begin recording upon frame load
 
-    startRecordingAutomatically [Boolean | ``false``]
-        Whether to automatically begin recording upon frame load
+nextButtonText
+    Text to display on the 'next frame' button
 
-    nextButtonText
-        Text to display on the 'next frame' button
-
-    showPreviousButton
-        Whether to show a 'previous' button
+showPreviousButton
+    Whether to show a 'previous' button
 
 Data collected
 ----------------

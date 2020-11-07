@@ -158,23 +158,21 @@ Parameters
 
 All of the following are optional:
 
-.. glossary::
+title [String]
+    Title text to display at the top of this block
 
-    title [String]
-        Title text to display at the top of this block
+text [String]
+    Main text of this block. You can use `\n` or `<br>` for paragraph breaks. You can use HTML inside the text,
+    for instance to include a link or an image.
 
-    text [String]
-        Main text of this block. You can use `\n` or `<br>` for paragraph breaks. You can use HTML inside the text,
-        for instance to include a link or an image.
+    :emph: whether to show this text in bold
 
-        :emph: whether to show this text in bold
+image [Object]
+    Image to display along with this block. Needs two fields:
 
-    image [Object]
-        Image to display along with this block. Needs two fields:
+    :src: URL of image
+    :alt: alt-text for image
 
-        :src: URL of image
-        :alt: alt-text for image
-
-    listblocks [Array]
-        A list of items to display in bullet points. Each item is itself rendered with exp-text-block, so it is an
-        object that can have title, text, image, listblocks, etc.
+listblocks [Array]
+    A list of items to display in bullet points. Each item is itself rendered with exp-text-block, so it is an
+    object that can have title, text, image, listblocks, etc.

@@ -71,7 +71,7 @@ Case study: randomizing the order of options in a survey
 
 Suppose you're including a survey where you ask participants to record whether their child performed a certain task, and you want to present the options in a random order to avoid systematically biasing the results towards either option. You start with a survey frame like this (see the frame docs for more information about this frame):
 
-.. code:: json
+.. code:: javascript
 
     "example-survey": {
         "kind": "exp-lookit-survey",
@@ -103,7 +103,7 @@ To randomize the options, we'll need to make a few small changes. First, add ``"
 
 Next, you want the ``enum`` list for ``didit`` to actually be in random order. To achieve that, you can add a property like ``DIDIT_OPTIONS`` as a frame property, and then specify that the value of ``enum`` should be a random permutation of that list, like this:
 
-.. code:: json
+.. code:: javascript
 
     "example-survey": {
         "kind": "exp-lookit-survey",

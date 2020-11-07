@@ -1,3 +1,5 @@
+.. _exp-lookit-exit-survey:
+
 exp-lookit-exit-survey
 ==============================================
 
@@ -51,57 +53,54 @@ This frame will display the exit survey and a debriefing page about the Lookit p
         }
     }
 
+For information about what belongs in the debriefing, see the :ref:`Lookit docs <docs:debriefing-info>`.
 
 
 Parameters
 ----------------
 
-.. glossary::
+debriefing [Object]
+    Object specifying information to show on second page of exit survey, before returning to main Lookit site.
 
-    debriefing [Object]
-        Object specifying information to show on second page of exit survey, before returning to main Lookit site.
+    :title: [String]
+        Title of debriefing page
 
-        :title: [String]
-            Title of debriefing page
+    :text: [String]
+        Debriefing text. You can include line breaks (\n) and links (<a href='https://...' rel='noopener' target='_blank'>Link text</a>)
 
-        :text: [String]
-            Debriefing text. You can include line breaks (\n) and links (<a href='https://...' rel='noopener' target='_blank'>Link text</a>)
+    :image: [Object]
+        Image to show at top of debriefing (optional)
 
-        :image: [Object]
-            Image to show at top of debriefing (optional)
+        :src: [String]
+            Image URL
 
-            :src: [String]
-                Image URL
+        :alt: [String]
+            Image alt-text
 
-            :alt: [String]
-                Image alt-text
-
-    showShareButton [Boolean | ``true``]
-        Whether to show a 'share this study on Facebook' button
+showShareButton [Boolean | ``true``]
+    Whether to show a 'share this study on Facebook' button
 
 Data collected
 ----------------
 
 The fields added specifically for this frame type are:
 
-.. glossary::
+birthDate [String]
+    Child's birthdate as entered into exit survey; timestamp string starting YYYY-mm-dd.
+    @attribute birthDate
 
-    birthDate [String]
-        Child's birthdate as entered into exit survey; timestamp string starting YYYY-mm-dd.
-        @attribute birthDate
+databraryShare [String]
+    Whether data can be shared with Databrary: 'yes' or 'no'
+    @attribute databraryShare
 
-    databraryShare [String]
-        Whether data can be shared with Databrary: 'yes' or 'no'
-        @attribute databraryShare
+useOfMedia [String]
+    Video privacy level: 'private', 'scientific', or 'public'
 
-    useOfMedia [String]
-        Video privacy level: 'private', 'scientific', or 'public'
+withdrawal [Boolean]
+    Whether the the box to withdraw video data is checked
 
-    withdrawal [Boolean]
-        Whether the the box to withdraw video data is checked
-
-    feedback [String]
-        Freeform comments entered by parent
+feedback [String]
+    Freeform comments entered by parent
 
 Events recorded
 ----------------

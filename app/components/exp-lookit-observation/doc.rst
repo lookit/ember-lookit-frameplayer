@@ -1,3 +1,5 @@
+.. _exp-lookit-observation:
+
 exp-lookit-observation
 ==============================================
 
@@ -63,34 +65,32 @@ This frame will play through a central video of Kim introducing an apple two tim
 Parameters
 ----------------
 
-.. glossary::
+hideWebcam [Boolean | ``false``]
+    Whether to hide webcam view when frame loads (participant will still be able to show manually)
 
-    hideWebcam [Boolean | ``false``]
-        Whether to hide webcam view when frame loads (participant will still be able to show manually)
+blocks [Array]
+    Array of blocks specifying specifying text/images of instructions to display,
+    rendered by :ref:`exp-text-block`
 
-    blocks [Array]
-        Array of blocks specifying specifying text/images of instructions to display,
-        rendered by :ref:`exp-text-block`
+showPreviousButton [Boolean | ``true``]
+    Whether to show a 'previous' button
 
-    showPreviousButton [Boolean | ``true``]
-        Whether to show a 'previous' button
+nextButtonText [String | ``'Next'``]
+    Text to display on the 'next frame' button
 
-    nextButtonText [String | ``'Next'``]
-        Text to display on the 'next frame' button
+recordSegmentLength [Number | ``300``]
+    Number of seconds to record for before automatically pausing. Use 0 for no limit.
 
-    recordSegmentLength [Number | ``300``]
-        Number of seconds to record for before automatically pausing. Use 0 for no limit.
+startRecordingAutomatically [Boolean | ``false``]
+    Whether to automatically begin recording upon frame load
 
-    startRecordingAutomatically [Boolean | ``false``]
-        Whether to automatically begin recording upon frame load
+recordingRequired [Number | ``0``]
+    Whether a recording must be made to proceed to next frame. 'Next' button
+    will be disabled until recording is made if so. 0 to not require recording;
+    any positive number to require that many seconds of recording
 
-    recordingRequired [Number | ``0``]
-        Whether a recording must be made to proceed to next frame. 'Next' button
-        will be disabled until recording is made if so. 0 to not require recording;
-        any positive number to require that many seconds of recording
-
-    hideControls [Boolean | ``false``]
-        Whether to hide video recording controls (only use with startRecordingAutomatically)
+hideControls [Boolean | ``false``]
+    Whether to hide video recording controls (only use with startRecordingAutomatically)
 
 Data collected
 ----------------

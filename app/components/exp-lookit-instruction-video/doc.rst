@@ -1,3 +1,5 @@
+.. _exp-lookit-instruction-video:
+
 exp-lookit-instruction-video
 ==============================================
 
@@ -101,55 +103,53 @@ This frame will show an instruction video & summary.
 Parameters
 ----------------
 
-.. glossary::
+title [String]
+    Title to show at top of frame
 
-    title [String]
-        Title to show at top of frame
+introText [String | ``'Welcome! Please watch this video to learn how the study will work. You can read the transcript to the right if you prefer.'``]
+    Intro text to show at top of frame
 
-    introText [String | ``'Welcome! Please watch this video to learn how the study will work. You can read the transcript to the right if you prefer.'``]
-        Intro text to show at top of frame
+warningText [String | ``'Please watch the video or read the transcript before proceeding.'``]
+    Text to show above Next button if participant has not yet watched video or read transcript
 
-    warningText [String | ``'Please watch the video or read the transcript before proceeding.'``]
-        Text to show above Next button if participant has not yet watched video or read transcript
+instructionsVideo [String or Array]
+    The location of the instructions video to play. This can be either
+    an array of {'src': 'https://...', 'type': '...'} objects (e.g. providing both
+    webm and mp4 versions at specified URLS) or a single string relative to baseDir/<EXT>/.
 
-    instructionsVideo [String or Array]
-        The location of the instructions video to play. This can be either
-        an array of {'src': 'https://...', 'type': '...'} objects (e.g. providing both
-        webm and mp4 versions at specified URLS) or a single string relative to baseDir/<EXT>/.
+transcriptTitle [String | ``'Video transcript'``
+    Title to show above video transcript/overview. Generally this should be either "Video transcript" or
+    "Video summary" depending on whether you're providing a word-for-word transcript or a condensed summary.
 
-    transcriptTitle [String | ``'Video transcript'``
-        Title to show above video transcript/overview. Generally this should be either "Video transcript" or
-        "Video summary" depending on whether you're providing a word-for-word transcript or a condensed summary.
+transcriptBlocks [Array]
+    Array of blocks for :ref:`exp-text-block`, providing a transcript of the video
+    or an overview of what it said. A transcript can be broken down into bullet points to make it more readable.
 
-    transcriptBlocks [Array]
-        Array of blocks for :ref:`exp-text-block`, providing a transcript of the video
-        or an overview of what it said. A transcript can be broken down into bullet points to make it more readable.
+    If you've also provided closed captions throughout the video, you can use this space just to provide key
+    points.
 
-        If you've also provided closed captions throughout the video, you can use this space just to provide key
-        points.
+    If this is left blank (``[]``) no transcript is displayed.
 
-        If this is left blank (``[]``) no transcript is displayed.
+    Each block may have...
 
-        Each block may have...
+    :title: [String]
+        Title of this section
+    :text: [String]
+        Text of this section
+    :listblocks: [Array]
+        Bullet points for this section. Each bullet may have...
 
-        :title: [String]
-            Title of this section
-        :text: [String]
-            Text of this section
-        :listblocks: [Array]
-            Bullet points for this section. Each bullet may have...
+        :text: Text of this bullet point
+        :image: [Object] Image for this bullet point, with fields:
 
-            :text: Text of this bullet point
-            :image: [Object] Image for this bullet point, with fields:
+           :src: [String] URL of image
+           :alt: [String] Alt text for image
 
-               :src: [String] URL of image
-               :alt: [String] Alt text for image
+showPreviousButton [Boolean | ``true``]
+    Whether to show a 'previous' button
 
-    showPreviousButton [Boolean | ``true``]
-        Whether to show a 'previous' button
-
-    nextButtonText [String | ``'Start the videos! \n (You\'ll have a moment to turn around.)'``]
-        Text to display on the 'next frame' button
+nextButtonText [String | ``'Start the videos! \n (You\'ll have a moment to turn around.)'``]
+    Text to display on the 'next frame' button
 
 Data collected
 ----------------

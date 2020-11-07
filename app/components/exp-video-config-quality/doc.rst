@@ -1,3 +1,5 @@
+.. _exp-video-config-quality:
+
 exp-video-config-quality
 ==============================================
 
@@ -102,40 +104,38 @@ Here the researcher provides specific items to allow customizing the instruction
 Parameters
 ----------------
 
-.. glossary::
+introText [String]
+    Text to show as the introduction to the list of things to check. Can include HTML.
 
-    introText [String]
-        Text to show as the introduction to the list of things to check. Can include HTML.
+title [String]
+    Title to display to participant
 
-    title [String]
-        Title to display to participant
+requireItemConfirmation [Boolean | ``true``]
+    Whether to show checkboxes under each instruction item and require
+    participant to check them off to proceed.
 
-    requireItemConfirmation [Boolean | ``true``]
-        Whether to show checkboxes under each instruction item and require
-        participant to check them off to proceed.
+requireTestVideo [Boolean | ``true``]
+    Whether to require participant to make and view a test video. Ignored if
+    showRecordMenu is false.
 
-    requireTestVideo [Boolean | ``true``]
-        Whether to require participant to make and view a test video. Ignored if
-        showRecordMenu is false.
+showRecordMenu [Boolean | ``true``]
+    Whether to display record/replay menu to participant. If false,
+    requireTestVideo value is ignored.
 
-    showRecordMenu [Boolean | ``true``]
-        Whether to display record/replay menu to participant. If false,
-        requireTestVideo value is ignored.
+recordingInstructionText [String]
+    Text to show below the webcam view. For instance, you might instruct
+    families to make a short recording in the position they will be in for the
+    experiment, and make sure that the infant's eyes are visible or that the
+    child is audible. HTML is allowed.
 
-    recordingInstructionText [String]
-        Text to show below the webcam view. For instance, you might instruct
-        families to make a short recording in the position they will be in for the
-        experiment, and make sure that the infant's eyes are visible or that the
-        child is audible. HTML is allowed.
+completedItemText [String | ``'Did it!'``]
+    Text to show next to instructions checkboxes, if participant is required
+    to check off each instruction (see requireItemConfirmation). Ignored if
+    requireItemConfirmation is false.
 
-    completedItemText [String | ``'Did it!'``]
-        Text to show next to instructions checkboxes, if participant is required
-        to check off each instruction (see requireItemConfirmation). Ignored if
-        requireItemConfirmation is false.
-
-    instructionBlocks [Array]
-        List of instruction segments to display to participant. Rendered using
-        :ref:`exp-text-block`.
+instructionBlocks [Array]
+    List of instruction segments to display to participant. Rendered using
+    :ref:`exp-text-block`.
 
 Data collected
 ----------------

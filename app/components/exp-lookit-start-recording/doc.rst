@@ -1,3 +1,5 @@
+.. _exp-lookit-start-recording:
+
 exp-lookit-start-recording
 ==============================================
 
@@ -85,31 +87,29 @@ This frame will start a session-level recording, showing a looping video until t
 Parameters
 ----------------
 
-.. glossary::
+displayFullscreen [Boolean | ``true``]
+    Whether to display this frame in full-screen mode
 
-    displayFullscreen [Boolean | ``true``]
-        Whether to display this frame in full-screen mode
+backgroundColor [String | ``'white'``]
+    Color of background. See `CSS specs <https://developer.mozilla.org/en-US/docs/Web/CSS/color_value>`__
+    for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
+    rgb hex values (e.g. '#800080' - include the '#')
 
-    backgroundColor [String | ``'white'``]
-        Color of background. See `CSS specs <https://developer.mozilla.org/en-US/docs/Web/CSS/color_value>`__
-        for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
-        rgb hex values (e.g. '#800080' - include the '#')
+video [String or Array]
+    Video to play (looping) while waiting. You can optionally supply either a video or image, not both.
 
-    video [String or Array]
-        Video to play (looping) while waiting. You can optionally supply either a video or image, not both.
+    This can be either an array of {src: 'url', type: 'MIMEtype'} objects or
+    just a string like `attentiongrabber` to rely on the `baseDir` and `videoTypes`
+    to generate full paths.
 
-        This can be either an array of {src: 'url', type: 'MIMEtype'} objects or
-        just a string like `attentiongrabber` to rely on the `baseDir` and `videoTypes`
-        to generate full paths.
+image [String]
+    Image to display while waiting. You can optionally supply either a video or image, not both.
 
-    image [String]
-        Image to display while waiting. You can optionally supply either a video or image, not both.
+    This can be either a full URL or just the filename (e.g. "star.png") to
+    use the full path based on `baseDir` (e.g. `baseDir/img/star.png`).
 
-        This can be either a full URL or just the filename (e.g. "star.png") to
-        use the full path based on `baseDir` (e.g. `baseDir/img/star.png`).
-
-    imageAnimation [String | ``'spin'``]
-        Which animation to use for the image. Options are 'bounce', 'spin', or '' (empty to not animate).
+imageAnimation [String | ``'spin'``]
+    Which animation to use for the image. Options are 'bounce', 'spin', or '' (empty to not animate).
 
 Data collected
 ----------------

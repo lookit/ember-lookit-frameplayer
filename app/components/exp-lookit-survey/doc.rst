@@ -1,3 +1,5 @@
+.. _exp-lookit-survey:
+
 exp-lookit-survey
 ==============================================
 
@@ -524,57 +526,53 @@ custom formatting, time-pickers, dependencies, and question groups.
 Parameters
 ----------------
 
-.. glossary::
+showPreviousButton [Boolean | ``true``]
+    Whether to show a 'previous' button
 
-    showPreviousButton [Boolean | ``true``]
-        Whether to show a 'previous' button
+nextButtonText [String | ``'Next'``]
+    Text to display on the 'next frame' button
 
-    nextButtonText [String | ``'Next'``]
-        Text to display on the 'next frame' button
+formSchema [Object]
+    Object specifying the content of the form. This is in the same format as
+    the example definition of the const 'schema' at http://toddjordan.github.io/ember-cli-dynamic-forms/#/demos/data:
+    a schema and options are designated separately. Each field of the form
+    must be defined in schema. Options may additionally be specified in options. This object has fields:
 
-    formSchema [Object]
-        Object specifying the content of the form. This is in the same format as
-        the example definition of the const 'schema' at http://toddjordan.github.io/ember-cli-dynamic-forms/#/demos/data:
-        a schema and options are designated separately. Each field of the form
-        must be defined in schema. Options may additionally be specified in options. This object has fields:
+        :schema: [Object]
+            The schema defines the fields in this form. It has the following properties:
 
-            :schema: [Object]
-                The schema defines the fields in this form. It has the following properties:
+            :type: [String]
+                This MUST be the string ``'object'``.\
+            :title: [String]
+                A form title for display
+            :properties: [Object]
+                An object defining the set of questions in this form and
+                their associated data types, at minimum. Each key:value pair in this object is of
+                the form ``'FIELDNAME': {...}``. The ``FIELDNAME`` is something you select, like ``age``; it should be
+                unique within this form. The object contains at least 'type' and 'title' values,
+                as well as any additional desired parameters that belong to the 'Schema' for the
+                desired field described at http://www.alpacajs.org/documentation.html.
 
-                :type: [String]
-                    This MUST be the string ``'object'``.\
-                :title: [String]
-                    A form title for display
-                :properties: [Object]
-                    An object defining the set of questions in this form and
-                    their associated data types, at minimum. Each key:value pair in this object is of
-                    the form ``'FIELDNAME': {...}``. The ``FIELDNAME`` is something you select, like ``age``; it should be
-                    unique within this form. The object contains at least 'type' and 'title' values,
-                    as well as any additional desired parameters that belong to the 'Schema' for the
-                    desired field described at http://www.alpacajs.org/documentation.html.
-
-            :options: [Object]
-                The options allow additional customization of the forms specified in the schema. This
-                object should have a single key 'fields' mapping to an object. Each key:value pair in this object is of
-                the form FIELDNAME:object, with FIELDNAMEs the same as in the schema.
-                The potential parameters to use are those that belong to the 'Options' for the
-                desired field described at  http://www.alpacajs.org/documentation.html.
+        :options: [Object]
+            The options allow additional customization of the forms specified in the schema. This
+            object should have a single key 'fields' mapping to an object. Each key:value pair in this object is of
+            the form FIELDNAME:object, with FIELDNAMEs the same as in the schema.
+            The potential parameters to use are those that belong to the 'Options' for the
+            desired field described at  http://www.alpacajs.org/documentation.html.
 
 Data collected
 ----------------
 
 The fields added specifically for this frame type are:
 
-.. glossary::
+formSchema [Object]
+    The same formSchema that was provided as a parameter to this frame, for ease of analysis if randomizing or
+    iterating on experimental design.
 
-    formSchema [Object]
-        The same formSchema that was provided as a parameter to this frame, for ease of analysis if randomizing or
-        iterating on experimental design.
-
-    formData [Object]
-        Data corresponding to the fields defined in formSchema['schema']['properties'].
-        The keys of formData are the FIELDNAMEs used there, and the values are the participant's responses.
-        Note that if the participant does not answer a question, that key may be absent, rather than being present with a null value.
+formData [Object]
+    Data corresponding to the fields defined in formSchema['schema']['properties'].
+    The keys of formData are the FIELDNAMEs used there, and the values are the participant's responses.
+    Note that if the participant does not answer a question, that key may be absent, rather than being present with a null value.
 
 Events recorded
 ----------------
