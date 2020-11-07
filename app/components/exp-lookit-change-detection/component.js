@@ -78,16 +78,16 @@ function shuffleArrayInPlace(array) {
  * For any parameters that expect a list of audio/video sources, you can EITHER provide
  * a list of src/type pairs with full paths like this:
  ```json
-    [
-        {
+ [
+ {
             'src': 'http://.../video1.mp4',
             'type': 'video/mp4'
         },
-        {
+ {
             'src': 'http://.../video1.webm',
             'type': 'video/webm'
         }
-    ]
+ ]
  ```
  * OR you can provide a single string 'stub', which will be expanded
  * based on the parameter baseDir and the media types expected - either audioTypes or
@@ -95,16 +95,16 @@ function shuffleArrayInPlace(array) {
  * and baseDir is https://mystimuli.org/mystudy/, with audioTypes ['mp3', 'ogg'], then this
  * will be expanded to:
  ```json
-                  [
-                         {
+ [
+ {
                              src: 'https://mystimuli.org/mystudy/mp3/intro.mp3',
                              type: 'audio/mp3'
                          },
-                         {
+ {
                              src: 'https://mystimuli.org/mystudy/ogg/intro.ogg',
                              type: 'audio/ogg'
                          }
-                 ]
+ ]
  ```
  * This allows you to simplify your JSON document a bit and also easily switch to a
  * new version of your stimuli without changing every URL. You can mix source objects with

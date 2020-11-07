@@ -81,7 +81,7 @@ export default Ember.Mixin.create({
 
     /**
      * Whether to start a session (multi-frame) recording as soon as possible upon loading this frame. This allows you to conduct video recording across multiple frames, simply specifying which frame to start and end on. Individual frames may also provide frame-specific recording capabilities; it is best NOT to conduct both a multiframe 'session' recording and frame-specific recording simultaneously as multiple video streams will eat up bandwidth. If you decide to use session recording, turn off recording for any frames that would otherwise record. There can be multiple session recordings in an experiment, e.g. from frames 1-3 and 5-10.
-     * @property {Number} startSessionRecording
+     * @property {Boolean} startSessionRecording
      * @default false
      */
     startSessionRecording: false,
@@ -97,7 +97,7 @@ export default Ember.Mixin.create({
 
     /**
      * Whether to end any session (multi-frame) recording at the end of this frame.
-     * @property {Number} endSessionRecording
+     * @property {Boolean} endSessionRecording
      * @default false
      */
     endSessionRecording: false,

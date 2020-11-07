@@ -1,3 +1,6 @@
 [submodule "docs"]
 	path = docs
 	url = https://github.com/lookit/lookit-frameplayer-docs.git
+[submodule "_themes/sphinx_rtd_theme"]
+	path = _themes/sphinx_rtd_theme
+	url = https://github.com/kimberscott/sphinx-rtd-theme-frameplayer
