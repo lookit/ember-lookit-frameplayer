@@ -1,14 +1,14 @@
 .. _base frame:
 
-Overview
-=================
+All frames support...
+======================
 
 All Lookit frames share some common features. While frame-specific features are described on the pagse for those frames,
 like exp-lookit-video, you can also use any of the parameters listed here to customize any frame, and will receive
 the data and events described here.
 
 Parameters
-=================
+------------------
 
 There are several parameters that ALL frames accept to allow you to customize the study "flow," which are:
 
@@ -16,7 +16,7 @@ There are several parameters that ALL frames accept to allow you to customize th
 
     .. _selectNextFrame:
 
-    selectNextFrame
+    selectNextFrame [String]
         Function to select which frame index to go to when using the 'next' action on this
         frame. Allows flexible looping / short-circuiting based on what has happened so far
         in the study (e.g., once the child answers N questions correctly, move on to next
@@ -72,7 +72,7 @@ There are several parameters that ALL frames accept to allow you to customize th
 
     .. _generateProperties:
 
-    generateProperties
+    generateProperties [String]
         Function to generate additional properties for this frame (like {"kind": "exp-lookit-text"})
         at the time the frame is initialized. Allows behavior of study to depend on what has
         happened so far (e.g., answers on a form or to previous test trials).
@@ -155,48 +155,7 @@ There are several parameters that ALL frames accept to allow you to customize th
     parameters
         An object containing values for any parameters (variables) to use in this frame.
         Any property VALUES in this frame that match any of the property NAMES in `parameters`
-        will be replaced by the corresponding parameter value. For example, suppose your frame
-        is:
-
-        .. code:: javascript
-
-            {
-                'kind': 'FRAME_KIND',
-                'parameters': {
-                    'FRAME_KIND': 'exp-lookit-text'
-                }
-            }
-
-        Then the frame ``kind`` will be ``exp-lookit-text``. This may be useful if you need
-        to repeat values for different frame properties, especially if your frame is actually
-        a randomizer or group. You may use parameters nested within objects (at any depth) or
-        within lists.
-
-        You can also use selectors to randomly sample from or permute
-        a list defined in ``parameters``. Suppose ``STIMLIST`` is defined in
-        ``parameters``, e.g. a list of potential stimuli. Rather than just using ``STIMLIST``
-        as a value in your frames, you can also:
-
-        - Select the Nth element (0-indexed) of the value of ``STIMLIST``: (Will cause error if ``N >= THELIST.length``)
-
-          ``'parameterName': 'STIMLIST#N'``
-
-        - Select (uniformly) a random element of the value of ``STIMLIST``:
-
-          ``'parameterName': 'STIMLIST#RAND'``
-
-        - Set ``parameterName`` to a random permutation of the value of ``STIMLIST``:
-
-          ``'parameterName': 'STIMLIST#PERM'``
-
-        - Select the next element in a random permutation of the value of ``STIMLIST``, which is used across all
-          substitutions in this randomizer. This allows you, for instance, to provide a list
-          of possible images in your ``parameterSet``, and use a different one each frame with the
-          subset/order randomized per participant. If more ``STIMLIST#UNIQ`` parameters than
-          elements of ``STIMLIST`` are used, we loop back around to the start of the permutation
-          generated for this randomizer.
-
-          ``'parameterName': 'STIMLIST#UNIQ'``
+        will be replaced by the corresponding parameter value. For details, see :ref:`frame parameters`.
 
 There are also some miscellaneous parameters you can set on any frame:
 
@@ -230,7 +189,7 @@ There are also some miscellaneous parameters you can set on any frame:
         adding this to an arbitrary frame.
 
 Data collected
-=================
+------------------
 
 
 .. glossary::
@@ -251,7 +210,7 @@ Data collected
 
 
 Events recorded
-=================
+------------------
 
 Events recorded by a frame will be available inside the ``expData`` for this session and frame. If the
 frame ID is ``'0-video-config'``, then you could find a list of events in ``expData['0-video-config']['eventTimings']``.

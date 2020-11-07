@@ -11,3 +11,5 @@ node_modules
 blueprints
 vendor
 helpers.js
+_build
+_themes

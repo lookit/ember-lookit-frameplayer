@@ -6,57 +6,57 @@ select
 Overview
 ------------------
 
-Video display frame. This may be used for looking measures (looking time, preferential looking, etc.) as well as
-for brief filler between test trials or for displaying videos to older children or parents.
+Randomizer to allow selection of one (or arbitrary sequence) of defined frames.
 
-What it looks like
-~~~~~~~~~~~~~~~~~~
+This is unlikely to be useful on its own! It is intended to be used either:
 
-.. image:: /../images/Exp-lookit-video.png
-    :alt: Example screenshot from exp-lookit-video frame
+- within a :ref:`random-parameter-set` randomizer, with different ``parameterSets`` picking out
+  different values for ``whichFrames``)
+- via the :ref:`exp-frame-select` frame, which allows you to set `whichFrames` using a custom
+  ``generateProperties`` function. (Note that you can't add a ``generateProperties`` function
+  directly to a randomizer - that's why you'd use the regular frame instead.)
 
+To use, define a frame with ``"kind": "choice"`` and ``"sampler": "select"``,
+as shown below, in addition to the parameters described under 'properties'.
 
-
-Recording
-~~~~~~~~~~
-
-Video (and audio if provided) start as soon as any recording begins, or right away if there is no recording starting.
-
-Display
-~~~~~~~~~~
-
-This frame is displayed fullscreen; if the frame before it is not, that frame
-needs to include a manual "next" button so that there's a user interaction
-event to trigger fullscreen mode. (Browsers don't allow us to switch to FS
-without a user event.)
-
-Specifying where files are
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Several of the parameters for this frame can be specified either by providing a list of full URLs and file types, or
-by providing just a filename that will be interpreted relative to the ``baseDir``. See the :ref:`expand-assets` tool that this frame uses.
-
-More general functionality
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Below is information specific to this particular frame. There may also be available parameters, events recorded,
-and data collected that come from the following more general sources:
-
-- the :ref:`base frame<base frame>` (things all frames do)
-- :ref:`video-record`
-- :ref:`expand-assets`
-
-
-Examples
+Example
 ----------------
 
-This frame will play through a central video of Kim introducing an apple two times, then proceed.
+This will always show "Let's think about hippos!" because it picks out the first frame (``"whichFrames": 0``):
 
 .. code:: javascript
 
-   "play-video-twice": {
-  }
-
+    "select-randomizer-test": {
+        "sampler": "select",
+        "kind": "choice",
+        "whichFrames": 0,
+        "commonFrameProperties": {
+            "kind": "exp-lookit-text"
+        },
+        "frameOptions": [
+            {
+                "blocks": [
+                    {
+                        "emph": true,
+                        "text": "Let's think about hippos!",
+                        "title": "FRAME 1"
+                    },
+                    {
+                        "text": "Some more about hippos..."
+                    }
+                ]
+            },
+            {
+                "blocks": [
+                    {
+                        "emph": false,
+                        "text": "Let's think about dolphins!",
+                        "title": "FRAME 2"
+                    }
+                ]
+            }
+        ]
+    }
 
 
 Parameters
@@ -64,28 +64,42 @@ Parameters
 
 .. glossary::
 
-    video [Object | ``{}`` ]
-        Object describing the video to show. It can have the following properties:
+    frameOptions [Array]
+        List of frames that can be created by this randomizer. Each frame is an
+        object with any necessary frame-specific properties specified. The
+        'kind' of frame can be specified either here (per frame) or in
+        commonFrameProperties. If a property is defined for a given frame both
+        in this frame list and in commonFrameProperties, the value in the frame
+        list will take precedence.
 
-        :source: [String or Array]
-            The location of the main video to play. This can be either
-            an array of ``{'src': 'https://...', 'type': '...'}`` objects (e.g., to provide both
-            webm and mp4 versions at specified URLS) or a single string relative to ``baseDir/<EXT>/``.
+        (E.g., you could include 'kind': 'normal-frame' in
+        commmonFrameProperties, but for a single frame in frameOptions, include
+        'kind': 'special-frame'.)
+
+
+    commonFrameProperties [Object]
+        Object describing common parameters to use in EVERY frame created
+        by this randomizer. Parameter names and values are as described in
+        the documentation for the frameType used.
+
+    whichFrames [Number or Array]
+        Index or indices (0-indexed) within ``frameOptions`` to actually use. This can be either a number
+        (e.g., 0 to use the first option or 1 to use the second option) or an array providing
+        an ordered list of indices to use (e.g., [1, 0] to use the second then first options).
+        All indices must be integers in [0, frameOptions.length).
+
+        If not provided or -1, the entire ``frameOptions`` list is used in order. (If an empty
+        list is provided, however, that is respected and no frames are inserted by this
+        randomizer.)
+
 
 Data collected
 ----------------
 
-The fields added specifically for this frame type are:
+The information returned by this randomizer will be available in ``expData["conditions"]["THIS-RANDOMIZER-ID"]``. The
+randomizer ID will depend on its order in the study - for instance, ``6-test-trials``.
 
 .. glossary::
 
-    videoShown [String]
-        Source of video  shown during this trial. Just stores first URL if multiple formats are offered.
-
-
-Events recorded
-----------------
-
-The events recorded specifically by this frame are:
-
-:videoStarted: When video begins playing (recorded each time video starts if played through more than once)
+    whichFrames [Array]
+        the index/indices of the frame(s) used, as provided to this frame

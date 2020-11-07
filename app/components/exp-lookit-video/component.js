@@ -596,7 +596,7 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
         }
     },
 
-        isReadyToFinish() {
+    isReadyToFinish() {
         let ready = (this.get('testVideoTimesPlayed') >= this.get('requireVideoCount')) &&
             (this.get('testAudioTimesPlayed') >= this.get('requireAudioCount')) &&
             (this.get('satisfiedDuration'));

@@ -4,6 +4,21 @@ Welcome to the Lookit experiment runner's documentation!
 Building a study on Lookit and using Lookit's own experiment runner? You're in the right place to learn how to put
 together the study protocol you have in mind. To the left you can find information about...
 
+Specifying your study protocol
+-------------------------------
+
+There are some features that are common to all frames, like being able to set a ``generateProperties`` function to
+adjust parameters on-the-fly based on what the child has done so far:
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Study protocol
+    :hidden:
+
+    utils/protocol.rst
+    utils/protocol-generator.rst
+
+
 Features common to all frames
 ------------------------------
 
@@ -16,6 +31,8 @@ adjust parameters on-the-fly based on what the child has done so far:
     :hidden:
 
     components/exp-frame-base/doc.rst
+    components/exp-frame-base/parameters.rst
+    components/exp-frame-base/groups.rst
 
 Specific frames
 ----------------
@@ -25,7 +42,7 @@ The documentation will tell you how each frame works, what data it collects, and
 
 .. toctree::
    :maxdepth: 2
-   :caption: Frames
+   :caption: Specific frames
    :hidden:
 
    components/exp-frame-select/doc.rst
@@ -51,8 +68,6 @@ The documentation will tell you how each frame works, what data it collects, and
    components/exp-video-config/doc.rst
    components/exp-video-config-quality/doc.rst
 
-   components/exp-lookit-composite-video-trial/doc.rst
-
 Mixins
 ------------
 
@@ -66,25 +81,29 @@ information about what parameters to include and what data will be collected her
    :caption: Mixins
    :hidden:
 
-   mixins/expand-assets-doc.rst
-   mixins/infant-controlled-timing-doc.rst
-   mixins/video-record-doc.rst
+   mixins/expand-assets.rst
+   mixins/infant-controlled-timing.rst
+   mixins/video-record.rst
 
-Randomizers
-------------
+Randomization
+--------------
 
-This special type of frame allows you to randomize the study procedure without writing any code.
-These can be used to set up counterbalancing or condition assignment. The randomizers described here correspond to
-values for 'sampler' when you define a frame with type 'choice'. The documentation will tell you how each randomizer
-works and what parameters you need to give it.
+Generally, you’ll want to show slightly different versions of the study
+to different participants: perhaps you have a few different conditions,
+and/or need to counterbalance the order of trials or left/right position
+of stimuli. You have several options for how to handle this, depending on your preferences
+and the complexity of your design.
+
 
 .. toctree::
    :maxdepth: 2
-   :caption: Randomizers
+   :caption: Randomization
    :hidden:
 
-Utilities
--------------
+   randomizers/overview.rst
+   randomizers/permute.rst
+   randomizers/random-parameter-set.rst
+   randomizers/select.rst
 
 
 .. toctree::
