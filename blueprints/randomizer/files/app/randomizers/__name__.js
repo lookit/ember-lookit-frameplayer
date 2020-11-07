@@ -21,21 +21,7 @@ export default {
 
 
 /**
-* TODO: SHORT DESCRIPTION OF YOUR RANDOMIZER FRAME HERE (will be used by YUIdoc)
-* INSERT EXAMPLE USAGE BELOW.
-
-*
-```json
-"frames": {
-    "test-trials": {
-        "sampler": "your-randomizer-name",
-        "kind": "choice",
-        "id": "test-trials"
-    }
-}
-
-* ```
-* @class yourRandomizerName
+* TODO: SHORT DESCRIPTION OF YOUR RANDOMIZER FRAME HERE
 */
 
 
@@ -59,16 +45,6 @@ var randomizer = function(/*frameId, frameConfig, pastSessions, resolveFrame*/) 
     */
 
 
-    // To specify the data a user needs to provide to your randomizer (i.e. the expected
-    // fields of frameConfig), include YUIdoc "properties" using YUIdoc comment syntax.
-    // These can be anywhere in your file. Here's an example...
-
-    /**
-     * An example property.
-     *
-     * @property {Boolean} whetherToStartOnLeft
-     */
-
 
     /* Return:
          resolvedFrames: a list of resolved frames that have resulted from your randomization
@@ -78,14 +54,6 @@ var randomizer = function(/*frameId, frameConfig, pastSessions, resolveFrame*/) 
            response data. These keys should be documented as shown below, using a 'method'
            called 'conditions':
     */
-
-    /**
-     * Parameters captured and sent to the server
-     *
-     * @attribute conditions
-     * @param {Number} exampleConditionNumber which condition was chosen
-     * @param {Array} exampleConditionObject which images were shown
-     */
 
     // return [resolvedFrames, conditions]
 

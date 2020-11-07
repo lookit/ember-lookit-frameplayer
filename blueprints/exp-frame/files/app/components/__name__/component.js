@@ -2,39 +2,15 @@ import ExpFrameBaseComponent from '../exp-frame-base/component';
 import layout from './template';
 // Import any mixins here, e.g. import VideoRecord from '../../mixins/video-record';
 
-// The YUIdoc comments, using /** ... */ syntax, will be automatically compiled into
-// nice user-facing documentation as shown here (https://lookit.github.io/ember-lookit-frameplayer/modules/frames.html)
-// once your changes are merged into the lookit/ember-lookit-frameplayer repo. You can see how they look
-// locally as described here: https://lookit.readthedocs.io/en/develop/ember-app-installation.html#writing-documentation-of-frames
-
-
-/**
- * @module exp-player
- * @submodule frames
- */
 
 /**
  * TODO: short description of what your frame does. Include example usage below.
  *
  * TODO: You should also add a screenshot of your frame in the location
- * ember-lookit-frameplayer/screenshots/Exp-your-frame-name.png, and it will be added
+ * ember-lookit-frameplayer/images/Exp-your-frame-name.png, and it will be added
  * to the YUIdoc page.
  *
-```json
- "frames": {
-    "test-trial": {
-        "kind": "exp-your-frame-name",
-        "id": "test-trial"
-    }
- }
-
- * ```
- * @class ExpYourFrameName TODO: change to your actual frame name
- * @extends ExpFrameBase
- * @uses FullScreen TODO: add any mixins that your frame uses like this
  */
-
-
 
 export default ExpFrameBaseComponent.extend({ //list any mixins here before the {
     type: '<%= dasherizedModuleName %>',
