@@ -227,9 +227,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 /**
                  * Webcam display hidden from participant
                  *
-                 * @event hideWebcam
+                 * @event webcamHidden
                  */
-                this.send('setTimeEvent', 'hideWebcam');
+                this.send('setTimeEvent', 'webcamHidden');
             }
         }
 
@@ -336,11 +336,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                     $('#hiddenWebcamMessage').hide();
                     $(this.get('recorderElement') + ' div').removeClass('exp-lookit-observation-hidevideo');
                     this.set('hidden', false);
-                    /**
-                     * Webcam display shown to participant
-                     *
-                     * @event showWebcam
-                     */
                     this.send('setTimeEvent', 'showWebcam');
                 }
                 this.set('toggling', false);
