@@ -10,8 +10,7 @@ Dedicated frame to start session recording.
 
 This frame will take a few seconds to get a session-level recording started, then proceed
 immediately to the next frame. (See
-`Lookit docs <https://lookit.readthedocs.io/en/develop/researchers-create-experiment.html?highlight=startSessionRecording#recording-webcam-video>`__
-for information about session-level vs. individual-frame recording.)
+:ref:`Lookit docs <recording-video>` for information about session-level vs. individual-frame recording.)
 
 (You could also set startSessionRecording to true on any frame, but then you need to rely
 on that individual frame's setup for waiting for recording before getting started.)

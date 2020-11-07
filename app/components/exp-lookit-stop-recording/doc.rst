@@ -10,7 +10,7 @@ Dedicated frame to stop session recording.
 
 This frame will take a few seconds to upload an ongoing session-level recording, then proceed
 immediately to the next frame.  (See
-`Lookit docs <https://lookit.readthedocs.io/en/develop/researchers-create-experiment.html?highlight=startSessionRecording#recording-webcam-video>`__
+:ref:`Lookit docs <recording-video>`
 for information about session-level vs. individual-frame recording.)
 
 It will time out after a default of 5 minutes of waiting for the upload to complete, or

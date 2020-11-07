@@ -187,13 +187,13 @@ The Lookit stimuli template on Github
 One option for hosting your stimuli is to put them in a GitHub repo which has the directory structure described above
 already built-in. You can make your own copy by following the directions at `Lookit stimuli template repo <https://github.com/lookit/lookit-stimuli-template>`__.
 This is best for smallish stimuli (not for long video files >10MB). For a discussion of other options for hosting your
-files, see `the main Lookit docs <https://lookit.readthedocs.io/en/develop/researchers-prep-stimuli.html#putting-your-stimuli-files-online>`__.
+files, see :ref:`the main Lookit docs <docs:putting-stimuli-online>`.
 
 Troubleshooting
 ~~~~~~~~~~~~~~~~
 
-If media files aren't displaying as expected, the most important thing to do is to `check the browser console for
-relevant error messages <https://lookit.readthedocs.io/en/develop/tutorial-first-study.html#using-the-javascript-console-in-your-browser-to-learn-more-about-any-problems>`__.
+If media files aren't displaying as expected, the most important thing to do is to :ref:`check the browser console for
+relevant error messages <docs:browser-console>`.
 Generally you will see a 404 error saying that a file wasn't found, so you can check where the
 experiment runner is *looking* for the file to understand if there's a discrepancy between that and where you have it.
 
