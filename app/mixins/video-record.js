@@ -70,18 +70,6 @@ let {
  */
 
 /**
- * When pausing study, immediately before request to pause webcam recording
- *
- * @event pauseVideo
- */
-
-/**
- * When unpausing study, immediately before request to resume webcam recording
- *
- * @event unpauseVideo
- */
-
-/**
  * Just before stopping webcam video capture
  *
  * @event stoppingCapture
@@ -470,8 +458,6 @@ export default Ember.Mixin.create({
                 if (this.get('waitForUploadVideo')) {
                     let $videoElement = $('<video loop autoplay="autoplay" class="video-record-mixin-image"></video>');
                     let videoSources = this.get('waitForUploadVideo_parsed') ? this.get('waitForUploadVideo_parsed') : this.get('waitForUploadVideo');
-                    console.log(videoSources);
-                    console.log(this);
                     $.each(videoSources, function (idx, source) {
                         $videoElement.append(`<source src=${source.src} type=${source.type}>`);
                     });
