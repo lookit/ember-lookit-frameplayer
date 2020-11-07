@@ -1,6 +1,6 @@
 {
   "name": "ember-lookit-frameplayer",
-  "version": "v1.4.0",
+  "version": "v1.3.1",
   "description": "Ember Frame Player",
   "private": true,
   "directories": {
@@ -8,7 +8,8 @@
     "test": "tests"
   },
   "scripts": {
-    "docs": "make html",
+    "docs":         "yuidoc --lint &&    yuidoc --helpers helpers.js && mkdir -p docs/docs              && cp -r docs_tmp/* docs/docs               && rm -rf docs_tmp &&   mkdir -p docs/docs/assets/screenshots && rm -f docs/docs/assets/screenshots/* &&    cp docs/screenshots/* docs/docs/assets/screenshots/ && mkdir -p docs/docs/assets/framevideos && rm -f docs/docs/assets/framevideos/* && cp docs/framevideos/* docs/docs/assets/framevideos/",
+    "release-docs": "yuidoc --lint &&    yuidoc --helpers helpers.js && mkdir -p docs/docs/releases/NEW && cp -r docs_tmp/* docs/docs/releases/NEW  && rm -rf docs_tmp &&   mkdir -p docs/docs/assets/screenshots && rm -f docs/docs/assets/screenshots/* &&    cp docs/screenshots/* docs/docs/assets/screenshots/ && mkdir -p docs/docs/assets/framevideos && rm -f docs/docs/assets/framevideos/* && cp docs/framevideos/* docs/docs/assets/framevideos/",
     "build": "ember build",
     "start": "ember server",
     "test": "yarn run check-style && ember test --ssl false",
@@ -80,9 +81,11 @@
     "ember-truth-helpers": "^2.1.0",
     "loader.js": "^4.7.0",
     "moment": "^2.22.2",
-    "toastr": "^2.1.4"
+    "toastr": "^2.1.4",
+    "yuidocjs": "^0.10.2"
   },
   "resolutions": {
+    "yuidocjs/yui/request": "^2.88.0",
     "ember-cli/ember-cli-preprocess-registry/broccoli-clean-css": "^2.0.0",
     "ember-cli-dynamic-forms/ember-cli-babel": "^7.1.3",
     "ember-data-has-many-query/ember-cli-babel": "^7.1.3",

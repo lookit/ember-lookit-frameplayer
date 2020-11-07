@@ -12,7 +12,6 @@ let {
 } = Ember;
 
 /**
- * @class ExpLookitCompositeVideoTrial
  * @module exp-player
  * @submodule frames-deprecated
  */
@@ -111,9 +110,10 @@ let {
 * @uses Media-reload
 * @uses Video-record
 * @uses Expand-assets
+ * @deprecated
 */
 
-let ExpLookitCompositeVideoTrial = ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord, ExpandAssets, {
+export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord, ExpandAssets, {
     layout: layout,
     type: 'exp-lookit-composite-video-trial',
 
@@ -144,7 +144,6 @@ let ExpLookitCompositeVideoTrial = ExpFrameBaseComponent.extend(FullScreen, Medi
     doUseCamera: Ember.computed.alias('doRecording'),
     startRecordingAutomatically: Ember.computed.alias('doRecording'),
 
-    /** @param some stuff */
     completedAnnouncementAudio: false,
     completedAnnouncementTime: false,
     retryCalibrationAudio: false, // silly workaround for attempt to play calibration audio
@@ -183,7 +182,7 @@ let ExpLookitCompositeVideoTrial = ExpFrameBaseComponent.extend(FullScreen, Medi
         Example value:
 
         ```[{'src': 'http://.../video1.mp4', 'type': 'video/mp4'}, {'src': 'http://.../video1.webm', 'type': 'video/webm'}]```
-        @param {Array} sources
+        @property {Array} sources
             @param {String} src
             @param {String} type
         @default []
@@ -415,8 +414,6 @@ let ExpLookitCompositeVideoTrial = ExpFrameBaseComponent.extend(FullScreen, Medi
         }
     },
 
-
-    /** some sample doc*/
     videoSources: Ember.computed('isPaused', 'currentTask', 'useAlternate', function() {
         if (this.get('isPaused')) {
             return this.get('attnSources_parsed');
@@ -752,5 +749,3 @@ let ExpLookitCompositeVideoTrial = ExpFrameBaseComponent.extend(FullScreen, Medi
         this._super(...arguments);
     }
 });
-
-export default ExpLookitCompositeVideoTrial;

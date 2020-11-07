@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
+import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
 import isColor, {colorSpecToRgbaArray} from '../../utils/is-color';
@@ -11,140 +12,97 @@ let {
 } = Ember;
 
 /**
-*
-* @example
-  "announce-next-trial": {
-      "kind": "exp-lookit-video",
+ * @module exp-player
+ * @submodule frames
+ */
 
-      "audio": {
-          "loop": false,
-          "source": "video_01"
-      },
-      "video": {
-          "top": 10,
-          "left": 40,
-          "loop": true,
-          "width": 20,
-          "source": "attentiongrabber"
-      },
-      "backgroundColor": "white",
-      "autoProceed": true,
-      "parentTextBlock": {
-          "text": "If your child needs a break, just press X to pause!"
-      },
+/**
+ * Video display frame. This may be used for displaying videos to older children or parents, as well as for
+ * typical looking measures trials or as brief filler in between test trials.
+ *
+ * (Note: this frame replaced the previous exp-lookit-video frame, which is now called
+ *  {{#crossLink "Exp-lookit-composite-video-trial"}}{{/crossLink}}.)
+ *
+ * This is very customizable: you can...
+ *   - position the video wherever you want on the screen, including specifying that it should fill the screen (while maintaining aspect ratio)
+ *   - choose the background color
+ *   - optionally specify audio that should play along with the video
+ *   - have the frame proceed automatically (`autoProceed`), or enable a Next button when the user can move on
+ *   - allow parents to press a key to pause the video (and then either restart when they un-pause, or move on to the next frame)
+ *
+ * Video (and audio if provided) start as soon as any recording begins, or right away if there is no recording starting.
+ *
+ * If the user pauses using the `pauseKey`, or if the user leaves fullscreen mode, the study will be paused.
+ * While paused, the video/audio are stopped and not displayed, and instead a looping `pauseVideo` and text are displayed.
+ *
+ * There are several ways you can specify how long the trial should last. The frame will continue until
+ * ALL of the following are true:
+ *   - the video has been played all the way through `requireVideoCount` times
+ *   - the audio has been played all the way through `requireAudioCount` times
+ *   - `requiredDuration` seconds have elapsed since beginning the video
+ *
+ * You do not need to use all of these - for instance, to play the video one time and then proceed, set
+ * `requireVideoCount` to 1 and the others to 0. You can also specify whether the audio and video should loop (beyond
+ * any replaying required to reach the required counts).
+ *
+ * This frame is displayed fullscreen; if the frame before it is not, that frame
+ * needs to include a manual "next" button so that there's a user interaction
+ * event to trigger fullscreen mode. (Browsers don't allow us to switch to FS
+ * without a user event.)
+ *
+ * Example usage: (Note - this is a bit of an odd example with both audio ('peekaboo') and audio embedded in the video.
+ * In general you would probably only want one or the other!)
 
-      "requiredDuration": 0,
-      "requireAudioCount": 1,
-      "requireVideoCount": 0,
-      "doRecording": true,
+```json
+ "play-video-twice": {
+            "kind": "exp-lookit-video",
+            "audio": {
+                "loop": false,
+                "source": "peekaboo"
+            },
+            "video": {
+                "top": 10,
+                "left": 25,
+                "loop": true,
+                "width": 50,
+                "source": "cropped_apple"
+            },
+            "backgroundColor": "white",
+            "autoProceed": true,
+            "parentTextBlock": {
+                "text": "If your child needs a break, just press X to pause!"
+            },
+            "requiredDuration": 0,
+            "requireAudioCount": 0,
+            "requireVideoCount": 2,
+            "restartAfterPause": true,
+            "pauseKey": "x",
+            "pauseKeyDescription": "X",
+            "pauseAudio": "pause",
+            "pauseVideo": "attentiongrabber",
+            "pauseText": "(You'll have a moment to turn around again.)",
+            "unpauseAudio": "return_after_pause",
+            "doRecording": true,
+            "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
+            "audioTypes": [
+                "ogg",
+                "mp3"
+            ],
+            "videoTypes": [
+                "webm",
+                "mp4"
+            ]
+        },
 
-      "pauseKey": "x",
-      "pauseKeyDescription": "X",
-      "restartAfterPause": true,
-      "pauseAudio": "pause",
-      "pauseVideo": "attentiongrabber",
-      "pauseText": "(You'll have a moment to turn around again.)",
-      "unpauseAudio": "return_after_pause",
-
-      "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
-      "audioTypes": [
-          "ogg",
-          "mp3"
-      ],
-      "videoTypes": [
-          "webm",
-          "mp4"
-      ]
-  },
-*
-* @example
-  "play-video-twice": {
-      "kind": "exp-lookit-video",
-
-      "video": {
-          "top": 10,
-          "left": 25,
-          "loop": false,
-          "width": 50,
-          "source": "cropped_apple"
-      },
-      "backgroundColor": "white",
-      "autoProceed": true,
-      "parentTextBlock": {
-          "text": "If your child needs a break, just press X to pause!"
-      },
-
-      "requiredDuration": 0,
-      "requireAudioCount": 0,
-      "requireVideoCount": 2,
-      "doRecording": true,
-
-      "pauseKey": "x",
-      "pauseKeyDescription": "X",
-      "restartAfterPause": true,
-      "pauseAudio": "pause",
-      "pauseVideo": "attentiongrabber",
-      "pauseText": "(You'll have a moment to turn around again.)",
-      "unpauseAudio": "return_after_pause",
-
-      "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
-      "audioTypes": [
-          "ogg",
-          "mp3"
-      ],
-      "videoTypes": [
-          "webm",
-          "mp4"
-      ]
-  },
-*
+* ```
+* @class Exp-lookit-video
 * @extends Exp-frame-base
+* @uses Full-screen
 * @uses Video-record
 * @uses Expand-assets
-
- * @param {Object=} video - Object describing the video to show, with properties:
- *
- *   * source: location of hte main video to play
- *
- *   @param {String} video.source - The location of the main video to play. This can be either
- *      an array of ``{'src': 'https://...', 'type': '...'}`` objects (e.g., to provide both
- *      webm and mp4 versions at specified URLS) or a single string relative to ``baseDir/<EXT>/``.
- *   @param {Number} [video.left]  - left margin, as percentage of screen width. If neither left nor width is provided,
- *     the image is centered horizontally.
- *   @param {Number} [video.width] - video width, as percentage of screen width. Note:
- *     in general only provide one of width and height; the other will be adjusted to
- *     preserve the video aspect ratio.
- *   @param {Number} video.top - top margin, as percentage of video area height (i.e. whole screen,
- *     unless parent text or next button are shown). If not provided,
- *     the image is centered vertically.
- *   @param {Number} video.height - video height, as percentage of video area height. Note:
- *     in general only provide one of width and height; the other will be adjusted to
- *     preserve the video aspect ratio.
- *   @param {String} video.position - use 'fill' to fill the screen as much as possible while
- *     preserving aspect ratio. This overrides left/width/top/height values if given.
- *   @param {Boolean} video.loop - whether the video should loop, even after any ``requireTestVideoCount``
- *     is satisfied
- *
- * @param {Object} [audio] - Object describing the audio file to play along with video. Can have properties:
- * @param {String} audio.source - Location of the audio file to play.
- *   This can either be an array of {src: 'url', type: 'MIMEtype'} objects, e.g.
- *   listing equivalent .mp3 and .ogg files, or can be a single string ``filename``
- *   which will be expanded based on ``baseDir`` and ``audioTypes`` values (see ``audioTypes``).
- * @param {Boolean} audio.loop - whether the audio should loop, even after any requireTestAudioCount
- *     is satisfied
- *
- * @property {Boolean} autoProceed - Whether to proceed automatically when video is complete / requiredDuration is
- * achieved, vs. enabling a next button at that point.
- * If true, the frame auto-advances after ALL of the following happen
- * (a) the requiredDuration (if any) is achieved, counting from the video starting
- * (b) the video is played requireVideoCount times
- * (c) the audio is played requireAudioCount times
- * If false: a next button is displayed. It becomes possible to press 'next'
- * only once the conditions above are met.
- * @default true
- *
 */
-let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
+
+export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
     layout: layout,
     type: 'exp-lookit-video',
 
@@ -179,14 +137,35 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
     hasBeenPaused: false,
     isPaused: false,
     hasParentText: true,
-    /** @param unpausing comment some text */
     unpausing: false,
 
-    /** comment some text */
     maximizeVideoArea: false,
     _finishing: false,
 
     frameSchemaProperties: {
+        /**
+         * Object describing the video to show.
+         *
+         * @property {Object} video
+         *   @param {String} source The location of the main video to play. This can be either
+         *      an array of {'src': 'https://...', 'type': '...'} objects (e.g. providing both
+         *      webm and mp4 versions at specified URLS) or a single string relative to baseDir/<EXT>/.
+         *   @param {Number} left left margin, as percentage of screen width. If not provided,
+         *     the image is centered horizontally.
+         *   @param {Number} width image width, as percentage of screen width. Note:
+         *     in general only provide one of width and height; the other will be adjusted to
+         *     preserve the video aspect ratio.
+         *   @param {Number} top top margin, as percentage of video area height (i.e. whole screen,
+         *     unless parent text or next button are shown). If not provided,
+         *     the image is centered vertically.
+         *   @param {Number} height image height, as percentage of video area height. Note:
+         *     in general only provide one of width and height; the other will be adjusted to
+         *     preserve the video aspect ratio.
+         *   @param {String} position use 'fill' to fill the screen as much as possible while
+         *     preserving aspect ratio. This overrides left/width/top/height values if given.
+         *   @param {Boolean} loop whether the video should loop, even after any requireTestVideoCount
+         *     is satisfied
+         */
         video: {
             type: 'object',
             properties: {
@@ -214,6 +193,18 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
                 }
             }
         },
+        /**
+         * Object describing the audio file to play along with video (optional)
+         *
+         * @property {Object} audio
+         * @default {'source': '', loop: false}
+         * @param {String} source Location of the audio file to play.
+         *   This can either be an array of {src: 'url', type: 'MIMEtype'} objects, e.g.
+         *   listing equivalent .mp3 and .ogg files, or can be a single string `filename`
+         *   which will be expanded based on `baseDir` and `audioTypes` values (see `audioTypes`).
+         * @param {Boolean} loop whether the audio should loop, even after any requireTestAudioCount
+         *     is satisfied
+         */
         audio: {
             type: 'object',
             description: 'Audio to play along with video',
@@ -227,6 +218,20 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
             },
             default: {}
         },
+
+        /**
+         * Whether to proceed automatically when video is complete / requiredDuration is
+         * achieved, vs. enabling a next button at that point.
+         * If true, the frame auto-advances after ALL of the following happen
+         * (a) the requiredDuration (if any) is achieved, counting from the video starting
+         * (b) the video is played requireVideoCount times
+         * (c) the audio is played requireAudioCount times
+         * If false: a next button is displayed. It becomes possible to press 'next'
+         * only once the conditions above are met.
+         *
+         * @property {Boolean} autoProceed
+         * @default true
+         */
         autoProceed: {
             type: 'boolean',
             description: 'Whether to proceed automatically after audio (and hide replay/next buttons)',
@@ -358,7 +363,7 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
          * Sources Array of {src: 'url', type: 'MIMEtype'} objects for
          * audio played upon unpausing study
          *
-         * @param {Object[]} unpauseAudio
+         * @property {Object[]} unpauseAudio
          * @default []
          */
         unpauseAudio: {
@@ -762,5 +767,3 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
         $('#waitForVideo').hide();
     }
 });
-
-export default ExpLookitVideo;

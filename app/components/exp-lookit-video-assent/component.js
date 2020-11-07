@@ -17,7 +17,122 @@ let {
  */
 
 /**
+Video assent frame for Lookit studies for older children to agree to participation,
+separately from parental consent.
 
+A series of assent form "pages" is displayed, each one displaying some combination of
+(a) an image or the participant's webcam view or a video, (b) audio, and (c) text. You can
+optionally record webcam video during the whole assent procedure or on the last page.
+
+Once the family has viewed all pages, the
+child can answer a question about whether to participate. If they choose yes, they proceed;
+if they choose no, they are sent to the exit URL.
+
+You can either simply have children click on "Yes" or "No," or you can add audio/video on
+the last page that instructs them to answer verbally, and do webcam recording on that page.
+For instance, you might show a video of yourself asking "Do you want to participate in this study?
+You can say "yes" or "no." Parents, once your child has answered, please click on their answer
+to the right."
+
+In general it is expected that only one of webcam view, video, and image will be provided per
+page, although it is ok to have only text or only text plus audio. If audio or video is provided for a page,
+the participant must finish it to proceed. (If both audio and video are provided they will
+be played simultaneously and both must finish for the participant to proceed.) They only
+need to complete the audio/video for a given page once, in case they navigate using the
+previous/next buttons.
+
+This frame can optionally be shown only when the child is at least N years old, in case
+some participants will need to give assent and others will rely only on parent consent.
+
+Specifying media locations:
+
+For `imgSrc` parameters within `pages`, you can either specify complete URLs or partial URLs
+relative to a base directory `baseDir` for the frame. Images are expected to be in an
+`img` directory within the `baseDir`. For instance, in the example below,
+the first page's image is at `https://s3.amazonaws.com/lookitcontents/cats/img/jane_smith.jpg`.
+
+For any parameters that expect a list of audio/video sources, you can EITHER provide
+a list of src/type pairs with full paths like this:
+```json
+    [
+        {
+            'src': 'http://.../video1.mp4',
+            'type': 'video/mp4'
+        },
+        {
+            'src': 'http://.../video1.webm',
+            'type': 'video/webm'
+        }
+    ]
+```
+OR you can provide a single string 'stub', which will be expanded
+based on the parameter baseDir and the media types expected - either audioTypes or
+videoTypes as appropriate. For example, if you provide the audio source `intro`
+and baseDir is https://mystimuli.org/mystudy/, with audioTypes ['mp3', 'ogg'], then this
+will be expanded to:
+```json
+                 [
+                        {
+                            src: 'https://mystimuli.org/mystudy/mp3/intro.mp3',
+                            type: 'audio/mp3'
+                        },
+                        {
+                            src: 'https://mystimuli.org/mystudy/ogg/intro.ogg',
+                            type: 'audio/ogg'
+                        }
+                ]
+```
+This allows you to simplify your JSON document a bit and also easily switch to a
+new version of your stimuli without changing every URL. You can mix source objects with
+full URLs and those using stubs within the same directory. However, any stimuli
+specified using stubs MUST be organized as expected under baseDir/MEDIATYPE/filename.MEDIATYPE.
+
+Example usage:
+
+```json
+"frames": {
+    "video-assent": {
+        "kind": "exp-lookit-video-assent",
+            "pages": [
+                {
+                    "imgSrc": "jane_smith.png",
+                    "altText": "Jane Smith",
+                    "textBlocks": [
+                        {
+                            "text": "My name is Jane Smith. I am a scientist who studies why children love cats."
+                        }
+                    ],
+                    "audio": "narration_1"
+                },
+                {
+                    "imgSrc": "cats_game.png",
+                    "altText": "picture of sample game",
+                    "textBlocks": [
+                        {
+                            "text": "In this study, you will play a game about cats."
+                        }
+                    ]
+                },
+                {
+                    "showWebcam": true,
+                    "textBlocks": [
+                        {
+                            "text": "During the study, your webcam will record a video of you. We will watch this video later to see how much you love cats."
+                        }
+                    ]
+                }
+            ],
+            "baseDir": "https://s3.amazonaws.com/lookitcontents/cats/",
+            "videoTypes": [
+                "webm",
+                "mp4"
+            ],
+            "participationQuestion": "Do you want to participate in this study?",
+            "minimumYearsToAssent": 7
+        }
+    }
+}
+```
 
 @class Exp-lookit-video-assent
 @extends Exp-frame-base
@@ -277,9 +392,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
             /**
              * When participant downloads consent form
              *
-             * @event downloadAssentForm
+             * @event downloadConsentForm
              */
-            this.send('setTimeEvent', 'downloadAssentForm');
+            this.send('setTimeEvent', 'downloadConsentForm');
         }
     },
 
