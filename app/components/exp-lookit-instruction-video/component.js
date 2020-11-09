@@ -128,7 +128,8 @@ export default ExpFrameBaseComponent.extend(ExpandAssets, {
 
         requireWatchOrRead: {
             type: 'Boolean',
-            description: 'Whether to require that the participant watches the video (or reads the whole transcript) to move on'
+            description: 'Whether to require that the participant watches the video (or reads the whole transcript) to move on',
+            default: true
         },
 
         /**
