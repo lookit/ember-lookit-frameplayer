@@ -368,7 +368,6 @@ doRecording [Boolean]
     connection before starting audio or showing images if so)
 
 autoProceed [Boolean | ``false``]
-
     Whether to proceed automatically when all conditions are met, vs. enabling
     next button at that point. If true: the next, previous, and replay buttons are
     hidden, and the frame auto-advances after ALL of the following happen
