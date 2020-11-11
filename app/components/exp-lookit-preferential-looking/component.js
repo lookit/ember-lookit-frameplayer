@@ -99,7 +99,6 @@ let {
 ```json
     "sample-trial": {
         "kind": "exp-lookit-preferential-looking",
-        "isLast": false,
         "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/",
         "leftImage": "stapler_test_02.jpg",
         "testLength": 8,

@@ -581,3 +581,295 @@ The events recorded specifically by this frame are:
 :dismissFeedback: When the participant dismisses a feedback dialogue
 
     :imageId: [String] ID of the associated image
+
+
+Updating from deprecated frames
+---------------------------------
+
+.. _update_preferential_to_images:
+
+Updating an exp-lookit-preferential-looking frame
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are up to four phases in the exp-lookit-preferential-looking frame, each of which will become its own frame:
+
+- An "announcement" with audio and a small attention-getter video. If using, turn this into an :ref:`exp-lookit-video` frame.
+- An intro where the "introVideo" is played until it ends. If using, turn this into an :ref:`exp-lookit-video` frame.
+- Calibration where a video is shown at various locations. If using, turn this into an :ref:`exp-lookit-calibration` frame.
+- A test trial where images or a video are displayed. If using images, turn this into an exp-lookit-images-audio frame (see below).
+
+Consider the following trial which has all four phases:
+
+.. code:: javascript
+
+    "sample-trial": {
+        "kind": "exp-lookit-preferential-looking",
+        "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/",
+        "audioTypes": [
+            "ogg",
+            "mp3"
+        ],
+        "videoTypes": [
+            "webm",
+            "mp4"
+        ],
+
+        "announcementVideo": "attentiongrabber",
+        "announcementAudio": "video_02",
+        "announcementLength": 2,
+
+        "introVideo": "cropped_book",
+
+        "calibrationLength": 0,
+        "calibrationAudio": "chimes",
+        "calibrationVideo": "attentiongrabber",
+
+        "pauseAudio": "pause",
+        "unpauseAudio": "return_after_pause",
+
+        "testAudio": "400Hz_tones",
+        "loopTestAudio": false,
+        "leftImage": "stapler_test_02.jpg",
+        "rightImage": "novel_02.jpg",
+        "testLength": 8,
+    }
+
+To create the test trial portion as an exp-lookit-images-audio frame, we will:
+
+1. Change the "kind" and keep the baseDir, audioTypes, and videoTypes if present. We will also set ``autoProceed`` and
+   ``doRecording`` to true since we want to continue automatically after the test is over and do video recording (unless
+   you're using session recording).
+
+   .. code:: javascript
+
+        "test-trial": {
+            "kind": "exp-lookit-images-audio", <-- update the "kind"
+            "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/", <-- keep this the same
+            "audioTypes": [ <-- keep this the same
+                "ogg",
+                "mp3"
+            ],
+            "videoTypes": [ <-- keep this the same
+                "webm",
+                "mp4"
+            ],
+            "autoProceed": true,
+            "doRecording": true
+        }
+
+2. Then we need to add the images and the audio. The leftImage and rightImage will each end up being an element of
+   ``images``. If there's a centerImage instead, you can insert it the same way (using ``"position": "center"``).
+
+   .. code:: javascript
+
+        "test-trial": {
+            "kind": "exp-lookit-images-audio",
+            ...
+            "images": [
+                {
+                    "id": "left" <-- you can actually name this whatever you want
+                    "src": "stapler_test_02.jpg", <-- "leftImage"
+                    "position": "left"
+                },
+                {
+                    "id": "right" <-- you can actually name this whatever you want
+                    "src": "novel_02.jpg", <-- "rightImage"
+                    "position": "right"
+                }
+            ],
+            "audio": "400Hz_tones" <-- "testAudio"
+        }
+
+   Note that it is not yet possible to make the audio loop. If you need audio to loop, for now please create a version
+   of the file where it repeats for as long as the trial.
+
+   If you were using ``leftImageIndex``, ``rightImageIndex``, ``centerImageIndex``, and ``possibleImages``, you can now specify
+   those instead using :ref:`frame parameters <frame parameters>`:
+
+   .. code:: javascript
+
+        "test-trial": {
+            "kind": "exp-lookit-images-audio",
+            ...
+            "images": [
+                {
+                    "id": "left" <-- you can actually name this whatever you want
+                    "src": "POSSIBLEIMAGES#1", <-- "POSSIBLEIMAGES#leftImageIndex
+                    "position": "left"
+                },
+                {
+                    "id": "right" <-- you can actually name this whatever you want
+                    "src": "POSSIBLEIMAGES#0", <-- "POSSIBLEIMAGES#rightImageIndex
+                    "position": "right"
+                }
+            ],
+            "audio": "400Hz_tones" <-- "testAudio",
+            "parameters": {
+                "POSSIBLEIMAGES": ["novel_02.jpg", "stapler_test_02.jpg"]
+            }
+        }
+
+.. _update_story_to_images:
+
+Updating an exp-lookit-story-page frame
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This frame is very similar, and only minor adjustments need to be made to update.
+
+1. Change your frame "kind" from "exp-lookit-story-page" to "exp-lookit-images-audio"
+
+2. Change any "left", "width", "top", "bottom" properties of your images to numbers instead of strings - e.g., change
+
+   .. code:: javascript
+
+        "images": [
+            {
+                "id": "leftA",
+                "src": "flurps1.jpg",
+                "left": "10",
+                "width": "30",
+                "top": "34.47"
+            },
+            ...
+        ],
+        ...
+
+   to:
+
+   .. code:: javascript
+
+        "images": [
+            {
+                "id": "leftA",
+                "src": "flurps1.jpg",
+                "left": 10,
+                "width": 30,
+                "top": 34.47
+            },
+            ...
+        ],
+        ...
+
+   You also now have the option to use the preset "position" property instead if you prefer.
+
+3. Remove the "audioSources" parameter. Move the "sources" property of its first element to an "audio" property of the frame, and
+   its "highlights" property to a property of the frame, like this:
+
+   .. code:: javascript
+
+        "original-frame": {
+            "kind": "exp-lookit-story-page",
+            "audioSources": [
+                {
+                    "audioId": "firstAudio",
+                    "sources": "intro1",
+                    "highlights": [
+                        {"range": [3.017343,    5.600283], "image":     "leftA"},
+                        {"range": [5.752911,    8.899402], "image":     "rightA"}
+                    ]
+                }
+            ],
+            ...
+        }
+
+   becomes:
+
+   .. code:: javascript
+
+        "new-frame": {
+            "kind": "exp-lookit-images-audio",
+            "audio": "intro1",
+            "highlights": [
+                {"range": [3.017343,    5.600283], "image":     "leftA"},
+                {"range": [5.752911,    8.899402], "image":     "rightA"}
+            ],
+            ...
+        }
+
+   If you had multiple audio files in the "audioSources" list, you will need to make a separate frame for each of them,
+   or combine them.
+
+.. _update_dialogue_to_images:
+
+Updating an exp-lookit-dialogue-page frame
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This frame is very similar, and only minor adjustments need to be made to update.
+
+Note: animations of the images (flying in from one side, etc.) are not available; however, images can be made to appear
+at a particular delay.
+
+Images cannot be associated with text ("Click to hear what he said!") etc. and the participant cannot be required to
+click on each image. However, the images can be associated with audio or text feedback shown/played upon clicking,
+and a "correct" response can be required to move on.
+
+1. Change your frame "kind" from "exp-lookit-dialogue-page" to "exp-lookit-images-audio"
+
+2. Change any "left", "width", "top", "bottom" properties of your images to numbers instead of strings - e.g., change
+
+   .. code:: javascript
+
+        "images": [
+            {
+                "id": "leftA",
+                "src": "flurps1.jpg",
+                "left": "10",
+                "width": "30",
+                "top": "34.47"
+            },
+            ...
+        ],
+        ...
+
+   to:
+
+   .. code:: javascript
+
+        "images": [
+            {
+                "id": "leftA",
+                "src": "flurps1.jpg",
+                "left": 10,
+                "width": 30,
+                "top": 34.47
+            },
+            ...
+        ],
+        ...
+
+   You also now have the option to use the preset "position" property instead if you prefer.
+
+3. Remove the "audioSources" parameter. Move the "sources" property of its first element to an "audio" property of the frame,
+   like this:
+
+   .. code:: javascript
+
+        "original-frame": {
+            "kind": "exp-lookit-story-page",
+            "audioSources": [
+                {
+                    "audioId": "firstAudio",
+                    "sources": "intro1"
+                }
+            ],
+            ...
+        }
+
+   becomes:
+
+   .. code:: javascript
+
+        "new-frame": {
+            "kind": "exp-lookit-images-audio",
+            "audio": "intro1",
+            ...
+        }
+
+   If you had multiple audio files in the "audioSources" list, you will need to make a separate frame for each of them,
+   or combine them.
+
+4. Rename the "isChoiceFrame" parameter to "choiceRequired". Note that you now have additional options for providing
+   feedback as well as requiring a correct choice to move on.
+
+5. If you were using a ``backgroundImage``, turn it into the first image in your image list, with
+   ``"left": 0, "width": "100", "top": 0, "height": 100``.

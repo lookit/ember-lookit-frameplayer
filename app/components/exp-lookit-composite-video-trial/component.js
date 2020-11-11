@@ -80,7 +80,6 @@ let {
 ```json
         "sample-intermodal-trial-2": {
             "kind": "exp-lookit-composite-video-trial",
-            "isLast": false,
             "baseDir": "https://s3.amazonaws.com/lookitcontents/intermodal/",
             "sources": "sbs_ramp_down_up_apple_c1_b1_NN",
             "testCount": 2,

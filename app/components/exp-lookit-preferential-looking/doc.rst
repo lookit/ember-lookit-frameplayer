@@ -8,5 +8,6 @@ Please see `the old docs <https://lookit.github.io/lookit-frameplayer-docs/relea
 Consider instead
 ------------------
 
-- :ref:`exp-lookit-video` to play a video and optional audio, with more configurability & better timing precision for the recording
-- :ref:`exp-lookit-calibration` to show a calibration stimulus at specific locations, again with more configurability and better timing precision
+- :ref:`exp-lookit-video` to play a video and optional audio, with more configurability & better timing precision for the recording.  (:ref:`Update guide <update_preferential_to_video>`)
+- :ref:`exp-lookit-calibration` to show a calibration stimulus at specific locations, again with more configurability and better timing precision  (:ref:`Update guide <update_preferential_to_calibration>`)
+- :ref:`exp-lookit-images-audio` to display images and play audio. (:ref:`Update guide <update_preferential_to_images>`)

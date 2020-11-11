@@ -7,4 +7,4 @@ Please see `the old docs <https://lookit.github.io/lookit-frameplayer-docs/relea
 Consider instead
 ------------------
 
-- :ref:`exp-lookit-images-audio`, which should be able to do everything this frame can, but more reliably and with more options!
+- :ref:`exp-lookit-images-audio`, which should be able to do everything this frame can, but more reliably and with more options! (:ref:`Update guide <update_dialogue_to_images>`)

@@ -338,3 +338,590 @@ The events recorded specifically by this frame are:
 
 :nextButtonEnabled: When all requirements for this frame are completed and next button is enabled (only recorded if
     autoProceed is false)
+
+
+Updating from deprecated frames
+---------------------------------
+
+.. _update_composite_to_video:
+
+Updating an exp-lookit-composite-video-trial (or the old exp-lookit-video) frame
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The old version of the ``exp-lookit-video`` frame was renamed ``exp-lookit-composite-video-trial``, which was then deprecated
+due to stimulus presentation and recording timing issues. If you are using one of these frames, you can update to the current ``exp-lookit-video`` frame by separating the
+"phases" of the trial out into video and calibration frames.
+
+There are up to four phases in the ``exp-lookit-composite-video-trial`` frame, each of which will become a new frame:
+
+- An "announcement" with audio and a small attention-getter video. If using, turn this into a separate exp-lookit-video frame.
+- Calibration where a video is shown at various locations. If using, turn this into an :ref:`exp-lookit-calibration` frame.
+- An "intro" video which is played once through.  If using, turn this into a separate exp-lookit-video frame.
+- A test video which can be played N times or for N seconds, along with optional audio. If using, turn this into a separate exp-lookit-video frame.
+
+Consider the following trial which has all four phases:
+
+.. code:: javascript
+
+    "sample-physics-trial-2": {
+        "kind": "exp-lookit-composite-video-trial",
+        "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
+        "audioTypes": [
+            "ogg",
+            "mp3"
+        ],
+        "videoTypes": [
+            "webm",
+            "mp4"
+        ],
+
+        "attnSources": "attentiongrabber",
+        "announceLength": 2,
+        "audioSources": "video_02",
+
+        "calibrationLength": 3000,
+        "calibrationAudioSources": "chimes",
+        "calibrationVideoSources": "attentiongrabber"
+
+        "introSources": "cropped_block",
+
+        "sources": "example_pairing",
+        "altSources": "example_pairing",
+        "testCount": 2,
+        "musicSources": "music_02",
+
+        "pauseAudio": "pause",
+        "unpauseAudio": "return_after_pause",
+
+    }
+
+We will look at how to create ``exp-lookit-video`` frames for the announcement, intro, and test phases. See the
+:ref:`exp-lookit-calibration update guide <update_composite_to_calibration>` for how to update the calibration phase.
+
+The announcement phase
++++++++++++++++++++++++
+
+First let's create the frame for the initial announcement. During that video, the ``attnSources`` video would play
+(centrally, looping) while the ``audioSources`` audio played once. The phase lasts for ``announceLength`` seconds or
+the duration of ``audioSources``, whichever is longer.
+
+We'll use an ``exp-lookit-video`` frame for this.
+
+1. Change the "kind" to "exp-lookit-video". Keep the ``baseDir``, ``audioTypes``, and ``videoTypes`` if using:
+
+   .. code:: javascript
+
+       "sample-physics-announcement": {
+           "kind": "exp-lookit-video",
+           "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
+           "audioTypes": [
+               "ogg",
+               "mp3"
+           ],
+           "videoTypes": [
+               "webm",
+              "mp4"
+           ]
+       }
+
+2. Add the ``video`` and ``audio`` objects, based on ``attnSources`` and ``audioSources``.
+   Here we set the video to loop and to take up 20% of the width of the screen:
+
+   .. code:: javascript
+
+       "sample-physics-announcement": {
+           "kind": "exp-lookit-video",
+           ...
+           "video": {
+               "source": "attentiongrabber",
+               "left": 40,
+               "width": 20,
+               "top": 30,
+               "loop": true
+           },
+           "audio": {
+               "source": "video_02",
+               "loop": false
+           }
+       }
+
+3. Set the duration of the frame. Here we want it to take at least ``announceLength`` seconds and we want the
+   audio to play through one time, but we don't care about the video. We also probably don't want to record for this
+   short bit:
+
+   .. code:: javascript
+
+       "sample-physics-announcement": {
+           "kind": "exp-lookit-video",
+           ...
+           "requiredDuration": 2,
+           "requireVideoCount": 0,
+           "requireAudioCount": 1,
+           "doRecording": false
+       }
+
+4. Add in the media to use when pausing/unpausing. You now also have the options to set the key used for pausing, text
+   shown, and whether to restart the trial (see Parameters above), but you can just use the defaults if you want. You'll
+   just need to copy over ``pauseAudio`` and ``unpauseAudio``, and set ``pauseVideo`` to the old value of ``attnSources``:
+
+   .. code:: javascript
+
+       "sample-physics-announcement": {
+           "kind": "exp-lookit-video",
+           ...
+           "pauseVideo": "attentiongrabber",
+           "pauseAudio": "pause",
+           "unpauseAudio": "return_after_pause"
+       }
+
+5. Putting it all together, we have:
+
+   .. code:: javascript
+
+       "sample-physics-announcement": {
+           "kind": "exp-lookit-video",
+           "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/", <-- just keep this from your old frame
+           "audioTypes": [ <-- just keep this from your old frame
+               "ogg",
+               "mp3"
+           ],
+           "videoTypes": [ <-- just keep this from your old frame
+               "webm",
+               "mp4"
+           ],
+
+          "video": {
+               "source": "attentiongrabber", <-- "attnSources"
+               "left": 40,
+               "width": 20, <-- make this fairly small and center it
+               "top": 30,
+               "loop": true <-- video should loop
+           },
+           "audio": {
+               "source": "video_02", <-- "audioSources"
+               "loop": false <-- audio should not loop
+           },
+
+           "requiredDuration": 2, <-- "announceLength"
+           "requireVideoCount": 0,
+           "requireAudioCount": 1,
+           "doRecording": false,
+
+           "pauseVideo": "attentiongrabber", <-- "attnSources"
+           "pauseAudio": "pause", <-- just keep this from your old frame
+           "unpauseAudio": "return_after_pause" <-- just keep this from your old frame
+      }
+
+The intro phase
++++++++++++++++++++++++
+
+The intro phase is very similar to the announcement phase, except that we don't have separate audio (just any audio
+in the "introSources" video) and we just play the video once through instead of looping it. We'll start from what the
+announcement trial looked like above, and just edit the "video" and duration/count parameters:
+
+.. code:: javascript
+
+    "sample-physics-intro":
+        "kind": "exp-lookit-video",
+        "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/", <-- just keep this from your old frame
+        "audioTypes": [ <-- just keep this from your old frame
+           "ogg",
+           "mp3"
+        ],
+        "videoTypes": [ <-- just keep this from your old frame
+           "webm",
+           "mp4"
+        ],
+
+        "video": {
+           "source": "example_pairing", <-- value of "introSources"
+           "width": 40,
+           "left": 30, <-- make this a bit bigger and adjust top/width accordingly
+           "top": 20,
+           "loop": false <-- don't loop this video
+        },
+
+        "requiredDuration": 0, <-- no required duration this time
+        "requireVideoCount": 1, <-- play the video once through
+        "requireAudioCount": 0, <-- no audio to play
+        "doRecording": true, <-- probably do want to record this (unless you're using session recording)
+
+        "pauseVideo": "attentiongrabber", <-- "attnSources"
+        "pauseAudio": "pause", <-- just keep this from your old frame
+        "unpauseAudio": "return_after_pause" <-- just keep this from your old frame
+    }
+
+If you're doing recording, you may also want to review the :ref:`video-record` parameters which allow you to specify
+an image/video and text to display while establishing the video connection and uploading the video.
+
+The test phase
++++++++++++++++++++++++
+
+Again, the test phase will be similar to the announcement phase, except that we will show the ``sources`` video and the
+``musicSources`` audio, and the duration is different:
+
+.. code:: javascript
+
+    "sample-physics-test": {
+       "kind": "exp-lookit-video",
+       "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/", <-- just keep this from your old frame
+       "audioTypes": [ <-- just keep this from your old frame
+           "ogg",
+           "mp3"
+       ],
+       "videoTypes": [ <-- just keep this from your old frame
+           "webm",
+           "mp4"
+       ],
+
+      "video": {
+           "source": "attentiongrabber", <-- "attnSources"
+           "position": "fill", <-- maximize while preserving aspect ratio
+           "loop": true <-- video should loop
+       },
+       "audio": {
+           "source": "music_02", <-- "music_sources"
+           "loop": true <-- audio should loop (although it doesn't have to anymore!)
+       },
+
+       "requiredDuration": 0, <-- if your old frame has "testLength" defined, put it here; otherwise 0
+       "requireVideoCount": 2, <-- if your old frame has "testCount" defined, put it here; otherwise 0
+       "requireAudioCount": 0,
+       "doRecording": true,
+
+       "pauseVideo": "attentiongrabber", <-- "attnSources"
+       "pauseAudio": "pause", <-- just keep this from your old frame
+       "unpauseAudio": "return_after_pause" <-- just keep this from your old frame
+    }
+
+Again, you may want to review the new :ref:`video-record` parameters which allow you to specify
+an image/video and text to display while establishing the video connection and uploading the video.
+
+The one difference here is that if the participant pauses the study, it will just restart from the beginning of this trial
+upon unpausing, rather than playing an alternate video.
+
+Putting it together
++++++++++++++++++++++++
+
+Because each phase shares a lot of the same parameters - for example, the ``baseDir`` and ``pauseAudio`` - you may want
+to group these together to condense your definitions. For example, you can use a :ref:`frame group <frame groups>` to
+put together all four phases (including the calibration phase as discussed :ref:`here <update_composite_to_calibration>`):
+
+.. code:: javascript
+
+    "sample-physics-trial": {
+        "kind": "group",
+        "frameList": [
+            { <-- This is the announcement
+                "video": {
+                   "source": "attentiongrabber", <-- "attnSources"
+                   "left": 40,
+                   "width": 20, <-- make this fairly small and center it
+                   "top": 30,
+                   "loop": true <-- video should loop
+                },
+                "audio": {
+                   "source": "video_02", <-- "audioSources"
+                   "loop": false <-- audio should not loop
+                },
+                "requiredDuration": 2, <-- "announceLength"
+                "requireAudioCount": 1,
+                "doRecording": false
+            },
+            { <-- This is calibration
+                "kind": "exp-lookit-calibration" <-- everything else we need is down in commonFrameProperties
+            },
+            { <-- This is the intro
+                "video": {
+                   "source": "example_pairing", <-- value of "introSources"
+                   "position": "fill" <-- maximize video on screen (preserving aspect ratio)
+                   "loop": true <-- loop this video
+                },
+                "requireVideoCount": 1 <-- play the video once through
+            },
+            { <-- This is the test
+                "video": {
+                   "source": "attentiongrabber", <-- "attnSources"
+                   "position": "fill"  <-- maximize while preserving aspect ratio
+                   "loop": true <-- video should loop
+                },
+                "audio": {
+                   "source": "music_02", <-- "music_sources"
+                   "loop": loop <-- audio should loop
+                },
+                "requiredDuration": 0, <-- if your old frame has "testLength" defined, put it here; otherwise omit
+                "requireVideoCount": 2 <-- if your old frame has "testCount" defined, put it here; otherwise omit
+            }
+        ],
+        "commonFrameProperties": {
+            "kind": "exp-lookit-video", <-- we'll overwrite this just for calibration
+            "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/", <-- just keep this from your old frame
+            "audioTypes": [ <-- just keep this from your old frame
+               "ogg",
+               "mp3"
+            ],
+            "videoTypes": [ <-- just keep this from your old frame
+               "webm",
+               "mp4"
+            ],
+
+            "requiredDuration": 0,  <-- we'll overwrite this for particular frames
+            "requireVideoCount": 0, <-- we'll overwrite this for particular frames
+            "requireAudioCount": 0, <-- we'll overwrite this for particular frames
+            "doRecording": true, <-- we'll overwrite this for particular frames
+
+            "pauseVideo": "attentiongrabber", <-- "attnSources"
+            "pauseAudio": "pause", <-- just keep this from your old frame
+            "unpauseAudio": "return_after_pause" <-- just keep this from your old frame
+
+            "calibrationLength": 3000, <-- just keep this from your old frame. We can put the calibration info here even though it's only used for the calibration frame
+            "calibrationAudio": "chimes", <-- "calibrationAudioSources"
+            "calibrationVideo": "attentiongrabber" <-- "calibrationAudioSources"
+        }
+    }
+
+.. _update_preferential_to_video:
+
+Updating an exp-lookit-preferential-looking frame
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are up to four phases in the ``exp-lookit-preferential-looking`` frame, each of which will become its own frame:
+
+- An "announcement" with audio and a small attention-getter video. If using, turn this into an exp-lookit-video frame (see below).
+- An intro where the "introVideo" is played until it ends (see below).
+- Calibration where a video is shown at various locations. If using, turn this into an :ref:`exp-lookit-calibration` frame.
+- A test trial where images or video are displayed. If using images, turn this into an :ref:`exp-lookit-images-audio` frame.
+  If using video (``testVideo`` is defined), turn this into an exp-lookit-video frame (see below).
+
+Consider the following trial which has all four phases:
+
+.. code:: javascript
+
+    "sample-trial": {
+        "kind": "exp-lookit-preferential-looking",
+        "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/",
+        "audioTypes": [
+            "ogg",
+            "mp3"
+        ],
+        "videoTypes": [
+            "webm",
+            "mp4"
+        ],
+
+        "announcementVideo": "attentiongrabber",
+        "announcementAudio": "video_02",
+        "announcementLength": 2,
+
+        "introVideo": "cropped_book",
+
+        "calibrationLength": 0,
+        "calibrationAudio": "chimes",
+        "calibrationVideo": "attentiongrabber",
+
+        "pauseAudio": "pause",
+        "unpauseAudio": "return_after_pause",
+
+        "testAudio": "400Hz_tones",
+        "loopTestAudio": true,
+        "testVideo": "cropped_book",
+        "testLength": 8,
+    }
+
+The announcement phase
++++++++++++++++++++++++
+
+First let's create the frame for the initial announcement. During that video, the "announcementVideo" video would play
+(centrally, looping) while the "announcementAudio" audio played once. The phase lasts for "announcementLength" seconds
+(the default is 2 if it's not defined in your frame) or the duration of "announcementAudio", whichever is longer.
+
+We'll use an ``exp-lookit-video`` frame for this.
+
+1. Change the "kind" to "exp-lookit-video". Keep the ``baseDir``, ``audioTypes``, and ``videoTypes`` if using:
+
+   .. code:: javascript
+
+       "sample-preflook-announcement": {
+           "kind": "exp-lookit-video",
+           "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/",
+           "audioTypes": [
+               "ogg",
+               "mp3"
+           ],
+           "videoTypes": [
+                "webm",
+                "mp4"
+           ],
+       }
+
+2. Add the "video" and "audio" objects, based on "announcementVideo" and "announcementAudio".
+   Here we set the video to loop and to take up 20% of the width of the screen:
+
+   .. code:: javascript
+
+       "sample-preflook-announcement": {
+           "kind": "exp-lookit-video",
+           ...
+           "video": {
+               "source": "attentiongrabber",
+               "left": 40,
+               "width": 20,
+               "top": 30,
+               "loop": true
+           },
+           "audio": {
+               "source": "video_02",
+               "loop": false
+           }
+       }
+
+3. Set the duration of the frame. Here we want it to take at least "announcementLength" seconds and we want the
+   audio to play through one time, but we don't care about the video. We also probably don't want to record for this
+   short bit:
+
+   .. code:: javascript
+
+       "sample-preflook-announcement": {
+           "kind": "exp-lookit-video",
+           ...
+           "requiredDuration": 2,
+           "requireVideoCount": 0,
+           "requireAudioCount": 1,
+           "doRecording": false
+       }
+
+4. Add in the media to use when pausing/unpausing. You now also have the options to set the key used for pausing, text
+   shown, and whether to restart the trial (see Parameters above), but you can just use the defaults if you want. You'll
+   just need to copy over ``pauseAudio`` and ``unpauseAudio``, and set ``pauseVideo`` to the old value of ``announcementVideo``:
+
+   .. code:: javascript
+
+       "sample-preflook-announcement": {
+           "kind": "exp-lookit-video",
+           ...
+           "pauseVideo": "attentiongrabber",
+           "pauseAudio": "pause",
+           "unpauseAudio": "return_after_pause"
+       }
+
+5. Putting it all together, we have:
+
+   .. code:: javascript
+
+       "sample-preflook-announcement": {
+           "kind": "exp-lookit-video",
+           "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/", <-- just keep this from your old frame
+           "audioTypes": [ <-- just keep this from your old frame
+               "ogg",
+               "mp3"
+           ],
+           "videoTypes": [ <-- just keep this from your old frame
+               "webm",
+               "mp4"
+           ],
+
+          "video": {
+               "source": "attentiongrabber", <-- "announcementVideo"
+               "left": 40,
+               "width": 20, <-- make this fairly small and center it
+               "top": 30,
+               "loop": true <-- video should loop
+           },
+           "audio": {
+               "source": "video_02", <-- "announcementAudio"
+               "loop": false <-- audio should not loop
+           },
+
+           "requiredDuration": 2, <-- "announcementLength" or 2 if not defind
+           "requireVideoCount": 0,
+           "requireAudioCount": 1,
+           "doRecording": false,
+
+           "pauseVideo": "attentiongrabber", <-- "announcementVideo"
+           "pauseAudio": "pause", <-- just keep this from your old frame
+           "unpauseAudio": "return_after_pause" <-- just keep this from your old frame
+      }
+
+The intro phase
++++++++++++++++++++++++
+
+The intro phase is very similar to the announcement phase, except that we don't have separate audio (just any audio
+in the "introSources" video) and we just play the video once through instead of looping it. We'll start from what the
+announcement trial looked like above, and just edit the "video" and duration/count parameters:
+
+.. code:: javascript
+
+   "sample-preflook-announcement": {
+       "kind": "exp-lookit-video",
+       "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/", <-- just keep this from your old frame
+       "audioTypes": [ <-- just keep this from your old frame
+           "ogg",
+           "mp3"
+       ],
+       "videoTypes": [ <-- just keep this from your old frame
+           "webm",
+           "mp4"
+       ],
+
+      "video": {
+           "source": "cropped_book", <-- value of "introVideo"
+           "left": 30,
+           "width": 40, <-- make this a bit bigger
+           "top": 30,
+           "loop": false <-- video shouldn't loop
+       },
+
+       "requiredDuration": 0, <-- no required duration this time
+       "requireVideoCount": 1, <-- play the video once through
+       "requireAudioCount": 0, <-- no audio to play
+       "doRecording": true, <-- probably do want to record this (unless you're using session recording)
+
+       "pauseVideo": "attentiongrabber", <-- "announcementVideo"
+       "pauseAudio": "pause", <-- just keep this from your old frame
+       "unpauseAudio": "return_after_pause" <-- just keep this from your old frame
+  }
+
+If you're doing recording, you may also want to review the :ref:`video-record` parameters which allow you to specify
+an image/video and text to display while establishing the video connection and uploading the video.
+
+The test phase
++++++++++++++++++++++++
+
+Most of the time the exp-lookit-preferential-looking frame would be displaying images rather than video, but if you have
+used the ``testVideo`` property rather than ``leftImage``, ``rightImage``, etc. then you can convert the test phase to an
+``exp-lookit-video`` frame. It is again similar to the announcement except for the media used and duration:
+
+.. code:: javascript
+
+   "sample-preflook-test": {
+       "kind": "exp-lookit-video",
+       "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/", <-- just keep this from your old frame
+       "audioTypes": [ <-- just keep this from your old frame
+           "ogg",
+           "mp3"
+       ],
+       "videoTypes": [ <-- just keep this from your old frame
+           "webm",
+           "mp4"
+       ],
+
+      "video": {
+           "source": "cropped_book", <-- value of "testVideo"
+           "position": "fill", <-- maximize test video while preserving aspect ratio
+           "loop": true <-- video should loop
+       },
+      "audio": {
+           "source": "400Hz_tones", <-- value of "testAudio"
+           "loop": true <-- value of "loopTestAudio"
+       },
+
+       "requiredDuration": 8, <-- testLength, if defined; otherwise 0
+       "requireVideoCount": 0, <-- testCount, if defined; otherwise 0
+       "requireAudioCount": 0, <-- don't require playing audio through
+       "doRecording": true, <-- probably do want to record this (unless you're using session recording)
+
+       "pauseVideo": "attentiongrabber", <-- "announcementVideo"
+       "pauseAudio": "pause", <-- just keep this from your old frame
+       "unpauseAudio": "return_after_pause" <-- just keep this from your old frame
+  }
+
