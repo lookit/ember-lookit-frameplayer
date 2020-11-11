@@ -46,9 +46,7 @@ This frame shows a friendly message offering tech support by the lab via phone.
 
     "video-config": {
         "kind": "exp-video-config",
-        "troubleshootingIntro": "If you're having any trouble getting your webcam set up,
-          please feel free to call the XYZ lab at (123) 456-7890 and we'd be glad to
-          help you out!"
+        "troubleshootingIntro": "If you're having any trouble getting your webcam set up, please feel free to call the XYZ lab at (123) 456-7890 and we'd be glad to help you out!"
     }
 
 

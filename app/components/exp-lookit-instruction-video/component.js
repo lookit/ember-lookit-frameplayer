@@ -126,8 +126,15 @@ export default ExpFrameBaseComponent.extend(ExpandAssets, {
             default: 'Welcome! Please watch this video to learn how the study will work. You can read the transcript to the right if you prefer.'
         },
 
+        requireWatchOrRead: {
+            type: 'Boolean',
+            description: 'Whether to require that the participant watches the video (or reads the whole transcript) to move on',
+            default: true
+        },
+
         /**
-         * Text to show above Next button if participant has not yet watched video or read transcript
+         * Text to show above Next button if participant has not yet watched video or read transcript. Only used if
+         * requireWatchOrRead is true.
          *
          * @property {String} warningText
          * @default 'Please watch the video or read the transcript before proceeding.'
@@ -245,8 +252,8 @@ export default ExpFrameBaseComponent.extend(ExpandAssets, {
         }
     },
 
-    hasCompletedFrame: Em.computed('playedVideo', 'readTranscript', function() {
-        return (this.get('playedVideo') || this.get('readTranscript'));
+    hasCompletedFrame: Em.computed('playedVideo', 'readTranscript', 'requireWatchOrRead', function() {
+        return (!this.get('requireWatchOrRead') || this.get('playedVideo') || this.get('readTranscript'));
     }),
 
     showWarning: false,

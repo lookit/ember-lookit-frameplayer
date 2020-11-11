@@ -178,3 +178,145 @@ The events recorded specifically by this frame are:
 
     :location: [String]
         The location of calibration image/video, relative to child: 'left', 'right', or 'center'
+
+
+Updating from deprecated frames
+---------------------------------
+
+.. _update_composite_to_calibration:
+
+Updating an exp-lookit-composite-video-trial (or the old exp-lookit-video) frame
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Your ``exp-lookit-composite-video-trial`` frame may have included a calibration phase. If so (``calibrationLength`` set to >0),
+then you can replace that phase with an ``exp-lookit-calibration`` frame.
+
+Consider the following ``exp-lookit-composite-video-trial`` frame which includes calibration:
+
+.. code:: javascript
+
+    "sample-physics-trial-2": {
+        "kind": "exp-lookit-composite-video-trial",
+        "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
+        "audioTypes": [
+            "ogg",
+            "mp3"
+        ],
+        "videoTypes": [
+            "webm",
+            "mp4"
+        ],
+
+        "attnSources": "attentiongrabber",
+        "announceLength": 2,
+        "audioSources": "video_02",
+
+        "calibrationLength": 3000,
+        "calibrationAudioSources": "chimes",
+        "calibrationVideoSources": "attentiongrabber"
+
+        "introSources": "cropped_block",
+
+        "sources": "example_pairing",
+        "altSources": "example_pairing",
+        "testCount": 2,
+        "musicSources": "music_02",
+
+        "pauseAudio": "pause",
+        "unpauseAudio": "return_after_pause",
+
+    }
+
+To create the corresponding ``exp-lookit-calibration`` frame, you will change the ``kind`` to ``exp-lookit-calibration``,
+rename ``calibrationAudioSources`` and ``calibrationVideoSources``, and remove the irrelevant fields, like this:
+
+.. code:: javascript
+
+    "sample-physics-calibration": {
+        "kind": "exp-lookit-calibration", <-- change the "kind"
+        "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/", <-- leave this the same
+        "audioTypes": [ <-- leave this the same
+            "ogg",
+            "mp3"
+        ],
+        "videoTypes": [ <-- leave this the same
+            "webm",
+            "mp4"
+        ],
+
+        "calibrationLength": 3000,  <-- leave this the same
+        "calibrationAudio": "chimes",  <-- just rename from "calibrationAudioSources"
+        "calibrationVideo": "attentiongrabber"  <-- just rename from "calibrationVideoSources"
+    }
+
+If your old frame defined ``calibrationPositions``, you can leave that the same too. Otherwise this will continue to
+use the default of ``['center', 'left', 'right', 'center']``.
+
+The one difference is that you will not yet be able to pause the study during the calibration phase.
+
+.. _update_preferential_to_calibration:
+
+Updating an exp-lookit-preferential-looking frame
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Your ``exp-lookit-preferential-looking`` frame may have included a calibration phase. If so (``calibrationLength`` set to >0),
+then you can replace that phase with an ``exp-lookit-calibration`` frame.
+
+Consider the following ``exp-lookit-preferential-looking`` frame which includes calibration:
+
+.. code:: javascript
+
+    "sample-trial": {
+        "kind": "exp-lookit-preferential-looking",
+        "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/",
+        "audioTypes": [
+            "ogg",
+            "mp3"
+        ],
+        "videoTypes": [
+            "webm",
+            "mp4"
+        ],
+
+        "announcementVideo": "attentiongrabber",
+        "announcementAudio": "video_02",
+        "announcementLength": 2,
+
+        "introVideo": "cropped_book",
+
+        "calibrationLength": 0,
+        "calibrationAudio": "chimes",
+        "calibrationVideo": "attentiongrabber",
+
+        "pauseAudio": "pause",
+        "unpauseAudio": "return_after_pause",
+
+        "testAudio": "400Hz_tones",
+        "loopTestAudio": false,
+        "leftImage": "stapler_test_02.jpg",
+        "rightImage": "novel_02.jpg",
+        "testLength": 8,
+    }
+
+You can change it to an ``exp-lookit-calibration`` frame just by changing the ``kind`` and removing the irrelevant parameters:
+
+.. code:: javascript
+
+    "sample-trial": {
+        "kind": "exp-lookit-calibration", <-- change the "kind"
+        "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/", <-- leave this the same
+        "audioTypes": [ <-- leave this the same
+            "ogg",
+            "mp3"
+        ],
+        "videoTypes": [ <-- leave this the same
+            "webm",
+            "mp4"
+        ],
+
+        "calibrationLength": 0, <-- leave this the same
+        "calibrationAudio": "chimes", <-- leave this the same
+        "calibrationVideo": "attentiongrabber" <-- leave this the same
+    }
+
+The one difference is that you will not yet be able to pause the study during the calibration phase.

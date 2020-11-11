@@ -145,6 +145,10 @@ transcriptBlocks [Array]
            :src: [String] URL of image
            :alt: [String] Alt text for image
 
+requireWatchOrRead [Boolean | ``true``]
+    Whether to require that the participant watches the whole video (or reads the whole transcript) to move on.
+    Set to false for e.g. a debriefing video where it's optional to review the information.
+
 showPreviousButton [Boolean | ``true``]
     Whether to show a 'previous' button
 

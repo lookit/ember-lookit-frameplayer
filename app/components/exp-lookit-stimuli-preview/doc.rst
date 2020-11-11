@@ -152,3 +152,150 @@ The events recorded specifically by this frame are:
 :startPreview: User clicks on start preview button
 :nextStimulus: User clicks to move to next stimulus
 :previousStimulus: User clicks to move to previous stimulus
+
+
+Updating from deprecated frames
+---------------------------------
+
+Updating from separate exp-video-preview-explanation and exp-video-preview frames
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you currently use separate ``exp-video-preview-explanation`` and ``exp-video-preview`` frames, you will need to update
+to a single ``exp-lookit-stimuli-preview`` frame when updating the experiment runner. Follow the steps below to update.
+
+1. Combine the two frames into one (pooling all the parameters), and change its kind to ``exp-lookit-stimuli-preview``.
+
+2. Move the value of ``introBlock`` to be the first element of ``blocks``, and move the ``image`` to a new additional element,
+   like this:
+
+   .. code:: javascript
+
+        "introBlock": {
+            "text": "During the videos, we'll ask that you hold your child over your shoulder like this, so that you're facing face away from the screen."
+        },
+        "image": {
+            "alt": "Father holding child looking over his shoulder",
+            "src": "https://s3.amazonaws.com/lookitcontents/exp-physics/OverShoulder.jpg"
+        },
+        "blocks": [
+            {
+                "text": "The reason we ask this is that your child is learning from you all the time. Even if he or she can't see where you're looking, you may unconsciously shift towards one side or the other and influence your child's attention. We want to make sure we're measuring your child's preferences, not yours!"
+            },
+            {
+                "text": "If you'd like to see the videos your child will be shown, you can take a look ahead of time now. It's important that you preview the videos without your child, so that the videos will still be new to them."
+            }
+        ],
+        ...
+
+   would become:
+
+   .. code:: javascript
+
+        "blocks": [
+            {
+                "text": "During the videos, we'll ask that you hold your child over your shoulder like this, so that you're facing face away from the screen."
+            },
+            {
+                "image": {
+                    "alt": "Father holding child looking over his shoulder",
+                    "src": "https://s3.amazonaws.com/lookitcontents/exp-physics/OverShoulder.jpg"
+                }
+            },
+            {
+                "text": "The reason we ask this is that your child is learning from you all the time. Even if he or she can't see where you're looking, you may unconsciously shift towards one side or the other and influence your child's attention. We want to make sure we're measuring your child's preferences, not yours!"
+            },
+            {
+                "text": "If you'd like to see the videos your child will be shown, you can take a look ahead of time now. It's important that you preview the videos without your child, so that the videos will still be new to them."
+            }
+        ],
+        ...
+
+3. Remove the ``text`` and ``prompt`` parameters. (If you had something important in there, move it to "blocks".)
+
+4. Rename ``videos`` to ``stimuli``. Within ``stimuli`` change any properties named ``sources`` to ``video``, and change any properties
+   named ``imgSrc`` to ``image``.
+
+Suppose you started with the following two frames:
+
+.. code:: javascript
+
+    "my-preview-explanation": {
+        "introBlock": {
+            "text": "During the videos, we'll ask that you hold your child over your shoulder like this, so that you're facing face away from the screen."
+        },
+        "image": {
+            "alt": "Father holding child looking over his shoulder",
+            "src": "https://s3.amazonaws.com/lookitcontents/exp-physics/OverShoulder.jpg"
+        },
+        "kind": "exp-lookit-preview-explanation",
+        "skipButtonText": "Skip preview",
+        "previewButtonText": "I'd like to preview the videos",
+        "blocks": [
+            {
+                "text": "The reason we ask this is that your child is learning from you all the time. Even if he or she can't see where you're looking, you may unconsciously shift towards one side or the other and influence your child's attention. We want to make sure we're measuring your child's preferences, not yours!"
+            },
+            {
+                "text": "If you'd like to see the videos your child will be shown, you can take a look ahead of time now. It's important that you preview the videos without your child, so that the videos will still be new to them."
+            }
+        ],
+        "showPreviousButton": true
+    },
+    "my-preview-frame": {
+        "id": "video-preview",
+        "kind": "exp-video-preview",
+        "text": "Here are the videos your child will see in this study. You can watch them ahead of time--please just don't show your child yet!",
+        "prompt": "My child can NOT see the screen. Start the preview!",
+        "baseDir": "https://url.com/",
+        "videoTypes": ["webm", "mp4"],
+        "videos": [
+           {
+             "caption": "User-facing text that appears below the video",
+             "sources": "example_intro"
+           },
+           {
+             "caption": "User-facing text that appears below the video",
+             "imgSrc": "caterpillar_picture"
+           }
+         ]
+    }
+
+Following the steps above, you would end up with:
+
+.. code:: javascript
+
+    "my-preview-explanation": {
+        "kind": "exp-lookit-stimuli-preview",
+
+        "skipButtonText": "Skip preview",
+        "previewButtonText": "I'd like to preview the videos",
+        "blocks": [
+            {
+                 "text": "During the videos, we'll ask that you hold your child over your shoulder like this, so that you're facing face away from the screen."
+            },
+            {
+                "image": {
+                    "alt": "Father holding child looking over his shoulder",
+                    "src": "https://raw.githubusercontent.com/kimberscott/placeholder-stimuli/master/img/OverShoulder.jpg"
+                }
+            },
+            {
+                "text": "This is because your child is learning from you all the time, and may pick up on even very small cues about what you think. But if you can't see the stimuli, we're definitely only measuring your child's own beliefs."
+            },
+            {
+                "text": "If you'd like to see the videos your child will be shown, you can take a look ahead of time now. It's important that you preview the videos without your child, so that the videos will still be new to them."
+            }
+        ],
+        "showPreviousButton": true,
+        "baseDir": "https://url.com/",
+        "videoTypes": ["webm", "mp4"],
+        "stimuli": [
+           {
+             "caption": "User-facing text that appears below the video",
+             "video": "example_intro"
+           },
+           {
+             "caption": "User-facing text that appears below the video",
+             "image": "caterpillar_picture"
+           }
+         ]
+    }
