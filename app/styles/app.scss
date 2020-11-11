@@ -5,16 +5,10 @@
 @import "components/exp-video-config";
 @import "components/exp-video-config-quality";
 @import "components/exp-lookit-mood-questionnaire";
-@import "components/exp-lookit-preview-exp";
 @import "components/exp-lookit-instructions";
 @import "components/exp-lookit-exit-survey";
-@import "components/exp-lookit-geometry-alternation";
-@import "components/exp-video-preview";
 @import "components/exit-warning";
 @import "full-screen";
-@import "components/exp-lookit-preferential-looking";
-@import "components/exp-lookit-story-page";
-@import "components/exp-lookit-dialogue-page";
 @import "components/radio-group";
 @import "components/exp-lookit-video";
 @import "components/exp-lookit-video-consent";
@@ -27,12 +21,8 @@
 @import "components/radio-group";
 @import "components/exp-lookit-stimuli-preview";
 @import "components/exp-lookit-calibration";
-@import "components/exp-lookit-composite-video-trial";
 @import "components/exp-lookit-start-stop-recording";
 @import "components/exp-lookit-instruction-video";
-
-// Physics study only
-@import "components/exp-exit-survey";
 
 #experiment-player {
     font-size: large;
