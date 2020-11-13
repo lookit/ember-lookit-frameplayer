@@ -487,9 +487,12 @@ pageColor [String | ``'white'``]
     for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
     rgb hex values (e.g. '#800080' - include the '#')
 
+choiceAllowed [Boolean | ``false``]
+    Whether the user may click on images to select them.
+
 choiceRequired [Boolean | ``false``]
-    Whether this is a frame where the user needs to click to select one of the
-    images before proceeding.
+    Whether the user is able to select the images (overrides
+    choiceAllowed if choiceAllowed is false)
 
 correctChoiceRequired [Boolean | ``false``]
     [Only used if `choiceRequired` is true] Whether the participant has to select

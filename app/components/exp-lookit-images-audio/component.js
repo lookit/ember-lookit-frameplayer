@@ -363,6 +363,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     minDurationAchieved: false,
 
     choiceRequired: false,
+    choiceAllowed: false,
     correctChoiceRequired: false,
     correctImageSelected: false,
     canMakeChoice: true,
@@ -652,6 +653,11 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
         choiceRequired: {
             type: 'boolean',
             description: 'Whether this is a frame where the user needs to click to select one of the images before proceeding',
+            default: false
+        },
+        choiceAllowed: {
+            type: 'boolean',
+            description: 'Whether this is a frame where the user CAN select any of the images',
             default: false
         },
         /**
@@ -987,7 +993,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
     clickImage(imageId, nonChoiceOption, correct, feedbackText) {
         // If this is a choice frame and a valid choice and we're allowed to make a choice yet...
-        if (this.get('choiceRequired') && !nonChoiceOption && this.get('canMakeChoice') && !this.get('showingFeedbackDialog')) {
+        if ((this.get('choiceRequired') || this.get('choiceAllowed')) && !nonChoiceOption && this.get('canMakeChoice') && !this.get('showingFeedbackDialog')) {
             this.set('finishedAllAudio', true); // Treat as if audio is finished in case making choice before audio finishes - otherwise we never satisfy that criterion
             /**
              * When one of the image options is clicked during a choice frame
