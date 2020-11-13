@@ -14,7 +14,7 @@
 
         {{#each images_parsed as |image|}}
             <div id={{image.id}} class="story-image-container {{if image.position image.position}}"  onclick={{action "clickImage" image.id image.nonChoiceOption image.correct image.feedbackText}}>
-                <img src={{image.src}} class="story-image {{if (and choiceRequired (not image.nonChoiceOption)) "choice-option"}}" alt={{image.alt}}>
+                <img src={{image.src}} class="story-image {{if (and (or choiceRequired choiceAllowed) (not image.nonChoiceOption)) "choice-option"}}" alt={{image.alt}}>
                 <audio class="feedback-audio" onended={{action "endFeedbackAudio" image.id image.correct}}>
                     {{#each image.feedbackAudio as |stream|}}
                         <source src={{stream.src}} type={{stream.type}}>
