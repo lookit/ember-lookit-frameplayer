@@ -126,7 +126,9 @@ If your frame uses the video-record mixin, you may see the following in addition
 
     :status: [String] status status of video stream connection, e.g. 'NetConnection.Connect.Success' if successful
 
-:recorderReady: When video recorder has been installed and can be started
+:recorderReady: When video recorder has been installed
+
+:onReadyToRecord: Pipe event indicating it's ok to start the video recorder
 
 :startRecording: When video recorder has actually started recording
 

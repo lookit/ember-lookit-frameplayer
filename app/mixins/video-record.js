@@ -310,6 +310,11 @@ export default Ember.Mixin.create({
                 });
             }
         });
+        recorder.on('onReadyToRecord', (recId, recType) => {   // eslint-disable-line no-unused-vars
+            if (!(_this.get('isDestroyed') || _this.get('isDestroying'))) {
+                _this.send('setTimeEvent', 'onReadyToRecord');
+            }
+        });
         this.set('recorder', recorder);
         this.send('setTimeEvent', 'setupVideoRecorder', {
             videoId: videoId
