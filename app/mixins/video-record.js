@@ -421,7 +421,6 @@ export default Ember.Mixin.create({
         } else {
             this.set('assetsToExpand', {'image': ['waitForUploadImage'], 'video': ['waitForUploadVideo']})
         }
-        console.log(this.get('assetsToExpand'));
         this._super(...arguments);
     },
 
@@ -505,10 +504,10 @@ export default Ember.Mixin.create({
      * Observer that starts recording once recorder is ready.
      * @method whenPossibleToRecordObserver
      */
-    whenPossibleToRecordObserver: observer('recorder.hasCamAccess', 'recorderReady', function() {
+    whenPossibleToRecordObserver: observer('recorder.hasCamAccess', 'recorderReady', 'recorder.readyToRecord', function() {
         if (this.get('doUseCamera') && this.get('startRecordingAutomatically')) {
             var _this = this;
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
+            if (this.get('recorder.hasCamAccess') && this.get('recorderReady') && this.get('recorder.readyToRecord')) {
                 this.startRecorder().then(() => {
                     _this.set('recorderReady', false);
                     $('.video-record-mixin-wait-for-video').hide();

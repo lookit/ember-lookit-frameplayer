@@ -282,8 +282,8 @@ export default Ember.Mixin.create({
      * Observer that starts recording once session recorder is ready.
      * @method whenPossibleToRecordSessionObserver
      */
-    whenPossibleToRecordSessionObserver: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
-        if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
+    whenPossibleToRecordSessionObserver: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', 'sessionRecorder.readyToRecord', function() {
+        if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady') && this.get('sessionRecorder.readyToRecord')) {
             if (this.get('startSessionRecording')) {
                 var _this = this;
                 this.startSessionRecorder().then(() => {

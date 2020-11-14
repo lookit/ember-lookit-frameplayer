@@ -100,7 +100,7 @@ const VideoRecorder = Ember.Object.extend({
     _started: false,
     _camAccess: false,
     _recording: false,
-    _recorderReady: false,
+    _readyToRecord: false,
     _hasCreatedRecording: false,
     _nWebcams: 0,
     _nMics: 0,
@@ -342,12 +342,11 @@ const VideoRecorder = Ember.Object.extend({
     },
 
     _onCamAccess(recorderId, allowed) { // eslint-disable-line no-unused-vars
-        console.log('onCamAccess: ' + recorderId);
         this.set('hasCamAccess', allowed);
     },
 
     _onReadyToRecord(recorderId, recorderType) { // eslint-disable-line no-unused-vars
-        this.set('_recorderReady', true);
+        this.set('_readyToRecord', true);
     },
 
     _userHasCamMic(recorderId, camNumber, micNumber) { // eslint-disable-line no-unused-vars
