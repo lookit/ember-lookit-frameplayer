@@ -101,6 +101,7 @@ const VideoRecorder = Ember.Object.extend({
     _camAccess: false,
     _recording: false,
     _readyToRecord: false,
+    readyToRecord: Ember.computed.alias('_readyToRecord').readOnly(),
     _hasCreatedRecording: false,
     _nWebcams: 0,
     _nMics: 0,
