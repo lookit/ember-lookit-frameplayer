@@ -31,7 +31,6 @@ import SessionRecord from '../../mixins/session-record';
         exit=(action 'exit')
         previous=(action 'previous')
         saveHandler=(action 'saveFrame')
-        skipone=(action 'skipone')
         extra=extra
     }}``
  *
@@ -386,7 +385,7 @@ let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
 
         let clean = currentFrameIndex !== this.get('_oldFrameIndex');
 
-        var defaultParams = this.setupParams(clean);
+        let defaultParams = this.setupParams(clean);
         if (clean) {
             Object.keys(defaultParams).forEach((key) => {
                 this.set(key, defaultParams[key]);
@@ -394,14 +393,39 @@ let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
         }
 
         if (!this.get('id')) {
-            var frameIndex = this.get('frameIndex');
-            var kind = this.get('kind');
-            this.set('id', `${kind}-${frameIndex}`);
+            this.set('id', `${this.get('kind')}-${currentFrameIndex}`);
+        }
+
+        // Finalize the frame ID! Handle case where due to navigation, frameId already exists in the sequence.
+        // Do this even if not "clean" i.e. if we're repeating the same frame - it won't have been saved in the sequence
+        // if we're just re-rendering.
+        let sequence = this.get('session').get('sequence');
+        let origId = this.get('id');
+        if (sequence.includes(origId)) {
+            // Get stub: This ID with any -repeat-N removed
+            let repeatedFramePattern = /-repeat-(\d+)$/;
+            let stub = origId;
+            if (repeatedFramePattern.test(origId)) {
+                stub = origId.replace(repeatedFramePattern, '');
+            }
+            // Find lowest N where stub-repeat-N doesn't already exist
+            let framePatternString = `^${stub}-repeat-(?<repeat>\\d+)$`;
+            let thisFramePattern = new RegExp(framePatternString);
+            let existingRepeatIndices = [];
+            sequence.forEach(function (frId) {
+                let match = frId.match(thisFramePattern);
+                if (match) {
+                    existingRepeatIndices.push(match.groups.repeat);
+                }
+            });
+            // Call this frame stub-repeat-N+1
+            let repeatIndex = existingRepeatIndices.length ? Math.max(...existingRepeatIndices) + 1 : 1;
+            this.set('id', stub + '-repeat-' + repeatIndex);
         }
 
         if (clean) {
-            var session = this.get('session');
-            var expData = session ? session.get('expData') : null;
+            let session = this.get('session');
+            let expData = session ? session.get('expData') : null;
 
             // Load any existing data for this particular frame - e.g. for a survey that
             // the participant is returning to via a previous button.
@@ -422,12 +446,12 @@ let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
                     throw new Error('generateProperties provided for this frame, but cannot be evaluated.');
                 }
                 if (typeof (this.get('_generatePropertiesFn')) === 'function') {
-                    var sequence = session ? session.get('sequence', null) : null;
-                    var child = session ? session.get('child', null) : null;
-                    var conditions = session ? session.get('conditions', {}) : {};
-                    var frameContext = this.get('frameContext');
-                    var pastSessions = frameContext ? frameContext.pastSessions : null;
-                    var generatedParams = this._generatePropertiesFn(expData, sequence, child, pastSessions, conditions);
+                    let sequence = session ? session.get('sequence', null) : null;
+                    let child = session ? session.get('child', null) : null;
+                    let conditions = session ? session.get('conditions', {}) : {};
+                    let frameContext = this.get('frameContext');
+                    let pastSessions = frameContext ? frameContext.pastSessions : null;
+                    let generatedParams = this._generatePropertiesFn(expData, sequence, child, pastSessions, conditions);
                     if (typeof (generatedParams) === 'object') {
                         this.set('generatedProperties', generatedParams);
                         Object.keys(generatedParams).forEach((key) => {
@@ -693,8 +717,7 @@ let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
              * @event previousFrame
              */
             this.send('setTimeEvent', 'previousFrame');
-            var frameId = `${this.get('id')}`; // don't prepend frameindex, done by parser
-            console.log(`Previous: Leaving frame ID ${frameId}`);
+            this.send('save');
             this.sendAction('previous');
             window.scrollTo(0, 0);
         }
@@ -704,7 +727,7 @@ let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
         // Add different classes depending on whether fullscreen mode is
         // being triggered as part of standard frame operation or as an override to a frame
         // that is not typically fullscreen. In latter case, keep formatting as close to
-        // before as possible, to enable forms etc. to work ok in fullscreen mode.
+        // before as possible, to enable forms etc. to work ok in fullscreen mode
 
         Ember.$('*').removeClass('player-fullscreen');
         Ember.$('*').removeClass('player-fullscreen-override');
