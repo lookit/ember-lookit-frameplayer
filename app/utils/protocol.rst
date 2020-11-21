@@ -3,7 +3,7 @@
 Protocol configuration
 ===================================
 
-Researchers specify how their Lookit study works by writing a "protocol configuration" for their study. This configuration is written in JSON, which stands for JavaScript Object Notation - this is just a special text format, not code. 
+Researchers specify how their Lookit study works by writing a "protocol configuration" for their study. This configuration is written in JSON, which stands for JavaScript Object Notation - this is just a special text format, not code.
 
 Your study protocol configuration tells the Lookit experiment runner what sequence of "frames" to use in your study, and set all the options for those frames like what pictures or videos to show and for how long.
 
@@ -20,7 +20,7 @@ human-readable text format for describing data. A JSON object is an unordered se
 - A key and value are separated by a colon.
 - Key-value pairs are separated by commas.
 
-A JSON value can be any of the following: 
+A JSON value can be any of the following:
 
 - a string (enclosed in double quotes)
 - a number
@@ -66,16 +66,24 @@ Study protocol structure
 --------------------------
 
 Studies on Lookit are broken into a set of fundamental units called
-**frames**, which can also be thought of as “pages” of the study. A
+**frames**, which can also be thought of as "pages" of the study. A
 single experimental trial (e.g. looking time measurement) would
-generally be one frame, as are the video consent procedure and exit survey. 
+generally be one frame, as are the video consent procedure and exit survey.
 Your JSON must have two keys: ``frames`` and
 ``sequence``. The ``frames`` value defines the frames used in this
 study: it must be a JSON object mapping frame nicknames (any unique
 strings chosen by the researcher) to frame objects (defined next). The
 ``sequence`` value must be an ordered list of the frames to use in this
-study; values in this list must be frame nicknames from the “frames”
-value. 
+study. Values in this list must be IDs from the “frames”
+value.
+
+.. admonition:: Frame IDs can't have underscores in them
+
+   Frame IDs must be made of only numbers, letters, and dashes (e.g., "motor-skills-survey-23" is fine, but "motor_skills_survey" is not).
+
+   You will see an error in the browser console if you try to use a frame ID with an underscore in it!
+
+   Frame IDs **also can't end with** ``-repeat-N`` (e.g., '-repeat-3'), because that suffix is used when the participant navigates back to repeat a frame.
 
 Here is the JSON for a very minimal Lookit study:
 
