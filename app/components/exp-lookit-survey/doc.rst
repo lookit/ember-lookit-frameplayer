@@ -44,14 +44,6 @@ may be specified under options to populate a question's potential answers (e.g.,
 load a list of countries from some other source rather than hard-coding it, or to
 provide checkboxes with vocabulary items from an externally-defined inventory).
 
-You can also use alpacajs's "dependencies" and "conditional dependencies" functionality to
-set up fields that depend on other fields - e.g., asking if the child speaks any
-language besides English in the home and only if so displaying a dropdown to select the
-language(s), or asking if the child likes Elmo or Grover better and then asking a question
-specific to the preferred character. Or if you have questions only relevant to the
-birth mother of the child, you could ask if the participant is the birth mother and show
-those questions conditionally.
-
 Formatting
 ~~~~~~~~~~~
 
@@ -60,6 +52,33 @@ elements, and inline CSS.
 
 The form itself occupies a maximum of 800px horizontally and takes up 80% of the vertical
 height of the window (it will scroll to fit).
+
+Conditional questions
+~~~~~~~~~~~~~~~~~~~~~~
+
+You can use `alpacajs's "dependencies" functionality <http://www.alpacajs.org/docs/api/conditional-dependencies.html>`__ to
+set up fields that depend on other fields - e.g., asking if the child speaks any
+language besides English in the home and only if so displaying a dropdown to select the
+language(s), or asking if the child likes Elmo or Grover better and then asking a question
+specific to the preferred character. Or if you have questions only relevant to the
+birth mother of the child, you could ask if the participant is the birth mother and show
+those questions conditionally. See below for an example.
+
+
+
+
+Ordering questions
+~~~~~~~~~~~~~~~~~~
+
+By default, questions should be presented in the order they're defined in your schema.
+If they are not, you can use the "order" option to arrange them; see `the Alpaca docs <http://www.alpacajs.org/docs/api/ordering.html>`__.
+
+Ordering options
+~~~~~~~~~~~~~~~~
+
+By default, Alpaca sorts options alphabetically for fields with radio buttons or checkboxes.
+That's usually not what you want. Add ``"sort": false`` under formSchema -> options ->
+fields -> <your field> to list them in the order you define them.
 
 Current limitations
 ~~~~~~~~~~~~~~~~~~~
@@ -135,12 +154,68 @@ Here is an example of a reasonably simple survey using this frame:
                     "species": {
                         "type": "radio",
                         "message": "Seriously, what species??",
-                        "validator": "required-field"
+                        "validator": "required-field",
+                        "removeDefaultNone": true,
+                        "sort": false
                     }
                 }
             }
         },
         "nextButtonText": "Moving on..."
+    }
+
+Conditional dependence: show a question based on the answer to another question
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: javascript
+
+    "language-survey": {
+        "kind": "exp-lookit-survey",
+        "formSchema": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "multilingual": {
+                        "type": "string",
+                        "title": "Is your child regularly exposed to any languages besides English?",
+                        "enum": [
+                            "Yes",
+                            "No"
+                        ]
+                    },
+                    "languages": {
+                        "type": "text",
+                        "title": "What other languages is he or she learning?"
+                    }
+                },
+                "dependencies": {
+                    "languages": [
+                        "multilingual"
+                    ]
+                }
+            },
+            "options": {
+                "fields": {
+                    "multilingual": {
+                        "type": "radio",
+                        "message": "Please select an answer",
+                        "validator": "required-field",
+                        "sort": false,
+                        "removeDefaultNone": true,
+                        "order": 1
+                    },
+                    "languages": {
+                        "type": "text",
+                        "message": "Please write in an answer",
+                        "validator": "required-field",
+                        "dependencies": {
+                            "multilingual": "Yes"
+                        },
+                        "order": 2
+                    }
+                }
+            }
+        }
     }
 
 Reproducing the mood survey
