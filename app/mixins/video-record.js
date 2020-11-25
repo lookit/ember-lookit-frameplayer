@@ -418,7 +418,7 @@ export default Ember.Mixin.create({
 
     didInsertElement() {
         // Give any active session recorder precedence over individual-frame recording
-        if (this.get('sessionRecorder') && this.get('session').get('recordingInProgress')) {
+        if (this.get('sessionRecorder') && this.get('session').get('recordingInProgress') && this.get('doUseCamera')) {
             console.warn('Recording on this frame was specified, but session recording is already active. Not making frame recording.');
             this.set('doUseCamera', false);
         }
