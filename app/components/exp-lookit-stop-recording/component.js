@@ -73,9 +73,6 @@ export default ExpFrameBaseComponent.extend(ExpandAssets, {
     layout: layout,
     type: 'exp-lookit-stop-recording',
 
-    fullScreenElementId: 'experiment-player',
-    fsButtonID: 'fsButton',
-
     /**
      * @property {Boolean} startSessionRecording
      * @private

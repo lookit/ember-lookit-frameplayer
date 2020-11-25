@@ -149,7 +149,6 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
     type: 'exp-lookit-video',
 
     displayFullscreen: true, // force fullscreen for all uses of this component
-    fsButtonID: 'fsButton',
 
     assetsToExpand: {
         'audio': [

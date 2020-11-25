@@ -22,8 +22,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     type: 'exp-lookit-images-audio',
     layout: layout,
     displayFullscreen: true, // force fullscreen for all uses of this component
-    fullScreenElementId: 'experiment-player', // which element to send fullscreen
-    fsButtonID: 'fsButton', // ID of button to go to fullscreen
 
     startedTrial: false, // whether we've started playing audio yet
     _finishing: false, // whether we're currently trying to move to next trial (to prevent overlapping calls)

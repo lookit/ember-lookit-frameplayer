@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
-import FullScreen from '../../mixins/full-screen';
 import MediaReload from '../../mixins/media-reload';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
@@ -106,13 +105,11 @@ let {
 * @uses Expand-assets
 */
 
-export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord, ExpandAssets, {
+export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAssets, {
     layout: layout,
     type: 'exp-lookit-calibration',
 
     displayFullscreen: true, // force fullscreen for all uses of this component
-    fullScreenElementId: 'experiment-player',
-    fsButtonID: 'fsButton',
 
     assetsToExpand: {
         'audio': [

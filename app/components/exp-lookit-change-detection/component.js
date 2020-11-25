@@ -158,8 +158,6 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     type: 'exp-lookit-geometry-alternation',
     layout: layout,
     displayFullscreen: true, // force fullscreen for all uses of this component
-    fullScreenElementId: 'experiment-player',
-    fsButtonID: 'fsButton',
 
     // Track state of experiment
     completedAudio: false,
