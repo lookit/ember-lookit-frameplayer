@@ -248,9 +248,10 @@ export default Ember.Component.extend(FullScreen, {
             if (nextFrameIndex < (this.get('frames').length)) {
                 this._transition();
                 this.set('frameIndex', nextFrameIndex);
+                window.scrollTo(0, 0);
                 return;
             }
-            this._exit(); // exit if nextFrameIndex == this.get('frames').length
+            this._exit(); // exit if nextFrameIndex >= this.get('frames').length
         },
 
         exit() {
