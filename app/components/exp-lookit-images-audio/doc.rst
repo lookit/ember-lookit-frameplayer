@@ -457,7 +457,7 @@ images [Array | ``[]``]
         the screen or to fill the screen as much as possible.
         This overrides left/width/top values if given.
     :nonChoiceOption: [Boolean]
-        [Only used if ``choiceRequired`` is true]
+        [Only used if ``choiceRequired`` or ``choiceAllowed`` is true]
         whether this should be treated as a non-clickable option (e.g., this is
         a picture of a girl, and the child needs to choose whether the girl has a
         DOG or a CAT)
@@ -466,13 +466,13 @@ images [Array | ``[]``]
         start (timing will be relative to any audio or to start of trial if no
         audio). Optional; default is to show images immediately.
     :feedbackAudio: [Array or String]
-        [Only used if ``choiceRequired`` is true] Audio to play upon clicking this image.
+        [Only used if ``choiceRequired`` or ``choiceAllowed``  is true] Audio to play upon clicking this image.
         This can either be an array of
         {src: 'url', type: 'MIMEtype'} objects, e.g. listing equivalent .mp3 and
         .ogg files, or can be a single string ``filename`` which will be expanded
         based on ``baseDir`` and ``audioTypes`` values (see ``audioTypes``).
     :feedbackText: [String]
-        [Only used if ``choiceRequired`` is true] Text
+        [Only used if ``choiceRequired`` or ``choiceAllowed``  is true] Text
         to display in a dialogue window upon clicking the image.
 
 backgroundColor [String | ``'black'``]
@@ -487,9 +487,12 @@ pageColor [String | ``'white'``]
     for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
     rgb hex values (e.g. '#800080' - include the '#')
 
+choiceAllowed [Boolean | ``false``]
+    Whether the user may click on images to select them.
+
 choiceRequired [Boolean | ``false``]
-    Whether this is a frame where the user needs to click to select one of the
-    images before proceeding.
+    Whether the user is able to select the images (overrides
+    choiceAllowed if choiceAllowed is false)
 
 correctChoiceRequired [Boolean | ``false``]
     [Only used if `choiceRequired` is true] Whether the participant has to select
@@ -497,7 +500,7 @@ correctChoiceRequired [Boolean | ``false``]
 
 canMakeChoiceBeforeAudioFinished [Boolean | ``false``]
     Whether the participant can make a choice before audio finishes. (Only relevant
-    if `choiceRequired` is true.)
+    if ``choiceRequired`` or `choiceAllowed`` is true.)
 
 highlights [Array | ``[]``]
     Array representing times when particular images should be highlighted. Each

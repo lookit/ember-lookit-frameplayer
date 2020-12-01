@@ -593,7 +593,9 @@ export default ExpFrameBaseComponent.extend({
     formData: null,
     actions: {
         setupForm(form) {
-
+            if (this.get('isDestroyed') || this.get('isDestroying')) {
+                return;
+            }
             this.set('form', form);
             // If we've gotten here via 'previous' and so already have data, set the
             // JSON value of this form to that data.
