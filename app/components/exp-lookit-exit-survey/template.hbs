@@ -60,6 +60,11 @@
                     {{/if}}
                     <hr>
                     <label><i class="fa fa-star"></i> Use of video clips and images:</label>
+                    {{#if additionalVideoPrivacyText}}
+                        <p>
+                            {{exp-format additionalVideoPrivacyText}}
+                        </p>
+                    {{/if}}
                     <div class="radio">
                         <label>
                             <span class="radio-holder">
