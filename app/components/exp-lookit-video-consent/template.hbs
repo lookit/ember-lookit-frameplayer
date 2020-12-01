@@ -79,6 +79,31 @@
                             @PIContact={{PIContact}}
                     />
 
+                {{else if (eq template "consent_005")}}
+
+                    <ConsentTemplate005
+                            @experiment={{experiment}}
+                            @PIName={{PIName}}
+                            @institution={{institution}}
+                            @purpose={{purpose}}
+                            @payment={{payment}}
+                            @procedures={{procedures}}
+                            @datause={{datause}}
+                            @additional_segments={{additional_segments}}
+                            @research_rights_statement={{research_rights_statement}}
+                            @gdpr={{gdpr}}
+                            @gdpr_personal_data={{gdpr_personal_data}}
+                            @gdpr_sensitive_data={{gdpr_sensitive_data}}
+                            @PIContact={{PIContact}}
+
+                            @risk_statement={{risk_statement}}
+                            @voluntary_participation={{voluntary_participation}}
+                            @include_databrary={{include_databrary}}
+                            @additional_video_privacy_statement={{additional_video_privacy_statement}}
+                            @risk_header={{risk_header}}
+                            @benefits_header={{benefits_header}}
+                    />
+
                 {{/if}}
 
             </div>

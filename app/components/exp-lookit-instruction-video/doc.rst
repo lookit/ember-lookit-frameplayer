@@ -43,11 +43,11 @@ This frame will show an instruction video & summary.
 
 .. code:: javascript
 
-     "intro-video": {
+    "intro-video": {
         "kind": "exp-lookit-instruction-video",
         "instructionsVideo": [
             {
-                "src": "https://raw.github.com/UCDOakeslab/Baby_MR_Lookit/master/Lookit Introduction Part 1_Edited.mp4",
+                "src": "https://raw.githubusercontent.com/lookit/template-study-stim/master/tetris/mp4/Lookit_Template_First_Instructions.mp4",
                 "type": "video/mp4"
             }
         ],
@@ -93,8 +93,8 @@ This frame will show an instruction video & summary.
                 ]
             }
         ],
-        "warningText": "Please watch the video or read the transcript before proceeding.",
-        "nextButtonText": "Next",
+        "warningText": "Please watch the video or read the summary before proceeding.",
+        "nextButtonText": "I'm ready to make sure my webcam is connected!",
         "title": "Study instructions",
         "showPreviousButton": false
     }
