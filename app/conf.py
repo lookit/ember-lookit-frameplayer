@@ -21,10 +21,6 @@ project = 'Experiment runner'
 copyright = '2020, MIT'
 author = 'MIT'
 
-# The full version, including alpha/beta/rc tags
-release = '1.3.1'
-
-
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
@@ -60,3 +56,5 @@ html_static_path = ['../images', '../_styles']
 # These paths are either relative to html_static_path
 # or fully qualified paths (eg. https://...)
 html_css_files = ['elf.css']
+
+master_doc = 'index'
