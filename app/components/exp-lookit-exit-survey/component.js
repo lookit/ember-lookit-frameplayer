@@ -103,6 +103,11 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
             type: 'boolean',
             description: 'Whether to show a \'share this study on Facebook\' button',
             default: true
+        },
+        additionalVideoPrivacyText: {
+            type: 'string',
+            default: '',
+            description: 'Additional text to display under "Use of video clips and images:", before listing options'
         }
     },
     frameSchemaRequired: ['debriefing'],
