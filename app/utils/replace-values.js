@@ -12,6 +12,27 @@ function shuffleArray(array) {
     return shuffled;
 }
 
+// Combine two objects which contain arrays by appending all elements of the
+// new array to the original one, or creating a new array if the original did not have this key.
+// Modifies targetArrays.
+// Example:
+//
+// targetArrays = {"image": [], "audio": ['a', 'b']}
+// newArrays = {"audio": ['c'], "video": ['d', 'e']}
+// mergeObjectOfArrays(targetArrays, newArrays)
+//
+// now targetArrays is {"image": [], "audio": ['a', 'b', 'c'], "video": ['d', 'e']}
+function mergeObjectOfArrays(targetArrays, newArrays) {
+    Object.keys(newArrays).forEach((item) => {
+        if (targetArrays[item]) {
+            targetArrays[item].push(...newArrays[item]);
+        } else {
+            targetArrays[item] = newArrays[item];
+        }
+    });
+    return targetArrays;
+}
+
 function Substituter() {
     this.storedProperties = {};
 
@@ -71,3 +92,5 @@ function Substituter() {
 }
 
 export default Substituter;
+
+export { mergeObjectOfArrays, Substituter };

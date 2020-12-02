@@ -79,12 +79,12 @@ than 2 s total, as coded by the parent holding down the P key, it will proceed.
         "requireAudioCount": 0,
         "requireVideoCount": 5,
         "restartAfterPause": true,
-        "pauseKey": "x",
-        "pauseKeyDescription": "X",
+
         "pauseAudio": "pause",
         "pauseVideo": "attentiongrabber",
-        "pauseText": "(You'll have a moment to turn around again.)",
         "unpauseAudio": "return_after_pause",
+        "pauseKey": " ",
+
         "doRecording": true,
         "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
         "audioTypes": [

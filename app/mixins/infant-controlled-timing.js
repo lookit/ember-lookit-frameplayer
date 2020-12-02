@@ -37,7 +37,7 @@ let {
  *
  * 5) If it is possible for the frame to end by other mechanisms than the trialEndKey or reaching the lookaway criterion,
  *    then when that happens: set the `trialEndReason` accordingly (e.g., `this.set('trialEndReason', 'ceiling')`) and
- *    call `this.setTrialEndTime()` to calculate a total looking time based on the
+ *    call `this.setTrialEndTime()` to calculate a total looking time based on the parent's coding
  *
  * 6) So that your frame will capture information about looking time and the reason the trial ended, and make that
  *    available to the researcher, add the following to your frame's `meta.data.properties`:

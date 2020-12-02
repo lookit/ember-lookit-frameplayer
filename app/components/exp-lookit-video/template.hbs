@@ -38,42 +38,6 @@
         </div>
 
 
-        <!--PAUSE VIDEO AND TEXT-->
-        <div id="paused-display" class="fill">
-            {{#if (or isPaused unpausing)}}
-                <video id="pause-video"
-                class="attn"
-                autoplay="autoplay"
-                loop
-                >
-                    {{#each pauseVideo_parsed as |stream|}}
-                        <source src={{stream.src}} type={{stream.type}}>
-                    {{/each}}
-                </video>
-
-                <p class="pause-instructions"> Study paused </p>
-                {{#if updatedIsFullscreen}}
-                    <p class="pause-instructions"> Press {{pauseKeyDescription}} to resume </p>
-                    <p class="pause-instructions"> {{pauseText}} </p>
-                {{/if}}
-
-            {{/if}}
-        </div>
-
-        <audio id="pause-audio">
-            {{#each pauseAudio_parsed as |stream|}}
-                <source src={{stream.src}} type={{stream.type}}>
-            {{/each}}
-        </audio>
-
-        <audio id="unpause-audio"
-               onended={{action "unpauseStudy"}}
-        >
-            {{#each unpauseAudio_parsed as |stream|}}
-                <source src={{stream.src}} type={{stream.type}}>
-            {{/each}}
-        </audio>
-
     </div>
 
 
@@ -81,7 +45,7 @@
 
         <div id="story-controls">
 
-            {{#if (and (not (or isPaused unpausing)) hasParentText)}}
+            {{#if hasParentText}}
                 <div id="parenttext">
                     {{exp-text-block block=parentTextBlock}}
                 </div>
@@ -97,14 +61,6 @@
 
         </div>
 
-    {{/unless}}
-
-    <!--FULLSCREEN BUTTON-->
-
-    {{#unless updatedIsFullscreen}}
-        <button type="button" class="btn btn-success" id="fsButton" {{ action "showFullscreen"}} {{!-- template-lint-disable no-inline-styles --}}>
-            please return to fullscreen
-        </button>
     {{/unless}}
 
 </div>

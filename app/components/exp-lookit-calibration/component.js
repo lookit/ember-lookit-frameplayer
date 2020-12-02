@@ -1,9 +1,8 @@
 import Ember from 'ember';
 import layout from './template';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
-import FullScreen from '../../mixins/full-screen';
-import MediaReload from '../../mixins/media-reload';
 import VideoRecord from '../../mixins/video-record';
+import PauseUnpause from '../../mixins/pause-unpause';
 import ExpandAssets from '../../mixins/expand-assets';
 import isColor from '../../utils/is-color';
 import { audioAssetOptions, imageAssetOptions, videoAssetOptions } from '../../mixins/expand-assets';
@@ -106,13 +105,11 @@ let {
 * @uses Expand-assets
 */
 
-export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord, ExpandAssets, {
+export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAssets, {
     layout: layout,
     type: 'exp-lookit-calibration',
 
     displayFullscreen: true, // force fullscreen for all uses of this component
-    fullScreenElementId: 'experiment-player',
-    fsButtonID: 'fsButton',
 
     assetsToExpand: {
         'audio': [
@@ -263,6 +260,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         // to call next AFTER recording is stopped and we don't want this to have
         // already been destroyed at that point.
         window.clearInterval(this.get('calTimer'));
+        this.disablePausing();
         var _this = this;
         if (this.get('doRecording')) {
             this.stopRecorder().then(() => {
@@ -324,18 +322,23 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
 
 
                 _this.set('calTimer', window.setTimeout(function() {
-                    _this.set('retryCalibrationAudio', false);
-                    doCalibrationSegments(calList, thisLoc);
+                    if (!_this.get('_isPaused')) {
+                        _this.set('retryCalibrationAudio', false);
+                        _this.enablePausing(true); // On 2nd+ cal, require FS mode
+                        doCalibrationSegments(calList, thisLoc);
+                    }
                 }, _this.get('calibrationLength')));
+
             }
         };
 
-        doCalibrationSegments(this.get('calibrationPositions').slice(), '');
+        if (!this.get('_isPaused')) {
+            doCalibrationSegments(this.get('calibrationPositions').slice(), '');
+        }
 
     },
 
     reloadObserver: Ember.observer('reloadingMedia', function() {
-        console.log('reloadObserver');
         if (!this.get('reloadingMedia')) {  // done with most recent reload
             if (this.get('retryCalibrationAudio')) {
                 $('#player-calibration-audio')[0].play();
@@ -344,12 +347,38 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
     }),
 
     onRecordingStarted() {
-        this.startCalibration();
+        if (!this.get('_isPaused')) {
+            this.enablePausing(true);
+            this.startCalibration();
+        }
     },
 
     onSessionRecordingStarted() {
         $('#waitForVideo').hide();
-        this.startCalibration();
+        if (!this.get('_isPaused')) {
+            this.enablePausing(true);
+            this.startCalibration();
+        }
+    },
+
+    onStudyPause() {
+        window.clearInterval(this.get('calTimer'));
+        if ($('#player-calibration-audio').length) {
+            $('#player-calibration-audio')[0].pause();
+        }
+        $('.exp-lookit-calibration').hide();
+        this.set('retryCalibrationAudio', false);
+        if (this.get('doRecording')) {
+            let _this = this;
+            return this.stopRecorder().finally(() => {
+                _this.set('stoppedRecording', true);
+                _this.destroyRecorder();
+            });
+        } else {
+            return new Promise((resolve) => {
+                resolve();
+            });
+        }
     },
 
     didInsertElement() {
@@ -368,7 +397,10 @@ export default ExpFrameBaseComponent.extend(FullScreen, MediaReload, VideoRecord
         if (this.get('calibrationImage')) {
             $('#calibration-image').addClass(this.get('calibrationImageAnimation'));
         }
-        if (!(this.get('doRecording') || this.get('startSessionRecording'))) {
+        if (!(this.get('doRecording') && !(this.get('startSessionRecording')))) {
+            if (this.checkFullscreen()) {
+                this.enablePausing(); // allow pausing right away if not in process of entering FS, otherwise give a moment
+            }
             this.startCalibration();
         }
     },
