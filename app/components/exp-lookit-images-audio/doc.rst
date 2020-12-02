@@ -72,6 +72,24 @@ needs to include a manual "next" button so that there's a user interaction
 event to trigger fullscreen mode. (Browsers don't allow us to switch to FS
 without a user event.)
 
+Pausing
+~~~~~~~~~~
+
+This frame supports flexible pausing behavior due to the use of :ref:`pause-unpause`. See that link for more detailed
+information about how to adjust pausing behavior.
+
+If the user pauses using the ``pauseKey`` (space bar by default), the study will be paused. You can optionally disable pausing, or have the
+study pause if the user leaves fullscreen mode; see :ref:`pause-unpause`. While paused, audio is paused and stimuli are
+not displayed, and instead a ``pauseImage`` or looping ``pauseVideo`` and some ``pausedText`` are displayed. Audio can be played upon pausing and
+upon unpausing.
+
+Upon unpausing, either this frame will restart (default) or the study can proceed to a frame of your choice (see the
+``frameOffsetAfterPause`` parameter in :ref:`pause-unpause`.
+
+If ``doRecording`` is true and you are recording webcam video during this frame, that recording will stop when the study
+is paused. If you are doing session-level recording, you can optionally stop that upon pausing; if you do that, you
+will probably want to send families back to an exp-lookit-start-recording frame upon unpausing.
+
 Specifying where files are
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -85,6 +103,7 @@ Below is information specific to this particular frame. There may also be availa
 and data collected that come from the following more general sources:
 
 - the :ref:`base frame<base frame>` (things all frames do)
+- :ref:`pause-unpause`
 - :ref:`video-record`
 - :ref:`expand-assets`
 
@@ -111,7 +130,10 @@ The examples below show a variety of usages.
             "autoProceed": true,
             "doRecording": true,
             "durationSeconds": 8,
-            "maximizeDisplay": true
+            "maximizeDisplay": true,
+
+            "pageColor": "black",
+            "backgroundColor": "black"
         }
 
 2. Single image displayed at specified position, with 'next' button to move on
@@ -239,7 +261,7 @@ The examples below show a variety of usages.
             }
         }
 
-6. Three images with audio prompt, family has to click one of two to continue
+6. Three images with audio prompt, family has to click one of two to continue. Pausing is disabled.
 
     .. code:: javascript
 
@@ -274,7 +296,9 @@ The examples below show a variety of usages.
                 "text": "Some explanatory text for parents",
                 "title": "For parents"
             },
-            "canMakeChoiceBeforeAudioFinished": true
+            "canMakeChoiceBeforeAudioFinished": true,
+
+            "allowUserPause": false
         }
 
 7.  Three images with audio prompt, family has to click correct one to continue - audio feedback on incorrect answer

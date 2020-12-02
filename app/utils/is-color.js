@@ -1,4 +1,5 @@
-// See https://stackoverflow.com/a/56266358
+// See https://stackoverflow.com/a/56266358.
+// Return value: whether this is a valid CSS color specifier (#000000, green, etc.)
 const isColor = (strColor) => {
     const s = new Option().style;
     s.color = strColor;
@@ -24,6 +25,11 @@ const colorSpecToRgbaArray = function(color) {
     return context.getImageData(0, 0, 1, 1).data;
 };
 
+// Return either 'black' or 'white' depending on whether background color (RGB(A) array) is dark or light)
+const textColorForBackground = function(colorSpecRGBA) {
+    return (colorSpecRGBA[0] + colorSpecRGBA[1] + colorSpecRGBA[2] > 128 * 3) ? 'black' : 'white';
+};
+
 export default isColor;
 
-export { colorSpecToRgbaArray, isColor };
+export { colorSpecToRgbaArray, isColor, textColorForBackground };

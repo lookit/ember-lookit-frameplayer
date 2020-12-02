@@ -1,8 +1,8 @@
 import Ember from 'ember';
 import layout from './template';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
-import FullScreen from '../../mixins/full-screen';
 import VideoRecord from '../../mixins/video-record';
+import PauseUnpause from '../../mixins/pause-unpause';
 import ExpandAssets from '../../mixins/expand-assets';
 import { audioAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
 import isColor from '../../utils/is-color';
@@ -10,20 +10,18 @@ import isColor from '../../utils/is-color';
 let {
     $
 } = Ember;
+
 /**
  * Frame to display image(s) and play audio, with optional video recording. Options allow
  * customization for looking time, storybook, forced choice, and reaction time type trials,
  * including training versions where children (or parents) get feedback about their responses.
  */
 
-
-export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAssets, {
+export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAssets, {
 
     type: 'exp-lookit-images-audio',
     layout: layout,
     displayFullscreen: true, // force fullscreen for all uses of this component
-    fullScreenElementId: 'experiment-player', // which element to send fullscreen
-    fsButtonID: 'fsButton', // ID of button to go to fullscreen
 
     startedTrial: false, // whether we've started playing audio yet
     _finishing: false, // whether we're currently trying to move to next trial (to prevent overlapping calls)
@@ -49,6 +47,8 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     canMakeChoice: true,
     showingFeedbackDialog: false,
     selectedImage: null,
+
+    pauseWhenExitingFullscreen: false, // pause-unpause mixin
 
     audioPlayed: null,
 
@@ -330,6 +330,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
     },
 
     finish() {
+        this.disablePausing();
         if (!this.get('_finishing')) {
             this.set('_finishing', true);
             var _this = this;
@@ -392,6 +393,7 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
     startTrial() {
         this.set('startedTrial', true);
+        this.enablePausing(false);
         if (this.get('durationSeconds') && this.get('durationSeconds') > 0) {
             let _this = this;
             /**
@@ -686,6 +688,33 @@ export default ExpFrameBaseComponent.extend(FullScreen, VideoRecord, ExpandAsset
 
         // Begin trial!
         this.checkAndEnableProceed();
+    },
+
+    onStudyPause() {
+        window.clearInterval(this.get('pageTimer'));
+        window.clearInterval(this.get('progressTimer'));
+        window.clearInterval(this.get('nextButtonDisableTimer'));
+        window.clearInterval(this.get('showChoiceTimer'));
+        $.each(this.get('imageDisplayTimers'), function(idx, timeout) {
+            window.clearInterval(timeout);
+        });
+
+        $('.exp-lookit-image-audio').hide();
+        $('audio.player-audio').each(function() {
+            this.pause();
+        });
+
+        if (this.get('doRecording')) {
+            let _this = this;
+            return this.stopRecorder().finally(() => {
+                _this.set('stoppedRecording', true);
+                _this.destroyRecorder();
+            });
+        } else {
+            return new Promise((resolve) => {
+                resolve();
+            });
+        }
     },
 
     // Once rendered, hide images and (if not recording) begin trial

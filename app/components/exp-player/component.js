@@ -71,7 +71,7 @@ export default Ember.Component.extend(FullScreen, {
             this.showConfirmationDialog();
             this.get('toast').warning('To leave the study early, please press Exit below so you can select a privacy level for your videos.');
             this.set('hasAttemptedExit', true);
-            this.send('exitFullscreen');
+            this.exitFullscreen();
 
             // Log that the user attempted to leave early, via browser navigation.
             // There is no guarantee that the server request to save this event will finish before exit completed;
@@ -117,7 +117,7 @@ export default Ember.Component.extend(FullScreen, {
         var _this = this;
         Ember.$(window).on('keydown', (e) => {
             if ((e.which === 112) || (e.ctrlKey && e.which == 88)) { // F1 key or ctrl-x
-                _this.send('exitFullscreen');
+                _this.exitFullscreen();
                 _this.showConfirmationDialog();
             }
         });
@@ -248,19 +248,10 @@ export default Ember.Component.extend(FullScreen, {
             if (nextFrameIndex < (this.get('frames').length)) {
                 this._transition();
                 this.set('frameIndex', nextFrameIndex);
+                window.scrollTo(0, 0);
                 return;
             }
-            this._exit(); // exit if nextFrameIndex == this.get('frames').length
-        },
-
-        skipone() {
-            var frameIndex = this.get('frameIndex');
-            if (frameIndex < (this.get('frames').length - 2)) {
-                this._transition();
-                this.set('frameIndex', frameIndex + 2);
-                return;
-            }
-            this._exit();
+            this._exit(); // exit if nextFrameIndex >= this.get('frames').length
         },
 
         exit() {

@@ -34,3 +34,11 @@ video.player-fullscreen::-webkit-media-controls {
     cursor: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7), none;
 }
 
+#fsButton {
+    z-index: 999;
+    position: absolute;
+    margin-top: 25vh;
+    width: 100%;
+    font-size: 2em;
+    display: none;
+}

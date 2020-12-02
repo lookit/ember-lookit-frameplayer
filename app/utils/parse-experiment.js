@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 var frameNamePattern = new RegExp(/^exp(?:-\w+)+$/);
+var frameNameForbidden = new RegExp(/-repeat-\d+$/);
 var urlPattern = /^(URL|JSON):(.*)$/;
 
 import randomizers from '../randomizers/index';
@@ -36,8 +37,8 @@ var ExperimentParser = function (context = {
 ExperimentParser.prototype._reformatFrame = function (frame, index, prependFrameInds = true) {
     let newConfig = Ember.copy(frame, true);
     const acceptableFrameIdChars = /^[A-Za-z0-9-. ]+$/;
-    if (frame.id && !frame.id.match(acceptableFrameIdChars)) {
-        throw `Error parsing frame ${frame.id}: frame IDs must be composed only of the following characters: a-z, A-Z, -, ., [space]`;
+    if (frame.id && (!frame.id.match(acceptableFrameIdChars) || frame.id.match(frameNameForbidden))) {
+        throw `Error parsing frame ${frame.id}: frame IDs must be composed only of the following characters: a-z, A-Z, -, ., [space] and may not end in -repeat-N`;
     }
     if (prependFrameInds) {
         newConfig.id = `${index}-${frame.id}`;
@@ -94,7 +95,7 @@ ExperimentParser.prototype._resolveFrame = function (frameId, frame) {
     try {
         if (frameId && !frame) {
             if (!this.frames.hasOwnProperty(frameId)) {
-                throw `Parse error: Experiment sequence includes an undefined frame '${frameId}'. Each element of the 'sequence' in your study JSON must also be a key in the 'frames'. The frames you can use are: ${Object.keys(this.frames)}`;
+                throw `Parse error: Experiment sequence includes an undefined frame '${frameId}'. Each element of the 'sequence' in your study JSON must also be a key in the 'frames'. The frames you can use are: ${Object.getOwnPropertyNames(this.frames)}`;
             }
         }
 
@@ -187,10 +188,10 @@ ExperimentParser.prototype.parse = function (prependFrameInds = true) {
     // Basic checks to warn about unusual sequences
     let frameKinds = expFrames.map(frame => frame.kind);
     let nFrames = expFrames.length;
-    if (nFrames > 0 && frameKinds[0] != 'exp-video-config') {
-        console.warn('Parse warning: First frame is not an exp-video-config frame. Lookit recommends starting with an exp-video-config frame to help participants set up their webcams. If you are testing out a subset of your study, or using a custom replacement for exp-video-config, you can disregard this warning.');
+    if (nFrames > 0 && !frameKinds.includes('exp-video-config')) {
+        console.warn('Parse warning: No exp-video-config frame included. Lookit recommends starting with an exp-video-config frame to help participants set up their webcams. If you are testing out a subset of your study, or using a custom replacement for exp-video-config, you can disregard this warning.');
     }
-    if (!(frameKinds.includes('exp-lookit-video-consent') || frameKinds.includes('exp-video-consent'))) {
+    if (!frameKinds.includes('exp-lookit-video-consent')) {
         console.warn('Parse warning: No consent frame detected. All studies must include a consent frame such as exp-lookit-video-consent. If you are testing out a subset of your study or have received approval to use a custom replacement for exp-lookit-video-consent, you can disregard this warning.');
     }
     if (frameKinds[nFrames - 1] != 'exp-lookit-exit-survey') {

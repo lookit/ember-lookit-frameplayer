@@ -39,13 +39,6 @@
 
     </div>
 
-    {{#unless updatedIsFullscreen}}
-        <button type="button" class="btn btn-warning exp-lookit-story-page" id="fsButton" {{ action "showFullscreen"}} >
-            please return
-            <br>
-            to fullscreen
-        </button>
-    {{/unless}}
 
     {{#if audio_parsed}}
         <audio class="player-audio" id="player-audio" onended={{action "finishedAudio"}} ontimeupdate={{action "updateCharacterHighlighting"}}>

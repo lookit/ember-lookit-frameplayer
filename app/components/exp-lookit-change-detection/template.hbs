@@ -15,49 +15,14 @@
             {{/each}}
         </video>
 
-        {{#if hasBeenPaused}}
-            <audio id="player-audio" onended={{action "endAudio"}}>
-                {{#each unpauseAudio_parsed as |stream|}}
-                    <source src={{stream.src}} type={{stream.type}}>
-                {{/each}}
-            </audio>
-        {{else}}
-            <audio id="player-audio"
-                   onended={{action "endAudio"}}>
-                {{#each audioSources_parsed as |stream|}}
-                    <source src={{stream.src}} type={{stream.type}}>
-                {{/each}}
-            </audio>
-        {{/if}}
-
-        <audio id="player-pause-audio">
-            {{#each pauseAudio_parsed as |stream|}}
-                <source src={{stream.src}} type={{stream.type}}>
-            {{/each}}
-        </audio>
-
-        <audio id="player-pause-audio-leftfs">
-            {{#each fsAudio_parsed as |stream|}}
+        <audio id="player-audio"
+               onended={{action "endAudio"}}>
+            {{#each audioSources_parsed as |stream|}}
                 <source src={{stream.src}} type={{stream.type}}>
             {{/each}}
         </audio>
 
     {{/if}}
-
-    {{#if isPaused}}
-        <p class="pause-instructions"> Study paused </p>
-        {{#if updatedIsFullscreen}}
-            <p class="pause-instructions"> Press space to resume </p>
-            <p class="pause-instructions"> (You'll have a moment to turn around again.) </p>
-        {{/if}}
-    {{/if}}
-
-    {{#unless updatedIsFullscreen}}
-        <button type="button" class="btn btn-success exp-lookit-geometry-alternation" id="fsButton" {{ action "showFullscreen"}} >
-            please return to fullscreen
-        </button>
-    {{/unless}}
-
 
     <div id="allstimuli">
         <div id="left-stream-container" class="stream-container">

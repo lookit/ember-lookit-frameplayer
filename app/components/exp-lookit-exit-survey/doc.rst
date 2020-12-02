@@ -80,6 +80,11 @@ debriefing [Object]
 showShareButton [Boolean | ``true``]
     Whether to show a 'share this study on Facebook' button
 
+additionalVideoPrivacyText [String]
+    Optional additional text to display under the header "Use of video clips and images", above the options. This may
+    be used, for example, if you have separately asked for permission to use the videos as stimuli for other parents and want
+    to clarify that these options are in addition to that.
+
 Data collected
 ----------------
 
