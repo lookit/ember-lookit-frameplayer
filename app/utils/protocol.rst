@@ -91,9 +91,7 @@ Here is the JSON for a very minimal Lookit study:
 
    {
        "frames": {
-           "my-consent-frame": {
-               "kind": "exp-video-consent",
-               "prompt": "I agree to participate",
+           "my-text-frame": {
                "blocks": [
                    {
                        "title": "About the study",
@@ -110,13 +108,13 @@ Here is the JSON for a very minimal Lookit study:
            }
        },
        "sequence": [
-           "my-consent-frame",
+           "my-text-frame",
            "my-exit-survey"
        ]
    }
 
 This JSON specifies a Lookit study with two frames, consent and an exit
-survey. Note that the frame nicknames ``my-consent-frame`` and
+survey. Note that the frame nicknames ``my-text-frame`` and
 ``my-exit-survey`` that are defined in ``frames`` are also used in the
 ``sequence``. Frames may be specified but not used in ``sequence``.
 Here’s the object associated with the ``my-exit-survey`` frame:

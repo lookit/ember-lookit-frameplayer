@@ -37,38 +37,36 @@ Parameters
 
 Any frame that uses this mixin will accept the following parameters in addition to the regular frame parameters:
 
-.. glossary::
+lookawayType [String | ``'total'``]
 
-    lookawayType [String | ``'total'``]
+    Type of lookaway criterion. Must be either
+    'total' (to count total lookaway time) or 'continuous' (to count only continuous lookaway time).
+    Whichever criterion type is used, only lookaways after the first look to the screen are considered.
 
-        Type of lookaway criterion. Must be either
-        'total' (to count total lookaway time) or 'continuous' (to count only continuous lookaway time).
-        Whichever criterion type is used, only lookaways after the first look to the screen are considered.
+lookawayThreshold [Number | 2]
+    Lookaway threshold in seconds. How long does the child need to look away before the trial ends? Depending on
+    the lookawayType, this will refer either to the total amount of time the child has looked away since their
+    first look to the screen, or to the length of a single continuous lookaway.
 
-    lookawayThreshold [Number | 2]
-        Lookaway threshold in seconds. How long does the child need to look away before the trial ends? Depending on
-        the lookawayType, this will refer either to the total amount of time the child has looked away since their
-        first look to the screen, or to the length of a single continuous lookaway.
+lookawayKey [String | ``'p'``]
+     Key parent should press to indicate the child is looking away. If a key is provided, then the trial will
+     end if the child looks away looks long enough per the lookawayType and lookawayThreshold. You can also use
+     'mouse' to indicate that mouse down/up should be used in place of key down/up events. Use an empty string,
+     '', to not record any lookaways for this trial. You can look up the names of keys at https://keycode.info.
 
-    lookawayKey [String | ``'p'``]
-         Key parent should press to indicate the child is looking away. If a key is provided, then the trial will
-         end if the child looks away looks long enough per the lookawayType and lookawayThreshold. You can also use
-         'mouse' to indicate that mouse down/up should be used in place of key down/up events. Use an empty string,
-         '', to not record any lookaways for this trial. You can look up the names of keys at https://keycode.info.
+endTrialKey [String | ``'q'``]
+     Key parent should press to manually move on to next trial. This allows you to have parents control the study
+     by giving instructions like "press q when the child looks away for at least a few seconds" instead of "hold down
+     w whenever the child isn't looking."  Use an empty string, '', to not allow this function
+     for this trial. You can look up the names of keys at https://keycode.info. Default is 'q'.
 
-    endTrialKey [String | ``'q'``]
-         Key parent should press to manually move on to next trial. This allows you to have parents control the study
-         by giving instructions like "press q when the child looks away for at least a few seconds" instead of "hold down
-         w whenever the child isn't looking."  Use an empty string, '', to not allow this function
-         for this trial. You can look up the names of keys at https://keycode.info. Default is 'q'.
+lookawayTone [String | ``'noise'``]
+     Type of audio to play during parent-coded lookaways - 'tone' (A 220), 'noise' (pink noise), or 'none'. These
+     tones are available at https://www.mit.edu/~kimscott/placeholderstimuli/ if you want to use them in
+     instructions.
 
-    lookawayTone [String | ``'noise'``]
-         Type of audio to play during parent-coded lookaways - 'tone' (A 220), 'noise' (pink noise), or 'none'. These
-         tones are available at https://www.mit.edu/~kimscott/placeholderstimuli/ if you want to use them in
-         instructions.
-
-    lookawayToneVolume [Number | ``0.25``]
-         Volume of lookaway tone, as fraction of full volume (1 = full volume, 0 = silent)
+lookawayToneVolume [Number | ``0.25``]
+     Volume of lookaway tone, as fraction of full volume (1 = full volume, 0 = silent)
 
 Data collected
 ----------------
@@ -76,28 +74,26 @@ Data collected
 In addition to data collected by the regular version of the frame, a frame that uses this mixin will collect
 two pieces of data for convenience when coding or if implementing a live habituation procedure:
 
-.. glossary::
+totalLookingTime [Number]
+    Total looking time during this frame, in seconds.
+    Looking time is calculated as the total time spent looking between:
 
-    totalLookingTime [Number]
-        Total looking time during this frame, in seconds.
-        Looking time is calculated as the total time spent looking between:
+    1. The start of the parent control period, or the first look during that period if the child is not looking initially and
+    2. The end of the trial due to the parent pushing the end trial key, the child reaching the lookaway criterion,
+       or the frame being completed without either of these happening (e.g., a video is played N times or an image is
+       shown for N seconds).
 
-        1. The start of the parent control period, or the first look during that period if the child is not looking initially and
-        2. The end of the trial due to the parent pushing the end trial key, the child reaching the lookaway criterion,
-           or the frame being completed without either of these happening (e.g., a video is played N times or an image is
-           shown for N seconds).
+    All time spent looking away, per parent coding, is excluded, regardless of the duration of the lookaway.
 
-        All time spent looking away, per parent coding, is excluded, regardless of the duration of the lookaway.
+    This value will be null if the trial is not completed by any of the above mechanisms, for instance because
+    the parent ends the study early during this frame.
 
-        This value will be null if the trial is not completed by any of the above mechanisms, for instance because
-        the parent ends the study early during this frame.
+trialEndReason [String]
+    What caused the trial to end: 'lookaway' (the child reached the lookaway threshold), 'parentEnded' (the parent
+    pressed the endTrialKey), or 'ceiling' (the frame ended without either of those happening).
 
-    trialEndReason [String]
-        What caused the trial to end: 'lookaway' (the child reached the lookaway threshold), 'parentEnded' (the parent
-        pressed the endTrialKey), or 'ceiling' (the frame ended without either of those happening).
-
-        This value will be null if the trial is not completed by any of the above mechanisms, for instance because
-        the parent ends the study early during this frame.
+    This value will be null if the trial is not completed by any of the above mechanisms, for instance because
+    the parent ends the study early during this frame.
 
 Events recorded
 ----------------
