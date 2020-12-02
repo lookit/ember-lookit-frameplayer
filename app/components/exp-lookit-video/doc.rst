@@ -51,13 +51,20 @@ Video (and audio if provided) start as soon as any recording begins, or right aw
 Pausing
 ~~~~~~~~~~
 
-If the user pauses using the ``pauseKey``, or if the user leaves fullscreen mode, the study will be paused. If you don't
-want to allow pausing during the frame, set the ``pauseKey`` to an empty string (``""``).
+This frame supports flexible pausing behavior due to the use of :ref:`pause-unpause`. See that link for more detailed
+information about how to adjust pausing behavior.
 
-While paused, the video/audio are stopped and not displayed, and instead a looping ``pauseVideo`` and text are displayed.
+If the user pauses using the ``pauseKey`` (space bar by default), or if the user leaves fullscreen mode, the study will be paused. You can
+optionally disable either type of pausing; see :ref:`pause-unpause`. While paused, the video/audio are stopped and not
+displayed, and instead a ``pauseImage`` or looping ``pauseVideo`` and some ``pausedText`` are displayed. Audio can be played upon pausing and
+upon unpausing.
 
-Leaving fullscreen mode will also pause the trial. For this reason, it's important to specify pause/unpause audio even
-if you plan to disable pausing!
+Upon unpausing, either this frame will restart (default) or the study can proceed to a frame of your choice (see the
+``frameOffsetAfterPause`` parameter in :ref:`pause-unpause`.
+
+If ``doRecording`` is true and you are recording webcam video during this frame, that recording will stop when the study
+is paused. If you are doing session-level recording, you can optionally stop that upon pausing; if you do that, you
+will probably want to send families back to an exp-lookit-start-recording frame upon unpausing.
 
 Display
 ~~~~~~~~~~
@@ -82,6 +89,7 @@ Below is information specific to this particular frame. There may also be availa
 and data collected that come from the following more general sources:
 
 - the :ref:`base frame<base frame>` (things all frames do)
+- :ref:`pause-unpause`
 - :ref:`video-record`
 - :ref:`expand-assets`
 
@@ -106,7 +114,7 @@ This frame will play through a central video of Kim introducing an apple two tim
       "backgroundColor": "white",
       "autoProceed": true,
       "parentTextBlock": {
-          "text": "If your child needs a break, just press X to pause!"
+          "text": "If your child needs a break, press the space bar to pause!"
       },
 
       "requiredDuration": 0,
@@ -114,13 +122,10 @@ This frame will play through a central video of Kim introducing an apple two tim
       "requireVideoCount": 2,
       "doRecording": true,
 
-      "pauseKey": "x",
-      "pauseKeyDescription": "X",
-      "restartAfterPause": true,
+      "frameOffsetAfterPause": 0,
       "pauseAudio": "pause",
-      "pauseVideo": "attentiongrabber",
-      "pauseText": "(You'll have a moment to turn around again.)",
       "unpauseAudio": "return_after_pause",
+      "pauseVideo": "attentiongrabber",
 
       "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
       "audioTypes": [
@@ -155,7 +160,7 @@ webcam video.
       "backgroundColor": "white",
       "autoProceed": true,
       "parentTextBlock": {
-          "text": "If your child needs a break, just press X to pause!"
+          "text": "If your child needs a break, press the space bar to pause!"
       },
 
       "requiredDuration": 0,
@@ -163,13 +168,10 @@ webcam video.
       "requireVideoCount": 0,
       "doRecording": false,
 
-      "pauseKey": "x",
-      "pauseKeyDescription": "X",
-      "restartAfterPause": true,
+      "frameOffsetAfterPause": 0,
       "pauseAudio": "pause",
-      "pauseVideo": "attentiongrabber",
-      "pauseText": "(You'll have a moment to turn around again.)",
       "unpauseAudio": "return_after_pause",
+      "pauseVideo": "attentiongrabber",
 
       "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
       "audioTypes": [
@@ -246,33 +248,8 @@ backgroundColor [String | ``'white'``]
     rgb hex values (e.g. '#800080' - include the '#'). We recommend a light background if you need to
     see children's eyes.
 
-pauseVideo [String or Array]
-    Video to show (looping) when trial is paused. As with the main video source, this can either be an array of
-     ``{'src': 'https://...', 'type': '...'}`` objects (e.g. providing both webm and mp4 versions at specified URLS)
-     or a single string relative to ``baseDir/<EXT>/``.
-
-pauseAudio [String or Array]
-    Audio to play [one time] upon pausing study, e.g. "Study paused." This can be either an array of
-    ``{src: 'url', type: 'MIMEtype'}`` objects or a single string relative to ``baseDir/<EXT>``.
-
-unpauseAudio [String or Array]
-    Audio to play [one time] when participant resumes the study, before actually resuming. E.g. this might give them
-    a chance to get back in position. This can be either an array of
-    ``{src: 'url', type: 'MIMEtype'}`` objects or a single string relative to ``baseDir/<EXT>``.
-
-pauseKey [String | ``' '``]
-    Key to pause the trial. Use an empty string, '', to not allow pausing using the keyboard. You can look up the names of keys at
-    https://keycode.info. Default is the space bar (' ').
-
-pauseKeyDescription [String | ``'space'``]
-    Parent-facing description of the key to pause the study. This is just used to display text
-    "Press {pauseKeyDescription} to resume" when the study is paused.
-
 restartAfterPause [Boolean | ``true``]
-    Whether to restart this frame upon unpausing, vs moving on to the next frame
-
-pauseText [String | "(You'll have a moment to turn around again.)"]
-    Text to show under "Study paused / Press space to resume" when study is paused.
+    [Deprecated - use ``frameOffsetAfterPause`` from :ref:`pause-unpause` directly for more flexible behavior after unpausing.] Whether to restart this frame upon unpausing, vs moving on to the next frame. If set to false, then ``frameOffsetAfterPausing`` is set to 1 and we will proceed to the next frame in order (not using any ``selectNextFrame`` function) after unpausing. If not set or set to true, the frameOffsetAfterPausing is used.
 
 requiredDuration [Number | ``0``]
     Duration to require before proceeding, if any. Set if you want a time-based limit.

@@ -86,6 +86,7 @@ information about what parameters to include and what data will be collected her
 
    mixins/expand-assets.rst
    mixins/infant-controlled-timing.rst
+   mixins/pause-unpause.rst
    mixins/video-record.rst
 
 Randomization

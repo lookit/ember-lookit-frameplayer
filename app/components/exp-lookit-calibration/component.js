@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
-import MediaReload from '../../mixins/media-reload';
 import VideoRecord from '../../mixins/video-record';
 import PauseUnpause from '../../mixins/pause-unpause';
 import ExpandAssets from '../../mixins/expand-assets';
@@ -261,6 +260,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
         // to call next AFTER recording is stopped and we don't want this to have
         // already been destroyed at that point.
         window.clearInterval(this.get('calTimer'));
+        this.disablePausing();
         var _this = this;
         if (this.get('doRecording')) {
             this.stopRecorder().then(() => {
@@ -324,6 +324,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
                 _this.set('calTimer', window.setTimeout(function() {
                     if (!_this.get('_isPaused')) {
                         _this.set('retryCalibrationAudio', false);
+                        _this.enablePausing(true); // On 2nd+ cal, require FS mode
                         doCalibrationSegments(calList, thisLoc);
                     }
                 }, _this.get('calibrationLength')));
@@ -332,7 +333,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
         };
 
         if (!this.get('_isPaused')) {
-            this.enablePausing();
             doCalibrationSegments(this.get('calibrationPositions').slice(), '');
         }
 
@@ -348,22 +348,16 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
 
     onRecordingStarted() {
         if (!this.get('_isPaused')) {
-            if (this.checkFullscreen()) {
-                this.startCalibration();
-            } else {
-                this._pauseStudy();
-            }
+            this.enablePausing(true);
+            this.startCalibration();
         }
     },
 
     onSessionRecordingStarted() {
         $('#waitForVideo').hide();
         if (!this.get('_isPaused')) {
-            if (this.checkFullscreen()) {
-                this.startCalibration();
-            } else {
-                this._pauseStudy();
-            }
+            this.enablePausing(true);
+            this.startCalibration();
         }
     },
 
@@ -405,10 +399,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
         }
         if (!(this.get('doRecording') && !(this.get('startSessionRecording')))) {
             if (this.checkFullscreen()) {
-                this.startCalibration();
-            } else {
-                this._pauseStudy();
+                this.enablePausing(); // allow pausing right away if not in process of entering FS, otherwise give a moment
             }
+            this.startCalibration();
         }
     },
 

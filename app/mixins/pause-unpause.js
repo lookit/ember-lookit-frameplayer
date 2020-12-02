@@ -23,7 +23,8 @@ let {
  *   different from mixin defaults
  *
  * * Add a call to enablePausing() when you want to start allowing the user to pause (this will allow user pausing
- *   if it's enabled, as well as pausing upon leaving fullscreen mode if that's enabled)
+ *   if it's enabled, as well as pausing upon leaving fullscreen mode if that's enabled). Add a call to disablePausing()
+ *   when pausing should no longer be allowed - e.g., once stopping recording to move to the next frame.
  *
  * * Add onStudyPause and onStudyUnpause frame-specific Promises. onStudyPause should take care of any stimuli, timers,
  *   key handlers, etc. that should not continue during pausing, stop recording, etc. It should resolve once it's ok to
@@ -59,7 +60,7 @@ var pauseUnpauseMixin = Ember.Mixin.create({
     pauseColor: 'white',
 
     /*
-     Video to display along with any wait-for-recording or wait-for-upload message (looping).
+     Video to display along with any pausing/pausedText message (looping).
      Either pauseImage or pauseVideo can be
      specified. This can be either an array of ``{'src': 'https://...', 'type': '...'}`` objects (e.g. providing both
      webm and mp4 versions at specified URLS) or a single string relative to ``baseDir/<EXT>/`` if this frame otherwise
@@ -68,7 +69,7 @@ var pauseUnpauseMixin = Ember.Mixin.create({
     pauseVideo: '',
 
     /*
-     Image to display along with any wait-for-recording or wait-for-upload message (looping).
+     Image to display along with any pausing/pausedText message.
      Either pauseImage or pauseVideo can be
      specified. This can be either a full URL or a filename, which will be relative to ``baseDir/img/`` if this frame otherwise
      supports use of ``baseDir``.
@@ -96,8 +97,7 @@ var pauseUnpauseMixin = Ember.Mixin.create({
 
     /*
      How many frames to proceed when restarting after pausing. 0 to restart this frame; 1 to proceed to next frame;
-     -1 to start at previous frame; etc. Use 'selectNextFrame' to use frame's own selectNextFrame function to
-     determine the next frame.
+     -1 to start at previous frame; etc.
      */
     frameOffsetAfterPause: 0,
 
@@ -250,8 +250,9 @@ var pauseUnpauseMixin = Ember.Mixin.create({
     /*
      Enable pausing/unpausing. May be called from consuming frame's onStudyPause/onStudyUnpause hooks.
      */
-    enablePausing() {
+    enablePausing(doFullscreenCheck = true) {
         if (!this.get('_pausingEnabled')) {
+            $(document).off('keyup.pauser');
             $(document).on('keyup.pauser', (e) => {
                 if (this.checkFullscreen()) {
                     // Only allow pausing/unpausing if we're full-screen OR full-screen isn't required
@@ -266,11 +267,15 @@ var pauseUnpauseMixin = Ember.Mixin.create({
                 }
             });
             this.set('_pausingEnabled', true);
-            // Don't need to separately enable FS listener because it checks _pausingEnabled
-            if (this.get('pauseWhenExitingFullscreen') && !this.checkFullscreen() && !this.get('_isPaused')) {
-                this._pauseStudy();
-            }
         }
+
+        // Don't need to separately enable FS listener because it checks _pausingEnabled
+        if (this.get('pauseWhenExitingFullscreen') && !this.checkFullscreen() && !this.get('_isPaused') && doFullscreenCheck) {
+            console.log('failed fullscreen c heck');
+            this._pauseStudy();
+            return true;
+        }
+        return false;
     },
 
     onFullscreen() {
