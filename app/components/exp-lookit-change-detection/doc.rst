@@ -53,6 +53,24 @@ needs to include a manual "next" button so that there's a user interaction
 event to trigger fullscreen mode. (Browsers don't allow us to switch to FS
 without a user event.)
 
+Pausing
+~~~~~~~~~~
+
+This frame supports flexible pausing behavior due to the use of :ref:`pause-unpause`. See that link for more detailed
+information about how to adjust pausing behavior.
+
+If the user pauses using the ``pauseKey`` (space bar by default), or leaves fullscreen mode, the study will be paused. You can optionally disable
+either form of pausing; see :ref:`pause-unpause`. While paused, audio is paused and stimuli are
+not displayed, and instead a ``pauseImage`` or looping ``pauseVideo`` and some ``pausedText`` are displayed. Audio can be played upon pausing and
+upon unpausing.
+
+Upon unpausing, either this frame will restart (default) or the study can proceed to a frame of your choice (see the
+``frameOffsetAfterPause`` parameter in :ref:`pause-unpause`.
+
+If ``doRecording`` is true and you are recording webcam video during this frame, that recording will stop when the study
+is paused. If you are doing session-level recording, you can optionally stop that upon pausing; if you do that, you
+will probably want to send families back to an exp-lookit-start-recording frame upon unpausing.
+
 Specifying where files are
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -66,6 +84,7 @@ Below is information specific to this particular frame. There may also be availa
 and data collected that come from the following more general sources:
 
 - the :ref:`base frame<base frame>` (things all frames do)
+- :ref:`pause-unpause`
 - :ref:`video-record`
 - :ref:`expand-assets`
 
@@ -79,18 +98,23 @@ This frame will alternate between fruit and shapes on the left, and just fruit o
 
     "alt-trial": {
         "kind": "exp-lookit-change-detection",
+
         "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
         "videoTypes": ["mp4", "webm"],
         "audioTypes": ["mp3", "ogg"],
-        "trialLength": 15,
-        "attnLength": 2,
-        "fsAudio": "sample_1",
+
         "unpauseAudio": "return_after_pause",
         "pauseAudio": "pause",
+        "pauseVideo": "attentiongrabber",
+        "frameOffsetAfterPause": 0,
+
+        "trialLength": 15,
+        "attnLength": 2,
         "videoSources": "attentiongrabber",
         "musicSources": "music_01",
         "audioSources": "video_01",
         "endAudioSources": "all_done",
+
         "border": "thick solid black",
         "leftImagesA": ["apple.jpg", "orange.jpg"],
         "rightImagesA": ["square.png", "tall.png", "wide.png"],
@@ -100,6 +124,7 @@ This frame will alternate between fruit and shapes on the left, and just fruit o
         "randomizeImageOrder": true,
         "displayMs": 500,
         "blankMs": 250,
+
         "containerColor": "white",
         "backgroundColor": "#abc"
     }
@@ -136,18 +161,6 @@ endAudioSources [String or Array | ``[]``]
 videoSources [String or Array | ``[]``]
     Array of {src: 'url', type: 'MIMEtype'} objects for attention-getter video, OR string relative to ``baseDir``.
     Will play in a loop for announcement phase.
-
-pauseAudio [String or Array | ``[]``]
-    Array of {src: 'url', type: 'MIMEtype'} objects for audio to play upon pausing study, OR string relative to
-    ``baseDir``.
-
-unpauseAudio [String or Array | ``[]``]
-    Array of {src: 'url', type: 'MIMEtype'} objects for audio to play upon unpausing study, OR string relative to
-    ``baseDir``.
-
-fsAudio [String or Array | ``[]``]
-    Array of {src: 'url', type: 'MIMEtype'} objects for audio to play upon pausing study due to leaving fullscreen
-    mode, OR string relative to ``baseDir``.
 
 startWithA [Boolean | ``true``]
     Whether to start with the 'A' image list on both left and right. If true, both

@@ -155,6 +155,10 @@ parameters
 
 There are also some miscellaneous parameters you can set on any frame:
 
+id [String]
+    Setting the id explicitly allows you to override the frame ID that will be used in data downloads and video filenames.
+    This may be useful to identify specific frames within randomizers or frame groups.
+
 displayFullscreenOverride [Boolean | ``false``]
      Set to `true` to display this frame in fullscreen mode, even if the frame type
      is not always displayed fullscreen. (For instance, you might use this to keep

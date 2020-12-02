@@ -141,7 +141,7 @@ p#pipeClickPowered {
     font-size: large;
 }
 
-.video-record-mixin-wait-for-video {
+.video-record-mixin-wait-for-video, .pause-unpause-mixin-cover {
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -149,7 +149,7 @@ p#pipeClickPowered {
     left: 0;
     display: none; // Initially hidden, only show if we actually use it!
 
-    .video-record-mixin-image {
+    .video-record-mixin-image, .pause-unpause-mixin-image {
         margin: auto;
         position: absolute;
         left: 0;
@@ -158,7 +158,7 @@ p#pipeClickPowered {
         height: 30%;
     }
 
-  .video-record-mixin-wait-for-video-text {
+  .video-record-mixin-wait-for-video-text, .pause-unpause-mixin-text {
         font-size: 2em;
         text-align: center;
         top: 65%;
@@ -168,4 +168,3 @@ p#pipeClickPowered {
     }
 
 }
-

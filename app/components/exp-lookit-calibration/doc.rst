@@ -28,30 +28,45 @@ Recording
 
 Generally you will want to have webcam video of this frame. You can set doRecording to true to
 make a video clip just for this frame. Recording will begin at the same time the first calibration
-stimulus is shown. Alternately, you can use session-level recording (set
-startSessionRecording to true on this or a previous frame). If either type of recording
-is starting on this frame, it waits until recording starts to display the first calibration
-segment.
+stimulus is shown. Alternately, you can use session-level recording by using an exp-lookit-start-recording sometime
+before this one.
 
 Fullscreen display
 ~~~~~~~~~~~~~~~~~~~
 
 This frame is displayed fullscreen, to match the frames you will likely want to compare
 looking behavior on. If the participant leaves fullscreen, that will be
-recorded as an event, and a large "return to fullscreen" button will be displayed. Don't
-use video coding from any intervals where the participant isn't in fullscreen mode - the
+recorded as an event, and a large "return to fullscreen" button will be displayed. By default leaving fullscreen
+will pause the study. Don't use video coding from any intervals where the participant isn't in fullscreen mode - the
 position of the attention-grabbers won't be as expected.
 
-If the frame before this is not fullscreen, that frame
-needs to include a manual "next" button so that there's a user interaction
-event to trigger fullscreen mode. (Browsers don't allow us to switch to FS
-without a user event.)
+If the frame before this is not fullscreen, that frame needs to include a manual "next" button so that there's a user
+interaction event to trigger fullscreen mode. (Browsers don't allow us to switch to FS without a user event.)
+
+Pausing
+~~~~~~~~~~
+
+This frame supports flexible pausing behavior due to the use of :ref:`pause-unpause`. See that link for more detailed
+information about how to adjust pausing behavior.
+
+If the user pauses using the ``pauseKey`` (space bar by default), or leaves fullscreen mode, the study will be paused. You can optionally disable
+either form of pausing; see :ref:`pause-unpause`. While paused, audio is paused and stimuli are
+not displayed, and instead a ``pauseImage`` or looping ``pauseVideo`` and some ``pausedText`` are displayed. Audio can be played upon pausing and
+upon unpausing.
+
+Upon unpausing, either this frame will restart (default) or the study can proceed to a frame of your choice (see the
+``frameOffsetAfterPause`` parameter in :ref:`pause-unpause`.
+
+If ``doRecording`` is true and you are recording webcam video during this frame, that recording will stop when the study
+is paused. If you are doing session-level recording, you can optionally stop that upon pausing; if you do that, you
+will probably want to send families back to an exp-lookit-start-recording frame upon unpausing.
 
 Specifying where files are
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Several of the parameters for this frame can be specified either by providing a list of full URLs and file types, or
-by providing just a filename that will be interpreted relative to the ``baseDir``. See the :ref:`expand-assets` mixin that this frame uses.
+by providing just a filename that will be interpreted relative to the ``baseDir``. See the :ref:`expand-assets`
+mixin that this frame uses.
 
 More general functionality
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -60,6 +75,7 @@ Below is information specific to this particular frame. There may also be availa
 and data collected that come from the following more general sources:
 
 - the :ref:`base frame<base frame>` (things all frames do)
+- :ref:`pause-unpause`
 - :ref:`video-record`
 - :ref:`expand-assets`
 
@@ -82,6 +98,7 @@ This frame will show an image at center, left, and right, along with chimes each
             "webm",
             "mp4"
         ],
+
         "calibrationImage": "peekaboo_remy.jpg",
         "calibrationLength": 3000,
         "calibrationPositions": [
@@ -90,7 +107,16 @@ This frame will show an image at center, left, and right, along with chimes each
             "right"
         ],
         "calibrationAudio": "chimes",
-        "calibrationImageAnimation": "spin"
+        "calibrationImageAnimation": "spin",
+
+        "doRecording": true,
+        "showWaitForUploadMessage": true,
+        "waitForUploadImage": "peekaboo_remy.jpg",
+
+        "pauseVideo": "attentiongrabber",
+        "pauseAudio": "pause",
+        "unpauseAudio": "return_after_pause",
+        "frameOffsetAfterPause": 0
     }
 
 This frame will show a small video at center, left, and right, along with chimes each time.
@@ -108,6 +134,7 @@ This frame will show a small video at center, left, and right, along with chimes
             "webm",
             "mp4"
         ],
+
         "calibrationLength": 3000,
         "calibrationPositions": [
             "center",
@@ -115,7 +142,16 @@ This frame will show a small video at center, left, and right, along with chimes
             "right"
         ],
         "calibrationAudio": "chimes",
-        "calibrationVideo": "attentiongrabber"
+        "calibrationVideo": "attentiongrabber",
+
+        "doRecording": true,
+        "showWaitForUploadMessage": true,
+        "waitForUploadImage": "peekaboo_remy.jpg",
+
+        "pauseVideo": "attentiongrabber",
+        "pauseAudio": "pause",
+        "unpauseAudio": "return_after_pause",
+        "frameOffsetAfterPause": 0
     }
 
 Parameters
@@ -246,13 +282,15 @@ rename ``calibrationAudioSources`` and ``calibrationVideoSources``, and remove t
 
         "calibrationLength": 3000,  <-- leave this the same
         "calibrationAudio": "chimes",  <-- just rename from "calibrationAudioSources"
-        "calibrationVideo": "attentiongrabber"  <-- just rename from "calibrationVideoSources"
+        "calibrationVideo": "attentiongrabber",  <-- just rename from "calibrationVideoSources"
+
+        "pauseAudio": "pause", <-- leave these the same
+        "unpauseAudio": "return_after_pause",
+        "pauseVideo": "attentiongrabber" <-- just rename from "attnSources"
     }
 
 If your old frame defined ``calibrationPositions``, you can leave that the same too. Otherwise this will continue to
 use the default of ``['center', 'left', 'right', 'center']``.
-
-The one difference is that you will not yet be able to pause the study during the calibration phase.
 
 .. _update_preferential_to_calibration:
 
@@ -316,7 +354,9 @@ You can change it to an ``exp-lookit-calibration`` frame just by changing the ``
 
         "calibrationLength": 0, <-- leave this the same
         "calibrationAudio": "chimes", <-- leave this the same
-        "calibrationVideo": "attentiongrabber" <-- leave this the same
-    }
+        "calibrationVideo": "attentiongrabber", <-- leave this the same
 
-The one difference is that you will not yet be able to pause the study during the calibration phase.
+        "pauseAudio": "pause", <-- leave these the same
+        "unpauseAudio": "return_after_pause",
+        "pauseVideo": "attentiongrabber" <-- copy this from announcementVideo
+    }

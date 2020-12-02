@@ -229,6 +229,7 @@ export default Ember.Mixin.create({
                 this.send('setTimeEvent', 'destroyingRecorder');
             }
             recorder.destroy();
+            $(`#${this.get('sessionRecorderElement')}`).remove();
         }
     },
 
