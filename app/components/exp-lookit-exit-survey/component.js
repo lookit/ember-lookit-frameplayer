@@ -6,11 +6,6 @@ import Ember from 'ember';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 import FullScreen from '../../mixins/full-screen';
 
-/**
- * @module exp-player
- * @submodule frames
- */
-
 const Validations = buildValidations({
     birthDate: validator('presence', {
         presence: true,
@@ -28,30 +23,8 @@ const Validations = buildValidations({
     })
 });
 
-/**
+/*
 Standard exit survey for Lookit studies: confirm participant birthdate, ask user for video sharing permission level & Databrary sharing, option to withdraw, freeform comments, debriefing/thank you text. Leaves fullscreen mode.
-
-```json
-"frames": {
-    "my-exit-survey": {
-        "kind": "exp-lookit-exit-survey",
-        "debriefing": {
-            "title": "Thank you!",
-            "text": "Learning how children react to ducks will help scientists design better rubber ducks.",
-            "image": {
-                "src": "https://s3.amazonaws.com/lookitcontents/ducks/duck.png",
-                "alt": "Very cute duck"
-            }
-        }
-    }
-}
-```
-
-@class Exp-lookit-exit-survey
-@extends Exp-frame-base
-
-@uses Full-screen
-@uses Validations
 */
 
 export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
@@ -60,16 +33,6 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
     frameType: 'EXIT',
     fullScreenElementId: 'experiment-player',
     frameSchemaProperties: {
-        /**
-        Object specifying information to show on second page of exit survey, before returning to main Lookit site.
-        @property {Object} debriefing
-            @param {String} title Title of debriefing page
-            @param {String} text Paragraph to show as debriefing
-            @param {Object} image Object specifying source URL [src] & alt-text [alt] for any image to show during debriefing (optional). Example: `{
-        "src": "https://s3.amazonaws.com/lookitcontents/ducks/duck.png",
-        "alt": "Very cute duck"
-        }`
-        */
         debriefing: {
             type: 'object',
             properties: {
@@ -90,15 +53,13 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
                             type: 'string'
                         }
                     }
+                },
+                blocks: {
+                    type: 'array',
+                    default: []
                 }
             }
         },
-        /**
-         * Whether to show a 'share this study on Facebook' button
-         *
-         * @property {Boolean} showShareButton
-         * @default true
-         */
         showShareButton: {
             type: 'boolean',
             description: 'Whether to show a \'share this study on Facebook\' button',
@@ -115,39 +76,34 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
         data: {
             type: 'object',
             properties: {
-                /**
+                /*
                 * Child's birthdate as entered into exit survey; timestamp string starting YYYY-mm-dd.
-                * @attribute birthDate
                 */
                 birthDate: {
                     type: 'string',
                     default: null
                 },
-                /**
+                /*
                 * Whether data can be shared with Databrary: 'yes' or 'no'
-                * @attribute databraryShare
                 */
                 databraryShare: {
                     type: 'string'
                 },
-                /**
+                /*
                 * Video privacy level: 'private', 'scientific', or 'public'
-                * @attribute useOfMedia
                 */
                 useOfMedia: {
                     type: 'string'
                 },
-                /**
+                /*
                 * Whether the the box to withdraw video data is checked
-                * @attribute withdrawal
                 */
                 withdrawal: {
                     type: 'boolean',
                     default: false
                 },
-                /**
+                /*
                 * Freeform comments entered by parent
-                * @attribute feedback
                 */
                 feedback: {
                     type: 'string',

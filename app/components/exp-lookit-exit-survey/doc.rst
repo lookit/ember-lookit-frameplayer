@@ -45,11 +45,33 @@ This frame will display the exit survey and a debriefing page about the Lookit p
         "kind": "exp-lookit-exit-survey",
         "debriefing": {
             "title": "Thank you!",
-            "text": "PLACEHOLDER DEBRIEFING TEXT. SEE DOCS FOR ADVICE ON WHAT TO INCLUDE HERE.",
-            "image": {
-                "src": "https://s3.amazonaws.com/lookitcontents/ducks/duck.png",
-                "alt": "Very cute duck"
-            }
+            "blocks": [
+                {
+                    "text": "THIS IS ALL JUST PLACEHOLDER DEBRIEFING TEXT. SEE DOCS FOR ADVICE ON WHAT TO INCLUDE HERE.",
+                    "listblocks": [
+                        {
+                            "text": "Suscipit adipiscing bibendum est ultricies integer quis auctor."
+                        },
+                        {
+                            "text": "Imperdiet sed euismod nisi porta lorem mollis."
+                        },
+                        {
+                            "text": "Sollicitudin tempor id eu nisl nunc mi."
+                        }
+                    ]
+                },
+                {
+                    "title": "Nulla porttitor",
+                    "image": {
+                        "src": "https://www.mit.edu/~kimscott/placeholderstimuli/img/apple.jpg",
+                        "alt": "Sample image your child saw of an apple"
+                    }
+                },
+                {
+                    "title": "Your gift card will arrive in 2-3 days",
+                    "text": "Suscipit adipiscing bibendum est ultricies integer quis auctor."
+                }
+            ]
         }
     }
 
