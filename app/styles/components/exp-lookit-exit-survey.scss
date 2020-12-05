@@ -1,45 +1,54 @@
 .exp-lookit-exit-survey {
     padding: 100px !important;
+
+    .ember-view .date {
+      width: 30%;
+    }
+
+    .extra-info {
+      font-size: smaller;
+      font-weight: normal;
+      color: rgb(95,95,95);
+    }
+
+    .input-text {
+      width: 100%;
+      border-radius: 5px;
+      border-color: rgb(95, 95, 95);
+    }
+
+    .ember-view{
+      height: auto !important;
+    }
+
+
+    .radio-holder {
+      position:relative;
+      margin-top:-4px;
+    }
+
+
+    .debriefingpic {
+      display:block;
+      margin: auto;
+      max-height: 180px;
+      border-radius: 10%;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    img {
+        max-width: 100%;
+        margin: auto;
+        display: block;
+    }
+
 }
 
 .player-fullscreen .exp-lookit-exit-survey {
     text-align: left !important;
-}
-
-.exp-lookit-exit-survey .ember-view .date {
-    width: 30%;
-}
-
-.exp-lookit-exit-survey .extra-info {
-    font-size: smaller;
-    font-weight: normal;
-    color: rgb(95,95,95);
-}
-
-.exp-lookit-exit-survey .input-text {
-    width: 100%;
-    border-radius: 5px;
-    border-color: rgb(95, 95, 95);
-}
-
-.exp-lookit-exit-survey .ember-view{
-    height: auto !important;
-}
-
-.exp-lookit-exit-survey .radio-holder {
-    position:relative;
-    margin-top:-4px;
-}
-
-.exp-lookit-exit-survey .debriefingpic {
-    display:block;
-    margin: auto;
-    max-height: 180px;
-    border-radius: 10%;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.exp-lookit-exit-survey h2 {
-    text-align: center;
 }
