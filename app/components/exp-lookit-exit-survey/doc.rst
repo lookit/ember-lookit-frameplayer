@@ -88,7 +88,7 @@ debriefing [Object]
         Title of debriefing page
 
     :text: [String]
-        Debriefing text. You can include line breaks (\n) and links (<a href='https://...' rel='noopener' target='_blank'>Link text</a>)
+        Debriefing text. You can include line breaks (``\n``) and links (e.g., ``<a href='https://...' rel='noopener' target='_blank'>Link text</a>``)
 
     :image: [Object]
         Image to show at top of debriefing (optional)
@@ -98,6 +98,9 @@ debriefing [Object]
 
         :alt: [String]
             Image alt-text
+
+    :blocks: [String]
+        List of blocks of text/images to display (alternative to just specifying text), rendered using :ref:`exp-text-block`.
 
 showShareButton [Boolean | ``true``]
     Whether to show a 'share this study on Facebook' button
