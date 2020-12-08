@@ -8,21 +8,18 @@
     overflow: scroll;
 }
 
-#experiment-player.player-fullscreen div {
+#experiment-player.player-fullscreen div.lookit-frame {
     height: 100%;
     width: 100%;
     padding: 0;
     margin: 0;
-}
-
-#experiment-player.player-fullscreen .lookit-frame {
     display: table;
-}
 
-#experiment-player.player-fullscreen .lookit-frame > div  {
-    display: table-cell;
-    text-align: center;
-    vertical-align: middle;
+    > div {
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+    }
 }
 
 video.player-fullscreen::-webkit-media-controls {
