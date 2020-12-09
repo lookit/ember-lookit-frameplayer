@@ -8,23 +8,7 @@
     overflow: scroll;
 }
 
-#experiment-player.player-fullscreen div.lookit-frame {
-    height: 100%;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    display: table;
 
-    > div {
-      display: table-cell;
-      text-align: center;
-      vertical-align: middle;
-    }
-}
-
-video.player-fullscreen::-webkit-media-controls {
-  display:none !important;
-}
 
 #experiment-player.player-fullscreen, #experiment-player.player-fullscreen * {
     // blank cursor (1px transparent image)
@@ -38,4 +22,38 @@ video.player-fullscreen::-webkit-media-controls {
     width: 100%;
     font-size: 2em;
     display: none;
+}
+
+
+#experiment-player.player-fullscreen div.lookit-frame {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  display: table;
+
+  > div {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+  }
+}
+
+#experiment-player.player-fullscreen   {
+  > div, > div > div, > div > div > div {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .lookit-frame {
+      display: table;
+
+      > div {
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+      }
+  }
 }
