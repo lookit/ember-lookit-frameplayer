@@ -24,7 +24,7 @@
 
         <div class="col-md-4">
             <button type="button" id="reloadButton" class="btn btn-default" {{action "reloadRecorder"}}>
-                Reload webcam
+                {{ t "Reload webcam" }}
                 <i class="fa fa-refresh"></i>
             </button>
         </div>
@@ -77,16 +77,16 @@
         <div class="col-md-12">
             {{#if showCheckboxWarning}}
                 <p class="warning">
-                    Please check off the "{{completedItemText}}" box under each instruction before continuing.
+                    {{t 'exp-video-config-quality.checkbox-warning' completedItemText=completedItemText}}
                 </p>
             {{/if}}
 
             {{#if showRecorderWarning}}
                 <p class="warning">
-                    Please try recording and viewing a video before continuing.
+                    {{ t "exp-video-config-quality.recording-warning" }}
                 </p>
             {{/if}}
-            <button type="button" id="nextbutton" class="btn btn-success pull-right nextButton {{if readyToProceed "" "disabled"}}" {{ action "finish" }} > Next</button>
+            <button type="button" id="nextbutton" class="btn btn-success pull-right nextButton {{if readyToProceed "" "disabled"}}" {{ action "finish" }} > {{ t "Next" }} </button>
         </div>
 
     </div>

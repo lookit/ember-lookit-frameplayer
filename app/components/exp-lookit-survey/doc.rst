@@ -80,6 +80,32 @@ By default, Alpaca sorts options alphabetically for fields with radio buttons or
 That's usually not what you want. Add ``"sort": false`` under formSchema -> options ->
 fields -> <your field> to list them in the order you define them.
 
+Localization
+~~~~~~~~~~~~
+
+You are responsible for writing your questions and answers in the appropriate language for your study. To localize the
+validation messages (like "this field is required"), add ``locale`` to a ``view`` for your ``formSchema`` as shown below:
+
+.. code:: javascript
+
+    "pet-survey": {
+        "kind": "exp-lookit-survey",
+        "formSchema": {
+            "schema": {
+                ...
+            },
+            "options": {
+                ...
+            },
+            "view": {
+                "locale": "ja_JP"
+            }
+        },
+       ...
+    }
+
+See `the Alpaca docs <http://www.alpacajs.org/docs/api/i18n.html>`__ for a list of available locales.
+
 Current limitations
 ~~~~~~~~~~~~~~~~~~~
 

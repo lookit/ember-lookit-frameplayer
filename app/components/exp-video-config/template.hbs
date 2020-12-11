@@ -4,10 +4,10 @@
 
     <div class="col-md-10 col-md-offset-1">
 
-        <h2> Webcam setup </h2>
+        <h2> {{t "exp-video-config.title" }} </h2>
 
         <p id="not-recording-note">
-            No recording during this section
+            {{t "exp-video-config.not-recording-note" }}
         </p>
 
         <hr>
@@ -30,16 +30,16 @@
             <div class="row select-source">
 
                 <div class="select" onchange={{action "processSelectedMic" value="target.value"}}>
-                    <label for="audioSource">Microphone: </label><select id="audioSource"></select>
+                    <label for="audioSource">{{t "exp-video-config.Microphone" }}: </label><select id="audioSource"></select>
                 </div>
 
                 <div class="select" onchange={{action "processSelectedCam" value="target.value"}}>
-                    <label for="videoSource">Camera: </label><select id="videoSource"></select>
+                    <label for="videoSource">{{t "exp-video-config.Camera" }}: </label><select id="videoSource"></select>
                 </div>
             </div>
         </div>
 
-        <p class="support-note"> <em>Note:</em> Lookit is currently only supported on recent versions of Firefox and Chrome. It doesn't work on mobile devices like phones or tablets yet!</p>
+        <p class="support-note"> <em>{{ t "exp-video-config.Note"}}:</em> {{t "exp-video-config.support-message" }}</p>
 
     </div>
 
@@ -47,7 +47,9 @@
 
         {{#if showWebCamWarning }}
             <h4 class="text-warning">
-                We couldn't connect to your webcam. Please make sure you have a webcam connected and <button type="button" class="btn btn-default" {{action "reloadRecorder"}}>click here to detect</button>. (See the troubleshooting directions below if you're having trouble!)
+                {{t "exp-video-config.no-connection" }}
+                <button type="button" class="btn btn-default" {{action "reloadRecorder"}}>{{ t "exp-video-config.click-here-to-detect" }}</button>.
+                {{t "exp-video-config.see-troubleshooting" }}
             </h4>
         {{/if}}
 
@@ -56,17 +58,15 @@
             <ol>
 
                 <li>
-                    Make sure you can see yourself to the left!
-
-                    You may need to click "Allow" so that we can access your webcam and microphone. On Firefox, make sure to also check "Remember this decision"!
+                    {{ t "exp-video-config.step-1" }}
 
                     {{#if hasCamAccess}}
                         <div class="statusBox border checkComplete">
-                            Looks good!
+                            {{ t "exp-video-config.looks-good" }}
                         </div>
                     {{else}}
                         <div class="statusBox border">
-                            No webcam detected
+                            {{ t "exp-video-config.no-webcam-detected" }}
                         </div>
                     {{/if}}
 
@@ -75,19 +75,20 @@
 
                 <li>
 
-                    Make sure your webcam settings got saved by clicking <button type="button" id="reloadCheckButton" class="btn btn-default {{if checkedWebcamPermissions "checkComplete" ""}}" {{action "reloadRecorderButtonAndRecordCheck"}}>reload webcam</button>.
-                    Your webcam should re-appear WITHOUT you having to allow access again. (If you do see a dialogue, click "Remember this decision" or "Always allow" and try again!)
+                    {{ t "exp-video-config.step-2-click-directions" }}
+                    <button type="button" id="reloadCheckButton" class="btn btn-default {{if checkedWebcamPermissions "checkComplete" ""}}" {{action "reloadRecorderButtonAndRecordCheck"}}>{{ t "exp-video-config.reload-button-label" }} </button>.
+                    {{ t "exp-video-config.step-2-what-should-happen" }}
 
                 </li>
 
                 <li>
-                    Make sure we'll be able to hear you! This box will be filled in once we hear a loud enough sound:
+                    {{ t "exp-video-config.step-3" }}:
 
                     <div class="statusBox border {{if micChecked "checkComplete" ""}}">
                         {{#if micChecked}}
-                            Sounds good!
+                            {{ t "exp-video-config.sounds-good" }}
                         {{else}}
-                            Try clapping or saying hi.
+                            {{ t "exp-video-config.try-clapping" }}
                         {{/if}}
                     </div>
 
@@ -103,25 +104,25 @@
             {{#if hasCamAccess}}
                 {{#unless checkedWebcamPermissions}}
                     <div class="reload-warning">
-                        * Please press the 'reload webcam' button first to make sure it shows up again without making you click to allow.
+                        * {{t "exp-video-config.step-2-warning" }}
                     </div>
                 {{/unless}}
                 {{#unless micChecked}}
                     <div class="reload-warning">
-                        * Please check that your recording audio is loud enough first. Make some noise!
+                        * {{ t "exp-video-config.step-3-warning" }}
                     </div>
                 {{/unless}}
             {{else}}
 
                 <div class="reload-warning">
-                    * We don't seem to have camera access. Are you on a computer (not a phone or tablet), and using Chrome or Firefox? If so, see the troubleshooting info below.
+                    * {{ t "exp-video-config.camera-access-warning" }}
                 </div>
             {{/if}}
 
         {{/if}}
 
         <button type="button" id="nextbutton" disabled={{if hasCamAccess false true}} class="btn btn-success pull-right" {{ action "checkAudioThenNext" }} >
-            Next
+            {{ t "Next" }}
         </button>
     </div>
 
@@ -132,7 +133,7 @@
 <div class="row exp-video-config">
     <div class="col-md-10 col-md-offset-1">
 
-        <h2> Setup tips and troubleshooting</h2>
+        <h2> {{t "exp-video-config.setup-tips-header" }} </h2>
         <hr>
 
         <p>
@@ -141,81 +142,73 @@
 
         {{#bs-accordion selected=selected collapsed=collapsed as |acc|}}
 
-            {{#acc.item value="chrome" title="Camera setup instructions for Chrome"}}
+            {{#acc.item value="devices" title=(t 'exp-video-config.supported-setup' ) }}
                 <ol>
                     <li>
-                        When you load this page for the first time, you should see a prompt like the one below. Click "Allow" to let Lookit access the webcam and microphone.
-                        <img class="screenshot" src="assets/webrtc_chrome_initialprompt.png" alt="Chrome permissions prompt">
+                        {{ t "exp-video-config.mobile-devices" }}
                     </li>
                     <li>
-                        If you didn't see that prompt, or if you clicked "Block," you can change the settings by clicking on the green lock icon next to the URL. Set Camera and Microphone (and Sound if it's shown) all to "Allow," and then refresh this page.
-                        <img class="screenshot" src="assets/webrtc_chrome_fix_step1.png" alt="Editing microphone and camera permissions in Chrome, step 1">
-                    </li>
-
-                    <li>
-                        <em>Having trouble passing the sound check?</em> Chrome may be using the wrong input device - unfortunately it doesn't let you pick which microphone when you click "Allow". You can select the correct microphone at chrome://settings/content/microphone (copy and paste that as a URL). Then refresh this page to try again.
-                    </li>
-
-                    <li>
-                        <em>Seeing the wrong camera view</em> - like your built-in laptop camera instead of a USB webcam? You can select the correct camera at chrome://settings/content/camera (copy and paste that as a URL). Then refresh this page to try again.
-                    </li>
-
-                    <li>
-                        You can also refer to <a href="https://support.google.com/chrome/answer/2693767?hl=en" target="_blank" rel="noopener noreferrer"> these directions from Chrome </a>.
+                        {{ t "exp-video-config.browser-support" }}
                     </li>
                 </ol>
             {{/acc.item}}
 
-            {{#acc.item value="firefox" title="Camera setup instructions for Firefox"}}
+            {{#acc.item value="chrome" title=(t 'exp-video-config.chrome-instructions-header' ) }}
                 <ol>
                     <li>
-                        When you load this page for the first time, you should see a prompt like the one below. Select the camera and microphone you want to use, check "Remember this decision," and click "Allow":
+                        {{ t "exp-video-config.chrome-directions-prompt" }}
+                        <img class="screenshot" src="assets/webrtc_chrome_initialprompt.png" alt="Chrome permissions prompt">
+                    </li>
+                    <li>
+                        {{ t "exp-video-config.chrome-directions-set-perms" }}
+                        <img class="screenshot" src="assets/webrtc_chrome_fix_step1.png" alt="Editing microphone and camera permissions in Chrome, step 1">
+                    </li>
+
+                    <li>
+                        {{ t "exp-video-config.chrome-select-mic" htmlSafe=true }}
+                    </li>
+
+                    <li>
+                        {{ t "exp-video-config.chrome-select-camera" htmlSafe=true }}
+                    </li>
+
+                    <li>
+                        {{ t "exp-video-config.chrome-further-help" htmlSafe=true }}
+                    </li>
+                </ol>
+            {{/acc.item}}
+
+            {{#acc.item value="firefox" title=(t 'exp-video-config.firefox-instructions-header' )}}
+                <ol>
+                    <li>
+                        {{ t "exp-video-config.firefox-directions-prompt" }}
                         <img class="screenshot" src="assets/webrtc_firefox_initialprompt.png" alt="Firefox permissions prompt">
                     </li>
                     <li>
-                        If you didn't see that prompt, or if you clicked "Don't Allow" at first, you can change the settings by clicking on crossed-out camera and/or microphone next to the URL. Click the "X" next to each setting, then refresh the page.
+                        {{ t "exp-video-config.firefox-directions-set-perms" }}
                         <img class="screenshot" src="assets/webrtc_firefox_fix_step1.png" alt="Editing microphone and camera permissions in Firefox">
                     </li>
                 </ol>
             {{/acc.item}}
 
-            {{#acc.item value="whatelse" title="It's just not working - what else can I try?"}}
+            {{#acc.item value="whatelse" title=(t 'exp-video-config.additional-troubleshooting-header' )}}
 
-                <p> First, you are a very dedicated citizen scientist and we're grateful for your help! We're sorry you're having trouble.</p>
+                <p> {{ t "exp-video-config.additional-troubleshooting-intro" }} </p>
                 <ol>
                     <li>
-                        Make sure you're able to view your webcam video outside of Lookit. (For example, on a Mac, try Photobooth.)
+                        {{ t "exp-video-config.camera-check" }}
                     </li>
 
                     <li>
-                        The easiest approach is to try a different web browser if you have one installed anyway. For instance, if you're using Firefox, switch to Chrome, or vice versa. Also, update the browser if you're not using the latest version. You can check by going to "Chrome" -> "About Chrome" or "Firefox" -> "About Firefox" in the menu bar. (This is a good idea to make sure you've gotten any security updates anyway.)
+                        {{ t "exp-video-config.try-another-browser" }}
                     </li>
 
                     <li>
-                        Using Chrome?
-                        <ul>
-                            <li>Make sure you're not using an Incognito window - you won't be able to save and use settings throughout the study.</li>
-                            <li>Go to your Chrome settings for lookit.mit.edu here:
-                                <a href="chrome://settings/content/siteDetails?site=https://lookit.mit.edu" target="_blank" rel="noopener noreferrer">chrome://settings/content/siteDetails?site=https://lookit.mit.edu</a>.
-                                Set "Camera" and "Microphone" permissions to "Allow," like this. Then refresh this page.
-                                <img class="screenshot" src="assets/chrome_settings.png" alt="Chrome Lookit permissions settings">
-
-                            </li>
-                        </ul>
+                        {{ t "exp-video-config.chrome-incognito" }}
                     </li>
 
                     <li>
-                        Using Firefox?
-                        <p class="indent">
-                            The following may work on some versions of Firefox. Go to "Firefox" on the menu bar, then "Preferences."
-                            <img class="screenshot" src="assets/firefox_menu.png" alt="Firefox menu bar">
-                            Find "Privacy & Security" on the left menu. Scroll down to "Permissions." Click on "Camera" and enter https://lookit.mit.edu/ as an allowed site. Do the same for "Microphone."
-                        </p>
-
-                    </li>
-
-                    <li>
-                        If you're stumped, it's our fault. Please let us know so we can improve the site! Email us at lookit-tech@mit.edu with a short description of what's happening. Please include the web browser you're using (Firefox, Chrome, IE, Safari, etc.), what steps you've tried, and this session ID: {{session.id}}
+                        {{ t "exp-video-config.additional-troubleshooting-contact" }}: {{session.id}}
                     </li>
 
                 </ol>
