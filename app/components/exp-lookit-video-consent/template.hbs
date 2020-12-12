@@ -136,7 +136,8 @@
         <div class="video-consent-numbered-direction">
             <span class="video-consent-number">3.</span>
 
-            <span class="video-consent-direction">{{ t "exp-lookit-video-consent.read-statement-below" htmlSafe=true }}
+            <span class="video-consent-direction">
+                {{ t "exp-lookit-video-consent.read-statement-below" htmlSafe=true }}
                 {{#if (not (or (eq template "consent_003") (eq template "consent_002") (eq template "consent_001")))}} ({{ t "exp-lookit-video-consent.signed-alternative" }}){{/if}}:
             </span>
         </div>
