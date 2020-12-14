@@ -89,7 +89,7 @@ export default ExpFrameBaseComponent.extend(ExpandAssets, {
      * @property {Number} sessionMaxUploadSeconds
      * @default 3000
      */
-    sessionMaxUploadSeconds: 3000, // 5 minutes - generous default for possibly long recording
+    sessionMaxUploadSeconds: 300, // 5 minutes - generous default for possibly long recording
 
     hasStartedUpload: false,
 

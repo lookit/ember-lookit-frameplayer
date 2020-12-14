@@ -155,6 +155,13 @@
                 {{#if debriefing.text}}
                     {{exp-format debriefing.text}}
                 {{/if}}
+
+                {{#if debriefing.blocks}}
+                    {{#each debriefing.blocks as |textBlock|}}
+                        {{exp-text-block block=textBlock}}
+                    {{/each}}
+                {{/if}}
+
             </p>
 
             <hr>

@@ -47,6 +47,12 @@
 .exp-text {
     margin: auto;
     max-width: 65em;
+
+    img {
+        max-width: 100%;
+        display: block;
+        margin: auto;
+    }
 }
 
 .vertical-pad, .vertical-pad-md {

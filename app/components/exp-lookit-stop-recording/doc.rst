@@ -114,7 +114,7 @@ image [String]
 imageAnimation [String | ``'spin'``]
     Which animation to use for the image. Options are 'bounce', 'spin', or '' (empty to not animate).
 
-sessionMaxUploadSeconds: [Number | ``3000``]
+sessionMaxUploadSeconds: [Number | ``300``]
     Maximum time allowed for whole-session video upload before proceeding, in seconds.
     Can be overridden by researcher, based on tradeoff between making families wait and
     losing data.
