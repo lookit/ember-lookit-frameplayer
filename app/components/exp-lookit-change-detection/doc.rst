@@ -251,16 +251,16 @@ randomizeImageOrder [Boolean | ``true``]
 displayMs [Number | ``500``]
     Amount of time to display each image, in milliseconds
 
-displayMsLeftA [Number | ``750``]
+displayMsLeftA [Number]
     Amount of time to display each image in the left A stream, if different from displayMs.
 
-displayMsLeftB [Number | ``750``]
+displayMsLeftB [Number]
     Amount of time to display each image in the left B stream, if different from displayMs.
 
-displayMsRightA [Number | ``750``]
+displayMsRightA [Number]
     Amount of time to display each image in the right A stream, if different from displayMs.
 
-displayMsRightB [Number | ``750``]
+displayMsRightB [Number]
     Amount of time to display each image in the right B stream, if different from displayMs.
 
 blankMs [Number | ``250``]
