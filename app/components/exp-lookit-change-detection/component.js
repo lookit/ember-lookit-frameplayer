@@ -23,6 +23,49 @@ function shuffleArrayInPlace(array) {
     return array;
 }
 
+function stimulusTypeAndSrc(stimulus) {
+    // Processes a stimulus representation which can either be a string (image URL) or object of form {'video': videoSrc}
+    // or {'image': imageSrc}. 
+    if (typeof stimulus === 'string') {
+        return {
+            'type': 'image',
+            'src': stimulus
+        };
+    } else if (typeof stimulus === 'object') {
+        if (stimulus.hasOwnProperty('image')) {
+            return {
+                'type': 'image',
+                'src': stimulus['image']
+            };
+        } else if (stimulus.hasOwnProperty('video')) {
+            return {
+                'type': 'video',
+                'src': stimulus['video']
+            };
+        } else {
+            throw 'Object provided to specify stimulus, but has neither image nor video properties.'
+        }
+    } else {
+        throw 'Stimulus specified is neither string nor object.';
+    }
+}
+
+function set_stream_container_to_src(streamSelector, stimulus) {
+    // Replaces HTML of a given jQuery selector with an image or video specified by a stimulus string/object
+    // (as passed to stimulusTypeAndSrc)
+    let stimInfo = stimulusTypeAndSrc(stimulus);
+    if (stimInfo['type'] === 'image') {
+        $(streamSelector).html(`<img src=${stimInfo['src']} class="stim-image" alt="stimulus image">`);
+    } else if (stimInfo['type'] === 'video') {
+        let $videoElement = $(`<video loop autoplay="autoplay" class="stim-image" alt="stimulus video"></video>`);
+        $.each(stimInfo['src'], function (idx, source) {
+            $videoElement.append(`<source src=${source.src} type=${source.type}>`);
+        });
+        $(streamSelector).html($videoElement[0].outerHTML);
+    }
+    return stimInfo['src'];
+}
+
 /*
  *
  * Frame for a preferential looking "alternation" or "change detection" paradigm trial,
@@ -31,6 +74,20 @@ function shuffleArrayInPlace(array) {
  * of 8 vs. 16 dots, images of cats vs. dogs - and on the other side the images would all
  * be in the same category.
  */
+
+let stimulusOptions = imageAssetOptions.concat([
+    {
+        type: 'object',
+        properties: {
+            video: {
+                type: 'string'
+            },
+            image: {
+                type: 'string'
+            }
+        }
+    }
+]);
 
 export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAssets, {
 
@@ -52,6 +109,10 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
 
     imageIndexA: 0,
     imageIndexB: 0,
+    imageIndexLeftA: 0,
+    imageIndexLeftB: 0,
+    imageIndexRightA: 0,
+    imageIndexRightB: 0,
     doingA: false,
     musicFadeLength: 2000,
 
@@ -65,13 +126,21 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
             'fsAudio'
         ],
         'video': [
-            'videoSources'
+            'videoSources',
+            'leftImagesA/video',
+            'rightImagesA/video',
+            'leftImagesB/video',
+            'rightImagesB/video'
         ],
         'image': [
             'leftImagesA',
             'rightImagesA',
             'leftImagesB',
-            'rightImagesB'
+            'rightImagesB',
+            'leftImagesA/image',
+            'rightImagesA/image',
+            'leftImagesB/image',
+            'rightImagesB/image'
         ]
     },
 
@@ -96,6 +165,8 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
     // Timers for intro & stimuli
     introTimer: null, // minimum length of intro segment
     stimTimer: null,
+    stimTimerLeft: null,
+    stimTimerRight: null,
 
     frameSchemaProperties: {
         doRecording: {
@@ -148,6 +219,22 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
             description: 'Amount of time to display each image, in milliseconds',
             default: 500
         },
+        displayMsLeftA: {
+            type: 'number',
+            description: 'Amount of time to display each image in the left A stream (overrides displayMs), in milliseconds'
+        },
+        displayMsLeftB: {
+            type: 'number',
+            description: 'Amount of time to display each image in the left B stream (overrides displayMs), in milliseconds'
+        },
+        displayMsRightA: {
+            type: 'number',
+            description: 'Amount of time to display each image in the right A stream (overrides displayMs), in milliseconds'
+        },
+        displayMsRightB: {
+            type: 'number',
+            description: 'Amount of time to display each image in the right B stream (overrides displayMs), in milliseconds'
+        },
         blankMs: {
             type: 'number',
             description: 'Amount of time for blank display between each image, in milliseconds',
@@ -173,7 +260,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
             description: 'Set A of images to display on left of screen',
             default: [],
             items: {
-                oneOf: imageAssetOptions
+                oneOf: stimulusOptions
             }
         },
         leftImagesB: {
@@ -181,7 +268,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
             description: 'Set B of images to display on left of screen',
             default: [],
             items: {
-                oneOf: imageAssetOptions
+                oneOf: stimulusOptions
             }
         },
         rightImagesA: {
@@ -189,7 +276,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
             description: 'Set A of images to display on right of screen',
             default: [],
             items: {
-                oneOf: imageAssetOptions
+                oneOf: stimulusOptions
             }
         },
         rightImagesB: {
@@ -197,7 +284,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
             description: 'Set B of images to display on right of screen',
             default: [],
             items: {
-                oneOf: imageAssetOptions
+                oneOf: stimulusOptions
             }
         }
     },
@@ -336,9 +423,16 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
 
             // Start presenting triangles and set to stop after trial length
             $('#allstimuli').show();
-            this.presentImages();
+            if ((this.get('displayMsLeftA') == this.get('displayMsLeftB')) && (this.get('displayMsLeftA') == this.get('displayMsRightA')) && (this.get('displayMsLeftA') == this.get('displayMsRightB'))) {
+                this.presentImages();
+            } else {
+                this.presentImagesLeft();
+                this.presentImagesRight();
+            }
             this.set('trialTimer', window.setTimeout(function () {
                 window.clearTimeout(_this.get('stimTimer'));
+                window.clearTimeout(_this.get('stimTimerLeft'));
+                window.clearTimeout(_this.get('stimTimerRight'));
                 _this.clearImages();
                 _this.endTrial();
             }, _this.get('trialLength') * 1000));
@@ -366,6 +460,90 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
         $('.stream-container').html('');
     },
 
+    clearImageLeft() {
+        /**
+         * Records each time left image is cleared from display
+         *
+         * @event clearImageLeft
+         */
+        this.send('setTimeEvent', 'clearImageLeft');
+        $('#left-stream-container').html('');
+    },
+
+    clearImageRight() {
+        /**
+         * Records each time left image is cleared from display
+         *
+         * @event clearImageRight
+         */
+        this.send('setTimeEvent', 'clearImageRight');
+        $('#right-stream-container').html('');
+    },
+
+    presentImagesLeft() {
+        if (!this.get('_isPaused')) {
+            var A = this.get('doingALeft');
+            var leftImageList = A ? this.get('leftImagesA_parsed') : this.get('leftImagesB_parsed');
+            var imageIndex = A ? this.get('imageIndexLeftA') : this.get('imageIndexLeftB');
+            var leftImageIndex = imageIndex % leftImageList.length;
+
+            if (leftImageIndex === 0 && this.get('randomizeImageOrder')) {
+                shuffleArrayInPlace(leftImageList);
+            }
+            if (A) {
+                this.set('imageIndexLeftA', this.get('imageIndexLeftA') + 1);
+            } else {
+                this.set('imageIndexLeftB', this.get('imageIndexLeftB') + 1);
+            }
+            this.set('doingALeft', !this.get('doingALeft'));
+            var _this = this;
+            _this.clearImageLeft();
+
+            _this.set('stimTimerLeft', window.setTimeout(function () {
+                let src = set_stream_container_to_src('#left-stream-container', leftImageList[leftImageIndex]);
+                _this.send('setTimeEvent', 'presentImages', {
+                    left: src
+                });
+                _this.set('stimTimerLeft', window.setTimeout(function () {
+                    _this.presentImagesLeft();
+                }, A ? _this.get('displayMsLeftA') : _this.get('displayMsLeftB')));
+            }, _this.get('blankMs')));
+
+        }
+    },
+
+    presentImagesRight() {
+        if (!this.get('_isPaused')) {
+            var A = this.get('doingARight');
+            var rightImageList = A ? this.get('rightImagesA_parsed') : this.get('rightImagesB_parsed');
+            var imageIndex = A ? this.get('imageIndexRightA') : this.get('imageIndexRightB');
+            var rightImageIndex = imageIndex % rightImageList.length;
+
+            if (rightImageIndex === 0 && this.get('randomizeImageOrder')) {
+                shuffleArrayInPlace(rightImageList);
+            }
+            if (A) {
+                this.set('imageIndexRightA', this.get('imageIndexRightA') + 1);
+            } else {
+                this.set('imageIndexRightB', this.get('imageIndexRightA') + 1);
+            }
+            this.set('doingARight', !this.get('doingARight'));
+            var _this = this;
+            _this.clearImageRight();
+
+            _this.set('stimTimerRight', window.setTimeout(function () {
+                let src = set_stream_container_to_src('#right-stream-container', rightImageList[rightImageIndex]);
+                _this.send('setTimeEvent', 'presentImages', {
+                    right: src
+                });
+                _this.set('stimTimerRight', window.setTimeout(function () {
+                    _this.presentImagesRight();
+                }, A ? _this.get('displayMsRightA') : _this.get('displayMsRightB')));
+            }, _this.get('blankMs')));
+
+        }
+    },
+
     presentImages() {
         if (!this.get('_isPaused')) {
             var A = this.get('doingA');
@@ -390,9 +568,10 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
             this.set('doingA', !this.get('doingA'));
             var _this = this;
             _this.clearImages();
+
             _this.set('stimTimer', window.setTimeout(function () {
-                $('#left-stream-container').html(`<img src=${leftImageList[leftImageIndex]} class="stim-image" alt="left image">`);
-                $('#right-stream-container').html(`<img src=${rightImageList[rightImageIndex]} class="stim-image" alt="right image">`);
+                let leftSrc = set_stream_container_to_src('#left-stream-container', leftImageList[leftImageIndex]);
+                let rightSrc = set_stream_container_to_src('#right-stream-container', rightImageList[rightImageIndex]);
                 /**
                  * Immediately after making images visible
                  *
@@ -401,25 +580,29 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
                  * @param {String} right url of right image
                  */
                 _this.send('setTimeEvent', 'presentImages', {
-                    left: leftImageList[leftImageIndex],
-                    right: rightImageList[rightImageIndex]
+                    left: leftSrc,
+                    right: rightSrc
                 });
                 _this.set('stimTimer', window.setTimeout(function () {
                     _this.presentImages();
                 }, _this.get('displayMs')));
             }, _this.get('blankMs')));
+
         }
     },
 
     onStudyPause() {
         window.clearTimeout(this.get('introTimer'));
         window.clearTimeout(this.get('stimTimer'));
+        window.clearTimeout(this.get('stimTimerLeft'));
+        window.clearTimeout(this.get('stimTimerRight'));
         window.clearTimeout(this.get('trialTimer'));
         window.clearTimeout(this.get('musicFadeTimer'));
         this.set('currentSegment', 'intro');
         this.set('completedAudio', false);
         this.set('completedAttn', false);
         $('#alternation-container').hide();
+        this.clearImages();
         $('audio#player-audio, audio#player-music').each(function() {
             this.pause();
         });
@@ -443,23 +626,58 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
     didInsertElement() {
         this._super(...arguments);
         this.set('doingA', this.get('startWithA'));
+        this.set('doingALeft', this.get('startWithA'));
+        this.set('doingARight', this.get('startWithA'));
         this.notifyPropertyChange('readyToStartCalibration');
-        var _this = this;
+        let _this = this;
 
+        // Use either displayMs or specific displayMsLeftA, etc. where provided
+        if (!this.hasOwnProperty('displayMsLeftA')) {
+            this.set('displayMsLeftA', this.get('displayMs'));
+        }
+        if (!this.hasOwnProperty('displayMsLeftB')) {
+            this.set('displayMsLeftB', this.get('displayMs'));
+        }
+        if (!this.hasOwnProperty('displayMsRightA')) {
+            this.set('displayMsRightA', this.get('displayMs'));
+        }
+        if (!this.hasOwnProperty('displayMsRightB')) {
+            this.set('displayMsRightB', this.get('displayMs'));
+        }
+
+        // Load all the images/video ahead of time
         $.each([this.get('leftImagesA_parsed'), this.get('leftImagesB_parsed'), this.get('rightImagesA_parsed'), this.get('rightImagesB_parsed')],
             function(idx, imgList) {
                 $.each(imgList, function(idx, url) {
-                    var img = new Image();
-                    img.onload = function() { // set onload fn before source to ensure we catch it
-                        _this.set('image_loaded_count', _this.get('image_loaded_count') + 1);
-                        _this.notifyPropertyChange('readyToStartCalibration');
-                    };
-                    img.onerror = function() {
-                        _this.set('image_loaded_count', _this.get('image_loaded_count') + 1);
-                        _this.notifyPropertyChange('readyToStartCalibration');
-                        console.error('Unable to load image at ', url, ' - will skip loading but this may cause the exp-lookit-change-detection frame to fail');
-                    };
-                    img.src = url;
+                    let stimInfo = stimulusTypeAndSrc(url);
+                    if (stimInfo['type'] === 'image') {
+                        let img = new Image();
+                        img.onload = function () { // set onload fn before source to ensure we catch it
+                            _this.set('image_loaded_count', _this.get('image_loaded_count') + 1);
+                            _this.notifyPropertyChange('readyToStartCalibration');
+                        };
+                        img.onerror = function () {
+                            _this.set('image_loaded_count', _this.get('image_loaded_count') + 1);
+                            _this.notifyPropertyChange('readyToStartCalibration');
+                            console.error('Unable to load image at ', url, ' - will skip loading but this may cause the exp-lookit-change-detection frame to fail');
+                        };
+                        img.src = stimInfo['src'];
+                    } else if (stimInfo['type'] === 'video') {
+                        let $videoElement = $(`<video></video>`);
+                        $.each(stimInfo['src'], function (idx, source) {
+                            $videoElement.append(`<source src=${source.src} type=${source.type}>`);
+                        });
+                        $videoElement[0].oncanplaythrough = function () {
+                            _this.set('image_loaded_count', _this.get('image_loaded_count') + 1);
+                            _this.notifyPropertyChange('readyToStartCalibration');
+                        };
+                        $videoElement[0].onerror = function () {
+                            _this.set('image_loaded_count', _this.get('image_loaded_count') + 1);
+                            _this.notifyPropertyChange('readyToStartCalibration');
+                            console.error('Unable to load video at ', stimInfo['src'], ' - will skip loading but this may cause the exp-lookit-change-detection frame to fail');
+                        };
+                        $videoElement[0].load();
+                    }
                 });
             });
 
@@ -489,6 +707,8 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
     willDestroyElement() { // remove event handler
         window.clearInterval(this.get('introTimer'));
         window.clearInterval(this.get('stimTimer'));
+        window.clearTimeout(this.get('stimTimerLeft'));
+        window.clearTimeout(this.get('stimTimerRight'));
         this._super(...arguments);
     },
 

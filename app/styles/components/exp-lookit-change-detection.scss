@@ -35,7 +35,7 @@ $exp-alternation-right-rect: 81.25%;
     }
 
     // This is what needs to be maximized within it...
-    img.stim-image {
+    img.stim-image, video.stim-image {
         object-fit: contain;
         width: 100%;
         height: 100%;

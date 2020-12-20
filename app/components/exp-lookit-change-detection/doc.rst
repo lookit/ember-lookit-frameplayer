@@ -22,9 +22,9 @@ two rectangles that contain the image streams, and border of those rectangles. Y
 also specify how long to present the images for, how long to clear the screen in between
 image pairs, and how long the test trial should be altogether.
 
-You provide four lists of images to use in this frame: `leftImagesA`, `leftImagesB`,
-`rightImagesA`, and `rightImagesB`. The left stream will alternate between images in
-`leftImagesA` and `leftImagesB`. The right stream will alternate between images in
+You provide four lists of images (or videos!) to use in this frame: `leftImagesA`, `leftImagesB`,
+`rightImagesA`, and `rightImagesB`. The left stream will alternate between images/videos in
+`leftImagesA` and `leftImagesB`. The right stream will alternate between images/videos in
 `rightImagesA` and `rightImagesB`. They are either presented in random order (default)
 within those lists, or can be presented in the exact order listed by setting
 `randomizeImageOrder` to false.
@@ -42,7 +42,7 @@ Recording
 ~~~~~~~~~~
 
 If ``doRecording`` is true (default), then we wait for recording to begin before the
-actual test trial can begin. We also always wait for all images to pre-load, so that
+actual test trial can begin. We also always wait for all stimuli to pre-load, so that
 there are no delays in loading images that affect the timing of presentation.
 
 Display
@@ -129,6 +129,62 @@ This frame will alternate between fruit and shapes on the left, and just fruit o
         "backgroundColor": "#abc"
     }
 
+This frame will alternate between interesting and boring videos on the left, and between similarly-interesting videos on the right. The left "boring" videos will be displayed for 4 seconds; everything else will display for 2 seconds.
+
+(Note that you can also mix videos with images in the same or different streams.
+
+    "alt-trial": {
+        "kind": "exp-lookit-change-detection",
+
+        "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
+        "videoTypes": ["mp4"],
+        "audioTypes": ["mp3", "ogg"],
+
+        "unpauseAudio": "return_after_pause",
+        "pauseAudio": "pause",
+        "pauseVideo": "attentiongrabber",
+        "frameOffsetAfterPause": 0,
+
+        "trialLength": 15,
+        "attnLength": 2,
+        "videoSources": "attentiongrabber",
+        "musicSources": "music_01",
+        "audioSources": "video_01",
+        "endAudioSources": "all_done",
+
+        "border": "thick solid black",
+        "leftImagesA": [
+            {"video": "salience_interesting_wrench_c1_b1"},
+            {"video": "salience_interesting_spoon_c1_b1"},
+            {"video": "salience_interesting_scissors_c1_b1"}
+        ],
+        "leftImagesB": [
+            {"video": "salience_boring_wrench_c1_b1"},
+            {"video": "salience_boring_spoon_c1_b1"},
+            {"video": "salience_boring_scissors_c1_b1"}
+        ],
+        "rightImagesA": [
+            {"video": "same_A_wrench_c1_b1"},
+            {"video": "same_A_spoon_c1_b1"},
+            {"video": "same_A_scissors_c1_b1"}
+        ],
+        "rightImagesB": [
+            {"video": "same_B_wrench_c1_b1"},
+            {"video": "same_B_spoon_c1_b1"},
+            {"video": "same_B_scissors_c1_b1"}
+        ],
+        "startWithA": true,
+        "randomizeImageOrder": true,
+        "displayMsLeftA": 2000,
+        "displayMsLeftB": 4000,
+        "displayMsRightA": 2000,
+        "displayMsRightB": 2000,
+        "blankMs": 500,
+
+        "containerColor": "white",
+        "backgroundColor": "#abc"
+    }
+
 
 
 Parameters
@@ -189,8 +245,20 @@ randomizeImageOrder [Boolean | ``true``]
 
     ``['banana', 'aardvark', 'apple', 'bat', 'cucumber', 'bat', 'cucumber', 'aardvark', 'apple', 'bat']``
 
-displayMs [Number | ``750``]
+displayMs [Number | ``500``]
     Amount of time to display each image, in milliseconds
+
+displayMsLeftA [Number | ``750``]
+    Amount of time to display each image in the left A stream, if different from displayMs.
+
+displayMsLeftB [Number | ``750``]
+    Amount of time to display each image in the left B stream, if different from displayMs.
+
+displayMsRightA [Number | ``750``]
+    Amount of time to display each image in the right A stream, if different from displayMs.
+
+displayMsRightB [Number | ``750``]
+    Amount of time to display each image in the right B stream, if different from displayMs.
 
 blankMs [Number | ``250``]
     Amount of time for blank display between each image, in milliseconds
@@ -213,23 +281,31 @@ containerColor [String | ``'white'``]
 
 leftImagesA [Array | ``[]``]
     Set A of images to display on left of screen. Left stream will alternate between
-    images from set A and from set B. Elements of list can be full URLs or relative
-    paths starting from `baseDir`.
+    images from set A and from set B.
+
+    Elements of this list can be:
+
+    - Strings, in which case they will be assumed to represent images. This can be the full
+      URL to the image or relative to ``baseDir/img/``.
+    - Objects, in which case they should be either of the form (a) ``{"video": "VIDEONAME"}``, where
+      videoName is relative to the ``baseDir/EXT/`` (e.g., ``baseDir/mp4/`` if ``videoTypes`` specifies
+      mp4s) and omits the file extension or (b) ``{"image": "IMAGENAME"}`` where ``IMAGENAME`` is a string
+      as in the first option.
 
 leftImagesB [Array | ``[]``]
     Set B of images to display on left of screen. Left stream will alternate between
-    images from set A and from set B. Elements of list can be full URLs or relative
-    paths starting from `baseDir`.
+    images from set A and from set B. Elements of list can be full URLs to image, image filenames, or
+    objects specifying either video or images as in ``leftImagesA``.
 
 rightImagesA [Array | ``[]``]
     Set A of images to display on right of screen. Right stream will alternate between
-    images from set A and from set B. Elements of list can be full URLs or relative
-    paths starting from `baseDir`.
+    images from set A and from set B. Elements of list can be full URLs to image, image filenames, or
+    objects specifying either video or images as in ``leftImagesA``.
 
 rightImagesB [Array | ``[]``]
     Set B of images to display on right of screen. Right stream will alternate between
-    images from set A and from set B. Elements of list can be full URLs or relative
-    paths starting from `baseDir`.
+    images from set A and from set B. Elements of list can be full URLs to image, image filenames, or
+    objects specifying either video or images as in ``leftImagesA``.
 
 Data collected
 ----------------
