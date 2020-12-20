@@ -133,6 +133,9 @@ This frame will alternate between interesting and boring videos on the left, and
 
 (Note that you can also mix videos with images in the same or different streams.
 
+
+.. code:: javascript
+
     "alt-trial": {
         "kind": "exp-lookit-change-detection",
 
