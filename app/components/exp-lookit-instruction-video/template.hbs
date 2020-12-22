@@ -69,7 +69,7 @@
 
                 {{#if showPreviousButton}}
                     <button type="button" class="btn btn-default pull-left" {{ action "previous" }}>
-                        Previous
+                        {{ t "Previous" }}
                     </button>
                 {{/if}}
                 <button type="button" id="nextbutton" class="btn btn-success pull-right {{if (not hasCompletedFrame) "disabled"}}" {{ action "checkIfDoneThenNext" }}>

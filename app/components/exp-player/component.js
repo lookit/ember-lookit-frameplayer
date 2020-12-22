@@ -48,6 +48,7 @@ export default Ember.Component.extend(FullScreen, {
     hasAttemptedExit: false,
 
     toast: Ember.inject.service(),
+    intl: Ember.inject.service(),
 
     // Any additional properties we might wish to pass from the player to individual frames. Allows passing of arbitrary config
     // by individual consuming applications to suit custom needs.
@@ -69,7 +70,8 @@ export default Ember.Component.extend(FullScreen, {
 
         if (!this.get('allowExit')) {
             this.showConfirmationDialog();
-            this.get('toast').warning('To leave the study early, please press Exit below so you can select a privacy level for your videos.');
+            let warningText = this.get('intl').lookup('close-window-warning');
+            this.get('toast').warning(warningText);
             this.set('hasAttemptedExit', true);
             this.exitFullscreen();
 
@@ -94,7 +96,11 @@ export default Ember.Component.extend(FullScreen, {
 
     showConfirmationDialog() {
         var _this = this;
-        this.get('toast').warning("<br><button type='button' id='confirmationContinueStudy' class='btn btn-outline-secondary' style='color:black;'>Continue</button><button type='button' id='confirmationExitStudy' class='btn btn-danger' style='float:right;'>Exit</button>", 'Really exit study?',
+        let continueText = this.get('intl').lookup('Continue');
+        let exitText = this.get('intl').lookup('Exit');
+        let reallyExitText = this.get('intl').lookup('Really exit study');
+
+        this.get('toast').warning(`<br><button type='button' id='confirmationContinueStudy' class='btn btn-outline-secondary' style='color:black;'>${continueText}</button><button type='button' id='confirmationExitStudy' class='btn btn-danger' style='float:right;'>${exitText}</button>`, reallyExitText,
             {
                 allowHtml: true,
                 preventDuplicates: true,
@@ -296,6 +302,15 @@ export default Ember.Component.extend(FullScreen, {
             // Navigate to last page in experiment (assumed to be survey frame)
             var max = this.get('frames.length') - 1;
             this.send('next', max);
+        },
+
+        setLanguage(isoLang) {
+            let locales = this.get('intl').get('locales');
+            if (locales.includes(isoLang)) {
+                this.get('intl').set('locale', [isoLang, 'en-us']);
+            } else {
+                console.error(`Unable to set language to ${isoLang} because no translation file is available.`)
+            }
         },
     }
 });

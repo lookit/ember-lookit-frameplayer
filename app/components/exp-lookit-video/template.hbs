@@ -11,7 +11,7 @@
 
     <div id="image-area" class={{if maximizeVideoArea "image-area-fs"}} >
         {{#if startSessionRecording}}
-            <p id="waitForVideo"> establishing video connection <br> please wait... </p>
+            <p id="waitForVideo"> {{ t "establishing video connection" }} <br> {{ t "please wait" }}... </p>
         {{/if}}
 
         <!--STIMULI. Keep the test-video outside the if block to allow positioning at start. -->
@@ -54,7 +54,7 @@
             {{#unless autoProceed}}
                 <div class="button-container right">
                     <button type="button" id="nextbutton" class="btn btn-success fill" {{ action "finish" }} >
-                        Next <i class="fa fa-arrow-right"></i>
+                        {{ t "Next" }} <i class="fa fa-arrow-right"></i>
                     </button>
                 </div>
             {{/unless}}
