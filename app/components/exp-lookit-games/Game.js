@@ -40,36 +40,36 @@ export default class Game {
 
             game =   new ButtonPressWindow(context, document);
 
-        break;
+            break;
 
         case 1:
 
             game = new DiscreteButtonSpatial(context, document);
 
-        break;
+            break;
 
         case 2:
 
             game =   new DiscreteCatch(context, document);
 
-        break;
+            break;
 
         case 3:
 
             game =  new DiscreteBounce(context, document);
 
-        break;
+            break;
 
         case 4:
             game = new DiscreteCatchLift(context, document);
 
-        break;
+            break;
 
         default:
             game =  new ButtonPressWindow(context, document);
-        break;
+            break;
 
-    }
+        }
 
         game.init();
 
