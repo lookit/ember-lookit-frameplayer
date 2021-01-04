@@ -24,6 +24,8 @@
 @import "components/exp-lookit-start-stop-recording";
 @import "components/exp-lookit-instruction-video";
 @import "components/exp-lookit-survey-consent";
+//Game study css
+@import "components/exp-lookit-games";
 
 #experiment-player {
     font-size: large;
@@ -35,6 +37,9 @@
 }
 .exp-text-medium {
     font-size: 1.5em;
+}
+.exp-text-heavy {
+    font-weight: 750;
 }
 
 .breaklines {
