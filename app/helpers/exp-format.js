@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 function expFormat(text) {
     if (Array.isArray(text)) {
-        text = text.join('\n\n');
+        text = text.join('\n');
     }
     text = text.replace(/(\r\n|\n|\r)/gm, '<br>');
     text = text.replace(/\t/gm, '&nbsp;&nbsp;&nbsp;&nbsp;');
