@@ -80,6 +80,11 @@ export default ExpFrameBaseComponent.extend(Validations, {
             type: 'string',
             default: '',
             description: 'Additional text to display under "Use of video clips and images:", before listing options'
+        },
+        showDatabraryOptions: {
+            type: 'boolean',
+            default: true,
+            description: 'Whether to show the Databrary sharing option question - please only disable if required by IRB'
         }
     },
     frameSchemaRequired: ['debriefing'],
@@ -170,5 +175,8 @@ export default ExpFrameBaseComponent.extend(Validations, {
         // Alternate study ID method
         // let studyID = window.location.href.split('/').filter(piece => !!piece).slice(-2)[0];
         this.set('sharelink', 'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flookit.mit.edu%2Fstudies%2F' + this.get('experiment').get('id') + '%2F');
+        if (!this.get('showDatabraryOptions')) {
+            this.set('databraryShare', 'NA');
+        }
     }
 });

@@ -24,34 +24,38 @@
                 <hr>
 
                 <fieldset disabled={{withdrawal}} class={{if withdrawal "text-muted"}}>
-                    <label>
-                        <i class="fa fa-star"></i> {{ t "exp-lookit-exit-survey.q-databrary" }}
-                    </label>
-                    <div class="radio">
+
+                    {{#if showDatabraryOptions}}
                         <label>
-                            <span class="radio-holder">
-                                {{radio-button value="no" checked=databraryShare name="databraryShare"}}
-                            </span>
-                            {{ t "No" }}
+                            <i class="fa fa-star"></i> {{ t "exp-lookit-exit-survey.q-databrary" }}
                         </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <span class="radio-holder">
-                                {{radio-button value="yes" checked=databraryShare name="databraryShare"}}
-                            </span>
-                            {{ t "Yes" }}
-                        </label>
-                    </div>
-                    <div class="extra-info">
-                        {{ t "exp-lookit-exit-survey.databrary-info" htmlSafe=true }}
-                    </div>
-                    {{#if showValidation}}
-                        <p class="text text-danger">
-                            {{validations.attrs.databraryShare.messages}}
-                        </p>
+                        <div class="radio">
+                            <label>
+                                <span class="radio-holder">
+                                    {{radio-button value="no" checked=databraryShare name="databraryShare"}}
+                                </span>
+                                {{ t "No" }}
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <span class="radio-holder">
+                                    {{radio-button value="yes" checked=databraryShare name="databraryShare"}}
+                                </span>
+                                {{ t "Yes" }}
+                            </label>
+                        </div>
+                        <div class="extra-info">
+                            {{ t "exp-lookit-exit-survey.databrary-info" htmlSafe=true }}
+                        </div>
+                        {{#if showValidation}}
+                            <p class="text text-danger">
+                                {{validations.attrs.databraryShare.messages}}
+                            </p>
+                        {{/if}}
+                        <hr>
                     {{/if}}
-                    <hr>
+
                     <label><i class="fa fa-star"></i> {{ t "exp-lookit-exit-survey.acceptable-use-header" }}:</label>
                     {{#if additionalVideoPrivacyText}}
                         <p>

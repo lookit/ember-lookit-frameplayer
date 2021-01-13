@@ -178,6 +178,9 @@ risk_header [String | ``'What are the risks?'``]
 risk_statement [String]
     [Templates 5+ only] Optional statement; if provided, it is displayed under a header "Are there any risks if you participate?".
 
+summary_statement [String]
+    [Templates 5+ only] Statement inserted at the beginning of the consent form, right after "Researchers led by ... are running this study ... on Lookit." Please only use this if your IRB *requires* particular information to be included at the beginning of the form; information is usually easier for participants to find under the appropriate header rather than inserted here!
+
 voluntary_participation [String]
     [Templates 5+ only] Optional additional text for under header "Participation is voluntary". E.g., "There are two sessions in this study; you will be invited to complete another session next month. It is okay not to do both sessions!"
 

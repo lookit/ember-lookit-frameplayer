@@ -293,6 +293,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             default: 'What are the risks?'
         },
 
+        summary_statement: {
+            type: 'string',
+            description: 'Summary of consent form if required by IRB',
+            default: ''
+        },
+
         template: {
             type: 'string',
             enum: ['consent_001', 'consent_002', 'consent_003', 'consent_004', 'consent_005'],
