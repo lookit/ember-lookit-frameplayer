@@ -84,15 +84,15 @@ If your frame uses the video-record mixin, you can specify the following in addi
         rgb hex values (e.g. '#800080' - include the '#'). The text on top of this will be either black or white
         depending on which will have higher contrast.
 
-    waitForWebcamImage [String]
+    waitForUploadImage [String]
         [Only used if showWaitForUploadMessage and/or showWaitForRecordingMessage are true] Image to display along with
-        any wait-for-recording or wait-for-upload message. Either waitForWebcamImage or waitForWebcamVideo can be
+        any wait-for-recording or wait-for-upload message. Either waitForUploadImage or waitForUploadVideo can be
         specified. This can be either a full URL ('https://...') or just a filename, which will be assumed to be
         inside ``baseDir/img/`` if this frame otherwise supports use of ``baseDir``.
 
-    waitForWebcamVideo [String or Array]
+    waitForUploadVideo [String or Array]
         [Only used if showWaitForUploadMessage and/or showWaitForRecordingMessage are true] Video to display along with
-        any wait-for-recording or wait-for-upload message (looping). Either waitForWebcamImage or waitForWebcamVideo can be
+        any wait-for-recording or wait-for-upload message (looping). Either waitForUploadImage or waitForUploadVideo can be
         specified. This can be either an array of ``{'src': 'https://...', 'type': '...'}`` objects (e.g. providing both
         webm and mp4 versions at specified URLS) or a single string relative to ``baseDir/<EXT>/`` if this frame otherwise
         supports use of ``baseDir``.
