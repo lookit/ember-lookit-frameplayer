@@ -16,7 +16,13 @@
             <img id="placeholder-image" src={{image_parsed}} alt="placeholder">
         {{/if}}
 
-        <p class="wait-for-video"> {{ t "establishing video connection" }} <br> {{ t "please wait" }}... </p>
+        <p class="wait-for-video">
+            {{#if waitForVideoMessage}}
+                {{ exp-format waitForVideoMessage }}
+            {{else}}
+                {{ t "establishing video connection" }} <br> {{ t "please wait" }}...
+            {{/if}}
+        </p>
 
     </div>
 

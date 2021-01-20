@@ -66,11 +66,12 @@ This frame will stop a session-level recording, showing a spinning image until t
             "mp4"
         ],
         "image": "peekaboo_remy.jpg",
-        "imageAnimation": "spin"
+        "imageAnimation": "spin",
         "displayFullscreen": true
     }
 
-This frame will stop a session-level recording, showing a looping video until the recording is uploaded:
+This frame will stop a session-level recording, showing a looping video and progress bar but no text,
+until the recording is uploaded:
 
 .. code:: javascript
 
@@ -82,7 +83,9 @@ This frame will stop a session-level recording, showing a looping video until th
             "mp4"
         ],
         "video": "attentiongrabber",
-        "displayFullscreen": true
+        "displayFullscreen": true,
+        "showProgressBar": true,
+        "waitForUploadMessage": " "
     }
 
 
@@ -118,6 +121,13 @@ sessionMaxUploadSeconds: [Number | ``300``]
     Maximum time allowed for whole-session video upload before proceeding, in seconds.
     Can be overridden by researcher, based on tradeoff between making families wait and
     losing data.
+
+showProgressBar: [Boolean | ``true``]
+    Whether to display the animated progress bar showing upload progress.
+
+waitForUploadMessage: [String | ``''``]
+    Custom text to display while video is uploading; can contain ``<br>`` line breaks. Leave blank to use standard
+    "Uploading video (X%) / please wait...". Set to ``" "`` to override this and display no text.
 
 Data collected
 ----------------

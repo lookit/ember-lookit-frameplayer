@@ -62,11 +62,11 @@ This frame will start a session-level recording, showing a spinning image until 
             "mp4"
         ],
         "image": "peekaboo_remy.jpg",
-        "imageAnimation": "spin"
+        "imageAnimation": "spin",
         "displayFullscreen": true
     }
 
-This frame will start a session-level recording, showing a looping video until the recording starts:
+This frame will start a session-level recording, showing a looping video and no text until the recording starts:
 
 .. code:: javascript
 
@@ -78,7 +78,8 @@ This frame will start a session-level recording, showing a looping video until t
             "mp4"
         ],
         "video": "attentiongrabber",
-        "displayFullscreen": true
+        "displayFullscreen": true,
+        "waitForVideoMessage": " "
     }
 
 
@@ -109,6 +110,10 @@ image [String]
 
 imageAnimation [String | ``'spin'``]
     Which animation to use for the image. Options are 'bounce', 'spin', or '' (empty to not animate).
+
+waitForVideoMessage: [String | ``''``]
+    Custom text to display while connection is established; can contain ``<br>`` line breaks. Leave blank to use standard
+    "establishing video connection / please wait...". Set to ``" "`` to override this and display no text.
 
 Data collected
 ----------------
