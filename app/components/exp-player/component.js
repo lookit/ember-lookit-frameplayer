@@ -8,12 +8,6 @@ let {
     $
 } = Ember;
 
-// Use regular comment syntax here to exclude from docs for clarity
-/*
- * @module exp-player
- * @submodule components
- */
-
 /*
  * Experiment player: a component that renders a series of frames that define an experiment
  *
@@ -44,9 +38,6 @@ export default Ember.Component.extend(FullScreen, {
     displayFullscreen: false,
     fullScreenElementId: 'experiment-player',
 
-    allowExit: false,
-    hasAttemptedExit: false,
-
     toast: Ember.inject.service(),
     intl: Ember.inject.service(),
 
@@ -54,43 +45,26 @@ export default Ember.Component.extend(FullScreen, {
     // by individual consuming applications to suit custom needs.
     extra: {},
 
-    /**
-     * The message to display in the early exit modal. Newer browsers may not respect this message.
-     * @property {String|null} messageEarlyExitModal
-     */
-    messageEarlyExitModal: 'Are you sure you want to leave this page? You may lose unsaved data.',
-
-    /**
+    /*
      * Customize what happens when the user exits the page
      * @method beforeUnload
-     * @param {event} event The event to be handled
-     * @return {String|null} If string is provided, triggers a modal to confirm user wants to leave page
+     * @return null
      */
-    beforeUnload(event) {
+    beforeUnload() {
 
-        if (!this.get('allowExit')) {
-            this.showConfirmationDialog();
-            let warningText = this.get('intl').lookup('close-window-warning');
-            this.get('toast').warning(warningText);
-            this.set('hasAttemptedExit', true);
-            this.exitFullscreen();
+        this.showConfirmationDialog();
+        this.exitFullscreen();
 
-            // Log that the user attempted to leave early, via browser navigation.
-            // There is no guarantee that the server request to save this event will finish before exit completed;
-            //   we are limited in our ability to prevent willful exits
-            this.send('setGlobalTimeEvent', 'exitEarly', {
-                exitType: 'browserNavigationAttempt', // Page navigation, closed browser, etc
-                lastPageSeen: this.get('frameIndex')
-            });
-            //Ensure sync - try to force save to finish before exit
-            Ember.run(() => this.get('session').save());
+        // Log that the user attempted to leave early, via browser navigation.
+        // There is no guarantee that the server request to save this event will finish before exit completed;
+        //   we are limited in our ability to prevent willful exits
+        this.send('setGlobalTimeEvent', 'exitEarly', {
+            exitType: 'browserNavigationAttempt', // Page navigation, closed browser, etc
+            lastPageSeen: this.get('frameIndex')
+        });
+        //Ensure sync - try to force save to finish before exit
+        Ember.run(() => this.get('session').save());
 
-            // Then attempt to warn the user and exit
-            // Newer browsers will ignore the custom message below. See https://bugs.chromium.org/p/chromium/issues/detail?id=587940
-            const message = this.get('messageEarlyExitModal');
-            event.returnValue = message;
-            return message;
-        }
         return null;
     },
 
@@ -213,6 +187,7 @@ export default Ember.Component.extend(FullScreen, {
         });
         this.set('_currentFrameTemplate', null);
     },
+
     _exit() {
         this.get('session').save().then(() => window.location = this.get('experiment.exitURL') || '/');
     },
@@ -272,10 +247,6 @@ export default Ember.Component.extend(FullScreen, {
             }
         },
 
-        closeExitWarning() {
-            this.set('hasAttemptedExit', false);
-        },
-
         exitEarly() {
             // Stop/destroy session recorder if needed
             if (this.get('session').get('recorder')) {
@@ -290,7 +261,6 @@ export default Ember.Component.extend(FullScreen, {
                 }
             }
 
-            this.set('hasAttemptedExit', false);
             Ember.$(window).off('keydown');
             // Save any available data immediately
             this.send('setGlobalTimeEvent', 'exitEarly', {
