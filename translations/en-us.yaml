@@ -167,7 +167,7 @@ exp-video-config:
     looks-good: Looks good!
     no-webcam-detected: No webcam detected
     step-2-click-directions: Make sure your webcam settings got saved by clicking
-    reload-button-label: reload webcam
+    reload-button-label: this button
     step-2-what-should-happen: Your webcam should re-appear WITHOUT you having to allow access again. (If you do see a dialogue, click "Remember this decision" or "Always allow" and try again!)
     step-3: Make sure we'll be able to hear you! This box will be filled in once we hear a loud enough sound
     sounds-good: Sounds good!
