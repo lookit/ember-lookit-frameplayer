@@ -58,6 +58,7 @@ than 2 s total, as coded by the parent holding down the P key, it will proceed.
         "endTrialKey": "q",
         "lookawayTone": "noise",
         "lookawayToneVolume": 0.25,
+        "showLookawayVisualGuide": true,
 
         "images": [
             {

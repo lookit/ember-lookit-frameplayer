@@ -138,6 +138,18 @@ var infantControlledTimingMixin = Ember.Mixin.create({
             type: 'number',
             default: .25,
             description: 'Volume of lookaway tone, as fraction of full volume (1 = full volume, 0 = silent)'
+        },
+
+        showLookawayVisualGuide: {
+            type: 'boolean',
+            default: false,
+            description: 'Whether to show a border around the screen when the child isn\'t looking'
+        },
+
+        measurementPeriodDelay: {
+            type: 'number',
+            default: 0,
+            description: 'Number of seconds to delay measurement of looking time, beyond when it would ordinarily start'
         }
     },
 
@@ -178,6 +190,7 @@ var infantControlledTimingMixin = Ember.Mixin.create({
     _isLooking: true,
 
     _endTrialDueToLookawayTimer: null,
+    _delayLookingMeasurementPeriodTimer: null,
 
     _controlPeriodStarted: false,
     _anyLookDuringControlPeriod: false,
@@ -214,6 +227,10 @@ var infantControlledTimingMixin = Ember.Mixin.create({
         if ($lookawayTone.length) {
             $lookawayTone[0].play();
         }
+        if (this.get('showLookawayVisualGuide')) {
+            $('div.lookit-frame > div').addClass('infant-control-mixin-looking-away');
+            $('div.lookit-frame > div').removeClass('infant-control-mixin-looking');
+        }
     },
 
     _recordLookawayEnd() {
@@ -240,6 +257,10 @@ var infantControlledTimingMixin = Ember.Mixin.create({
         let $lookawayTone = $('audio#lookawayTone');
         if ($lookawayTone.length) {
             $lookawayTone[0].pause();
+        }
+        if (this.get('showLookawayVisualGuide')) {
+            $('div.lookit-frame > div').addClass('infant-control-mixin-looking');
+            $('div.lookit-frame > div').removeClass('infant-control-mixin-looking-away');
         }
     },
 
@@ -278,34 +299,46 @@ var infantControlledTimingMixin = Ember.Mixin.create({
      * @method startParentControl
      */
     startParentControl() {
-        this.set('_totalLookaway', 0);
-        this.set('_anyLookDuringControlPeriod', this.get('_isLooking'));
-        this.set('_trialStartTime', new Date());
-        this.set('_controlPeriodStarted', true);
-        /**
-         * When interval of parent control of trial begins - i.e., lookaways begin counting up to threshold.
-         * Lookaway events are recorded throughout, but do not count towards ending trial until parent control period
-         * begins.
-         *
-         * @event parentControlPeriodStart
-         */
-        this.send('setTimeEvent', 'parentControlPeriodStart');
+        let _this = this;
+        this.set('_delayLookingMeasurementPeriodTimer', window.setTimeout( function() {
+                _this.set('_totalLookaway', 0);
+                _this.set('_anyLookDuringControlPeriod', _this.get('_isLooking'));
+                _this.set('_trialStartTime', new Date());
+                _this.set('_controlPeriodStarted', true);
+                /**
+                 * When interval of parent control of trial begins - i.e., lookaways begin counting up to threshold.
+                 * Lookaway events are recorded throughout, but do not count towards ending trial until parent control period
+                 * begins.
+                 *
+                 * @event parentControlPeriodStart
+                 */
+                _this.send('setTimeEvent', 'parentControlPeriodStart');
 
-        $(document).on('keyup.parentEndTrial', (e) => {
-            if (this.checkFullscreen()) {
-                if (this.get('endTrialKey') && e.key === this.get('endTrialKey')) {
-                    /**
-                     * When trial ends due to parent pressing key to end trial
-                     *
-                     * @event parentEndedTrial
-                     */
-                    this.send('setTimeEvent', 'parentEndedTrial');
-                    this.set('trialEndReason', 'parentEnded');
-                    this.setTrialEndTime();
-                    this.onLookawayCriterion();
-                }
-            }
-        });
+                $(document).on('keyup.parentEndTrial', (e) => {
+                    if (_this.checkFullscreen()) {
+                        if (_this.get('endTrialKey') && e.key === _this.get('endTrialKey')) {
+                            /**
+                             * When trial ends due to parent pressing key to end trial
+                             *
+                             * @event parentEndedTrial
+                             */
+                            _this.send('setTimeEvent', 'parentEndedTrial');
+                            _this.set('trialEndReason', 'parentEnded');
+                            _this.setTrialEndTime();
+                            _this.onLookawayCriterion();
+                        }
+                    }
+                });
+            },
+            this.get('measurementPeriodDelay') * 1000)
+        );
+
+
+
+
+
+
+
     },
 
     /**
@@ -315,6 +348,7 @@ var infantControlledTimingMixin = Ember.Mixin.create({
      * @method endParentControl
      */
     endParentControl() {
+        window.clearTimeout(this.get('_delayLookingMeasurementPeriodTimer'));
         this.set('_controlPeriodStarted', false);
         /**
          * When interval of parent control of trial ends - i.e., lookaways cannot lead to ending trial, parent cannot
@@ -361,6 +395,12 @@ var infantControlledTimingMixin = Ember.Mixin.create({
             }
         } catch (e) {
             console.error(`Error setting lookaway tone: ${e}`);
+        }
+
+        // Start off assuming looking & display as such
+        if (this.get('showLookawayVisualGuide')) {
+            $('div.lookit-frame > div').addClass('infant-control-mixin-looking');
+            $('div.lookit-frame > div').removeClass('infant-control-mixin-looking-away');
         }
 
         this._super(...arguments);
