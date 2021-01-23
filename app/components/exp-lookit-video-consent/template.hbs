@@ -100,9 +100,13 @@
                             @voluntary_participation={{voluntary_participation}}
                             @include_databrary={{include_databrary}}
                             @additional_video_privacy_statement={{additional_video_privacy_statement}}
+                            @purpose_header={{purpose_header}}
+                            @procedures_header={{procedures_header}}
+                            @participation_header={{participation_header}}
                             @risk_header={{risk_header}}
                             @benefits_header={{benefits_header}}
                             @summary_statement={{summary_statement}}
+                            @prompt_only_adults={{prompt_only_adults}}
                     />
 
                 {{/if}}
@@ -144,7 +148,7 @@
         </div>
 
         <div class="well video-consent-prompt">
-            <span class="breaklines exp-lookit-video-consent-prompt">"{{ t "exp-lookit-video-consent.prompt" }}"</span>
+            <span class="breaklines exp-lookit-video-consent-prompt">"{{#if prompt_only_adults}}{{ t "exp-lookit-video-consent.prompt-adult-only" }}{{else}}{{ t "exp-lookit-video-consent.prompt" }}{{/if}}"</span>
         </div>
 
         {{#if prompt_all_adults}}

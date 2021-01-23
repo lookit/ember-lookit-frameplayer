@@ -56,6 +56,7 @@ exp-lookit-video-consent:
     read-statement-below: Read the statement below <em class="video-consent-outloud"> out loud</em>
     signed-alternative: or in ASL
     prompt: I have read and understand the consent document. I am this child's parent or legal guardian and we both agree to participate in this study.
+    prompt-adult-only: I have read and understand the consent document. I agree to participate in this study.
     additional-adult-question: Is another adult there too? If so, each additional adult should read out loud
     additional-adult-prompt: I have read and understand the consent document. I also agree to participate in this study.
     stop-recording: stop recording
@@ -104,10 +105,13 @@ consent-template-5:
     procedures-header: What happens during this study
     duration-statement: This study takes about {duration} to complete.
     participation-header: Participation is voluntary
-    participation-content: You and your child are free to choose whether to be in this study. If you do choose to participate, it's okay to stop at any point during the session. Please do pause or stop the session if your child becomes fussy or does not want to participate!
+    participation-content: You {only_adult, select, true {} other {and your child}} are free to choose whether to be in this study. If you do choose to participate, it's okay to stop at any point during the session. {only_adult, select, true {} other {Please do pause or stop the session if your child becomes fussy or does not want to participate!}}
+    risk-header: What are the risks?
+    benefits-header: What are the benefits?
     data-collection-header: Data collection and webcam recording
-    data-collection-1: During the session, you and your child will be recorded by your computer's webcam and microphone. These webcam recordings, and other data like answers you enter in forms, are sent securely to the Lookit platform. You can view your past recordings on Lookit under "Studies" -> "Your past studies" at any time.
-    data-collection-2: Data are stored securely on Lookit servers and by researchers, and are only shared as described in this document. However, there is always a small risk that data transmitted over the internet may be intercepted or that the security of stored data may be compromised.
+    data-collection-1: During the session, you {only_adult, select, true {} other {and your child}} will be recorded by your computer's webcam and microphone.
+    data-collection-2: These webcam recordings, and other data like answers you enter in forms, are sent securely to the Lookit platform. You can view your past recordings on Lookit under "Studies" -> "Your past studies" at any time.
+    data-collection-3: Data are stored securely on Lookit servers and by researchers, and are only shared as described in this document. However, there is always a small risk that data transmitted over the internet may be intercepted or that the security of stored data may be compromised.
     video-privacy-header: Who will be able to see your webcam recordings?
     video-privacy-consent: We will first check that you really agreed to participate by watching your consent recording. If we cannot confirm that you agreed to participate, no one will view any other recordings from this session.
     video-privacy-overview: At the end of the session, you will choose a privacy level for your webcam recordings. You can choose one of the following privacy levels for your videos
@@ -123,20 +127,20 @@ consent-template-5:
     data-use-researchers-content-1: If you participate in this study, we (the research group led by {name} at {institution}) will have access to
     data-use-researchers-item-1: webcam recordings and other data collected during this session
     data-use-researchers-item-2: your account profile and demographic survey
-    data-use-researchers-item-3: the child profile for the child who is participating
-    data-use-researchers-content-2: This includes changes you make in the future to any of this information. We may put different types of information together to learn more about child development. For instance, if your child participates in multiple studies from our group, we may look at how his or her responses compare across studies, or we may look at whether siblings tend to respond similarly. We may also study connections between children’s responses and family demographic survey data.
+    data-use-researchers-item-3: the {only_adult, select, true {} other {child}} profile for the {only_adult, select, true {family member} other {child}} who is participating
+    data-use-researchers-content-2: This includes changes you make in the future to any of this information. We may put different types of information together to learn more about child development. For instance, if {only_adult, select, true {you participate} other {your child participates}} in multiple studies from our group, we may look at how {only_adult, select, true {your} other {his or her}} responses compare across studies, or we may look at {only_adult, select, true {how your responses relate to other family members''} other {whether siblings tend to respond similarly}}. We may also study connections between {only_adult, select, true {your} other {children''s}} responses and family demographic survey data.
     data-use-Lookit-header: How Lookit uses your data
     data-use-Lookit-content: The Lookit core team at MIT will also have access to the data collected during this session, in addition to your account data. They use this data to run and improve Lookit, for instance to provide technical support, check how well data collection is working, or see whether Lookit is reaching a diverse group of families. Lookit stores data indefinitely unless you withdraw your recordings at the end of the study.
     publication-header: Publishing the results of this study
-    publication-contents: The results of this study may be presented at scientific meetings or published in scientific journals. We may publish individual responses that cannot identify children, like looking times or sequences of button presses. We never publish children’s birthdates or names. Even if you choose to share your recordings, we never publish information that would make it possible to link recordings with your demographic data.
+    publication-content: The results of this study may be presented at scientific meetings or published in scientific journals. We may publish individual responses that cannot identify {only_adult, select, true {you} other {children}}, like looking times or sequences of button presses. We never publish {only_adult, select, true {} other {children''s}} birthdates or names. Even if you choose to share your recordings, we never publish information that would make it possible to link recordings with your demographic data.
     research-subject-rights-header: Your rights as a participant
     gdpr-header: General Data Protection Regulation (GDPR) information
     gdpr-personal: As part of your participation, we will collect certain personal information about you, including
     gdpr-sensitive: In addition, we will collect special category data, your personal information that is especially sensitive
     gdpr-2: Your personal information will be transferred to the United States. The data protection and privacy laws of the United States may not offer you the same level of protection as those in your country of origin.
     contact-header: How to reach us
-    contact-statement-1: This study is run by {name} at {institution}. If you or your child have any questions or concerns about this study, or in the very unlikely event of a research-related injury, please contact {contact}.
-    contact-statement-2:  If you or your child have any questions or concerns about the Lookit platform, please contact Kim Scott at lookit@mit.edu.
+    contact-statement-1: This study is run by {name} at {institution}. If {only_adult, select, true {you} other {you or your child}} have any questions or concerns about this study, or in the very unlikely event of a research-related injury, please contact {contact}.
+    contact-statement-2:  If {only_adult, select, true {you} other {you or your child}} have any questions or concerns about the Lookit platform, please contact Kim Scott at lookit@mit.edu.
 
 exp-lookit-observation:
     Hide: Hide

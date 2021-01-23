@@ -9,32 +9,32 @@
 
     <p> {{t "consent-template-5.intro-sentence" name=PIName institution=institution experiment=experiment.name }} {{ exp-format summary_statement }} </p>
 
-    <h2> {{t "consent-template-5.purpose-header" }}</h2>
+    <h2> {{#if purpose_header}} {{purpose_header}} {{else}} {{t "consent-template-5.purpose-header" }} {{/if}}</h2>
     <p> {{ exp-format purpose }} </p>
 
-    <h2> {{t "consent-template-5.procedures-header" }}</h2>
+    <h2> {{#if procedures_header}} {{procedures_header}} {{else}} {{t "consent-template-5.procedures-header" }} {{/if}}</h2>
     <p> {{t "consent-template-5.duration-statement" duration=experiment.duration }}</p>
 
-    <h2> {{t "consent-template-5.participation-header" }}</h2>
+    <h2> {{#if participation_header}} {{participation_header}} {{else}} {{t "consent-template-5.participation-header" }} {{/if}}</h2>
     <p>
-        {{t "consent-template-5.participation-content" }}
+        {{t "consent-template-5.participation-content" only_adult=prompt_only_adults }}
     </p>
-    {{#if voluntary_participation}}<p> {{ exp-format voluntary_participation }} </p>{{/if}}
+    {{#if voluntary_participation}} <p> {{ exp-format voluntary_participation }} </p>{{/if}}
 
     {{#if risk_statement}}
-        <h2> {{ risk_header }} </h2>
+        <h2> {{#if risk_header}} {{ risk_header }} {{else}} {{t "consent-template-5.risk-header"}} {{/if}}</h2>
         <p> {{ exp-format risk_statement }} </p>
     {{/if}}
 
-    <h2> {{ benefits_header }} </h2>
+    <h2> {{#if benefits_header}} {{ benefits_header }} {{else}} {{t "consent-template-5.benefits-header"}} {{/if}} </h2>
     <p> {{ exp-format payment }} </p>
 
     <h2> {{t "consent-template-5.data-collection-header" }} </h2>
     <p>
-        {{t "consent-template-5.data-collection-1" }}
+        {{t "consent-template-5.data-collection-1" only_adult=prompt_only_adults }} {{t "consent-template-5.data-collection-2" }}
     </p>
     <p>
-        {{t "consent-template-5.data-collection-2" }}
+        {{t "consent-template-5.data-collection-3" }}
     </p>
 
     <h2> {{t "consent-template-5.video-privacy-header" }}</h2>
@@ -71,9 +71,9 @@
         <ul>
             <li> {{t "consent-template-5.data-use-researchers-item-1" }}</li>
             <li> {{t "consent-template-5.data-use-researchers-item-2" }}</li>
-            <li> {{t "consent-template-5.data-use-researchers-item-3" }}</li>
+            <li> {{t "consent-template-5.data-use-researchers-item-3" only_adult=prompt_only_adults }}</li>
         </ul>
-        {{t "consent-template-5.data-use-researchers-content-2" }}
+        {{t "consent-template-5.data-use-researchers-content-2" only_adult=prompt_only_adults }}
     </p>
     {{#if datause}}
         <p>
@@ -86,9 +86,11 @@
         {{t "consent-template-5.data-use-Lookit-content" }}
     </p>
 
+
+
     <h2> {{t "consent-template-5.publication-header" }}</h2>
     <p>
-        {{t "consent-template-5.publication-contents" }}
+        {{t "consent-template-5.publication-content" only_adult=prompt_only_adults }}
     </p>
 
     {{#if additional_segments}}
@@ -109,13 +111,12 @@
         </p>
     {{/if}}
 
-
     <h2> {{t "consent-template-5.contact-header" }}</h2>
     <p>
-        {{t "consent-template-5.contact-statement-1" name=PIName institution=institution contact=PIContact }}
+        {{t "consent-template-5.contact-statement-1" name=PIName institution=institution contact=PIContact only_adult=prompt_only_adults }}
     </p>
     <p>
-        {{t "consent-template-5.contact-statement-2" }}
+        {{t "consent-template-5.contact-statement-2" only_adult=prompt_only_adults}}
     </p>
 
 </div>
