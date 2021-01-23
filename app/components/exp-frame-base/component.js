@@ -29,6 +29,7 @@ import SessionRecord from '../../mixins/session-record';
 
         next=(action 'next')
         exit=(action 'exit')
+        setLanguage=(action 'setLanguage')
         previous=(action 'previous')
         saveHandler=(action 'saveFrame')
         extra=extra
@@ -490,6 +491,15 @@ let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
             console.error(`Failed to compile frameSchemaProperties to use for validating researcher usage of frame type '${this.get('kind')}.`);
         }
 
+        // Set the language (do this after generating properties to allow use of a generated language property)
+        if (this.get('language')) {
+            try {
+                this.sendAction('setLanguage', this.get('language'));
+            } catch (error) {
+                console.error(`Failed to set language to ISO code ${this.get('language')}`);
+            }
+        }
+
         this.set('_oldFrameIndex', currentFrameIndex);
     },
 
@@ -542,6 +552,10 @@ let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
         Ember.assign(defaultParams, params);
 
         return defaultParams;
+    },
+
+    _translate(text) {
+        return this.get('parentView').get('intl').lookup(text);
     },
 
     /**

@@ -68,6 +68,16 @@ lookawayTone [String | ``'noise'``]
 lookawayToneVolume [Number | ``0.25``]
      Volume of lookaway tone, as fraction of full volume (1 = full volume, 0 = silent)
 
+showLookawayVisualGuide [Boolean | ``false``]
+    Whether to show a visual guide of whether the child is looking. If true, a thick green border is displayed at the
+    edge of the screen when the child is coded as looking, and a dashed gray border is displayed when the child is not
+    looking.
+
+measurementPeriodDelay [Number | ``0``]
+    How many seconds to delay the measurement period, relative to when it would ordinarily begin  (e.g., with stimulus
+    presentation). Lookaways are still recorded before this, but don't count towards the total lookaway time. Parents
+    cannot end the trial using the endTrialKey before this.
+
 Data collected
 ----------------
 

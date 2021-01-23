@@ -3,12 +3,29 @@
 All frames support...
 ======================
 
-All Lookit frames share some common features. While frame-specific features are described on the pagse for those frames,
+All Lookit frames share some common features. While frame-specific features are described on the pages for those frames,
 like exp-lookit-video, you can also use any of the parameters listed here to customize any frame, and will receive
 the data and events described here.
 
 Parameters
 ------------------
+
+All frames (with the exception of ``exp-lookit-mood-questionnaire``) support basic translation, although availability of
+particular languages is subject to someone having handled translations for that language.
+
+.. _translation:
+
+language [String]
+    Language to present this frame in. Standard text, like hard-coded button labels, will be translated if a translation
+    file is available for this language. Default values that you can already customize (e.g, most "Next" button labels)
+    will **not** be translated. Text you supply will also not be translated.
+
+    The value of the "language" field will persist across frames once set, so you can set it once at the start of your
+    study to set the language for all frames.
+
+    Current options are 'en-US' (English, US) and 'nl' (Dutch). To add another language option, please contact Lookit
+    staff. You will need to make a copy of the `English translation file<https://github.com/lookit/ember-lookit-frameplayer/blob/develop/translations/en-us.yaml>`__ and fill in the translations. We will add this to the codebase and have you take a look at an example
+    study to confirm everything looks good.
 
 There are several parameters that ALL frames accept to allow you to customize the study "flow," which are:
 

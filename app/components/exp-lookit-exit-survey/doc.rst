@@ -105,6 +105,9 @@ debriefing [Object]
 showShareButton [Boolean | ``true``]
     Whether to show a 'share this study on Facebook' button
 
+showDatabraryOptions [Boolean | ``true``]
+    Whether to show the question about Databrary sharing. Please do not change this unless your IRB requires it and you have checked with Lookit staff - in general all studies should ask for permission to share on Databrary, even if you do not have active plans to do so or even an account on Databrary.
+
 additionalVideoPrivacyText [String]
     Optional additional text to display under the header "Use of video clips and images", above the options. This may
     be used, for example, if you have separately asked for permission to use the videos as stimuli for other parents and want
@@ -117,11 +120,9 @@ The fields added specifically for this frame type are:
 
 birthDate [String]
     Child's birthdate as entered into exit survey; timestamp string starting YYYY-mm-dd.
-    @attribute birthDate
 
 databraryShare [String]
-    Whether data can be shared with Databrary: 'yes' or 'no'
-    @attribute databraryShare
+    Whether data can be shared with Databrary: 'yes' or 'no', or 'NA' if the question was not shown
 
 useOfMedia [String]
     Video privacy level: 'private', 'scientific', or 'public'

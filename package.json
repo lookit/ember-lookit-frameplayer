@@ -1,6 +1,6 @@
 {
   "name": "ember-lookit-frameplayer",
-  "version": "v2.2.2",
+  "version": "v2.3.0",
   "description": "Ember Frame Player",
   "private": true,
   "directories": {
@@ -33,6 +33,7 @@
     "dotenv": "^6.2.0",
     "ember-bootstrap": "^2.5.0",
     "ember-cp-validations": "4.0.0-beta.5",
+    "ember-intl": "^5.5.1",
     "ember-js-pdf": "^0.4.2",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "font-awesome": "~4.7.0",

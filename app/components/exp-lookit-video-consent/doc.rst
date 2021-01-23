@@ -88,25 +88,16 @@ Example
 Parameters
 ----------------
 
+Standard fields
+~~~~~~~~~~~~~~~~~~
+
 template [String | ``'consent_001'``]
     Which consent document template to use. If you are setting up a new study, we recommend
     using the most recent (highest number) of these options. Options: ``consent_001``,
     ``consent_002``, ``consent_003``, ``consent_004``, ``consent_005``
 
-
-additional_segments [Array]
-    List of additional custom sections of the consent form, e.g. US Patriot Act Disclosure. These are subject to Lookit approval and in general can only add information that was true anyway but that your IRB needs included; please contact us before submitting your study to check.
-
-    Each section can have fields:
-
-        :title: [String] title of section
-        :text: [String] text of section
-
 additional_video_privacy_statement [String]
     [Templates 5+ only] Optional additional text for under header "Who can see our webcam recordings". For cases where researchers ask for other specific permission to share videos, separate from the exit survey, or want to provide more detail or different language about Databrary sharing.
-
-benefits_header [String | ``'What are the benefits'``]
-    [Templates 5+ only] Optional alternate header for the section on benefits/compensation, if requested by your IRB.
 
 datause
     Study-specific data use statement (optional). This will follow more general text like: "The research group led by [PIName] at [institution] will have access to video and other data collected during this session. We will also have access to your account profile, demographic survey, and the child profile for the child who is participating, including changes you make in the future to any of this information. We may study your child’s responses in connection with his or her previous responses to this or other studies run by our group, siblings’ responses to this or other studies run by our group, or demographic survey responses." (For exact text, please see specific template.)
@@ -160,26 +151,68 @@ procedures
     and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing
     your child's responses. There are no anticipated risks associated with participating."
 
-prompt_all_adults [Boolean | ``false``]
-    Whether to include an addition step #4 prompting any other adults present to read a statement of consent
-    (I have read and understand the consent document. I also agree to participate in this study.)
-
-    Please only set this to true if your IRB requires it.
-
 purpose
     Brief description of purpose of study - 1-2 sentences that describe what you are trying to find out. Language should be as straightforward and accessible as possible! E.g., "Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails."
 
 research_rights_statement [String]
     Statement about rights of research subjects and how to contact IRB.  Used only in template consent_002+. For instance, MIT's standard language is: You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact [CONTACT INFO].
 
-risk_header [String | ``'What are the risks?'``]
-    [Templates 5+ only] Optional header for risks section, if requested by your IRB.
-
 risk_statement [String]
     [Templates 5+ only] Optional statement; if provided, it is displayed under a header "Are there any risks if you participate?".
 
+
 voluntary_participation [String]
     [Templates 5+ only] Optional additional text for under header "Participation is voluntary". E.g., "There are two sessions in this study; you will be invited to complete another session next month. It is okay not to do both sessions!"
+
+Additional customization available if REQUIRED by your IRB
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To accommodate a variety of idiosyncratic IRB requirements, various other fields are technically customizable. Please
+start by trying to get approval for a standard Lookit consent form, because it helps participants for the forms to have
+common structure and language. If your IRB says no, you need to use their usual form that's 14 pages long, please explain
+that Lookit requires you to use of one of our standard forms to ensure a smooth participant experience; this is in the
+Terms of Use! If it really won't be possible to use Lookit without making more changes, please let us know before using
+the following fields to further customize the consent form:
+
+purpose_header [String | ``''``]
+    [Templates 5+ only] Custom alternate header for the section on study purpose.
+
+procedures_header [String | ``''``]
+    [Templates 5+ only] Custom alternate header for the section on study procedures.
+
+participation_header [String | ``''``]
+    [Templates 5+ only] Custom alternate header for the section on participation being voluntary.
+
+benefits_header [String | ``''``]
+    [Templates 5+ only] Custom alternate header for the section on benefits/compensation.
+
+risk_header [String | ``''``]
+    [Templates 5+ only] Custom alternate header for risks section.
+
+summary_statement [String]
+    [Templates 5+ only] Statement inserted at the beginning of the consent form, right after "Researchers led by ...
+    are running this study ... on Lookit." Please only use this if your IRB *requires* particular information to be
+    included at the beginning of the form; information is usually easier for participants to find under the appropriate
+    header rather than inserted here!
+
+additional_segments [Array]
+    List of additional custom sections of the consent form, e.g. US Patriot Act Disclosure or child abuse reporting obligation disclosure.
+    These are subject to Lookit approval and in general can only add information that was true anyway but that your IRB
+    needs explicitly listed.
+
+    Each section can have fields:
+
+        :title: [String] title of section
+        :text: [String] text of section
+
+prompt_all_adults [Boolean | ``false``]
+    Whether to include an addition step #4 prompting any other adults present to read a statement of consent
+    (I have read and understand the consent document. I also agree to participate in this study.)
+
+prompt_only_adults [Boolean | ``false``]
+    [Templates 5+ only] Whether to prompt only the adult for consent for themselves to participate, rather than also referencing a child.
+    This is for occasional studies running an adult comparison group.
+
 
 Data collected
 ----------------

@@ -150,7 +150,8 @@ export default Ember.Mixin.create({
     didInsertElement() {
         let $fsElement = Ember.$(`#${this.get('fullScreenElementId')}`);
         if (this.get('displayFullscreen')) {
-            let $fsButton = $('<button id="fsButton" class="btn btn-success">return to fullscreen</button>');
+            let buttonText = this._translate('return to fullscreen');
+            let $fsButton = $(`<button id="fsButton" class="btn btn-success">${buttonText}</button>`);
             $('div.lookit-frame').append($fsButton);
             $fsButton.on('click', this.showFullscreen.bind(this));
         }

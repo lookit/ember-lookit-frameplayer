@@ -3,8 +3,8 @@
 
         <div class="video-consent-numbered-direction">
             <span class="video-consent-number">1.</span>
-            <span class="video-consent-direction">Read through this consent document:</span>
-            <button type="button" id="downloadbutton" class="btn btn-outline-dark right" {{action "download"}}>( <i class="fa fa-download"></i> Download )</button>
+            <span class="video-consent-direction">{{ t "exp-lookit-video-consent.consent-step-1" }}:</span>
+            <button type="button" id="downloadbutton" class="btn btn-outline-dark right" {{action "download"}}>( <i class="fa fa-download"></i> {{ t "exp-lookit-video-consent.download"}} )</button>
         </div>
 
         <div class="center">
@@ -100,8 +100,13 @@
                             @voluntary_participation={{voluntary_participation}}
                             @include_databrary={{include_databrary}}
                             @additional_video_privacy_statement={{additional_video_privacy_statement}}
+                            @purpose_header={{purpose_header}}
+                            @procedures_header={{procedures_header}}
+                            @participation_header={{participation_header}}
                             @risk_header={{risk_header}}
                             @benefits_header={{benefits_header}}
+                            @summary_statement={{summary_statement}}
+                            @prompt_only_adults={{prompt_only_adults}}
                     />
 
                 {{/if}}
@@ -116,9 +121,9 @@
         <div class="video-consent-numbered-direction">
             <span class="video-consent-number">2.</span>
             <span class="video-consent-direction">
-                Click to
+                {{ t "exp-lookit-video-consent.click-to"}}
                 <button type="button" id="recordbutton" disabled={{disableRecord}} class="btn btn-primary pull-left center" {{ action "record" }}>
-                    start consent recording... <i class="fa fa-video-camera"></i>
+                    {{ t "exp-lookit-video-consent.start-consent-recording" }}... <i class="fa fa-video-camera"></i>
                 </button>
             </span>
 
@@ -128,28 +133,32 @@
             <div id="recorder" class="recorder col-xs-12">
                 <span id="recordingStatus">
                     <i class="fa fa-circle text-danger Blink" id="recordingIndicator"></i>
-                    <span id="recordingText"> Recording... </span>
+                    <span id="recordingText"> {{ t "exp-lookit-video-consent.Recording" }}... </span>
                 </span>
             </div>
         </div>
 
         <div class="video-consent-numbered-direction">
             <span class="video-consent-number">3.</span>
-            <span class="video-consent-direction">Read the statement below <em class="video-consent-outloud"> out loud</em>{{#if (not (or (eq template "consent_003") (eq template "consent_002") (eq template "consent_001")))}} (or in ASL){{/if}}: </span>
+
+            <span class="video-consent-direction">
+                {{ t "exp-lookit-video-consent.read-statement-below" htmlSafe=true }}
+                {{#if (not (or (eq template "consent_003") (eq template "consent_002") (eq template "consent_001")))}} ({{ t "exp-lookit-video-consent.signed-alternative" }}){{/if}}:
+            </span>
         </div>
 
         <div class="well video-consent-prompt">
-            <span class="breaklines exp-lookit-video-consent-prompt">"I have read and understand the consent document. I am this child's parent or legal guardian and we both agree to participate in this study."</span>
+            <span class="breaklines exp-lookit-video-consent-prompt">"{{#if prompt_only_adults}}{{ t "exp-lookit-video-consent.prompt-adult-only" }}{{else}}{{ t "exp-lookit-video-consent.prompt" }}{{/if}}"</span>
         </div>
 
         {{#if prompt_all_adults}}
             <div class="video-consent-numbered-direction">
                 <span class="video-consent-number">4.</span>
-                <span class="video-consent-direction">Is another adult there too? If so, each additional adult should read out loud:</span>
+                <span class="video-consent-direction">{{ t "exp-lookit-video-consent.additional-adult-question" }}:</span>
             </div>
 
             <div class="well video-consent-prompt">
-                <span class="breaklines exp-lookit-video-consent-prompt">"I have read and understand the consent document. I also agree to participate in this study." </span>
+                <span class="breaklines exp-lookit-video-consent-prompt">"{{ t "exp-lookit-video-consent.additional-adult-prompt" }}" </span>
             </div>
         {{/if}}
 
@@ -163,7 +172,7 @@
             </span>
             <span class="video-consent-direction">
                 Click to
-                <button type="button" id="stopbutton" disabled="disabled" class="btn btn-primary pull-right" {{ action "stop" }}>stop recording <i class="fa fa-stop"></i></button>
+                <button type="button" id="stopbutton" disabled="disabled" class="btn btn-primary pull-right" {{ action "stop" }}>{{ t "exp-lookit-video-consent.stop-recording" }} <i class="fa fa-stop"></i></button>
             </span>
         </div>
 
@@ -176,7 +185,7 @@
                 {{/if}}
             </span>
             <span class="video-consent-direction">
-                <button type="button"  id="playbutton" disabled="disabled" class="btn btn-primary pull-right" {{ action "playvideo" }}>Play the consent video <i class="fa fa-play"></i></button> to make sure your video was recorded. (If not, you can try again!)
+                <button type="button"  id="playbutton" disabled="disabled" class="btn btn-primary pull-right" {{ action "playvideo" }}>{{ t "exp-lookit-video-consent.play-consent-video-button" }} <i class="fa fa-play"></i></button> {{ t "exp-lookit-video-consent.review-video" }}
             </span>
         </div>
 
@@ -185,17 +194,17 @@
             {{#if hasMadeVideo}}
                 {{#unless hasCheckedVideo}}
                     <p class="warning">
-                        Please play your video to make sure you can hear the consent statement!
+                        {{ t "exp-lookit-video-consent.play-video-warning" }}
                     </p>
                 {{/unless}}
             {{else}}
                 <p class="warning">
-                    Please make a consent recording to continue.
+                    {{ t "exp-lookit-video-consent.consent-recording-warning" }}
                 </p>
             {{/if}}
         {{/if}}
 
-        <button type="button" id="submitbutton" class="btn btn-success pull-right  {{if (and hasMadeVideo hasCheckedVideo) "" "disabled"}}" {{ action "finish" }}>Submit</button>
+        <button type="button" id="submitbutton" class="btn btn-success pull-right  {{if (and hasMadeVideo hasCheckedVideo) "" "disabled"}}" {{ action "finish" }}>{{ t "Submit" }} </button>
 
     </div>
 </div>

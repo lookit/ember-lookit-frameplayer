@@ -147,6 +147,15 @@ p#pipeClickPowered {
     font-size: large;
 }
 
+div.lookit-frame {
+    > div.infant-control-mixin-looking-away {
+        border: 10px dashed gray;
+    }
+    > div.infant-control-mixin-looking {
+        border: 10px solid green;
+    }
+}
+
 .video-record-mixin-wait-for-video, .pause-unpause-mixin-cover {
     width: 100vw;
     height: 100vh;
