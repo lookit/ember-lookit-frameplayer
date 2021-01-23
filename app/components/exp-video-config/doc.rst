@@ -63,7 +63,13 @@ Data collected
 
 The fields added specifically for this frame type are:
 
-<None>
+screenHeight [Number]
+    the height of the participant's screen, in pixels (note: this does not map directly to physical size, and measures
+    the screen, not the window)
+
+screenWidth [Number]
+    the width of the participant's screen, in pixels (note: this does not map directly to physical size, and measures
+    the screen, not the window)
 
 Events recorded
 ----------------
