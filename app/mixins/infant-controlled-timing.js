@@ -301,36 +301,36 @@ var infantControlledTimingMixin = Ember.Mixin.create({
     startParentControl() {
         let _this = this;
         this.set('_delayLookingMeasurementPeriodTimer', window.setTimeout( function() {
-                _this.set('_totalLookaway', 0);
-                _this.set('_anyLookDuringControlPeriod', _this.get('_isLooking'));
-                _this.set('_trialStartTime', new Date());
-                _this.set('_controlPeriodStarted', true);
-                /**
+            _this.set('_totalLookaway', 0);
+            _this.set('_anyLookDuringControlPeriod', _this.get('_isLooking'));
+            _this.set('_trialStartTime', new Date());
+            _this.set('_controlPeriodStarted', true);
+            /**
                  * When interval of parent control of trial begins - i.e., lookaways begin counting up to threshold.
                  * Lookaway events are recorded throughout, but do not count towards ending trial until parent control period
                  * begins.
                  *
                  * @event parentControlPeriodStart
                  */
-                _this.send('setTimeEvent', 'parentControlPeriodStart');
+            _this.send('setTimeEvent', 'parentControlPeriodStart');
 
-                $(document).on('keyup.parentEndTrial', (e) => {
-                    if (_this.checkFullscreen()) {
-                        if (_this.get('endTrialKey') && e.key === _this.get('endTrialKey')) {
-                            /**
+            $(document).on('keyup.parentEndTrial', (e) => {
+                if (_this.checkFullscreen()) {
+                    if (_this.get('endTrialKey') && e.key === _this.get('endTrialKey')) {
+                        /**
                              * When trial ends due to parent pressing key to end trial
                              *
                              * @event parentEndedTrial
                              */
-                            _this.send('setTimeEvent', 'parentEndedTrial');
-                            _this.set('trialEndReason', 'parentEnded');
-                            _this.setTrialEndTime();
-                            _this.onLookawayCriterion();
-                        }
+                        _this.send('setTimeEvent', 'parentEndedTrial');
+                        _this.set('trialEndReason', 'parentEnded');
+                        _this.setTrialEndTime();
+                        _this.onLookawayCriterion();
                     }
-                });
-            },
-            this.get('measurementPeriodDelay') * 1000)
+                }
+            });
+        },
+        this.get('measurementPeriodDelay') * 1000)
         );
 
 
