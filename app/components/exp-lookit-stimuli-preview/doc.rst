@@ -92,14 +92,6 @@ Example
 Parameters
 ----------------
 
-video [Object | ``{}`` ]
-    Object describing the video to show. It can have the following properties:
-
-    :source: [String or Array]
-        The location of the main video to play. This can be either
-        an array of ``{'src': 'https://...', 'type': '...'}`` objects (e.g., to provide both
-        webm and mp4 versions at specified URLS) or a single string relative to ``baseDir/<EXT>/``.
-
 showPreviousButton [Boolean | ``true``]
     Whether to show a 'previous' button
 

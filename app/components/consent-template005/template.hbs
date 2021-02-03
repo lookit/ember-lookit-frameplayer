@@ -13,7 +13,7 @@
     <p> {{ exp-format purpose }} </p>
 
     <h2> {{#if procedures_header}} {{procedures_header}} {{else}} {{t "consent-template-5.procedures-header" }} {{/if}}</h2>
-    <p> {{t "consent-template-5.duration-statement" duration=experiment.duration }}</p>
+    <p> {{t "consent-template-5.duration-statement" duration=experiment.duration }} {{exp-format procedures}} </p>
 
     <h2> {{#if participation_header}} {{participation_header}} {{else}} {{t "consent-template-5.participation-header" }} {{/if}}</h2>
     <p>
