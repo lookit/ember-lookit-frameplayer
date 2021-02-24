@@ -218,6 +218,9 @@ video [Object]
     :loop: [Boolean]
         whether the video should loop, even after any ``requireTestVideoCount`` is satisfied.
 
+    :controls: [Boolean | ``false``]
+        whether to display controls allowing the user to seek, pause/resume, and adjust volume.
+
 audio [Object | ``{}``]
     Object describing the audio to play along with video, if any. Can have properties:
 
@@ -299,9 +302,17 @@ Events recorded
 
 The events recorded specifically by this frame are:
 
-:videoStarted: When video begins playing (recorded each time video starts if played through more than once)
+:videoStarted: When video begins playing (recorded each time video starts if played through more than once).
 
-:videoStopped: When video completes playback (recorded each time if played more than once)
+   :currentTime: [Number]
+       Playback time at start in s. This will be ~0 if video is being started/restarted automatically but may be nonzero
+       if controls were enabled and video playback was paused by the participant.
+
+:videoStopped: When video completes playback (recorded each time if played more than once) OR is paused, either
+   automatically because study was paused or by participant if controls were shown.
+
+   :currentTime: [Number]
+       Playback time at pause in s.
 
 :audioStarted: When audio begins playing (recorded each time video starts if played through more than once)
 

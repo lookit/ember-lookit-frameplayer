@@ -78,6 +78,9 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, Exp
                 },
                 'loop': {
                     type: 'boolean'
+                },
+                'controls': {
+                    type: 'boolean'
                 }
             }
         },
@@ -189,6 +192,10 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, Exp
 
     actions: {
 
+        videoPaused() {
+            this.send('setTimeEvent', 'videoPaused', {'currentTime': $('#player-video').length ? $('#player-video')[0].currentTime : null});
+        },
+
         videoStarted() {
             /**
              * When video begins playing (recorded each time video starts if played through more than once)
@@ -199,7 +206,7 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, Exp
                 return;
             }
 
-            this.send('setTimeEvent', 'videoStarted');
+            this.send('setTimeEvent', 'videoStarted', {'currentTime': $('#player-video').length ? $('#player-video')[0].currentTime : null});
             if (this.get('testVideoTimesPlayed') === 0) {
                 window.clearInterval(this.get('testTimer'));
                 if (this.get('requiredDuration')) {
@@ -225,12 +232,6 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, Exp
             if (this.get('isDestroying') || this.get('isDestroyed')) {
                 return;
             }
-            /**
-             * When video completes playback (recorded each time if played more than once)
-             *
-             * @event videoStopped
-             */
-            this.send('setTimeEvent', 'videoStopped');
             this.set('testVideoTimesPlayed', this.get('testVideoTimesPlayed') + 1);
             if (this.isReadyToFinish()) {
                 this.readyToFinish();

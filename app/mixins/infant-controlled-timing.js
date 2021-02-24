@@ -217,9 +217,9 @@ var infantControlledTimingMixin = Ember.Mixin.create({
                  *
                  * @event lookawayEndedTrial
                  */
-                this.send('setTimeEvent', 'lookawayEndedTrial');
-                this.set('trialEndReason', 'lookaway');
-                this.setTrialEndTime();
+                _this.send('setTimeEvent', 'lookawayEndedTrial');
+                _this.set('trialEndReason', 'lookaway');
+                _this.setTrialEndTime();
                 _this.onLookawayCriterion();
             }, delay));
         }
@@ -332,13 +332,6 @@ var infantControlledTimingMixin = Ember.Mixin.create({
         },
         this.get('measurementPeriodDelay') * 1000)
         );
-
-
-
-
-
-
-
     },
 
     /**
