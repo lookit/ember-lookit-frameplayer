@@ -1,7 +1,7 @@
 {{! template-lint-disable no-invalid-interactive}}
 {{! template-lint-disable no-html-comments}}
 
-<div class="input-group exp-lookit-video row {{unless (and autoProceed (not video.controls)) "cursor-display"}}">
+<div class="input-group exp-lookit-video row {{if (or (not autoProceed) video.controls) "cursor-display"}}">
 
     <!--RECORDER-->
     <div class="row recorder-container video-recorder-hidden">
