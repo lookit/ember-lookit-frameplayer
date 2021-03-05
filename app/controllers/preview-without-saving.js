@@ -17,12 +17,6 @@ export default Participate.extend({
         toggleData() {
             this.toggleProperty('showData');
             this.get('_resolve')();
-        },
-        saveResponse(payload, callback) {
-            var response = this.get('response');
-            response.setProperties(payload);
-            response.save().then(callback);
-            this.set('response', response);
         }
     }
 });
