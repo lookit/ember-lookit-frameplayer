@@ -1,7 +1,7 @@
 {{! template-lint-disable no-invalid-interactive}}
 {{! template-lint-disable no-html-comments}}
 
-<div class="input-group exp-lookit-video row {{unless autoProceed "cursor-display"}}">
+<div class="input-group exp-lookit-video row {{unless (and autoProceed (not video.controls)) "cursor-display"}}">
 
     <!--RECORDER-->
     <div class="row recorder-container video-recorder-hidden">
@@ -28,8 +28,10 @@
                 <video id="player-video"
                        class="test story-image"
                        autoplay="autoplay"
+                       controls={{ if video_parsed.controls "controls" "" }}
+                       onpause={{ action "videoPaused" }}
                        onended={{ action "videoStopped"}}
-                       onplay={{action "videoStarted"}}>
+                       onplay={{ action "videoStarted" }}>
                     {{#each video_parsed.source as |stream|}}
                         <source src={{stream.src}} type={{stream.type}}>
                     {{/each}}
