@@ -680,6 +680,8 @@ let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
             // that the user is likely to have limited ability to FIX a save error, and the
             // only thing they'll really be able to do is try again anyway, preventing
             // them from continuing is unnecessarily disruptive.
+            // 3/5/2021: It actually appears to be ok to enter FS from within the .finally() clause of a promise,
+            // but we still don't want to hold up moving to the next frame for the ~1s until saving succeeds.
             this.send('save');
 
             if (this.get('endSessionRecording') && this.get('sessionRecorder')) {
