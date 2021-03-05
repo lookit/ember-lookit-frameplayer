@@ -17,7 +17,6 @@ let {
  *   experiment=experiment
  *   session=session
  *   pastSessions=pastSessions
- *   saveHandler=(action 'saveSession')
  *   frameIndex=0
  *   fullScreenElementId='expContainer'}}
  * ```
@@ -32,6 +31,10 @@ export default Ember.Component.extend(FullScreen, {
     pastSessions: null,
     frames: null,
     conditions: null,
+
+    // Store sequence and expData on the component so we can update them immediately, then transfer to session
+    _sequence: [],
+    _expData: {},
 
     frameIndex: 0, // Index of the currently active frame
 
@@ -207,16 +210,20 @@ export default Ember.Component.extend(FullScreen, {
         },
 
         saveFrame(frameId, frameData) {
-            // Save the data from a completed frame to the session data item
-            if (this.get('session.sequence') && frameId != this.get('session.sequence')[this.get('session.sequence').length - 1]) {
-                this.get('session.sequence').push(frameId);
+            // Save the data from a completed frame to the session data item. Add to sequence and
+            if (frameId != this.get('_sequence')[this.get('_sequence').length - 1]) {
+                this.get('_sequence').push(frameId);
             }
-            this.get('session.expData')[frameId] = frameData;
-            if (!this.get('session').child.content || this.get('session').child.content.id === 'TEST_CHILD_DISREGARD') {
-                return Ember.RSVP.Promise.resolve();
-            } else {
-                return this.get('session').save();
-            }
+            this.get('_expData')[frameId] = frameData;
+            this.get('session').set('sequence', this.get('_sequence'));
+            this.get('session').set('expData', this.get('_expData'));
+            // This takes a second or so! If we directly manipulate session.sequence and session.expData, we can
+            // end up with overlapping calls to save() that lead to data being lost. Because all of the above steps
+            // can be done immediately, we can keep _sequence and _expData current (and in the correct order) so that
+            // when we save the session we don't lose any information. (Alternately we can keep track of whether we're
+            // currently saving, defer the save if so, and use e.g.
+            // this.get('session').save().finally(() => {_this.set('_saving', false);})
+            return this.get('session').save();
         },
 
         next(nextFrameIndex = -1) {
@@ -267,7 +274,7 @@ export default Ember.Component.extend(FullScreen, {
                 exitType: 'manualInterrupt',  // User consciously chose to exit, eg by pressing F1 key
                 lastPageSeen: this.get('frameIndex') + 1
             });
-            this.get('session').save(); // I think this is the response
+            this.get('session').save();
 
             // Navigate to last page in experiment (assumed to be survey frame)
             var max = this.get('frames.length') - 1;
