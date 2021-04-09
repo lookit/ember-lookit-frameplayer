@@ -60,13 +60,15 @@
     {{#if prompt}}
 
         <div class="row exp-controls col-md-12">
-            {{#if showPreviousButton}}
-                <button type="button" class="btn btn-default pull-left" {{ action "previous" }} > {{t "Previous" }}</button>
-            {{/if}}
-            <button type="button" class="btn btn-primary pull-right" {{ action "next" }} >  {{skipButtonText}} </button>
+            {{#unless requirePreview}}
+                <button type="button" class="btn btn-primary pull-right" {{ action "next" }} >  {{skipButtonText}} </button>
+            {{/unless}}
         </div>
 
         <div class="exp-controls col-md-12 row">
+            {{#if showPreviousButton}}
+                <button type="button" class="btn btn-default pull-left" {{ action "previous" }} > {{t "Previous" }}</button>
+            {{/if}}
             <button type="button" class="btn btn-success pull-right" disabled={{recorderSettingUp}} {{action "accept"}}>
                 {{previewButtonText}}
                 {{#if recorderSettingUp}} ({{t "please wait, setting up" }}...){{/if}}
