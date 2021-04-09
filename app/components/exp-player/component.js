@@ -99,7 +99,7 @@ export default Ember.Component.extend(FullScreen, {
         $(window).on('beforeunload', this.beforeUnload.bind(this));
         var _this = this;
         Ember.$(window).on('keydown', (e) => {
-            if ((e.which === 112) || (e.ctrlKey && e.which == 88)) { // F1 key or ctrl-x
+            if ((e.which === 112) || (e.which === 27) || (e.ctrlKey && e.which == 88)) { // F1 key, Esc, or ctrl-x
                 _this.exitFullscreen();
                 _this.showConfirmationDialog();
             }
