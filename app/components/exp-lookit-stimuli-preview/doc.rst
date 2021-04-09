@@ -49,6 +49,7 @@ Example
         "kind": "exp-lookit-stimuli-preview",
         "doRecording": true,
         "skipButtonText": "Skip preview",
+        "requirePreview": false,
         "previewButtonText": "I'd like to preview the videos",
         "blocks": [
             {
@@ -102,6 +103,9 @@ blocks [Array]
 
 previewButtonText [String | ``'I\'d like to preview the videos'``
     Text on the preview button user clicks to proceed to stimuli/images
+
+requirePreview [Boolean | ``false``]
+    Whether to require previewing the stimuli. If true, no button to skip preview is provided.
 
 skipButtonText [String | ``'Skip preview'``]
     Text to display on the button to skip the next frame
