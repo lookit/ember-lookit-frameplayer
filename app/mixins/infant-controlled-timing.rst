@@ -61,9 +61,9 @@ endTrialKey [String | ``'q'``]
      for this trial. You can look up the names of keys at https://keycode.info. Default is 'q'.
 
 lookawayTone [String | ``'noise'``]
-     Type of audio to play during parent-coded lookaways - 'tone' (A 220), 'noise' (pink noise), or 'none'. These
-     tones are available at https://www.mit.edu/~kimscott/placeholderstimuli/ if you want to use them in
-     instructions.
+    Audio file to play during parent-coded lookaways play during parent-coded lookaways, e.g. tone or noise. This can
+    be either an array of ``{src: 'url', type: 'MIMEtype'}`` objects or a single string relative to ``baseDir/<EXT>``.
+    Sample tones are available at https://www.mit.edu/~kimscott/placeholderstimuli/.
 
 lookawayToneVolume [Number | ``0.25``]
      Volume of lookaway tone, as fraction of full volume (1 = full volume, 0 = silent)
