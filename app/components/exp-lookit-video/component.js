@@ -232,6 +232,10 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, Exp
             if (this.get('isDestroying') || this.get('isDestroyed')) {
                 return;
             }
+            if ($('#player-video').length) {
+                $('#player-video')[0].currentTime = $('#player-video')[0].duration;
+                $('#player-video')[0].pause();
+            }
             this.set('testVideoTimesPlayed', this.get('testVideoTimesPlayed') + 1);
             if (this.isReadyToFinish()) {
                 this.readyToFinish();
