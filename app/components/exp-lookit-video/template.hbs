@@ -25,9 +25,11 @@
                     {{/each}}
                 </audio>
                 <!--TEST VIDEO-->
+                <!--tiny transparent gif for poster from https://stackoverflow.com/a/15960901/10199190 -->
                 <video id="player-video"
                        class="test story-image"
                        autoplay="autoplay"
+                       poster="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEAAAAALAAAAAABAAEAAAIA"
                        controls={{ if video_parsed.controls "controls" "" }}
                        onpause={{ action "videoPaused" }}
                        onended={{ action "videoStopped"}}
