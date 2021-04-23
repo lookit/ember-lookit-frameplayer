@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import {audioAssetOptions} from "./expand-assets";
+import {mergeObjectOfArrays} from "../utils/replace-values";
 
 let {
     $
@@ -115,17 +117,9 @@ var infantControlledTimingMixin = Ember.Mixin.create({
             default: 'q'
         },
 
-        /**
-         Type of audio to play during parent-coded lookaways - 'tone' (A 220), 'noise' (pink noise), or 'none'. These
-         tones are available at https://www.mit.edu/~kimscott/placeholderstimuli/ if you want to use them in
-         instructions.
-         @property {string} lookawayTone
-         @default 'noise'
-         */
         lookawayTone: {
-            type: 'string',
-            enum: ['tone', 'noise', 'none'],
-            default: 'noise',
+            anyOf: audioAssetOptions,
+            default: '',
             description: 'Type of audio to play during parent-coded lookaways'
         },
 
@@ -353,6 +347,16 @@ var infantControlledTimingMixin = Ember.Mixin.create({
         $(document).off('keyup.parentEndTrial');
     },
 
+    // Expand lookawayTone based on baseDir if appropriate
+    didReceiveAttrs() {
+        let assets = this.get('assetsToExpand') ? this.get('assetsToExpand') : {};
+        let additionalAssetsToExpand = {
+            audio: ['lookawayTone']
+        };
+        this.set('assetsToExpand', mergeObjectOfArrays(assets, additionalAssetsToExpand));
+        this._super(...arguments);
+    },
+
     didInsertElement() {
         this.set('_isLooking', true); // Default assumption is child is looking; hold down key for lookaway.
         this.set('_totalLookaway', 0);
@@ -377,15 +381,13 @@ var infantControlledTimingMixin = Ember.Mixin.create({
         });
 
         try {
-            let useLookawayTone = this.get('lookawayTone') !== 'none';
-            if (useLookawayTone) {
-                const baseDir = 'https://www.mit.edu/~kimscott/placeholderstimuli/';
-                let audioElement = $('<audio id="lookawayTone" loop></audio>');
-                $(`<source src='${baseDir}mp3/${this.get('lookawayTone')}.mp3' type='audio/mp3'>`).appendTo(audioElement);
-                $(`<source src='${baseDir}ogg/${this.get('lookawayTone')}.ogg' type='audio/ogg'>`).appendTo(audioElement);
-                $('#experiment-player > div > div').append(audioElement);
-                $('audio#lookawayTone')[0].volume = this.get('lookawayToneVolume');
+            let lookawayTones = this.get('lookawayTone_parsed') ? this.get('lookawayTone_parsed') : [];
+            let audioElement = $('<audio id="lookawayTone" loop></audio>');
+            for (let i = 0; i < lookawayTones.length; i++) {
+                $(`<source src='${lookawayTones[i].src}' type='${lookawayTones[i].type}'>`).appendTo(audioElement);
             }
+            $('#experiment-player > div > div').append(audioElement);
+            $('audio#lookawayTone')[0].volume = this.get('lookawayToneVolume');
         } catch (e) {
             console.error(`Error setting lookaway tone: ${e}`);
         }

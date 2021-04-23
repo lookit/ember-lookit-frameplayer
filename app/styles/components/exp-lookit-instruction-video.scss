@@ -27,6 +27,15 @@
         border: medium solid #aaa;
         padding: 1em;
         padding-top: 1.5em; // make space for overlapping title
+
+        img {
+          max-width: 75%;
+          border: thin solid black;
+          display: block;
+          margin: auto;
+          clear: both;
+        }
+
     }
 
     .transcript-title {
@@ -44,13 +53,6 @@
 
     li {
         margin-bottom: 20px;
-
-        img.text-block-img {
-            float: right;
-            max-height: 180px;
-            border-radius: 10%;
-            border: thin solid black;
-        }
     }
 
     .media-warning {
