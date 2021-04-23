@@ -518,7 +518,7 @@ test('parser applies nested randomization using parameters', function(assert) {
 
 // The below establishes the problems with using complex nested randomizers to e.g.
 // use unique stimuli throughout the study.
-skip('parser applies nested randomization using parameters', function(assert) {
+skip('parser uses unique stimuli throughout study with nested structure', function(assert) {
 
     var nRepeatedUniqOptions = 0;
     var nLeftFirst = 0;
