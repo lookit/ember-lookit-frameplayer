@@ -20,8 +20,8 @@ const colorSpecToRgbaArray = function(color) {
     context.fillStyle = 'rgba(0, 0, 0, 0)';
     context.fillStyle = color;
     // Make the fillRect larger than one pixel needed because colors of borders are sometimes slightly lighter
-    context.fillRect(0, 0, 5, 5);
-    return Uint8ClampedArray.from(context.getImageData(3, 3, 1, 1).data);
+    context.fillRect(0, 0, 8, 8);
+    return Uint8ClampedArray.from(context.getImageData(4, 4, 1, 1).data);
 };
 
 // Return either 'black' or 'white' depending on whether background color (RGB(A) array) is dark or light)

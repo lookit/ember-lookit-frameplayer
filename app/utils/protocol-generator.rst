@@ -385,11 +385,11 @@ On each test trial, the infant sees two images, one on the right and one on the 
 
         // Returns a random element of an array, and removes that element from the array
         function pop_random(array) {
-            var randIndex = Math.floor(Math.random() * array.length);
             if (array.length) {
-                return array.pop(randIndex);
+                let randIndex = Math.floor(Math.random() * array.length);
+                return array.splice(randIndex, 1)[0];
             }
-            return null
+            return null;
         }
 
         // -------- End helper functions -------------------------------------------

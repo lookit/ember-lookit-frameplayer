@@ -1506,11 +1506,11 @@ test('parser applies generator function and randomizes as expected without repea
 
         // Returns a random element of an array, and removes that element from the array
         function pop_random(array) {
-            var randIndex = Math.floor(Math.random() * array.length);
             if (array.length) {
-                return array.pop(randIndex);
+                let randIndex = Math.floor(Math.random() * array.length);
+                return array.splice(randIndex, 1)[0];
             }
-            return null
+            return null;
         }
 
         // -------- End helper functions -------------------------------------------
@@ -1538,11 +1538,11 @@ test('parser applies generator function and randomizes as expected without repea
                     "title": "Thank you!"
                 }
             }
-        }
+        };
 
         // Start off the frame sequence with config/consent frames; we'll add test
         // trials as we construct them
-        let frame_sequence = ['video-config', 'video-consent']
+        let frame_sequence = ['video-config', 'video-consent'];
 
         // start at a random point in this list and cycle through across trials.
         // each element is a list: category1, category2, audio.
@@ -1579,7 +1579,7 @@ test('parser applies generator function and randomizes as expected without repea
                 "exciting",
                 "Exciting"
             ]
-        ]
+        ];
 
         // Every image is just used once total, either as a target or as a distractor.
         // We'll remove the images from these lists as they get used.
@@ -1602,34 +1602,34 @@ test('parser applies generator function and randomizes as expected without repea
                 "Exciting_3.png",
                 "Exciting_4.png"
             ]
-        }
+        };
 
         // Make a deep copy of the original available images, in case we run out
         // (e.g. after adding additional trials) and need to "refill" a category.
-        let all_images = Ember.$.extend(true, {}, available_images)
+        let all_images = Ember.$.extend(true, {}, available_images);
 
         // Choose a random starting point and order for the category pairings
-        let ordered_category_pairings = shuffle(all_category_pairings)
+        let ordered_category_pairings = shuffle(all_category_pairings);
 
         for (iTrial = 0; iTrial < 4; iTrial++) {
 
-            let category_pairing = ordered_category_pairings[iTrial]
-            let category_id_1 = category_pairing[0]
-            let category_id_2 = category_pairing[1]
-            let audio = category_pairing[2]
+            let category_pairing = ordered_category_pairings[iTrial];
+            let category_id_1 = category_pairing[0];
+            let category_id_2 = category_pairing[1];
+            let audio = category_pairing[2];
 
             // "Refill" available images if empty
             if (!available_images[category_id_1].length) {
-                available_images[category_id_1] = all_images[category_id_1]
+                available_images[category_id_1] = all_images[category_id_1].slice();
             }
             if (!available_images[category_id_2].length) {
-                available_images[category_id_2] = all_images[category_id_2]
+                available_images[category_id_2] = all_images[category_id_2].slice();
             }
 
-            let image1 = pop_random(available_images[category_id_1])
-            let image2 = pop_random(available_images[category_id_2])
+            let image1 = pop_random(available_images[category_id_1]);
+            let image2 = pop_random(available_images[category_id_2]);
 
-            let left_right_pairing = shuffle(["left", "right"])
+            let left_right_pairing = shuffle(["left", "right"]);
 
             thisTrial = {
                 "kind": "exp-lookit-images-audio",
@@ -1651,16 +1651,16 @@ test('parser applies generator function and randomizes as expected without repea
                     "mp3"
                 ],
                 "autoProceed": true
-            }
+            };
 
             // Store this frame in frames and in the sequence
-            frameId = 'test-trial-' + (iTrial + 1)
+            frameId = 'test-trial-' + (iTrial + 1);
             frames[frameId] = thisTrial;
             frame_sequence.push(frameId);
         }
 
         // Finish up the frame sequence with the exit survey
-        frame_sequence = frame_sequence.concat(['exit-survey'])
+        frame_sequence = frame_sequence.concat(['exit-survey']);
 
         // Return a study protocol with "frames" and "sequence" fields just like when
         // defining the protocol in JSON only
@@ -1682,7 +1682,10 @@ test('parser applies generator function and randomizes as expected without repea
         child: new Ember.Object()
     };
 
-    for (var iRep=0; iRep<100; iRep++) {
+    let countFirstImageOnLeft = 0;
+    let countFirstImageId1 = 0;
+    let nReps = 100;
+    for (var iRep=0; iRep<nReps; iRep++) {
         let parser = new ExperimentParser(experiment);
         let result = parser.parse()[0];
         let expKinds = result.map((item) => item.kind);
@@ -1706,6 +1709,18 @@ test('parser applies generator function and randomizes as expected without repea
             assert.equal(allImages.indexOf(allImages[iImage], iImage + 1), -1, 'Image used more than once during study');
             assert.equal(allImages[iImage].slice(-4), '.png', 'Image property was not substituted in all the way down to filename');
         }
+
+        // Count how many times first image on first trial is on left/right (using shuffle) & uses image _1.png (using pop_random)
+        countFirstImageOnLeft += (result[2].images[0].position === 'left');
+
+        let image1 = result[2].images[0].src;
+        countFirstImageId1 += image1[image1.indexOf('.')-1] === '1';
     }
+
+    assert.notEqual(countFirstImageOnLeft, 0, "No first images presented on left");
+    assert.notEqual(countFirstImageOnLeft, nReps, "All first images presented on left");
+
+    assert.notEqual(countFirstImageId1, 0, "No first images from first element of category");
+    assert.notEqual(countFirstImageId1, nReps, "All first images from first element of category");
 
 });
