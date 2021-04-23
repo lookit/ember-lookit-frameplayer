@@ -25,14 +25,14 @@ language [String]
     study to set the language for all frames.
 
     Current options are 'en-US' (English, US) and 'nl' (Dutch). To add another language option, please contact Lookit
-    staff. You will need to make a copy of the `English translation file<https://github.com/lookit/ember-lookit-frameplayer/blob/develop/translations/en-us.yaml>`__ and translate the text after the colon
-    on each line, leaving everything else the same. You can see an example `here<https://github.com/lookit/ember-lookit-frameplayer/blob/develop/translations/nl.yaml>`__. There are three special cases:
+    staff. You will need to make a copy of the `English translation file <https://github.com/lookit/ember-lookit-frameplayer/blob/develop/translations/en-us.yaml>`__ and translate the text after the colon
+    on each line, leaving everything else the same. You can see an example `here <https://github.com/lookit/ember-lookit-frameplayer/blob/develop/translations/nl.yaml>`__. There are three special cases:
 
     * If there's HTML formatting, leave it be (just edit the text). E.g. ``<strong>Private</strong>`` became
       ``<strong>Privé:</strong>`` in Dutch.
 
     * If there are values inside  ``{}``, don’t translate them, just use them as placeholders: e.g.,
-      ``private-option-list-with-databrary: de Lookit projectstaf, onderzoekers die werken met {contact} aan de studie "{name}," en geautoriseerde gebruikers van het Databrary``
+      ``private-option-list-with-databrary: de Lookit projectstaf, onderzoekers die werken met {contact} ...``
 
     * When you see something starting ``{variable_name, select, true {X} other {Y}}``, translate X and Y only. These
       correspond to what text to show in two different scenarios: when ``variable_name`` is true and when it's false.
