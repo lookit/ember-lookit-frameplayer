@@ -22,9 +22,7 @@ What information it has access to
 
 The ``generateProtocol`` function receives two arguments, ``child`` and ``pastSessions``.
 
-The ``child`` and the elements of the array ``pastSessions`` are Ember objects and do not behave exactly like regular Javascript objects. Here
-
-``child`` is an Ember object representing the child currently participating in this study. You can access the following fields using ``child.get(<fieldName>)``, e.g. ``child.get('givenName')``:
+The ``child`` and the elements of the array ``pastSessions`` are Ember objects and do not behave exactly like regular Javascript objects. Here ``child`` is an Ember object representing the child currently participating in this study. You can access the following fields using ``child.get(<fieldName>)``, e.g. ``child.get('givenName')``:
 
   * givenName (string)
   * birthday (Date)
