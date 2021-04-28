@@ -61,12 +61,22 @@ endTrialKey [String | ``'q'``]
      for this trial. You can look up the names of keys at https://keycode.info. Default is 'q'.
 
 lookawayTone [String | ``'noise'``]
-     Type of audio to play during parent-coded lookaways - 'tone' (A 220), 'noise' (pink noise), or 'none'. These
-     tones are available at https://www.mit.edu/~kimscott/placeholderstimuli/ if you want to use them in
-     instructions.
+    Audio file to play during parent-coded lookaways play during parent-coded lookaways, e.g. tone or noise. This can
+    be either an array of ``{src: 'url', type: 'MIMEtype'}`` objects or a single string relative to ``baseDir/<EXT>``.
+    Sample tones are available at https://www.mit.edu/~kimscott/placeholderstimuli/.
 
 lookawayToneVolume [Number | ``0.25``]
      Volume of lookaway tone, as fraction of full volume (1 = full volume, 0 = silent)
+
+showLookawayVisualGuide [Boolean | ``false``]
+    Whether to show a visual guide of whether the child is looking. If true, a thick green border is displayed at the
+    edge of the screen when the child is coded as looking, and a dashed gray border is displayed when the child is not
+    looking.
+
+measurementPeriodDelay [Number | ``0``]
+    How many seconds to delay the measurement period, relative to when it would ordinarily begin  (e.g., with stimulus
+    presentation). Lookaways are still recorded before this, but don't count towards the total lookaway time. Parents
+    cannot end the trial using the endTrialKey before this.
 
 Data collected
 ----------------

@@ -60,16 +60,18 @@
     {{#if prompt}}
 
         <div class="row exp-controls col-md-12">
-            {{#if showPreviousButton}}
-                <button type="button" class="btn btn-default pull-left" {{ action "previous" }} > Previous</button>
-            {{/if}}
-            <button type="button" class="btn btn-primary pull-right" {{ action "next" }} >  {{skipButtonText}} </button>
+            {{#unless requirePreview}}
+                <button type="button" class="btn btn-primary pull-right" {{ action "next" }} >  {{skipButtonText}} </button>
+            {{/unless}}
         </div>
 
         <div class="exp-controls col-md-12 row">
+            {{#if showPreviousButton}}
+                <button type="button" class="btn btn-default pull-left" {{ action "previous" }} > {{t "Previous" }}</button>
+            {{/if}}
             <button type="button" class="btn btn-success pull-right" disabled={{recorderSettingUp}} {{action "accept"}}>
                 {{previewButtonText}}
-                {{#if recorderSettingUp}} (please wait, setting up...){{/if}}
+                {{#if recorderSettingUp}} ({{t "please wait, setting up" }}...){{/if}}
             </button>
         </div>
     {{/if}}
@@ -81,7 +83,7 @@
                     {{previousStimulusText}}
                 </button>
                 {{#if noNext}}
-                    <button type="button" {{action "finish"}} class="btn btn-success pull-right"> Continue</button>
+                    <button type="button" {{action "finish"}} class="btn btn-success pull-right"> {{ t "Continue" }} </button>
                 {{else}}
                     <button type="button" {{action "nextVideo"}} class="btn btn-success pull-right"> {{nextStimulusText}}</button>
                 {{/if}}

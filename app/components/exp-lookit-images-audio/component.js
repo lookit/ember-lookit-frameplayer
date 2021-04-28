@@ -262,14 +262,18 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
         }
     },
 
+    recordingStarted: false,
+
     // Override to do a bit extra when starting recording
     onRecordingStarted() {
-        this.startTrial();
+        this.set('recordingStarted', true);
+        this.startTrialIfReady();
     },
 
     // Override to do a bit extra when starting session recorder
     onSessionRecordingStarted() {
-        this.startTrial();
+        this.set('recordingStarted', true);
+        this.startTrialIfReady();
         $('#waitForVideo').hide();
     },
 
@@ -621,12 +625,22 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
         }
     },
 
-    // Supply image IDs if they're missing.
+    startTrialIfReady() {
+        let recordingNeeded = this.get('doRecording') || this.get('startSessionRecording');
+        let nImages = this.get('images_parsed').length;
+        if ((this.get('recordingStarted') || !recordingNeeded) && this.get('image_loaded_count') >= nImages && !this.get('_isPaused')) {
+            this.startTrial();
+        }
+    },
+
+    image_loaded_count: 0,
+
     didReceiveAttrs() {
         this._super(...arguments);
+        // Supply image IDs if they're missing.
         var N = 1;
-        var allImageIds =  this.get('images') ? this.get('images').map(im => im.hasOwnProperty('id') ? im.id : null) : [];
-        $.each(this.get('images'), function(idx, image) {
+        var allImageIds = this.get('images') ? this.get('images').map(im => im.hasOwnProperty('id') ? im.id : null) : [];
+        $.each(this.get('images'), function (idx, image) {
             if (!image.hasOwnProperty('id')) {
                 while (allImageIds.includes(`image_${N}`)) {
                     N++;
@@ -646,6 +660,24 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
         if (audioSources && audioSources.length) {
             this.set('audioPlayed', audioSources[0].src);
         }
+
+        // Preload images
+        let _this = this;
+        $.each(this.get('images_parsed'),
+            function (idx, obj) {
+                let url = obj.src;
+                let img = new Image();
+                img.onload = function () { // set onload fn before source to ensure we catch it
+                    _this.set('image_loaded_count', _this.get('image_loaded_count') + 1);
+                    _this.startTrialIfReady();
+                };
+                img.onerror = function () {
+                    _this.set('image_loaded_count', _this.get('image_loaded_count') + 1);
+                    _this.startTrialIfReady();
+                    console.error('Unable to load image at ', url, ' - will skip loading but this may cause the exp-lookit-images-audio frame to fail');
+                };
+                img.src = url;
+            });
     },
 
     didInsertElement() {
@@ -687,7 +719,8 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
         $('#nextbutton').prop('disabled', true);
 
         // Begin trial!
-        this.checkAndEnableProceed();
+        this.startTrialIfReady();
+        this.checkAndEnableProceed(); // Move on to next frame if nothing to do here
     },
 
     onStudyPause() {
@@ -723,7 +756,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
             $('.story-image-container').hide();
             // If recording, trial will be started upon recording start. Otherwise...
             if (!this.get('doRecording') && !this.get('startSessionRecording')) {
-                this.startTrial();
+                this.startTrialIfReady();
             }
         }
     },

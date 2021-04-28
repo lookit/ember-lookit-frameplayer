@@ -425,24 +425,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
     },
 
     didInsertElement() {
-        this._super(...arguments);
-        this.set('assentFormText', $('#consent-form-full-text').text());
-
-        var hasCompletedEachPageAudio = [];
-        for (let iPage = 0; iPage < this.get('pages_parsed').length; iPage++) {
-            hasCompletedEachPageAudio[iPage] = !this.get('pages_parsed')[iPage].audio; // count as completed if no audio
-        }
-        this.set('hasCompletedEachPageAudio', hasCompletedEachPageAudio);
-
-        var hasCompletedEachPageVideo = [];
-        for (let iPage = 0; iPage < this.get('pages_parsed').length; iPage++) {
-            hasCompletedEachPageVideo[iPage] = !this.get('pages_parsed')[iPage].video; // count as completed if no video
-        }
-        this.set('hasCompletedEachPageVideo', hasCompletedEachPageVideo);
-
-        this.set('pageIndex', -1);
-        this.send('nextVideo');
-
+        // Decide whether to skip based on age - do this BEFORE _super() to avoid setting up camera but immediately moving on
         if (this.get('session').get('child') && this.get('session').get('child').get('birthday')) { // always show frame in preview mode
             var dob = this.get('session').get('child').get('birthday');
 
@@ -464,9 +447,30 @@ export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
                  * @event skipAssentDueToParticipantAge
                  */
                 this.send('setTimeEvent', 'skipAssentDueToParticipantAge');
+                this.set('doUseCamera', false);
                 this.send('next');
+                return;
             }
         }
+
+        this._super(...arguments);
+        this.set('assentFormText', $('#consent-form-full-text').text());
+
+        var hasCompletedEachPageAudio = [];
+        for (let iPage = 0; iPage < this.get('pages_parsed').length; iPage++) {
+            hasCompletedEachPageAudio[iPage] = !this.get('pages_parsed')[iPage].audio; // count as completed if no audio
+        }
+        this.set('hasCompletedEachPageAudio', hasCompletedEachPageAudio);
+
+        var hasCompletedEachPageVideo = [];
+        for (let iPage = 0; iPage < this.get('pages_parsed').length; iPage++) {
+            hasCompletedEachPageVideo[iPage] = !this.get('pages_parsed')[iPage].video; // count as completed if no video
+        }
+        this.set('hasCompletedEachPageVideo', hasCompletedEachPageVideo);
+
+        this.set('pageIndex', -1);
+        this.send('nextVideo');
+
     }
 
 });

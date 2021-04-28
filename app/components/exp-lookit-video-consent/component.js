@@ -46,15 +46,16 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     startRecorderAndUpdateDisplay() {
         this.set('startedRecording', true); // keep track of if ANY recorder has been set up yet
+        let _this = this;
         this.startRecorder().then(() => {
             // Require at least 2 s recording
             setTimeout(function() {
                 $('#stopbutton').prop('disabled', false);
             }, 2000);
             $('#recordingIndicator').show();
-            $('#recordingText').text('Recording');
+            $('#recordingText').text(_this._translate('exp-lookit-video-consent.Recording'));
         }, () => {
-            $('#recordingText').text('Error starting recorder');
+            $('#recordingText').text(_this._translate('exp-lookit-video-consent.Error-starting-recorder'));
             $('#recordbutton').prop('disabled', false);
         });
     },
@@ -63,7 +64,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         record() {
 
             $('#recordingStatus').show();
-            $('#recordingText').text('Starting recorder...');
+            $('#recordingText').text(`${this._translate('exp-lookit-video-consent.Starting-recorder')}...`);
             $('[id^=pipeMenu]').hide();
             $('#recordbutton').prop('disabled', true);
             $('#playbutton').prop('disabled', true);
@@ -81,7 +82,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 this.setupRecorder(_this.$(_this.get('recorderElement'))).then(() => {
                     _this.startRecorderAndUpdateDisplay();
                 }, () => {
-                    $('#recordingText').text('Error starting recorder');
+                    $('#recordingText').text(_this._translate('exp-lookit-video-consent.Error-starting-recorder'));
                     $('#recordbutton').prop('disabled', false);
                 });
             } else {
@@ -90,7 +91,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
         },
         stop() {
-            $('#recordingText').text('Stopping and uploading...');
+            $('#recordingText').text(`${this._translate('exp-lookit-video-consent.Stopping-and-uploading')}...`);
             $('#recordingIndicator').hide();
             $('#stopbutton').prop('disabled', true);
             var _this = this;
@@ -98,7 +99,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             this.stopRecorder().finally(() => {
                 _this.set('stoppedRecording', true);
                 _this.set('hasMadeVideo', true);
-                $('#recordingText').text('Not recording');
+                $('#recordingText').text(_this._translate('exp-lookit-video-consent.Not-recording'));
                 $('#playbutton').prop('disabled', false);
                 $('#recordbutton').prop('disabled', false);
             });
@@ -210,6 +211,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             default: false
         },
 
+        prompt_only_adults: {
+            type: 'boolean',
+            description: 'Whether to ask for consent ONLY for the adult (not on behalf of a child)',
+            default: false
+        },
+
         payment: {
             type: 'string',
             description: 'Statement about payment/compensation for participation'
@@ -280,16 +287,40 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             description: 'Optional additional text for under header "Who can see our webcam recordings". Only used in templates 5+'
         },
 
+        purpose_header: {
+            type: 'string',
+            description: 'Custom header for the section on study purpose',
+            default: ''
+        },
+
+        procedures_header: {
+            type: 'string',
+            description: 'Custom header for the section on study procedures',
+            default: ''
+        },
+
+        participation_header: {
+            type: 'string',
+            description: 'Custom header for the section on voluntary participation',
+            default: ''
+        },
+
         benefits_header: {
             type: 'string',
-            description: 'Header for the section on benefits & compensation',
-            default: 'What are the benefits?'
+            description: 'Custom header for the section on benefits & compensation',
+            default: ''
         },
 
         risk_header: {
             type: 'string',
-            description: 'Header for the section on risks, if risk_statement is included',
-            default: 'What are the risks?'
+            description: 'Custom header for the section on risks, if risk_statement is included',
+            default: ''
+        },
+
+        summary_statement: {
+            type: 'string',
+            description: 'Summary of consent form if required by IRB',
+            default: ''
         },
 
         template: {
@@ -332,7 +363,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         }
         this.set('consentFormText', $('#consent-form-text').text());
         $('#recordingIndicator').hide();
-        $('#recordingText').text('Not recording yet');
+        $('#recordingText').text(this._translate('exp-lookit-video-consent.Not-recording-yet'));
         $('[id^=pipeMenu]').hide();
         $('#recordbutton').prop('disabled', false);
         $('#stopbutton').prop('disabled', true);

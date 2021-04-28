@@ -29,6 +29,7 @@ import SessionRecord from '../../mixins/session-record';
 
         next=(action 'next')
         exit=(action 'exit')
+        setLanguage=(action 'setLanguage')
         previous=(action 'previous')
         saveHandler=(action 'saveFrame')
         extra=extra
@@ -490,6 +491,15 @@ let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
             console.error(`Failed to compile frameSchemaProperties to use for validating researcher usage of frame type '${this.get('kind')}.`);
         }
 
+        // Set the language (do this after generating properties to allow use of a generated language property)
+        if (this.get('language')) {
+            try {
+                this.sendAction('setLanguage', this.get('language'));
+            } catch (error) {
+                console.error(`Failed to set language to ISO code ${this.get('language')}`);
+            }
+        }
+
         this.set('_oldFrameIndex', currentFrameIndex);
     },
 
@@ -542,6 +552,10 @@ let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
         Ember.assign(defaultParams, params);
 
         return defaultParams;
+    },
+
+    _translate(text) {
+        return this.get('parentView').get('intl').lookup(text);
     },
 
     /**
@@ -666,6 +680,8 @@ let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
             // that the user is likely to have limited ability to FIX a save error, and the
             // only thing they'll really be able to do is try again anyway, preventing
             // them from continuing is unnecessarily disruptive.
+            // 3/5/2021: It actually appears to be ok to enter FS from within the .finally() clause of a promise,
+            // but we still don't want to hold up moving to the next frame for the ~1s until saving succeeds.
             this.send('save');
 
             if (this.get('endSessionRecording') && this.get('sessionRecorder')) {

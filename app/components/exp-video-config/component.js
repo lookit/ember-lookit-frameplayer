@@ -124,51 +124,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         }
     },
 
-    /**
-     * @property {Boolean} startRecordingAutomatically
-     * @private
-     */
-
-    /**
-     * @property {Boolean} showWaitForRecordingMessage
-     * @private
-     */
-
-    /**
-     * @property {Boolean} waitForRecordingMessage
-     * @private
-     */
-
-    /**
-     * @property {Boolean} waitForRecordingMessageColor
-     * @private
-     */
-
-    /**
-     * @property {Boolean} showWaitForUploadMessage
-     * @private
-     */
-
-    /**
-     * @property {Boolean} waitForUploadMessage
-     * @private
-     */
-
-    /**
-     * @property {String} waitForUploadMessageColor
-     * @private
-     */
-
-    /**
-     * @property {String} waitForWebcamImage
-     * @private
-     */
-
-    /**
-     * @property {String} waitForWebcamVideo
-     * @private
-     */
-
     frameSchemaProperties: {
         /**
         Text to show as the introduction to the troubleshooting tips section
@@ -182,11 +137,18 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         }
     },
 
-    type: 'exp-videoconfig',
+    type: 'exp-video-config',
     meta: {
         data: {
             type: 'object',
-            properties: {}
+            properties: {
+                screenWidth: {
+                    type: 'number'
+                },
+                screenHeight: {
+                    type: 'number'
+                }
+            }
         }
     },
 
@@ -198,6 +160,8 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     didInsertElement() {
         this._super(...arguments);
+        this.set('screenWidth', screen.width);
+        this.set('screenHeight', screen.height);
         this.populateDropdowns();
     }
 });

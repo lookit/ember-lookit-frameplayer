@@ -216,11 +216,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 this.send('record');
             } else {
                 $('#recordButton').show();
-                $('#recordingText').text('Not recording yet');
+                $('#recordingText').text(this._translate('exp-lookit-observation.not-recording-yet'));
             }
 
             if (this.get('hideWebcam')) {
-                $('#webcamToggleButton').html('Show');
+                $('#webcamToggleButton').html(this._translate('exp-lookit-observation.Show'));
                 $('#hiddenWebcamMessage').show();
                 $(this.get('recorderElement') + ' div').addClass('exp-lookit-observation-hidevideo');
                 this.set('hidden', true);
@@ -242,10 +242,10 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         $('#pauseButton').hide();
         $('#recordingIndicator').hide();
         $('#recordingText').text('');
-        $('#recordButtonText').text('Record');
+        $('#recordButtonText').text(this._translate('exp-lookit-observation.Record'));
         if (this.get('recordingRequired')) {
             $('#nextbutton').prop('disabled', true);
-            $('#nextbutton').text('Recording required to continue');
+            $('#nextbutton').text(this._translate('exp-lookit-observation.recording-required-warning'));
         }
         this._super(...arguments);
     },
@@ -288,8 +288,8 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             $('#pauseButton').show();
             $('#recordButton').hide();
             $('#recordingIndicator').show();
-            $('#recordingText').text('Recording...');
-            $('#recordButtonText').text('Resume');
+            $('#recordingText').text(`${this._translate('exp-lookit-observation.Recording')}...`);
+            $('#recordButtonText').text(this._translate('exp-lookit-observation.Record'));
         },
 
         proceed() { // make sure 'next' fires while still on this frame
@@ -303,7 +303,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         },
         pause() {
             var _this = this;
-            $('#recordingText').text('Stopping and uploading...');
+            $('#recordingText').text(`${this._translate('exp-lookit-observation.stopping-and-uploading')}...`);
             $('#pauseButton').hide();
             window.clearTimeout(_this.get('recordingTimer')); // no need for current timer
             window.clearTimeout(this.get('okayToProceedTimer'));
@@ -312,7 +312,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             $('#recordingIndicator').hide();
             this.stopRecorder().finally(() => {
                 $('#recordButton').show();
-                $('#recordingText').text('Paused');
+                $('#recordingText').text(_this._translate('exp-lookit-observation.Paused'));
                 _this.destroyRecorder();
                 _this.setupRecorder(_this.$(_this.get('recorderElement')));
             });
@@ -321,7 +321,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             if (!this.toggling) {
                 this.set('toggling', true);
                 if (!this.get('hidden')) {
-                    $('#webcamToggleButton').html('Show');
+                    $('#webcamToggleButton').html(this._translate('exp-lookit-observation.Show'));
                     $('#hiddenWebcamMessage').show();
                     $(this.get('recorderElement') + ' div').addClass('exp-lookit-observation-hidevideo');
                     this.set('hidden', true);
@@ -332,7 +332,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                      */
                     this.send('setTimeEvent', 'hideWebcam');
                 } else {
-                    $('#webcamToggleButton').html('Hide');
+                    $('#webcamToggleButton').html(this._translate('exp-lookit-observation.Hide'));
                     $('#hiddenWebcamMessage').hide();
                     $(this.get('recorderElement') + ' div').removeClass('exp-lookit-observation-hidevideo');
                     this.set('hidden', false);

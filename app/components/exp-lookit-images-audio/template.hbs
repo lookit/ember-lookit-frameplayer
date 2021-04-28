@@ -9,7 +9,7 @@
 
     <div id="image-area" class="{{if noStoryControls "image-area-no-controls"}} {{if (and noStoryControls maximizeDisplay) "image-area-fullscreen"}}" >
         {{#if startSessionRecording}}
-            <p id="waitForVideo"> establishing video connection <br> please wait... </p>
+            <p id="waitForVideo"> {{ t "establishing video connection" }} <br> {{ t "please wait" }}... </p>
         {{/if}}
 
         {{#each images_parsed as |image|}}
@@ -55,12 +55,12 @@
                 <div class="button-container left">
                     {{#if showPreviousButton}}
                         <button type="button" id="previousbutton" class="btn btn-primary" {{ action "previous" }} >
-                            <i class="fa fa-arrow-left"></i> Previous
+                            <i class="fa fa-arrow-left"></i> {{ t "Previous" }}
                         </button>
                     {{/if}}
                     {{#if (and showReplayButton audio_parsed)}}
                         <button type="button" id="replaybutton" class="btn btn-primary"  {{ action "replay" }}>
-                            <i class="fa fa-repeat"></i> Replay
+                            <i class="fa fa-repeat"></i> {{ t "Replay" }}
                         </button>
                     {{/if}}
                 </div>
@@ -80,7 +80,7 @@
             {{#unless autoProceed}}
                 <div class="button-container right">
                     <button type="button" id="nextbutton" class="btn btn-success fill" {{ action "finish" }} >
-                        Next <i class="fa fa-arrow-right"></i>
+                        {{ t "Next" }} <i class="fa fa-arrow-right"></i>
                     </button>
                 </div>
             {{/unless}}

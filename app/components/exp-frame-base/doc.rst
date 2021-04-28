@@ -3,12 +3,41 @@
 All frames support...
 ======================
 
-All Lookit frames share some common features. While frame-specific features are described on the pagse for those frames,
+All Lookit frames share some common features. While frame-specific features are described on the pages for those frames,
 like exp-lookit-video, you can also use any of the parameters listed here to customize any frame, and will receive
 the data and events described here.
 
 Parameters
 ------------------
+
+All frames (with the exception of ``exp-lookit-mood-questionnaire``) support basic translation, although availability of
+particular languages is subject to someone having handled translations for that language. If the language you want to
+test in isn't available, you can add it!
+
+.. _translation:
+
+language [String]
+    Language to present this frame in. Standard text, like hard-coded button labels, will be translated if a translation
+    file is available for this language. Default values that you can already customize (e.g, most "Next" button labels)
+    will **not** be translated. Text you supply will also not be translated.
+
+    The value of the "language" field will persist across frames once set, so you can set it once at the start of your
+    study to set the language for all frames.
+
+    Current options are 'en-US' (English, US) and 'nl' (Dutch). To add another language option, please contact Lookit
+    staff. You will need to make a copy of the `English translation file <https://github.com/lookit/ember-lookit-frameplayer/blob/develop/translations/en-us.yaml>`__ and translate the text after the colon
+    on each line, leaving everything else the same. You can see an example `here <https://github.com/lookit/ember-lookit-frameplayer/blob/develop/translations/nl.yaml>`__. There are three special cases:
+
+    * If there's HTML formatting, leave it be (just edit the text). E.g. ``<strong>Private</strong>`` became
+      ``<strong>Privé:</strong>`` in Dutch.
+
+    * If there are values inside  ``{}``, don’t translate them, just use them as placeholders: e.g.,
+      ``private-option-list-with-databrary: de Lookit projectstaf, onderzoekers die werken met {contact} ...``
+
+    * When you see something starting ``{variable_name, select, true {X} other {Y}}``, translate X and Y only. These
+      correspond to what text to show in two different scenarios: when ``variable_name`` is true and when it's false.
+      The primary way we use this is to edit the consent form (template 5+ only) when it's intended to be used by an
+      adult only, rather than parent and child.
 
 There are several parameters that ALL frames accept to allow you to customize the study "flow," which are:
 

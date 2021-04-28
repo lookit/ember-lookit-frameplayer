@@ -1,7 +1,7 @@
 {{! template-lint-disable no-invalid-interactive}}
 {{! template-lint-disable no-html-comments}}
 
-<div class="input-group exp-lookit-video row {{unless autoProceed "cursor-display"}}">
+<div class="input-group exp-lookit-video row {{if (or (not autoProceed) video.controls) "cursor-display"}}">
 
     <!--RECORDER-->
     <div class="row recorder-container video-recorder-hidden">
@@ -11,7 +11,7 @@
 
     <div id="image-area" class={{if maximizeVideoArea "image-area-fs"}} >
         {{#if startSessionRecording}}
-            <p id="waitForVideo"> establishing video connection <br> please wait... </p>
+            <p id="waitForVideo"> {{ t "establishing video connection" }} <br> {{ t "please wait" }}... </p>
         {{/if}}
 
         <!--STIMULI. Keep the test-video outside the if block to allow positioning at start. -->
@@ -28,8 +28,10 @@
                 <video id="player-video"
                        class="test story-image"
                        autoplay="autoplay"
+                       controls={{ if video_parsed.controls "controls" "" }}
+                       onpause={{ action "videoPaused" }}
                        onended={{ action "videoStopped"}}
-                       onplay={{action "videoStarted"}}>
+                       onplay={{ action "videoStarted" }}>
                     {{#each video_parsed.source as |stream|}}
                         <source src={{stream.src}} type={{stream.type}}>
                     {{/each}}
@@ -54,7 +56,7 @@
             {{#unless autoProceed}}
                 <div class="button-container right">
                     <button type="button" id="nextbutton" class="btn btn-success fill" {{ action "finish" }} >
-                        Next <i class="fa fa-arrow-right"></i>
+                        {{ t "Next" }} <i class="fa fa-arrow-right"></i>
                     </button>
                 </div>
             {{/unless}}

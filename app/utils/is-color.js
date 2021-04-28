@@ -18,11 +18,10 @@ const colorSpecToRgbaArray = function(color) {
      * color_convert.to_rgb_array('garbagey')  # [0, 0, 0, 0]
      */
     context.fillStyle = 'rgba(0, 0, 0, 0)';
-    // We're reusing the canvas, so fill it with something predictable
-    context.clearRect(0, 0, 1, 1);
     context.fillStyle = color;
-    context.fillRect(0, 0, 1, 1);
-    return context.getImageData(0, 0, 1, 1).data;
+    // Make the fillRect larger than one pixel needed because colors of borders are sometimes slightly lighter
+    context.fillRect(0, 0, 8, 8);
+    return Uint8ClampedArray.from(context.getImageData(4, 4, 1, 1).data);
 };
 
 // Return either 'black' or 'white' depending on whether background color (RGB(A) array) is dark or light)

@@ -233,24 +233,24 @@ export default Ember.Mixin.create({
 
     /**
      * [Only used if showWaitForUploadMessage and/or showWaitForRecordingMessage are true] Image to display along with
-     * any wait-for-recording or wait-for-upload message. Either waitForWebcamImage or waitForWebcamVideo can be
+     * any wait-for-recording or wait-for-upload message. Either waitForUploadImage or waitForUploadVideo can be
      * specified. This can be either a full URL ('https://...') or just a filename, which will be assumed to be
      * inside ``baseDir/img/`` if this frame otherwise supports use of ``baseDir``.
      * @property {String} waitForWebcamImage
      * @default ''
      */
-    waitForWebcamImage: '',
+    waitForUploadImage: '',
 
     /**
      * [Only used if showWaitForUploadMessage and/or showWaitForRecordingMessage are true] Video to display along with
-     * any wait-for-recording or wait-for-upload message (looping). Either waitForWebcamImage or waitForWebcamVideo can be
+     * any wait-for-recording or wait-for-upload message (looping). Either waitForUploadImage or waitForUploadVideo can be
      * specified. This can be either an array of ``{'src': 'https://...', 'type': '...'}`` objects (e.g. providing both
      * webm and mp4 versions at specified URLS) or a single string relative to ``baseDir/<EXT>/`` if this frame otherwise
      * supports use of ``baseDir``.
      * @property {String} waitForWebcamVideo
      * @default ''
      */
-    waitForWebcamVideo: '',
+    waitForUploadVideo: '',
 
 
     _generateVideoId() {
@@ -350,7 +350,7 @@ export default Ember.Mixin.create({
         const recorder = this.get('recorder');
         if (recorder && recorder.get('recording')) {
             this.send('setTimeEvent', 'stoppingCapture');
-            if (this.get('showWaitForUploadMessage')) {
+            if (this.get('showWaitForUploadMessage') && !this.get('_isPaused')) { // Avoid showing wait-for-upload and paused screens simultaneously, give priority to paused
                 // TODO: consider adding progress bar
                 $( "video audio" ).each(function() {
                     this.pause();
@@ -365,8 +365,7 @@ export default Ember.Mixin.create({
                 $('.video-record-mixin-wait-for-video').css('background-color', colorSpec);
                 $('.video-record-mixin-wait-for-video-text').css('color', textColorForBackground(colorSpecRGBA));
                 $('.video-record-mixin-wait-for-video-text').html(`${expFormat(this.get('waitForUploadMessage'))}`);
-                $('.video-record-mixin-wait-for-video').show();
-
+                this.showWaitForVideoCover();
             }
             return recorder.stop(this.get('maxUploadSeconds') * 1000);
         } else {
@@ -416,6 +415,20 @@ export default Ember.Mixin.create({
         this._super(...arguments);
     },
 
+    showWaitForVideoCover() {
+        $('.video-record-mixin-wait-for-video').show();
+        $('.video-record-mixin-wait-for-video video').each(function() {
+            this.play();
+        });
+    },
+
+    hideWaitForVideoCover() {
+        $('.video-record-mixin-wait-for-video').hide();
+        $('.video-record-mixin-wait-for-video video').each(function() {
+            this.pause();
+        });
+    },
+
     didInsertElement() {
         // Give any active session recorder precedence over individual-frame recording
         if (this.get('sessionRecorder') && this.get('session').get('recordingInProgress') && this.get('doUseCamera')) {
@@ -447,7 +460,7 @@ export default Ember.Mixin.create({
 
                 // Add the video, if any
                 if (this.get('waitForUploadVideo')) {
-                    let $videoElement = $('<video loop autoplay="autoplay" class="video-record-mixin-image"></video>');
+                    let $videoElement = $('<video loop class="video-record-mixin-image"></video>');
                     let videoSources = this.get('waitForUploadVideo_parsed') ? this.get('waitForUploadVideo_parsed') : this.get('waitForUploadVideo');
                     $.each(videoSources, function (idx, source) {
                         $videoElement.append(`<source src=${source.src} type=${source.type}>`);
@@ -464,7 +477,7 @@ export default Ember.Mixin.create({
                 $('div.lookit-frame').append($waitForVideoCover);
 
                 if (this.get('showWaitForRecordingMessage') && this.get('startRecordingAutomatically')) {
-                    $waitForVideoCover.css('display', 'block');
+                    this.showWaitForVideoCover();
                 }
             }
 
@@ -502,7 +515,7 @@ export default Ember.Mixin.create({
             if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
                 this.startRecorder().then(() => {
                     _this.set('recorderReady', false);
-                    $('.video-record-mixin-wait-for-video').hide();
+                    _this.hideWaitForVideoCover();
                     _this.onRecordingStarted();
                 });
             }

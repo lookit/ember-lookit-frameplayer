@@ -17,13 +17,13 @@
         <div class="col-sm-5 col-sm-offset-1">
 
             <button type="button" class="btn btn-default pull-right" id="webcamToggleButton" {{action "toggleWebcamButton"}}>
-                Hide
+                {{ t "exp-lookit-observation.Hide" }}
             </button>
 
 
             <div class="row recorder-container">
                 <div id="recorder" class="recorder col-xs-12">
-                    <div id="hiddenWebcamMessage"> Webcam feed <br>not displayed </div>
+                    <div id="hiddenWebcamMessage"> {{ t "exp-lookit-observation.webcam-feed-not-displayed" htmlSafe=true }}</div>
                     {{#if recordSegmentLength}}
                         <div class="progress" id="progressbar">
                             <div class="progress-bar bg-info progress-bar-striped" role="progressbar" style="width:100%" aria-valuemin="0" aria-valuemax="100" {{!-- template-lint-disable no-inline-styles --}}></div>
@@ -39,7 +39,7 @@
 
                 <span id="recordingStatus">
                     <i class="fa fa-circle text-danger Blink" id="recordingIndicator"></i>
-                    <span id="recordingText"> Recording... </span>
+                    <span id="recordingText"> {{ t "exp-lookit-observation.Recording" }}... </span>
                 </span>
 
 
@@ -47,12 +47,12 @@
                 {{#unless hideControls}}
                     <button type="button" class="btn btn-default pull-right" id="pauseButton" {{action "pause"}}>
                         <i class="fa fa-pause" id="pauseButtonIcon"></i>
-                        <span id="pauseButtonText">Pause</span>
+                        <span id="pauseButtonText">{{t "Pause" }}</span>
                     </button>
 
                     <button type="button" class="btn btn-default pull-right" id="recordButton" {{action "record"}}>
                         <i class="fa fa-play" id="recordButtonIcon"></i>
-                        <span id="recordButtonText">Resume</span>
+                        <span id="recordButtonText">{{ t "Resume" }}</span>
                     </button>
                 {{/unless}}
             </div>
@@ -63,8 +63,8 @@
     <div class="row exp-lookit-observation-controls">
         <div class="col-sm-12 pull-down">
             {{#if showPreviousButton}}
-                <button type="button" lass="btn btn-default pull-left" {{ action "previous" }}>
-                    Previous
+                <button type="button" class="btn btn-default pull-left" {{ action "previous" }}>
+                    {{ t "Previous" }}
                 </button>
             {{/if}}
 

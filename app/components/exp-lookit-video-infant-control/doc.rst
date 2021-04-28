@@ -9,7 +9,7 @@ Infant-controlled version of the :ref:`exp-lookit-video` frame. This works the s
 
 - end the trial by pressing the ``endTrialKey`` key
 - hold down the ``lookawayKey`` (or the mouse button) to indicate that the child is not looking; the trial will automatically end
-  after the lookaway criterion is met. If the 'lookawayTone' is not 'none' a noise is played while the child is looking
+  after the lookaway criterion is met. If a 'lookawayTone' is provided, a noise is played while the child is looking
   away to help the parent know the looking coding is working.
 
 You can disable either of these behaviors by setting the corresponding key to ``''``.
@@ -45,8 +45,8 @@ restarting.
 Examples
 ----------------
 
-This frame will play through a central video of Kim introducing an apple up to five times. Once the child looks away for more
-than 2 s total, as coded by the parent holding down the P key, it will proceed.
+This frame will play through a central video of Kim introducing an apple up to five times. After the first 10 seconds,
+once the child looks away for more than 2 s total, as coded by the parent holding down the P key, it will proceed.
 
 .. code:: javascript
 
@@ -55,9 +55,11 @@ than 2 s total, as coded by the parent holding down the P key, it will proceed.
         "lookawayKey": "p",
         "lookawayType": "total",
         "lookawayThreshold": 2,
-        "endTrialKey": "q",
+        "endTrialKey": "",
         "lookawayTone": "noise",
         "lookawayToneVolume": 0.25,
+        "showLookawayVisualGuide": true,
+        "measurementPeriodDelay": 10,
 
         "audio": {
             "loop": false,

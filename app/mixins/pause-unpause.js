@@ -125,6 +125,20 @@ var pauseUnpauseMixin = Ember.Mixin.create({
         this._togglePauseState(false);
     },
 
+    showPauseCover() {
+        $('.pause-unpause-mixin-cover').show();
+        $('.pause-unpause-mixin-cover video').each(function() {
+            this.play();
+        });
+    },
+
+    hidePauseCover() {
+        $('.pause-unpause-mixin-cover').hide();
+        $('.pause-unpause-mixin-cover video').each(function() {
+            this.pause();
+        });
+    },
+
     _togglePauseState(doPause = null) {
         let _this = this;
         if (doPause == null) {
@@ -133,7 +147,7 @@ var pauseUnpauseMixin = Ember.Mixin.create({
         if (doPause) { // PAUSE (currently unpaused)
             this.set('_isPaused', true);
             $('#pause-text').html(`${expFormat(_this.get('pausingText'))}`);
-            $('div.pause-unpause-mixin-cover').show();
+            this.showPauseCover();
             this.disablePausing();
             this.send('setTimeEvent', 'pauseStudy');
             // Stop any unpause audio
@@ -157,7 +171,9 @@ var pauseUnpauseMixin = Ember.Mixin.create({
                     _this.set('sessionRecordingStopped', true);
                     _this.destroySessionRecorder();
                     if (_this.get('studyPauseCompleted')) {
-                        $('.video-record-mixin-wait-for-video').hide();
+                        if (this.hideWaitForVideoCover) {
+                            this.hideWaitForVideoCover();
+                        }
                         // Change message back from "Pausing..."
                         let pausedText = _this.checkFullscreen() ? _this.get('pausedText') : 'Study paused <br><br> Please return to fullscreen';
                         $('#pause-text').html(`${expFormat(pausedText)}`);
@@ -173,7 +189,9 @@ var pauseUnpauseMixin = Ember.Mixin.create({
                 // In case study pausing stopped recording, now hide any uploading message
                 _this.set('studyPauseCompleted', true);
                 if (_this.get('sessionRecordingStopped')) {
-                    $('.video-record-mixin-wait-for-video').hide();
+                    if (this.hideWaitForVideoCover) {
+                        this.hideWaitForVideoCover();
+                    }
                     // Change message back from "Pausing..."
                     let pausedText = _this.checkFullscreen() ? _this.get('pausedText') : 'Study paused <br><br> Please return to fullscreen';
                     $('#pause-text').html(`${expFormat(pausedText)}`);
@@ -183,7 +201,7 @@ var pauseUnpauseMixin = Ember.Mixin.create({
         }
         else { // UNPAUSE (currently paused)
             this.set('_isPaused', false);
-            // $('div.pause-unpause-mixin-cover').hide();
+            this.hidePauseCover(); // Not strictly necessary since we're going right to another frame
             this.send('setTimeEvent', 'resumeStudy');
             // Stop any pause audio & "rewind"
             if ($('#pause-unpause-mixin-pause-audio').length) {
@@ -303,7 +321,7 @@ var pauseUnpauseMixin = Ember.Mixin.create({
                         $('#pause-text').html(`${expFormat(this.get('pausingText'))}`);
                     }
                 }
-                $('.pause-unpause-mixin-cover').show();
+                this.showPauseCover();
             }
         }
 
@@ -344,7 +362,7 @@ var pauseUnpauseMixin = Ember.Mixin.create({
 
         // Add the video, if any
         if (this.get('pauseVideo')) {
-            let $videoElement = $('<video id="pause-unpause-mixin-pause-image" loop autoplay="autoplay" class="video-record-mixin-image"></video>');
+            let $videoElement = $('<video id="pause-unpause-mixin-pause-image" loop class="video-record-mixin-image"></video>');
             let videoSources = this.get('pauseVideo_parsed') ? this.get('pauseVideo_parsed') : this.get('pauseVideo');
             $.each(videoSources, function (idx, source) {
                 $videoElement.append(`<source src=${source.src} type=${source.type}>`);

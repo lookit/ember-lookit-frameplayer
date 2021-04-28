@@ -11,7 +11,7 @@ Infant-controlled version of the :ref:`exp-lookit-images-audio` frame. This work
 
 - end the trial by pressing the ``endTrialKey`` key
 - hold down the ``lookawayKey`` (or the mouse button) to indicate that the child is not looking; the trial will automatically end
-  after the lookaway criterion is met. If the 'lookawayTone' is not 'none' a noise is played while the child is looking
+  after the lookaway criterion is met. If a 'lookawayTone' is provided, a noise is played while the child is looking
   away to help the parent know the looking coding is working.
 
 You can disable either of these behaviors by setting the corresponding key to ``''``.
@@ -58,6 +58,7 @@ than 2 s total, as coded by the parent holding down the P key, it will proceed.
         "endTrialKey": "q",
         "lookawayTone": "noise",
         "lookawayToneVolume": 0.25,
+        "showLookawayVisualGuide": true,
 
         "images": [
             {
@@ -66,7 +67,10 @@ than 2 s total, as coded by the parent holding down the P key, it will proceed.
                 "position": "fill"
             }
         ],
+
         "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
+        "audioTypes": ["ogg", "mp3"],
+
         "autoProceed": true,
         "doRecording": true,
         "durationSeconds": 30,

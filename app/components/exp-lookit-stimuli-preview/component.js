@@ -52,6 +52,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
             default: true
         },
 
+        requirePreview: {
+            type: 'boolean',
+            default: false
+        },
+
         blocks: {
             type: 'array',
             items: {

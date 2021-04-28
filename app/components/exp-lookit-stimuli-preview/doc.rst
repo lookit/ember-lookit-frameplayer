@@ -49,6 +49,7 @@ Example
         "kind": "exp-lookit-stimuli-preview",
         "doRecording": true,
         "skipButtonText": "Skip preview",
+        "requirePreview": false,
         "previewButtonText": "I'd like to preview the videos",
         "blocks": [
             {
@@ -92,14 +93,6 @@ Example
 Parameters
 ----------------
 
-video [Object | ``{}`` ]
-    Object describing the video to show. It can have the following properties:
-
-    :source: [String or Array]
-        The location of the main video to play. This can be either
-        an array of ``{'src': 'https://...', 'type': '...'}`` objects (e.g., to provide both
-        webm and mp4 versions at specified URLS) or a single string relative to ``baseDir/<EXT>/``.
-
 showPreviousButton [Boolean | ``true``]
     Whether to show a 'previous' button
 
@@ -110,6 +103,9 @@ blocks [Array]
 
 previewButtonText [String | ``'I\'d like to preview the videos'``
     Text on the preview button user clicks to proceed to stimuli/images
+
+requirePreview [Boolean | ``false``]
+    Whether to require previewing the stimuli. If true, no button to skip preview is provided.
 
 skipButtonText [String | ``'Skip preview'``]
     Text to display on the button to skip the next frame

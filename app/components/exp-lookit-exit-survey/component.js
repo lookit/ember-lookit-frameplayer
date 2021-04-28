@@ -4,21 +4,32 @@ import {validator, buildValidations} from 'ember-cp-validations';
 import Ember from 'ember';
 
 import ExpFrameBaseComponent from '../exp-frame-base/component';
-import FullScreen from '../../mixins/full-screen';
+
 
 const Validations = buildValidations({
     birthDate: validator('presence', {
         presence: true,
-        message: 'This field is required'
+        // Translate just this message, avoid installing a different addon for now -
+        // see https://github.com/offirgolan/ember-cp-validations/issues/192
+        message: function() {
+            let intl = this.model.get('parentView').get('intl');
+            return intl.lookup('this-field-is-required');
+        }
     }),
     useOfMedia: validator('presence', {
         presence: true,
-        message: 'This field is required',
+        message: function() {
+            let intl = this.model.get('parentView').get('intl');
+            return intl.lookup('this-field-is-required');
+        },
         disabled: Ember.computed.readOnly('model.withdrawal')
     }),
     databraryShare: validator('presence', {
         presence: true,
-        message: 'This field is required',
+        message:  function() {
+            let intl = this.model.get('parentView').get('intl');
+            return intl.lookup('this-field-is-required');
+        },
         disabled: Ember.computed.readOnly('model.withdrawal')
     })
 });
@@ -27,7 +38,7 @@ const Validations = buildValidations({
 Standard exit survey for Lookit studies: confirm participant birthdate, ask user for video sharing permission level & Databrary sharing, option to withdraw, freeform comments, debriefing/thank you text. Leaves fullscreen mode.
 */
 
-export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
+export default ExpFrameBaseComponent.extend(Validations, {
     layout: layout,
     type: 'exp-lookit-exit-survey',
     frameType: 'EXIT',
@@ -69,6 +80,11 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
             type: 'string',
             default: '',
             description: 'Additional text to display under "Use of video clips and images:", before listing options'
+        },
+        showDatabraryOptions: {
+            type: 'boolean',
+            default: true,
+            description: 'Whether to show the Databrary sharing option question - please only disable if required by IRB'
         }
     },
     frameSchemaRequired: ['debriefing'],
@@ -159,5 +175,8 @@ export default ExpFrameBaseComponent.extend(Validations, FullScreen, {
         // Alternate study ID method
         // let studyID = window.location.href.split('/').filter(piece => !!piece).slice(-2)[0];
         this.set('sharelink', 'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flookit.mit.edu%2Fstudies%2F' + this.get('experiment').get('id') + '%2F');
+        if (!this.get('showDatabraryOptions')) {
+            this.set('databraryShare', 'NA');
+        }
     }
 });

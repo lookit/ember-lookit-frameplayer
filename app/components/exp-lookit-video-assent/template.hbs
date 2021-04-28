@@ -3,13 +3,13 @@
 
 <div class="row exp-lookit-video-assent">
     <div class="col-xs-12 assent-intro">
-        <p class="video-assent-title">Child assent to participate</p>
+        <p class="video-assent-title">{{t "exp-lookit-video-assent.header" }}</p>
         <div>
             <p>
-                For studies with older children, we need to check that both the parent <em>and</em> the child agree to participate. <strong>This page is for the child!</strong>
+                {{ t "exp-lookit-video-assent.explanation-1" htmlSafe=true }}
             </p>
             <p>
-                Parents, please help your child read and navigate if needed.
+                {{ t "exp-lookit-video-assent.explanation-2" }}
             </p>
         </div>
         <hr>
@@ -20,10 +20,10 @@
         <div class="row video-assent-numbered-direction">
             <div class="col-xs-11">
                 <span class="video-assent-number">1.</span>
-                <span class="video-assent-direction">Learn about the study:</span>
+                <span class="video-assent-direction">{{ t "exp-lookit-video-assent.step-1" }}:</span>
             </div>
             <div class="col-xs-1">
-                <button type="button" id="downloadbutton" class="btn btn-outline-dark right" {{action "download"}}>( <i class="fa fa-download"></i> Download)</button>
+                <button type="button" id="downloadbutton" class="btn btn-outline-dark right" {{action "download"}}>( <i class="fa fa-download"></i> {{ t "exp-lookit-video-assent.Download" }})</button>
             </div>
         </div>
 
@@ -107,23 +107,23 @@
 
         <div class="video-assent-numbered-direction">
             <span class="video-assent-number">2.</span>
-            <span class="video-assent-direction">Then decide: </span>
+            <span class="video-assent-direction">{{ t "exp-lookit-video-assent.step-2" }}: </span>
         </div>
 
         <div class="well video-assent-prompt">
             <div class="question"> {{participationQuestion}} </div>
-            <button type="button" id="yesbutton" {{action "selectNo"}} disabled={{unless readAllPages "disabled"}} class="btn btn-danger pull-left {{if (eq childResponse "No") "active"}}">No <i class="fa fa-thumbs-down"></i></button>
-            <button type="button" id="nobutton"  {{action "selectYes"}} disabled={{unless readAllPages "disabled"}} class="btn btn-success pull-right {{if (eq childResponse "Yes") "active"}}"><i class="fa fa-thumbs-up"></i> Yes</button>
+            <button type="button" id="yesbutton" {{action "selectNo"}} disabled={{unless readAllPages "disabled"}} class="btn btn-danger pull-left {{if (eq childResponse "No") "active"}}">{{t "No"}} <i class="fa fa-thumbs-down"></i></button>
+            <button type="button" id="nobutton"  {{action "selectYes"}} disabled={{unless readAllPages "disabled"}} class="btn btn-success pull-right {{if (eq childResponse "Yes") "active"}}"><i class="fa fa-thumbs-up"></i> {{t "Yes" }}</button>
             <div> </div>
         </div>
 
         {{#if (eq childResponse "No")}}
             <div class="no-assent-warning">
-                You have chosen not to participate. Pressing 'submit' will take you to the main Lookit page.
+                {{ t "exp-lookit-video-assent.chose-not-to-participate" }}
             </div>
         {{/if}}
 
-        <button type="button" id="submitbutton" disabled={{unless childResponse "disabled"}} class="btn btn-success pull-right" {{ action "submit" }}>submit <i class="fa fa-caret-right"></i></button>
+        <button type="button" id="submitbutton" disabled={{unless childResponse "disabled"}} class="btn btn-success pull-right" {{ action "submit" }}>{{ t "Submit" }} <i class="fa fa-caret-right"></i></button>
 
 
     </div>
@@ -136,11 +136,11 @@
                 {{#if currentPage.altText}}
                     [{{currentPage.altText}}]
                 {{else}}
-                    [Image]
+                    [{{ t "exp-lookit-video-assent.Image" }}]
                 {{/if}}
             {{else}}
                 {{#if currentPage.sources}}
-                    [Video]
+                    [{{ t "exp-lookit-video-assent.Video" }}]
                 {{/if}}
             {{/if}}
 
