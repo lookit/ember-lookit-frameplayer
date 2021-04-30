@@ -109,7 +109,12 @@
                             @prompt_only_adults={{prompt_only_adults}}
                     />
 
+                {{else if (eq template "video_release")}}
+
+                    <ConsentTemplateRelease/>
+
                 {{/if}}
+
 
             </div>
         </div>
@@ -148,7 +153,7 @@
         </div>
 
         <div class="well video-consent-prompt">
-            <span class="breaklines exp-lookit-video-consent-prompt">"{{#if prompt_only_adults}}{{ t "exp-lookit-video-consent.prompt-adult-only" }}{{else}}{{ t "exp-lookit-video-consent.prompt" }}{{/if}}"</span>
+            <span class="breaklines exp-lookit-video-consent-prompt">"{{#if (eq template "video_release")}}This video indicates my permission for the Lookit project at Massachusetts Institute of Technology (MIT) to use audio-video footage of me, (Name) ______________, recorded during this interview on (Date) __ / __ / ____. ]{{else}}{{#if prompt_only_adults}}{{ t "exp-lookit-video-consent.prompt-adult-only" }}{{else}}{{ t "exp-lookit-video-consent.prompt" }}{{/if}}{{/if}}"</span>
         </div>
 
         {{#if prompt_all_adults}}

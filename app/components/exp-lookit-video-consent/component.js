@@ -8,30 +8,6 @@ let {
     $
 } = Em;
 
-/**
- * @module exp-player
- * @submodule frames
- */
-
-/*
-Video consent frame for Lookit studies, with consent document displayed at left and instructions to start recording, read a statement out loud, and send. A standard consent
-document is displayed, with additional study-specific information provided by the researcher, in accordance with the Lookit terms of use.
-
-Researchers can select from the following named templates:
-
-* `consent_001`: Original Lookit consent document (2019)
-
-* `consent_002`: Added optional GDPR section and research subject rights statement
-
-* `consent_003`: Same as consent_002 except that the 'Payment' section is renamed 'Benefits, risks, and payment' for institutions that prefer that
-
-* `consent_004`: Same as consent_003 except that sentences in 'Data collection and webcam recording' are rearranged to make it clearer what happens if you withdraw video data, and the prompt says to read "out loud (or in ASL)" instead of just "out loud" for accessibility.
-
-Important: To look up the exact text of each consent template for your IRB protocol, and to understand the context for each piece of text to be inserted, please see https://github.com/lookit/research-resources/tree/master/Legal
-
-The consent document can be downloaded as PDF document by participant.
-
-*/
 
 export default ExpFrameBaseComponent.extend(VideoRecord, {
     layout: layout,
