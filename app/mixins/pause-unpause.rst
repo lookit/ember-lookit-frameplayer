@@ -135,6 +135,9 @@ pausedText [String | ``'Study paused \n\n Press space to resume'``]
 pausingText [String | ``'Study pausing... \n\n Please wait'``]
     Text to display while the study is pausing (e.g., while webcam video is uploading).
 
+fullscreenPausedText [String | ``'Study paused \n\n Please return to fullscreen'``]
+    Text to display when study is paused because it's not in fullscreen mode
+
 pauseColor [String | ``'white'``]
      Background color of pause screen. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
      for acceptable syntax: can use either color names ('blue', 'red', 'green', etc.), or
