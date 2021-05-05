@@ -10,12 +10,17 @@ $exp-lookit-preferential-looking-AR: 2;
 $exp-lookit-preferential-looking-picwidth: 30;
 $exp-lookit-preferential-looking-picmargin: 2;
 
-// Display cursor even though we're in FS mode, to allow clicking on buttons and images
+
 .exp-lookit-image-audio, .exp-lookit-image-audio *
 {
     margin:0;
     padding:0;
-    cursor: auto !important;
+}
+
+// Display cursor even though we're in FS mode, to allow clicking on buttons and images
+.exp-lookit-image-audio.cursor-display, .exp-lookit-image-audio.cursor-display *
+{
+  cursor: auto !important;
 }
 
 // Pieces not used yet, for the preferential looking sections
