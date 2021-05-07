@@ -37,7 +37,7 @@
     "ember-js-pdf": "^0.4.2",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "font-awesome": "~4.7.0",
-    "handlebars": "^4.3.0",
+    "handlebars": "^4.7.7",
     "lodash": "~4.17.19",
     "node-sass": "^4.14.1"
   },
