@@ -7057,10 +7057,10 @@ ember-inflector@^3.0.0:
   dependencies:
     ember-cli-babel "^6.6.0"
 
-ember-intl@^5.5.1:
-  version "5.5.1"
-  resolved "https://registry.yarnpkg.com/ember-intl/-/ember-intl-5.5.1.tgz#a6c951ae1a87791bca9f0028d20521d2cb583ccf"
-  integrity sha512-RK8HuJmwZFMduZB2kSYqwB41NBgNJP8bwtiEVVXI0YyWLZ33R+jpHtjwP1YJZ6fTXtJaEcOptXoEGt5IjKfJvg==
+ember-intl@^5.6.2:
+  version "5.6.2"
+  resolved "https://registry.yarnpkg.com/ember-intl/-/ember-intl-5.6.2.tgz#ece4820923dfda033c279b7e3920cbbc8b6bde07"
+  integrity sha512-+FfI2udVbnEzueompcRb3ytBWhfnBfVVjAwnCuxwqIyS9ti8lK0ZiYHa5bquNPHjjfBzfFl4x5TlVgDNaCnccg==
   dependencies:
     broccoli-caching-writer "^3.0.3"
     broccoli-funnel "^3.0.3"

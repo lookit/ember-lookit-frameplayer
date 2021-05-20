@@ -24,7 +24,9 @@ language [String]
     The value of the "language" field will persist across frames once set, so you can set it once at the start of your
     study to set the language for all frames.
 
-    Current options are 'en-US' (English, US) and 'nl' (Dutch). To add another language option, please contact Lookit
+    Current options are 'en-US' (English, US), 'nl' (Dutch), and 'it' (Italian).
+
+    To add another language option, please contact Lookit
     staff. You will need to make a copy of the `English translation file <https://github.com/lookit/ember-lookit-frameplayer/blob/develop/translations/en-us.yaml>`__ and translate the text after the colon
     on each line, leaving everything else the same. You can see an example `here <https://github.com/lookit/ember-lookit-frameplayer/blob/develop/translations/nl.yaml>`__. There are three special cases:
 
