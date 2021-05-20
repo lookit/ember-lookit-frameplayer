@@ -108,6 +108,9 @@ showShareButton [Boolean | ``true``]
 showDatabraryOptions [Boolean | ``true``]
     Whether to show the question about Databrary sharing. Please do not change this unless your IRB requires it and you have checked with Lookit staff - in general all studies should ask for permission to share on Databrary, even if you do not have active plans to do so or even an account on Databrary.
 
+includeWithdrawalExample [Boolean | ``true``]
+    Whether to include the parenthetical example of why you might withdraw video data. Please only disable if required by your IRB and you have checked with Lookit staff.
+
 additionalVideoPrivacyText [String]
     Optional additional text to display under the header "Use of video clips and images", above the options. This may
     be used, for example, if you have separately asked for permission to use the videos as stimuli for other parents and want

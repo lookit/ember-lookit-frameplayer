@@ -85,6 +85,11 @@ export default ExpFrameBaseComponent.extend(Validations, {
             type: 'boolean',
             default: true,
             description: 'Whether to show the Databrary sharing option question - please only disable if required by IRB'
+        },
+        includeWithdrawalExample: {
+            type: 'boolean',
+            default: true,
+            description: 'Whether to include the parenthetical example of why you might withdraw video data - please only disable if required by IRB'
         }
     },
     frameSchemaRequired: ['debriefing'],
