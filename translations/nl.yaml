@@ -196,5 +196,5 @@ exp-video-config:
   additional-troubleshooting-contact:  Als u iets niet  begrijpt, is het onze  schuld. Laat het ons weten zodat we de site kunnen verbeteren! E-mail ons op lookit-tech@mit.edu met een korte beschrijving van wat er gebeurd is. Vermeld de webbrowser die u gebruikt (Firefox, Chrome, IE, Safari, etc.), welke stappen u heeft geprobeerd en uw sessie-ID
 
 exp-video-config-quality:
-  checkbox-warning: Vink het vakje "{completeItemText}" onder elke instructie aan voordat u verder gaat.
+  checkbox-warning: Vink het vakje "{completedItemText}" onder elke instructie aan voordat u verder gaat.
   recording-warning: Probeer een video op te nemen en te bekijken voordat u verder gaat.
