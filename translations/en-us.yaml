@@ -96,7 +96,7 @@ consent-template-2:
     gdpr-2: Your personal information will be transferred to the United States. You understand that the data protection and privacy laws of the United States may not offer you the same level of protection as those in your country of origin.
     contact-header: Researcher contact information
     contact-statement-1: This study is run by {name} at {institution}. If you or your child have any questions or concerns about this study, or in the very unlikely event of a research-related injury, please contact {contact}.
-    contact-statement-2: If you or your child have any questions or concerns about the Lookit platform, please contact Kim Scott at kimscott@mit.edu or 617 324 4859.
+    contact-statement-2: If you or your child have any questions or concerns about the Lookit platform, please contact Lookit staff at lookit@mit.edu or 617 324 4859.
 
 consent-template-5:
     header: Consent to participate in research
@@ -140,7 +140,7 @@ consent-template-5:
     gdpr-2: Your personal information will be transferred to the United States. The data protection and privacy laws of the United States may not offer you the same level of protection as those in your country of origin.
     contact-header: How to reach us
     contact-statement-1: This study is run by {name} at {institution}. If {only_adult, select, true {you} other {you or your child}} have any questions or concerns about this study, or in the very unlikely event of a research-related injury, please contact {contact}.
-    contact-statement-2:  If {only_adult, select, true {you} other {you or your child}} have any questions or concerns about the Lookit platform, please contact Kim Scott at lookit@mit.edu.
+    contact-statement-2:  If {only_adult, select, true {you} other {you or your child}} have any questions or concerns about the Lookit platform, please contact Lookit staff at lookit@mit.edu.
 
 exp-lookit-observation:
     Hide: Hide
