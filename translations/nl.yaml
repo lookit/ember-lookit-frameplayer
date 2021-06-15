@@ -31,7 +31,7 @@ exp-lookit-exit-survey:
    publicity-option: <strong> Publiciteit:</strong>   Selecteer deze  optie als u het leuk  vindt als uw kind op  de Lookit-website  of in een  nieuwsartikel over  dit onderzoek te  zien is! Uw video kan zowel voor publieke als voor wetenschappelijke en educatieve doeleinden worden gedeeld; hij zal nooit voor commerciële doeleinden worden gebruikt. Gedeelde videoclips kunnen online beschikbaar zijn voor het grote publiek.
    withdrawal-header: Terugtrekking van videogegevens
    withdrawal-details:  Elke video helpt ons, zelfs als er iets mis  is gegaan! Echter, als u toch uw video wilt laten verwijderen{include_example, select, true { (bijvoorbeeld omdat uw echtgenoot het  op  de achtergrond over staatsgeheimen had)} other {}},  zet dan hier  een vinkje om uw videogegevens volledig uit het onderzoek te halen. Alleen uw toestemmingsvideo wordt bewaard en mag alleen worden bekeken door Lookit-projectmedewerkers en onderzoekers die met {contact} aan het onderzoek "{name}" werken; andere video's worden verwijderd zonder te  worden bek eken.
-   feedback-label: Uw feedback
+   feedback-label: Hoe ging het? Heeft u suggesties om het onderzoek te verbeteren?
    withdrawal-confirmation: U heeft ervoor gekozen uw videogegevens uit het onderzoek te halen. Elke video behalve uw toestemmingsopname wordt verwijderd zonder deze te bekijken. Weet u het zeker?
    Withdraw: Intrekken
    facebook-share: Deel deze studie op Facebook!
