@@ -217,6 +217,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             default: false
         },
 
+        private_level_only: {
+            type: 'boolean',
+            default: false,
+            description: 'Whether to describe only the "private" video sharing option (only for consent template 5+)'
+        },
+
         payment: {
             type: 'string',
             description: 'Statement about payment/compensation for participation'
