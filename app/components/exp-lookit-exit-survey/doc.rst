@@ -111,6 +111,9 @@ showDatabraryOptions [Boolean | ``true``]
 includeWithdrawalExample [Boolean | ``true``]
     Whether to include the parenthetical example of why you might withdraw video data. Please only disable if required by your IRB and you have checked with Lookit staff.
 
+privateLevelOnly [Boolean | ``false``]
+    Whether to offer only the "Private" video privacy level option under "Use of video clips and images." Only use this if your IRB has a hard restriction against offering participants the opportunity to share their videos more broadly.
+
 additionalVideoPrivacyText [String]
     Optional additional text to display under the header "Use of video clips and images", above the options. This may
     be used, for example, if you have separately asked for permission to use the videos as stimuli for other parents and want

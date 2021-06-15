@@ -99,7 +99,7 @@ template [String | ``'consent_001'``]
 additional_video_privacy_statement [String]
     [Templates 5+ only] Optional additional text for under header "Who can see our webcam recordings". For cases where researchers ask for other specific permission to share videos, separate from the exit survey, or want to provide more detail or different language about Databrary sharing.
 
-datause
+datause [String]
     Study-specific data use statement (optional). This will follow more general text like: "The research group led by [PIName] at [institution] will have access to video and other data collected during this session. We will also have access to your account profile, demographic survey, and the child profile for the child who is participating, including changes you make in the future to any of this information. We may study your child’s responses in connection with his or her previous responses to this or other studies run by our group, siblings’ responses to this or other studies run by our group, or demographic survey responses." (For exact text, please see specific template.)
 
     You may want to note what measures you will actually be coding for (looking time, facial expressions, parent-child interaction, etc.) and other more specific information about your use of data from this study here. For instance, you would note if you were building a corpus of naturalistic data that may be used to answer a variety of questions (rather than just collecting data for a single planned study).
@@ -113,19 +113,19 @@ gdpr_personal_data [String]
 gdpr_sensitive_data [String]
     List of types of special category information collected, for GDPR section only. Include all that apply: racial or ethnic origin; political opinions; religious or philosophical beliefs; trade union membership; processing of genetic data; biometric data; health data; and/or sex life or sexual orientation information
 
-PIName
+PIName [String]
     Name of PI running this study
 
 include_databrary [Boolean | ``false``]
     [Templates 5+ only] Whether to include a paragraph about Databrary under "Who can see our webcam recordings?".
 
-institution
+institution [String]
     Name of institution running this study (if ambiguous, list institution whose IRB approved the study)'
 
-PIContact
+PIContact [String]
     Contact information for PI or lab in case of participant questions or concerns. This will directly follow the phrase "please contact", so format accordingly: e.g., "the XYZ lab at xyz@science.edu" or "Mary Smith at 123 456 7890".
 
-payment
+payment [String]
     Statement about payment/compensation for participation, including a statement that there are no additional
     benefits anticipated to the participant. E.g., "After you finish the study, we will email you a $5 BabyStore
     gift card within approximately three days. To be eligible for the gift card your child must be in the age
@@ -141,6 +141,12 @@ payment
     change this to something like "What are the risks and benefits if you participate?" and include both here, then
     omit the ``risk_statement``.
 
+private_level_only [Boolean | ``false``]
+    [Templates 5+ only] Whether to describe only the "private" video privacy level under the heading "Who will be
+    able to see your webcam recordings?" Only use this option if your IRB has a hard restriction against even offering
+    participants the option to share their videos more broadly, and in conjunction with the corresponding restriction
+    of options in the exit survey!
+
 procedures
     Brief description of study procedures. For consent templates 001 and 002, this should include any
     risks or a statement that there are no anticipated risks. (For consent template 003, that is included
@@ -151,7 +157,7 @@ procedures
     and sounds make your child smile. We will ask you (the parent) to turn around to avoid influencing
     your child's responses. There are no anticipated risks associated with participating."
 
-purpose
+purpose [String]
     Brief description of purpose of study - 1-2 sentences that describe what you are trying to find out. Language should be as straightforward and accessible as possible! E.g., "Why do babies love cats? This study will help us find out whether babies love cats because of their soft fur or their twitchy tails."
 
 research_rights_statement [String]
