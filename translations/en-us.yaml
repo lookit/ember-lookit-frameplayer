@@ -30,8 +30,8 @@ exp-lookit-exit-survey:
     scientific-option: <strong>Scientific and educational:</strong> Video may be shared for scientific or educational purposes. For example, we might show a video clip in a talk at a scientific conference or an undergraduate class about cognitive development, or include an image or video in a scientific paper. In some circumstances, video or images may be available online, for instance as supplemental material in a scientific paper.
     publicity-option: <strong>Publicity:</strong> Please select this option if you'd be excited about seeing your child featured on the Lookit website or in a news article about this study! Your video may be shared for publicity as well as scientific and educational purposes; it will never be used for commercial purposes. Video clips shared may be available online to the general public.
     withdrawal-header: Withdrawal of video data
-    withdrawal-details: Every video helps us, even if something went wrong! However, if you need your video deleted (your spouse was discussing state secrets in the background, etc.), check here to completely withdraw your video data from this session from the study. Only your consent video will be retained and it may only be viewed by Lookit project staff and researchers working with {contact} on the study "{name}"; other video will be deleted without viewing.
-    feedback-label: Your feedback
+    withdrawal-details: Every video helps us, even if something went wrong! However, if you need your video deleted{include_example, select, true { (your spouse was discussing state secrets in the background, etc.)} other {}}, check here to completely withdraw your video data from this session from the study. Only your consent video will be retained and it may only be viewed by Lookit project staff and researchers working with {contact} on the study "{name}"; other video will be deleted without viewing.
+    feedback-label: How did it go? Do you have any suggestions for improving the study?
     withdrawal-confirmation: You have chosen to withdraw your video data from the study. Any video beyond your consent recording will be deleted without viewing. Are you sure?
     Withdraw: Withdraw
     facebook-share: Share this study on Facebook!
@@ -80,7 +80,7 @@ consent-template-2:
     participation-content: You and your child are free to choose whether to be in this study. If you and your child choose to participate, it's okay to stop at any point during the session. Please pause or stop the session if your child becomes very fussy or does not want to participate! If this is a study with multiple sessions, it's okay not to complete all the sessions.
     payment-header: Payment
     data-collection-header: Data collection and webcam recording
-    data-collection-1: During the session, you and your child will be recorded via your computer's webcam and microphone. Video recordings and other data you enter are sent securely to the Lookit platform and stored indefinitely. At the end of the session, you will be prompted to choose a privacy level for your webcam recordings. You will have the option to withdraw your video data at this point. You can view your past recordings on Lookit under "Studies" -> "Your past studies" at any time.
+    data-collection-1: During the session, you and your child will be recorded via your computer's webcam and microphone. Video recordings and other data you enter are sent securely to the Lookit platform and stored indefinitely. At the end of the session, you will be prompted to choose a privacy level for your webcam recordings. You will have the option to withdraw your video data at this point. You can view your past recordings on Lookit at any time.
     data-collection-2: Data is stored securely on Lookit servers and by researchers. However, there is always a small risk that data transmitted over the internet may be intercepted or that the security of stored data may be compromised.
     data-collection-3: No video clips will be published or shared unless you allow this when selecting a privacy level. If we do not receive a consent recording (the video you'll make to the right) for this session and cannot verify that you agreed to participate, no other video from your session will be viewed.
     data-use-researchers-header: Use of data by study researchers
@@ -96,7 +96,7 @@ consent-template-2:
     gdpr-2: Your personal information will be transferred to the United States. You understand that the data protection and privacy laws of the United States may not offer you the same level of protection as those in your country of origin.
     contact-header: Researcher contact information
     contact-statement-1: This study is run by {name} at {institution}. If you or your child have any questions or concerns about this study, or in the very unlikely event of a research-related injury, please contact {contact}.
-    contact-statement-2: If you or your child have any questions or concerns about the Lookit platform, please contact Kim Scott at kimscott@mit.edu or 617 324 4859.
+    contact-statement-2: If you or your child have any questions or concerns about the Lookit platform, please contact Lookit staff at lookit@mit.edu or 617 324 4859.
 
 consent-template-5:
     header: Consent to participate in research
@@ -110,7 +110,7 @@ consent-template-5:
     benefits-header: What are the benefits?
     data-collection-header: Data collection and webcam recording
     data-collection-1: During the session, you {only_adult, select, true {} other {and your child}} will be recorded by your computer's webcam and microphone.
-    data-collection-2: These webcam recordings, and other data like answers you enter in forms, are sent securely to the Lookit platform. You can view your past recordings on Lookit under "Studies" -> "Your past studies" at any time.
+    data-collection-2: These webcam recordings, and other data like answers you enter in forms, are sent securely to the Lookit platform. You can view your past recordings on Lookit at any time.
     data-collection-3: Data are stored securely on Lookit servers and by researchers, and are only shared as described in this document. However, there is always a small risk that data transmitted over the internet may be intercepted or that the security of stored data may be compromised.
     video-privacy-header: Who will be able to see your webcam recordings?
     video-privacy-consent: We will first check that you really agreed to participate by watching your consent recording. If we cannot confirm that you agreed to participate, no one will view any other recordings from this session.
@@ -122,6 +122,7 @@ consent-template-5:
     video-privacy-scientific-description: Researchers with access to your recordings may share them for scientific or educational purposes, for instance showing an example in a class or during a scientific conference.
     video-privacy-publicity-description: Researchers with access to your recordings may also share them for publicity, for instance in a news segment about the research or to recruit more participants.
     video-privacy-withdraw: You will also have the option to withdraw your recordings. If you do, only your consent recording will be kept and all other recordings will be deleted.
+    video-privacy-withdraw-private-only: At the end of the session, you will have the option to withdraw your recordings. If you do, only your consent recording will be kept and all other recordings will be deleted.
     databrary: Separately, you can opt in to give access to your recordings and other data to authorized users of the secure data library Databrary. This means that other researchers besides the ones running this study will have access to your recordings, and may be able to use them to answer other questions about child development. Data sharing can lead to faster progress in research on human development and behavior. Authorized Databrary researchers have to agree to maintain confidentiality and not use the data for commercial purposes. If you have any questions about this data-sharing library, visit <a href="https://nyu.databrary.org/" target="_blank" rel="noopener">Databrary</a> or email ethics@databrary.org.
     data-use-researchers-header: How we use your data
     data-use-researchers-content-1: If you participate in this study, we (the research group led by {name} at {institution}) will have access to
@@ -140,7 +141,7 @@ consent-template-5:
     gdpr-2: Your personal information will be transferred to the United States. The data protection and privacy laws of the United States may not offer you the same level of protection as those in your country of origin.
     contact-header: How to reach us
     contact-statement-1: This study is run by {name} at {institution}. If {only_adult, select, true {you} other {you or your child}} have any questions or concerns about this study, or in the very unlikely event of a research-related injury, please contact {contact}.
-    contact-statement-2:  If {only_adult, select, true {you} other {you or your child}} have any questions or concerns about the Lookit platform, please contact Kim Scott at lookit@mit.edu.
+    contact-statement-2:  If {only_adult, select, true {you} other {you or your child}} have any questions or concerns about the Lookit platform, please contact Lookit staff at lookit@mit.edu.
 
 exp-lookit-observation:
     Hide: Hide

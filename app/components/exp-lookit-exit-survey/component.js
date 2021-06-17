@@ -81,10 +81,20 @@ export default ExpFrameBaseComponent.extend(Validations, {
             default: '',
             description: 'Additional text to display under "Use of video clips and images:", before listing options'
         },
+        privateLevelOnly: {
+            type: 'boolean',
+            default: false,
+            description: 'Whether to restrict privacy level "choices" to the "private" option'
+        },
         showDatabraryOptions: {
             type: 'boolean',
             default: true,
             description: 'Whether to show the Databrary sharing option question - please only disable if required by IRB'
+        },
+        includeWithdrawalExample: {
+            type: 'boolean',
+            default: true,
+            description: 'Whether to include the parenthetical example of why you might withdraw video data - please only disable if required by IRB'
         }
     },
     frameSchemaRequired: ['debriefing'],
@@ -177,6 +187,9 @@ export default ExpFrameBaseComponent.extend(Validations, {
         this.set('sharelink', 'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flookit.mit.edu%2Fstudies%2F' + this.get('experiment').get('id') + '%2F');
         if (!this.get('showDatabraryOptions')) {
             this.set('databraryShare', 'NA');
+        }
+        if (this.get('privateLevelOnly')) {
+            this.set('useOfMedia', 'private');
         }
     }
 });

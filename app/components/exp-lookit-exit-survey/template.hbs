@@ -75,22 +75,24 @@
                             {{/if}}
                         </label>
                     </div>
-                    <div class="radio">
-                        <label>
-                            <span class="radio-holder">
-                                {{radio-button value="scientific" checked=useOfMedia name="useOfMedia"}}
-                            </span>
-                            {{ t "exp-lookit-exit-survey.scientific-option" htmlSafe=true}}
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <span class="radio-holder">
-                                {{radio-button value="public" checked=useOfMedia name="useOfMedia"}}
-                            </span>
-                            {{ t "exp-lookit-exit-survey.publicity-option" htmlSafe=true }}
-                        </label>
-                    </div>
+                    {{#unless privateLevelOnly}}
+                        <div class="radio">
+                            <label>
+                                <span class="radio-holder">
+                                    {{radio-button value="scientific" checked=useOfMedia name="useOfMedia"}}
+                                </span>
+                                {{ t "exp-lookit-exit-survey.scientific-option" htmlSafe=true}}
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <span class="radio-holder">
+                                    {{radio-button value="public" checked=useOfMedia name="useOfMedia"}}
+                                </span>
+                                {{ t "exp-lookit-exit-survey.publicity-option" htmlSafe=true }}
+                            </label>
+                        </div>
+                    {{/unless}}
                     {{#if showValidation}}
                         <p class="text text-danger">
                             {{validations.attrs.useOfMedia.messages}}
@@ -102,12 +104,12 @@
                 <label>
                     {{input type="checkbox" checked=withdrawal name="withdrawal"}}
                     <span class="extra-info">
-                        {{ t "exp-lookit-exit-survey.withdrawal-details" name=experiment.name contact=experiment.contactInfo }}
+                        {{ t "exp-lookit-exit-survey.withdrawal-details" name=experiment.name contact=experiment.contactInfo include_example=includeWithdrawalExample}}
                     </span>
                 </label>
                 <hr>
                 <div class="form-group">
-                    <label>{{ t "exp-lookit-exit-survey.feedback-label" }}:</label><br>
+                    <label>{{ t "exp-lookit-exit-survey.feedback-label" }}</label><br>
                     {{textarea class="input-text" value=feedback name="feedback" rows=3 cols=40}}
                 </div>
                 <hr>
