@@ -62,6 +62,7 @@ The documentation will tell you how each frame works, what data it collects, and
    components/exp-lookit-stimuli-preview/doc.rst
    components/exp-lookit-stop-recording/doc.rst
    components/exp-lookit-survey/doc.rst
+   components/exp-lookit-survey-consent/doc.rst
    components/exp-lookit-text/doc.rst
    components/exp-lookit-video/doc.rst
    components/exp-lookit-video-assent/doc.rst

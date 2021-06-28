@@ -131,6 +131,7 @@ The examples below show a variety of usages.
             "doRecording": true,
             "durationSeconds": 8,
             "maximizeDisplay": true,
+            "showCursor": false,
 
             "pageColor": "black",
             "backgroundColor": "black"
@@ -186,7 +187,8 @@ The examples below show a variety of usages.
                 "text": "Some explanatory text for parents",
                 "title": "For parents"
             },
-            "showProgressBar": true
+            "showProgressBar": true,
+            "showCursor": false
         }
 
 4. Image plus audio, with 'next' button to move on
@@ -510,6 +512,10 @@ pageColor [String | ``'white'``]
     `CSS specs <https://developer.mozilla.org/en-US/docs/Web/CSS/color_value>`__
     for acceptable syntax: can use color names ('blue', 'red', 'green', etc.), or
     rgb hex values (e.g. '#800080' - include the '#')
+
+showCursor [Boolean | ``true``]
+    Whether to show the mouse cursor during this frame. By default it is shown to allow clicking on buttons or images,
+    but it can be hidden for looking studies where it might be a distraction.
 
 choiceAllowed [Boolean | ``false``]
     Whether the user may click on images to select them.

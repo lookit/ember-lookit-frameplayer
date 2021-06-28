@@ -91,6 +91,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
             default: true,
             description: 'Whether to show a replay button (used only if showing Next button)'
         },
+        showCursor: {
+            type: 'boolean',
+            default: true,
+            description: 'Whether to show the mouse cursor'
+        },
         maximizeDisplay: {
             type: 'boolean',
             default: false,
