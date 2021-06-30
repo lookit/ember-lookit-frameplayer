@@ -140,7 +140,7 @@ consent-template-5:
     gdpr-sensitive: Inoltre, raccoglieremo "dati personali particolari", le tue informazioni personali sensibili
     gdpr-2: Le tue informazioni personali verranno trasferite negli Stati Uniti. Tieni presente che le leggi sulla protezione dei dati e sulla privacy degli Stati Uniti potrebbero non offrirti lo stesso livello di protezione di quelle del tuo paese di origine.
     contact-header: Come contattarci
-    contact-statement-1: Questo studio è condotto da {name} presso {institution}. Se {only_adult, select, true {hai} other {tu o tu@ figli@ avete}} domande o preoccupazioni riguardo a questo studio, o nell'improbabile caso di problematiche correlate alla ricerca, contatta {contact}.
+    contact-statement-1: Questo studio è condotto da {name} presso {institution}. Se {only_adult, select, true {hai} other {tu o tu@ figli@ avete}} domande o preoccupazioni riguardo a questo studio, {omit_injury, select, true {} other {o nell'improbabile caso di problematiche correlate alla ricerca,}} contatta {contact}.
     contact-statement-2:  Se {only_adult, select, true {hai} other {tu o tu@ figli@ avete}} domande o preoccupazioni riguardo alla piattaforma Lookit, contatta Kim Scott a lookit@mit.edu.
 
 exp-lookit-observation:

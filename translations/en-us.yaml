@@ -140,7 +140,7 @@ consent-template-5:
     gdpr-sensitive: In addition, we will collect special category data, your personal information that is especially sensitive
     gdpr-2: Your personal information will be transferred to the United States. The data protection and privacy laws of the United States may not offer you the same level of protection as those in your country of origin.
     contact-header: How to reach us
-    contact-statement-1: This study is run by {name} at {institution}. If {only_adult, select, true {you} other {you or your child}} have any questions or concerns about this study, or in the very unlikely event of a research-related injury, please contact {contact}.
+    contact-statement-1: This study is run by {name} at {institution}. If {only_adult, select, true {you} other {you or your child}} have any questions or concerns about this study, {omit_injury, select, true {} other {or in the very unlikely event of a research-related injury,}} please contact {contact}.
     contact-statement-2:  If {only_adult, select, true {you} other {you or your child}} have any questions or concerns about the Lookit platform, please contact Lookit staff at lookit@mit.edu.
 
 exp-lookit-observation:

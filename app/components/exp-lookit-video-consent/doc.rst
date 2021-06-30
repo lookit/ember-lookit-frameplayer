@@ -219,6 +219,10 @@ prompt_only_adults [Boolean | ``false``]
     [Templates 5+ only] Whether to prompt only the adult for consent for themselves to participate, rather than also referencing a child.
     This is for occasional studies running an adult comparison group.
 
+omit_injury_phrase [Boolean | ``false``]
+    [Templates 5+ only] Whether to omit the phrase "or in the very unlikely event of a research-related injury" from
+    the contact section. (This was required by the Northwestern IRB.)
+
 
 Data collected
 ----------------

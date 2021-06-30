@@ -140,7 +140,7 @@ consent-template-5:
   gdpr-sensitive: Bovendien zullen we speciale categoriegegevens verzamelen, uw persoonlijke gegevens die bijzonder gevoelig zijn
   gdpr-2: Uw persoonlijke gegevens worden overgebracht naar de Verenigde Staten. De gegevensbeschermings- en privacywetten van de Verenigde Staten bieden u mogelijk niet hetzelfde beschermingsniveau als die in uw land van herkomst.
   contact-header: Hoe bereikt u ons
-  contact-statement-1: Dit onderzoek wordt uitgevoerd door {name} bij {institution}. Als u of uw kind vragen of opmerkingen hebben over dit onderzoek, of in het zeer onwaarschijnlijke geval van een onderzoeksgerelateerd letsel, neem dan contact op met {contact}.
+  contact-statement-1: Dit onderzoek wordt uitgevoerd door {name} bij {institution}. Als u of uw kind vragen of opmerkingen hebben over dit onderzoek, {omit_injury, select, true {} other {of in het zeer onwaarschijnlijke geval van een onderzoeksgerelateerd letsel,}} neem dan contact op met {contact}.
   contact-statement-2: Als u of uw kind vragen of opmerkingen heeft over het Lookit-platform, neem dan contact op met Kim Scott via lookit@mit.edu.
 
 exp-lookit-observation:
