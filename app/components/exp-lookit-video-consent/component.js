@@ -311,6 +311,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             default: ''
         },
 
+        omit_injury_phrase: {
+            type: 'boolean',
+            description: 'Whether to omit the phrase "or in the very unlikely event of a research-related injury" from the contact section',
+            default: false
+        },
+
         benefits_header: {
             type: 'string',
             description: 'Custom header for the section on benefits & compensation',
