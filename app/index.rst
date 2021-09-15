@@ -9,8 +9,7 @@ together the study protocol you have in mind. To the left you can find informati
 Specifying your study protocol
 -------------------------------
 
-There are some features that are common to all frames, like being able to set a ``generateProperties`` function to
-adjust parameters on-the-fly based on what the child has done so far:
+The basics of how to structure either a JSON document or a Javascript function that describes your study protocol.
 
 .. toctree::
     :maxdepth: 2
@@ -25,7 +24,7 @@ Features common to all frames
 ------------------------------
 
 There are some features that are common to all frames, like being able to set a ``generateProperties`` function to
-adjust parameters on-the-fly based on what the child has done so far:
+adjust parameters on-the-fly based on what the child has done so far.
 
 .. toctree::
     :maxdepth: 2
