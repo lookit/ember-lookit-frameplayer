@@ -1,0 +1,201 @@
+No: No
+Yes: Si
+Next: Avanti
+Previous: Indietro
+Replay: Riproduci di nuovo
+Pause: Pausa
+Resume: Ricomincia
+Continue: Continua
+Cancel: Annulla
+Exit: Esci
+Submit: Invia
+Really exit study: Confermi "interrompi lo studio"? <br> Fai clic su Esci per interrompere subito lo studio e selezionare un livello di privacy per i tuoi video.
+establishing video connection: connessione video in corso
+please wait: attendere prego
+uploading video: caricamento video
+return to fullscreen: torna alla modalità schermo intero
+please wait, setting up: attendere prego, configurazione in corso
+Reload webcam: Ricarica webcam
+this-field-is-required: Questo campo e' obbligatorio.
+
+exp-lookit-exit-survey:
+    confirm-birthdate: Conferma la data di nascita di tu@ figli@
+    why-birthdate: Assicurati che non ci siano errori di battitura durante la registrazione e di non aver selezionato accidentalmente un bambin@ diverso all'inizio dello studio.
+    q-databrary: Desideri condividere il tuo video e altri dati di questa sessione con gli utenti autorizzati della libreria di dati protetti Databrary?
+    databrary-info: Solo i ricercatori autorizzati avranno accesso alle informazioni nella libreria Databrary. I ricercatori autorizzati di Databrary sono vincolati a mantenere la riservatezza e a non utilizzare le informazioni per scopi commerciali. La condivisione dei dati farà avanzare più rapidamente la ricerca sullo sviluppo e sul comportamento umano. Se hai domande sulla libreria Databrary e sulla condivisione dei dati, visita <a href="https://nyu.databrary.org/" target="_blank" rel="noopener noreferrer">Databrary</a> o invia un'email a ethics@databrary.org.
+    acceptable-use-header: Utilizzo delle video clip e immagini
+    private-option-part-1: <strong>Privato:</strong> Il video può essere visualizzato solo dai ricercatori autorizzati
+    private-option-list-with-databrary: Lo staff della piattaforma Lookit, i ricercatori che lavorano con {contact} allo studio "{name}" e gli utenti autorizzati di Databrary.
+    private-option-list-without-databrary: Lo staff della piattaforma Lookit e i ricercatori che lavorano con {contact} allo studio "{name}".
+    scientific-option: <strong>Scientifico ed educativo:</strong> Il video può essere condiviso per scopi scientifici ed educativi. Ad esempio, potremmo mostrare una clip del tuo video durante una presentazione ad una conferenza scientifica o ad una classe universitaria sullo sviluppo cognitivo, o includere un'immagine o un video in un articolo scientifico. In alcuni casi, video e immagini saranno disponibili online, ad esempio come materiale supplementare in un documento scientifico.
+    publicity-option: <strong>Divulgazione:</strong> Seleziona questa opzione se saresti entusiasta di vedere tu@ figli@ presentat@ sul sito web di Lookit o in un articolo su questo studio! Il tuo video potrà essere condiviso per scopi pubblicitari, scientifici ed educativi; al contrario, non verrà mai utilizzato per scopi commerciali. Le clip dei video condivisi saranno disponibili al pubblico online.
+    withdrawal-header: Elimina dati video
+    withdrawal-details: Ogni video ci aiuta, anche se qualcosa è andato storto! Tuttavia se hai bisogno che il tuo video venga eliminato{include_example, select, true { (il tuo coniuge stava discutendo segreti di stato di sottofondo, ecc.)} other {}}, clicca qui per eliminare completamente i tuoi dati video di questa sessione dallo studio. Solamente il tuo video con la dichiarazione del tuo consenso verrà conservato e potrà essere visualizzato solo dal personale della piattaforma Lookit e dai ricercatori che lavorano con {contact} allo studio "{name}"; gli altri video verranno eliminati senza essere visualizzati.
+    feedback-label: Com'è andata? Hai qualche suggerimento per migliorare lo studio?
+    withdrawal-confirmation: Hai scelto di eliminare i tuoi dati video dallo studio. Qualsiasi video oltre alla dichiarazione del tuo consenso verrà eliminato senza essere visualizzato. Sei sicur@?
+    Withdraw: Elimina
+    facebook-share: Condividi questo studio su Facebook!
+
+exp-lookit-video-assent:
+    header: Il bambino acconsente a partecipare
+    explanation-1: Per gli studi con bambini più grandi, dobbiamo verificare che sia il genitore <em>sia</em> il bambin@ acconsentano a partecipare. <strong>Questa pagina è per il bambin@!</strong>
+    explanation-2: Vi preghiamo di aiutare vostr@ figli@ a leggere e navigare la pagina se necessario.
+    step-1: Informazioni sullo studio
+    Download: Scarica
+    step-2: Ora decidi
+    chose-not-to-participate: Hai scelto di non partecipare. Premi il tasto "invia" e verrai reindirizzato alla pagina principale di Lookit.
+    Image: Immagine
+    Video: Video
+
+exp-lookit-video-consent:
+    consent-step-1: Leggi questo documento di consenso
+    download: Scarica
+    click-to: Vai a
+    start-consent-recording: avvia la registrazione della dichiarazione di consenso
+    Recording: Registrazione in corso
+    read-statement-below: Leggi la dichiarazione di seguito <em class="video-consent-outloud"> ad alta voce</em>
+    signed-alternative: o in lingua dei segni italiana (LIS)
+    prompt: Ho letto e compreso il documento di consenso. Sono il genitore o il tutore legale di quest@ bambin@ ed entrambi acconsentiamo a partecipare a questo studio.
+    prompt-adult-only: Ho letto e compreso il documento di consenso. Acconsento a partecipare a questo studio.
+    additional-adult-question: C'è anche un altro adulto? In quel caso, preghiamo ogni adulto di leggere la dichiarazione di seguito ad alta voce
+    additional-adult-prompt: Ho letto e compreso il documento di consenso. Anche io acconsento a partecipare a questo studio.
+    stop-recording: interrompi la registrazione
+    play-consent-video-button: Riproduci il video della dichiarazione di consenso
+    review-video: per assicurarti che il tuo video sia stato registrato. (In caso contrario, riprova!)
+    play-video-warning: Riproduci il tuo video e assicurati di poter sentire chiaramente la dichiarazione di consenso!
+    consent-recording-warning: Effettua la registrazione della dichiarazione di consenso per continuare.
+    Not-recording-yet: Registrazione non ancora in corso
+    Error-starting-recorder: Errore durante l'avvio della registrazione
+    Starting-recorder: Avvio della registrazione
+    Not-recording: Registrazione non in corso
+    Stopping-and-uploading: Interrompi la registrazione e carica
+
+consent-template-2:
+    header: Dichiarazione di consenso a partecipare alla ricerca
+    intro-sentence: I ricercatori guidati da {name} presso {institution} stanno conducendo questo studio, "{experiment}", su Lookit.
+    purpose-header: Scopo
+    procedures-header: Procedura
+    duration-statement: Questo studio richiede circa {duration} per essere completato.
+    participation-header: Partecipazione
+    participation-content: Tu e tu@ figli@ siete liberi di scegliere se partecipare a questo studio. Se tu e tu@ figli@ decidete di partecipare, potete fermarvi in qualsiasi momento durante la sessione. Metti in pausa o interrompi la sessione se tu@ figli@ diventa molto agitat@ o non vuole partecipare! Se si tratta di uno studio con più sessioni, potete completare anche solo alcune delle sessioni.
+    payment-header: Ricompensa
+    data-collection-header: Raccolta dati e registrazione webcam
+    data-collection-1: Durante la sessione, tu e tu@ figli@ verrete registrati tramite la webcam e il microfono del computer. Le registrazioni video e gli altri dati inseriti vengono inviati in modo sicuro alla piattaforma Lookit e archiviati a tempo indeterminato. Alla fine della sessione, ti verrà chiesto di scegliere un livello di privacy per le registrazioni. A questo punto avrai la possibilità di eliminare i tuoi dati video. Puoi visualizzare le tue registrazioni passate su Lookit in qualsiasi momento.
+    data-collection-2: I dati vengono archiviati in modo sicuro sui server Lookit e dai ricercatori. Tuttavia, c'è sempre un piccolo rischio che i dati trasmessi su Internet possano essere intercettati o che la sicurezza dei dati memorizzati possa essere compromessa.
+    data-collection-3: Nessuna video clip verrà pubblicata o condivisa a meno che non lo si consenta durante la selezione del livello di privacy. Se non riceviamo una registrazione del consenso (il video che farai a destra) per questa sessione e non possiamo verificare che hai acconsentito a partecipare, non verrà visualizzato nessun altro video della tua sessione.
+    data-use-researchers-header: Utilizzo dei dati da parte dei ricercatori dello studio
+    data-use-researchers-content: Il gruppo di ricerca guidato da {name} presso {institution} avrà accesso al video e ad altri dati raccolti durante questa sessione. Avremo anche accesso al profilo del tuo account, al sondaggio demografico e al profilo del bambino che partecipa, comprese le modifiche che apporterai in futuro a qualsiasi di queste informazioni. Potremmo studiare le risposte di tuo figlio in relazione alle sue risposte precedenti o alle risposte dei fratelli a questo o ad altri studi condotti dal nostro gruppo, o alle risposte dei sondaggi demografici.
+    data-use-Lookit-header: Utilizzo dei dati da parte di Lookit
+    data-use-Lookit-content: Poiché questo studio viene condotto sulla piattaforma Lookit, anche i ricercatori che lavorano per la piattaforma Lookit al MIT avranno accesso ai dati raccolti durante questa sessione, oltre ai dati del tuo account, ai profili dei bambini e alle risposte del sondaggio demografico. Questi dati possono essere utilizzati da Lookit per rilevare e risolvere problemi tecnici o identificare nuove funzionalità che potrebbero essere utili; fornire supporto ai ricercatori dello studio; valutare la qualità dei dati (ad esempio, se un osservatore può indicare chiaramente in quale direzione stanno guardando i bambini); valutare il successo del sito nel raggiungere una popolazione diversificata; e caratterizzare il coinvolgimento della famiglia (ad esempio, esaminare quali aspetti di uno studio rendono i genitori più interessati a tornare in seguito).
+    publication-header: Pubblicazione dei risultati
+    publication-contents: I risultati della ricerca possono essere presentati a convegni scientifici o pubblicati su riviste scientifiche. I dati grezzi (ad esempio, i tempi di osservazione) possono essere pubblicati quando non è possibile identificare i bambini. Non pubblichiamo mai le date di nascita o i nomi dei bambini e non pubblichiamo mai i tuoi dati demografici insieme al video di tu@ figli@.
+    research-subject-rights-header: Diritti dei partecipanti alla ricerca
+    gdpr-header: Informazioni riguardo al Regolamento Generale sulla Protezione dei Dati (RGPD)
+    gdpr-personal: Se partecipi a questa ricerca, raccoglieremo alcune informazioni personali su di te, tra cui
+    gdpr-sensitive: Inoltre, raccoglieremo "dati personali particolari", le tue informazioni personali sensibili
+    gdpr-2: Le tue informazioni personali verranno trasferite negli Stati Uniti d'America. Tieni presente che le leggi sulla protezione dei dati e sulla privacy degli Stati Uniti d'America potrebbero non offrirti lo stesso livello di protezione di quelle del tuo paese di origine.
+    contact-header: Recapito del ricercatore
+    contact-statement-1: Questo studio è condotto da {name} presso {institution}. Se tu o tu@ figli@ avete domande o dubbi su questo studio, o nell'improbabile caso di un infortunio correlato alla ricerca, contattate {contact}.
+    contact-statement-2: Se tu o tu@ figli@ avete domande o dubbi sulla piattaforma Lookit, contattate Kim Scott all'indirizzo kimscott@mit.edu o 617 324 4859.
+
+consent-template-5:
+    header: Dichiarazione di consenso a partecipare alla ricerca
+    intro-sentence: I ricercatori guidati da {name} presso {institution} stanno conducendo questo studio, "{experiment}", su Lookit.
+    purpose-header: Perché stiamo conducendo questo studio
+    procedures-header: Cosa succede durante questo studio
+    duration-statement: Questo studio richiede circa {duration} per essere completato.
+    participation-header: La partecipazione è volontaria
+    participation-content: ​{only_adult, select, true {Sei libera} other {Tu e tu@ figli@ siete liberi}} di scegliere se partecipare a questo studio. Se {only_adult, select, true {scegli} other {scegliete}} di partecipare, {only_adult, select, true {puoi fermarti} other {potete fermarvi}} in qualsiasi momento durante la sessione. {only_adult, select, true {} other {Per favore metti in pausa o interrompi la sessione se tu@ figli@ diventa troppo agitat@ o non vuole partecipare!}}
+    risk-header: Quali sono i rischi?
+    benefits-header: Quali sono i vantaggi?
+    data-collection-header: Raccolta dati e registrazione webcam
+    data-collection-1: Durante la sessione, {only_adult, select, true {verrai} other {tu e tu@ figli@ verrete}} registrati tramite la webcam e il microfono del computer.
+    data-collection-2: Queste registrazioni e altri dati, come ad esempio le risposte inserite nei moduli, vengono inviati in modo sicuro alla piattaforma Lookit. Puoi visualizzare le tue registrazioni passate su Lookit in qualsiasi momento.
+    data-collection-3: I dati vengono archiviati in modo sicuro sui server Lookit e dai ricercatori. Tuttavia, c'è sempre un piccolo rischio che i dati trasmessi su Internet possano essere intercettati o che la sicurezza dei dati memorizzati possa essere compromessa.
+    video-privacy-header: Chi potrà vedere le tue registrazioni?
+    video-privacy-consent: Per prima cosa controlleremo che tu abbia acconsentito a partecipare a questo studio guardando la registrazione della dichiarazione di consenso. Se non siamo in grado di confermare che hai acconsentito a partecipare, nessun altro video della tua sessione verrà visualizzato.
+    video-privacy-overview: Alla fine della sessione, ti chiederemo di scegliere un livello di privacy per i tuo video. Potrai scegliere uno dei seguenti livelli di privacy per i tuoi video
+    video-privacy-Private: Privato
+    video-privacy-Scientific: Scientifico
+    video-privacy-Publicity: Pubblico
+    video-privacy-private-description: I ricercatori che hanno accesso ai tuoi video non li condivideranno con nessun altro.
+    video-privacy-scientific-description: I ricercatori che hanno accesso ai tuoi video possono condividerli per scopi scientifici o educativi, ad esempio mostrando un esempio ad una classe o durante una conferenza scientifica.
+    video-privacy-publicity-description: I ricercatori che hanno accesso ai tuoi video possono condividerli anche per pubblicità, ad esempio in uno speciale sulla ricerca o per reclutare più partecipanti.
+    video-privacy-withdraw: Avrai anche la possibilità di eliminare i tuoi video. In quel caso, verrà conservata solo la registrazione del consenso e tutti gli altri video verranno eliminati.
+    video-privacy-withdraw-private-only: A fine sessione avrai la possibilità di cancellare i tuoi video. In tal caso verrà conservata solamente la registrazione della tua dichiarazione di consenso mentre tutti gli altri video verranno eliminati.
+    databrary: Separatamente, potrai scegliere di contensire l'accesso ai tuoi video e ad altri tuoi dati agli utenti autorizzati della libreria di dati protetti Databrary. Ciò significa che altri ricercatori oltre a quelli che stanno conducendo questo studio avranno accesso ai tuoi video e potrebbero essere in grado di utilizzarli per rispondere ad altre domande sullo sviluppo infantile. La condivisione dei dati farà avanzare più rapidamente la ricerca sullo sviluppo e sul comportamento umano. I ricercatori autorizzati di Databrary sono vincolati a mantenere la riservatezza e a non utilizzare i dati per scopi commerciali. Se hai domande sulla libreria Databrary e sulla condivisione dei dati, visita <a href="https://nyu.databrary.org/" target="_blank" rel="noopener noreferrer">Databrary</a> o invia un'email a ethics@databrary.org.
+    data-use-researchers-header: Come utilizziamo i tuoi dati
+    data-use-researchers-content-1: Se partecipi a questo studio, noi (il gruppo di ricerca guidato da {name} presso {institution}) avremo accesso a
+    data-use-researchers-item-1: registrazioni webcam e altri dati raccolti durante questa sessione
+    data-use-researchers-item-2: il profilo del tuo account e il sondaggio demografico
+    data-use-researchers-item-3: il profilo del {only_adult, select, true {membro della famiglia} other {figli@}} che stanno partecipando
+    data-use-researchers-content-2: Ciò include le modifiche apportate in futuro a qualsiasi di queste informazioni. Potremmo mettere insieme diversi tipi di informazioni per saperne di più sullo sviluppo infantile. Ad esempio, se {only_adult, select, true {tu partecipi} other {tu@ figli@ participa}} a più studi dal nostro gruppo, potremmo confrontare le {only_adult, select, true {tue} other {sue}} risposte tra studi, oppure potremmo esaminare {only_adult, select, true {come le tue risposte si collegano ad altri membri della famiglia ''} other {se fratelli tendono a rispondere in modo simile}}. Potremmo anche studiare il collegamento tra {only_adult, select, true {le tue risposte} other {le risposte di tu@ figli@}} e i dati del sondaggio demografico familiare.
+    data-use-Lookit-header: Come Lookit utilizza i tuoi dati
+    data-use-Lookit-content: Anche lo staff principale di Lookit al MIT avrà accesso ai dati raccolti durante questa sessione, oltre ai dati del tuo account. Lo staff usa questi dati per migliorare la piattaforma Lookit, ad esempio per fornire supporto tecnico, valutare la qualità della raccolta dati o valutare il successo di Lookit nel raggiungere una popolazione diversificata. Lookit memorizza i dati a tempo indeterminato a meno che non elimini i video a fine studio.
+    publication-header: Pubblicazione dei risultati di questo studio
+    publication-content: I risultati di questo studio potrebbero essere presentati a convegni scientifici o pubblicati su riviste scientifiche. Potremmo pubblicare risposte individuali che {only_adult, select, true {non ti possono identificare} other {non possono identificare i tuoi figli}}, come la durata di osservazione a uno stimolo presentato durante lo studio o le sequenze dei tasti premuti sulla tastiera del computer. Non pubblichiamo mai {only_adult, select, true {la tua data di nascita} other {la data di nascita di tu@ figli@}} o nomi. Anche se scegli di condividere i tuoi video, informazioni che renderebbero possibile collegare i video con i tuoi dati demografici non verranno mai pubblicate.
+    research-subject-rights-header: I tuoi diritti da partecipante alla ricerca
+    gdpr-header: Informazioni riguardo al Regolamento Generale sulla Protezione dei Dati (RGPD)
+    gdpr-personal: Se partecipi a questa ricerca, raccoglieremo alcune informazioni personali su di te, tra cui
+    gdpr-sensitive: Inoltre, raccoglieremo "dati personali particolari", le tue informazioni personali sensibili
+    gdpr-2: Le tue informazioni personali verranno trasferite negli Stati Uniti. Tieni presente che le leggi sulla protezione dei dati e sulla privacy degli Stati Uniti potrebbero non offrirti lo stesso livello di protezione di quelle del tuo paese di origine.
+    contact-header: Come contattarci
+    contact-statement-1: Questo studio è condotto da {name} presso {institution}. Se {only_adult, select, true {hai} other {tu o tu@ figli@ avete}} domande o preoccupazioni riguardo a questo studio, {omit_injury, select, true {} other {o nell'improbabile caso di problematiche correlate alla ricerca,}} contatta {contact}.
+    contact-statement-2:  Se {only_adult, select, true {hai} other {tu o tu@ figli@ avete}} domande o preoccupazioni riguardo alla piattaforma Lookit, contatta Kim Scott a lookit@mit.edu.
+
+exp-lookit-observation:
+    Hide: Nascondi
+    Show: Mostra
+    webcam-feed-not-displayed: Registrazione video <br>non visualizzata
+    Recording: Registrazione in corso
+    not-recording-yet: Registrazione non ancora in corso
+    Record: Registra
+    recording-required-warning: Registrazione obbligatoria per continuare
+    stopping-and-uploading: Interrompi e carica
+    Paused: In pausa
+
+exp-video-config:
+    title: Configurazione della webcam
+    not-recording-note: Nessuna registrazione durante questa sezione
+    Microphone: Microfono
+    Camera: Webcam
+    Note: Da tenere presente
+    support-message: Lookit è attualmente supportato solo sulle versioni recenti di Firefox e Chrome. Non funziona ancora su dispositivi mobili come telefoni o tablet!
+    no-connection: Non siamo riusciti a connetterci alla tua webcam. Assicurati di avere una webcam collegata e
+    click-here-to-detect: clicca qui per rilevare webcam
+    see-troubleshooting: Se hai problemi, consulta le istruzioni per la risoluzione dei problemi di seguito!
+    step-1: Assicurati di essere nell'inquadratura a sinistra! Potrebbe essere necessario fare clic su "Consenti" per farci accedere alla tua webcam e microfono. Su Firefox, assicurati di selezionare anche "Ricorda questa decisione"!
+    looks-good: Ti vediamo bene!
+    no-webcam-detected: Nessuna webcam e' stata rilevata
+    step-2-click-directions: Assicurati che le impostazioni della webcam siano state salvate facendo clic su
+    reload-button-label: questo pulsante
+    step-2-what-should-happen: La tua webcam dovrebbe riapparire SENZA che tu debba consentire nuovamente l'accesso. (Se vedi una finestra di dialogo, fai clic su "Ricorda questa decisione" o "Consenti sempre" e riprova!)
+    step-3: Assicurati che possiamo sentirti chiaramente! Questa casella diventerà verde quando sentiremo un suono abbastanza alto
+    sounds-good: Ti sentiamo bene!
+    try-clapping: Prova ad applaudire o a salutare.
+    step-2-warning: Premi prima il pulsante "ricarica webcam" per assicurarti di non dover consentire nuovamente l'accesso alla webcam.
+    step-3-warning: Assicurati che l'audio della tua registrazione sia abbastanza alto. Fai un po' di rumore!
+    camera-access-warning: Sembra che non abbiamo accesso alla tua webcam. Assicurati di stare usando Chrome o Firefox su un computer (non un telefono o tablet). Se il problema persiste, controlla le informazioni sulla risoluzione dei problemi di seguito.
+    setup-tips-header: Informazioni sulla configurazione e risoluzione dei problemi
+    supported-setup: Controlla il tuo dispositivo e browser
+    mobile-devices: Stai utilizzando un telefono o un tablet? Attualmente Lookit funziona solo sui computer - ma speriamo di riuscire presto a supportare anche i dispositivi mobili! Visita di nuovo da un computer.
+    browser-support: Stai utilizzando un browser diverso da Chrome o Firefox (come Internet Explorer o Safari)? In tal caso, riprova utilizzando Chrome o Firefox. Questi sono gli unici browser attualmente supportati da Lookit.
+    chrome-instructions-header: Istruzioni per la configurazione della webcam su Chrome
+    chrome-directions-prompt: Quando carichi questa pagina per la prima volta, dovresti vedere un messaggio come quello qui sotto. Fai clic su "Consenti" per consentire a Lookit di accedere alla webcam e al microfono.
+    chrome-directions-set-perms: Se non hai visualizzato il messaggio o se hai cliccato "Blocca", puoi modificare le impostazioni cliccando sull'icona raffigurante un lucchetto verde accanto all'URL (indirizzo web). Imposta Webcam e Microfono (e Suono se viene visualizzato) a "Consenti", in seguito aggiorna la pagina.
+    chrome-select-mic: <em>Hai problemi a superare il controllo suono?</em> Chrome potrebbe utilizzare il dispositivo di input sbagliato, purtroppo non ti consente di scegliere quale microfono quando fai clic su "Consenti". Puoi selezionare il microfono corretto in chrome -> impostazioni -> impostazioni sito -> microfono. In seguito aggiorna questa pagina per riprovare.
+    chrome-select-camera: <em>Vedi la webcam sbagliata</em> - per esempio vedi la webcam integrata del tuo laptop invece di una webcam USB? Per selezionare la webcam corretta vai su chrome -> impostazioni -> impostazioni sito -> camera. In seguito aggiorna questa pagina per riprovare.
+    chrome-further-help: Puoi anche fare riferimento a <a href="https://support.google.com/chrome/answer/2693767?hl=it" target="_blank" rel="noopener noreferrer"> queste indicazioni da Chrome </a> .
+    firefox-instructions-header: Istruzioni per la configurazione della webcam su Firefox
+    firefox-directions-prompt: Quando carichi questa pagina per la prima volta, dovresti vedere un messaggio come quello qui sotto. Seleziona la webcam e il microfono che desideri utilizzare, seleziona "Ricorda questa decisione" e fai clic su "Consenti".
+    firefox-directions-set-perms: Se non hai visualizzato il messaggio o se hai cliccato "Non consentire" all'inizio, puoi modificare le impostazioni cliccando sulla webcam / o sul microfono barrati accanto all'URL (indirizzo web). Fai clic sulla "X" accanto a ciascuna impostazione, in seguito aggiorna la pagina.
+    additional-troubleshooting-header: Ho provato tutto ma non funziona, cos'altro posso provare?
+    additional-troubleshooting-intro: Innanzitutto, ti vogliamo ringraziare per il tuo interesse nella nostra ricerca e per il tuo aiuto! Ci dispiace che tu stia riscontrando dei problemi tecnici.
+    camera-check: Assicurati di essere in grado di visualizzare il video della webcam al di fuori di Lookit. (Ad esempio, su un Mac, prova Photobooth.)
+    try-another-browser: L'approccio più semplice è provare un browser diverso se ne hai un altro già installato. Ad esempio, se stai utilizzando Firefox, passa a Chrome o viceversa. Inoltre, aggiorna il browser se non stai utilizzando l'ultima versione. Puoi controllare andando su "Chrome" -> "Informazioni su Chrome" o "Firefox" -> "Informazioni su Firefox" nella barra del menu. (In ogni caso, questa è una buona idea per assicurarti di aver ricevuto tutti gli aggiornamenti di sicurezza.)
+    chrome-incognito: Stai utilizzando Chrome? Assicurati di non stare utilizzando una finestra di navigazione in incognito - in quanto non sarai in grado di salvare e utilizzare le impostazioni durante lo studio.
+    additional-troubleshooting-contact: Se sei confus@, è colpa nostra. Contattaci con i tuoi commenti per aiutarci a migliorare il sito! Scrivici a lookit-tech-italian@mit.edu con una breve descrizione di ciò che sta accadendo. Includi il browser che stai utilizzando (Firefox, Chrome, IE, Safari, ecc.), i passaggi che hai provato e l'ID di questa sessione.
+
+exp-video-config-quality:
+    checkbox-warning: Spunta la casella "{completedItemText}" sotto ogni istruzione prima di continuare.
+    recording-warning: Prova a registrare e visualizzare un video prima di continuare.

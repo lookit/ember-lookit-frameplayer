@@ -52,6 +52,11 @@ var pauseUnpauseMixin = Ember.Mixin.create({
     pausingText: 'Study pausing... \n\n Please wait',
 
     /*
+     Text to display when study is paused due to not being fullscreen
+     */
+    fullscreenPausedText: 'Study paused \n\n Please return to fullscreen',
+
+    /*
      Background color of pause screen. See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
      for acceptable syntax: can use either color names ('blue', 'red', 'green', etc.), or
      rgb hex values (e.g. '#800080' - include the '#'). The text on top of this will be either black or white
@@ -175,7 +180,7 @@ var pauseUnpauseMixin = Ember.Mixin.create({
                             this.hideWaitForVideoCover();
                         }
                         // Change message back from "Pausing..."
-                        let pausedText = _this.checkFullscreen() ? _this.get('pausedText') : 'Study paused <br><br> Please return to fullscreen';
+                        let pausedText = _this.checkFullscreen() ? _this.get('pausedText') : this.get('fullscreenPausedText');
                         $('#pause-text').html(`${expFormat(pausedText)}`);
                         _this.enablePausing();
                     }
@@ -193,7 +198,7 @@ var pauseUnpauseMixin = Ember.Mixin.create({
                         this.hideWaitForVideoCover();
                     }
                     // Change message back from "Pausing..."
-                    let pausedText = _this.checkFullscreen() ? _this.get('pausedText') : 'Study paused <br><br> Please return to fullscreen';
+                    let pausedText = _this.checkFullscreen() ? _this.get('pausedText') : this.get('fullscreenPausedText');
                     $('#pause-text').html(`${expFormat(pausedText)}`);
                     _this.enablePausing();
                 }
@@ -312,7 +317,7 @@ var pauseUnpauseMixin = Ember.Mixin.create({
                 if (!this.checkFullscreen()) { // If we've just left fullscreen
                     // Was already paused, just leaving FS - just make sure pause screen is still rendered, and
                     // we show the appropriate text
-                    $('#pause-text').html(`${expFormat('Study paused <br><br> Please return to fullscreen')}`);
+                    $('#pause-text').html(`${expFormat(this.get('fullscreenPausedText'))}`);
                 } else { // If we've just entered fullscreen but are paused
                     // show regular paused/ispausing text now
                     if (this.get('studyPauseCompleted') && this.get('sessionRecordingStopped')) {

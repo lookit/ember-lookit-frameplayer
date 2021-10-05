@@ -217,6 +217,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             default: false
         },
 
+        private_level_only: {
+            type: 'boolean',
+            default: false,
+            description: 'Whether to describe only the "private" video sharing option (only for consent template 5+)'
+        },
+
         payment: {
             type: 'string',
             description: 'Statement about payment/compensation for participation'
@@ -303,6 +309,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             type: 'string',
             description: 'Custom header for the section on voluntary participation',
             default: ''
+        },
+
+        omit_injury_phrase: {
+            type: 'boolean',
+            description: 'Whether to omit the phrase "or in the very unlikely event of a research-related injury" from the contact section',
+            default: false
         },
 
         benefits_header: {

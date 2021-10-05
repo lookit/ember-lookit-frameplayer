@@ -1,0 +1,55 @@
+<div class="row exp-lookit-survey-consent">
+    <div class="col-md-12 exp-lookit-survey-form">
+        {{#if title}}
+            <p class="exp-text-medium title">{{exp-format title}}</p>
+        {{/if}}
+        {{#bs-form}}
+            {{#each items as |item|}}
+                {{#with (concat "answer_" item.label) as |answer-label|}}
+                    {{#if (eq item.kind "text-block")}}
+                        {{exp-text-block block=item}}
+                    {{else}}
+                        {{#if (eq item.kind "checkbox-item")}}
+                            <label class={{if (and (not (get this answer-label)) showValidation) "text-danger" ""}}>
+                                <div class="checkbox-container">{{input type="checkbox" checked=(get this answer-label) name=answer-label}}</div>
+                                <div class="label-container">{{exp-format item.text}}</div>
+                            </label>
+                        {{else if (eq item.kind "multiple-choice")}}
+                            <label> {{exp-format item.question}} </label>
+                            {{#each item.answers as |answer|}}
+                                <div class={{if (and (not (get this answer-label)) showValidation) "text-danger radio" "radio"}}>
+                                    <label>
+                                        {{radio-button value=answer checked=(get this answer-label) name=answer-label}}
+                                        {{answer}}
+                                    </label>
+                                </div>
+                            {{/each}}
+                        {{/if}}
+                        {{#if (and (not (get this answer-label)) showValidation)}}
+                            <p class="text text-danger"> {{exp-format item.validationText}} </p>
+                        {{/if}}
+                    {{/if}}
+                {{/with}}
+            {{/each}}
+        {{/bs-form}}
+    </div>
+</div>
+
+<div class="row exp-controls exp-lookit-survey-consent">
+    {{#if showValidation}}
+        <p class="text text-danger pull-right form-validation"> {{exp-format formValidationText}} </p>
+    {{/if}}
+</div>
+
+<div class="row exp-controls exp-lookit-survey-consent">
+    <div class="col-md-12">
+        {{#if showPreviousButton}}
+            <button type="button" class="btn btn-default pull-left" {{ action "previous" }}>
+                {{ t "Previous" }}
+            </button>
+        {{/if}}
+        <button type="button" id="nextbutton" class="btn btn-success pull-right" {{ action "finish" }}>
+            {{ t "Submit" }}
+        </button>
+    </div>
+</div>

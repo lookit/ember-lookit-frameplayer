@@ -1,0 +1,51 @@
+.exp-lookit-survey-consent {
+
+    max-width: 800px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block;
+
+    label {
+        width: 100%;
+        font-weight: normal;
+    }
+
+    .checkbox-container {
+        display: inline-block;
+        width: 5%;
+    }
+
+    p.text-danger {
+        margin-left: 5%;
+        font-weight: bold;
+
+        &.form-validation {
+            width: 75%;
+            text-align: right;
+        }
+    }
+
+    .radio {
+        margin-left: 5%;
+    }
+
+    .label-container {
+        font-weight: normal;
+        display: inline-block;
+        width: 90%;
+        vertical-align: top;
+    }
+
+    .exp-lookit-survey-form {
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+        padding: 0;
+        height: 80vh;
+        overflow-y: auto;
+    }
+
+    p.title {
+        text-align: center;
+    }
+
+}

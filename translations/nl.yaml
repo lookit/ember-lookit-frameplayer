@@ -30,9 +30,9 @@ exp-lookit-exit-survey:
    scientific-option: <strong> Wetenschappelijk en educatief:</strong> Video's kunnen worden gedeeld voor wetenschappelijke of educatieve doeleinden. We kunnen bijvoorbeeld een videoclip laten zien in een lezing op een wetenschappelijke conferentie of in een college over cognitieve ontwikkeling, of een beeld of video toevoegen in een wetenschappelijke paper. In sommige gevallen kunnen de video's of afbeeldingen online beschikbaar zijn, bijvoorbeeld als aanvullend materiaal in een wetenschappelijke paper.
    publicity-option: <strong> Publiciteit:</strong>   Selecteer deze  optie als u het leuk  vindt als uw kind op  de Lookit-website  of in een  nieuwsartikel over  dit onderzoek te  zien is! Uw video kan zowel voor publieke als voor wetenschappelijke en educatieve doeleinden worden gedeeld; hij zal nooit voor commerciële doeleinden worden gebruikt. Gedeelde videoclips kunnen online beschikbaar zijn voor het grote publiek.
    withdrawal-header: Terugtrekking van videogegevens
-   withdrawal-details:  Elke video helpt ons, zelfs als er iets mis  is gegaan! Echter, als u toch uw video wilt laten verwijderen (bijvoorbeeld omdat uw echtgenoot het  op  de achtergrond over staatsgeheimen had),  zet dan hier  een vinkje om uw videogegevens volledig uit het onderzoek te halen. Alleen uw toestemmingsvideo wordt bewaard en mag alleen worden bekeken door Lookit-projectmedewerkers en onderzoekers die met {contact} aan het onderzoek "{name}" werken; andere video's worden verwijderd zonder te  worden bek eken.
-   feedback-label: Uw feedback
-   withdrawal-confirmation: U heeft ervoor gekozen om uw videogegevens uit het onderzoek te halen. Elke video heeft zijn eigen toestemmingsverklaring, indien u geen toestemming geeft voor deze opname, zal de video worden verwijderd zonder dat deze wordt bekeken. Weet u het zeker?
+   withdrawal-details:  Elke video helpt ons, zelfs als er iets mis  is gegaan! Echter, als u toch uw video wilt laten verwijderen{include_example, select, true { (bijvoorbeeld omdat uw echtgenoot het  op  de achtergrond over staatsgeheimen had)} other {}},  zet dan hier  een vinkje om uw videogegevens volledig uit het onderzoek te halen. Alleen uw toestemmingsvideo wordt bewaard en mag alleen worden bekeken door Lookit-projectmedewerkers en onderzoekers die met {contact} aan het onderzoek "{name}" werken; andere video's worden verwijderd zonder te  worden bek eken.
+   feedback-label: Hoe ging het? Heeft u suggesties om het onderzoek te verbeteren?
+   withdrawal-confirmation: U heeft ervoor gekozen uw videogegevens uit het onderzoek te halen. Elke video behalve uw toestemmingsopname wordt verwijderd zonder deze te bekijken. Weet u het zeker?
    Withdraw: Intrekken
    facebook-share: Deel deze studie op Facebook!
 
@@ -80,7 +80,7 @@ consent-template-2:
    participation-content: U en uw kind zijn vrij om te kiezen of jullie mee willen doen aan dit onderzoek. Als u en uw kind ervoor kiezen om deel te nemen, is het oké om op elk moment van de sessie te stoppen. Pauzeer of stop de sessie als uw kind erg onrustig wordt of niet mee wil doen! Als dit een studie is met meerdere sessies, is het oké om niet alle sessies af te maken.
    payment-header: Betaling
    data-collection-header: Gegevensverzameling en webcam-opname
-   data-collection-1: Tijdens de sessie worden u en uw kind opgenomen via de webcam en de microfoon van uw computer. Videoregistraties en andere gegevens die u invoert, worden veilig naar het Lookit-platform gestuurd en voor onbepaalde tijd opgeslagen. Aan het einde van de sessie wordt u gevraagd een privacy-niveau te kiezen voor uw webcam-opnamen. U heeft dan de mogelijkheid om uw videogegevens in te trekken. U kunt uw vroegere opnames op Lookit te allen tijde bekijken onder "Studies" -> "your past studies".
+   data-collection-1: Tijdens de sessie worden u en uw kind opgenomen via de webcam en de microfoon van uw computer. Videoregistraties en andere gegevens die u invoert, worden veilig naar het Lookit-platform gestuurd en voor onbepaalde tijd opgeslagen. Aan het einde van de sessie wordt u gevraagd een privacy-niveau te kiezen voor uw webcam-opnamen. U heeft dan de mogelijkheid om uw videogegevens in te trekken. U kunt uw vroegere opnames op Lookit te allen tijde bekijken.
    data-collection-2: De gegevens worden veilig opgeslagen op Lookit-servers en door onderzoekers. Er is echter altijd een klein risico dat gegevens die via het internet worden verzonden, worden onderschept of dat de veiligheid van de opgeslagen gegevens in het gedrang komt.
    data-collection-3: Er worden geen videoclips gepubliceerd of gedeeld, tenzij u dit toestaat bij het selecteren van een privacy-niveau. Als we voor deze sessie geen toestemming krijgen voor de opname (de video die u aan de rechterkant maakt) en we niet kunnen controleren of u akkoord gaat met deelname, zal er geen andere video van uw sessie worden bekeken.
    data-use-researchers-header: Gebruik van gegevens door studie-onderzoekers
@@ -110,7 +110,7 @@ consent-template-5:
   benefits-header: Wat zijn de voordelen?
   data-collection-header: Gegevensverzameling en webcamopname
   data-collection-1: Tijdens de sessie worden u {only_adult, select, true {} other {en uw kind}} opgenomen door de webcam en microfoon van uw computer. Deze webcamopnames en andere gegevens zoals antwoorden die u in formulieren invoert, worden veilig naar het Lookit-platform verzonden. U kunt op elk moment uw eerdere opnames op Lookit bekijken onder."Studies" -> "Your past studies".
-  data-collection-2: Deze webcamopnames, en andere gegevens zoals alle antwoorden die u op formulieren invult, worden beveiligd verzonden naar het Lookit-platform. Daarbij kunt u, uw eerdere opnames op elk gewenst moment bekijken op Lookit onder "Studies" -> "Your past studies".
+  data-collection-2: Deze webcamopnames, en andere gegevens zoals alle antwoorden die u op formulieren invult, worden beveiligd verzonden naar het Lookit-platform. Daarbij kunt u, uw eerdere opnames op elk gewenst moment bekijken op Lookit.
   data-collection-3: Gegevens worden door de onderzoekers veilig opgeslagen op de servers van Lookik, en worden alleen gedeeld zoals beschreven in dit document. Er bestaat echter altijd een klein risico dat gegevens die via het internet worden verzonden, onderschept worden of dat de beveiliging van de opgeslagen gegevens in het gedrang komt.
   video-privacy-header: Wie kan uw webcamopnamen zien?
   video-privacy-consent: We zullen eerst controleren of u echt akkoord bent gegaan met deelname door uw toestemmingsregistratie te bekijken. Als we niet kunnen bevestigen dat u heeft ingestemd met deelname, zal niemand andere opnamen van deze sessie bekijken.
@@ -122,6 +122,7 @@ consent-template-5:
   video-privacy-scientific-description: Onderzoekers met toegang tot uw opnamen kunnen deze delen voor wetenschappelijke of educatieve doeleinden, bijvoorbeeld door een voorbeeld te laten zien in een college of tijdens een wetenschappelijke conferentie.
   video-privacy-publicity-description: Onderzoekers met toegang tot uw opnamen kunnen deze ook delen voor publiciteit, bijvoorbeeld in een nieuwsfragment over het onderzoek of om meer deelnemers te werven.
   video-privacy-withdraw: U heeft ook de mogelijkheid om uw opnamen in te trekken. Als u dat doet, wordt alleen uw toestemmingsopname bewaard en worden alle andere opnamen verwijderd.
+  video-privacy-withdraw-private-only: Aan het einde van de sessie heeft u de mogelijkheid om uw opnamen in te trekken. Als u dat doet, wordt alleen uw toestemmingsopname bewaard en worden alle andere opnamen verwijderd.
   databrary: Afzonderlijk kunt u ervoor kiezen om toegang te geven tot uw opnames en andere gegevens aan geautoriseerde gebruikers van de beveiligde databibliotheek Databrary. Dit betekent dat andere onderzoekers die dit onderzoek uitvoeren, toegang hebben tot uw opnamen en deze mogelijk kunnen gebruiken om andere vragen over de ontwikkeling van kinderen te beantwoorden. Het delen van gegevens kan leiden tot snellere vooruitgang in onderzoek naar menselijke ontwikkeling en gedrag. Geautoriseerde onderzoekers in de database moeten ermee instemmen de vertrouwelijkheid te bewaren en de gegevens niet voor commerciële doeleinden te gebruiken. Als u vragen heeft over deze gegevensuitwisselingsbibliotheek, gaat u naar <a href="https://nyu.databrary.org/" target="_blank" rel="noopener">Databrary</a> of email ethics@databrary.org.
   data-use-researchers-header: Hoe gebruiken we uw gegevens
   data-use-researchers-content-1: Als u deelneemt aan dit onderzoek, hebben wij (de onderzoeksgroep onder leiding van {name} bij {institution}) toegang tot
@@ -139,7 +140,7 @@ consent-template-5:
   gdpr-sensitive: Bovendien zullen we speciale categoriegegevens verzamelen, uw persoonlijke gegevens die bijzonder gevoelig zijn
   gdpr-2: Uw persoonlijke gegevens worden overgebracht naar de Verenigde Staten. De gegevensbeschermings- en privacywetten van de Verenigde Staten bieden u mogelijk niet hetzelfde beschermingsniveau als die in uw land van herkomst.
   contact-header: Hoe bereikt u ons
-  contact-statement-1: Dit onderzoek wordt uitgevoerd door {name} bij {institution}. Als u of uw kind vragen of opmerkingen hebben over dit onderzoek, of in het zeer onwaarschijnlijke geval van een onderzoeksgerelateerd letsel, neem dan contact op met {contact}.
+  contact-statement-1: Dit onderzoek wordt uitgevoerd door {name} bij {institution}. Als u of uw kind vragen of opmerkingen hebben over dit onderzoek, {omit_injury, select, true {} other {of in het zeer onwaarschijnlijke geval van een onderzoeksgerelateerd letsel,}} neem dan contact op met {contact}.
   contact-statement-2: Als u of uw kind vragen of opmerkingen heeft over het Lookit-platform, neem dan contact op met Kim Scott via lookit@mit.edu.
 
 exp-lookit-observation:
@@ -196,5 +197,5 @@ exp-video-config:
   additional-troubleshooting-contact:  Als u iets niet  begrijpt, is het onze  schuld. Laat het ons weten zodat we de site kunnen verbeteren! E-mail ons op lookit-tech@mit.edu met een korte beschrijving van wat er gebeurd is. Vermeld de webbrowser die u gebruikt (Firefox, Chrome, IE, Safari, etc.), welke stappen u heeft geprobeerd en uw sessie-ID
 
 exp-video-config-quality:
-  checkbox-warning: Vink het vakje "{completeItemText}" onder elke instructie aan voordat u verder gaat.
+  checkbox-warning: Vink het vakje "{completedItemText}" onder elke instructie aan voordat u verder gaat.
   recording-warning: Probeer een video op te nemen en te bekijken voordat u verder gaat.

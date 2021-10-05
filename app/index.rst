@@ -9,8 +9,7 @@ together the study protocol you have in mind. To the left you can find informati
 Specifying your study protocol
 -------------------------------
 
-There are some features that are common to all frames, like being able to set a ``generateProperties`` function to
-adjust parameters on-the-fly based on what the child has done so far:
+The basics of how to structure either a JSON document or a Javascript function that describes your study protocol.
 
 .. toctree::
     :maxdepth: 2
@@ -25,7 +24,7 @@ Features common to all frames
 ------------------------------
 
 There are some features that are common to all frames, like being able to set a ``generateProperties`` function to
-adjust parameters on-the-fly based on what the child has done so far:
+adjust parameters on-the-fly based on what the child has done so far.
 
 .. toctree::
     :maxdepth: 2
@@ -62,6 +61,7 @@ The documentation will tell you how each frame works, what data it collects, and
    components/exp-lookit-stimuli-preview/doc.rst
    components/exp-lookit-stop-recording/doc.rst
    components/exp-lookit-survey/doc.rst
+   components/exp-lookit-survey-consent/doc.rst
    components/exp-lookit-text/doc.rst
    components/exp-lookit-video/doc.rst
    components/exp-lookit-video-assent/doc.rst

@@ -42,17 +42,23 @@
         {{t "consent-template-5.video-privacy-consent" }}
     </p>
 
-    <p>
-        {{t "consent-template-5.video-privacy-overview" }}:
-        <ul>
-            <li>"{{t "consent-template-5.video-privacy-Private" }}": {{t "consent-template-5.video-privacy-private-description" }}</li>
-            <li>"{{t "consent-template-5.video-privacy-Scientific" }}": {{t "consent-template-5.video-privacy-scientific-description" }}
-            </li>
-            <li>"{{t "consent-template-5.video-privacy-Publicity" }}": {{t "consent-template-5.video-privacy-publicity-description" }}
-            </li>
-        </ul>
-        {{t "consent-template-5.video-privacy-withdraw" }}
-    </p>
+    {{#if private_level_only}}
+        <p>
+            {{t "consent-template-5.video-privacy-private-description" }} {{t "consent-template-5.video-privacy-withdraw-private-only" }}
+        </p>
+    {{else}}
+        <p>
+            {{t "consent-template-5.video-privacy-overview" }}:
+            <ul>
+                <li>"{{t "consent-template-5.video-privacy-Private" }}": {{t "consent-template-5.video-privacy-private-description" }}</li>
+                <li>"{{t "consent-template-5.video-privacy-Scientific" }}": {{t "consent-template-5.video-privacy-scientific-description" }}
+                </li>
+                <li>"{{t "consent-template-5.video-privacy-Publicity" }}": {{t "consent-template-5.video-privacy-publicity-description" }}
+                </li>
+            </ul>
+            {{t "consent-template-5.video-privacy-withdraw" }}
+        </p>
+    {{/if}}
 
     {{#if include_databrary}}
         <p>
@@ -113,7 +119,7 @@
 
     <h2> {{t "consent-template-5.contact-header" }}</h2>
     <p>
-        {{t "consent-template-5.contact-statement-1" name=PIName institution=institution contact=PIContact only_adult=prompt_only_adults }}
+        {{t "consent-template-5.contact-statement-1" name=PIName institution=institution contact=PIContact only_adult=prompt_only_adults omit_injury=omit_injury_phrase }}
     </p>
     <p>
         {{t "consent-template-5.contact-statement-2" only_adult=prompt_only_adults}}
