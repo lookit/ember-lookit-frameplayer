@@ -27,8 +27,8 @@ var LOOKIT_PREFERRED_DEVICES = {
 // Only override newer navigator.mediaDevices.getUserMedia rather than also
 // navigator.getUserMedia, as the latter will only be used by Pipe if the newer one is not
 // available, in which case probably bigger problems than this one.
-navigator.mediaDevices.getUserMedia = (function(origGetUserMedia) {
-    return function() {
+navigator.mediaDevices.getUserMedia = (function (origGetUserMedia) {
+    return function () {
         // Add preferred mic and camera, if already stored, to any other constraints being
         // passed to getUserMedia
         var constraints = arguments[0];
@@ -38,7 +38,7 @@ navigator.mediaDevices.getUserMedia = (function(origGetUserMedia) {
         if (constraints.hasOwnProperty('video') && LOOKIT_PREFERRED_DEVICES.cam) {
             constraints.video.deviceId = LOOKIT_PREFERRED_DEVICES.cam;
         }
-        return origGetUserMedia.apply(this, arguments).then(function(stream) {
+        return origGetUserMedia.apply(this, arguments).then(function (stream) {
             // Set the preferred cam/mic IDs the first time we get a stream
             try {
                 var audioTracks = stream.getAudioTracks();
@@ -46,8 +46,8 @@ navigator.mediaDevices.getUserMedia = (function(origGetUserMedia) {
                 if (!LOOKIT_PREFERRED_DEVICES.mic && audioTracks) {
                     var thisAudioLabel = audioTracks[0].label;
                     navigator.mediaDevices.enumerateDevices()
-                        .then(function(devices) {
-                            devices.forEach(function(device) {
+                        .then(function (devices) {
+                            devices.forEach(function (device) {
                                 if (device.kind == 'audioinput' && device.label == thisAudioLabel) {
                                     LOOKIT_PREFERRED_DEVICES.mic = device.deviceId;
                                 }
@@ -57,8 +57,8 @@ navigator.mediaDevices.getUserMedia = (function(origGetUserMedia) {
                 if (!LOOKIT_PREFERRED_DEVICES.cam && videoTracks) {
                     var thisVideoLabel = videoTracks[0].label;
                     navigator.mediaDevices.enumerateDevices()
-                        .then(function(devices) {
-                            devices.forEach(function(device) {
+                        .then(function (devices) {
+                            devices.forEach(function (device) {
                                 if (device.kind == 'videoinput' && device.label == thisVideoLabel) {
                                     LOOKIT_PREFERRED_DEVICES.cam = device.deviceId;
                                 }
@@ -162,7 +162,7 @@ const VideoRecorder = Ember.Object.extend({
             }
         });
         this.set('$container', $container);
-        $container.append($('<div>', {id: divId, class: origDivId}));
+        $container.append($('<div>', { id: divId, class: origDivId }));
         $element.append($container);
 
         return new RSVP.Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
@@ -178,10 +178,10 @@ const VideoRecorder = Ember.Object.extend({
                 ao: audioOnly, // not audio-only
                 dup: 0, // don't allow file uploads
                 payload: videoFilename, // data used by webhook to rename video
-                accountHash:  pipeKey,
-                eid:  pipeEnv, // environment ID for pipe account
-                mrt:  maxRecordingTime,
-                size:  { // just display size when showing to user. We override css.
+                accountHash: pipeKey,
+                eid: pipeEnv, // environment ID for pipe account
+                mrt: maxRecordingTime,
+                size: { // just display size when showing to user. We override css.
                     width: 320,
                     height: 240
                 }
@@ -189,12 +189,12 @@ const VideoRecorder = Ember.Object.extend({
 
             this.set('_started', true);
             var _this = this;
-            PipeSDK.insert(divId, pipeConfig, function(myRecorderObject) {
+            PipeSDK.insert(divId, pipeConfig, function (myRecorderObject) {
                 _this.set('recorder', PipeSDK.getRecorderById(divId));
                 _this.get('hooks').forEach(hookName => {
                     // At the time the hook is actually called, look up the appropriate
                     // functions both from here and that might be added later.
-                    myRecorderObject[hookName] = function(...args) {
+                    myRecorderObject[hookName] = function (...args) {
                         if (_this.get('_' + hookName)) { // 'Native' hook defined here
                             _this['_' + hookName].apply(_this, args);
                         }
@@ -238,14 +238,19 @@ const VideoRecorder = Ember.Object.extend({
             return null;
         }, 100); // try every 100ms
 
-        return new Ember.RSVP.Promise((resolve, reject) => {
+        return new Ember.RSVP.Promise((resolve) => {
             if (_this.get('recording')) {
                 resolve(this);
             } else {
-                _this.set('_recordPromise', {
-                    resolve,
-                    reject
-                });
+                /*
+                This is to fix an issue where frame were freezing.  If this is determined to be a 
+                reasonable solution, then '_recordPromise' should be removed in other places.  
+                */
+                // _this.set('_recordPromise', {
+                //     resolve,
+                //     reject
+                // });
+                resolve();
             }
         });
     },
@@ -282,7 +287,7 @@ const VideoRecorder = Ember.Object.extend({
         var _this = this;
         var _stopPromise = new Ember.RSVP.Promise((resolve, reject) => {
             // If we don't end up uploading within 5 seconds, call reject
-            _this.set('uploadTimeout', window.setTimeout(function() {
+            _this.set('uploadTimeout', window.setTimeout(function () {
                 console.warn('waiting for upload timed out');
                 window.clearTimeout(_this.get('uploadTimeout'));
                 reject();
