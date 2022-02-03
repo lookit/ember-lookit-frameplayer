@@ -234,23 +234,23 @@ const VideoRecorder = Ember.Object.extend({
                 return null;
             }
             _this.get('recorder').record();
-            window.clearInterval(id); // stop trying - success
+
+            // Giving the "record" method a few seconds seems to increase the reliability of hooks firing.
+            setTimeout(function () {
+                window.clearInterval(id); // stop trying - success
+            }, 3000);
+
             return null;
         }, 100); // try every 100ms
 
-        return new Ember.RSVP.Promise((resolve) => {
+        return new Ember.RSVP.Promise((resolve, reject) => {
             if (_this.get('recording')) {
                 resolve(this);
             } else {
-                /*
-                This is to fix an issue where frame were freezing.  If this is determined to be a 
-                reasonable solution, then '_recordPromise' should be removed in other places.  
-                */
-                // _this.set('_recordPromise', {
-                //     resolve,
-                //     reject
-                // });
-                resolve();
+                _this.set('_recordPromise', {
+                    resolve,
+                    reject
+                });
             }
         });
     },
