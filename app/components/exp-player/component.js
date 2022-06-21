@@ -3,6 +3,7 @@ import layout from './template';
 
 import FullScreen from '../../mixins/full-screen';
 import ExperimentParser from '../../utils/parse-experiment';
+import { addSearchParams } from '../../utils/add-search-params';
 
 let {
     $
@@ -192,7 +193,11 @@ export default Ember.Component.extend(FullScreen, {
     },
 
     _exit() {
-        this.get('session').save().then(() => window.location = this.get('experiment.exitURL') || '/');
+        const exitUrl = this.get('experiment.exitURL');
+        const hashChildId = this.get('session.hash_child_id');
+        const responseId =  this.get('session.id');
+
+        this.get('session').save().then(() => window.location = addSearchParams(exitUrl, responseId, hashChildId) );
     },
 
     actions: {
