@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
-import VideoRecord from '../../mixins/video-record';
+import VideoRecord from '../../mixins/video-record-new';
 import PauseUnpause from '../../mixins/pause-unpause';
 import ExpandAssets from '../../mixins/expand-assets';
 import { audioAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';

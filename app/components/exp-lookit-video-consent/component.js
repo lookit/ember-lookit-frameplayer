@@ -2,7 +2,7 @@ import Em from 'ember';
 import layout from './template';
 
 import ExpFrameBaseComponent from '../exp-frame-base/component';
-import VideoRecord from '../../mixins/video-record';
+import VideoRecord from '../../mixins/video-record-new';
 
 let {
     $
@@ -45,9 +45,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     showWarning: false,
 
     startRecorderAndUpdateDisplay() {
+        console.log('video consent component: start recorder and update display');
         this.set('startedRecording', true); // keep track of if ANY recorder has been set up yet
         let _this = this;
         this.startRecorder().then(() => {
+            console.log('video consent component: start recorder promise fulfilled');
             // Require at least 2 s recording
             setTimeout(function() {
                 $('#stopbutton').prop('disabled', false);
@@ -62,7 +64,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     actions: {
         record() {
-
+            console.log('video consent component: record');
             $('#recordingStatus').show();
             $('#recordingText').text(`${this._translate('exp-lookit-video-consent.Starting-recorder')}...`);
             $('[id^=pipeMenu]').hide();
@@ -91,12 +93,14 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
         },
         stop() {
+            console.log('video consent component: stop');
             $('#recordingText').text(`${this._translate('exp-lookit-video-consent.Stopping-and-uploading')}...`);
             $('#recordingIndicator').hide();
             $('#stopbutton').prop('disabled', true);
             var _this = this;
 
             this.stopRecorder().finally(() => {
+                console.log('video consent component: stop recorder promise resolved')
                 _this.set('stoppedRecording', true);
                 _this.set('hasMadeVideo', true);
                 $('#recordingText').text(_this._translate('exp-lookit-video-consent.Not-recording'));
@@ -106,14 +110,23 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
         },
         playvideo() {
+            console.log('video consent component: play video');
             $('#recordingText').text('');
             $('#recordingStatus').hide();
-            this.get('recorder').get('recorder').playVideo();
-            $('[id^=pipeMenu]').show();
+            const vid = document.querySelector('video');
+            vid.src = null;
+            vid.srcObject = null;
+            vid.muted = false;
+            vid.volume = 1;
+            this.get('recorder').get('recorder').getDataURL().then((dataURI) => {
+                vid.src = dataURI;
+                vid.controls = true;
+            });
+            $('[id^=pipeMenu]').show();  // TO DO: what is this showing? 
             this.set('hasCheckedVideo', true);
         },
         finish() {
-
+            console.log('video consent component: finish');
             if (!this.get('hasMadeVideo') || !this.get('hasCheckedVideo')) {
                 this.set('showWarning', true);
             } else {
@@ -369,6 +382,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     didInsertElement() {
         this._super(...arguments);
+        console.log('video consent component: didInsertElement');
         let validTemplateNames = ['consent_001', 'consent_002', 'consent_003', 'consent_004'];
         if (!validTemplateNames.includes(this.get('template'))) {
             console.warn('Invalid consent form specified. \'template\' parameter of \'exp-lookit-video-consent\' frame should be one of: ' + validTemplateNames.join(' '));

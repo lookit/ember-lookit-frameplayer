@@ -29,9 +29,12 @@ var LOOKIT_PREFERRED_DEVICES = {
 // available, in which case probably bigger problems than this one.
 navigator.mediaDevices.getUserMedia = (function (origGetUserMedia) {
     return function () {
+        console.log('video recorder service: get user media');
         // Add preferred mic and camera, if already stored, to any other constraints being
         // passed to getUserMedia
         var constraints = arguments[0];
+        console.log('constraints: ', constraints);
+        console.log('arguments: ', arguments);
         if (constraints.hasOwnProperty('audio') && LOOKIT_PREFERRED_DEVICES.mic) {
             constraints.audio.deviceId = LOOKIT_PREFERRED_DEVICES.mic;
         }
@@ -146,7 +149,7 @@ const VideoRecorder = Ember.Object.extend({
      */
 
     install(videoFilename = '', pipeKey = '', pipeEnv = 1, maxRecordingTime = 100000000, autosave = 1, audioOnly = 0) {
-
+        console.log('video recorder service: install');
         let origDivId = this.get('divId');
 
         this.set('divId', `${this.get('divId')}-${this.get('recorderId')}`);
@@ -189,8 +192,9 @@ const VideoRecorder = Ember.Object.extend({
 
             this.set('_started', true);
             var _this = this;
-            PipeSDK.insert(divId, pipeConfig, function (myRecorderObject) {
-                _this.set('recorder', PipeSDK.getRecorderById(divId));
+            PipeSDK.insert(divId, pipeConfig, function (myRecorderObject) { // eslint-disable-line no-undef
+                console.log('video recorder service: pipe insert callback');
+                _this.set('recorder', PipeSDK.getRecorderById(divId)); // eslint-disable-line no-undef
                 _this.get('hooks').forEach(hookName => {
                     // At the time the hook is actually called, look up the appropriate
                     // functions both from here and that might be added later.
@@ -217,6 +221,7 @@ const VideoRecorder = Ember.Object.extend({
      * @return {Promise}
      */
     record() {
+        console.log('video recorder service: record');
         if (!this.get('started')) {
             throw new Error('Must call start before record');
         }
@@ -244,6 +249,7 @@ const VideoRecorder = Ember.Object.extend({
         }, 100); // try every 100ms
 
         return new Ember.RSVP.Promise((resolve, reject) => {
+            console.log('video recorder service: record promise');
             if (_this.get('recording')) {
                 resolve(this);
             } else {
@@ -274,6 +280,7 @@ const VideoRecorder = Ember.Object.extend({
      * @method stop
      */
     stop(maxUploadTimeMs = 5000) {
+        console.log('video recorder service: stop');
         var recorder = this.get('recorder');
         if (recorder) {
             try {
@@ -286,6 +293,7 @@ const VideoRecorder = Ember.Object.extend({
 
         var _this = this;
         var _stopPromise = new Ember.RSVP.Promise((resolve, reject) => {
+            console.log('video recorder service: stop promise');
             // If we don't end up uploading within 5 seconds, call reject
             _this.set('uploadTimeout', window.setTimeout(function () {
                 console.warn('waiting for upload timed out');
@@ -311,6 +319,7 @@ const VideoRecorder = Ember.Object.extend({
      * @method destroy
      */
     destroy() {
+        console.log('video recorder service: destroy');
         console.log(`Destroying the videoRecorder: ${this.get('divId')}`);
         $(`#${this.get('divId')}-container`).remove();
         if (this.get('recorder') && this.get('recorder').remove) {
@@ -328,6 +337,7 @@ const VideoRecorder = Ember.Object.extend({
 
     // Begin webcam hooks
     _onRecordingStarted(recorderId) { // eslint-disable-line no-unused-vars
+        console.log('video recorder service: on recording started fired');
         this.set('_recording', true);
         this.set('_hasCreatedRecording', true);
         this.set('pipeVideoName', this.get('recorder').getStreamName());
@@ -338,6 +348,7 @@ const VideoRecorder = Ember.Object.extend({
 
     // Once recording finishes uploading, resolve call to stop
     _onUploadDone(recorderId, streamName, streamDuration, audioCodec, videoCodec, fileType, audioOnly, location) { // eslint-disable-line no-unused-vars
+        console.log('video recorder service: on upload done fired');
         window.clearTimeout(this.get('uploadTimeout'));
         this.set('_isuploaded', true);
         if (this.get('_stopPromise')) {
@@ -347,24 +358,29 @@ const VideoRecorder = Ember.Object.extend({
     },
 
     _onCamAccess(recorderId, allowed) { // eslint-disable-line no-unused-vars
+        console.log('video recorder service: on cam access fired');
         console.log('onCamAccess: ' + recorderId);
         this.set('hasCamAccess', allowed);
     },
 
     _onReadyToRecord(recorderId, recorderType) { // eslint-disable-line no-unused-vars
+        console.log('video recorder service: on ready to record fired');
         this.set('_recorderReady', true);
     },
 
     _userHasCamMic(recorderId, camNumber, micNumber) { // eslint-disable-line no-unused-vars
+        console.log('video recorder service: user has cam mic fired');
         this.set('_nWebcams', camNumber);
         this.set('_nMics', micNumber);
     },
 
     _onConnectionStatus(recorderId, status) { // eslint-disable-line no-unused-vars
+        console.log('video recorder service: on connection status fired');
         this.set('connected', status === 'connected');
     },
 
     _onMicActivityLevel(recorderId, currentActivityLevel) { // eslint-disable-line no-unused-vars
+        console.log('video recorder service: on mic activity level fired');
         if (currentActivityLevel > this.get('minVolume')) {
             this.set('micChecked', true);
             // Remove the handler so we're not running this every single mic sample from now on

@@ -1,5 +1,5 @@
 import ExpFrameBaseComponent from '../exp-frame-base/component';
-import VideoRecord from '../../mixins/video-record';
+import VideoRecord from '../../mixins/video-record-new';
 import layout from './template';
 import Em from 'ember';
 import { observer } from '@ember/object';

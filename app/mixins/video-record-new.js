@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { observer } from '@ember/object';
-import VideoRecorder from '../services/video-recorder';
+import VideoRecorder from '../services/video-recorder-new';
 import { colorSpecToRgbaArray, isColor, textColorForBackground } from '../utils/is-color';
 import { expFormat } from '../helpers/exp-format';
 import { mergeObjectOfArrays } from "../utils/replace-values";
@@ -28,10 +28,20 @@ let {
  * You will also need to set `recorderElement` if the recorder is to be housed other than
  * in an element identified by the ID `recorder`.
  *
- * The properties `recorder`, `videoList`, `stoppedRecording`, `recorderReady`, and
- * `videoId` become available to the consuming frame. The recorder object has fields
- * that give information about its state: `hasWebCam`, 'hasCamAccess`, `recording`,
- * `connected`, and `micChecked` - for details, see services/video-recorder.js. These
+ * The following properties become available to the consuming frame:
+ *  recorder
+ *  videoList
+ *  stoppedRecording
+ *  recorderReady
+ *  videoId
+ * The recorder object has the following fields that give information about its state: 
+ *  hasWebCam
+ *  hasCamAccess
+ *  recording
+ *  connected
+ *  micChecked
+ * For details, see services/video-recorder.js. 
+ * These
  * can be accessed from the consuming frame as e.g. `this.get('recorder').get('hasWebCam')`.
  *
  * If starting recording automatically,  the function `onRecordingStarted` will be called
@@ -42,8 +52,7 @@ let {
  *
  * Events recorded in a frame that extends VideoRecord will automatically have additional
  * fields videoId (video filename), pipeId (temporary filename initially assigned by
- * the recording service),
- * and streamTime (when in the video they happened, in s).
+ * the recording service), and streamTime (when in the video they happened, in s).
  *
  * Setting up the camera is handled in didInsertElement, and making sure recording is
  * stopped is handled in willDestroyElement (Ember hooks that fire during the component
@@ -291,16 +300,14 @@ export default Ember.Mixin.create({
         const videoId = this._generateVideoId();
         this.set('videoId', videoId);
         const recorder = new VideoRecorder({element: element});
-        const pipeLoc = Ember.getOwner(this).resolveRegistration('config:environment').pipeLoc;
-        const pipeEnv = Ember.getOwner(this).resolveRegistration('config:environment').pipeEnv;
-        console.log('audio only: ', this.get('audioOnly'));
-        const installPromise = recorder.install(this.get('videoId'), pipeLoc, pipeEnv,
+        const installPromise = recorder.install(this.get('videoId'), 
             this.get('maxRecordingLength'), this.get('autosave'), this.get('audioOnly'));
 
-        // Track specific events for all frames that use  VideoRecorder
+        // Track specific events for all frames that use VideoRecorder
         var _this = this;
         recorder.on('onCamAccess', (recId, hasAccess) => {   // eslint-disable-line no-unused-vars
             console.log('video record mixin: on cam access fired');
+            _this.get('recorder').set('hasCamAccess', hasAccess);
             if (!(_this.get('isDestroyed') || _this.get('isDestroying'))) {
                 _this.send('setTimeEvent', 'recorder.hasCamAccess', {
                     hasCamAccess: hasAccess
@@ -319,6 +326,7 @@ export default Ember.Mixin.create({
         this.send('setTimeEvent', 'setupVideoRecorder', {
             videoId: videoId
         });
+        
         return installPromise;
     },
 
@@ -334,7 +342,7 @@ export default Ember.Mixin.create({
             return recorder.record().then(() => {
                 console.log('video record mixin: record promise fulfilled (start recorder function)');
                 this.send('setTimeEvent', 'startRecording', {
-                    pipeId: recorder.get('pipeVideoName')
+                    pipeId: recorder.get('videoName') // TO DO: change 'pipeId' to something else 
                 });
                 if (this.get('videoList') == null) {
                     this.set('videoList', [this.get('videoId')]);

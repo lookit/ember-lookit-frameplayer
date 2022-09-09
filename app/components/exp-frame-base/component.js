@@ -3,7 +3,7 @@ import Ajv from 'ajv';
 
 //import config from 'ember-get-config';
 import FullScreen from '../../mixins/full-screen';
-import SessionRecord from '../../mixins/session-record';
+import SessionRecord from '../../mixins/session-record-new';
 
 /**
  * @module exp-player

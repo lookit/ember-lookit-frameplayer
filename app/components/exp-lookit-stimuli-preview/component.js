@@ -2,7 +2,7 @@ import layout from './template';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 import Ember from 'ember';
 
-import VideoRecord from '../../mixins/video-record';
+import VideoRecord from '../../mixins/video-record-new';
 import ExpandAssets from '../../mixins/expand-assets';
 import { computed } from '@ember/object';
 import { videoAssetOptions, imageAssetOptions, audioAssetOptions } from '../../mixins/expand-assets';
