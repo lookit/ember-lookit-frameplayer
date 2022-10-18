@@ -422,6 +422,7 @@ const VideoRecorder = Ember.Object.extend({
     /**
      * Stop recording and save the video to the server
      * @method stop
+     * @return {Promise}
      */
     stop(maxUploadTimeMs = 5000) {
         console.log('video recorder service: stop');
@@ -466,6 +467,60 @@ const VideoRecorder = Ember.Object.extend({
             // }
         });
         return _stopPromise;
+    },
+
+    /**
+     * Pause the recording
+     *
+     * @method pause
+     * @return {Promise}
+     */
+    pause() {
+        this.get('recorder').getState().then((curr_state) => {
+            return new RSVP.Promise((resolve, reject) => {
+                if (curr_state == "recording") {
+                    this.get('recorder').pauseRecording()
+                        .then(() => {
+                            //this.set('_recording', false); // handle via the onStateChanged callback?
+                            resolve();
+                        })
+                        .catch((err) => {
+                            console.error(`Error pausing recorder: ${err.name}: ${err.message}`);
+                            console.trace();
+                            reject();
+                        });
+                } else {
+                    resolve();
+                }
+            });
+        })
+    },
+
+    /**
+     * Resume the recording
+     *
+     * @method resume
+     * @return {Promise}
+     */
+    resume() {
+        this.get('recorder').getState().then((curr_state) => {
+            return new RSVP.Promise((resolve, reject) => {
+                if (curr_state == "paused") {
+                    this.get('recorder').resumeRecording()
+                        .then(() => {
+                            //this.set('_recording', true); // handle via the onStateChanged callback?
+                            resolve();
+                        })
+                        .catch((err) => {
+                            console.error(`Error pausing recorder: ${err.name}: ${err.message}`);
+                            console.trace();
+                            reject();
+                        });
+                } else {
+                    resolve();
+                }
+            });
+        })
     },
 
     /**

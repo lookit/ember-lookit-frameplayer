@@ -48,18 +48,22 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         console.log('video consent component: start recorder and update display');
         this.set('startedRecording', true); // keep track of if ANY recorder has been set up yet
         let _this = this;
-        this.startRecorder().then(() => {
-            console.log('video consent component: start recorder promise fulfilled');
-            // Require at least 2 s recording
-            setTimeout(function() {
-                $('#stopbutton').prop('disabled', false);
-            }, 2000);
-            $('#recordingIndicator').show();
-            $('#recordingText').text(_this._translate('exp-lookit-video-consent.Recording'));
-        }, () => {
-            $('#recordingText').text(_this._translate('exp-lookit-video-consent.Error-starting-recorder'));
-            $('#recordbutton').prop('disabled', false);
-        });
+        this.startRecorder()
+            .then(() => {
+                console.log('video consent component: start recorder promise fulfilled');
+                // Require at least 2 s recording
+                setTimeout(function() {
+                    $('#stopbutton').prop('disabled', false);
+                }, 2000);
+                $('#recordingIndicator').show();
+                $('#recordingText').text(_this._translate('exp-lookit-video-consent.Recording'));
+            })
+            .catch((err) => {
+                $('#recordingText').text(_this._translate('exp-lookit-video-consent.Error-starting-recorder'));
+                $('#recordbutton').prop('disabled', false);
+                console.error(`Error starting recorder: ${err.name}: ${err.message}`);
+                console.trace();
+            });
     },
 
     actions: {
@@ -75,18 +79,22 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             this.set('hasMadeVideo', false);
 
             if (this.get('startedRecording')) {
-                if (this.get('recorder') && this.get('recorder').get('recorder')) {
-                    this.get('recorder').get('recorder').pause();
+                if (this.get('recorder')) {
+                    this.get('recorder').pause();
                 }
                 this.destroyRecorder(); // Need to destroy between recordings or else the same video ID is sent as payload.
                 // Don't destroy after stopRecorder call because then can't replay.
                 var _this = this;
-                this.setupRecorder(_this.$(_this.get('recorderElement'))).then(() => {
-                    _this.startRecorderAndUpdateDisplay();
-                }, () => {
-                    $('#recordingText').text(_this._translate('exp-lookit-video-consent.Error-starting-recorder'));
-                    $('#recordbutton').prop('disabled', false);
-                });
+                this.setupRecorder(_this.$(_this.get('recorderElement')))
+                    .then(() => {
+                        _this.startRecorderAndUpdateDisplay();
+                    })
+                    .catch((err) => {
+                        $('#recordingText').text(_this._translate('exp-lookit-video-consent.Error-starting-recorder'));
+                        $('#recordbutton').prop('disabled', false);
+                        console.error(`Error restarting recorder: ${err.name}: ${err.message}`);
+                        console.trace();
+                    });
             } else {
                 this.startRecorderAndUpdateDisplay(); // First time - can use current recorder
             }
@@ -99,14 +107,15 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             $('#stopbutton').prop('disabled', true);
             var _this = this;
 
-            this.stopRecorder().finally(() => {
-                console.log('video consent component: stop recorder promise resolved')
-                _this.set('stoppedRecording', true);
-                _this.set('hasMadeVideo', true);
-                $('#recordingText').text(_this._translate('exp-lookit-video-consent.Not-recording'));
-                $('#playbutton').prop('disabled', false);
-                $('#recordbutton').prop('disabled', false);
-            });
+            this.stopRecorder()
+                .finally(() => {
+                    console.log('video consent component: stop recorder promise resolved')
+                    _this.set('stoppedRecording', true);
+                    _this.set('hasMadeVideo', true);
+                    $('#recordingText').text(_this._translate('exp-lookit-video-consent.Not-recording'));
+                    $('#playbutton').prop('disabled', false);
+                    $('#recordbutton').prop('disabled', false);
+                });
 
         },
         playvideo() {
@@ -118,10 +127,15 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             vid.srcObject = null;
             vid.muted = false;
             vid.volume = 1;
-            this.get('recorder').get('recorder').getDataURL().then((dataURI) => {
-                vid.src = dataURI;
-                vid.controls = true;
-            });
+            this.get('recorder').get('recorder').getDataURL()
+                .then((dataURI) => {
+                    vid.src = dataURI;
+                    vid.controls = true;
+                })
+                .catch((err) => {
+                    console.error(`Error playing video: ${err.name}: ${err.message}`);
+                    console.trace();
+                });
             $('[id^=pipeMenu]').show();  // TO DO: what is this showing? 
             this.set('hasCheckedVideo', true);
         },
