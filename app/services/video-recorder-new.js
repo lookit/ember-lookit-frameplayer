@@ -470,6 +470,14 @@ const VideoRecorder = Ember.Object.extend({
                 window.clearTimeout(_this.get('uploadTimeout'));
                 reject();
             }, maxUploadTimeMs));
+            // TO DO: this is a temporary way to mimic the saving/upload step and resolve the stop promise
+            setTimeout(() => {
+                const vidBlob = _this.get('recorder').recordRTC.getBlob();
+                invokeSaveAsDialog(vidBlob, 'test.webm');
+                _this._onUploadDone(_this.get('recorderId')); // clears the upload timeout
+                resolve(_this);
+            }, 1000);
+
             if (!_this.get('_isuploaded')) {
                 _this.set('_stopPromise', {
                     resolve: resolve,
