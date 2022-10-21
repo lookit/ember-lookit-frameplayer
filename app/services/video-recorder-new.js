@@ -383,7 +383,7 @@ const VideoRecorder = Ember.Object.extend({
                     _this.set('_stopTimeout', window.setTimeout(function() {
                         console.warn('reached max recording time');
                         _this.stop();
-                    }, _this.get('maxRecordingTime')));
+                    }, _this.get('maxRecordingTime')*1000));
                 }
             })
             .catch((err) => {
@@ -452,19 +452,16 @@ const VideoRecorder = Ember.Object.extend({
             setTimeout(() => {
                 const vidBlob = _this.get('recorder').recordRTC.getBlob();
                 invokeSaveAsDialog(vidBlob, 'test.webm');
-                _this._onUploadDone(_this.get('recorderId'));
+                _this._onUploadDone(_this.get('recorderId')); // clears the upload timeout
                 resolve(_this);
             }, 1000);
 
-            // if (_this.get('_isuploaded')) {
-            //     window.clearTimeout(_this.get('uploadTimeout'));
-            //     resolve(_this);
-            // } else {
-            //     _this.set('_stopPromise', {
-            //         resolve: resolve,
-            //         reject: reject
-            //     });
-            // }
+            if (!_this.get('_isuploaded')) {
+                _this.set('_stopPromise', {
+                    resolve: resolve,
+                    reject: reject
+                });
+            }
         });
         return _stopPromise;
     },
