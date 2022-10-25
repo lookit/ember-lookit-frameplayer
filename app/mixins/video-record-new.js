@@ -534,7 +534,7 @@ export default Ember.Mixin.create({
         console.log('video record mixin: when possible to record observer');
         if (this.get('doUseCamera') && this.get('startRecordingAutomatically')) {
             var _this = this;
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
+            if (this.get('recorder.hasCamAccess') && this.get('recorderReady') && !(this.get('recording'))) {
                 this.startRecorder().then(() => {
                     console.log('video record mixin: start recorder fulfilled (when possible to record observer function)');
                     _this.set('recorderReady', false);
