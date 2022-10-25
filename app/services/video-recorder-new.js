@@ -274,7 +274,6 @@ const VideoRecorder = Ember.Object.extend({
                     _this.set('videoName', videoFilename);
                     _this.set('audioOnly', audioOnly);
                     _this.set('autosave', autosave);
-                    _this.set('checkMic', checkMic);
                     // set up hooks
                     _this.get('hooks').forEach(function(hookName) {
                         // At the time the hook is actually called, look up the appropriate
@@ -308,12 +307,7 @@ const VideoRecorder = Ember.Object.extend({
             }
 
             const setupMicCheck = (stream) => {
-                if (this.get('_micChecked')) {
-                    resolve();  // resolve the install promise without re-running the mic check
-                } else if (!this.get('checkMic')) {
-                    this.set('_micChecked', true);
-                    resolve(); // resolve the install promise without checking mic
-                } else if (stream !== null) {
+                if (stream !== null) {
                     console.log('setup mic check fired');
                 
                     let audioContext = new AudioContext();
@@ -470,14 +464,6 @@ const VideoRecorder = Ember.Object.extend({
                 window.clearTimeout(_this.get('uploadTimeout'));
                 reject();
             }, maxUploadTimeMs));
-            // TO DO: this is a temporary way to mimic the saving/upload step and resolve the stop promise
-            setTimeout(() => {
-                const vidBlob = _this.get('recorder').recordRTC.getBlob();
-                invokeSaveAsDialog(vidBlob, 'test.webm');
-                _this._onUploadDone(_this.get('recorderId')); // clears the upload timeout
-                resolve(_this);
-            }, 1000);
-
             if (!_this.get('_isuploaded')) {
                 _this.set('_stopPromise', {
                     resolve: resolve,
