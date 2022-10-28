@@ -97,6 +97,7 @@ const VideoRecorder = Ember.Object.extend({
     nMics: Ember.computed.alias('_nMics').readOnly(), // number of microphones available for recording
     recording: Ember.computed.alias('_recording').readOnly(),
     hasCreatedRecording: Ember.computed.alias('_hasCreatedRecording').readOnly(),
+    micChecked: Ember.computed.alias('_micChecked'),
 
     connected: false,
     uploadTimeout: null, // timer counting from attempt to stop until we should just resolve the stopPromise
@@ -104,6 +105,7 @@ const VideoRecorder = Ember.Object.extend({
     maxRecordingTime: null,
     audioOnly: null, // TO DO: if 1, record audio only
     autosave: null, // TO DO: if 1, trigger saving when recorder stops
+    checkMic: null,
 
     _started: false,
     _startTime: null,
@@ -113,6 +115,8 @@ const VideoRecorder = Ember.Object.extend({
     _hasCreatedRecording: false,
     _nWebcams: 0,
     _nMics: 0,
+    _minVolume: 0.1, // Volume required to pass mic check
+    _micChecked: false, // Has the microphone ever exceeded minVolume?
     _recordPromise: null,
     _stopTimeout: null,
     _stopPromise: null,
@@ -147,9 +151,6 @@ const VideoRecorder = Ember.Object.extend({
         'ondataavailable'
     ],
 
-    minVolume: 0.1, // Volume required to pass mic check
-    micChecked: false, // Has the microphone ever exceeded minVolume?
-
     /**
      * Install a recorder onto the page and optionally begin recording immediately.
      *
@@ -158,10 +159,11 @@ const VideoRecorder = Ember.Object.extend({
      * @param maxRecordingTime recording length limit in s [100000000]
      * @param autosave whether to autosave - 1 or 0 [1] // TO DO
      * @param audioOnly whether to do audio only recording - 1 or 0 [0] // TO DO
+     * @param checkMic boolean, whether a mic check must be passed before resolving the install promise
      * @return {Promise} Resolves when widget successfully installed and started
      */
 
-    install(videoFilename = '', maxRecordingTime = 100000000, autosave = 1, audioOnly = 0) {
+    install(videoFilename = '', maxRecordingTime = 100000000, autosave = 1, audioOnly = 0, checkMic = false) {
         console.log('video recorder service: install');
         let origDivId = this.get('divId');
 
@@ -272,6 +274,7 @@ const VideoRecorder = Ember.Object.extend({
                     _this.set('videoName', videoFilename);
                     _this.set('audioOnly', audioOnly);
                     _this.set('autosave', autosave);
+                    _this.set('checkMic', checkMic);
                     // set up hooks
                     _this.get('hooks').forEach(function(hookName) {
                         // At the time the hook is actually called, look up the appropriate
@@ -305,7 +308,12 @@ const VideoRecorder = Ember.Object.extend({
             }
 
             const setupMicCheck = (stream) => {
-                if (stream !== null) {
+                if (this.get('_micChecked')) {
+                    resolve();  // resolve the install promise without re-running the mic check
+                } else if (!this.get('checkMic')) {
+                    this.set('_micChecked', true);
+                    resolve(); // resolve the install promise without checking mic
+                } else if (stream !== null) {
                     console.log('setup mic check fired');
                 
                     let audioContext = new AudioContext();
@@ -597,9 +605,9 @@ const VideoRecorder = Ember.Object.extend({
 
     _onMicActivityLevel(recorderId, currentActivityLevel) { // eslint-disable-line no-unused-vars
         console.log('video recorder service: on mic activity level fired');
-        if (currentActivityLevel > this.get('minVolume')) {
+        if (currentActivityLevel > this.get('_minVolume')) {
             console.log('mic check complete');
-            this.set('micChecked', true);
+            this.set('_micChecked', true);
             // Remove the handler so we're not running this every single mic sample from now on
             this.set('_onMicActivityLevel', null);
             // This would remove the handler from the actual recorder, but we might have
