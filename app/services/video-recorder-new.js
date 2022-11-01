@@ -1,12 +1,10 @@
 import Ember from 'ember';
-// import { RecordRTCPromisesHandler } from 'recordrtc'; // TO DO: why doesn't this work?
+import { invokeSaveAsDialog, RecordRTCPromisesHandler } from 'recordrtc'; 
 
 /* OMIT FROM YUIDOC *
  * @module exp-player
  * @submodule services
  */
-
-// import { isNull } from 'lodash';
 
 let {
     $,
