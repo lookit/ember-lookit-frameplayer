@@ -452,16 +452,6 @@ const VideoRecorder = Ember.Object.extend({
         if (this.get('_stopTimeout') !== null) {
             window.clearTimeout(this.get('_stopTimeout'));
         }
-        var recorder = this.get('recorder');
-        if (recorder) {
-            try {
-                await recorder.stopRecording();
-                this.set('_recording', false);
-                await this.get('s3').completeUpload();
-            } catch (e) {
-                console.log('error stopping video: ', e);
-            }
-        }
         var _this = this;
         var _stopPromise = new RSVP.Promise((resolve, reject) => {
             console.log('video recorder service: stop promise');
@@ -478,6 +468,17 @@ const VideoRecorder = Ember.Object.extend({
                 });
             }
         });
+        var recorder = this.get('recorder');
+        if (recorder) {
+            try {
+                this.set('_recording', false);
+                await recorder.stopRecording();
+                await this.get('s3').completeUpload();
+                this._onUploadDone(this.get('recorderId')); // clears the upload timeout, sets isuploaded to true, resolves stop promise
+            } catch (e) {
+                console.log('error stopping video: ', e);
+            }
+        }
         return _stopPromise;
     },
 
