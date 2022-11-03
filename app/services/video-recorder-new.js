@@ -434,7 +434,7 @@ const VideoRecorder = Ember.Object.extend({
     getTime() {
         let recorder = this.get('recorder');
         if (recorder && this._started && this._startTime) {
-            let ts = Math.round(performance.now - this._startTime);
+            let ts = Math.round(performance.now() - this._startTime);
             console.log('time: ' + ts);
             return ts; 
         }
