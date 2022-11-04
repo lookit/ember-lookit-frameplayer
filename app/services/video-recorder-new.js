@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import { RecordRTCPromisesHandler } from 'recordrtc'; 
 import S3 from './s3';
 
 /* OMIT FROM YUIDOC *

@@ -18,6 +18,7 @@ module.exports = {
         'moment': false,
         'jsPDF': false,
         'Ajv': false,
+        'RecordRTCPromisesHandler': false
         //'PipeSDK': false
     },
     rules: { // 'warn', 'error', or 'off'
