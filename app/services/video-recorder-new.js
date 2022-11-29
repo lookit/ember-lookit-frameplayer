@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import S3 from './s3';
+//import S3 from './s3';
 
 /* OMIT FROM YUIDOC *
  * @module exp-player
@@ -274,7 +274,7 @@ const VideoRecorder = Ember.Object.extend({
                     _this.set('autosave', autosave);
 
                     // Filename doesn't have an extension.
-                    _this.set('s3', new S3(`${videoFilename}.webm`));
+                    //_this.set('s3', new S3(`${videoFilename}.webm`));
                     
                     // set up hooks
                     _this.get('hooks').forEach(function(hookName) {
@@ -297,13 +297,6 @@ const VideoRecorder = Ember.Object.extend({
                         let id = _this.get('recorderId');
                         _this.get('onCamAccess').call(_this, id, true); // recId, hasAccess
                     }
-                    // TO DO: need to attach callbacks for native RecordRTC hooks?
-                    // if (_this.get('_onStateChanged')) {
-                    //     thisRecorder._this.get('_onStateChanged')
-                    // }
-                    // if (_this.get('_onRecordingStopped')) {
-                    //     thisRecorder._this.get('_onRecordingStopped')
-                    // }
                     return stream;
                 }
             }
@@ -358,7 +351,7 @@ const VideoRecorder = Ember.Object.extend({
      * @method record
      * @return {Promise}
      */
-    async record() {
+    record() {
         console.log('video recorder service: record');
         if (!this.get('started')) {
             throw new Error('Must call install before record');
@@ -385,15 +378,11 @@ const VideoRecorder = Ember.Object.extend({
 
         //     return null;
         // }, 100); // try every 100ms
-        // TO DO: remove the cam access trigger, since it is called during install?
-        // if (_this.get('onCamAccess')) {
-        //     _this.get('onCamAccess').call(_this, false);
-        // }
         if (!_this.get('recorder') || !(_this.get('recorder').startRecording)) {
             return null;
         }
         
-        await _this.get('s3').createUpload();
+        //await _this.get('s3').createUpload();
 
         _this.get('recorder').startRecording()
             .then(()=> {
@@ -472,7 +461,7 @@ const VideoRecorder = Ember.Object.extend({
             try {
                 this.set('_recording', false);
                 await recorder.stopRecording();
-                await this.get('s3').completeUpload();
+                //await this.get('s3').completeUpload();
                 this._onUploadDone(this.get('recorderId')); // clears the upload timeout, sets isuploaded to true, resolves stop promise
             } catch (e) {
                 console.log('error stopping video: ', e);
@@ -493,7 +482,6 @@ const VideoRecorder = Ember.Object.extend({
                 if (curr_state == "recording") {
                     this.get('recorder').pauseRecording()
                         .then(() => {
-                            //this.set('_recording', false); // handle via the onStateChanged callback?
                             resolve();
                         })
                         .catch((err) => {
@@ -520,7 +508,6 @@ const VideoRecorder = Ember.Object.extend({
                 if (curr_state == "paused") {
                     this.get('recorder').resumeRecording()
                         .then(() => {
-                            //this.set('_recording', true); // handle via the onStateChanged callback?
                             resolve();
                         })
                         .catch((err) => {
@@ -566,7 +553,6 @@ const VideoRecorder = Ember.Object.extend({
         console.log('video recorder service: on recording started fired');
         this.set('_recording', true);
         this.set('_hasCreatedRecording', true);
-        this.set('videoName', 'test'); // this.get('recorder').getStreamName() // TO DO - figure out file names
         if (this.get('_recordPromise')) {
             this.get('_recordPromise').resolve(this);
         }
@@ -646,23 +632,8 @@ const VideoRecorder = Ember.Object.extend({
     }, 
 
     _ondataavailable(blob) {
-        this.get('s3').onDataAvailable(blob);
-
-        // this._blobs.push(blob);
-        // // TO DO: this will fire if recording is paused, should only upload if recording is finished/stopped
-        // if (!this.get('_recording')) {
-        //     try {
-        //         const vidBlob = new Blob(this._blobs);
-        //         // TO DO: this is just a local save for testing
-        //         invokeSaveAsDialog(vidBlob, 'test.webm');
-        //         this._onUploadDone(this.get('recorderId')); // clears the upload timeout, sets isuploaded to true, resolves stop promise
-        //     } catch(err) {
-        //         console.error('error saving video: ', err);
-        //         if (this.get('_stopPromise')) {
-        //             this.get('_stopPromise').reject();
-        //         }
-        //     }
-        // }
+        //this.get('s3').onDataAvailable(blob);
+        this._blobs.push(blob);
     }
 
     // End webcam hooks
