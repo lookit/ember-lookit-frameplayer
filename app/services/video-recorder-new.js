@@ -434,7 +434,7 @@ const VideoRecorder = Ember.Object.extend({
      * @method stop
      * @return {Promise}
      */
-    async stop(maxUploadTimeMs = 5000) {
+    stop(maxUploadTimeMs = 5000) {
         console.log('video recorder service: stop');
         
         if (this.get('_stopTimeout') !== null) {
@@ -459,9 +459,9 @@ const VideoRecorder = Ember.Object.extend({
         var recorder = this.get('recorder');
         if (recorder) {
             try {
-                this.set('_recording', false);
-                await recorder.stopRecording();
+                recorder.stopRecording();
                 //await this.get('s3').completeUpload();
+                _this.get('recorder').onRecordingStopped.call(_this); 
                 this._onUploadDone(this.get('recorderId')); // clears the upload timeout, sets isuploaded to true, resolves stop promise
             } catch (e) {
                 console.log('error stopping video: ', e);
@@ -628,8 +628,21 @@ const VideoRecorder = Ember.Object.extend({
     },
 
     _onRecordingStopped() {
-        console.log('recorder stopped');
-    }, 
+        console.log('video recorder service: recorder stopped callback');
+        this.set('_recording', false);
+        try {
+            const vidBlob = new Blob(this._blobs);
+            const vidName = this.get('videoName');
+            // TO DO: this is just a local save for testing
+            invokeSaveAsDialog(vidBlob, vidName+'.webm');
+            this._onUploadDone(this.get('recorderId'), vidName);  // clears the upload timeout, sets isuploaded to true, resolves stop promise
+        } catch(err) {
+            console.error('error saving video: ', err);
+            if (this.get('_stopPromise')) {
+                this.get('_stopPromise').reject();
+            }
+        }
+    },
 
     _ondataavailable(blob) {
         //this.get('s3').onDataAvailable(blob);
