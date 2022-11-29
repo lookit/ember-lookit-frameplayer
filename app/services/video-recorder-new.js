@@ -304,32 +304,35 @@ const VideoRecorder = Ember.Object.extend({
             const setupMicCheck = (stream) => {
                 if (stream !== null) {
                     console.log('setup mic check fired');
-                
-                    let audioContext = new AudioContext();
-                    let microphone = audioContext.createMediaStreamSource(stream);
-
-                    audioContext.audioWorklet.addModule('assets/mic-check-processor.js').then(() => {
-                        const processorNode = new AudioWorkletNode(audioContext, 'mic-check-processor');
-                        this.set('_processorNode', processorNode);
-                        microphone.connect(processorNode).connect(audioContext.destination);
-                        var _this = this;
-                        processorNode.port.onmessage = (event) => {
-                            // handle message from the processor: event.data
-                            if (_this.get('recorder').onMicActivityLevel) {
-                                if ('data' in event && 'volume' in event.data) {
-                                    let id = _this.get('recorderId');
-                                    _this.get('recorder').onMicActivityLevel.call(_this, id, event.data.volume);
+                    if (checkMic) {
+                        let audioContext = new AudioContext();
+                        let microphone = audioContext.createMediaStreamSource(stream);
+                        audioContext.audioWorklet.addModule('assets/mic-check-processor.js').then(() => {
+                            const processorNode = new AudioWorkletNode(audioContext, 'mic-check-processor');
+                            this.set('_processorNode', processorNode);
+                            microphone.connect(processorNode).connect(audioContext.destination);
+                            var _this = this;
+                            processorNode.port.onmessage = (event) => {
+                                // handle message from the processor: event.data
+                                if (_this.get('recorder').onMicActivityLevel) {
+                                    if ('data' in event && 'volume' in event.data) {
+                                        let id = _this.get('recorderId');
+                                        _this.get('recorder').onMicActivityLevel.call(_this, id, event.data.volume);
+                                    }
+                                } else {
+                                    return false;
                                 }
-                            } else {
-                                return false;
                             }
-                        }
-                        resolve(); // resolve the install promise after mic check has been set up
-                    });
+                            resolve(); // resolve the install promise after mic check has been set up
+                        });
+                    } else {
+                        this._completeMicCheck();
+                        resolve(); // skip mic check and resolve the install promise
+                    }
                 } else {
                     reject();
                 }
-            }
+            };
 
             const catch_install_error = (err) => {
                 console.error(`${err.name}: ${err.message}`);
@@ -548,6 +551,20 @@ const VideoRecorder = Ember.Object.extend({
         this.set(hookName, func);
     },
 
+    // private helper function
+    _completeMicCheck() {
+        console.log('mic check complete');
+        this.set('_micChecked', true);
+        // Remove the handler so we're not running this every single mic sample from now on
+        this.set('_onMicActivityLevel', null);
+        // This would remove the handler from the actual recorder, but we might have
+        // something added by a consuming frame via the 'on' fn
+        this.get('recorder').onMicActivityLevel = null; //function (recorderId, currentActivityLevel) {}; // eslint-disable-line no-unused-vars
+        if (this.get('_processorNode') !== null) {
+            this.get('_processorNode').port.postMessage({micChecked: true});
+        }
+    },
+
     // Begin webcam hooks (names are a carryover from Pipe)
     _onRecordingStarted(recorderId) { // eslint-disable-line no-unused-vars
         console.log('video recorder service: on recording started fired');
@@ -593,14 +610,7 @@ const VideoRecorder = Ember.Object.extend({
     _onMicActivityLevel(recorderId, currentActivityLevel) { // eslint-disable-line no-unused-vars
         console.log('video recorder service: on mic activity level fired');
         if (currentActivityLevel > this.get('_minVolume')) {
-            console.log('mic check complete');
-            this.set('_micChecked', true);
-            // Remove the handler so we're not running this every single mic sample from now on
-            this.set('_onMicActivityLevel', null);
-            // This would remove the handler from the actual recorder, but we might have
-            // something added by a consuming frame via the 'on' fn
-            this.get('recorder').onMicActivityLevel = null; //function (recorderId, currentActivityLevel) {}; // eslint-disable-line no-unused-vars
-            this.get('_processorNode').port.postMessage({micChecked: true});
+            this._completeMicCheck();
         }
     },
 
