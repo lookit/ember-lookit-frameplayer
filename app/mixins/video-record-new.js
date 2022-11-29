@@ -166,7 +166,7 @@ export default Ember.Mixin.create({
      * @property {Boolean} checkMic
      * @default false
      */
-     checkMic: false,
+    checkMic: false,
 
     /**
      * Whether to use the camera in this frame. Consuming frame should set this property

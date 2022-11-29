@@ -644,7 +644,7 @@ const VideoRecorder = Ember.Object.extend({
             const vidBlob = new Blob(this._blobs);
             const vidName = this.get('videoName');
             // TO DO: this is just a local save for testing
-            invokeSaveAsDialog(vidBlob, vidName+'.webm');
+            invokeSaveAsDialog(vidBlob, vidName+'.webm');  // eslint-disable-line no-undef
             this._onUploadDone(this.get('recorderId'), vidName);  // clears the upload timeout, sets isuploaded to true, resolves stop promise
         } catch(err) {
             console.error('error saving video: ', err);
