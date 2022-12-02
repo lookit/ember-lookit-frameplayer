@@ -121,7 +121,6 @@ const VideoRecorder = Ember.Object.extend({
     _isuploaded: false, // TO DO
     _processorNode: null,
     _lastState: null,
-    _blobs: [],
 
     recorder: null, // The actual recorder object
 
@@ -541,7 +540,6 @@ const VideoRecorder = Ember.Object.extend({
         // reset to initial values: user has cam mic, cam access, mic checked?
         this.set('_userHasCamMic', false);
         this.set('_camAccess', false);
-        this.set('_blobs', []);
     },
 
     on(hookName, func) {
@@ -640,23 +638,10 @@ const VideoRecorder = Ember.Object.extend({
     _onRecordingStopped() {
         console.log('video recorder service: recorder stopped callback');
         this.set('_recording', false);
-        try {
-            const vidBlob = new Blob(this._blobs);
-            const vidName = this.get('videoName');
-            // TO DO: this is just a local save for testing
-            invokeSaveAsDialog(vidBlob, vidName+'.webm');  // eslint-disable-line no-undef
-            this._onUploadDone(this.get('recorderId'), vidName);  // clears the upload timeout, sets isuploaded to true, resolves stop promise
-        } catch(err) {
-            console.error('error saving video: ', err);
-            if (this.get('_stopPromise')) {
-                this.get('_stopPromise').reject();
-            }
-        }
     },
 
     _ondataavailable(blob) {
         this.get('s3').onDataAvailable(blob);
-        this._blobs.push(blob);
     }
 
     // End webcam hooks
