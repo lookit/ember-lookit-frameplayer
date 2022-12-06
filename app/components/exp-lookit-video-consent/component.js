@@ -43,7 +43,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     hasCheckedVideo: false,
     hasMadeVideo: false,
     showWarning: false,
-    checkMic: true,
 
     startRecorderAndUpdateDisplay() {
         console.log('video consent component: start recorder and update display');
