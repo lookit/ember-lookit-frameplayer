@@ -2,7 +2,7 @@ import Em from 'ember';
 
 import layout from './template';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
-import VideoRecord from '../../mixins/video-record-new';
+import VideoRecord from '../../mixins/video-record';
 
 let {
     $

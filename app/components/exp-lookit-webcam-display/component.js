@@ -1,5 +1,5 @@
 import ExpFrameBaseComponent from '../exp-frame-base/component';
-import VideoRecord from '../../mixins/video-record-new';
+import VideoRecord from '../../mixins/video-record';
 import layout from './template';
 /**
  * @module exp-player

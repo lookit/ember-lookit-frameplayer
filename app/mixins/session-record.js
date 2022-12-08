@@ -130,7 +130,7 @@ export default Ember.Mixin.create({
      * @return {Promise} A promise representing the result of installing the recorder
      */
     setupSessionRecorder(recorderElementId) {
-
+        console.log('session recorder mixin: set up session recorder');
         var $sessionRecorderElement = $('<div>', {
             id: recorderElementId,
             class: 'video-recorder-hidden'
@@ -145,9 +145,7 @@ export default Ember.Mixin.create({
         const sessionVideoId = this._generateSessionVideoId();
         this.get('session').set('videoId', sessionVideoId);
         const sessionRecorder = new VideoRecorder({element: $element});
-        const pipeLoc = Ember.getOwner(this).resolveRegistration('config:environment').pipeLoc;
-        const pipeEnv = Ember.getOwner(this).resolveRegistration('config:environment').pipeEnv;
-        const installPromise = sessionRecorder.install(sessionVideoId, pipeLoc, pipeEnv,
+        const installPromise = sessionRecorder.install(sessionVideoId, 
             maxRecordingLength, autosave, this.get('sessionAudioOnly'));
 
         // Track specific events for all frames that use VideoRecorder
@@ -180,6 +178,7 @@ export default Ember.Mixin.create({
      * @return Promise Resolves when recording has started
      */
     startSessionRecorder() {
+        console.log('session recorder mixin: start recorder');
         const sessionRecorder = this.get('sessionRecorder');
         if (sessionRecorder) {
             var _this = this;
@@ -190,7 +189,7 @@ export default Ember.Mixin.create({
                  * @event startSessionRecording
                  */
                 _this.send('setTimeEvent', 'startSessionRecording', {
-                    sessionPipeId: sessionRecorder.get('pipeVideoName')
+                    sessionPipeId: sessionRecorder.get('videoName')
                 });
             });
         } else {
@@ -204,6 +203,7 @@ export default Ember.Mixin.create({
      * @return Promise Resolves when recording has been uploaded or timed out
      */
     stopSessionRecorder() {
+        console.log('session record mixin: stop recorder');
         const sessionRecorder = this.get('sessionRecorder');
         if (sessionRecorder) {
             /**
@@ -223,6 +223,7 @@ export default Ember.Mixin.create({
      * @method destroySessionRecorder
      */
     destroySessionRecorder() {
+        console.log('session record mixin: destroy recorder');
         const recorder = this.get('sessionRecorder');
         if (recorder) {
             if (!(this.get('isDestroyed') || this.get('isDestroying'))) {
@@ -257,6 +258,7 @@ export default Ember.Mixin.create({
     // fallback to stop if leaving via closing the window, etc. and also handles
     // actually destroying the recorder any time the component is destroyed.
     willDestroyElement() {
+        console.log('session record mixin: will destroy element');
         var _this = this;
         if (this.get('sessionRecorder') && this.get('endSessionRecording')) {
             if (!(this.get('session').get('recordingInProgress'))) {
@@ -284,10 +286,12 @@ export default Ember.Mixin.create({
      * @method whenPossibleToRecordSessionObserver
      */
     whenPossibleToRecordSessionObserver: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
+        console.log('session record mixin: when possible to record observer');
         if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
             if (this.get('startSessionRecording')) {
                 var _this = this;
                 this.startSessionRecorder().then(() => {
+                    console.log('session record mixin: start recorder fulfilled (when possible to record observer function)');
                     _this.send('setTimeEvent', 'startedSessionRecording');
                     _this.set('sessionRecorderReady', false);
                     _this.onSessionRecordingStarted();

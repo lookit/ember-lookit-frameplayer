@@ -2,8 +2,8 @@ import Em from 'ember';
 import layout from './template';
 
 import ExpFrameBaseComponent from '../exp-frame-base/component';
-import VideoRecord from '../../mixins/video-record-new';
-import { LOOKIT_PREFERRED_DEVICES } from '../../services/video-recorder-new';
+import VideoRecord from '../../mixins/video-record';
+import { LOOKIT_PREFERRED_DEVICES } from '../../services/video-recorder';
 import { observer } from '@ember/object';
 
 let {

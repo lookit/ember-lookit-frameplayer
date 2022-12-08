@@ -2,7 +2,7 @@ import layout from './template';
 
 import Ember from 'ember';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
-import VideoRecord from '../../mixins/video-record-new';
+import VideoRecord from '../../mixins/video-record';
 import { observer } from '@ember/object';
 
 let {
