@@ -220,7 +220,7 @@ prompt_only_adults [Boolean | ``false``]
     This is for occasional studies running an adult comparison group.
 
 consent_statement_text [String]
-    Replace the default consent prompt with your custom text.
+    [Templates 5+ only] Replace the default spoken consent statement with your custom text.
 
 omit_injury_phrase [Boolean | ``false``]
     [Templates 5+ only] Whether to omit the phrase "or in the very unlikely event of a research-related injury" from
