@@ -11,5 +11,6 @@ export default DS.Model.extend({
     study: DS.belongsTo('study'),
     demographicSnapshot: DS.belongsTo('demographic'),
     createdOn: DS.attr('date'),
-    isPreview: DS.attr('boolean', {defaultValue: false})
+    isPreview: DS.attr('boolean', {defaultValue: false}),
+    hash_child_id: DS.attr('string')
 });

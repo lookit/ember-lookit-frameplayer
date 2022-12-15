@@ -150,7 +150,7 @@
         </div>
 
         <div class="well video-consent-prompt">
-            <span class="breaklines exp-lookit-video-consent-prompt">"{{#if prompt_only_adults}}{{ t "exp-lookit-video-consent.prompt-adult-only" }}{{else}}{{ t "exp-lookit-video-consent.prompt" }}{{/if}}"</span>
+            <span class="breaklines exp-lookit-video-consent-prompt">"{{#if consent_statement_text}}{{consent_statement_text}}{{else if prompt_only_adults}}{{ t "exp-lookit-video-consent.prompt-adult-only"}}{{else}}{{t "exp-lookit-video-consent.prompt"}}{{/if}}"</span>
         </div>
 
         {{#if prompt_all_adults}}
