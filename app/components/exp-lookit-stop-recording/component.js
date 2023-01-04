@@ -129,16 +129,16 @@ export default ExpFrameBaseComponent.extend(ExpandAssets, {
         });
 
         this.set('progressTimer', window.setInterval(function() {
-            let msg = $('.pipeMsgOverlay').html();
-            let match = msg.match(/\d*%/);
-            if (match) {
-                $('#progress').html(`Uploading video... ${match[0]}`);
-                $('.progress-bar').css('width', match);
-                _this.set('hasStartedUpload', true);
-            } else if (msg) {
-                $('#progress').html(msg);
-            } else {
-                $('#progress').html('Uploading video...')
+            $('#progress').html('Uploading video...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+            if (!_this.get('_recording') && _this.get('sessionRecorder').s3.hasStartedCompletingUpload) {
+                const percComplete = _this.get('sessionRecorder').s3.percentUploadComplete;
+                if (percComplete > 0) {
+                    _this.set('hasStartedUpload', true);
+                }
+                let progressPercStr = percComplete.toString()+'%';
+                $('#progress').html(`Uploading video... ${progressPercStr}`);
+                $('.progress-bar').css('width', progressPercStr);
+                            
             }
         }, 100));
 

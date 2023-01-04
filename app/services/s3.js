@@ -7,6 +7,8 @@ class S3 {
         this.blobParts = [];
         this.promises = [];
         this.partNumber = 1;
+        this.partsUploaded = 0;
+        this.hasStartedCompletingUpload = false;
         // eslint-disable-next-line no-undef
         this.s3 = new AWS.S3({
             credentials: {
@@ -20,6 +22,10 @@ class S3 {
         return this.blobParts.reduce((p, c) => {
             return p + c.size;
         }, 0);
+    }
+
+    get percentUploadComplete() {
+        return Math.floor((this.partsUploaded / this.partNumber) * 100);
     }
 
     async createUpload() {
@@ -44,6 +50,8 @@ class S3 {
                     UploadId: this.uploadId,
                 }).promise();
 
+                this.partsUploaded++;
+
                 return {
                     PartNumber: partNumber,
                     ETag: uploadPartResponse.ETag
@@ -57,6 +65,7 @@ class S3 {
     }
 
     async completeUpload() {
+        this.hasStartedCompletingUpload = true;
         this.addUploadPartPromise();
         this.parts = await Promise.all(this.promises);
 
