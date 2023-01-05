@@ -120,6 +120,12 @@ export default Ember.Mixin.create({
      */
     checkMic: false,
 
+    /** 
+     * Private flag that is set when the async record method is first called 
+     * to prevent record from being called multiple times
+    */
+    _starting: false,
+
     _generateSessionVideoId() {
         return [
             'videoStream',
@@ -296,16 +302,15 @@ export default Ember.Mixin.create({
      */
     whenPossibleToRecordSessionObserver: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
         console.log('session record mixin: when possible to record observer');
-        if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
-            if (this.get('startSessionRecording')) {
-                var _this = this;
-                this.startSessionRecorder().then(() => {
-                    console.log('session record mixin: start recorder fulfilled (when possible to record observer function)');
-                    _this.send('setTimeEvent', 'startedSessionRecording');
-                    _this.set('sessionRecorderReady', false);
-                    _this.onSessionRecordingStarted();
-                });
-            }
+        if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady') && this.get('startSessionRecording') && this.get('sessionRecorder') && !(this.get('sessionRecorder').recording) && !(this.get('_starting'))) {
+            this.set('_starting', true);
+            var _this = this;
+            this.startSessionRecorder().then(() => {
+                console.log('session record mixin: start recorder fulfilled (when possible to record observer function)');
+                _this.send('setTimeEvent', 'startedSessionRecording');
+                _this.set('sessionRecorderReady', false);
+                _this.onSessionRecordingStarted();
+            });
         }
     })
 
