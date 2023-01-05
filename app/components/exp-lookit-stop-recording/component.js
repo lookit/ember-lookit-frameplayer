@@ -134,11 +134,11 @@ export default ExpFrameBaseComponent.extend(ExpandAssets, {
                 const percComplete = _this.get('sessionRecorder').s3.percentUploadComplete;
                 if (percComplete > 0) {
                     _this.set('hasStartedUpload', true);
+                    window.clearInterval(_this.get('allowProceedTimer'));
                 }
                 let progressPercStr = percComplete.toString()+'%';
                 $('#progress').html(`Uploading video... ${progressPercStr}`);
                 $('.progress-bar').css('width', progressPercStr);
-                            
             }
         }, 100));
 
