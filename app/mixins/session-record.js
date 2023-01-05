@@ -226,6 +226,7 @@ export default Ember.Mixin.create({
              *
              * @event stopSessionRecording
              */
+            this.get('session').set('recordingInProgress',false);
             this.send('setTimeEvent', 'stopSessionRecording');
             return sessionRecorder.stop(this.get('sessionMaxUploadSeconds') * 1000);
         } else {
@@ -275,7 +276,7 @@ export default Ember.Mixin.create({
     willDestroyElement() {
         console.log('session record mixin: will destroy element');
         var _this = this;
-        if (this.get('sessionRecorder') && this.get('endSessionRecording')) {
+        if (this.get('sessionRecorder') && this.get('endSessionRecording') && this.get('sessionRecorder').recording) {
             if (!(this.get('session').get('recordingInProgress'))) {
                 this.destroySessionRecorder();
             } else {
