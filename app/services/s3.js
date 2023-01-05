@@ -57,7 +57,7 @@ class S3 {
                     ETag: uploadPartResponse.ETag
                 };
             } catch (_err) {
-                console.log('s3 upload part ', partNumber, ' error: ', _err);
+                console.warn('s3 upload part ', partNumber, ' error: ', _err);
                 err = _err;
                 retry += 1;
             }
