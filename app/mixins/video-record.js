@@ -304,7 +304,6 @@ export default Ember.Mixin.create({
      * @return {Promise} A promise representing the result of installing the recorder
      */
     setupRecorder(element) {
-        console.log('video record mixin: set up recorder');
         const videoId = this._generateVideoId();
         this.set('videoId', videoId);
         const recorder = new VideoRecorder({element: element});
@@ -314,7 +313,6 @@ export default Ember.Mixin.create({
         // Track specific events for all frames that use VideoRecorder
         var _this = this;
         recorder.on('onCamAccess', (recId, hasAccess) => {   // eslint-disable-line no-unused-vars
-            console.log('video record mixin: on cam access fired');
             _this.get('recorder').set('hasCamAccess', hasAccess);
             if (!(_this.get('isDestroyed') || _this.get('isDestroying'))) {
                 _this.send('setTimeEvent', 'recorder.hasCamAccess', {
@@ -323,7 +321,6 @@ export default Ember.Mixin.create({
             }
         });
         recorder.on('onConnectionStatus', (recId, status) => {   // eslint-disable-line no-unused-vars
-            console.log('video record mixin: on connection status fired');
             if (!(_this.get('isDestroyed') || _this.get('isDestroying'))) {
                 _this.send('setTimeEvent', 'videoStreamConnection', {
                     status: status
@@ -344,11 +341,9 @@ export default Ember.Mixin.create({
      * @return Promise Resolves when recording has started
      */
     startRecorder() {
-        console.log('video record mixin: start recorder');
         const recorder = this.get('recorder');
         if (recorder) {
             return recorder.record().then(() => {
-                console.log('video record mixin: record promise fulfilled (start recorder function)');
                 this.send('setTimeEvent', 'startRecording', {
                     pipeId: recorder.get('videoName') // TO DO: change 'pipeId' to something else 
                 });
@@ -369,7 +364,6 @@ export default Ember.Mixin.create({
      * @return Promise A promise that resolves when upload is complete
      */
     stopRecorder() {
-        console.log('video record mixin: stop recorder');
         const recorder = this.get('recorder');
         if (recorder && recorder.get('recording')) {
             this.send('setTimeEvent', 'stoppingCapture');
@@ -401,7 +395,6 @@ export default Ember.Mixin.create({
      * @method destroyRecorder
      */
     destroyRecorder() {
-        console.log('video record mixin: destroy recorder');
         const recorder = this.get('recorder');
         if (recorder) {
             if (!(this.get('isDestroyed') || this.get('isDestroying'))) {
@@ -412,7 +405,6 @@ export default Ember.Mixin.create({
     },
 
     willDestroyElement() {
-        console.log('video record mixin: will destroy element');
         var _this = this;
         if (_this.get('recorder')) {
             window.clearTimeout(_this.get('recorder').get('uploadTimeout'));
@@ -420,7 +412,6 @@ export default Ember.Mixin.create({
                 _this.destroyRecorder();
             } else {
                 _this.stopRecorder().then(() => {
-                    console.log('video record mixin: stop recorder promise fulfilled (will destroy element function)');
                     _this.set('stoppedRecording', true);
                     _this.destroyRecorder();
                 }, () => {
@@ -432,7 +423,6 @@ export default Ember.Mixin.create({
     },
 
     didReceiveAttrs() {
-        console.log('video record mixin: did receive attributes');
         let assets = this.get('assetsToExpand') ? this.get('assetsToExpand') : {};
         let additionalAssetsToExpand = {
             image: ['waitForUploadImage'],
@@ -457,7 +447,6 @@ export default Ember.Mixin.create({
     },
 
     didInsertElement() {
-        console.log('video record mixin: did insert element');
         // Give any active session recorder precedence over individual-frame recording
         if (this.get('sessionRecorder') && this.get('session').get('recordingInProgress') && this.get('doUseCamera')) {
             console.warn('Recording on this frame was specified, but session recording is already active. Not making frame recording.');
@@ -511,7 +500,6 @@ export default Ember.Mixin.create({
 
             var _this = this;
             this.setupRecorder(this.$(this.get('recorderElement'))).then(() => {
-                console.log('video record mixin: set up recorder promise fulfilled (did insert element function)');
                 /**
                  * When video recorder has been installed
                  *
@@ -539,12 +527,10 @@ export default Ember.Mixin.create({
      * @method whenPossibleToRecordObserver
      */
     whenPossibleToRecordObserver: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        console.log('video record mixin: when possible to record observer');
         if (this.get('doUseCamera') && this.get('startRecordingAutomatically')) {
             var _this = this;
             if (this.get('recorder.hasCamAccess') && this.get('recorderReady') && !(this.get('recording'))) {
                 this.startRecorder().then(() => {
-                    console.log('video record mixin: start recorder fulfilled (when possible to record observer function)');
                     _this.set('recorderReady', false);
                     _this.hideWaitForVideoCover();
                     _this.onRecordingStarted();
@@ -559,7 +545,6 @@ export default Ember.Mixin.create({
      * @method hideRecorder
      */
     hideRecorder() {
-        console.log('video record mixin: hide recorder');
         $(this.get('recorderElement')).parent().addClass('video-recorder-hidden');
     },
 
@@ -569,12 +554,10 @@ export default Ember.Mixin.create({
      * @method showRecorder
      */
     showRecorder() {
-        console.log('video record mixin: show recorder');
         $(this.get('recorderElement')).parent().removeClass('video-recorder-hidden');
     },
 
     init() {
-        console.log('video record mixin: init');
         this._super(...arguments);
         this.set('videoList', []);
     }

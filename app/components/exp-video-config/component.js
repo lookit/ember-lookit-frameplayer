@@ -52,7 +52,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
         // Adapted from the example at https://github.com/webrtc/samples/blob/gh-pages/src/content/devices/input-output/js/main.js
         navigator.mediaDevices.enumerateDevices().then(function(deviceInfos) {
-            console.log('exp-video-config: enumerate devices promise fulfilled');
             selectors.forEach(select => {
                 while (select.firstChild) {
                     select.removeChild(select.firstChild);
@@ -84,7 +83,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     },
 
     reloadRecorder() {
-        console.log('exp-video-config: reload recorder');
         this.destroyRecorder();
         this.setupRecorder(this.$(this.get('recorderElement')));
     },
@@ -92,7 +90,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     actions: {
 
         checkAudioThenNext() {
-            console.log('exp-video-config: check audio then next');
             if (!this.get('checkedWebcamPermissions') || !this.get('micChecked') || !this.get('hasCamAccess')) {
                 this.set('showWarning', true);
             } else {
@@ -101,20 +98,17 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         },
 
         reloadRecorderButton() {
-            console.log('exp-video-config: reload recorder button');
             this.set('showWarning', false);
             this.populateDropdowns();
             this.reloadRecorder();
         },
 
         reloadRecorderButtonAndRecordCheck() {
-            console.log('exp-video-config: reload recorder button and record check');
             this.send('reloadRecorderButton');
             this.set('checkedWebcamPermissions', true);
         },
 
         processSelectedMic() {
-            console.log('exp-video-config: process selected mic');
             var selectedMicId = $('select#audioSource')[0].value;
             if (selectedMicId) {
                 LOOKIT_PREFERRED_DEVICES.mic = selectedMicId;
@@ -123,7 +117,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         },
 
         processSelectedCam() {
-            console.log('exp-video-config: process selected cam');
             var selectedCamId = $('select#videoSource')[0].value;
             if (selectedCamId) {
                 LOOKIT_PREFERRED_DEVICES.cam = selectedCamId;
@@ -161,14 +154,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     },
 
     updateOptions: observer('hasCamAccess', function() {
-        console.log('exp-video-config: update options observer');
         if (this.get('hasCamAccess')) {
             this.populateDropdowns();
         }
     }),
 
     didInsertElement() {
-        console.log('exp-video-config: did insert element');
         this._super(...arguments);
         this.set('screenWidth', screen.width);
         this.set('screenHeight', screen.height);

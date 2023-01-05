@@ -144,7 +144,6 @@ export default Ember.Mixin.create({
      * @return {Promise} A promise representing the result of installing the recorder
      */
     setupSessionRecorder(recorderElementId) {
-        console.log('session recorder mixin: set up session recorder');
         var $sessionRecorderElement = $('<div>', {
             id: recorderElementId,
             class: 'video-recorder-hidden'
@@ -193,7 +192,6 @@ export default Ember.Mixin.create({
      * @return Promise Resolves when recording has started
      */
     startSessionRecorder() {
-        console.log('session recorder mixin: start recorder');
         const sessionRecorder = this.get('sessionRecorder');
         if (sessionRecorder) {
             var _this = this;
@@ -218,7 +216,6 @@ export default Ember.Mixin.create({
      * @return Promise Resolves when recording has been uploaded or timed out
      */
     stopSessionRecorder() {
-        console.log('session record mixin: stop recorder');
         const sessionRecorder = this.get('sessionRecorder');
         if (sessionRecorder) {
             /**
@@ -239,7 +236,6 @@ export default Ember.Mixin.create({
      * @method destroySessionRecorder
      */
     destroySessionRecorder() {
-        console.log('session record mixin: destroy recorder');
         const recorder = this.get('sessionRecorder');
         if (recorder) {
             if (!(this.get('isDestroyed') || this.get('isDestroying'))) {
@@ -274,7 +270,6 @@ export default Ember.Mixin.create({
     // fallback to stop if leaving via closing the window, etc. and also handles
     // actually destroying the recorder any time the component is destroyed.
     willDestroyElement() {
-        console.log('session record mixin: will destroy element');
         var _this = this;
         if (this.get('sessionRecorder') && this.get('endSessionRecording') && this.get('sessionRecorder').recording) {
             if (!(this.get('session').get('recordingInProgress'))) {
@@ -302,12 +297,10 @@ export default Ember.Mixin.create({
      * @method whenPossibleToRecordSessionObserver
      */
     whenPossibleToRecordSessionObserver: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
-        console.log('session record mixin: when possible to record observer');
         if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady') && this.get('startSessionRecording') && this.get('sessionRecorder') && !(this.get('sessionRecorder').recording) && !(this.get('_starting'))) {
             this.set('_starting', true);
             var _this = this;
             this.startSessionRecorder().then(() => {
-                console.log('session record mixin: start recorder fulfilled (when possible to record observer function)');
                 _this.send('setTimeEvent', 'startedSessionRecording');
                 _this.set('sessionRecorderReady', false);
                 _this.onSessionRecordingStarted();
