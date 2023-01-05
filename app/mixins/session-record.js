@@ -159,6 +159,7 @@ export default Ember.Mixin.create({
         // Track specific events for all frames that use VideoRecorder
         var _this = this;
         sessionRecorder.on('onCamAccess', (recId, hasAccess) => {   // eslint-disable-line no-unused-vars
+            _this.get('sessionRecorder').set('hasCamAccess', hasAccess);
             if (!(_this.get('isDestroyed') || _this.get('isDestroying'))) {
                 _this.send('setTimeEvent', 'sessionRecorder.hasCamAccess', {
                     hasCamAccess: hasAccess
