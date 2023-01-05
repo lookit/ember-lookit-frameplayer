@@ -57,6 +57,7 @@ class S3 {
                     ETag: uploadPartResponse.ETag
                 };
             } catch (_err) {
+                console.log('s3 upload part ', partNumber, ' error: ', _err);
                 err = _err;
                 retry += 1;
             }
@@ -76,7 +77,8 @@ class S3 {
                 Parts: this.parts
             },
             UploadId: this.uploadId
-        }).promise();
+        }).promise()
+            .then((resp) => {console.log('s3: upload link: ', resp.Location)});
     }
 
     addUploadPartPromise() {
