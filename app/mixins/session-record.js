@@ -112,6 +112,14 @@ export default Ember.Mixin.create({
      */
     sessionAudioOnly: 0,
 
+    /**
+     * Whether to do check the mic input during recorder set up (before the install promise is resolved). 
+     * Defaults to false and can be overridden by consuming frame.
+     * @property {Boolean} checkMic
+     * @default false
+     */
+    checkMic: false,
+
     _generateSessionVideoId() {
         return [
             'videoStream',
@@ -146,7 +154,7 @@ export default Ember.Mixin.create({
         this.get('session').set('videoId', sessionVideoId);
         const sessionRecorder = new VideoRecorder({element: $element});
         const installPromise = sessionRecorder.install(sessionVideoId, 
-            maxRecordingLength, autosave, this.get('sessionAudioOnly'));
+            maxRecordingLength, autosave, this.get('sessionAudioOnly'), this.get('checkMic'));
 
         // Track specific events for all frames that use VideoRecorder
         var _this = this;
