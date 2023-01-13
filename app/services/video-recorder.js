@@ -117,7 +117,7 @@ const VideoRecorder = Ember.Object.extend({
     _recordPromise: null,
     _stopTimeout: null,
     _stopPromise: null,
-    _isuploaded: false, // TO DO
+    _isuploaded: false,
     _processorNode: null,
     _lastState: null,
 
@@ -131,16 +131,20 @@ const VideoRecorder = Ember.Object.extend({
         'onRecordingStarted', // triggered after the resolution of RecordRTC startRecording promise (TO DO: should fire on change to 'recording' state?)
         'onCamAccess', // triggered by resolution of get user media promise
         'onReadyToRecord',
-        'onUploadDone', // TO DO - related to connection to AWS server
+        'onUploadDone',
         'userHasCamMic', // set after the resolution of the get user media promise
-        'onConnectionStatus', // TO DO - related to connection to AWS server
+        // Connection status/closed hooks made more sense when video upload was streaming rather than uploading in parts as we're doing now.
+        // These hooks are maintained for backward compatibility and are set to fire in a way that mimics their previous behavior, i.e.
+        // when the multi-part upload is established, completed, or fails. However they won't work in exactly the same way since we don't have a 
+        // continuously-monitored streaming connection.
+        'onConnectionStatus', 
+        'onConnectionClosed', 
         'onMicActivityLevel', // triggered via Audio Worklet Processor (until micChecked is true)
         'btPlayPressed', // TO DO - use RecordRTC state change?
         'btRecordPressed', // TO DO - use RecordRTC state change?
         'btStopRecordingPressed', // TO DO - use RecordRTC state change?
         'btPausePressed', // TO DO - use RecordRTC state change?
         'onPlaybackComplete', // TO DO
-        'onConnectionClosed', // TO DO - related to connection to AWS server
         'onSaveOk', // TO DO - related to connection to AWS server
         'onStateChanged',
         'onRecordingStopped',
@@ -381,6 +385,11 @@ const VideoRecorder = Ember.Object.extend({
         
         await _this.get('s3').createUpload();
 
+        if (_this.get('recorder').onConnectionStatus) {
+            let id = _this.get('recorderId');
+            _this.get('recorder').onConnectionStatus.call(_this, id, 'connected'); 
+        }
+            
         _this.get('recorder').startRecording()
             .then(()=> {
                 _this.set('_startTime', performance.now());  // TO DO: better way to get start time?
@@ -523,6 +532,10 @@ const VideoRecorder = Ember.Object.extend({
     destroy() {
         console.log(`Destroying the videoRecorder: ${this.get('divId')}`);
         $(`#${this.get('divId')}-container`).remove();
+        if (this.get('connected') && this.get('recorder').onConnectionClosed) {
+            let id = this.get('recorderId');
+            this.get('recorder').onConnectionClosed(id); 
+        }
         if (this.get('recorder') && this.get('recorder').destroy) {
             this.get('recorder').destroy();
         }
@@ -569,6 +582,10 @@ const VideoRecorder = Ember.Object.extend({
             console.log('Upload completed for file: ' + streamName);
             this.get('_stopPromise').resolve(this);
         }
+        if (this.get('recorder').onConnectionClosed) {
+            let id = this.get('recorderId');
+            this.get('recorder').onConnectionClosed(id); 
+        }
     },
 
     _onCamAccess(recorderId, allowed) { // eslint-disable-line no-unused-vars
@@ -584,13 +601,21 @@ const VideoRecorder = Ember.Object.extend({
         this.set('_nMics', micNumber);
     },
 
-    _onConnectionStatus(recorderId, status) { // eslint-disable-line no-unused-vars
-        this.set('connected', status === 'connected');
-    },
-
     _onMicActivityLevel(recorderId, currentActivityLevel) { // eslint-disable-line no-unused-vars
         if (currentActivityLevel > this.get('_minVolume')) {
             this._completeMicCheck();
+        }
+    },
+
+    // These two connection hooks are carry-overs from pipe and no longer native hooks. 
+    // Connection status is now triggered by the `record` method and the `onConnectionClosed` hook.
+    _onConnectionStatus(recorderId, status) { // eslint-disable-line no-unused-vars
+        this.set('connected', status === 'connected');
+    },
+    // Connection closed is now triggered by the `onUploadDone` hook and the `destroy` method.
+    _onConnectionClosed(recorderId) {
+        if (this.get('recorder').onConnectionStatus) {
+            this.get('recorder').onConnectionStatus(recorderId, 'disconnected'); 
         }
     },
 
@@ -600,7 +625,6 @@ const VideoRecorder = Ember.Object.extend({
     //  btStopRecordingPressed = function (recorderId) {};
     //  btPausePressed = function (recorderId) {};
     //  onPlaybackComplete = function (recorderId) {};
-    //  onConnectionClosed = function (recorderId) {};
     //  onSaveOk = function (recorderId, streamName, streamDuration, cameraName, micName, audioCodec, videoCodec, filetype, videoId, audioOnly, location) {};
 
     // RecordRTC event-related callbacks - only used to trigger pre-existing states/callbacks (to maintain compatibility with Pipe version)
