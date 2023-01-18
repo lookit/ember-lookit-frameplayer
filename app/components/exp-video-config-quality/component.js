@@ -320,12 +320,17 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
         if (!this.get('showRecordMenu')) {
             this.set('requireTestVideo', false);
+            $('#recordingStatus').hide();
+            $('#recordingIndicator').hide();
             $('.exp-video-config-quality').append($('<style>') // CSS rule so that persists if element reloaded
                 .prop('type', 'text/css')
                 .prop('id', 'exp-video-config-quality-hide-record-buttons')
-                .html('.exp-video-config-quality div[id^="pipeMenu"] {visibility: hidden; display: none !important;}'));
+                .html('.exp-video-config-quality .recording-menu {visibility: hidden; display: none !important;}'));
         } else {
             $('#exp-video-config-quality-hide-record-buttons').remove();
+            document.getElementById('recordingIndicator').classList.remove('text-danger','Blink');
+            $('#recordingStatus').show();
+            $('#recordingIndicator').show();
         }
     },
 
@@ -335,6 +340,37 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     completedBoxes: false,
     readyToProceed: false,
+    hasMadeVideo: false, // keep track of whether any recording has been made 
+
+    setupRecorderAndUpdateDisplay() {
+        var _this = this;
+        return this.setupRecorder(_this.$(_this.get('recorderElement')))
+            .then(() => {
+                $('#recordbutton').prop('disabled', false);
+                $('#stopbutton').prop('disabled', true);
+                $('#playbutton').prop('disabled', true);
+            })
+            .catch((err) => {
+                $('#recordbutton').prop('disabled', true);
+                console.error(`Error setting up recorder: ${err.name}: ${err.message}`);
+                console.trace();
+            });
+    },
+
+    startRecorderAndUpdateDisplay() {
+        var _this = this;
+        return this.startRecorder()
+            .then(() => {
+                _this.set('hasMadeVideo', true); 
+                $('#stopbutton').prop('disabled', false);
+                document.getElementById('recordingIndicator').classList.add('text-danger','Blink');
+            })
+            .catch((err) => {
+                $('#recordbutton').prop('disabled', false);
+                console.error(`Error starting recorder: ${err.name}: ${err.message}`);
+                console.trace();
+            });
+    },
 
     checkIfDone() {
         // Checks if conditions are met to move on from this frame, setting 'readyToProceed'
@@ -377,23 +413,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
      * @method whenPossibleToRecord
      */
     videoConfigRecordingObserver: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        // The Pipe menu takes a little while to get set up, so if we try to bind an
-        // event to it e.g. upon didRender, it doesn't end up bound. Additionally, the
-        // #pipeRec and #pipePlay buttons have their behavior OVERWRITTEN by Pipe,
-        // e.g. pipePlay's handler changes after there's a recording available, so
-        // we don't want to bind to those.
-        var _this = this;
+        // wait until everything is ready before activating the 'record' button 
         if (this.get('recorder') && this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-            this.get('recorder').on('btPlayPressed', (recId) => {   // eslint-disable-line no-unused-vars
-                _this.set('hasPlayedBack', true);
-                _this.checkIfDone();
-            });
-
-            this.get('recorder').on('btStopRecordingPressed', (recId) => {   // eslint-disable-line no-unused-vars
-                _this.get('recorder').set('_recording', false); // so we don't also call stop when leaving page unless needed
-                _this.set('stoppedRecording', true);
-            });
-
+            $('#recordbutton').prop('disabled', false);
         }
     }),
 
@@ -438,7 +460,61 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             this.set('showWarning', false);
             this.set('hasPlayedBack', false);
             this.destroyRecorder();
-            this.setupRecorder(this.$(this.get('recorderElement')));
+            document.getElementById('recordingIndicator').classList.remove('text-danger','Blink');
+            this.setupRecorderAndUpdateDisplay();
+        },
+
+        playvideo() {
+            document.getElementById('recordingIndicator').classList.remove('text-danger','Blink');
+            const vid = document.querySelector('video');
+            vid.src = null;
+            vid.srcObject = null;
+            vid.muted = false;
+            vid.volume = 1;
+            this.get('recorder').get('recorder').getDataURL()
+                .then((dataURI) => {
+                    vid.src = dataURI;
+                    vid.controls = true;
+                })
+                .catch((err) => {
+                    console.error(`Error playing video: ${err.name}: ${err.message}`);
+                    console.trace();
+                });
+            this.set('hasPlayedBack', true);
+            this.checkIfDone();
+        },
+
+        stop() {
+            document.getElementById('recordingIndicator').classList.remove('text-danger','Blink');
+            $('#stopbutton').prop('disabled', true);
+            this.stopRecorder()
+                .finally(() => {
+                    $('#playbutton').prop('disabled', false);
+                    $('#recordbutton').prop('disabled', false);
+                });
+        },
+
+        record() {
+            $('#recordbutton').prop('disabled', true);
+            $('#playbutton').prop('disabled', true);
+            this.set('showWarning', false);
+            this.set('hasCheckedVideo', false);
+
+            if (this.get('hasMadeVideo')) {
+                // Need to destroy between recordings or else the same video ID is sent as payload.
+                // Don't destroy after stopRecorder call because then can't replay.
+                if (this.get('recorder')) {
+                    this.get('recorder').pause();
+                }
+                this.destroyRecorder(); 
+                this.setupRecorderAndUpdateDisplay()
+                    .then(() => {
+                        this.startRecorderAndUpdateDisplay();
+                    });
+            } else {
+                // First recording - can use current recorder
+                this.startRecorderAndUpdateDisplay(); 
+            }
         },
     }
 });
