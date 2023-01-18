@@ -140,16 +140,18 @@ const VideoRecorder = Ember.Object.extend({
         'onConnectionStatus', 
         'onConnectionClosed', 
         'onMicActivityLevel', // triggered via Audio Worklet Processor (until micChecked is true)
-        'btPlayPressed', // TO DO - use RecordRTC state change?
-        'btRecordPressed', // TO DO - use RecordRTC state change?
-        'btStopRecordingPressed', // TO DO - use RecordRTC state change?
-        'btPausePressed', // TO DO - use RecordRTC state change?
-        'onPlaybackComplete', // TO DO
-        'onSaveOk', // TO DO - related to connection to AWS server
         'onStateChanged',
         'onRecordingStopped',
         'ondataavailable'
     ],
+
+    // Old Pipe hooks that have not been implemented (yet)
+    // 'btPlayPressed'
+    // 'btRecordPressed'
+    // 'btStopRecordingPressed'
+    // 'btPausePressed'
+    // 'onPlaybackComplete'
+    // 'onSaveOk'
 
     /**
      * Install a recorder onto the page and optionally begin recording immediately.
@@ -289,10 +291,8 @@ const VideoRecorder = Ember.Object.extend({
                             }
                         }
                     });
-                    // set user has cam mic value
                     _this.set('_userHasCamMic', true);
-                    // set cam access value and trigger on cam access hook
-                    //_this.set('_camAccess', true);
+                    // trigger on cam access hook
                     if (_this.get('onCamAccess')) {
                         let id = _this.get('recorderId');
                         _this.get('onCamAccess').call(_this, id, true); // recId, hasAccess
@@ -392,10 +392,9 @@ const VideoRecorder = Ember.Object.extend({
             
         _this.get('recorder').startRecording()
             .then(()=> {
-                _this.set('_startTime', performance.now());  // TO DO: better way to get start time?
+                _this.set('_startTime', performance.now());
                 _this.get('recorder').onRecordingStarted.call(_this); 
-                if (_this.get('maxRecordingTime') !== null) { // TO DO: right way to check?
-                    // TO DO: should this be a promise? 
+                if (_this.get('maxRecordingTime') !== null) {
                     _this.set('_stopTimeout', window.setTimeout(function() {
                         console.warn('reached max recording time');
                         _this.stop();
@@ -620,6 +619,10 @@ const VideoRecorder = Ember.Object.extend({
     },
 
     // Additional hooks available:
+    // NOTE/TO DO: these hooks are a carry-over from Pipe and not actually implemented (yet). 
+    // All except for 'onSaveOk' are related to Pipe's built-in recording/playback menu. The new recorder is not linked to a 
+    // playback menu, which means that the buttons and callbacks should be implemented at the frame's component level (see video-config-quality for an example).
+    // The 'onSaveOk' hook is not used by our frames and the existing 'onUploadDone' hook should cover its uses.
     //  btRecordPressed = function (recorderId) {};
     //  btPlayPressed(recorderId)
     //  btStopRecordingPressed = function (recorderId) {};
@@ -627,7 +630,7 @@ const VideoRecorder = Ember.Object.extend({
     //  onPlaybackComplete = function (recorderId) {};
     //  onSaveOk = function (recorderId, streamName, streamDuration, cameraName, micName, audioCodec, videoCodec, filetype, videoId, audioOnly, location) {};
 
-    // RecordRTC event-related callbacks - only used to trigger pre-existing states/callbacks (to maintain compatibility with Pipe version)
+    // RecordRTC event-related callbacks
     _onStateChanged(state) {
         // RecordRTC states: inactive, recording, stopped, paused
         // don't check for stopped state here - RecordRTC has a separate callback onRecordingStopped
