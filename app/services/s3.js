@@ -2,6 +2,7 @@ import ENV from '../config/environment';
 
 class S3 {
     constructor(key) {
+        console.log('env: ', ENV);
         this.env = ENV.s3;
         this.key = key;
         this.blobParts = [];
@@ -29,6 +30,7 @@ class S3 {
     }
 
     async createUpload() {
+        debugger; // eslint-disable-line no-debugger
         const createResponse = await this.s3.createMultipartUpload({
             Bucket: this.env.bucket,
             Key: this.key,
