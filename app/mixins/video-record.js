@@ -307,8 +307,9 @@ export default Ember.Mixin.create({
         const videoId = this._generateVideoId();
         this.set('videoId', videoId);
         const recorder = new VideoRecorder({element: element});
+        const s3vars = Ember.getOwner(this).resolveRegistration('config:environment').s3;
         const installPromise = recorder.install(this.get('videoId'), 
-            this.get('maxRecordingLength'), this.get('autosave'), this.get('audioOnly'), this.get('checkMic'));
+            this.get('maxRecordingLength'), this.get('autosave'), this.get('audioOnly'), this.get('checkMic'), s3vars);
 
         // Track specific events for all frames that use VideoRecorder
         var _this = this;
