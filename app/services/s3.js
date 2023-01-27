@@ -1,6 +1,5 @@
 class S3 {
     constructor(key, s3vars) {
-        console.log('s3vars: ', s3vars);
         this.env = s3vars;
         this.key = key;
         this.blobParts = [];
