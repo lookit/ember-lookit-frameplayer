@@ -17,7 +17,7 @@ module.exports = function(environment) {
     awsRecordingAccessKeyId: process.env.AWS_RECORDING_ACCESS_KEY_ID,
     awsRecordingSecretAccessKey: process.env.AWS_RECORDING_SECRET_ACCESS_KEY,
     awsRecordingBucket: process.env.AWS_RECORDING_BUCKET,
-    s3: {
+    awsRecording: {
       region: process.env.AWS_RECORDING_REGION,
       accessKeyId: process.env.AWS_RECORDING_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_RECORDING_SECRET_ACCESS_KEY,
