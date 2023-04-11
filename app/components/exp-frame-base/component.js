@@ -488,7 +488,7 @@ let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
             }
         }
         catch (error) {
-            console.error(`Failed to compile frameSchemaProperties to use for validating researcher usage of frame type '${this.get('kind')}.`);
+            console.error(`Failed to compile frameSchemaProperties to use for validating researcher usage of frame type '${this.get('kind')}'. Compile error message='${error.message}`);
         }
 
         // Set the language (do this after generating properties to allow use of a generated language property)
