@@ -298,14 +298,14 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
                 * @attribute leftSequence
                 */
                 leftSequence: {
-                    type: 'Object'
+                    type: 'object'
                 },
                 /**
                 * Sequence of images shown on the right
                 * @attribute rightSequence
                 */
                 rightSequence: {
-                    type: 'Object'
+                    type: 'object'
                 },
                 videoId: {
                     type: 'string'
