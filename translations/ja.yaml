@@ -15,31 +15,20 @@ consent-template-5:
   benefits-header: 研究・調査に参加するメリットは何ですか？
   contact-header: 私たちへの連絡方法
   contact-statement-1: この研究・調査は、{name}の{institution}によって運営されています。もし{only_adult, select,
-    true {あなた} other {あなたやあなたのお子さん}}がこの研究について質問や懸念がある場合、{omit_injury, select, true
-    {} other {あるいは、万が一、研究・調査に関して傷害が発生した場合、}} {contact}までご連絡ください。
   contact-statement-2: もし {only_adult, select, true {あなた} other {あなたやあなたのお子さん}}がLookitプラットフォームに関する質問や懸念をお持ちの場合は、Lookitスタッフ（lookit@mit.edu）までご連絡ください。
   data-collection-1: 研究・調査の間、あなた{only_adult, select, true {} other {とお子さん}}は、あなたのコンピュータについているウェブカメラとマイクで録画・録音されます
   data-collection-2: 録画されたウェブカメラのデータや、フォームに記入された回答などの他のデータは、Lookitプラットフォームに安全に送信されます。Lookit上で、あなたはいつでも過去の録画を閲覧することができます。
   data-collection-3: データは、Lookitのサーバおよび研究グループによって安全に保管され、こちらの文書に記載された方法でのみ共有されます。ただし、インターネットを介してデータを扱う特性上、データが傍受されたり、保存されたデータのセキュリティーが損なわれたりする可能性がないとは言えません。
   data-collection-header: データ収集とウェブカメラでの録画について
   data-use-Lookit-content: MITにあるLookitのコアチームは、お客様のアカウントデータに加えて、このセッションで収集したデータにもアクセスできます。これらのデータは、Lookit
-    の運営と改善のために使用されます。たとえば、技術サポートの提供、データ収集の効果の確認、Lookit が多様な家族グループにリーチしているかどうかの確認などです。Lookitは、研究の終了時に記録を撤回しない限り、データを無期限に保存します。
   data-use-Lookit-header: Lookitがあなたのデータをどのように使用するか
   data-use-researchers-content-1: あなたがこの研究に参加された場合、私たち（{institution}の{name}が率いる研究グループ）は以下にアクセスすることができます。
   data-use-researchers-content-2: これには、あなたが将来これらの情報のいずれかを変更することも含まれます。私たちは、子どもの発達についてより詳しく知るために、異なる種類の情報を組み合わせることがあります。例えば、{only_adult,
-    select, true {あなた} other {お子さん}}が私たちの複数の研究に参加している場合、{only_adult, select, true
-    {あなた} other {お子さん}}の反応が研究間でどのように比較されるかを調べたり、{only_adult, select, true {あなたの反応がご家族の反応とどのように関係しているか}
-    other {きょうだいは似たような反応をするか}}などを調べたりすることがあります。また、{only_adult, select, true {あなたの}
-    other {お子さんの}} 回答とご家族の人口統計調査データとの関連を調べることもあります。
   data-use-researchers-header: データの使用について
   data-use-researchers-item-1: このセッション中に収集されたウェブカメラの映像やその他のデータ
   data-use-researchers-item-2: あなたのプロフィールと人口統計調査への回答
-  data-use-researchers-item-3: '{only_adult, select, true {} other {}}参加している{only_adult,
-    select, true {family member} other {child}}のプロフィール
-
-    '
+  data-use-researchers-item-3: '{only_adult, select, true {} other {}}参加している{only_adult, select, true {family member} other {child}}のプロフィール  '
   databrary: これとは別に、安全なデータライブラリであるDatabraryの許可されたユーザーに、あなたの映像やその他のデータへのアクセスを許可することもできます。つまり、この研究・調査の実施者以外の研究者が、あなたの映像にアクセスし、子どもの発達に関する他の疑問を解明するため使用することができるということです。データを共有することで、人間の発達や行動に関する研究がより早く進む可能性があります。承認されたDatabraryの研究者は、守秘義務を守り、データを商業目的で使用しないことに同意しなければなりません。このデータライブラリについては、こちら<a
-    href="https://nyu.databrary.org/" target="_blank" rel="noopener">Databrary</a>またはethics@databrary.orgへのメールでお問い合わせください。
   duration-statement: この研究・調査にかかる時間は、およそ{duration}です
   gdpr-2: あなたの個人情報は、米国に転送されます。米国のデータ保護およびプライバシーに関する法律は、あなたの出身国の法律と同じレベルの保護を提供できない場合があります。
   gdpr-header: 一般データ保護規則（GDPR）に関する情報
@@ -48,23 +37,16 @@ consent-template-5:
   header: 研究・調査に参加することに同意します
   intro-sentence: '{institution}所属の{name}率いる研究グループが、この研究・調査「{experiment}」をLookit上で実施しています'
   participation-content: あなた {only_adult, select, true {} other {とお子さん}} がこの研究・調査に参加するかどうかは自由です。参加することを選んだ場合でも、実施中どのタイミングでも参加を中止することができます。{only_adult,
-    select, true {} other {もしお子さんがぐずってしまったり、研究・調査に参加したくなくなってしまった場合には、セッションを中断または中止してください！}}
   participation-header: この研究・調査への参加は任意です
   procedures-header: この研究・調査では何をするのですか？
   publication-content: この研究・調査の結果は、学会で発表されたり、科学雑誌に掲載されたりすることがあります。私たちは、{only_adult,
-    select, true {あなた} other {お子さん}}を特定できない形で、注視時間やボタンを押した順序などの個々の回答を公表することがあります。ただし、{only_adult,
-    select, true {} other {お子さん}}の生年月日や名前を公開することはありません。あなたが録画データの共有を選択された場合でも、録画データとあなたの人口統計データを結びつけることができるような情報を公開することはありません。
   publication-header: この研究・調査の結果を公開する
   purpose-header: なぜこの研究・調査を実施しているのですか？
   research-subject-rights-header: 参加者としてのあなたの権利
   risk-header: 研究・調査に参加することに何かリスクはありますか？
-  video-privacy-Private: 'プライベートな利用
-
-    '
+  video-privacy-Private: 'プライベートな利用  '
   video-privacy-Publicity: パブリックな利用
-  video-privacy-Scientific: '科学・教育的な利用
-
-    '
+  video-privacy-Scientific: '科学・教育的な利用  '
   video-privacy-consent: 私たちは、同意に関する録画を閲覧することで、あなたが本当に研究・調査への参加に同意したかどうかを最初に確認します。もし参加同意が確認できなかった場合には、このセッション中のそれ以外の動画は誰にも閲覧されることはありません。
   video-privacy-header: 誰がウェブカメラの録画データを見ることができるのですか？
   video-privacy-overview: セッションの最後に、ウェブカメラで撮影した映像のプライバシーレベルを選択してください。以下のいずれかを選択できます。
@@ -79,25 +61,17 @@ exp-lookit-exit-survey:
   acceptable-use-header: 動画と画像の利用について
   confirm-birthdate: お子さんの生年月日をご確認ください
   databrary-info: 許可された研究者だけが、このデータライブラリー上のデータにアクセスすることができます。アクセスを許可された研究者は、守秘義務を遵守すること、およびデータを商用利用しないことに同意しなければなりません。データの共有は、人の発達や行動に関する研究・調査をより加速的に進展させることに繋がります。ぜひデータの共有にご協力いただければ幸いです。このデータ共有ライブラリーについてご不明な点がございましたら、<a
-    href="https://nyu.databrary.org/" target="_blank" rel="noopener noreferrer">データブラリー
-    (Databrary) </a> のページをご覧いただくか、ethics@databrary.org までご連絡ください (英語のみ)。
   facebook-share: この研究・調査をFacebookでシェアする
   feedback-label: いかがでしたか？　この研究・調査をより改善するためのアイディアがあれば、ぜひ教えてください。
   private-option-list-with-databrary: Lookitプロジェクトスタッフ、「{name}」の研究・調査を実施している研究グループ
-    {contact}、およびデータブラリー上の権限を付与されたユーザー
   private-option-list-without-databrary: Lookitプロジェクトスタッフ、「{name}」の研究・調査を実施している研究グループ
-    {contact}
   private-option-part-1: <strong>プライベートな利用範囲：</strong> 権限を与えられた研究者だけが録画データを閲覧することができます。
   publicity-option: <strong>パブリックな利用範囲：</strong> Lookitウェブサイトやニュースで、あなたのお子さんが注目を浴びることにご快諾いただける場合は、この利用範囲を選択してください！　あなたの録画データは、科学的・教育的目的に加えて、広報目的のために利用される場合があります。ただし、商業目的で使用されることは一切ありません。共有された録画データは、オンライン上で広く一般に公開・利用されます。
   q-databrary: 今回のセッションの録画データやその他のデータを、安全なデータライブラリー (Databrary) 上の許可されたユーザーと共有することを希望しますか？
   scientific-option: <strong>科学・教育的な利用範囲：</strong> 録画データは、科学的または教育的目的のために共有される場合があります。例えば、研究者が学会発表や認知発達に関する学部生向けの講義で録画データを流したり、科学論文に画像や録画を掲載したりする場合があります。状況によっては、科学論文における補足資料として、画像や録画をオンラインで公開することもあります。
   why-birthdate: 登録時に記入ミスしていたり、誤って他のお子さんを選択したりしていないか、研究・調査の開始時にもう一度確認をお願いいたします
-  withdrawal-confirmation: 'あなたは、録画データをこの研究・調査から取り消すことを選択しました。参加同意についての録画以外の録画データは、閲覧されることなく削除されます。本当に取り消してよろしいですか？
-
-    '
+  withdrawal-confirmation: 'あなたは、録画データをこの研究・調査から取り消すことを選択しました。参加同意についての録画以外の録画データは、閲覧されることなく削除されます。本当に取り消してよろしいですか？  '
   withdrawal-details: 仮に何かがうまくいかなかったとしても、どのような録画データであれ研究者にとってはありがたいものです。しかし、それでも録画データの削除をご希望の場合は{include_example,
-    select, true { (あなたの配偶者が国家機密について話している場面が録画に映り込んでしまった、など)} other {}}、こちらにチェックを入れて、このセッションの録画データを当該研究・調査から完全に取り除いてください。ただし、参加同意についての録画データだけはその後も保持され、閲覧の対象になる場合があります
-    (Lookitプロジェクトのスタッフおよび「{name}」の研究・調査を実施している研究グループ {contact} しか閲覧することはありません)。それ以外の録画データは閲覧されることなく削除されます。
   withdrawal-header: 録画データの取り消し
 exp-lookit-observation:
   Hide: 隠す
@@ -116,9 +90,7 @@ exp-lookit-video-assent:
   chose-not-to-participate: あなたは、研究・調査に参加しないことを選択しました。「送信する」を押すと、Lookitのメインページに移動します。
   explanation-1: 年長のお子さんを対象にした研究・調査では、保護者の方に加えてお子さん<em>も</em>参加に同意したことを確認する必要があります。<strong>このページは、お子さんご自身の同意パートになります！</strong>
   explanation-2: 保護者の方へ：必要に応じて、お子さんが同意文を読み上げ、参加に同意するのを手伝ってあげてください。
-  header: '研究・調査への参加に対するお子さんの同意
-
-    '
+  header: '研究・調査への参加に対するお子さんの同意  '
   step-1: この研究・調査についてもっと理解する
   step-2: 選択してください
 exp-lookit-video-consent:
@@ -148,7 +120,6 @@ exp-video-config:
   Microphone: マイク
   Note: ご注意
   additional-troubleshooting-contact: 困ったときは、私たちの責任です。サイトを改善するために、ぜひその内容を教えてください。何が起きたのかを簡単に説明した上で、lookit-tech@mit.edu
-    までメールをお送りください。お使いのWebブラウザ（Firefox、Chrome、IE、Safariなど）、試した手順、このセッションIDを明記してください。
   additional-troubleshooting-header: どうしてもうまくいかないのですが、他に何を試したらいいでしょうか？
   additional-troubleshooting-intro: とても熱心な市民科学者のあなたのご協力にまずは感謝させてください！問題が起こってしまい、申し訳ありません。
   browser-support: ChromeやFirefox以外のWebブラウザ（Internet ExplorerやSafariなど）をお使いですか？その場合は、ChromeまたはFirefoxで再度お試しください。現在Lookitがサポートしているブラウザはこれらのみです。
@@ -156,12 +127,11 @@ exp-video-config:
   camera-check: Lookitの外でウェブカメラの映像を見ることができるかどうかを確認してください。(例えば、Macの場合は、Photoboothを試してみてください）。
   chrome-directions-prompt: このページを最初に読み込むと、以下のようなメッセージが表示されます。「許可する」をクリックして、Lookitがウェブカメラとマイクにアクセスできるようにしてください。
   chrome-directions-set-perms: このメッセージが表示されなかった場合、または「ブロック」をクリックした場合は、URLの横にある緑色のロックアイコンをクリックして設定を変更することができます。カメラとマイク（表示されている場合は音声も）をすべて「許可」に設定して、このページを更新してください。
-  chrome-further-help: <a href="https://support.google.com/chrome/answer/2693767?hl=en"
-    target="_blank" rel="noopener noreferrer"> Chrome </a>からもこれらの指示を参照できます。
+  chrome-further-help: '<a href="https://support.google.com/chrome/answer/2693767?hl=en"'
   chrome-incognito: Chromeをお使いですか？「シークレットモード」を使用していないことを確認してください。シークレットモードの場合、研究・調査の間に設定を保存したり使用したりすることができません。
   chrome-instructions-header: Chromeでのカメラ設定方法
-  chrome-select-camera: <em>間違ったカメラの映像が表示される</em> - USBウェブカメラではなく、ノートパソコンの内蔵カメラが接続されている可能性があります。正しいカメラは、chrome://settings/content/camera（URLをコピー＆ペーストしてください）で選択できます。その後、このページを更新して再度お試しください。
-  chrome-select-mic: <em>音声確認がうまくいかない場合</em> Chromeが間違った入力デバイスを使用している可能性があります。残念ながら「許可」をクリックしても、どのマイクを使用するかを選択することはできません。正しいマイクを選択するには、chrome://settings/content/microphone（URLをコピー＆ペーストしてください）を参照してください。その後、このページを更新して再度お試しください。
+  chrome-select-camera: '<em>間違ったカメラの映像が表示される</em> - USBウェブカメラではなく、ノートパソコンの内蔵カメラが接続されている可能性があります。正しいカメラは、chrome://settings/content/camera（URLをコピー＆ペーストしてください）で選択できます。その後、このページを更新して再度お試しください。'
+  chrome-select-mic: '<em>音声確認がうまくいかない場合</em> Chromeが間違った入力デバイスを使用している可能性があります。残念ながら「許可」をクリックしても、どのマイクを使用するかを選択することはできません。正しいマイクを選択するには、chrome://settings/content/microphone（URLをコピー＆ペーストしてください）を参照してください。その後、このページを更新して再度お試しください。'
   click-here-to-detect: ここをクリックして検出してください。
   firefox-directions-prompt: このページを最初に読み込むと、以下のようなメッセージが表示されます。使用するカメラとマイクを選択し、「決定内容を保存する」にチェックを入れて、「許可」をクリックします。
   firefox-directions-set-perms: このメッセージが表示されなかった場合、または最初に「許可しない」をクリックした場合は、URLの横にあるカメラやマイクのアイコンをクリックして設定を変更できます。それぞれの設定の横にある「X」をクリックし、ページを更新してください。
@@ -190,7 +160,7 @@ exp-video-config-quality:
   checkbox-warning: 各説明の下にある"{completedItemText}"ボックスにチェックを入れてから続けてください。
   recording-warning: ビデオを録画してご覧になってからお進みください。
 please wait: しばらくお待ちください
-please wait, setting up: 設定しています。しばらくお待ちください。
+"please wait, setting up": 設定しています。しばらくお待ちください。
 return to fullscreen: フルスクリーンにする
 this-field-is-required: この項目は必須です
 uploading video: 動画をアップロードしています
