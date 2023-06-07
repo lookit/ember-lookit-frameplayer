@@ -145,8 +145,11 @@ export default Ember.Mixin.create({
         const sessionVideoId = this._generateSessionVideoId();
         this.get('session').set('videoId', sessionVideoId);
         const sessionRecorder = new VideoRecorder({element: $element});
+        const env_vars = Ember.getOwner(this).resolveRegistration('config:environtment');
+        console.log('env: ', env_vars);
         const pipeLoc = Ember.getOwner(this).resolveRegistration('config:environment').pipeLoc;
         const pipeEnv = Ember.getOwner(this).resolveRegistration('config:environment').pipeEnv;
+        console.log('pipeLoc: ', pipeLoc);
         const installPromise = sessionRecorder.install(sessionVideoId, pipeLoc, pipeEnv,
             maxRecordingLength, autosave, this.get('sessionAudioOnly'));
 
