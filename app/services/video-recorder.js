@@ -147,6 +147,8 @@ const VideoRecorder = Ember.Object.extend({
 
     install(videoFilename = '', pipeKey = '', pipeEnv = 1, maxRecordingTime = 100000000, autosave = 1, audioOnly = 0) {
 
+        console.log('video recorder install, pipe env: ', pipeEnv);
+
         let origDivId = this.get('divId');
 
         this.set('divId', `${this.get('divId')}-${this.get('recorderId')}`);
