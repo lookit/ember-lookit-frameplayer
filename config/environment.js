@@ -14,10 +14,10 @@ module.exports = function(environment) {
         development: process.env.SENTRY_DSN === ''
     },
     awsRecording: {
-      region: process.env.AWS_RECORDING_REGION,
-      accessKeyId: process.env.AWS_RECORDING_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_RECORDING_SECRET_ACCESS_KEY,
-      bucket: process.env.AWS_RECORDING_BUCKET
+      region: process.env.S3_REGION,
+      accessKeyId: process.env.S3_ACCESS_KEY_ID,
+      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+      bucket: process.env.S3_BUCKET
     },
     EmberENV: {
       EXTEND_PROTOTYPES: true,
