@@ -27,12 +27,14 @@ class S3 {
     }
 
     async createUpload() {
+        this.logRecordingEvent('Creating video upload connection.');
         const createResponse = await this.s3.createMultipartUpload({
             Bucket: this.env.bucket,
             Key: this.key,
             ContentType: "video/mp4",
         }).promise();
         this.uploadId = createResponse.UploadId;
+        this.logRecordingEvent('Connection established.');
     }
 
     async uploadPart(blob, partNumber) {
@@ -47,6 +49,7 @@ class S3 {
                     PartNumber: partNumber,
                     UploadId: this.uploadId,
                 }).promise();
+                this.logRecordingEvent(`Uploaded file part ${partNumber}.`);
 
                 this.partsUploaded++;
 
@@ -55,7 +58,7 @@ class S3 {
                     ETag: uploadPartResponse.ETag
                 };
             } catch (_err) {
-                console.warn('s3 upload part ', partNumber, ' error: ', _err);
+                this.logRecordingEvent(`Error uploading part: ${partNumber}\nError: ${_err}`);
                 err = _err;
                 retry += 1;
             }
@@ -76,7 +79,9 @@ class S3 {
             },
             UploadId: this.uploadId
         }).promise()
-            .then((resp) => {console.log('s3: upload link: ', resp.Location)});
+            .then((resp) => {
+                this.logRecordingEvent(`Upload complete: ${resp.Location}`);
+            });
     }
 
     addUploadPartPromise() {
@@ -90,6 +95,12 @@ class S3 {
         if (this.blobPartsSize > 5 * (1024 * 1024)) {
             this.addUploadPartPromise();
         }
+    }
+
+    logRecordingEvent(msg) {
+        // right now this just prints to the console, but we could also send this info to permanent storage (similar to pipe logs)
+        const timestamp = new Date().toISOString();
+        console.log(`Recording log: ${timestamp}\n${msg}\n`);
     }
 }
 export default S3;
