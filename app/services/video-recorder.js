@@ -166,12 +166,10 @@ const VideoRecorder = Ember.Object.extend({
      * @return {Promise} Resolves when widget successfully installed and started
      */
 
-    install(videoFilename = '', maxRecordingTime = 100000000, autosave = 1, audioOnly = 0, checkMic = false, s3vars = {}, pipeKey = '', pipeEnv = 1) {
+    install(videoFilename = '', maxRecordingTime = 100000000, autosave = 1, audioOnly = 0, checkMic = false, s3vars = {}) {
 
         console.log('video recorder install');
         console.log('s3vars: ', s3vars);
-        console.log('pipeKey: ', pipeKey);
-        console.log('pipeEnv: ', pipeEnv);
 
         let origDivId = this.get('divId');
 
