@@ -307,11 +307,15 @@ export default Ember.Mixin.create({
         const videoId = this._generateVideoId();
         this.set('videoId', videoId);
         const recorder = new VideoRecorder({element: element});
-        const env_vars = Ember.getOwner(this).resolveRegistration('config:environtment');
-        console.log('env: ', env_vars);
-        const s3vars = env_vars.awsRecording;
+        const pipeLoc = Ember.getOwner(this).resolveRegistration('config:environment').pipeLoc;
+        const pipeEnv = Ember.getOwner(this).resolveRegistration('config:environment').pipeEnv;
+        const s3vars = Ember.getOwner(this).resolveRegistration('config:environment').awsRecording;
+        console.log('video record');
+        console.log('pipeLoc: ', pipeLoc);
+        console.log('pipeEnv: ', pipeEnv);
+        console.log('s3 vars: ', s3vars);
         const installPromise = recorder.install(this.get('videoId'), 
-            this.get('maxRecordingLength'), this.get('autosave'), this.get('audioOnly'), this.get('checkMic'), s3vars);
+            this.get('maxRecordingLength'), this.get('autosave'), this.get('audioOnly'), this.get('checkMic'), s3vars, pipeLoc, pipeEnv);
 
         // Track specific events for all frames that use VideoRecorder
         var _this = this;
