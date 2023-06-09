@@ -308,8 +308,6 @@ export default Ember.Mixin.create({
         this.set('videoId', videoId);
         const recorder = new VideoRecorder({element: element});
         const s3vars = Ember.getOwner(this).resolveRegistration('config:environment').awsRecording;
-        console.log('video record');
-        console.log('s3 vars: ', s3vars);
         const installPromise = recorder.install(this.get('videoId'), 
             this.get('maxRecordingLength'), this.get('autosave'), this.get('audioOnly'), this.get('checkMic'), s3vars);
 
