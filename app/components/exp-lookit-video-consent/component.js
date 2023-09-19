@@ -27,6 +27,10 @@ Researchers can select from the following named templates:
 
 * `consent_004`: Same as consent_003 except that sentences in 'Data collection and webcam recording' are rearranged to make it clearer what happens if you withdraw video data, and the prompt says to read "out loud (or in ASL)" instead of just "out loud" for accessibility.
 
+* `consent_005`: A reworked and simplified template that fixes a lot of mildly confusing sentences. Adds a separate risk_statement to separate information about procedures, risks, and compensation/benefits.
+
+* `consent_garden`: For Project GARDEN studies only.
+
 Important: To look up the exact text of each consent template for your IRB protocol, and to understand the context for each piece of text to be inserted, please see https://github.com/lookit/research-resources/tree/master/Legal
 
 The consent document can be downloaded as PDF document by participant.
