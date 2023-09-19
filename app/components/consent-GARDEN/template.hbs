@@ -1,0 +1,136 @@
+<div class="center-text">
+    <span class="exp-text-medium">
+        {{!-- header --}}
+        {{#if header}} {{header}} {{else}} {{t "consent-garden.header" experiment=experiment.name }} {{/if}} 
+    </span>
+</div>
+
+<br>
+<div class="video-consent-body">
+
+    {{!-- intro sentence --}}
+    <p>{{#if intro_sentence}} {{exp-format intro_sentence}} {{else}} {{t "consent-garden.intro-sentence" name=PIName institution=institution experiment=experiment.name }} {{/if}} {{ exp-format summary_statement }} </p>
+
+    {{!-- overview --}}
+    <h2>{{#if overview_header}} {{exp-format overview_header}} {{else}} {{t "consent-garden.overview-header" }} {{/if}}</h2>
+    <p>{{#if overview_content}} {{exp-format overview_content}} {{else}} {{t "consent-garden.overview-content" contact=PIContact experiment=experiment.name }} {{/if}}</p>
+
+    {{!-- study info --}}
+    <h2>{{#if study_info_header}} {{exp-format study_info_header}} {{else}} {{t "consent-garden.study-info-header" }} {{/if}}</h2>
+    <p>{{#if study_info_content}} {{exp-format study_info_content}} {{else}} {{t "consent-garden.study-info-content" description=study_info_description lab=lab institution=institution experiment=experiment.name }} {{/if}}</p>
+
+    {{!-- purpose --}}
+    <h2>{{#if purpose_header}} {{exp-format purpose_header}} {{else}} {{t "consent-garden.purpose-header" }} {{/if}}</h2>
+    <p>{{ exp-format purpose_content }}</p>
+
+    {{!-- eligibility --}}
+    <h2>{{#if eligibility_header}} {{exp-format eligibility_header}} {{else}} {{t "consent-garden.eligibility-header" }} {{/if}}</h2>
+    <p>{{ exp-format eligibility_content }}</p>
+
+    {{!-- procedures --}}
+    <h2>{{#if procedures_header}} {{exp-format procedures_header}} {{else}} {{t "consent-garden.procedures-header" }} {{/if}}</h2>
+    <p>{{#if duration_statment}} {{exp-format duration_statment}} {{else}} {{t "consent-garden.duration-statement" duration=experiment.duration }} {{exp-format procedures_content }} {{/if}}</p>
+
+    {{!-- payment --}}
+    <h2>{{#if payment_header}} {{ exp-format payment_header }} {{else}} {{t "consent-garden.payment-header"}} {{/if}}</h2>
+    <p>{{#if payment_content}} {{ exp-format payment_content }} {{else}} {{t "consent-garden.payment-content"}} {{/if}}</p>
+
+    {{!-- benefits --}}
+    <h2>{{#if benefits_header}} {{ exp-format benefits_header }} {{else}} {{t "consent-garden.benefits-header"}} {{/if}}</h2>
+    <p>{{ exp-format benefits_content }}</p>
+
+    {{!-- risks --}}
+    <h2>{{#if risk_header}} {{ exp-format risk_header }} {{else}} {{t "consent-garden.risk-header"}} {{/if}}</h2>
+    <p>{{#if risk_content}} 
+        {{ exp-format risk_content }} 
+    {{else}} 
+        {{t "consent-garden.risk-content-1" duration=experiment.duration experiment=experiment.name }} 
+        <p>{{#if risk_content_additional}} {{ exp-format risk_content_additional }} {{/if}}</p>
+        {{t "consent-garden.risk-content-2" risk_content_discontinue_options=risk_content_discontinue_options }}
+        <p>{{#if risk_content_breach_of_confidentiality}} {{ exp-format risk_content_breach_of_confidentiality }} {{/if}}</p>
+        {{t "consent-garden.risk-content-3" }}      
+    {{/if}}</p>
+
+    {{!-- data collection --}}
+    <h2>{{#if data_collection_header}} {{ exp-format data_collection_header }} {{else}} {{t "consent-garden.data-collection-header"}} {{/if}}</h2>
+    <p>{{#if data_collection_content}} {{ exp-format data_collection_content }} {{else}} {{t "consent-garden.data-collection-content" omit_video=data_collection_omit_video }} {{/if}}</p>
+
+    {{!-- data use --}}
+    <h2>{{#if data_use_header}} {{ exp-format data_use_header }} {{else}} {{t "consent-garden.data-use-researchers-header" }} {{/if}}</h2>
+    <p>{{#if data_use_content}} {{ exp-format data_use_content }} {{else}} {{t "consent-garden.data-use-researchers-content"}} {{/if}}</p>
+
+    {{!-- data access --}}
+    <h2>{{#if data_access_header}} {{ exp-format data_access_header }} {{else}} {{t "consent-garden.data-access-header" }} {{/if}}</h2>
+    <p>{{#if data_access_content}} {{ exp-format data_access_content }} {{else}} {{t "consent-garden.data-access-content" institution=institution }} {{/if}}</p>
+
+    {{!-- data management --}}
+    <h2>{{#if data_management_header}} {{ exp-format data_management_header }} {{else}} {{t "consent-garden.data-management-header" }} {{/if}}</h2>
+    <p>{{#if data_management_content}} {{ exp-format data_management_content }} {{else}} {{t "consent-garden.data-management-content"}} {{/if}}</p>
+
+    {{!-- data sharing --}}
+    <h2>{{#if data_sharing_header}} {{ exp-format data_sharing_header }} {{else}} {{t "consent-garden.data-sharing-header" }} {{/if}}</h2>
+    <p>{{#if data_sharing_content}} {{ exp-format data_sharing_content }} {{else}} {{t "consent-garden.data-sharing-content" data_sharing_learn=data_sharing_learn experiment=experiment.name }} {{/if}}</p>
+
+    {{!-- research rights and irb info --}}
+    <h2>{{#if research_rights_irb_header}} {{ exp-format research_rights_irb_header }} {{else}} {{t "consent-garden.research-rights-irb-header" institution=institution }} {{/if}}</h2>
+    <p>{{#if research_rights_irb_content}} {{ exp-format research_rights_irb_content }} {{else}} {{t "consent-garden.research-rights-irb-content" institution=institution include_irb_contact_statement=include_irb_contact_statement irb_contact=irb_contact irb_extra=irb_extra}} {{/if}}</p>
+
+    {{!-- lookit info --}}
+    <h2>{{#if lookit_info_header}} {{ exp-format lookit_info_header }} {{else}} {{t "consent-garden.lookit-info-header" }} {{/if}}</h2>
+    <p>{{#if lookit_info_content}} {{ exp-format lookit_info_content }} {{else}} {{t "consent-garden.lookit-info-content"}} {{/if}}</p>
+
+    {{!-- voluntary participation --}}
+    <h2>{{#if voluntary_participation_header}} {{ exp-format voluntary_participation_header }} {{else}} {{t "consent-garden.voluntary-participation-header" }} {{/if}}</h2>
+    <p>{{#if voluntary_participation_content}} {{ exp-format voluntary_participation_content }} {{else}} {{t "consent-garden.voluntary-participation-content" }} {{/if}}</p>
+
+    {{!-- video sharing --}}
+    <h2>{{#if video_sharing_header}} {{ exp-format video_sharing_header }} {{else}} {{t "consent-garden.video-sharing-header" }} {{/if}}</h2>
+    <p>
+        {{#if video_sharing_consent}} {{ exp-format video_sharing_consent }} {{else}} {{t "consent-garden.video-sharing-consent" }} {{/if}}
+        {{#unless data_collection_omit_video}} 
+            <br><br>
+            {{#if video_sharing_study}} 
+                {{ exp-format video_sharing_study }} 
+            {{else}} 
+                {{#if private_level_only}}
+                    {{t "consent-garden.video-sharing-study-private" }}
+                {{else}}
+                    {{t "consent-garden.video-sharing-study-all" }}
+                    {{!-- databrary sharing: video sharing section --}}
+                    {{#if include_databrary}}
+                        <p>{{#if databrary_content}} {{ exp-format databrary_content }} {{else}} {{t "consent-garden.databrary-content" htmlSafe=true }} {{/if}}</p>
+                    {{/if}}
+                {{/if}}
+        {{/unless}}
+    </p>
+
+    {{!-- additional video privacy statement --}}
+    {{#if additional_video_privacy_statement}}
+        <p>
+            {{exp-format additional_video_privacy_statement}}
+        </p>
+    {{/if}}
+
+    {{!-- publication --}}
+    <h2>{{#if publication_header}} {{ exp-format publication_header }} {{else}} {{t "consent-garden.publication-header" }} {{/if}}</h2>
+    <p>{{#if publication_content}} {{ exp-format publication_content }} {{else}} {{t "consent-garden.publication-content" experiment=experiment.name }} {{/if}}</p>
+    {{!-- databrary sharing: publication section --}}
+    {{#if include_databrary}}
+        <p>{{#if databrary_content}} {{ exp-format databrary_content }} {{else}} {{t "consent-garden.databrary-content" htmlSafe=true }} {{/if}}</p>
+    {{/if}}
+
+    {{!-- additional segments --}}
+    {{#if additional_segments}}
+        {{#each additional_segments as |segment|}}
+            <h2> {{exp-format segment.title}} </h2>
+            <p> {{exp-format segment.text}} </p>
+        {{/each}}
+    {{/if}}
+
+    {{!-- contact --}}
+    <h2> {{t "consent-garden.contact-header" }}</h2>
+    <p>
+        {{t "consent-garden.contact-content" name=PIName institution=institution contact=PIContact }}
+    </p>
+
+</div>
