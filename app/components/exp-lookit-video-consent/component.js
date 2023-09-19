@@ -339,6 +339,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             default: ''
         },
 
+        consent_statement_text: {
+            type: 'string',
+            description: 'Custom text for the consent statement to be read aloud.',
+            default: ''
+        },
+
         template: {
             type: 'string',
             enum: ['consent_001', 'consent_002', 'consent_003', 'consent_004', 'consent_005', 'consent_garden'],
