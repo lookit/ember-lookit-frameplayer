@@ -341,7 +341,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
         template: {
             type: 'string',
-            enum: ['consent_001', 'consent_002', 'consent_003', 'consent_004', 'consent_005'],
+            enum: ['consent_001', 'consent_002', 'consent_003', 'consent_004', 'consent_005', 'consent_garden'],
             description: 'Which consent document template to use',
             default: 'consent_001'
         }
