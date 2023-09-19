@@ -369,7 +369,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     didInsertElement() {
         this._super(...arguments);
-        let validTemplateNames = ['consent_001', 'consent_002', 'consent_003', 'consent_004'];
+        let validTemplateNames = ['consent_001', 'consent_002', 'consent_003', 'consent_004', 'consent_005', 'consent_garden'];
         if (!validTemplateNames.includes(this.get('template'))) {
             console.warn('Invalid consent form specified. \'template\' parameter of \'exp-lookit-video-consent\' frame should be one of: ' + validTemplateNames.join(' '));
         }
