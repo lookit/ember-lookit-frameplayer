@@ -111,6 +111,74 @@
                             @omit_injury_phrase={{omit_injury_phrase}}
                     />
 
+                    {{else if (eq template "consent_garden")}}
+
+                        <ConsentTemplateGarden
+                            @experiment={{experiment}}
+                            @PIName={{PIName}}
+                            @PIContact={{PIContact}}
+                            @institution={{institution}}
+                            @study_info_description={{study_info_description}}
+                            @purpose_content={{purpose_content}}
+                            @eligibility_content={{eligibility_content}}
+                            @procedures_content={{procedures_content}}
+                            @benefits_content={{benefits_content}}
+                            @data_sharing_learn={{data_sharing_learn}}
+                            @irb_contact={{irb_contact}}
+
+                            @include_databrary={{include_databrary}}
+                            @summary_statement={{summary_statement}}
+                            @risk_content_additional={{risk_content_additional}}
+                            @risk_content_discontinue_options={{risk_content_discontinue_options}}
+                            @risk_content_breach_of_confidentiality={{risk_content_breach_of_confidentiality}}
+                            @data_collection_omit_video={{data_collection_omit_video}}
+                            @include_irb_contact_statement={{include_irb_contact_statement}}
+                            @irb_extra={{irb_extra}}
+                            @private_level_only={{private_level_only}}
+                            @additional_video_privacy_statement={{additional_video_privacy_statement}}
+                            @additional_segments={{additional_segments}}
+
+                            @header={{header}}
+                            @intro_sentence={{intro_sentence}}
+                            @overview_header={{overview_header}}
+                            @overview_content={{overview_content}}
+                            @study_info_header={{study_info_header}}
+                            @study_info_content={{study_info_content}}
+                            @purpose_header={{purpose_header}}
+                            @elibigility_header={{elibigility_header}}
+                            @procedures_header={{procedures_header}}
+                            @duration_statement={{duration_statement}}
+                            @payment_header={{payment_header}}
+                            @payment_content={{payment_content}}
+                            @benefits_header={{benefits_header}}
+                            @risk_header={{risk_header}}
+                            @risk_content={{risk_content}}
+                            @data_collection_header={{data_collection_header}}
+                            @data_collection_content={{data_collection_content}}
+                            @data_use_header={{data_use_header}}
+                            @data_use_content={{data_use_content}}
+                            @data_access_header={{data_access_header}}
+                            @data_access_content={{data_access_content}}
+                            @data_management_header={{data_management_header}}
+                            @data_management_content={{data_management_content}}
+                            @data_sharing_header={{data_sharing_header}}
+                            @data_sharing_content={{data_sharing_content}}
+                            @research_rights_irb_header={{research_rights_irb_header}}
+                            @research_rights_irb_content={{research_rights_irb_content}}
+                            @lookit_info_header={{lookit_info_header}}
+                            @lookit_info_content={{lookit_info_content}}
+                            @voluntary_participation_header={{voluntary_participation_header}}
+                            @voluntary_participation_content={{voluntary_participation_content}}
+                            @video_sharing_header={{video_sharing_header}}
+                            @video_sharing_consent={{video_sharing_consent}}
+                            @video_sharing_study={{video_sharing_study}}
+                            @databrary_content={{databrary_content}}
+                            @publication_header={{publication_header}}
+                            @publication_content={{publication_content}}
+                            @contact_header={{contact_header}}
+                            @contact_content={{contact_content}}
+                        />
+
                 {{/if}}
 
             </div>
