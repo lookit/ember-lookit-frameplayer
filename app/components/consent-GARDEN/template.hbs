@@ -41,15 +41,17 @@
 
     {{!-- risks --}}
     <h2>{{#if risk_header}} {{ exp-format risk_header }} {{else}} {{t "consent-garden.risk-header"}} {{/if}}</h2>
-    <p>{{#if risk_content}} 
-        {{ exp-format risk_content }} 
-    {{else}} 
-        {{t "consent-garden.risk-content-1" duration=experiment.duration experiment=experiment.name }} 
-        <p>{{#if risk_content_additional}} {{ exp-format risk_content_additional }} {{/if}}</p>
-        {{t "consent-garden.risk-content-2" risk_content_discontinue_options=risk_content_discontinue_options }}
-        <p>{{#if risk_content_breach_of_confidentiality}} {{ exp-format risk_content_breach_of_confidentiality }} {{/if}}</p>
-        {{t "consent-garden.risk-content-3" }}      
-    {{/if}}</p>
+    <p>
+        {{#if risk_content}}
+            {{ exp-format risk_content }}
+        {{else}}
+            {{t "consent-garden.risk-content-1" duration=experiment.duration experiment=experiment.name }}
+            <p>{{#if risk_content_additional}} {{ exp-format risk_content_additional }} {{/if}}</p>
+            {{t "consent-garden.risk-content-2" risk_content_discontinue_options=risk_content_discontinue_options }}
+            <p>{{#if risk_content_breach_of_confidentiality}} {{ exp-format risk_content_breach_of_confidentiality }} {{/if}}</p>
+            {{t "consent-garden.risk-content-3" }}
+        {{/if}}
+    </p>
 
     {{!-- data collection --}}
     <h2>{{#if data_collection_header}} {{ exp-format data_collection_header }} {{else}} {{t "consent-garden.data-collection-header"}} {{/if}}</h2>
@@ -101,6 +103,7 @@
                         <p>{{#if databrary_content}} {{ exp-format databrary_content }} {{else}} {{t "consent-garden.databrary-content" htmlSafe=true }} {{/if}}</p>
                     {{/if}}
                 {{/if}}
+            {{/if}}
         {{/unless}}
     </p>
 
