@@ -1,7 +1,7 @@
 <div class="center-text">
     <span class="exp-text-medium">
         {{!-- header --}}
-        {{#if header}} {{header}} {{else}} {{t "consent-garden.header" experiment=experiment.name htmlSafe=true }} {{/if}} 
+        {{#if header}} {{exp-format header}} {{else}} {{t "consent-garden.header" experiment=experiment.name htmlSafe=true }} {{/if}} 
     </span>
 </div>
 
