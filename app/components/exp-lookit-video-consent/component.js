@@ -373,6 +373,12 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             description: 'GARDEN only: Eligibility criteria.'
         },
 
+        include_duration_in_procedures: {
+            type: 'boolean',
+            default: true,
+            description: 'GARDEN only: Whether or not to include the duration statement at the start of the procedures section.'
+        },
+
         procedures_content: {
             type: 'string',
             description: 'GARDEN only: Statement summarizing study procedures.'

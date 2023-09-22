@@ -29,7 +29,13 @@
 
     {{!-- procedures --}}
     <h2>{{#if procedures_header}} {{exp-format procedures_header}} {{else}} {{t "consent-garden.procedures-header" htmlSafe=true }} {{/if}}</h2>
-    <p>{{#if duration_statment}} {{exp-format duration_statment}} {{else}} {{t "consent-garden.duration-statement" duration=experiment.duration htmlSafe=true }} {{exp-format procedures_content }} {{/if}}</p>
+    <p>
+        {{#if include_duration_in_procedures}}
+            {{#if duration_statment}} {{exp-format duration_statment}} {{else}} {{t "consent-garden.duration-statement" duration=experiment.duration htmlSafe=true }} {{exp-format procedures_content }} {{/if}}
+        {{else}}
+            {{exp-format procedures_content }}
+        {{/if}}
+    </p>
 
     {{!-- payment --}}
     <h2>{{#if payment_header}} {{ exp-format payment_header }} {{else}} {{t "consent-garden.payment-header" htmlSafe=true }} {{/if}}</h2>
