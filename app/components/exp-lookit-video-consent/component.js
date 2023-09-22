@@ -353,6 +353,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         },
 
         // GARDEN template parameters
+        lab: {
+            type: 'string',
+            description: 'GARDEN only: Name of lab running this study'
+        },
+
         study_info_description: {
             type: 'string',
             description: 'GARDEN only: Brief (one-sentence) description of study to insert into the study_info_content default text.'
