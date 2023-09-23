@@ -47,6 +47,10 @@
         width: 100%;
     }
 
+    video.pipeNormal {
+        min-height: unset !important;
+    }
+
 }
 
 :fullscreen .exp-lookit-webcam-display {
