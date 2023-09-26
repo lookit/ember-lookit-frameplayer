@@ -139,7 +139,7 @@
     {{/if}}
 
     {{!-- contact --}}
-    <h2> {{#if contact_header }} {{ exp-format contact_header }} {{t "consent-garden.contact-header" htmlSafe=true }} {{/if}}</h2>
+    <h2> {{#if contact_header }} {{ exp-format contact_header }} {{else}} {{t "consent-garden.contact-header" htmlSafe=true }} {{/if}}</h2>
     <p>
         {{#if contact_content}} {{ exp-format contact_content }} {{else}} {{t "consent-garden.contact-content" name=PIName institution=institution contact=PIContact htmlSafe=true }} {{/if}}
     </p>
