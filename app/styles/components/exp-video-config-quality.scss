@@ -136,14 +136,15 @@ $medium-focus-color: #87b79f;
             float: right;
         }
 
-        div.pipeMicIconNoMenu {
-            bottom: 0px !important;
-            margin-bottom: 20% !important;
-        }
+    }
 
-        video.pipeNormal {
-            min-height: unset !important;
-        }
+    video.pipeNormal {
+        min-height: unset !important;
+    }
+
+    div.pipeMicIconNoMenu {
+        bottom: 0px !important;
+        margin-bottom: 20% !important;
     }
 
     video[id^=pipeSmallVideo].pipeSmallNormal {
