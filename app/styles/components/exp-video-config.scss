@@ -107,4 +107,14 @@
         max-width: 12em;
     }
 
+    video.pipeNormal {
+        min-height: unset !important;
+    }
+
+    div.pipeMicIconNoMenu {
+        bottom: 0px !important;
+        margin-bottom: 10% !important;
+    }
+
+
 }
