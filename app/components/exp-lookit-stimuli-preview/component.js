@@ -8,7 +8,7 @@ import { computed } from '@ember/object';
 import { videoAssetOptions, imageAssetOptions, audioAssetOptions } from '../../mixins/expand-assets';
 
 /*
- * A frame that to explain any blinding procedures to parents, and offer them the option to preview stimuli before the study. Two buttons allow the user to move forward: one goes to the next frame (if the parent wants to preview stimuli), and one skips the next frame and goes to the one after that (if the parent declins). Therefore, this frame should be followed by an {{#crossLink "Exp-video-preview"}}{{/crossLink}} frame.
+ * A frame that can be used to explain any blinding procedures to parents, and offer them the option to preview stimuli before the study. Two buttons allow the user to move forward: one goes to the next frame (if the parent wants to preview stimuli), and one skips the next frame and goes to the one after that (if the parent declins). Therefore, this frame should be followed by an {{#crossLink "Exp-video-preview"}}{{/crossLink}} frame.
  */
 
 export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
