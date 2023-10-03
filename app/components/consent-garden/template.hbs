@@ -104,11 +104,6 @@
                     {{t "consent-garden.video-sharing-study-private" htmlSafe=true }}
                 {{else}}
                     {{t "consent-garden.video-sharing-study-all" htmlSafe=true }}
-                    {{!-- databrary sharing: video sharing section --}}
-                    {{#if include_databrary}}
-                        <br><br>
-                        {{#if databrary_content}} {{ exp-format databrary_content }} {{else}} {{t "consent-garden.databrary-content" htmlSafe=true }} {{/if}}
-                    {{/if}}
                 {{/if}}
             {{/if}}
         {{/unless}}
