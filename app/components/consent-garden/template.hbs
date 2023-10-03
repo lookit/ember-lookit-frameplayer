@@ -114,16 +114,13 @@
         {{/if}}
     </p>
 
-    {{!-- publication --}}
-    <h2>{{#if publication_header}} {{ exp-format publication_header }} {{else}} {{t "consent-garden.publication-header" htmlSafe=true }} {{/if}}</h2>
-    <p>
-        {{#if publication_content}} {{ exp-format publication_content }} {{else}} {{t "consent-garden.publication-content" experiment=experiment.name htmlSafe=true }} {{/if}}
-        {{!-- databrary sharing: publication section --}}
-        {{#if include_databrary}}
-            <br><br>
+    {{!-- databrary sharing --}}
+    {{#if include_databrary}}
+        <h2>{{#if databrary_header}} {{ exp-format databrary_header }} {{else}} {{t "consent-garden.databrary-header" htmlSafe=true }} {{/if}}</h2>
+        <p>
             {{#if databrary_content}} {{ exp-format databrary_content }} {{else}} {{t "consent-garden.databrary-content" htmlSafe=true }} {{/if}}
-        {{/if}}
-    </p>
+        </p>
+    {{/if}}
 
     {{!-- additional segments --}}
     {{#if additional_segments}}
