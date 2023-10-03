@@ -103,7 +103,11 @@
                 {{#if private_level_only}}
                     {{t "consent-garden.video-sharing-study-private" htmlSafe=true }}
                 {{else}}
-                    {{t "consent-garden.video-sharing-study-all" htmlSafe=true }}
+                    {{t "consent-garden.video-sharing-study-all-1" htmlSafe=true }}
+                    {{#if include_databrary}}
+                        {{t "consent-garden.video-sharing-study-all-databrary" htmlSafe=true }}
+                    {{/if}}
+                    {{t "consent-garden.video-sharing-study-all-2" htmlSafe=true }}
                 {{/if}}
             {{/if}}
         {{/unless}}
