@@ -27,6 +27,10 @@ Researchers can select from the following named templates:
 
 * `consent_004`: Same as consent_003 except that sentences in 'Data collection and webcam recording' are rearranged to make it clearer what happens if you withdraw video data, and the prompt says to read "out loud (or in ASL)" instead of just "out loud" for accessibility.
 
+* `consent_005`: A reworked and simplified template that fixes a lot of mildly confusing sentences. Adds a separate risk_statement to separate information about procedures, risks, and compensation/benefits.
+
+* `consent_garden`: For Project GARDEN studies only.
+
 Important: To look up the exact text of each consent template for your IRB protocol, and to understand the context for each piece of text to be inserted, please see https://github.com/lookit/research-resources/tree/master/Legal
 
 The consent document can be downloaded as PDF document by participant.
@@ -335,12 +339,268 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             default: ''
         },
 
+        consent_statement_text: {
+            type: 'string',
+            description: 'Custom text for the consent statement to be read aloud.',
+            default: ''
+        },
+
         template: {
             type: 'string',
-            enum: ['consent_001', 'consent_002', 'consent_003', 'consent_004', 'consent_005'],
+            enum: ['consent_001', 'consent_002', 'consent_003', 'consent_004', 'consent_005', 'consent_garden'],
             description: 'Which consent document template to use',
             default: 'consent_001'
+        },
+
+        // GARDEN template parameters
+        lab: {
+            type: 'string',
+            description: 'GARDEN only: Name of lab running this study'
+        },
+
+        study_info_description: {
+            type: 'string',
+            description: 'GARDEN only: Brief (one-sentence) description of study to insert into the study_info_content default text.'
+        },
+
+        purpose_content: {
+            type: 'string',
+            description: 'GARDEN only: Brief description of the purpose of the study. '
+        },
+
+        eligibility_content: {
+            type: 'string',
+            description: 'GARDEN only: Eligibility criteria.'
+        },
+
+        include_duration_in_procedures: {
+            type: 'boolean',
+            default: true,
+            description: 'GARDEN only: Whether or not to include the duration statement at the start of the procedures section.'
+        },
+
+        procedures_content: {
+            type: 'string',
+            description: 'GARDEN only: Statement summarizing study procedures.'
+        },
+
+        benefits_content: {
+            type: 'string',
+            description: 'GARDEN only: Statement summarizing the benefits of the research to the family or to society.'
+        },
+
+        data_sharing_learn: {
+            type: 'string',
+            description: 'GARDEN only: Statement about what additional things might be learned from the data from this specific study.'
+        },
+
+        irb_contact: {
+            type: 'string',
+            description: 'GARDEN only: Contact info for the research rights/IRB section.'
+        },
+
+        risk_content_additional: {
+            type: 'string',
+            description: 'GARDEN only: Additional risk statement to be added after the default text'
+        },
+        
+        risk_content_discontinue_options: {
+            type: 'string',
+            description: 'GARDEN only: Additional study-specific discontinue options to be inserted into the default statement.'
+        },
+
+        risk_content_breach_of_confidentiality: {
+            type: 'string',
+            description: 'GARDEN only: Breach of confidentiality statement, if required by your IRB.'
+        },
+
+        data_collection_omit_video: {
+            type: 'boolean',
+            default: false, 
+            description: 'GARDEN only: Whether or not to omit the video recordings data type form the data collection section.'
+        },
+        
+        include_irb_contact_statement: {
+            type: 'boolean',
+            default: false, 
+            description: 'GARDEN only: Whether or not to include the "IRB may contact you" sentence in the research rights/IRB section.'
+        },
+        
+        irb_extra : {
+            type: 'string',
+            description: 'GARDEN only: Use this parameter to provide any additional institution IRB specific information.'
+        },
+
+        header: {
+            type: 'string',
+            description: 'GARDEN only: Custom header.'
+        },
+
+        intro_sentence: {
+            type: 'string',
+            description: 'GARDEN only: Custom intro sentence'
+        },
+
+        overview_header: {
+            type: 'string',
+            description: 'GARDEN only: Custom overview header.'
+        },
+
+        overview_content: {
+            type: 'string',
+            description: 'GARDEN only: Custom overview content.'
+        },
+
+        study_info_header: {
+            type: 'string',
+            description: 'GARDEN only: Custom study info header.'
+        },
+
+        study_info_content: {
+            type: 'string',
+            description: 'GARDEN only: Custom study info content.'
+        },
+
+        eligibility_header : {
+            type: 'string',
+            description: 'GARDEN only: Custom eligibility header.'
+        },
+
+        duration_statement: {
+            type: 'string',
+            description: 'GARDEN only: Custom duration statement.'
+        },
+
+        payment_header: {
+            type: 'string',
+            description: 'GARDEN only: Custom payment header.'
+        },
+
+        payment_content: {
+            type: 'string',
+            description: 'GARDEN only: Custom payment content.'
+        },
+
+        risk_content: {
+            type: 'string',
+            description: 'GARDEN only: Custom risk content.'
+        },
+
+        data_collection_header: {
+            type: 'string',
+            description: 'GARDEN only: Custom data collection header.'
+        },
+
+        data_collection_content: {
+            type: 'string',
+            description: 'GARDEN only: Custom data collection content.'
+        },
+
+        data_use_header: {
+            type: 'string',
+            description: 'GARDEN only: Custom data use header.'
+        },
+
+        data_use_content: {
+            type: 'string',
+            description: 'GARDEN only: Custom data use content.'
+        },
+
+        data_access_header: {
+            type: 'string',
+            description: 'GARDEN only: Custom data access header.'
+        },
+
+        data_access_content: {
+            type: 'string',
+            description: 'GARDEN only: Custom data access content.'
+        },
+
+        data_management_header: {
+            type: 'string',
+            description: 'GARDEN only: Custom data management header.'
+        },
+
+        data_management_content: {
+            type: 'string',
+            description: 'GARDEN only: Custom data management content.'
+        },
+
+        data_sharing_header: {
+            type: 'string',
+            description: 'GARDEN only: Custom data sharing header.'
+        },
+
+        data_sharing_content: {
+            type: 'string',
+            description: 'GARDEN only: Custom data sharing content.'
+        },
+
+        research_rights_irb_header: {
+            type: 'string',
+            description: 'GARDEN only: Custom Research Rights / IRB header.'
+        },
+
+        research_rights_irb_content: {
+            type: 'string',
+            description: 'GARDEN only: Custom Research Rights / IRB content.'
+        },
+
+        lookit_info_header: {
+            type: 'string',
+            description: 'GARDEN only: Custom Lookit Info header.'
+        },
+
+        lookit_info_content: {
+            type: 'string',
+            description: 'GARDEN only: Custom Lookit Info content.'
+        },
+
+        voluntary_participation_header: {
+            type: 'string',
+            description: 'GARDEN only: Custom voluntary participation header.'
+        },
+
+        voluntary_participation_content: {
+            type: 'string',
+            description: 'GARDEN only: Custom voluntary participation content.'
+        },
+
+        video_sharing_header: {
+            type: 'string',
+            description: 'GARDEN only: Custom video sharing header.'
+        },
+
+        video_sharing_consent: {
+            type: 'string',
+            description: 'GARDEN only: Custom video sharing consent content.'
+        },
+
+        video_sharing_study: {
+            type: 'string',
+            description: 'GARDEN only: Custom video sharing study content.'
+        },
+
+        databrary_header: {
+            type: 'string',
+            description: 'GARDEN only: Custom databrary header.'
+        },
+
+        databrary_content: {
+            type: 'string',
+            description: 'GARDEN only: Custom databrary content.'
+        },
+
+        contact_header : {
+            type: 'string',
+            description: 'GARDEN only: Custom contact header.'
+        },
+
+        contact_content: {
+            type: 'string',
+            description: 'GARDEN only: Custom contact content.'
         }
+
     },
 
     frameSchemaRequired: ['PIName', 'institution', 'PIContact', 'purpose', 'procedures', 'payment', 'template'],
@@ -369,7 +629,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     didInsertElement() {
         this._super(...arguments);
-        let validTemplateNames = ['consent_001', 'consent_002', 'consent_003', 'consent_004'];
+        let validTemplateNames = ['consent_001', 'consent_002', 'consent_003', 'consent_004', 'consent_005', 'consent_garden'];
         if (!validTemplateNames.includes(this.get('template'))) {
             console.warn('Invalid consent form specified. \'template\' parameter of \'exp-lookit-video-consent\' frame should be one of: ' + validTemplateNames.join(' '));
         }
