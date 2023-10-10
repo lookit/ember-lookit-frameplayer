@@ -50,6 +50,10 @@
         margin: 0;
     }
 
+    video.pipeNormal {
+        min-height: unset !important;
+    }
+
     .media-wrapper {
         width: 100%;
     }
