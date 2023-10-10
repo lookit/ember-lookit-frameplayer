@@ -1,0 +1,13 @@
+<iframe 
+    height="{{ iframeHeight }}" 
+    width="{{ iframeWidth }}" 
+    src="{{ iframeSrc }}" 
+    sandbox="allow-scripts allow-same-origin" 
+    referrerpolicy="no-referrer"
+/>
+{{#if optionalText }}<p>{{ optionalText }}</p>{{/if}}
+<div class="row exp-controls">
+    <div class="col-md-12">
+        <button type="button" id="nextbutton" class="btn btn-success pull-right" {{ action "next" }} > {{ t "Next" }} </button>
+    </div>
+</div>
