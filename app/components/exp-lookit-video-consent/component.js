@@ -581,19 +581,14 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             description: 'GARDEN only: Custom video sharing study content.'
         },
 
+        databrary_header: {
+            type: 'string',
+            description: 'GARDEN only: Custom databrary header.'
+        },
+
         databrary_content: {
             type: 'string',
             description: 'GARDEN only: Custom databrary content.'
-        },
-
-        publication_header: {
-            type: 'string',
-            description: 'GARDEN only: Custom publication header.'
-        },
-
-        publication_content: {
-            type: 'string',
-            description: 'GARDEN only: Custom publication content.'
         },
 
         contact_header : {
