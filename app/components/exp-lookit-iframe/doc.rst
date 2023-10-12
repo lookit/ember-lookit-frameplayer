@@ -6,7 +6,20 @@ exp-lookit-iframe
 Overview
 ------------------
 
-A frame to display external websites, such as surveys, to the participant. 
+A frame to display external websites within a Lookit study, such as surveys or tasks hosted on other platforms. A 'Next' button is 
+displayed beneath the iframe box that allows the participant to continue to the next Lookit frame.
+
+This frame is useful for embedding an externally-hosted webpage in the middle of a Lookit study. Importantly, the Lookit study has no 
+way of 'knowing' what sorts of interactions the participant has, or has not had, on the external website. For example, there is no way 
+to ensure that the participant has made a response on the external site before they click the 'Next' button to continue on with the 
+Lookit study. For this reason, if your study methods allow it, we suggest moving any externally-hosted surveys/tasks to the end of the 
+Lookit study. You can automatically direct participants to another website at the end of the Lookit study using the study's 
+'`Exit URL <https://lookit.readthedocs.io/en/develop/researchers-set-study-fields.html#exit-url>`_'.
+
+If you do need to embed an external website in the middle of a Lookit study, this frame includes the optionalText parameter, which 
+allows you to add text underneath the iframe box. You can use this text to help ensure the participant completes everything in the 
+iframe box before clicking the frame's 'Next' button, e.g. "Please make sure that you see the message 'Your response has been 
+submitted' in the box above before clicking the next button below."
 
 What it looks like
 ~~~~~~~~~~~~~~~~~~
@@ -29,7 +42,7 @@ Examples
 
     "study-survey": {
         "kind": "exp-lookit-iframe",
-        "iframeSrc": "https://mit.co1.qualtrics.com/jfe/form/SV_do6kyKJkwl19USW",
+        "iframeSrc": "https://example.com",
         "iframeHeight": "700px",
         "iframeWidth": "100%",
         "optionalText": "Message to the participant."
@@ -39,19 +52,23 @@ Parameters
 ----------------
 
 iframeSrc [String]
-    Page that should be shown in IFrame.  Additionally, we update the query string with child's hash id using the key value 'child'
-    and the response id using the key value 'response'.
+    The external URL that should be shown in the iframe. The link will be automatically updated to include two pieces of information 
+    as URL query parameters: the hashed child ID ('child') and the response ID ('response'). This will allow you to link the study 
+    responses and child's Lookit account without having to ask the family to enter additional information. See 
+    `this page <https://lookit.readthedocs.io/en/develop/researchers-set-study-fields.html#study-url-external-studies>`_
+    for information on how to use these query strings.
 
 iframeHeight [String | ``700px``]
-    Set the height of the iframe.  This can be most CSS units, but percents don't work here as the parent elements restrict the height 
-    of the frame.  Also, take in to account the height of the page being loaded into the iframe.  It might be awkward for the user to 
-    have to deal with nested scrolling view. 
+    Set the height of the iframe. You can use CSS units ("700px", "4in"), but not percents ("100%"). Make sure to preview your study 
+    to see how the external page looks. Avoid a nested scrolling view by either making your iframeHeight value taller, or including 
+    navigation between shorter sections in your external page.
 
 iframeWidth [String | ``100%``]
-    Set width of the iframe.  The default seems to work pretty well, but any CSS value should work here.  
+    Set the width of the iframe. You can use CSS units, including percents ("700px", "4in", "100%").
 
 optionalText [String]
-    Add some text to the frame to contextualize what's being displayed in the iframe. 
+    Add a message underneath the iframe to contextualize what's being displayed. For instance, you can tell the participant how they 
+    will know when to click the Next button.
 
 Data collected
 ----------------
