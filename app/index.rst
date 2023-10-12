@@ -51,6 +51,7 @@ The documentation will tell you how each frame works, what data it collects, and
    components/exp-lookit-calibration/doc.rst
    components/exp-lookit-change-detection/doc.rst
    components/exp-lookit-exit-survey/doc.rst
+   components/exp-lookit-iframe/doc.rst
    components/exp-lookit-images-audio/doc.rst
    components/exp-lookit-images-audio-infant-control/doc.rst
    components/exp-lookit-instruction-video/doc.rst
