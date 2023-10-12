@@ -27,14 +27,14 @@ class S3 {
     }
 
     async createUpload() {
-        this.logRecordingEvent('Creating video upload connection.');
+        this.logRecordingEvent(`Creating video upload connection.`);
         const createResponse = await this.s3.createMultipartUpload({
             Bucket: this.env.bucket,
             Key: this.key,
             ContentType: "video/mp4",
         }).promise();
         this.uploadId = createResponse.UploadId;
-        this.logRecordingEvent('Connection established.');
+        this.logRecordingEvent(`Connection established.`);
     }
 
     async uploadPart(blob, partNumber) {
@@ -58,12 +58,12 @@ class S3 {
                     ETag: uploadPartResponse.ETag
                 };
             } catch (_err) {
-                this.logRecordingEvent(`Error uploading part: ${partNumber}\nError: ${_err}`);
+                this.logRecordingEvent(`Error uploading part ${partNumber}.\nError: ${_err}`);
                 err = _err;
                 retry += 1;
             }
         }
-        throw Error(`Upload part failed after 3 attempts. \n${err}`);
+        throw Error(`Upload part failed after 3 attempts.\nError: ${err}`);
     }
 
     async completeUpload() {
@@ -100,7 +100,7 @@ class S3 {
     logRecordingEvent(msg) {
         // right now this just prints to the console, but we could also send this info to permanent storage (similar to pipe logs)
         const timestamp = new Date().toISOString();
-        console.log(`Recording log: ${timestamp}\n${msg}\n`);
+        console.log(`Recording log: ${timestamp}\nFile: ${this.key}\n${msg}\n`);
     }
 }
 export default S3;
