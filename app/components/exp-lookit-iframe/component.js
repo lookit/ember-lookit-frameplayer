@@ -1,6 +1,7 @@
 import layout from './template';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 import { addSearchParams } from '../../utils/add-search-params';
+import $ from 'jquery';
 
 
 export default ExpFrameBaseComponent.extend({
@@ -21,6 +22,9 @@ export default ExpFrameBaseComponent.extend({
         },
         optionalText:{
             type:'string'
+        },
+        optionalExternalLink:{
+            type:'boolean'
         }
     },
 
@@ -39,4 +43,14 @@ export default ExpFrameBaseComponent.extend({
         this._super(...arguments);
     }
 
+});
+
+
+function enableNextbutton(){
+    document.querySelector('#nextbutton').removeAttribute('disabled')
+}
+
+$(function() {
+    setTimeout(enableNextbutton, 3000);
+    document.querySelector('iframe').onload = enableNextbutton
 });
