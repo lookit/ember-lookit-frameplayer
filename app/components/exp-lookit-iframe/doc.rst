@@ -21,6 +21,22 @@ allows you to add text underneath the iframe box. You can use this text to help 
 iframe box before clicking the frame's 'Next' button, e.g. "Please make sure that you see the message 'Your response has been 
 submitted' in the box above before clicking the next button below."
 
+Another reason to use this frame is if you want to capture webcam video of participants while they are completing a task on 
+a site that doesn't provide webcam monitoring. While the participant is interacting with the externally-hosted webpage, you 
+can record webcam video for this frame by including the session recording frame 
+`exp-lookit-start-recording <https://lookit.readthedocs.io/projects/frameplayer/en/latest/components/exp-lookit-start-recording/doc.html#exp-lookit-start-recording>`_. 
+Note that any timing information collected by the external site (e.g. externally recorded response time after the external 
+page loads) will not necessarily correspond precisely to the Lookit frame timing information or exact onset of the resulting 
+video file (link to documentation: https://lookit.readthedocs.io/en/develop/researchers-lag-issues.html).
+
+More generally, remember that the Lookit study has no way of 'knowing' what sorts of interactions the participant has, or has 
+not had, on the external website. For example, there is no way to ensure that the participant has made a response on the 
+external site before they click the 'Next' button to continue on with the Lookit study.
+
+This frame includes the optionalText parameter, which allows you to add text underneath the iframe box. You can use this text 
+to help ensure the participant completes everything in the iframe box before clicking the frame's 'Next' button, e.g. "Please 
+make sure that you see the message 'Your response has been submitted' in the box above before clicking the next button below."
+
 What it looks like
 ~~~~~~~~~~~~~~~~~~
 
@@ -69,6 +85,12 @@ iframeWidth [String | ``100%``]
 optionalText [String]
     Add a message underneath the iframe to contextualize what's being displayed. For instance, you can tell the participant how they 
     will know when to click the Next button.
+
+optionalExternalLink [Boolean | ``false``]
+    Allow participants to click on a link to open the external URL in a new tab if the iframe doesn't load correctly. This 
+    message displays under any optionalText string and reads "If you don't see anything in the space above, there might have 
+    been a problem loading this part of the study. Click [here] to open this part of the study in a new tab. Make sure to keep 
+    this tab open so you can continue to the rest of the study."
 
 Data collected
 ----------------
