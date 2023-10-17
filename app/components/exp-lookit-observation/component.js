@@ -260,38 +260,45 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     actions: {
         record() {
 
-            this.startRecorder(); // TODO: use then
-
             var _this = this;
-            if (this.get('recordSegmentLength')) { // no timer if 0
-                window.clearTimeout(this.get('recordingTimer')); // as a precaution in case still running
-                window.clearInterval(this.get('progressTimer'));
-                window.clearTimeout(this.get('okayToProceedTimer'));
-                this.set('timerStart', new Date().getTime());
-                this.set('recordingTimer', window.setTimeout(function() {
-                    /**
-                     * Video recording automatically paused upon reaching time limit
-                     *
-                     * @event recorderTimeout
-                     */
-                    _this.send('setTimeEvent', 'recorderTimeout');
-                    _this.send('pause');
-                }, _this.get('recordSegmentLength') * 1000));
-                this.set('progressTimer', window.setInterval(function() {
-                    var prctDone =  (_this.get('recordSegmentLength') * 1000 - (new Date().getTime() - _this.get('timerStart'))) / (_this.get('recordSegmentLength') * 10);
-                    $('.progress-bar').css('width', prctDone + '%');
-                }, 100));
-                if (this.get('recordingRequired')) {
-                    this.set('okayToProceedTimer', window.setTimeout(function() {
-                        _this.enableNext();
-                    }, 1000 * this.get('recordingRequired')));
+            this.startRecorder().then(() => {
+                _this.set('_starting', false);
+                _this.hideWaitForVideoCover();
+                _this.onRecordingStarted();
+
+                // set up timer and progress bar if necessary
+                if (this.get('recordSegmentLength')) { // no timer if 0
+                    window.clearTimeout(this.get('recordingTimer')); // as a precaution in case still running
+                    window.clearInterval(this.get('progressTimer'));
+                    window.clearTimeout(this.get('okayToProceedTimer'));
+                    this.set('timerStart', new Date().getTime());
+                    this.set('recordingTimer', window.setTimeout(function() {
+                        /**
+                         * Video recording automatically paused upon reaching time limit
+                         * @event recorderTimeout
+                         */
+                        _this.send('setTimeEvent', 'recorderTimeout');
+                        _this.send('pause');
+                    }, _this.get('recordSegmentLength') * 1000));
+                    this.set('progressTimer', window.setInterval(function() {
+                        var prctDone =  (_this.get('recordSegmentLength') * 1000 - (new Date().getTime() - _this.get('timerStart'))) / (_this.get('recordSegmentLength') * 10);
+                        $('.progress-bar').css('width', prctDone + '%');
+                    }, 100));
+                    if (this.get('recordingRequired')) {
+                        this.set('okayToProceedTimer', window.setTimeout(function() {
+                            _this.enableNext();
+                        }, 1000 * this.get('recordingRequired')));
+                    }
                 }
-            }
-            $('#pauseButton').show();
-            $('#recordButton').hide();
-            $('#recordingIndicator').show();
-            $('#recordingText').text(`${this._translate('exp-lookit-observation.Recording')}...`);
-            $('#recordButtonText').text(this._translate('exp-lookit-observation.Record'));
+
+                $('#pauseButton').show();
+                $('#recordButton').hide();
+                $('#recordingIndicator').show();
+                $('#recordingText').text(`${this._translate('exp-lookit-observation.Recording')}...`);
+                $('#recordButtonText').text(this._translate('exp-lookit-observation.Record'));
+
+            });
+           
         },
 
         proceed() { // make sure 'next' fires while still on this frame
