@@ -53,7 +53,9 @@
     position: absolute;
     font-size: 2em;
     text-align: center;
-    margin: 30% 0 0 30%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .exp-lookit-observation #webcamToggleButton {
