@@ -225,7 +225,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             if (this.get('hideWebcam')) {
                 $('#webcamToggleButton').html(this._translate('exp-lookit-observation.Show'));
                 $('#hiddenWebcamMessage').show();
-                $(this.get('recorderElement') + ' div').addClass('exp-lookit-observation-hidevideo');
+                $('video').parent('div.lookit-video-recorder').parent().addClass('exp-lookit-observation-hidevideo');
                 this.set('hidden', true);
                 /**
                  * Webcam display hidden from participant
