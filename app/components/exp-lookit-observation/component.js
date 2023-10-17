@@ -64,7 +64,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     okayToProceedTimer: null,
 
     timerStart: null,
-    hasStartedRecording: false,
+    // Flag to prevent recorder from continuing to automatically start when 'startRecordingAutomatically'
+    // We can't use the recorder's hasCreatedRecording property to track this because a new recorder is created after each recording ends.
+    hasMadeRecording: false,
     recordingStarted: false,
     toggling: false,
     hidden: false,
@@ -209,10 +211,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     },
 
     // Override to deal with whether or not recording is starting automatically
-    whenPossibleToRecord: observer('recorder.hasCamAccess', 'recorderReady', function() {
-
-        if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-            if (this.get('startRecordingAutomatically')) {
+    whenPossibleToRecordObserver: observer('recorder.hasCamAccess', 'recorderReady', function() {
+        var _this = this;
+        if (this.get('recorder.hasCamAccess') && this.get('recorderReady') && !(this.get('recorder.recording')) && !(this.get('_starting'))) {
+            if (this.get('startRecordingAutomatically') && !(this.get('hasMadeRecording'))) {
+                this.set('_starting', true);
                 this.send('record');
             } else {
                 $('#recordButton').show();
@@ -232,7 +235,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                 this.send('setTimeEvent', 'webcamHidden');
             }
         }
-
 
     }),
 
@@ -311,6 +313,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             $('.progress-bar').css('width', '100%');
             $('#recordingIndicator').hide();
             this.stopRecorder().finally(() => {
+                _this.set('hasMadeRecording', true);
                 $('#recordButton').show();
                 $('#recordingText').text(_this._translate('exp-lookit-observation.Paused'));
                 _this.destroyRecorder();
