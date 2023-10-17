@@ -303,7 +303,6 @@ export default Ember.Mixin.create({
             var _this = this;
             this.startSessionRecorder().then(() => {
                 _this.send('setTimeEvent', 'startedSessionRecording');
-                _this.set('sessionRecorderReady', false);
                 _this.onSessionRecordingStarted();
             });
         }
