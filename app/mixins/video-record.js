@@ -40,6 +40,7 @@ let {
  *  recording
  *  connected
  *  micChecked
+ *  hasCreatedRecording
  * For details, see services/video-recorder.js. 
  * These
  * can be accessed from the consuming frame as e.g. `this.get('recorder').get('hasWebCam')`.
@@ -269,6 +270,11 @@ export default Ember.Mixin.create({
      */
     waitForUploadVideo: '',
 
+    /**
+     * Private flag that is set when the async record method is first called
+     * to prevent record from being called multiple times
+    */
+     _starting: false,
 
     _generateVideoId() {
         return [
@@ -530,9 +536,10 @@ export default Ember.Mixin.create({
     whenPossibleToRecordObserver: observer('recorder.hasCamAccess', 'recorderReady', function() {
         if (this.get('doUseCamera') && this.get('startRecordingAutomatically')) {
             var _this = this;
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady') && !(this.get('recording'))) {
+            if (this.get('recorder.hasCamAccess') && this.get('recorderReady') && !(this.get('recorder.recording')) && !(this.get('_starting'))) {
+                this.set('_starting', true);
                 this.startRecorder().then(() => {
-                    _this.set('recorderReady', false);
+                    _this.set('_starting', false);
                     _this.hideWaitForVideoCover();
                     _this.onRecordingStarted();
                 });
