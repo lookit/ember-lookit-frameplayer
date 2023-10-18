@@ -151,6 +151,10 @@ const VideoRecorder = Ember.Object.extend({
     // 'onPlaybackComplete'
     // 'onSaveOk'
 
+    // Old Pipe install parameters that have not been implemented (yet)
+    // 'audioOnly'
+    // 'autosave'
+
     /**
      * Install a recorder onto the page and optionally begin recording immediately.
      *
@@ -207,7 +211,6 @@ const VideoRecorder = Ember.Object.extend({
             const recordRtcConfig = {
                 type: 'video', // audio, video, canvas, gif
                 mimeType: 'video/webm',
-                // TO DO: not sure about these codecs?
                 // video/webm;codecs=vp9
                 // video/webm;codecs=vp8
                 // video/webm;codecs=h264
@@ -353,28 +356,8 @@ const VideoRecorder = Ember.Object.extend({
         if (!this.get('started')) {
             throw new Error('Must call install before record');
         }
-        //let count = 0;
         var _this = this;
         _this.set('_isuploaded', false);
-        // let id = window.setInterval(() => {
-        //     if (++count > 50) { // stop trying - failure (5s)
-        //         if (_this.get('onCamAccess')) {
-        //             _this.get('onCamAccess').call(_this, false);
-        //         }
-        //         return window.clearInterval(id), _this.get('_recordPromise').reject();
-        //     }
-        //     if (!_this.get('recorder') || !(_this.get('recorder').record)) {
-        //         return null;
-        //     }
-        //     _this.get('recorder').record();
-
-        //     // Giving the "record" method a few seconds seems to increase the reliability of hooks firing.
-        //     setTimeout(function () {
-        //         window.clearInterval(id); // stop trying - success
-        //     }, 3000);
-
-        //     return null;
-        // }, 100); // try every 100ms
         if (!_this.get('recorder') || !(_this.get('recorder').startRecording)) {
             return null;
         }
@@ -615,7 +598,7 @@ const VideoRecorder = Ember.Object.extend({
     },
 
     // Additional hooks available:
-    // NOTE/TO DO: these hooks are a carry-over from Pipe and not actually implemented (yet). 
+    // NOTE: these hooks are a carry-over from Pipe and not actually implemented (yet). 
     // All except for 'onSaveOk' are related to Pipe's built-in recording/playback menu. The new recorder is not linked to a 
     // playback menu, which means that the buttons and callbacks should be implemented at the frame's component level (see video-config-quality for an example).
     // The 'onSaveOk' hook is not used by our frames and the existing 'onUploadDone' hook should cover its uses.
