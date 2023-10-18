@@ -531,6 +531,7 @@ export default Ember.Mixin.create({
 
     /**
      * Observer that starts recording once recorder is ready.
+     * Consuming frames can override this if necessary (e.g. observation frame).
      * @method whenPossibleToRecordObserver
      */
     whenPossibleToRecordObserver: observer('recorder.hasCamAccess', 'recorderReady', function() {

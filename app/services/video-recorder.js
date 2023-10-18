@@ -128,7 +128,7 @@ const VideoRecorder = Ember.Object.extend({
     // RecordRTC API: https://github.com/muaz-khan/RecordRTC#api
     // We can also access the internal web audio API recording object (MediaStreamRecorder) and use that directly
     hooks: [
-        'onRecordingStarted', // triggered after the resolution of RecordRTC startRecording promise (TO DO: should fire on change to 'recording' state?)
+        'onRecordingStarted', // triggered after the resolution of RecordRTC startRecording promise
         'onCamAccess', // triggered by resolution of get user media promise
         'onReadyToRecord',
         'onUploadDone',
