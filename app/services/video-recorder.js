@@ -336,7 +336,7 @@ const VideoRecorder = Ember.Object.extend({
             };
 
             const catch_install_error = (err) => {
-                console.error(`${err.name}: ${err.message}`);
+                console.error(`Recorder installation error:\n${err.name}: ${err.message}`);
                 console.trace();
                 return reject();
             }
@@ -398,13 +398,13 @@ const VideoRecorder = Ember.Object.extend({
                 _this.get('recorder').onRecordingStarted.call(_this); 
                 if (_this.get('maxRecordingTime') !== null) {
                     _this.set('_stopTimeout', window.setTimeout(function() {
-                        console.warn('reached max recording time');
+                        console.warn(`Reached max recording time for file: ${_this.get('videoName')}`);
                         _this.stop();
                     }, _this.get('maxRecordingTime')*1000));
                 }
             })
             .catch((err) => {
-                console.error(`${err.name}: ${err.message}`);
+                console.error(`Error starting recording for file: ${_this.get('videoName')}\n${err.name}: ${err.message}`);
             });
 
         return new RSVP.Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
@@ -448,7 +448,7 @@ const VideoRecorder = Ember.Object.extend({
         var _stopPromise = new RSVP.Promise((resolve, reject) => {
             // If we reach the upload time limit maxUploadTimeMs, call reject
             _this.set('uploadTimeout', window.setTimeout(function () {
-                console.warn('waiting for upload timed out');
+                console.warn(`Waiting for upload timed out: ${_this.get('videoName')}`);
                 window.clearTimeout(_this.get('uploadTimeout'));
                 reject();
             }, maxUploadTimeMs));
@@ -467,7 +467,7 @@ const VideoRecorder = Ember.Object.extend({
                 await this.get('s3').completeUpload();
                 this._onUploadDone(this.get('recorderId'), this.get('s3').key); // clears the upload timeout, sets isuploaded to true, resolves stop promise
             } catch (e) {
-                console.warn('error stopping video: ', e);
+                console.warn(`Error stopping video ${_this.get('videoName')}: ${e}`);
             }
         }
         return _stopPromise;
@@ -488,7 +488,7 @@ const VideoRecorder = Ember.Object.extend({
                             resolve();
                         })
                         .catch((err) => {
-                            console.error(`Error pausing recorder: ${err.name}: ${err.message}`);
+                            console.error(`Error pausing recorder:\n${err.name}: ${err.message}`);
                             console.trace();
                             reject();
                         });
@@ -514,7 +514,7 @@ const VideoRecorder = Ember.Object.extend({
                             resolve();
                         })
                         .catch((err) => {
-                            console.error(`Error pausing recorder: ${err.name}: ${err.message}`);
+                            console.error(`Error resuming recording:\n${err.name}: ${err.message}`);
                             console.trace();
                             reject();
                         });
