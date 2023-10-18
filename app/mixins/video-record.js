@@ -159,7 +159,7 @@ export default Ember.Mixin.create({
      * @property {Number} audioOnly
      * @default 0
      */
-    audioOnly: 0,
+    //audioOnly: 0,
 
     /**
      * Whether to do check the mic input during recorder set up (before the install promise is resolved). 
@@ -315,7 +315,7 @@ export default Ember.Mixin.create({
         const recorder = new VideoRecorder({element: element});
         const s3vars = Ember.getOwner(this).resolveRegistration('config:environment').awsRecording;
         const installPromise = recorder.install(this.get('videoId'), 
-            this.get('maxRecordingLength'), this.get('audioOnly'), this.get('checkMic'), s3vars);
+            this.get('maxRecordingLength'), this.get('checkMic'), s3vars);
 
         // Track specific events for all frames that use VideoRecorder
         var _this = this;

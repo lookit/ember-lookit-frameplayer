@@ -106,13 +106,6 @@ export default Ember.Mixin.create({
     sessionRecorderReady: false,
 
     /**
-     * Whether to do audio-only (vs also video) recording for session (multiframe) recording. Only used if starting session recording this frame.
-     * @property {Number} sessionAudioOnly
-     * @default 0
-     */
-    sessionAudioOnly: 0,
-
-    /**
      * Whether to do check the mic input during recorder set up (before the install promise is resolved). 
      * Defaults to false and can be overridden by consuming frame.
      * @property {Boolean} checkMic
@@ -159,7 +152,7 @@ export default Ember.Mixin.create({
         const sessionRecorder = new VideoRecorder({element: $element});
         const s3vars = Ember.getOwner(this).resolveRegistration('config:environment').awsRecording;
         const installPromise = sessionRecorder.install(sessionVideoId, 
-            maxRecordingLength, this.get('sessionAudioOnly'), this.get('checkMic'), s3vars);
+            maxRecordingLength, this.get('checkMic'), s3vars);
 
         // Track specific events for all frames that use VideoRecorder
         var _this = this;
