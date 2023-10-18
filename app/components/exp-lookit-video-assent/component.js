@@ -32,6 +32,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
     disableRecord: Em.computed('recorder.recording', 'recorder.hasCamAccess', function () {
         return !this.get('recorder.hasCamAccess') || this.get('recorder.recording');
     }),
+    // keep track of whether a recorder has already started,
+    // in case of recording last page and moving forward/backward through pages,
+    // and to prevent race conditions when recorder is still installing
     startedRecording: false,
 
     pageIndex: null,
@@ -132,7 +135,8 @@ export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
     },
 
     updatePage() {
-        if (this.get('recordLastPage') && !this.get('recordWholeProcedure') && (this.get('pageIndex') === this.get('pages').length - 1)) {
+        if (this.get('recordLastPage') && !this.get('recordWholeProcedure') && !(this.get('startedRecording')) && (this.get('pageIndex') === this.get('pages').length - 1)) {
+            this.set('startedRecording', true);
             this.startRecorder();
         }
         if (this.get('pageHasAudio')) {
