@@ -68,7 +68,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         record() {
             $('#recordingStatus').show();
             $('#recordingText').text(`${this._translate('exp-lookit-video-consent.Starting-recorder')}...`);
-            $('[id^=pipeMenu]').hide();
             $('#recordbutton').prop('disabled', true);
             $('#playbutton').prop('disabled', true);
             this.set('showWarning', false);
@@ -130,7 +129,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
                     console.error(`Error playing video: ${err.name}: ${err.message}`);
                     console.trace();
                 });
-            $('[id^=pipeMenu]').show();  // TO DO: what is this showing? 
             this.set('hasCheckedVideo', true);
         },
         finish() {
@@ -396,7 +394,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         this.set('consentFormText', $('#consent-form-text').text());
         $('#recordingIndicator').hide();
         $('#recordingText').text(this._translate('exp-lookit-video-consent.Not-recording-yet'));
-        $('[id^=pipeMenu]').hide();
         $('#recordbutton').prop('disabled', false);
         $('#stopbutton').prop('disabled', true);
         $('#playbutton').prop('disabled', true);
