@@ -98,7 +98,7 @@ const VideoRecorder = Ember.Object.extend({
 
     connected: false,
     uploadTimeout: null, // timer counting from attempt to stop until we should just resolve the stopPromise
-    maxUploadTimeMs: 5000,
+    maxUploadTimeMs: 7000,
     maxRecordingTime: null,
     audioOnly: null, // TO DO: if 1, record audio only
     autosave: null, // TO DO: if 1, trigger saving when recorder stops
@@ -439,14 +439,14 @@ const VideoRecorder = Ember.Object.extend({
      * @method stop
      * @return {Promise}
      */
-    async stop(maxUploadTimeMs = 5000) {
+    async stop(maxUploadTimeMs = 7000) {
         
         if (this.get('_stopTimeout') !== null) {
             window.clearTimeout(this.get('_stopTimeout'));
         }
         var _this = this;
         var _stopPromise = new RSVP.Promise((resolve, reject) => {
-            // If we don't end up uploading within 5 seconds, call reject
+            // If we reach the upload time limit maxUploadTimeMs, call reject
             _this.set('uploadTimeout', window.setTimeout(function () {
                 console.warn('waiting for upload timed out');
                 window.clearTimeout(_this.get('uploadTimeout'));

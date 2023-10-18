@@ -141,9 +141,9 @@ export default Ember.Mixin.create({
      * Can be overridden by researcher, based on tradeoff between making families wait and
      * losing data.
      * @property {Number} maxUploadSeconds
-     * @default 5
+     * @default 7
      */
-    maxUploadSeconds: 5,
+    maxUploadSeconds: 7,
 
     /**
      * Whether to autosave recordings. Can be overridden by consuming frame.
