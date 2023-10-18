@@ -152,7 +152,7 @@ export default Ember.Mixin.create({
      * @default 1
      * @private
      */
-    autosave: 1,
+    //autosave: 1,
 
     /**
      * Whether to do audio-only (vs also video) recording. Can be overridden by consuming frame.
@@ -315,7 +315,7 @@ export default Ember.Mixin.create({
         const recorder = new VideoRecorder({element: element});
         const s3vars = Ember.getOwner(this).resolveRegistration('config:environment').awsRecording;
         const installPromise = recorder.install(this.get('videoId'), 
-            this.get('maxRecordingLength'), this.get('autosave'), this.get('audioOnly'), this.get('checkMic'), s3vars);
+            this.get('maxRecordingLength'), this.get('audioOnly'), this.get('checkMic'), s3vars);
 
         // Track specific events for all frames that use VideoRecorder
         var _this = this;

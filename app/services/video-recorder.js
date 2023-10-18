@@ -101,7 +101,6 @@ const VideoRecorder = Ember.Object.extend({
     maxUploadTimeMs: 7000,
     maxRecordingTime: null,
     audioOnly: null, // TO DO: if 1, record audio only
-    autosave: null, // TO DO: if 1, trigger saving when recorder stops
     checkMic: null,
 
     _started: false,
@@ -159,14 +158,13 @@ const VideoRecorder = Ember.Object.extend({
      * @method install
      * @param videoFilename desired filename for video 
      * @param maxRecordingTime recording length limit in s [100000000]
-     * @param autosave whether to autosave - 1 or 0 [1] // TO DO
      * @param audioOnly whether to do audio only recording - 1 or 0 [0] // TO DO
      * @param checkMic boolean, whether a mic check must be passed before resolving the install promise
      * @param s3vars object with s3 environment variables
      * @return {Promise} Resolves when widget successfully installed and started
      */
 
-    install(videoFilename = '', maxRecordingTime = 100000000, autosave = 1, audioOnly = 0, checkMic = false, s3vars = {}) {
+    install(videoFilename = '', maxRecordingTime = 100000000, audioOnly = 0, checkMic = false, s3vars = {}) {
 
         let origDivId = this.get('divId');
 
@@ -275,7 +273,6 @@ const VideoRecorder = Ember.Object.extend({
                     _this.set('maxRecordingTime', maxRecordingTime)
                     _this.set('videoName', videoFilename);
                     _this.set('audioOnly', audioOnly);
-                    _this.set('autosave', autosave);
 
                     // Filename doesn't have an extension.
                     _this.set('s3', new S3(`${videoFilename}.webm`, s3vars));

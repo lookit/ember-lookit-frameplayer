@@ -154,13 +154,12 @@ export default Ember.Mixin.create({
         var $element = $('#' + recorderElementId);
 
         const maxRecordingLength = 100000000;
-        const autosave = 1;
         const sessionVideoId = this._generateSessionVideoId();
         this.get('session').set('videoId', sessionVideoId);
         const sessionRecorder = new VideoRecorder({element: $element});
         const s3vars = Ember.getOwner(this).resolveRegistration('config:environment').awsRecording;
         const installPromise = sessionRecorder.install(sessionVideoId, 
-            maxRecordingLength, autosave, this.get('sessionAudioOnly'), this.get('checkMic'), s3vars);
+            maxRecordingLength, this.get('sessionAudioOnly'), this.get('checkMic'), s3vars);
 
         // Track specific events for all frames that use VideoRecorder
         var _this = this;
