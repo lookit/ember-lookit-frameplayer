@@ -274,7 +274,7 @@ export default Ember.Mixin.create({
      * Private flag that is set when the async record method is first called
      * to prevent record from being called multiple times
     */
-     _starting: false,
+    _starting: false,
 
     _generateVideoId() {
         return [

@@ -212,7 +212,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     // Override to deal with whether or not recording is starting automatically
     whenPossibleToRecordObserver: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        var _this = this;
         if (this.get('recorder.hasCamAccess') && this.get('recorderReady') && !(this.get('recorder.recording')) && !(this.get('_starting'))) {
             if (this.get('startRecordingAutomatically') && !(this.get('hasMadeRecording'))) {
                 this.set('_starting', true);
