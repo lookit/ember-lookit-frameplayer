@@ -131,6 +131,7 @@ export default Ember.Mixin.create({
 
     /**
      * Maximum recording length in seconds. Can be overridden by consuming frame.
+     * Default for trial recordings is 7200 seconds (120 minutes)
      * @property {Number} maxRecordingLength
      * @default 7200
      */
@@ -271,10 +272,11 @@ export default Ember.Mixin.create({
     waitForUploadVideo: '',
 
     /**
-     * Private flag that is set when the async record method is first called
-     * to prevent record from being called multiple times
+     * Flag that is set when the async record method is first called
+     * to prevent record from being called multiple times. Can be overwritten by the consuming frame to 
+     * indicate that startRecording is about to be called.
     */
-    _starting: false,
+    starting: false,
 
     _generateVideoId() {
         return [
@@ -349,6 +351,7 @@ export default Ember.Mixin.create({
      */
     startRecorder() {
         const recorder = this.get('recorder');
+        var _this = this;
         if (recorder) {
             return recorder.record().then(() => {
                 this.send('setTimeEvent', 'startRecording', {
@@ -359,6 +362,9 @@ export default Ember.Mixin.create({
                 } else {
                     this.set('videoList', this.get('videoList').concat([this.get('videoId')]));
                 }
+                _this.set('starting', false);
+                _this.hideWaitForVideoCover();
+                _this.onRecordingStarted();
             });
         } else {
             return Ember.RSVP.resolve();
@@ -372,7 +378,7 @@ export default Ember.Mixin.create({
      */
     stopRecorder() {
         const recorder = this.get('recorder');
-        if (recorder && recorder.get('recording')) {
+        if (recorder && recorder.get('recording') && !(recorder.isDestroyed)) {
             this.send('setTimeEvent', 'stoppingCapture');
             if (this.get('showWaitForUploadMessage') && !this.get('_isPaused')) { // Avoid showing wait-for-upload and paused screens simultaneously, give priority to paused
                 // TODO: consider adding progress bar
@@ -392,8 +398,11 @@ export default Ember.Mixin.create({
                 this.showWaitForVideoCover();
             }
             return recorder.stop(this.get('maxUploadSeconds') * 1000);
-        } else {
-            return Ember.RSVP.reject(1);
+        } else if (!(recorder.get('_stopPromise'))) {
+            // reject the promise because the recorder is in one of the following states:
+            // - doesn't exist, or is not recording, or has been destroyed
+            // - exists and is recording, but is already in the process of stopping and uploading (stopPromise exists)
+            return Ember.RSVP.reject(`Unable to stop recorder for ${recorder.get('videoName')}. Maybe it does not exist, is not recording, has been destroyed, or is already stopping.`);
         }
     },
 
@@ -413,7 +422,7 @@ export default Ember.Mixin.create({
 
     willDestroyElement() {
         var _this = this;
-        if (_this.get('recorder')) {
+        if (_this.get('recorder') && !(_this.get('recorder')).isDestroyed) {
             window.clearTimeout(_this.get('recorder').get('uploadTimeout'));
             if (_this.get('stoppedRecording', true)) {
                 _this.destroyRecorder();
@@ -421,8 +430,8 @@ export default Ember.Mixin.create({
                 _this.stopRecorder().then(() => {
                     _this.set('stoppedRecording', true);
                     _this.destroyRecorder();
-                }, () => {
-                    _this.destroyRecorder();
+                }, (reason) => {
+                    console.warn(`Recording stop promise rejected: ${reason}`);
                 });
             }
         }
@@ -536,14 +545,9 @@ export default Ember.Mixin.create({
      */
     whenPossibleToRecordObserver: observer('recorder.hasCamAccess', 'recorderReady', function() {
         if (this.get('doUseCamera') && this.get('startRecordingAutomatically')) {
-            var _this = this;
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady') && !(this.get('recorder.recording')) && !(this.get('_starting'))) {
-                this.set('_starting', true);
-                this.startRecorder().then(() => {
-                    _this.set('_starting', false);
-                    _this.hideWaitForVideoCover();
-                    _this.onRecordingStarted();
-                });
+            if (this.get('recorder.hasCamAccess') && this.get('recorderReady') && !(this.get('recorder.recording')) && !(this.get('starting'))) {
+                this.set('starting', true);
+                this.startRecorder();
             }
         }
     }),
