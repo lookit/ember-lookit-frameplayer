@@ -562,6 +562,7 @@ const VideoRecorder = Ember.Object.extend({
         if (this.get('_stopPromise')) {
             console.log('Upload completed for file: ' + streamName);
             this.get('_stopPromise').resolve(this);
+            this.set('_stopPromise', null);
         }
         if (this.get('recorder').onConnectionClosed) {
             let id = this.get('recorderId');
