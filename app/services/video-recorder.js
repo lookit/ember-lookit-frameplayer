@@ -95,6 +95,8 @@ const VideoRecorder = Ember.Object.extend({
     recording: Ember.computed.alias('_recording').readOnly(),
     hasCreatedRecording: Ember.computed.alias('_hasCreatedRecording').readOnly(),
     micChecked: Ember.computed.alias('_micChecked'),
+    isUploaded: Ember.computed.alias('_isUploaded'),
+    isDestroyed: Ember.computed.alias('_isDestroyed'),
 
     connected: false,
     uploadTimeout: null, // timer counting from attempt to stop until we should just resolve the stopPromise
@@ -115,9 +117,10 @@ const VideoRecorder = Ember.Object.extend({
     _recordPromise: null,
     _stopTimeout: null,
     _stopPromise: null,
-    _isuploaded: false,
+    _isUploaded: false,
     _processorNode: null,
     _lastState: null,
+    _isDestroyed: false,
 
     recorder: null, // The actual recorder object
 
@@ -160,7 +163,7 @@ const VideoRecorder = Ember.Object.extend({
      *
      * @method install
      * @param videoFilename desired filename for video 
-     * @param maxRecordingTime recording length limit in s [100000000]
+     * @param maxRecordingTime recording length limit in seconds
      * @param checkMic boolean, whether a mic check must be passed before resolving the install promise
      * @param s3vars object with s3 environment variables
      * @return {Promise} Resolves when widget successfully installed and started
@@ -357,7 +360,7 @@ const VideoRecorder = Ember.Object.extend({
             throw new Error('Must call install before record');
         }
         var _this = this;
-        _this.set('_isuploaded', false);
+        _this.set('_isUploaded', false);
         if (!_this.get('recorder') || !(_this.get('recorder').startRecording)) {
             return null;
         }
@@ -429,7 +432,7 @@ const VideoRecorder = Ember.Object.extend({
                 window.clearTimeout(_this.get('uploadTimeout'));
                 reject();
             }, maxUploadTimeMs));
-            if (!_this.get('_isuploaded')) {
+            if (!_this.get('_isUploaded')) {
                 _this.set('_stopPromise', {
                     resolve: resolve,
                     reject: reject
@@ -442,7 +445,7 @@ const VideoRecorder = Ember.Object.extend({
                 recorder.stopRecording();
                 _this.get('recorder').onRecordingStopped.call(_this);
                 await this.get('s3').completeUpload();
-                this._onUploadDone(this.get('recorderId'), this.get('s3').key); // clears the upload timeout, sets isuploaded to true, resolves stop promise
+                _this._onUploadDone(this.get('recorderId'), this.get('s3').key); // clears the upload timeout, sets isUploaded to true, resolves stop promise
             } catch (e) {
                 console.warn(`Error stopping video ${_this.get('videoName')}: ${e}`);
             }
@@ -518,9 +521,9 @@ const VideoRecorder = Ember.Object.extend({
             this.get('recorder').destroy();
         }
         this.set('_recording', false);
-        // reset to initial values: user has cam mic, cam access, mic checked?
-        this.set('_userHasCamMic', false);
-        this.set('_camAccess', false);
+        // The recorder's destroy method just destroys the internal recorder, but our recorder object still exists (because it was created with const).
+        // Mark it as destroyed so that we can check for this in other places (calling methods on a destroyed recorder throws errors).
+        this.set('_isDestroyed', true);
     },
 
     on(hookName, func) {
@@ -555,7 +558,7 @@ const VideoRecorder = Ember.Object.extend({
     // Once recording finishes uploading, resolve call to stop
     _onUploadDone(recorderId, streamName, streamDuration, audioCodec, videoCodec, fileType, location) { // eslint-disable-line no-unused-vars
         window.clearTimeout(this.get('uploadTimeout'));
-        this.set('_isuploaded', true);
+        this.set('_isUploaded', true);
         if (this.get('_stopPromise')) {
             console.log('Upload completed for file: ' + streamName);
             this.get('_stopPromise').resolve(this);
