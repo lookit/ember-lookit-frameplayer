@@ -95,8 +95,6 @@ const VideoRecorder = Ember.Object.extend({
     recording: Ember.computed.alias('_recording').readOnly(),
     hasCreatedRecording: Ember.computed.alias('_hasCreatedRecording').readOnly(),
     micChecked: Ember.computed.alias('_micChecked'),
-    isUploaded: Ember.computed.alias('_isUploaded'),
-    isDestroyed: Ember.computed.alias('_isDestroyed'),
 
     connected: false,
     uploadTimeout: null, // timer counting from attempt to stop until we should just resolve the stopPromise
