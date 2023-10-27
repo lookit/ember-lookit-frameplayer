@@ -48,7 +48,6 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, Exp
     skip: false,
     hasParentText: true,
 
-    /** comment some text */
     maximizeVideoArea: false,
     _finishing: false,
 
@@ -202,7 +201,7 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, Exp
              *
              * @event videoStarted
              */
-            if (this.get('isDestroying') || this.get('isDestroyed')) {
+            if (this.get('isDestroying') || this.get('isDestroyed') || this.get('_finishing')) {
                 return;
             }
 
@@ -229,7 +228,7 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, Exp
         },
 
         videoStopped() {
-            if (this.get('isDestroying') || this.get('isDestroyed')) {
+            if (this.get('isDestroying') || this.get('isDestroyed') || (this.get('_finishing'))) {
                 return;
             }
             this.set('testVideoTimesPlayed', this.get('testVideoTimesPlayed') + 1);
@@ -296,19 +295,27 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, Exp
             this.set('testVideoTimesPlayed', 0);
             this.set('testAudioTimesPlayed', 0);
             this.set('satisfiedDuration', false);
-            var _this = this;
             if (!this.get('_finishing')) {
                 this.set('_finishing', true);
                 if (this.get('doRecording')) {
-                    this.set('doingTest', false);
-                    this.stopRecorder().then(() => {
-                        _this.set('stoppedRecording', true);
-                        _this.send('next');
-                    }, () => {
-                        _this.send('next');
-                    });
+                    if (!this.get('stopping') && !this.get('stoppedRecording')) {
+                        this.set('stopping', true);
+                        this.set('doingTest', false);
+                        var _this = this;
+                        this.stopRecorder().then(() => {
+                            _this.set('stoppedRecording', true);
+                            _this.destroyRecorder();
+                            _this.send('next');
+                        }, () => {
+                            _this.destroyRecorder();
+                            _this.send('next');
+                        });
+                    } else if (!this.get('stopping') && this.get('stoppedRecording')) {
+                        this.destroyRecorder();
+                        this.send('next');
+                    }
                 } else {
-                    _this.send('next');
+                    this.send('next');
                 }
             }
         }
@@ -356,8 +363,9 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, Exp
         this.set('satisfiedDuration', false);
         $('.exp-lookit-video').hide();
         $('#nextbutton').prop('disabled', true); // disable Next while paused
-        if (this.get('doRecording')) {
+        if (this.get('doRecording') && (!this.get('stoppedRecording')) && (!this.get('stopping'))) {
             let _this = this;
+            this.set('stopping', true);
             return this.stopRecorder().finally(() => {
                 _this.set('stoppedRecording', true);
                 _this.destroyRecorder();

@@ -118,7 +118,7 @@ const VideoRecorder = Ember.Object.extend({
     _isUploaded: false,
     _processorNode: null,
     _lastState: null,
-    _isDestroyed: false,
+    _recorderIsDestroyed: false,
 
     recorder: null, // The actual recorder object
 
@@ -521,7 +521,7 @@ const VideoRecorder = Ember.Object.extend({
         this.set('_recording', false);
         // The recorder's destroy method just destroys the internal recorder, but our recorder object still exists (because it was created with const).
         // Mark it as destroyed so that we can check for this in other places (calling methods on a destroyed recorder throws errors).
-        this.set('_isDestroyed', true);
+        this.set('_recorderIsDestroyed', true);
     },
 
     on(hookName, func) {

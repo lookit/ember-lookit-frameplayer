@@ -71,6 +71,8 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     toggling: false,
     hidden: false,
     recorderElement: '#recorder',
+    // Flag to track that user requests to move on via a next button click while upload is still in progress
+    proceedClicked: false,
 
     frameSchemaProperties: {
         /**
@@ -212,9 +214,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     // Override to deal with whether or not recording is starting automatically
     whenPossibleToRecordObserver: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('recorder.hasCamAccess') && this.get('recorderReady') && !(this.get('recorder.recording')) && !(this.get('_starting'))) {
+        if (this.get('recorder.hasCamAccess') && this.get('recorderReady') && !(this.get('recorder.recording')) && !(this.get('starting'))) {
             if (this.get('startRecordingAutomatically') && !(this.get('hasMadeRecording'))) {
-                this.set('_starting', true);
+                this.set('starting', true);
                 this.send('record');
             } else {
                 $('#recordButton').show();
@@ -237,6 +239,11 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
     }),
 
+    // Override to set startedRecording flag when starting automatically or via the record action
+    onRecordingStarted() {
+        this.set('recordingStarted', true);
+    },
+
     didInsertElement() { // initial state of all buttons/text
         $('#hiddenWebcamMessage').hide();
         $('#recordButton').hide();
@@ -256,14 +263,21 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         $('#nextbutton').text(this.get('nextButtonText'));
     },
 
+    onDestroyed() {
+        // reset any states here, since the recorder variable and states are not actually overwritten/reset
+        // by the recorder's destroy event
+        this.set('starting', false);
+        this.set('stopping', false);
+        this.set('recordingStarted', false);
+        this.set('stoppedRecording', false);
+    },
+
     actions: {
         record() {
 
             var _this = this;
             this.startRecorder().then(() => {
-                _this.set('_starting', false);
-                _this.hideWaitForVideoCover();
-                _this.onRecordingStarted();
+                _this.set('starting', false);
 
                 // set up timer and progress bar if necessary
                 if (this.get('recordSegmentLength')) { // no timer if 0
@@ -304,11 +318,35 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             window.clearTimeout(this.get('recordingTimer')); // no need for current timer
             window.clearTimeout(this.get('okayToProceedTimer'));
             window.clearInterval(this.get('progressTimer'));
-            this.stopRecorder().finally(() => {
-                this.destroyRecorder();
+            let rec = this.get('recorder');
+            this.set('proceedClicked', true);
+            if (rec && !(rec._recorderIsDestroyed)) {
+                var _this = this;
+                rec.get('recorder').getState().then((state) => {
+                    if (state == 'recording') {
+                        _this.set('stopping', true);
+                        _this.stopRecorder().finally(() => {
+                            _this.set('stoppedRecording', true);
+                            _this.destroyRecorder();
+                            _this.onDestroyed();
+                            _this.send('next');
+                        });
+                    } else if ((_this.recordingStarted && _this.stoppedRecording && rec.isUploaded) || !(_this.recordingStarted)) {
+                        // recorder is paused/stopped/inactive, and either it never started recording or has but upload has finished
+                        _this.destroyRecorder();
+                        _this.onDestroyed();
+                        _this.send('next');
+                    }
+                    // Do not do anything if is currently stopping/uploading - the destroy and next actions will be handled via the existing stop promise and proceedClicked flag
+                }, () => {
+                    _this.send('next');
+                });
+            } else {
+                // recorder does not exist or exists but has been destroyed
                 this.send('next');
-            });
+            }
         },
+
         pause() {
             var _this = this;
             $('#recordingText').text(`${this._translate('exp-lookit-observation.stopping-and-uploading')}...`);
@@ -318,14 +356,34 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             window.clearInterval(_this.get('progressTimer'));
             $('.progress-bar').css('width', '100%');
             $('#recordingIndicator').hide();
-            this.stopRecorder().finally(() => {
+            this.set('stopping', true);
+            this.stopRecorder().then(() => {
                 _this.set('hasMadeRecording', true);
+                _this.set('stoppedRecording', true);
                 $('#recordButton').show();
                 $('#recordingText').text(_this._translate('exp-lookit-observation.Paused'));
                 _this.destroyRecorder();
-                _this.setupRecorder(_this.$(_this.get('recorderElement')));
+                _this.onDestroyed();
+                if (_this.get('proceedClicked')) {
+                    _this.send('proceed');
+                } else {
+                    _this.setupRecorder(_this.$(_this.get('recorderElement')));
+                }
+            }, () => {
+                _this.set('hasMadeRecording', true);
+                _this.set('stoppedRecording', true);
+                $('#recordButton').show();
+                $('#recordingText').text(_this._translate('exp-lookit-observation.Paused'));
+                _this.destroyRecorder();
+                _this.onDestroyed();
+                if (_this.get('proceedClicked')) {
+                    _this.send('proceed');
+                } else {
+                    _this.setupRecorder(_this.$(_this.get('recorderElement')));
+                }
             });
         },
+
         toggleWebcamButton() {
             if (!this.toggling) {
                 this.set('toggling', true);

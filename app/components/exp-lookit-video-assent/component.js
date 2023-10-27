@@ -199,15 +199,26 @@ export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
             this.send('setTimeEvent', 'assentQuestionSubmit',
                 {childResponse: this.get('childResponse')});
 
-            var _this = this;
-            if (_this.get('childResponse') === 'Yes') {
-                this.stopRecorder().then(() => {
-                    _this.send('next');
-                }, () => {
-                    _this.send('next');
-                });
+            if (this.get('childResponse') === 'Yes') {
+                if (!this.get('stoppedRecording') && (!this.get('stopping'))) {
+                    this.set('stopping', true);
+                    var _this = this;
+                    this.stopRecorder().then(() => {
+                        _this.set('stoppedRecording', true);
+                        _this.destroyRecorder();
+                        _this.send('next');
+                    }, () => {
+                        _this.destroyRecorder();
+                        _this.send('next');
+                    });
+                } else if (this.get('stoppedRecording') && (!this.get('stopping'))) {
+                    // if recorder has finished stopping/uploading then we can destroy it and move on
+                    // (if recorder is already stopping but hasn't finished, then do nothing - need to wait for it to finish)
+                    this.destroyRecorder();
+                    this.send('next');
+                }
             } else {
-                _this.send('exit');
+                this.send('exit');
             }
         },
 

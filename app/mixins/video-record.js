@@ -106,7 +106,7 @@ export default Ember.Mixin.create({
 
     /**
      * Whether recording is stopped already, meaning it doesn't need to be re-stopped when
-     * destroying frame. This should be set to true by the consuming frame when video is
+     * destroying frame. This should be set to true by the consuming frame after the video is
      * stopped.
      * @property {Boolean} stoppedRecording
      * @private
@@ -278,6 +278,12 @@ export default Ember.Mixin.create({
     */
     starting: false,
 
+    /**
+     * Flag that is set when the async stopRecording method is first called
+     * to prevent stopRecording from being called multiple times. Can be overwritten by the consuming frame.
+    */
+    stopping: false,
+
     _generateVideoId() {
         return [
             this.get('frameType') === 'CONSENT' ? 'consent-videoStream' : 'videoStream',
@@ -378,7 +384,8 @@ export default Ember.Mixin.create({
      */
     stopRecorder() {
         const recorder = this.get('recorder');
-        if (recorder && recorder.get('recording') && !(recorder.isDestroyed)) {
+        if (recorder && recorder.get('recording') && !(recorder._recorderIsDestroyed)) {
+            this.set('stopping', true);
             this.send('setTimeEvent', 'stoppingCapture');
             if (this.get('showWaitForUploadMessage') && !this.get('_isPaused')) { // Avoid showing wait-for-upload and paused screens simultaneously, give priority to paused
                 // TODO: consider adding progress bar
@@ -398,10 +405,10 @@ export default Ember.Mixin.create({
                 this.showWaitForVideoCover();
             }
             return recorder.stop(this.get('maxUploadSeconds') * 1000);
-        } else if (!(recorder.get('_stopPromise'))) {
+        } else {
             // reject the promise because the recorder is in one of the following states:
             // - doesn't exist, or is not recording, or has been destroyed
-            // - exists and is recording, but is already in the process of stopping and uploading (stopPromise exists)
+            // - exists and is recording, but is already in the process of stopping and uploading
             return Ember.RSVP.reject(`Unable to stop recorder for ${recorder.get('videoName')}. Maybe it does not exist, is not recording, has been destroyed, or is already stopping.`);
         }
     },
@@ -422,18 +429,21 @@ export default Ember.Mixin.create({
 
     willDestroyElement() {
         var _this = this;
-        if (_this.get('recorder') && !(_this.get('recorder')).isDestroyed) {
+        if (_this.get('recorder') && !(_this.get('recorder')._recorderIsDestroyed)) {
             window.clearTimeout(_this.get('recorder').get('uploadTimeout'));
-            if (_this.get('stoppedRecording', true)) {
-                _this.destroyRecorder();
-            } else {
+            if (_this.get('recorder').get('recording') && !(this.get('stopping'))) {
                 _this.stopRecorder().then(() => {
                     _this.set('stoppedRecording', true);
                     _this.destroyRecorder();
                 }, (reason) => {
                     console.warn(`Recording stop promise rejected: ${reason}`);
                 });
+            } else if (!(_this.get('recorder').get('recording')) && !(this.get('stopping'))) {
+                // recorder is not recording or stopping
+                _this.destroyRecorder();
             }
+            // if recorder is already stopping/uploading (stopping = true) then don't trigger stop or destroy
+            // in this case, the consuming frame needs to make sure the recorder is destroyed after stopping
         }
         _this._super(...arguments);
     },
