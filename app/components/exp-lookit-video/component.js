@@ -280,10 +280,6 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, Exp
             // to call next AFTER recording is stopped and we don't want this to have
             // already been destroyed at that point.
 
-            // Pause audio/video so we don't trigger started/stopped handlers while destroying
-            $('audio, video').each(function() {
-                this.pause();
-            });
             /**
              * When trial is complete and begins cleanup (may then wait for video upload)
              *
@@ -297,6 +293,10 @@ let ExpLookitVideo = ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, Exp
             this.set('satisfiedDuration', false);
             if (!this.get('_finishing')) {
                 this.set('_finishing', true);
+                // Pause audio/video so we don't trigger started/stopped handlers while destroying
+                $('audio, video').each(function() {
+                    this.pause();
+                });
                 if (this.get('doRecording')) {
                     if (!this.get('stopping') && !this.get('stoppedRecording')) {
                         this.set('stopping', true);
