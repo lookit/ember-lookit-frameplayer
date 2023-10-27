@@ -153,4 +153,8 @@ $exp-lookit-video-assent-highlight-color: #d4efdf;
         }
     }
 
+    video.pipeNormal {
+        min-height: unset !important;
+    }
+
 }

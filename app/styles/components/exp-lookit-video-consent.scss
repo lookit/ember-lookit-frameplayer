@@ -139,6 +139,10 @@
         width: 20% !important;
     }
 
+    video.pipeNormal {
+        min-height: unset !important;
+    }
+
     [id^=pipeMenu] {
         width: 100% !important;
         margin: auto;
