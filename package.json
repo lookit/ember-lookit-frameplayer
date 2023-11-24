@@ -80,7 +80,7 @@
     "ember-toastr": "1.7.2",
     "ember-truth-helpers": "^2.1.0",
     "loader.js": "^4.7.0",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "toastr": "^2.1.4"
   },
   "resolutions": {
