@@ -7,6 +7,7 @@ export default DS.Model.extend({
     sequence: DS.attr({ defaultValue: () => [] }),
     completed: DS.attr('boolean', {defaultValue: false}),
     completedConsentFrame: DS.attr('boolean', {defaultValue: false}),
+    surveyConsent: DS.attr('boolean', {defaultValue: false}),
     child: DS.belongsTo('child'),
     study: DS.belongsTo('study'),
     demographicSnapshot: DS.belongsTo('demographic'),

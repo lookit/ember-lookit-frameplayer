@@ -614,3 +614,69 @@ Here is a snippet showing how you might access information in the child's ``cond
     } else {
         // otherwise...
     }
+
+.. _generators-checking-for-completion:
+
+Checking whether the child has already completed the study
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Lookit infrastructure allows you to add the study itself to the :ref:`'Must not have participated' study field <docs:study_participation_criteria>`, so that children are not eligible if they have already participated in the study. However, 'participation' in this case is defined as having started the study, whereas you may only want to only consider a child ineligible if they have _completed_ the study (or reached some other specific point during the session).
+
+This example shows how to check the ``pastSessions`` for this study and child, to see if the child is marked as ``complete`` for any past sessions. If so, you could show an additional frame at the start of the study to warn families that they are no longer eligible for compensation. This example works by checking the ``complete`` field in the previous session data, but you could also check for participation up to a particular point in the study by searching the ``sequence`` for specific frames.
+
+.. code:: javascript
+
+    function generateProtocol(child, pastSessions) {
+
+        let ineligible = false;
+
+        // Check whether this child has done this study before AND finished it
+        try {
+            let completedSessions = pastSessions.some(function(session) {
+                return session.completed === true;
+            });
+            if (completedSessions) {
+                ineligible = true;
+            }
+        } catch (error) {
+            // Wrap the above in a try block so that we can use a default protocol if there's an error
+            console.error(error);
+        }
+
+        // Set the default study protocol
+        let protocol = {
+            frames: {
+                "start-study": {
+                    "kind": "exp-lookit-text",
+                    "blocks": [{
+                        "title": "Welcome!",
+                        "text": "This is the start of the study."
+                    }]
+                },
+                // ... more frames
+                "exit-survey": {
+                    "kind": "exp-lookit-exit-survey",
+                    "debriefing": {
+                        "title": "Thank you!",
+                        "text": "You participated."
+                    }
+                }
+            },
+            sequence: ["start-study", ... "exit-survey"]
+        };
+
+        // If the child is not eligible, add a frame to the start of the study warning parents about this
+        if (ineligible) {
+            protocol.frames["ineligible-warning"] = {
+                "showPreviousButton": false,
+                "kind": "exp-lookit-text",
+                "blocks": [{
+                    "title": "It looks like you've completed this study already!",
+                    "text": "We're only able to compensate you when your child is completing this study for the first time. You're welcome to continue doing the study, but we cannot provide compensation. If you think this is an error, please contact Becky Gilbert (bgilbert@mit.edu)."
+                }]
+            };
+            protocol.sequence.unshift("ineligible-warning");
+        }
+
+        return protocol;
+    }
