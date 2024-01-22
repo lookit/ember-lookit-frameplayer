@@ -34,13 +34,15 @@ The ``child`` and the elements of the array ``pastSessions`` are Ember objects a
 
 ``pastSessions`` is an array of Ember objects representing past sessions for this child and this study, in reverse time order: pastSessions[0] is THIS session, pastSessions[1] the previous sessions, and so on. Each session has the following fields, corresponding to information available for download on Lookit, which can be accessed as ``pastSessions[i].get(<fieldName>)``:
 
+(Note: ANY instance of a participant opening a study will be recorded as a session in ``pastSessions``, so make sure to use these fields to filter the sessions for what you're looking for, e.g. all sessions where consent has been completed, where the whole study has been completed, etc.)
+
    * createdOn (Date)
    * conditions
    * expData
    * sequence
    * completed
    * globalEventTimings
-   * completedConsentFrame (note - this list will include even "responses") where the user did not complete the consent form!
+   * completedConsentFrame
    * demographicSnapshot
    * isPreview
 
