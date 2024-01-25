@@ -145,27 +145,24 @@ export default ExpFrameBaseComponent.extend(ExpandAssets, {
         this.set('allowProceedTimer', window.setTimeout(function() {
             if (!_this.get('hasStartedUpload')) {
                 /**
-                 * Note: temporarily increased this limit to a very long time (10 minutes)
-                 * because we don't have as fine-grained upload progress info with RecordRTC/S3
-                 * as we used to have with Pipe. We can either remove this timer or set it to 
-                 * a more reasonable duration later.
-                 * 
-                 * If no progress update about upload is available within 10s, and
-                 * frame proceeds automatically. Otherwise if the upload has started
-                 * (e.g. we know it is 10% done) it will continue waiting.
+                 * Note: this timer waits a long time (5 minutes) before checking if at least one part of the multi-part * upload has completed, and if not, allowing the participant to proceed. 
+                 * This is a longer wait time (vs the old Pipe system) because we don't have as fine-grained upload 
+                 * progress info with RecordRTC/S3 as we used to have with Pipe. We might want to reconsider the way
+                 * this timer works and its duration in the future, if we get reports about participants getting 'stuck'
+                 * while waiting for uploads.
                  *
                  * @event warningUploadTimeoutError
                  */
                 _this.send('setTimeEvent', 'warningUploadTimeoutError');
                 _this.send('next');
             }
-        }, 600000));
+        }, 300000));
 
     },
 
     willDestroyElement() {
         window.clearInterval(this.get('progressTimer'));
-        window.clearInterval(this.get('allowProceedTimer'));
+        window.clearTimeout(this.get('allowProceedTimer'));
         this._super(...arguments);
     }
 
