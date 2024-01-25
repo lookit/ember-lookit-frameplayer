@@ -147,22 +147,6 @@ export default Ember.Mixin.create({
     maxUploadSeconds: 7,
 
     /**
-     * Whether to autosave recordings. Can be overridden by consuming frame.
-     * TODO: eventually use this to set up non-recording option for previewing
-     * @property {Number} autosave
-     * @default 1
-     * @private
-     */
-    //autosave: 1,
-
-    /**
-     * Whether to do audio-only (vs also video) recording. Can be overridden by consuming frame.
-     * @property {Number} audioOnly
-     * @default 0
-     */
-    //audioOnly: 0,
-
-    /**
      * Whether to do check the mic input during recorder set up (before the install promise is resolved). 
      * Defaults to false and can be overridden by consuming frame.
      * @property {Boolean} checkMic
