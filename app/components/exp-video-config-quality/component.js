@@ -466,20 +466,21 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
 
         playvideo() {
             document.getElementById('recordingIndicator').classList.remove('text-danger','Blink');
-            const vid = document.querySelector('video');
-            vid.src = null;
-            vid.srcObject = null;
-            vid.muted = false;
-            vid.volume = 1;
-            this.get('recorder').get('recorder').getDataURL()
-                .then((dataURI) => {
-                    vid.src = dataURI;
-                    vid.controls = true;
-                })
-                .catch((err) => {
-                    console.error(`Error playing video: ${err.name}: ${err.message}`);
-                    console.trace();
-                });
+            // const vid = document.querySelector('video');
+            // vid.src = null;
+            // vid.srcObject = null;
+            // vid.muted = false;
+            // vid.volume = 1;
+            // this.get('recorder').get('recorder').getDataURL()
+            //     .then((dataURI) => {
+            //         vid.src = dataURI;
+            //         vid.controls = true;
+            //     })
+            //     .catch((err) => {
+            //         console.error(`Error playing video: ${err.name}: ${err.message}`);
+            //         console.trace();
+            //     });
+            this.setUpPlayback();
             this.set('hasPlayedBack', true);
             this.checkIfDone();
         },

@@ -411,6 +411,27 @@ export default Ember.Mixin.create({
         }
     },
 
+    /**
+     * Set up playback of a video recording
+     * @method setUpPlayback
+     */
+    setUpPlayback() {
+        const vid = document.querySelector('video');
+        vid.src = null;
+        vid.srcObject = null;
+        vid.muted = false;
+        vid.volume = 1;
+        this.get('recorder').get('recorder').getDataURL()
+            .then((dataURI) => {
+                vid.src = dataURI;
+                vid.controls = true;
+            })
+            .catch((err) => {
+                console.error(`Error playing video: ${err.name}: ${err.message}`);
+                console.trace();
+            });
+    },
+
     willDestroyElement() {
         var _this = this;
         if (_this.get('recorder') && !(_this.get('recorder')._recorderIsDestroyed)) {
