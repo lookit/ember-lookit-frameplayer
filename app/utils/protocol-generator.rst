@@ -34,13 +34,15 @@ The ``child`` and the elements of the array ``pastSessions`` are Ember objects a
 
 ``pastSessions`` is an array of Ember objects representing past sessions for this child and this study, in reverse time order: pastSessions[0] is THIS session, pastSessions[1] the previous sessions, and so on. Each session has the following fields, corresponding to information available for download on Lookit, which can be accessed as ``pastSessions[i].get(<fieldName>)``:
 
+(Note: ANY instance of a participant opening a study will be recorded as a session in ``pastSessions``, so make sure to use these fields to filter the sessions for what you're looking for, e.g. all sessions where consent has been completed, where the whole study has been completed, etc.)
+
    * createdOn (Date)
    * conditions
    * expData
    * sequence
    * completed
    * globalEventTimings
-   * completedConsentFrame (note - this list will include even "responses") where the user did not complete the consent form!
+   * completedConsentFrame
    * demographicSnapshot
    * isPreview
 
@@ -628,55 +630,55 @@ This example shows how to check the ``pastSessions`` for this study and child, t
 
     function generateProtocol(child, pastSessions) {
 
-    let ineligible = false;
+        let ineligible = false;
 
-    // Check whether this child has done this study before AND finished it
-    try {
-        let completedSessions = pastSessions.some(function(session) {
-            return session.completed === true;
-        });
-        if (completedSessions) {
-            ineligible = true;
+        // Check whether this child has done this study before AND finished it
+        try {
+            let completedSessions = pastSessions.some(function(session) {
+                return session.completed === true;
+            });
+            if (completedSessions) {
+                ineligible = true;
+            }
+        } catch (error) {
+            // Wrap the above in a try block so that we can use a default protocol if there's an error
+            console.error(error);
         }
-    } catch (error) {
-        // Wrap the above in a try block so that we can use a default protocol if there's an error
-        console.error(error);
-    }
 
-    // Set the default study protocol
-    let protocol = {
-        frames: {
-            "start-study": {
+        // Set the default study protocol
+        let protocol = {
+            frames: {
+                "start-study": {
+                    "kind": "exp-lookit-text",
+                    "blocks": [{
+                        "title": "Welcome!",
+                        "text": "This is the start of the study."
+                    }]
+                },
+                // ... more frames
+                "exit-survey": {
+                    "kind": "exp-lookit-exit-survey",
+                    "debriefing": {
+                        "title": "Thank you!",
+                        "text": "You participated."
+                    }
+                }
+            },
+            sequence: ["start-study", ... "exit-survey"]
+        };
+
+        // If the child is not eligible, add a frame to the start of the study warning parents about this
+        if (ineligible) {
+            protocol.frames["ineligible-warning"] = {
+                "showPreviousButton": false,
                 "kind": "exp-lookit-text",
                 "blocks": [{
-                    "title": "Welcome!",
-                    "text": "This is the start of the study."
+                    "title": "It looks like you've completed this study already!",
+                    "text": "We're only able to compensate you when your child is completing this study for the first time. You're welcome to continue doing the study, but we cannot provide compensation. If you think this is an error, please contact Becky Gilbert (bgilbert@mit.edu)."
                 }]
-            },
-            // ... more frames
-            "exit-survey": {
-                "kind": "exp-lookit-exit-survey",
-                "debriefing": {
-                    "title": "Thank you!",
-                    "text": "You participated."
-                }
-            }
-        },
-        sequence: ["start-study", ... "exit-survey"]
-    };
+            };
+            protocol.sequence.unshift("ineligible-warning");
+        }
 
-    // If the child is not eligible, add a frame to the start of the study warning parents about this
-    if (ineligible) {
-        protocol.frames["ineligible-warning"] = {
-            "showPreviousButton": false,
-            "kind": "exp-lookit-text",
-            "blocks": [{
-                "title": "It looks like you've completed this study already!",
-                "text": "We're only able to compensate you when your child is completing this study for the first time. You're welcome to continue doing the study, but we cannot provide compensation. If you think this is an error, please contact Becky Gilbert (bgilbert@mit.edu)."
-            }]
-        };
-        protocol.sequence.unshift("ineligible-warning");
+        return protocol;
     }
-
-    return protocol;
-}

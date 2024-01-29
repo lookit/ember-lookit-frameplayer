@@ -79,6 +79,8 @@ export default ExpFrameBaseComponent.extend({
         finish() {
             let formValid = this.validate();
             if (formValid) {
+                this.session.set('completedConsentFrame', true);
+                this.session.set('surveyConsent', true);
                 this.send('next');
             } else {
                 $('div.exp-lookit-survey-form').scrollTop(0);
