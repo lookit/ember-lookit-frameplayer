@@ -129,38 +129,40 @@ export default ExpFrameBaseComponent.extend(ExpandAssets, {
         });
 
         this.set('progressTimer', window.setInterval(function() {
-            let msg = $('.pipeMsgOverlay').html();
-            let match = msg.match(/\d*%/);
-            if (match) {
-                $('#progress').html(`Uploading video... ${match[0]}`);
-                $('.progress-bar').css('width', match);
-                _this.set('hasStartedUpload', true);
-            } else if (msg) {
-                $('#progress').html(msg);
-            } else {
-                $('#progress').html('Uploading video...')
+            $('#progress').html('Uploading video...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+            if (!_this.get('_recording') && _this.get('sessionRecorder').s3.hasStartedCompletingUpload) {
+                const percComplete = _this.get('sessionRecorder').s3.percentUploadComplete;
+                if (percComplete > 0) {
+                    _this.set('hasStartedUpload', true);
+                    window.clearInterval(_this.get('allowProceedTimer'));
+                }
+                let progressPercStr = percComplete.toString()+'%';
+                $('#progress').html(`Uploading video... ${progressPercStr}`);
+                $('.progress-bar').css('width', progressPercStr);
             }
         }, 100));
 
         this.set('allowProceedTimer', window.setTimeout(function() {
             if (!_this.get('hasStartedUpload')) {
                 /**
-                 * If no progress update about upload is available within 10s, and
-                 * frame proceeds automatically. Otherwise if the upload has started
-                 * (e.g. we know it is 10% done) it will continue waiting.
+                 * Note: this timer waits a long time (5 minutes) before checking if at least one part of the multi-part * upload has completed, and if not, allowing the participant to proceed. 
+                 * This is a longer wait time (vs the old Pipe system) because we don't have as fine-grained upload 
+                 * progress info with RecordRTC/S3 as we used to have with Pipe. We might want to reconsider the way
+                 * this timer works and its duration in the future, if we get reports about participants getting 'stuck'
+                 * while waiting for uploads.
                  *
                  * @event warningUploadTimeoutError
                  */
                 _this.send('setTimeEvent', 'warningUploadTimeoutError');
                 _this.send('next');
             }
-        }, 5000));
+        }, 300000));
 
     },
 
     willDestroyElement() {
         window.clearInterval(this.get('progressTimer'));
-        window.clearInterval(this.get('allowProceedTimer'));
+        window.clearTimeout(this.get('allowProceedTimer'));
         this._super(...arguments);
     }
 

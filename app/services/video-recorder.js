@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import S3 from './s3';
 
 /* OMIT FROM YUIDOC *
  * @module exp-player
@@ -84,68 +85,89 @@ const VideoRecorder = Ember.Object.extend({
 
     divId: 'lookit-video-recorder',
     recorderId: (new Date().getTime() + ''),
-    pipeVideoName: '',
+    videoName: '',
 
     started: Ember.computed.alias('_started').readOnly(),
+    startTime: Ember.computed.alias('_startTime').readOnly(),
     hasCamAccess: false,
     nWebcams: Ember.computed.alias('_nWebcams').readOnly(), // number of webcams available for recording
     nMics: Ember.computed.alias('_nMics').readOnly(), // number of microphones available for recording
     recording: Ember.computed.alias('_recording').readOnly(),
     hasCreatedRecording: Ember.computed.alias('_hasCreatedRecording').readOnly(),
+    micChecked: Ember.computed.alias('_micChecked'),
+
     connected: false,
-    uploadTimeout: null, // timer counting from attempt to stop until we should just
-    //resolve the stopPromise
-    maxUploadTimeMs: 5000,
+    uploadTimeout: null, // timer counting from attempt to stop until we should just resolve the stopPromise
+    maxUploadTimeMs: 7000,
+    maxRecordingTime: null,
+    checkMic: null,
 
     _started: false,
+    _startTime: null,
     _camAccess: false,
     _recording: false,
     _recorderReady: false,
     _hasCreatedRecording: false,
     _nWebcams: 0,
     _nMics: 0,
-
+    _minVolume: 0.1, // Volume required to pass mic check
+    _micChecked: false, // Has the microphone ever exceeded minVolume?
     _recordPromise: null,
+    _stopTimeout: null,
     _stopPromise: null,
-    _isuploaded: false,
+    _isUploaded: false,
+    _processorNode: null,
+    _lastState: null,
+    _recorderIsDestroyed: false,
 
-    recorder: null, // The actual recorder object, also stored in PipeSDK.recorders obj
+    recorder: null, // The actual recorder object
 
-    // List of webcam hooks that should be added to recorder
-    // See https://addpipe.com/docs#javascript-events-api
-    hooks: ['onRecordingStarted',
-        'onCamAccess',
+    // RecordRTC does not natively support the states/event-related callbacks below,
+    // these are from Pipe and we're not changing the names for combatibility reasons.
+    // RecordRTC API: https://github.com/muaz-khan/RecordRTC#api
+    // We can also access the internal web audio API recording object (MediaStreamRecorder) and use that directly
+    hooks: [
+        'onRecordingStarted', // triggered after the resolution of RecordRTC startRecording promise
+        'onCamAccess', // triggered by resolution of get user media promise
         'onReadyToRecord',
         'onUploadDone',
-        'userHasCamMic',
-        'onConnectionStatus',
-        'onMicActivityLevel',
-        'btPlayPressed',
-        'btRecordPressed',
-        'btStopRecordingPressed',
-        'btPausePressed',
-        'onPlaybackComplete',
-        'onConnectionClosed',
-        'onSaveOk'
+        'userHasCamMic', // set after the resolution of the get user media promise
+        // Connection status/closed hooks made more sense when video upload was streaming rather than uploading in parts as we're doing now.
+        // These hooks are maintained for backward compatibility and are set to fire in a way that mimics their previous behavior, i.e.
+        // when the multi-part upload is established, completed, or fails. However they won't work in exactly the same way since we don't have a 
+        // continuously-monitored streaming connection.
+        'onConnectionStatus', 
+        'onConnectionClosed', 
+        'onMicActivityLevel', // triggered via Audio Worklet Processor (until micChecked is true)
+        'onStateChanged',
+        'onRecordingStopped',
+        'ondataavailable'
     ],
 
-    minVolume: 1, // Volume required to pass mic check
-    micChecked: false, // Has the microphone ever exceeded minVolume?
+    // Old Pipe hooks that have not been implemented (yet)
+    // 'btPlayPressed'
+    // 'btRecordPressed'
+    // 'btStopRecordingPressed'
+    // 'btPausePressed'
+    // 'onPlaybackComplete'
+    // 'onSaveOk'
+
+    // Old Pipe install parameters that have not been implemented (yet)
+    // 'audioOnly'
+    // 'autosave'
 
     /**
      * Install a recorder onto the page and optionally begin recording immediately.
      *
      * @method install
-     * @param videoFilename desired filename for video (will be set after saving with Pipe name) ['']
-     * @param pipeKey Pipe account hash ['']
-     * @param pipeEnv which Pipe environment [1]
-     * @param maxRecordingTime recording length limit in s [100000000]
-     * @param autosave whether to autosave - 1 or 0 [1]
-     * @param audioOnly whether to do audio only recording - 1 or 0 [0]
+     * @param videoFilename desired filename for video 
+     * @param maxRecordingTime recording length limit in seconds
+     * @param checkMic boolean, whether a mic check must be passed before resolving the install promise
+     * @param s3vars object with s3 environment variables
      * @return {Promise} Resolves when widget successfully installed and started
      */
 
-    install(videoFilename = '', pipeKey = '', pipeEnv = 1, maxRecordingTime = 100000000, autosave = 1, audioOnly = 0) {
+    install(videoFilename = '', maxRecordingTime = 100000000, checkMic = false, s3vars = {}) {
 
         let origDivId = this.get('divId');
 
@@ -167,7 +189,7 @@ const VideoRecorder = Ember.Object.extend({
 
         return new RSVP.Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
 
-            var pipeConfig = {
+            /* var pipeConfig = {
                 qualityurl: 'https://d3l7d0ho3mojk5.cloudfront.net/pipe/720p.xml',
                 showMenu: 0, // hide recording button menu
                 sis: 1, // skip initial screen
@@ -185,27 +207,142 @@ const VideoRecorder = Ember.Object.extend({
                     width: 320,
                     height: 240
                 }
-            };
+            }; */
+            var _this = this;
+            const recordRtcConfig = {
+                type: 'video', // audio, video, canvas, gif
+                mimeType: 'video/webm',
+                // video/webm;codecs=vp9
+                // video/webm;codecs=vp8
+                // video/webm;codecs=h264
+                //recorderType: MediaStreamRecorder,
+                disableLogs: false,
+                timeSlice: 1000, 
+                ondataavailable: function(blob) {
+                    if (_this._ondataavailable) {
+                        _this._ondataavailable.call(_this, blob);
+                    }
+                },
+                //checkForInactiveTracks: false, // auto stop recording if camera stops
+                //onTimeStamp: function(timestamp) {}, // if timeSlice is given
+                //bitsPerSecond: 128000, // audio and video
+                //audioBitsPerSecond: 128000,
+                //videoBitsPerSecond: 128000,
+                //frameInterval: 90, // used by CanvasRecorder and WhammyRecorder
+                // if you are recording multiple streams into single file
+                // previewStream helps you see what is being recorded
+                //previewStream: function(stream) {},
+                // used by CanvasRecorder and WhammyRecorder
+                //video: HTMLVideoElement,
+                // used by CanvasRecorder and WhammyRecorder
+                //canvas: {
+                //    width: 640,
+                //    height: 480
+                //},
+                // used by StereoAudioRecorder, range is 22050 to 96000.
+                //sampleRate: 96000,
+                // used by StereoAudioRecorder, range is 22050 to 96000. This forces 16khz recording:
+                //desiredSampRate: 16000,
+                // used by StereoAudioRecorder, legal values are (256, 512, 1024, 2048, 4096, 8192, 16384).
+                //bufferSize: 16384, 
+                //numberOfAudioChannels: 2, // used by StereoAudioRecorder: 1 or 2
+                //frameRate: 30, // used by WebAssemblyRecorder
+                //bitrate: 128000, // used by WebAssemblyRecorder
+                // used by MultiStreamRecorder to access HTMLCanvasElement
+                //elementClass: 'multi-streams-mixer'
+            }; 
 
             this.set('_started', true);
-            var _this = this;
-            PipeSDK.insert(divId, pipeConfig, function (myRecorderObject) {
-                _this.set('recorder', PipeSDK.getRecorderById(divId));
-                _this.get('hooks').forEach(hookName => {
-                    // At the time the hook is actually called, look up the appropriate
-                    // functions both from here and that might be added later.
-                    myRecorderObject[hookName] = function (...args) {
-                        if (_this.get('_' + hookName)) { // 'Native' hook defined here
-                            _this['_' + hookName].apply(_this, args);
-                        }
-                        if (_this.hasOwnProperty(hookName)) { // Some hook added later via 'on'
-                            _this[hookName].apply(_this, args);
-                        }
-                    };
-                });
-            });
 
-            return resolve();
+            function afterGettingUserMedia(stream) {
+                if (_this.get('_recording')) {
+                    return null;
+                } else {
+                    // add video element in divId to display video stream
+                    let vidElement = document.createElement('video');
+                    vidElement.controls = false;
+                    vidElement.autoplay = true;
+                    vidElement.muted = true;
+                    vidElement.style.width = "100%";
+                    vidElement.srcObject = stream;
+                    let vidDivId = _this.get('divId');
+                    let vidDiv = document.getElementById(vidDivId);
+                    vidDiv.appendChild(vidElement);
+                    // create RecordRTC recorder
+                    let thisRecorder = new RecordRTCPromisesHandler(stream, recordRtcConfig);
+                    _this.set('recorder', thisRecorder);
+                    _this.set('stream', stream);
+                    _this.set('maxRecordingTime', maxRecordingTime)
+                    _this.set('videoName', videoFilename);
+
+                    // Filename doesn't have an extension.
+                    _this.set('s3', new S3(`${videoFilename}.webm`, s3vars));
+                    
+                    // set up hooks
+                    _this.get('hooks').forEach(function(hookName) {
+                        // At the time the hook is actually called, look up the appropriate
+                        // functions both from here and that might be added later.
+                        thisRecorder[hookName] = function(...args) {
+                            if (_this.get('_' + hookName)) { // 'Native' hook defined here
+                                _this['_' + hookName].apply(_this, args);
+                            }
+                            if (_this.hasOwnProperty(hookName)) { // Some hooks added later via 'on'
+                                _this[hookName].apply(_this, args);
+                            }
+                        }
+                    });
+                    _this.set('_userHasCamMic', true);
+                    // trigger on cam access hook
+                    if (_this.get('onCamAccess')) {
+                        let id = _this.get('recorderId');
+                        _this.get('onCamAccess').call(_this, id, true); // recId, hasAccess
+                    }
+                    return stream;
+                }
+            }
+
+            const setupMicCheck = (stream) => {
+                if (stream !== null) {
+                    if (checkMic) {
+                        let audioContext = new AudioContext();
+                        let microphone = audioContext.createMediaStreamSource(stream);
+                        audioContext.audioWorklet.addModule('assets/mic-check-processor.js').then(() => {
+                            const processorNode = new AudioWorkletNode(audioContext, 'mic-check-processor');
+                            this.set('_processorNode', processorNode);
+                            microphone.connect(processorNode).connect(audioContext.destination);
+                            var _this = this;
+                            processorNode.port.onmessage = (event) => {
+                                // handle message from the processor: event.data
+                                if (_this.get('recorder').onMicActivityLevel) {
+                                    if ('data' in event && 'volume' in event.data) {
+                                        let id = _this.get('recorderId');
+                                        _this.get('recorder').onMicActivityLevel.call(_this, id, event.data.volume);
+                                    }
+                                } else {
+                                    return false;
+                                }
+                            }
+                            resolve(); // resolve the install promise after mic check has been set up
+                        });
+                    } else {
+                        this._completeMicCheck();
+                        resolve(); // skip mic check and resolve the install promise
+                    }
+                } else {
+                    reject();
+                }
+            };
+
+            const catch_install_error = (err) => {
+                console.error(`Recorder installation error:\n${err.name}: ${err.message}`);
+                console.trace();
+                return reject();
+            }
+
+            navigator.mediaDevices.getUserMedia({audio: {noiseSuppression: true}, video: {width: 1280, height: 720, frameRate: 30}})
+                .then(afterGettingUserMedia)
+                .then(setupMicCheck)
+                .catch(catch_install_error);
 
         });
     },
@@ -216,34 +353,39 @@ const VideoRecorder = Ember.Object.extend({
      * @method record
      * @return {Promise}
      */
-    record() {
+    async record() {
         if (!this.get('started')) {
-            throw new Error('Must call start before record');
+            throw new Error('Must call install before record');
         }
-        let count = 0;
         var _this = this;
-        this.set('_isuploaded', false);
-        let id = window.setInterval(() => {
-            if (++count > 50) { // stop trying - failure (5s)
-                if (_this.get('onCamAccess')) {
-                    _this.get('onCamAccess').call(_this, false);
-                }
-                return window.clearInterval(id), _this.get('_recordPromise').reject();
-            }
-            if (!_this.get('recorder') || !(_this.get('recorder').record)) {
-                return null;
-            }
-            _this.get('recorder').record();
-
-            // Giving the "record" method a few seconds seems to increase the reliability of hooks firing.
-            setTimeout(function () {
-                window.clearInterval(id); // stop trying - success
-            }, 3000);
-
+        _this.set('_isUploaded', false);
+        if (!_this.get('recorder') || !(_this.get('recorder').startRecording)) {
             return null;
-        }, 100); // try every 100ms
+        }
+        
+        await _this.get('s3').createUpload();
 
-        return new Ember.RSVP.Promise((resolve, reject) => {
+        if (_this.get('recorder').onConnectionStatus) {
+            let id = _this.get('recorderId');
+            _this.get('recorder').onConnectionStatus.call(_this, id, 'connected'); 
+        }
+            
+        _this.get('recorder').startRecording()
+            .then(()=> {
+                _this.set('_startTime', performance.now());
+                _this.get('recorder').onRecordingStarted.call(_this); 
+                if (_this.get('maxRecordingTime') !== null) {
+                    _this.set('_stopTimeout', window.setTimeout(function() {
+                        console.warn(`Reached max recording time for file: ${_this.get('videoName')}`);
+                        _this.stop();
+                    }, _this.get('maxRecordingTime')*1000));
+                }
+            })
+            .catch((err) => {
+                console.error(`Error starting recording for file: ${_this.get('videoName')}\n${err.name}: ${err.message}`);
+            });
+
+        return new RSVP.Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
             if (_this.get('recording')) {
                 resolve(this);
             } else {
@@ -263,8 +405,9 @@ const VideoRecorder = Ember.Object.extend({
      */
     getTime() {
         let recorder = this.get('recorder');
-        if (recorder && recorder.getStreamTime) {
-            return parseFloat(recorder.getStreamTime());
+        if (recorder && this._started && this._startTime) {
+            let ts = Math.round(performance.now() - this._startTime);
+            return ts; 
         }
         return null;
     },
@@ -272,37 +415,92 @@ const VideoRecorder = Ember.Object.extend({
     /**
      * Stop recording and save the video to the server
      * @method stop
+     * @return {Promise}
      */
-    stop(maxUploadTimeMs = 5000) {
-        var recorder = this.get('recorder');
-        if (recorder) {
-            try {
-                recorder.stopVideo();
-            } catch (e) {
-                console.log('error stopping video');
-            }
+    async stop(maxUploadTimeMs = 7000) {
+        
+        if (this.get('_stopTimeout') !== null) {
+            window.clearTimeout(this.get('_stopTimeout'));
         }
-        this.set('_recording', false);
-
         var _this = this;
-        var _stopPromise = new Ember.RSVP.Promise((resolve, reject) => {
-            // If we don't end up uploading within 5 seconds, call reject
+        var _stopPromise = new RSVP.Promise((resolve, reject) => {
+            // If we reach the upload time limit maxUploadTimeMs, call reject
             _this.set('uploadTimeout', window.setTimeout(function () {
-                console.warn('waiting for upload timed out');
+                console.warn(`Waiting for upload timed out: ${_this.get('videoName')}`);
                 window.clearTimeout(_this.get('uploadTimeout'));
                 reject();
             }, maxUploadTimeMs));
-            if (_this.get('_isuploaded')) {
-                window.clearTimeout(_this.get('uploadTimeout'));
-                resolve(_this);
-            } else {
+            if (!_this.get('_isUploaded')) {
                 _this.set('_stopPromise', {
                     resolve: resolve,
                     reject: reject
                 });
             }
         });
+        var recorder = this.get('recorder');
+        if (recorder) {
+            try {
+                recorder.stopRecording();
+                _this.get('recorder').onRecordingStopped.call(_this);
+                await this.get('s3').completeUpload();
+                _this._onUploadDone(this.get('recorderId'), this.get('s3').key); // clears the upload timeout, sets isUploaded to true, resolves stop promise
+            } catch (e) {
+                console.warn(`Error stopping video ${_this.get('videoName')}: ${e}`);
+            }
+        }
         return _stopPromise;
+    },
+
+    /**
+     * Pause the recording
+     *
+     * @method pause
+     * @return {Promise}
+     */
+    pause() {
+        this.get('recorder').getState().then((curr_state) => {
+            return new RSVP.Promise((resolve, reject) => {
+                if (curr_state == "recording") {
+                    this.get('recorder').pauseRecording()
+                        .then(() => {
+                            resolve();
+                        })
+                        .catch((err) => {
+                            console.error(`Error pausing recorder:\n${err.name}: ${err.message}`);
+                            console.trace();
+                            reject();
+                        });
+                } else {
+                    resolve();
+                }
+            });
+        })
+    },
+
+    /**
+     * Resume the recording
+     *
+     * @method resume
+     * @return {Promise}
+     */
+    resume() {
+        this.get('recorder').getState().then((curr_state) => {
+            return new RSVP.Promise((resolve, reject) => {
+                if (curr_state == "paused") {
+                    this.get('recorder').resumeRecording()
+                        .then(() => {
+                            resolve();
+                        })
+                        .catch((err) => {
+                            console.error(`Error resuming recording:\n${err.name}: ${err.message}`);
+                            console.trace();
+                            reject();
+                        });
+                } else {
+                    resolve();
+                }
+            });
+        })
     },
 
     /**
@@ -313,10 +511,17 @@ const VideoRecorder = Ember.Object.extend({
     destroy() {
         console.log(`Destroying the videoRecorder: ${this.get('divId')}`);
         $(`#${this.get('divId')}-container`).remove();
-        if (this.get('recorder') && this.get('recorder').remove) {
-            this.get('recorder').remove();
+        if (this.get('connected') && this.get('recorder').onConnectionClosed) {
+            let id = this.get('recorderId');
+            this.get('recorder').onConnectionClosed(id); 
+        }
+        if (this.get('recorder') && this.get('recorder').destroy) {
+            this.get('recorder').destroy();
         }
         this.set('_recording', false);
+        // The recorder's destroy method just destroys the internal recorder, but our recorder object still exists (because it was created with const).
+        // Mark it as destroyed so that we can check for this in other places (calling methods on a destroyed recorder throws errors).
+        this.set('_recorderIsDestroyed', true);
     },
 
     on(hookName, func) {
@@ -326,28 +531,44 @@ const VideoRecorder = Ember.Object.extend({
         this.set(hookName, func);
     },
 
-    // Begin webcam hooks
+    // private helper function
+    _completeMicCheck() {
+        this.set('_micChecked', true);
+        // Remove the handler so we're not running this every single mic sample from now on
+        this.set('_onMicActivityLevel', null);
+        // This would remove the handler from the actual recorder, but we might have
+        // something added by a consuming frame via the 'on' fn
+        this.get('recorder').onMicActivityLevel = null; //function (recorderId, currentActivityLevel) {}; // eslint-disable-line no-unused-vars
+        if (this.get('_processorNode') !== null) {
+            this.get('_processorNode').port.postMessage({micChecked: true});
+        }
+    },
+
+    // Begin webcam hooks (names are a carryover from Pipe)
     _onRecordingStarted(recorderId) { // eslint-disable-line no-unused-vars
         this.set('_recording', true);
         this.set('_hasCreatedRecording', true);
-        this.set('pipeVideoName', this.get('recorder').getStreamName());
         if (this.get('_recordPromise')) {
             this.get('_recordPromise').resolve(this);
         }
     },
 
     // Once recording finishes uploading, resolve call to stop
-    _onUploadDone(recorderId, streamName, streamDuration, audioCodec, videoCodec, fileType, audioOnly, location) { // eslint-disable-line no-unused-vars
+    _onUploadDone(recorderId, streamName, streamDuration, audioCodec, videoCodec, fileType, location) { // eslint-disable-line no-unused-vars
         window.clearTimeout(this.get('uploadTimeout'));
-        this.set('_isuploaded', true);
+        this.set('_isUploaded', true);
         if (this.get('_stopPromise')) {
             console.log('Upload completed for file: ' + streamName);
             this.get('_stopPromise').resolve(this);
+            this.set('_stopPromise', null);
+        }
+        if (this.get('recorder').onConnectionClosed) {
+            let id = this.get('recorderId');
+            this.get('recorder').onConnectionClosed(id); 
         }
     },
 
     _onCamAccess(recorderId, allowed) { // eslint-disable-line no-unused-vars
-        console.log('onCamAccess: ' + recorderId);
         this.set('hasCamAccess', allowed);
     },
 
@@ -360,29 +581,56 @@ const VideoRecorder = Ember.Object.extend({
         this.set('_nMics', micNumber);
     },
 
+    _onMicActivityLevel(recorderId, currentActivityLevel) { // eslint-disable-line no-unused-vars
+        if (currentActivityLevel > this.get('_minVolume')) {
+            this._completeMicCheck();
+        }
+    },
+
+    // These two connection hooks are carry-overs from pipe and no longer native hooks. 
+    // Connection status is now triggered by the `record` method and the `onConnectionClosed` hook.
     _onConnectionStatus(recorderId, status) { // eslint-disable-line no-unused-vars
         this.set('connected', status === 'connected');
     },
-
-    _onMicActivityLevel(recorderId, currentActivityLevel) { // eslint-disable-line no-unused-vars
-        if (currentActivityLevel > this.get('minVolume')) {
-            this.set('micChecked', true);
-            // Remove the handler so we're not running this every single mic sample from now on
-            this.set('_onMicActivityLevel', null);
-            // This would remove the handler from the actual recorder, but we might have
-            // something added by a consuming frame via the 'on' fn
-            //this.get('recorder').onMicActivityLevel = function (recorderId, currentActivityLevel) {};
+    // Connection closed is now triggered by the `onUploadDone` hook and the `destroy` method.
+    _onConnectionClosed(recorderId) {
+        if (this.get('recorder').onConnectionStatus) {
+            this.get('recorder').onConnectionStatus(recorderId, 'disconnected'); 
         }
-    }
+    },
 
     // Additional hooks available:
+    // NOTE: these hooks are a carry-over from Pipe and not actually implemented (yet). 
+    // All except for 'onSaveOk' are related to Pipe's built-in recording/playback menu. The new recorder is not linked to a 
+    // playback menu, which means that the buttons and callbacks should be implemented at the frame's component level (see video-config-quality for an example).
+    // The 'onSaveOk' hook is not used by our frames and the existing 'onUploadDone' hook should cover its uses.
     //  btRecordPressed = function (recorderId) {};
     //  btPlayPressed(recorderId)
     //  btStopRecordingPressed = function (recorderId) {};
     //  btPausePressed = function (recorderId) {};
     //  onPlaybackComplete = function (recorderId) {};
-    //  onConnectionClosed = function (recorderId) {};
     //  onSaveOk = function (recorderId, streamName, streamDuration, cameraName, micName, audioCodec, videoCodec, filetype, videoId, audioOnly, location) {};
+
+    // RecordRTC event-related callbacks
+    _onStateChanged(state) {
+        // RecordRTC states: inactive, recording, stopped, paused
+        // don't check for stopped state here - RecordRTC has a separate callback onRecordingStopped
+        if (state == "recording") {
+            let recorderId = this.get('recorderId');
+            this.set('_recording', true);
+            this.get('recorder')._onRecordingStarted(recorderId);
+        } else {
+            this.set('_recording', false);
+        }
+    },
+
+    _onRecordingStopped() {
+        this.set('_recording', false);
+    },
+
+    _ondataavailable(blob) {
+        this.get('s3').onDataAvailable(blob);
+    }
 
     // End webcam hooks
 });

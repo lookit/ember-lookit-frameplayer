@@ -193,7 +193,7 @@ exp-lookit-observation:
     Show: Show
     webcam-feed-not-displayed: Webcam feed <br>not displayed
     Recording: Recording
-    not-recording-yet: Not recording yet
+    not-recording-yet: Not recording
     Record: Record
     recording-required-warning: Recording required to continue
     stopping-and-uploading: Stopping and uploading
