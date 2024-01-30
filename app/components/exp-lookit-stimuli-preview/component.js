@@ -17,7 +17,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
 
     videoIndex: 0,
 
-    recordingStopped: false,
     recordingStarted: false,
 
     noNext: computed('videoIndex', function() {
@@ -192,17 +191,23 @@ export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
             this.send('setTimeEvent', 'previousStimulus');
             this.set('videoIndex', this.get('videoIndex') - 1);
         },
-        finish() {
+        finish() { // continue button press
             if (this.get('doRecording')) {
-                if (!this.get('recordingStopped')) {
-                    this.set('recordingStopped', true);
+                if (!this.get('stoppedRecording') && !this.get('stopping')) {
+                    this.set('stopping', true);
                     var _this = this;
                     this.stopRecorder().then(() => {
+                        _this.set('stoppedRecording', true);
+                        _this.destroyRecorder();
                         _this.send('next');
                     }, () => {
+                        _this.destroyRecorder();
                         _this.send('next');
                     });
-                } else {
+                } else if (this.get('stoppedRecording') && !this.get('stopping')) {
+                    // if recorder has finished stopping/uploading then we can destroy it and move on
+                    // (if recorder is already stopping, then do nothing - need to wait for it to finish)
+                    this.destroyRecorder();
                     this.send('next');
                 }
             } else {

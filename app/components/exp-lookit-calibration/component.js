@@ -115,18 +115,22 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
         // already been destroyed at that point.
         window.clearInterval(this.get('calTimer'));
         this.disablePausing();
-        var _this = this;
-        if (this.get('doRecording')) {
+        if (this.get('doRecording') && (!this.get('stoppedRecording')) && !(this.get('stopping'))) {
+            this.set('stopping', true);
+            var _this = this;
             this.stopRecorder().then(() => {
                 _this.set('stoppedRecording', true);
+                _this.destroyRecorder();
                 _this.send('next');
-                return;
             }, () => {
+                _this.destroyRecorder();
                 _this.send('next');
-                return;
             });
+        } else if (this.get('doRecording') && this.get('stoppedRecording') && !(this.get('stopping'))) {
+            this.destroyRecorder();
+            this.send('next');
         } else {
-            _this.send('next');
+            this.send('next');
         }
     },
 

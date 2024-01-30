@@ -62,7 +62,17 @@
         <div class="col-md-4">
 
             <div class="row recorder-container">
-                <div id="recorder" class="col-xs-12"></div>
+                <div id="recorder" class="col-xs-12">
+                    <span id="recordingStatus">
+                        <i class="fa fa-circle text-danger Blink" id="recordingIndicator"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="recording-menu">
+                <button type="button" id="recordbutton" disabled="disabled" class="menu-btn" {{ action "record" }}><i class="fa fa-video-camera"></i></button>
+                <button type="button" id="stopbutton" disabled="disabled" class="menu-btn" {{ action "stop" }}><i class="fa fa-stop"></i></button>
+                <button type="button" id="playbutton" disabled="disabled" class="menu-btn" {{ action "playvideo" }}><i class="fa fa-play"></i></button>
             </div>
 
             <div class="recording-instructions">

@@ -360,15 +360,25 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
              * @event stoppingCapture
             */
             this.disablePausing();
-            var _this = this;
-            this.stopRecorder().then(() => {
-                _this.set('stoppedRecording', true);
-                _this.send('next');
-                return;
-            }, () => {
-                _this.send('next');
-                return;
-            });
+            if (this.get('doRecording')) {
+                if (!this.get('stoppedRecording') && (!this.get('stopping'))) {
+                    var _this = this;
+                    this.stopRecorder().then(() => {
+                        _this.set('stoppedRecording', true);
+                        _this.destroyRecorder();
+                        _this.send('next');
+                    }, () => {
+                        _this.destroyRecorder();
+                        _this.send('next');
+                    });
+                } else if (this.get('stoppedRecording') && (!this.get('stopping'))) {
+                    this.destroyRecorder();
+                    this.send('next');
+                }
+                // if the recorder is still stopping/uploading, then wait
+            } else {
+                this.send('next');
+            }
 
             this._super(...arguments);
         }
@@ -442,9 +452,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
     // When triangles have been shown for time indicated: play end-audio if
     // present, or just move on.
     endTrial() {
-        this.stopRecorder();
+        
         if (this.get('endAudioSources').length) {
-            $('#player-endaudio')[0].play();
+            $('#player-endaudio')[0].play(); // onended calls finish
         } else {
             this.send('finish');
         }
@@ -607,8 +617,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
             this.pause();
         });
 
-        if (this.get('doRecording')) {
-            let _this = this;
+        if (this.get('doRecording') && !this.get('stoppedRecording') && !this.get('stopping')) {
+            var _this = this;
+            this.set('stopping', true);
             return this.stopRecorder().finally(() => {
                 _this.set('stoppedRecording', true);
                 _this.destroyRecorder();

@@ -13,6 +13,12 @@ module.exports = function(environment) {
         cdn: 'https://cdn.ravenjs.com/3.26.4/ember/raven.min.js', // probably unused
         development: process.env.SENTRY_DSN === ''
     },
+    awsRecording: {
+      region: process.env.S3_REGION,
+      accessKeyId: process.env.S3_ACCESS_KEY_ID,
+      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+      bucket: process.env.S3_BUCKET
+    },
     EmberENV: {
       EXTEND_PROTOTYPES: true,
       FEATURES: {

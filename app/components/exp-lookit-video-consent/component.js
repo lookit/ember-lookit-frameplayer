@@ -51,25 +51,27 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
     startRecorderAndUpdateDisplay() {
         this.set('startedRecording', true); // keep track of if ANY recorder has been set up yet
         let _this = this;
-        this.startRecorder().then(() => {
-            // Require at least 2 s recording
-            setTimeout(function() {
-                $('#stopbutton').prop('disabled', false);
-            }, 2000);
-            $('#recordingIndicator').show();
-            $('#recordingText').text(_this._translate('exp-lookit-video-consent.Recording'));
-        }, () => {
-            $('#recordingText').text(_this._translate('exp-lookit-video-consent.Error-starting-recorder'));
-            $('#recordbutton').prop('disabled', false);
-        });
+        this.startRecorder()
+            .then(() => {
+                // Require at least 2 s recording
+                setTimeout(function() {
+                    $('#stopbutton').prop('disabled', false);
+                }, 2000);
+                $('#recordingIndicator').show();
+                $('#recordingText').text(_this._translate('exp-lookit-video-consent.Recording'));
+            })
+            .catch((err) => {
+                $('#recordingText').text(_this._translate('exp-lookit-video-consent.Error-starting-recorder'));
+                $('#recordbutton').prop('disabled', false);
+                console.error(`Error starting recorder: ${err.name}: ${err.message}`);
+                console.trace();
+            });
     },
 
     actions: {
         record() {
-
             $('#recordingStatus').show();
             $('#recordingText').text(`${this._translate('exp-lookit-video-consent.Starting-recorder')}...`);
-            $('[id^=pipeMenu]').hide();
             $('#recordbutton').prop('disabled', true);
             $('#playbutton').prop('disabled', true);
             this.set('showWarning', false);
@@ -77,18 +79,22 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             this.set('hasMadeVideo', false);
 
             if (this.get('startedRecording')) {
-                if (this.get('recorder') && this.get('recorder').get('recorder')) {
-                    this.get('recorder').get('recorder').pause();
+                if (this.get('recorder')) {
+                    this.get('recorder').pause();
                 }
                 this.destroyRecorder(); // Need to destroy between recordings or else the same video ID is sent as payload.
                 // Don't destroy after stopRecorder call because then can't replay.
                 var _this = this;
-                this.setupRecorder(_this.$(_this.get('recorderElement'))).then(() => {
-                    _this.startRecorderAndUpdateDisplay();
-                }, () => {
-                    $('#recordingText').text(_this._translate('exp-lookit-video-consent.Error-starting-recorder'));
-                    $('#recordbutton').prop('disabled', false);
-                });
+                this.setupRecorder(_this.$(_this.get('recorderElement')))
+                    .then(() => {
+                        _this.startRecorderAndUpdateDisplay();
+                    })
+                    .catch((err) => {
+                        $('#recordingText').text(_this._translate('exp-lookit-video-consent.Error-starting-recorder'));
+                        $('#recordbutton').prop('disabled', false);
+                        console.error(`Error restarting recorder: ${err.name}: ${err.message}`);
+                        console.trace();
+                    });
             } else {
                 this.startRecorderAndUpdateDisplay(); // First time - can use current recorder
             }
@@ -100,24 +106,23 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
             $('#stopbutton').prop('disabled', true);
             var _this = this;
 
-            this.stopRecorder().finally(() => {
-                _this.set('stoppedRecording', true);
-                _this.set('hasMadeVideo', true);
-                $('#recordingText').text(_this._translate('exp-lookit-video-consent.Not-recording'));
-                $('#playbutton').prop('disabled', false);
-                $('#recordbutton').prop('disabled', false);
-            });
+            this.stopRecorder()
+                .finally(() => {
+                    _this.set('stoppedRecording', true);
+                    _this.set('hasMadeVideo', true);
+                    $('#recordingText').text(_this._translate('exp-lookit-video-consent.Not-recording'));
+                    $('#playbutton').prop('disabled', false);
+                    $('#recordbutton').prop('disabled', false);
+                });
 
         },
         playvideo() {
             $('#recordingText').text('');
             $('#recordingStatus').hide();
-            this.get('recorder').get('recorder').playVideo();
-            $('[id^=pipeMenu]').show();
+            this.setUpPlayback();
             this.set('hasCheckedVideo', true);
         },
         finish() {
-
             if (!this.get('hasMadeVideo') || !this.get('hasCheckedVideo')) {
                 this.set('showWarning', true);
             } else {
@@ -636,7 +641,6 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         this.set('consentFormText', $('#consent-form-text').text());
         $('#recordingIndicator').hide();
         $('#recordingText').text(this._translate('exp-lookit-video-consent.Not-recording-yet'));
-        $('[id^=pipeMenu]').hide();
         $('#recordbutton').prop('disabled', false);
         $('#stopbutton').prop('disabled', true);
         $('#playbutton').prop('disabled', true);
