@@ -96,6 +96,14 @@ p#pipeClickPowered {
 .lookit-video-recorder, .lookit-video-recorder > div, .lookit-video-recorder video.pipeNormal, .lookit-video-recorder video.pipeSmallNormal {
     height: 100% !important;
     width: 100% !important;
+    background-color: black;
+    border-radius: 8px;
+}
+
+.lookit-video-recorder video {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
 }
 
 // Make sure the microphone symbol and meter show up even if aspect ratio is such that

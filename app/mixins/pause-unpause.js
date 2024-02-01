@@ -294,7 +294,7 @@ var pauseUnpauseMixin = Ember.Mixin.create({
 
         // Don't need to separately enable FS listener because it checks _pausingEnabled
         if (this.get('pauseWhenExitingFullscreen') && !this.checkFullscreen() && !this.get('_isPaused') && doFullscreenCheck) {
-            console.log('failed fullscreen c heck');
+            console.log('failed fullscreen check');
             this._pauseStudy();
             return true;
         }

@@ -106,11 +106,18 @@ export default Ember.Mixin.create({
     sessionRecorderReady: false,
 
     /**
-     * Whether to do audio-only (vs also video) recording for session (multiframe) recording. Only used if starting session recording this frame.
-     * @property {Number} sessionAudioOnly
-     * @default 0
+     * Whether to do check the mic input during recorder set up (before the install promise is resolved). 
+     * Defaults to false and can be overridden by consuming frame.
+     * @property {Boolean} checkMic
+     * @default false
      */
-    sessionAudioOnly: 0,
+    checkMic: false,
+
+    /** 
+     * Private flag that is set when the async record method is first called 
+     * to prevent record from being called multiple times
+    */
+    _starting: false,
 
     _generateSessionVideoId() {
         return [
@@ -130,7 +137,6 @@ export default Ember.Mixin.create({
      * @return {Promise} A promise representing the result of installing the recorder
      */
     setupSessionRecorder(recorderElementId) {
-
         var $sessionRecorderElement = $('<div>', {
             id: recorderElementId,
             class: 'video-recorder-hidden'
@@ -141,18 +147,17 @@ export default Ember.Mixin.create({
         var $element = $('#' + recorderElementId);
 
         const maxRecordingLength = 100000000;
-        const autosave = 1;
         const sessionVideoId = this._generateSessionVideoId();
         this.get('session').set('videoId', sessionVideoId);
         const sessionRecorder = new VideoRecorder({element: $element});
-        const pipeLoc = Ember.getOwner(this).resolveRegistration('config:environment').pipeLoc;
-        const pipeEnv = Ember.getOwner(this).resolveRegistration('config:environment').pipeEnv;
-        const installPromise = sessionRecorder.install(sessionVideoId, pipeLoc, pipeEnv,
-            maxRecordingLength, autosave, this.get('sessionAudioOnly'));
+        const s3vars = Ember.getOwner(this).resolveRegistration('config:environment').awsRecording;
+        const installPromise = sessionRecorder.install(sessionVideoId, 
+            maxRecordingLength, this.get('checkMic'), s3vars);
 
         // Track specific events for all frames that use VideoRecorder
         var _this = this;
         sessionRecorder.on('onCamAccess', (recId, hasAccess) => {   // eslint-disable-line no-unused-vars
+            _this.get('sessionRecorder').set('hasCamAccess', hasAccess);
             if (!(_this.get('isDestroyed') || _this.get('isDestroying'))) {
                 _this.send('setTimeEvent', 'sessionRecorder.hasCamAccess', {
                     hasCamAccess: hasAccess
@@ -190,7 +195,7 @@ export default Ember.Mixin.create({
                  * @event startSessionRecording
                  */
                 _this.send('setTimeEvent', 'startSessionRecording', {
-                    sessionPipeId: sessionRecorder.get('pipeVideoName')
+                    sessionPipeId: sessionRecorder.get('videoName')
                 });
             });
         } else {
@@ -211,6 +216,7 @@ export default Ember.Mixin.create({
              *
              * @event stopSessionRecording
              */
+            this.get('session').set('recordingInProgress',false);
             this.send('setTimeEvent', 'stopSessionRecording');
             return sessionRecorder.stop(this.get('sessionMaxUploadSeconds') * 1000);
         } else {
@@ -258,7 +264,7 @@ export default Ember.Mixin.create({
     // actually destroying the recorder any time the component is destroyed.
     willDestroyElement() {
         var _this = this;
-        if (this.get('sessionRecorder') && this.get('endSessionRecording')) {
+        if (this.get('sessionRecorder') && this.get('endSessionRecording') && this.get('sessionRecorder').recording) {
             if (!(this.get('session').get('recordingInProgress'))) {
                 this.destroySessionRecorder();
             } else {
@@ -284,15 +290,13 @@ export default Ember.Mixin.create({
      * @method whenPossibleToRecordSessionObserver
      */
     whenPossibleToRecordSessionObserver: observer('sessionRecorder.hasCamAccess', 'sessionRecorderReady', function() {
-        if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady')) {
-            if (this.get('startSessionRecording')) {
-                var _this = this;
-                this.startSessionRecorder().then(() => {
-                    _this.send('setTimeEvent', 'startedSessionRecording');
-                    _this.set('sessionRecorderReady', false);
-                    _this.onSessionRecordingStarted();
-                });
-            }
+        if (this.get('sessionRecorder.hasCamAccess') && this.get('sessionRecorderReady') && this.get('startSessionRecording') && this.get('sessionRecorder') && !(this.get('sessionRecorder').recording) && !(this.get('_starting'))) {
+            this.set('_starting', true);
+            var _this = this;
+            this.startSessionRecorder().then(() => {
+                _this.send('setTimeEvent', 'startedSessionRecording');
+                _this.onSessionRecordingStarted();
+            });
         }
     })
 

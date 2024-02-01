@@ -27,6 +27,7 @@ function loadAll(model, relationship, dest, options = {}) {
 export default Ember.Mixin.create({
     _study: null,
     _child: null,
+    _recordingMethod: 'recordrtc',
     _response: null,
     _pastResponses: Ember.A(),
     _getStudy(params) {
@@ -41,7 +42,8 @@ export default Ember.Mixin.create({
         let response = this.store.createRecord('response', {
             completed: false,
             expData: {},
-            sequence: []
+            sequence: [],
+            recordingMethod: this.get('_recordingMethod')
         });
         response.set('study', this.get('_study'));
         response.set('child', this.get('_child'));

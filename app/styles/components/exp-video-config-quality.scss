@@ -162,4 +162,80 @@ $medium-focus-color: #87b79f;
         margin-top: 50px;
     }
 
+    .recorder-container {
+        width:100%;
+        margin: 0px;
+        height: 20vh;
+    }
+  
+    .recorder {
+        padding: 0px;
+        margin-bottom: 1em;
+        margin-top: 1em;
+        background-color: #ccc;
+        width: 110%;
+        height:100%;
+        min-width:450px;
+        margin-left:-10%;
+        clear:both !important;
+        position: relative;
+      }
+  
+    .Blink {
+        animation: exp-lookit-video-config-quality-blinker 1.0s cubic-bezier(.5, 0, 1, 1) infinite alternate;
+        float:left;
+        font-size:large;
+        margin-right: .5em;
+    }
+    @keyframes exp-lookit-video-config-quality-blinker {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+
+    #recordingStatus {
+        position: absolute;
+        z-index: 999;
+        text-align: center;
+        margin: .25em;
+        padding: .5em;
+        border-radius: .5em;
+        background-color: white;
+        opacity: 0.6;
+    }
+
+    #recordingIndicator {
+        margin: .25em;
+    }
+
+    .menu-btn {
+        position: absolute;
+        margin-top: 5px;
+    }
+
+    .menu-btn i {
+        margin: .25em;
+    }
+
+    .menu-btn:disabled {
+        opacity: 0.5;
+        border-color: lightgrey;
+        cursor: not-allowed;
+    }
+
+    #recordbutton {
+        left: 10%;
+    }
+
+    #stopbutton {
+        left: 45%;
+    }
+
+    #playbutton {
+        right: 10%;
+    }
+
+    .recorder-container #recorder {
+        width: 100% !important;
+    }
+
 }

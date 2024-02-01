@@ -28,10 +28,21 @@ let {
  * You will also need to set `recorderElement` if the recorder is to be housed other than
  * in an element identified by the ID `recorder`.
  *
- * The properties `recorder`, `videoList`, `stoppedRecording`, `recorderReady`, and
- * `videoId` become available to the consuming frame. The recorder object has fields
- * that give information about its state: `hasWebCam`, 'hasCamAccess`, `recording`,
- * `connected`, and `micChecked` - for details, see services/video-recorder.js. These
+ * The following properties become available to the consuming frame:
+ *  recorder
+ *  videoList
+ *  stoppedRecording
+ *  recorderReady
+ *  videoId
+ * The recorder object has the following fields that give information about its state: 
+ *  hasWebCam
+ *  hasCamAccess
+ *  recording
+ *  connected
+ *  micChecked
+ *  hasCreatedRecording
+ * For details, see services/video-recorder.js. 
+ * These
  * can be accessed from the consuming frame as e.g. `this.get('recorder').get('hasWebCam')`.
  *
  * If starting recording automatically,  the function `onRecordingStarted` will be called
@@ -42,8 +53,7 @@ let {
  *
  * Events recorded in a frame that extends VideoRecord will automatically have additional
  * fields videoId (video filename), pipeId (temporary filename initially assigned by
- * the recording service),
- * and streamTime (when in the video they happened, in s).
+ * the recording service), and streamTime (when in the video they happened, in s).
  *
  * Setting up the camera is handled in didInsertElement, and making sure recording is
  * stopped is handled in willDestroyElement (Ember hooks that fire during the component
@@ -96,7 +106,7 @@ export default Ember.Mixin.create({
 
     /**
      * Whether recording is stopped already, meaning it doesn't need to be re-stopped when
-     * destroying frame. This should be set to true by the consuming frame when video is
+     * destroying frame. This should be set to true by the consuming frame after the video is
      * stopped.
      * @property {Boolean} stoppedRecording
      * @private
@@ -121,6 +131,7 @@ export default Ember.Mixin.create({
 
     /**
      * Maximum recording length in seconds. Can be overridden by consuming frame.
+     * Default for trial recordings is 7200 seconds (120 minutes)
      * @property {Number} maxRecordingLength
      * @default 7200
      */
@@ -131,25 +142,17 @@ export default Ember.Mixin.create({
      * Can be overridden by researcher, based on tradeoff between making families wait and
      * losing data.
      * @property {Number} maxUploadSeconds
-     * @default 5
+     * @default 7
      */
-    maxUploadSeconds: 5,
+    maxUploadSeconds: 7,
 
     /**
-     * Whether to autosave recordings. Can be overridden by consuming frame.
-     * TODO: eventually use this to set up non-recording option for previewing
-     * @property {Number} autosave
-     * @default 1
-     * @private
+     * Whether to do check the mic input during recorder set up (before the install promise is resolved). 
+     * Defaults to false and can be overridden by consuming frame.
+     * @property {Boolean} checkMic
+     * @default false
      */
-    autosave: 1,
-
-    /**
-     * Whether to do audio-only (vs also video) recording. Can be overridden by consuming frame.
-     * @property {Number} audioOnly
-     * @default 0
-     */
-    audioOnly: 0,
+    checkMic: false,
 
     /**
      * Whether to use the camera in this frame. Consuming frame should set this property
@@ -252,6 +255,18 @@ export default Ember.Mixin.create({
      */
     waitForUploadVideo: '',
 
+    /**
+     * Flag that is set when the async record method is first called
+     * to prevent record from being called multiple times. Can be overwritten by the consuming frame to 
+     * indicate that startRecording is about to be called.
+    */
+    starting: false,
+
+    /**
+     * Flag that is set when the async stopRecording method is first called
+     * to prevent stopRecording from being called multiple times. Can be overwritten by the consuming frame.
+    */
+    stopping: false,
 
     _generateVideoId() {
         return [
@@ -290,14 +305,14 @@ export default Ember.Mixin.create({
         const videoId = this._generateVideoId();
         this.set('videoId', videoId);
         const recorder = new VideoRecorder({element: element});
-        const pipeLoc = Ember.getOwner(this).resolveRegistration('config:environment').pipeLoc;
-        const pipeEnv = Ember.getOwner(this).resolveRegistration('config:environment').pipeEnv;
-        const installPromise = recorder.install(this.get('videoId'), pipeLoc, pipeEnv,
-            this.get('maxRecordingLength'), this.get('autosave'), this.get('audioOnly'));
+        const s3vars = Ember.getOwner(this).resolveRegistration('config:environment').awsRecording;
+        const installPromise = recorder.install(this.get('videoId'), 
+            this.get('maxRecordingLength'), this.get('checkMic'), s3vars);
 
-        // Track specific events for all frames that use  VideoRecorder
+        // Track specific events for all frames that use VideoRecorder
         var _this = this;
         recorder.on('onCamAccess', (recId, hasAccess) => {   // eslint-disable-line no-unused-vars
+            _this.get('recorder').set('hasCamAccess', hasAccess);
             if (!(_this.get('isDestroyed') || _this.get('isDestroying'))) {
                 _this.send('setTimeEvent', 'recorder.hasCamAccess', {
                     hasCamAccess: hasAccess
@@ -315,6 +330,7 @@ export default Ember.Mixin.create({
         this.send('setTimeEvent', 'setupVideoRecorder', {
             videoId: videoId
         });
+        
         return installPromise;
     },
 
@@ -325,16 +341,20 @@ export default Ember.Mixin.create({
      */
     startRecorder() {
         const recorder = this.get('recorder');
+        var _this = this;
         if (recorder) {
             return recorder.record().then(() => {
                 this.send('setTimeEvent', 'startRecording', {
-                    pipeId: recorder.get('pipeVideoName')
+                    pipeId: recorder.get('videoName') // TO DO: change 'pipeId' to something else 
                 });
                 if (this.get('videoList') == null) {
                     this.set('videoList', [this.get('videoId')]);
                 } else {
                     this.set('videoList', this.get('videoList').concat([this.get('videoId')]));
                 }
+                _this.set('starting', false);
+                _this.hideWaitForVideoCover();
+                _this.onRecordingStarted();
             });
         } else {
             return Ember.RSVP.resolve();
@@ -348,7 +368,8 @@ export default Ember.Mixin.create({
      */
     stopRecorder() {
         const recorder = this.get('recorder');
-        if (recorder && recorder.get('recording')) {
+        if (recorder && recorder.get('recording') && !(recorder._recorderIsDestroyed)) {
+            this.set('stopping', true);
             this.send('setTimeEvent', 'stoppingCapture');
             if (this.get('showWaitForUploadMessage') && !this.get('_isPaused')) { // Avoid showing wait-for-upload and paused screens simultaneously, give priority to paused
                 // TODO: consider adding progress bar
@@ -369,7 +390,10 @@ export default Ember.Mixin.create({
             }
             return recorder.stop(this.get('maxUploadSeconds') * 1000);
         } else {
-            return Ember.RSVP.reject(1);
+            // reject the promise because the recorder is in one of the following states:
+            // - doesn't exist, or is not recording, or has been destroyed
+            // - exists and is recording, but is already in the process of stopping and uploading
+            return Ember.RSVP.reject(`Unable to stop recorder for ${recorder.get('videoName')}. Maybe it does not exist, is not recording, has been destroyed, or is already stopping.`);
         }
     },
 
@@ -387,20 +411,44 @@ export default Ember.Mixin.create({
         }
     },
 
+    /**
+     * Set up playback of a video recording
+     * @method setUpPlayback
+     */
+    setUpPlayback() {
+        const vid = document.querySelector('video');
+        vid.src = null;
+        vid.srcObject = null;
+        vid.muted = false;
+        vid.volume = 1;
+        this.get('recorder').get('recorder').getDataURL()
+            .then((dataURI) => {
+                vid.src = dataURI;
+                vid.controls = true;
+            })
+            .catch((err) => {
+                console.error(`Error playing video: ${err.name}: ${err.message}`);
+                console.trace();
+            });
+    },
+
     willDestroyElement() {
         var _this = this;
-        if (_this.get('recorder')) {
+        if (_this.get('recorder') && !(_this.get('recorder')._recorderIsDestroyed)) {
             window.clearTimeout(_this.get('recorder').get('uploadTimeout'));
-            if (_this.get('stoppedRecording', true)) {
-                _this.destroyRecorder();
-            } else {
+            if (_this.get('recorder').get('recording') && !(this.get('stopping'))) {
                 _this.stopRecorder().then(() => {
                     _this.set('stoppedRecording', true);
                     _this.destroyRecorder();
-                }, () => {
-                    _this.destroyRecorder();
+                }, (reason) => {
+                    console.warn(`Recording stop promise rejected: ${reason}`);
                 });
+            } else if (!(_this.get('recorder').get('recording')) && !(this.get('stopping'))) {
+                // recorder is not recording or stopping
+                _this.destroyRecorder();
             }
+            // if recorder is already stopping/uploading (stopping = true) then don't trigger stop or destroy
+            // in this case, the consuming frame needs to make sure the recorder is destroyed after stopping
         }
         _this._super(...arguments);
     },
@@ -507,17 +555,14 @@ export default Ember.Mixin.create({
 
     /**
      * Observer that starts recording once recorder is ready.
+     * Consuming frames can override this if necessary (e.g. observation frame).
      * @method whenPossibleToRecordObserver
      */
     whenPossibleToRecordObserver: observer('recorder.hasCamAccess', 'recorderReady', function() {
         if (this.get('doUseCamera') && this.get('startRecordingAutomatically')) {
-            var _this = this;
-            if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-                this.startRecorder().then(() => {
-                    _this.set('recorderReady', false);
-                    _this.hideWaitForVideoCover();
-                    _this.onRecordingStarted();
-                });
+            if (this.get('recorder.hasCamAccess') && this.get('recorderReady') && !(this.get('recorder.recording')) && !(this.get('starting'))) {
+                this.set('starting', true);
+                this.startRecorder();
             }
         }
     }),

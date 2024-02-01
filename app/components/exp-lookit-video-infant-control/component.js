@@ -35,7 +35,7 @@ export default ExpLookitVideo.extend(InfantControlledTiming, {
     actions: {
 
         videoStarted() {
-            if (this.get('testVideoTimesPlayed') === 0) {
+            if ((this.get('testVideoTimesPlayed') === 0) && !this.get('_finishing')) {
                 this.startParentControl();
             }
             this._super(...arguments);
