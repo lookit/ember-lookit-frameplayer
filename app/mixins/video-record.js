@@ -421,9 +421,9 @@ export default Ember.Mixin.create({
         vid.srcObject = null;
         vid.muted = false;
         vid.volume = 1;
-        this.get('recorder').get('recorder').getDataURL()
-            .then((dataURI) => {
-                vid.src = dataURI;
+        this.get('recorder').get('recorder').getBlob()
+            .then((blob) => {
+                vid.src = URL.createObjectURL(blob);
                 vid.controls = true;
             })
             .catch((err) => {
