@@ -31,7 +31,7 @@ class S3 {
         const createResponse = await this.s3.createMultipartUpload({
             Bucket: this.env.bucket,
             Key: this.key,
-            ContentType: "video/mp4",
+            ContentType: "video/webm",
         }).promise();
         this.uploadId = createResponse.UploadId;
         this.logRecordingEvent(`Connection established.`);
