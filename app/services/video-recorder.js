@@ -197,7 +197,7 @@ const VideoRecorder = Ember.Object.extend({
         const mime_types = [
             "video/webm;codecs=vp9,opus",
             "video/webm;codecs=vp8,opus",
-            "video/webm;codecs=avc1,opus"
+            "video/webm;codecs=av1,opus"
         ];
         let mime_type_index = 0;
         while (mime_type_index < mime_types.length) {
