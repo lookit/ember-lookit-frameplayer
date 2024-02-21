@@ -95,6 +95,7 @@ const VideoRecorder = Ember.Object.extend({
     recording: Ember.computed.alias('_recording').readOnly(),
     hasCreatedRecording: Ember.computed.alias('_hasCreatedRecording').readOnly(),
     micChecked: Ember.computed.alias('_micChecked'),
+    mimeType: Ember.computed.alias('_mimeType'),
 
     connected: false,
     uploadTimeout: null, // timer counting from attempt to stop until we should just resolve the stopPromise
@@ -110,6 +111,7 @@ const VideoRecorder = Ember.Object.extend({
     _hasCreatedRecording: false,
     _nWebcams: 0,
     _nMics: 0,
+    _mimeType: "video/webm",
     _minVolume: 0.1, // Volume required to pass mic check
     _micChecked: false, // Has the microphone ever exceeded minVolume?
     _recordPromise: null,
@@ -187,6 +189,25 @@ const VideoRecorder = Ember.Object.extend({
         $container.append($('<div>', { id: divId, class: origDivId }));
         $element.append($container);
 
+        // Check the browser's container/codec support, in order of our preference, and set accordingly for use in the recorder's config.
+        // "video/webm" (without codecs) is our fallback and works fine in FF, but it produces errors in Chrome.
+        // (If we specify the video codec in the recording config mimeType then we need to give an audio codec too.
+        // The browser will return true for isTypeSupported without audio codec, but it will cause a "not supported" error
+        // when trying to create a recorder with a specified video codec that can't also record audio).
+        const mime_types = [
+            "video/webm;codecs=vp9,opus",
+            "video/webm;codecs=vp8,opus",
+            "video/webm;codecs=av1,opus"
+        ];
+        let mime_type_index = 0;
+        while (mime_type_index < mime_types.length) {
+            if (MediaRecorder.isTypeSupported(mime_types[mime_type_index])) {
+                this.set('_mimeType', mime_types[mime_type_index]);
+                break;
+            }
+            mime_type_index++;
+        }
+
         return new RSVP.Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
 
             /* var pipeConfig = {
@@ -211,10 +232,7 @@ const VideoRecorder = Ember.Object.extend({
             var _this = this;
             const recordRtcConfig = {
                 type: 'video', // audio, video, canvas, gif
-                mimeType: 'video/webm',
-                // video/webm;codecs=vp9
-                // video/webm;codecs=vp8
-                // video/webm;codecs=h264
+                mimeType: _this._mimeType,
                 //recorderType: MediaStreamRecorder,
                 disableLogs: false,
                 timeSlice: 1000, 
