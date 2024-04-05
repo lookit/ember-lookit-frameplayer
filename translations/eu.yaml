@@ -141,7 +141,7 @@ consent-template-5:
     gdpr-2: Zeure informazioa Ameriketako Estatu Batuetara bidaliko da. Ulertu behar duzu Ameriketako Estatu Batuetako datu-babes eta pribatutasun legeek beharbada ez zaituztela zeure herrialdeko legeek bezain beste babestuko.
     contact-header: Nola jarri gurekin harremanetan?
     contact-statement-1: Ikerketa hau {institution}-eko {name} ikertzaileak egiten du. {only_adult, select, true {Zeuk} other {Zuk zeuk edo zure haurrak}} ikerketaren inguruko galderak edo kezkak izanez gero, {omit_injury, select, true {} other {edo edozerrengatik ikerketak kalteren bat eragiten badu,}} mesedez harremanetan jarri {contact}.
-    contact-statement-2:  Zuk zeuk edo haurrak Lookit plataformaren inguruko galderarik edo kezkarik izanez gero, mesedez Lookiteko langileekin jarri harremaneta lookit@mit.edu  helbidean.
+    contact-statement-2: '{only_adult, select, true {Zeuk} other {Zuk zeuk edo zure haurrak}} Lookit plataformaren inguruko galderarik edo kezkarik izanez gero, mesedez Lookiteko langileekin jarri harremaneta lookit@mit.edu helbidean.'
 
 consent-garden:
     header: "Ikerketan parte hartzeko baimena: GARDEN proiektuko {experiment}"
