@@ -27,7 +27,7 @@ language [String]
     - 'eu': Basque
     - 'hu': Hungarian
     - 'it': Italian
-    - 'ja': Japonese
+    - 'ja': Japanese
     - 'nl': Dutch
     - 'pt': Portuguese
     - 'pt-br': Portuguese, Brazil
