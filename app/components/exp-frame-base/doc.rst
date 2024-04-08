@@ -17,7 +17,7 @@ test in isn't available, you can add it!
 .. _translation:
 
 language [String]
-    Language to present this frame in. This is specified using the two-letter language code (and sometimes a subtag indicating the language variant) - see options listed below. The frame's standard "hard-coded" text will be translated if a translation file is available for this language. The translations include any text that normally can't be customized with other frame parameters, such as certain button labels (e.g. "Pause", "Resume", "Reload webcam"), default parts of the consent frames, the exti frame survey, and other messages that the participant might see. Default values that you can already customize using frame parameters (e.g, most "Next" button labels) will **not** be translated. Text you supply will also not be translated.
+    Language to present this frame in. This is specified using the two-letter language code (and sometimes a subtag indicating the language variant) - see options listed below. The frame's standard "hard-coded" text will be translated if a translation file is available for this language. The translations include any text that normally can't be customized with other frame parameters, such as certain button labels (e.g. "Pause", "Resume", "Reload webcam"), default parts of the consent frames, the exit frame survey, and other messages that the participant might see. Default values that you can already customize using frame parameters (e.g, most "Next" button labels) will **not** be translated. Text you supply will also not be translated.
 
     The value of the "language" field will persist across frames once set, so you can set it once at the start of your
     study to set the language for all frames.
