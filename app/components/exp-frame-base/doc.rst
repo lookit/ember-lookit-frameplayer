@@ -20,18 +20,21 @@ language [String]
     Language to present the frame(s) in. This is specified using the two-letter language code (and sometimes a subtag indicating the language variant) - see options listed below. The default is "en-us". If we have a translation file for the language specified, then the frame's standard "hard-coded" text will be translated to this language. The value of the "language" field will persist across frames once set, so you can set it once at the start of your study to set the language for all frames.
     
     Things that are translated:
+
     - Button labels that cannot be modified using another frame parameter (e.g. "Pause", "Resume", "Reload webcam")
     - Default text in the consent frames
     - The exit frame survey
     - Any other text/messages that the participant might see *that cannot be customized with other frame parameters*
     
     Things that are NOT translated: 
+
     - Default values that you can already customize using frame parameters (e.g. most "Next" button labels)
     - Any other text that you provide in the frame parameters
 
     To see the specific text strings that are translated, along with their values for each language, see the `translations directory <https://github.com/lookit/ember-lookit-frameplayer/tree/master/translations>`__ in the Lookit Github repository.
 
     The current options for the language parameter are:
+    
     - 'en-us': English, US
     - 'eu': Basque
     - 'hu': Hungarian
