@@ -17,18 +17,34 @@ test in isn't available, you can add it!
 .. _translation:
 
 language [String]
-    Language to present this frame in. Standard text, like hard-coded button labels, will be translated if a translation
-    file is available for this language. Default values that you can already customize (e.g, most "Next" button labels)
-    will **not** be translated. Text you supply will also not be translated.
+    Language to present the frame(s) in. This is specified using the two-letter language code (and sometimes a subtag indicating the language variant) - see options listed below. The default is "en-us". If we have a translation file for the language specified, then the frame's standard "hard-coded" text will be translated to this language. The value of the "language" field will persist across frames once set, so you can set it once at the start of your study to set the language for all frames.
+    
+    Things that are translated:
 
-    The value of the "language" field will persist across frames once set, so you can set it once at the start of your
-    study to set the language for all frames.
+    - Button labels that cannot be modified using another frame parameter (e.g. "Pause", "Resume", "Reload webcam")
+    - Default text in the consent frames
+    - The exit frame survey
+    - Any other text/messages that the participant might see *that cannot be customized with other frame parameters*
+    
+    Things that are NOT translated: 
 
-    Current options are 'en-US' (English, US), 'nl' (Dutch), and 'it' (Italian).
+    - Default values that you can already customize using frame parameters (e.g. most "Next" button labels)
+    - Any other text that you provide in the frame parameters
 
-    To add another language option, please contact Lookit
-    staff. You will need to make a copy of the `English translation file <https://github.com/lookit/ember-lookit-frameplayer/blob/develop/translations/en-us.yaml>`__ and translate the text after the colon
-    on each line, leaving everything else the same. You can see an example `here <https://github.com/lookit/ember-lookit-frameplayer/blob/develop/translations/nl.yaml>`__. There are three special cases:
+    To see the specific text strings that are translated, along with their values for each language, see the `translations directory <https://github.com/lookit/ember-lookit-frameplayer/tree/master/translations>`__ in the Lookit Github repository.
+
+    The current options for the language parameter are:
+    
+    - 'en-us': English, US
+    - 'eu': Basque
+    - 'hu': Hungarian
+    - 'it': Italian
+    - 'ja': Japanese
+    - 'nl': Dutch
+    - 'pt': Portuguese
+    - 'pt-br': Portuguese, Brazil
+
+    To add another language option, please contact Lookit staff. You will need to make a copy of the `English translation file <https://github.com/lookit/ember-lookit-frameplayer/blob/develop/translations/en-us.yaml>`__ and translate the text after the colon on each line, leaving everything else the same. You can see an example `here <https://github.com/lookit/ember-lookit-frameplayer/blob/develop/translations/nl.yaml>`__. There are three special cases:
 
     * If there's HTML formatting, leave it be (just edit the text). E.g. ``<strong>Private</strong>`` became
       ``<strong>Privé:</strong>`` in Dutch.
