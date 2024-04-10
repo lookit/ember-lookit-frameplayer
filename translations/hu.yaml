@@ -75,7 +75,7 @@ consent-template-2:
     intro-sentence: '{name} által vezetett kutatòk {institution} irányítják ezt a, "{experiment},"-et Lookit-on.'
     purpose-header: Cél
     procedures-header: Eljárás
-    duration-statement: Ez a tanulmány körülbelül {duration} ideig tart.
+    duration-statement: Ez a kísérlet teljesítési ideje körülbelül {duration}.
     participation-header: Részvétel
     participation-content: Ön és gyermeke szabadon dönthet arról, hogy részt kíván -e venni ebben a vizsgálatban. Ha Ön és gyermeke úgy dönt, hogy részt vesz, a foglalkozás során bármikor abbahagyhatja. Kérjük, szüneteltesse vagy állítsa le a foglalkozást, ha gyermeke nagyon nyűgös lesz, vagy nem akar részt venni! Ha ez egy többszöri részvételbõl tudja csak befejezni, akkor az is megfelelõ, ha nem fejezi be az összes munkamenetet.
     payment-header: Fizetés
@@ -103,7 +103,7 @@ consent-template-5:
     intro-sentence: A(z) {institution} intéyményben lévõ és a(z) {name} által vezetett kutatók végzik ezt a tanulmányt, a "{experiment}" -et a Lookit-on.
     purpose-header: Miért végezzük ezt a tanulmányt?
     procedures-header: Mi történik a vizsgálat során?
-    duration-statement: Ez a tanulmány körülbelül {duration} időt vesz majd igénybe.
+    duration-statement: Ez a kísérlet teljesítési ideje körülbelül {duration}.
     participation-header: A részvétel önkéntes
     participation-content: Ön {only_adult, select, true {} other {és gyermeke}} szabadon dönthet arról, hogy részt vesz-e ebben a tanulmányban. Ha úgy dönt, hogy részt vesz, akkor a foglakozás során bármikor abbahagyhatja. {only_adult, select, true {} other {Kérjük, szüneteltesse vagy állítsa le a munkamenetet, ha gyermeke nyűgös lesz, vagy nem akar a továbbiakban részt venni!}}
     risk-header: Mik a kckázatok?
