@@ -105,11 +105,11 @@ consent-template-5:
     procedures-header: Ikerketa egin bitartean
     duration-statement: Ikerketak {duration} inguru eskatzen du.
     participation-header: Parte hartzea ez da derrigorrezkoa
-    participation-content: Zu eta haurra askeak zarete ikerketan parte hartu nahi duzuen erabakitzeko. If you do choose to participate, it's okay to stop at any point during the session. {only_adult, select, true {} other {Please do pause or stop the session if your child becomes fussy or does not want to participate!}}
+    participation-content: Zu eta haurra askeak zarete ikerketan parte hartu nahi duzuen erabakitzeko. Parte hartzea erabakitzen baduzu, ez izan eragozpenik saioa edozein momentutan uzteko. {only_adult, select, true {} other {Haurra haserretzen hasten bada edo ez badu parte hartu nahi, pausatu edo utzi saioa mesedez.}}
     risk-header: Zer arrisku dago?
     benefits-header: Zer onura dago?
     data-collection-header: Datuak biltzea eta webcamaren bidez grabatzea
-    data-collection-1: Saioan, zu {only_adult, select, true {} other {and your child}} ordengailuko webcamaren eta mikrofonoaren bidez grabatuko zaituztegu.
+    data-collection-1: Saioan, zu {only_adult, select, true {} other {eta zure haurra}} ordengailuko webcamaren eta mikrofonoaren bidez grabatuko zaituztegu.
     data-collection-2: Webcamaren grabazioak eta galdetegietan emandako erantzunak Lookit plataformara bidaltzen diran era seguruan. Aurreko grabazioak Lookiten ikus ditzakezu edozein unetan.
     data-collection-3: Datuak modu seguruan gordetzen dira Lookiten serbidoreetan eta ikertzaileen ordenagailuetan, eta hemen deskribatzen den bezala baizik ez dira partekatuko. Hala ere, therebeti dago internet bidez bidaltzen diren datuak lapurtuak izateko edo datuak babesteko segurtasuna gainditua izateko arrisku txiki bat.
     video-privacy-header: Nork ikusi ahalko ditu zure webcamaren grabazioak?
