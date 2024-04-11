@@ -1,0 +1,247 @@
+No: Nem
+Yes: Igen
+Next: Következõ
+Previous: Elõzõ
+Replay: újrajátszás
+Pause: Szünet
+Resume: Folytat
+Continue: Folytat
+Cancel: Törlés
+Exit: Kilépés
+Submit: Küldés
+Really exit study: Biztos hogy kilép? <br> Klikkeljen a Kilépésre most és válasszon ki egy biztonsági szintet a vedòknak.
+establishing video connection: videò kapcsolat létrehozása
+please wait: kérem várjon
+uploading video: video feltöltése
+return to fullscreen: visszatérés teljes képernyõre
+please wait, setting up: kérem várjon, a beállítás folyamatban
+Reload webcam: Kamera újra töltés
+this-field-is-required: Kötelezõ mezõ
+
+exp-lookit-exit-survey:
+    confirm-birthdate: Kérem igazolja a gyereke születési dátumát
+    why-birthdate: Kérjük ismét ellenõrizze a regisztráciò során megadott adatokat es hogy jò gyereket választott ki a tanulmány elején.
+    q-databrary: Szeretné megosztani a készült kepi és egyéb adatot a Databrary biztonságos adatbázis jogosult felhasználòival?
+    databrary-info: Csak megfelelõ jogosultsággal rendelkezõ felhasználòknak van hozzáférésük az adatokhoz. Azoknak a kutatòknak akik az informáciòkhoz hozzáférésük van az informáciòkhoz, nem használhatják azokat egyén gazgasági célokra es az adatokat bizalmasan kell kezelniük. Az adatok megosztása mindenképpen elõsegítené az emberi fejlõdés és viselkedés tudományos kutatását es ismeretét. Ha egyéb kérdése lenne az adatbázissal kapcsolatban, kérjük látogasson el a <a href="https://nyu.databrary.org/" target="_blank" rel="noopener noreferrer">Databrary</a> linker vagy küldjön levelet a ethics@databrary.org címre.
+    acceptable-use-header: Videó és a kepi anyagok felhasználása
+    private-option-part-1: <strong>Bizalmas:</strong> A video cask jogosultsággal rendelkezõ kutatòk láthatják.
+    private-option-list-with-databrary: Lookit project munkatársai, {contact}-val foglalkozò tudòsok, a "{name}," atanulmány keretében és megfelelõ hozzájárulással rendelkezõ Databrary felhasználòk.
+    private-option-list-without-databrary: Lookit project munkatársai, {contact}-val foglalkozò tudòsok, a "{name}," atanulmány keretében
+    scientific-option: <strong>Tudomány és oktatás:</strong> A videò todományos és kutatási célbòl megeszthatò. Például bemutathatunk egy videoklipet egy tudományos konferencián, egyetemi òra keretén belül a kognitív fejlődésről tartott előadás során, vagy beilleszthetünk egy képet vagy videót egy tudományos cikkbe. Bizonyos körülmények között a videók vagy bizonyos képek elérhetők lehetnek az interneten, mint egy tudományos cikk kiegészítő anyagaként.
+    publicity-option: <strong>Nyílvános:</strong> Kérjük, válassza ezt a lehetőséget, ha szeretné, hogy gyermeke a Lookit webhelyén vagy a tanulmányról szóló újságcikkben jelenjen meg! Videóját megoszthatjuk nyilvánossági, valamint tudományos és oktatási célokból, de soha nem használják kereskedelmi célokra felhasználva. A megosztott videoklipek a nagyközönség számára online elérhetők lehetnek.
+    withdrawal-header: A video felvétel visszavonása
+    withdrawal-details: Minden videó segít nekünk, még akkor is, ha valami rosszul ment! Ha azonban törölnie kell a videót {include_example, select, true { (házastársa államtitkokat osztott meg a háttérben stb.) } other {}}, Jelezze itt, hogy teljesen visszavonja videóadatait ebből a tanulmányból. Csak az Ön által hozzájárult videókat őrizzük meg, és csak a Lookit projekt munkatársai és a {contact} -val a "{name}" tanulmányon dolgozó kutatók tekinthetik meg; A többi videó megtekintés nélkül törlődik.
+    feedback-label: Hogy ment? Van valami javaslata a tanulmány tökéletesítésére?
+    withdrawal-confirmation: Úgy döntött, hogy visszavonja a felvételt a vizsgálatból. A beleegyezésén kívüli felvételeket megtekintés nélkül töröljük. Biztos benne?
+    Withdraw: Visszavonás
+    facebook-share: Ossza meg a tanulmányt a Facebook oldalán!
+
+exp-lookit-video-assent:
+    header: A gyermek hozzájárulása a részvételhez
+    explanation-1: Nagyobb gyermekekkel végzett vizsgálatok esetén ellenőriznünk kell, hogy mind a szülő <em>és</em> mind a gyermek beleegyezik-e a részvételbe. <strong>Ez az oldal a gyerekeknek szól!</strong>
+    explanation-2: Kérjük a szülõket hogy segítsék a gyereküket az olvasásban és az eligazodásban, amennyiben szükséges.
+    step-1: Tudjon meg többet a tanulmányról
+    Download: Letöltés
+    step-2: Döntsön utána
+    chose-not-to-participate: Ön úgy döntött, hogy nem vesz részt. A "küldés" gomb megnyomásával a Lookit főoldalára jut vissza.
+    Image: Kép
+    Video: Videò
+
+exp-lookit-video-consent:
+    consent-step-1: Olvassa el ezt a hozzájárulási dokumentumot
+    download: Letöltés
+    click-to: 'kattintson a következőre:'
+    start-consent-recording: hozzájárulás rögzítésének megkezdése
+    Recording: Felvétel
+    read-statement-below: Olvassa el <em class="video-consent-outloud"> hangosan</em> az alábbi nyilatkozatot
+    signed-alternative: vagy jelbeszédben (ASL)
+    prompt: Én vagyok ennek a gyermeknek a szülője vagy törvényes gyámja, és mindketten beleegyezünk, hogy részt veszünk ebben a tanulmányban.
+    prompt-adult-only: Beleegyezem, hogy részt veszem ebben a tanulmányban.
+    additional-adult-question: Van ott egy másik felnőtt is? Ha igen, minden további felnőttnek hangosan fel kell olvasnia
+    additional-adult-prompt: Beleegyezem, hogy részt veszem ebben a tanulmányban.
+    stop-recording: felvétel leállítása
+    play-consent-video-button: Hozzájárulás lejátszása
+    review-video: hogy megbizonyosodjon arról, hogy a videó rögzítve lett. (Ha nem, megpróbálhatja újra!)
+    play-video-warning: Kérjük, játssza le a videót és bizonyosodjon meg ròla hogy hallhatò a hozzájáruló nyilatkozat!
+    consent-recording-warning: Kérjük a folytatáshoz rögzítsen egy hozzájárulò nyilatkozatot.
+    Not-recording-yet: Még nem rögzít
+    Error-starting-recorder: Hiba a kamera elindításában
+    Starting-recorder: A rögzítés elindítva
+    Not-recording: Nem rögzít
+    Stopping-and-uploading: Leállítás és feltöltés
+
+consent-template-2:
+    header: Hozzájárulás a tanulmányban valò részvételéhez
+    intro-sentence: '{name} által vezetett kutatòk {institution} irányítják ezt a, "{experiment},"-et Lookit-on.'
+    purpose-header: Cél
+    procedures-header: Eljárás
+    duration-statement: Ez a kísérlet teljesítési ideje körülbelül {duration}.
+    participation-header: Részvétel
+    participation-content: Ön és gyermeke szabadon dönthet arról, hogy részt kíván -e venni ebben a vizsgálatban. Ha Ön és gyermeke úgy dönt, hogy részt vesz, a foglalkozás során bármikor abbahagyhatja. Kérjük, szüneteltesse vagy állítsa le a foglalkozást, ha gyermeke nagyon nyűgös lesz, vagy nem akar részt venni! Ha ez egy többszöri részvételbõl tudja csak befejezni, akkor az is megfelelõ, ha nem fejezi be az összes munkamenetet.
+    payment-header: Fizetés
+    data-collection-header: Adatgyűjtés és videò felvétel
+    data-collection-1: Az ülésszak során Önt és gyermekét a számítógép webkamerája és mikrofonja rögzíti. A videofelvételeket és az Ön által megadott egyéb adatokat biztonságosan elküldjük a Lookit platformra, és határozatlan ideig tároljuk. A munkamenet végén a rendszer kéri, hogy válasszon adatvédelmi szintet a webkamera felvételeihez. Ezen a ponton lehetősége lesz visszavonni videoadataihoz valò hozzáférést. A korábbi felvételeit bármikor megtekintheti a Lookit-on.
+    data-collection-2: Az adatokat biztonságosan tárolják a Lookit szervereken  és a tanulmányban részt vevõ kutatòk. Azonban mindig fennáll annak a kockázata, hogy az interneten keresztül továbbított adatokat elfogják, vagy a tárolt adatok biztonsága veszélybe kerül.
+    data-collection-3: Felvételeket csak akkor teszünk közzé vagy osztunk meg, ha ezt az adatvédelmi szint kiválasztásakor Ön azt angedélyezi. Amennyiben nem kapunk hozzájárulási felvételt (a jobb oldalon elkészítendő videót), és nem tudjuk ellenőrizni, hogy beleegyezett-e a részvételbe, akkor az ülésszakròl készült többi videók nem lesznek megtekintve.
+    data-use-researchers-header: A tanulmányban részt vevõ kutatói által gyūjtött adatok felhasználása
+    data-use-researchers-content: A(z) {institution} intézetben a(z) {name} által vezetett kutatócsoport hozzáférhet az foglalkozás során gyűjtött videó- és egyéb adatokhoz. Hozzáférhetünk továbbá profiljához, demográfiai adataihoz és a részt vevő gyermek profiljához, beleértve az ezen információk jövőbeli változásaihoz is. Tanulmányozhatjuk gyermeke válaszait a csoportunk által végzett ezen vagy más tanulmányokra adott korábbi válaszaival, a testvérek erre vagy a csoportunk által végzett más tanulmányokra adott válaszaival, valamint a demográfiai felmérésekre adott adatokkal kapcsolatba is.
+    data-use-Lookit-header: Az adatok Lookit általi felhasználása
+    data-use-Lookit-content: Mivel ez a tanulmány a Lookit platformon fut, az MIT Lookit projektjén dolgozó kutatók hozzáférhetnek a munkamenet során gyűjtött adatokhoz, az Ön és gyermei profil informáciò és a demográfiai felmérésekre adott válaszaival egyetemben. Ezeket az adatokat a Lookit felhasználhatja a technikai problémák észlelésére és kijavítására, vagy olyan új, hasznos funkciók azonosítására, melyek a tanulmányban részt vevő kutatókat segíti az adatminőség értékelésében (például mennyire tudja a megfigyelő megmondani, hogy a gyerekek milyen irányba néznek); értékelje a terület sikerét a sokszínű népesség elérésében; és jellemezze a családi elkötelezettséget (például annak vizsgálata, hogy egy tanulmány mely szempontjai teszik vonzòbbá a szülőknek a visszalátogatást).
+    publication-header: Az eredmények közzététele
+    publication-contents: A kutatás eredményei megjelenhetnek tudományos konferenciákon vagy tudományos folyóiratokban. A nyers adatok (például a képernyő bal és jobb oldalán lévő idő) közzétehetők, amennyiben egy gyerek nem beazonosítható. Soha nem tesszük közzé a gyermekek születési dátumát vagy nevét vagy egy gyermek demográfiai adatait a videójával párosítva.
+    research-subject-rights-header: A kutatási alanyok jogai
+    gdpr-header: Általános adatvédelmi (GDPR) információk
+    gdpr-personal: Az Ön részvételének részeként bizonyos személyes adatokat gyűjtünk Önről, többek között
+    gdpr-sensitive: Ezenkívül különleges kategóriájú adatokat, személyes adatokat gyűjtünk
+    gdpr-2: Személyes adatait az Egyesült Államokba továbbítjuk. Ön tudomásul veszi, hogy az Egyesült Államok adatvédelmi és magánélet-védelmi törvényei nem feltétlenül nyújtanak Önnek ugyanolyan szintű védelmet, mint a származási országában.
+    contact-header: A kutató elérhetőségei
+    contact-statement-1: Ezt a tanulmányt {name} vezeti a(z) {institution} intézményben. Ha Önnek vagy gyermekének bármilyen kérdései vagy aggályai vannak a tanulmánnyal kapcsolatban, vagy abban a nagyon valószínűtlen esetben, ha kutatással kapcsolatos sérülés következik be, kérjük, vegye fel a kapcsolatot a {contact} címen.
+    contact-statement-2: Ha Önnek vagy gyermekének bármilyen kérdése vagy aggálya van a Lookit platformmal kapcsolatban, kérjük, vegye fel a kapcsolatot a Lookit munkatársaival a lookit@mit.edu címen vagy a 617 324 4859 telefonszámon.
+
+consent-template-5:
+    header: Hozzájárulás a kutatásban való részvételhez
+    intro-sentence: A(z) {institution} intéyményben lévõ és a(z) {name} által vezetett kutatók végzik ezt a tanulmányt, a "{experiment}" -et a Lookit-on.
+    purpose-header: Miért végezzük ezt a tanulmányt?
+    procedures-header: Mi történik a vizsgálat során?
+    duration-statement: Ez a kísérlet teljesítési ideje körülbelül {duration}.
+    participation-header: A részvétel önkéntes
+    participation-content: Ön {only_adult, select, true {} other {és gyermeke}} szabadon dönthet arról, hogy részt vesz-e ebben a tanulmányban. Ha úgy dönt, hogy részt vesz, akkor a foglakozás során bármikor abbahagyhatja. {only_adult, select, true {} other {Kérjük, szüneteltesse vagy állítsa le a munkamenetet, ha gyermeke nyűgös lesz, vagy nem akar a továbbiakban részt venni!}}
+    risk-header: Mik a kckázatok?
+    benefits-header: Mik az előnyök?
+    data-collection-header: Adatok gyűjtése és a rögzíytett videó
+    data-collection-1: A foglalkoza során Önt {only_adult, select, true {} other {és gyerekét}} a számítógép webkamerája és mikrofonja rögzíti.
+    data-collection-2: Ezeket a webkamerás felvételeket és egyéb rögzített adatokat, például az űrlapokon megadott válaszokat biztonságosan el lesznek küldve a Lookit platformra. Ezeket és korábbi felvételeit bármikor megtekintheti a Lookit-on.
+    data-collection-3: Az adatokat a Lookit szerverein és a kutatók által biztonságosan tárolják, és csak a jelen dokumentumban leírtak alapjân osztják meg azokat. Azonban mindig fennáll annak a kis kockázata, hogy az interneten keresztül továbbított adatokat elfogják, vagy a tárolt adatok biztonsága veszélybe kerül.
+    video-privacy-header: Kinek van jogosultsága a felvételeket megnézni?
+    video-privacy-consent: Először ellenőrizzük, hogy valóban beleegyezett-e a részvételbe, a beleegyezési felvétel megtekintésével. Ha nem tudjuk megerősíteni, hogy beleegyezett a részvételbe, senki sem fogja megtekinteni a foglalkozásról készült többi felvételeket.
+    video-privacy-overview: 'A munkamenet végén kiválaszthatja a webkamera felvételeinek adatvédelmi szintjét. A következő adatvédelmi szintek közül választhat:'
+    video-privacy-Private: Bizalmas
+    video-privacy-Scientific: Tudományos
+    video-privacy-Publicity: Nyílvános
+    video-privacy-private-description: A felvételeihez hozzáférő kutatók azokat nem osztják meg senki mással.
+    video-privacy-scientific-description: Az Ön felvételeihez hozzáféréssel rendelkező kutatók tudományos vagy oktatási célból megoszthatják azokat, például példaként mutathatják be egy elõadáson vagy egy tudományos konferencián.
+    video-privacy-publicity-description: A felvételeihez hozzáféréssel rendelkező kutatók nyilvánosságra hozatal céljából is megoszthatják azokat, például a kutatásról szóló hírszegmensben, vagy további résztvevők toborzása érdekében.
+    video-privacy-withdraw: Lehetősége lesz arra is, hogy visszavonja felvételeit. Ebben az esetben csak a hozzájárulással rendelkezõ felvételét őrizzük meg, az összes többi felvételeit töröljük.
+    video-privacy-withdraw-private-only: A foglalkozás végén lehetősége lesz felvételei felhasználhatóságának az engedélyétvisszavonni. Ebben az esetben csak a azokat a korábbi, Ön által hozzájárult felvételeit őrizzük meg, az összes többit töröljük.
+    databrary: Külön dönthet úgy, hogy hozzáférést biztosít felvételeihez és egyéb adataihoz a Databrary biztonságos adatkönyvtár jogosult felhasználói számára. Ez azt jelenti, hogy a tanulmányt végzőkön kívül más kutatók is hozzáférhetnek a felvételekhez, és felhasználhatják azokat a gyermek fejlődésével kapcsolatos egyéb kérdések megválaszolására. Az adatmegosztás nagyban elõsegítheti az emberi fejlődéssel és viselkedéssel kapcsolatos kutatásokat. A Databrary felhatalmazott kutatóinak bele kell egyezniük az adatai védelmébe és nem használják fel az azokat kereskedelmi célokra. Ha bármilyen kérdése van ezzel az adatmegosztási könyvtárral kapcsolatban, látogasson el a Databrary oldalra, vagy küldjön e-mailt a ethics@databrary.org címre.
+    data-use-researchers-header: Az adatok felhasználása
+    data-use-researchers-content-1: 'Amennyiben részt vesz (a(z) {institution} intézményben és {name} által vezetett) kísérletben, hozzáférhetõsége lesz: '
+    data-use-researchers-item-1: a foglalkozás során rögzített kepi és egyéb adatokhoz
+    data-use-researchers-item-2: profiljához és demográfiai adataihoz
+    data-use-researchers-item-3: a(z) {only_adult, select, true {} other {gyermek}} profilja(i) a(z) {only_adult, select, true {családtag} other {gyermek}} részt vevõk számára
+    data-use-researchers-content-2: Ez magában foglalja az ezen információk a jövőben végrehajtott módosításait is. Különböző típusú információkat gyűjthetünk össze, hogy többet megtudjunk a gyermek fejlődéséről. Például, ha {only_adult, select, true {részt vesz} other {részt vevõ}} a csoportunk több tanulmányában, akkor megvizsgálhatjuk, hogy {only_adult, select, true {Ön} other {õ}} válaszai hogyan viszonyulnak egymáshoz a különböző vizsgálatokban, vagy megvizsgálhatjuk {only_adult, select, true {hogyan kapcsolódnak a válaszai más családtagokhoz képest} other {hogy a testvérek általában hasonlóan reagálnak-e}}. Tanulmányozhatjuk továbbá a {only_adult, select, true {Ön} other {gyermekek}} válaszai és a családi demográfiai adatai közötti kapcsolatokat.
+    data-use-Lookit-header: Hogyan használja fel a Lookit az Ön adatait
+    data-use-Lookit-content: Az MIT Lookit központi csapata a fiókja adatain kívül hozzáférhet a folyamat során gyűjtött információkhoz is. Ezeket az adatokat a Lookit futtatásához és fejlesztéséhez használják, mint például technikai támogatás nyújtásához, az adatgyűjtés működésének ellenőrzéséhez, vagy annak felmérésére, hogy a Lookit eléri-e a családok minél szélesebb demográfiai csoportját. A Lookit határozatlan ideig tárolja az adatokat, kivéve, ha a vizsgálat végén Ön a hozzáférést visszavonja.
+    publication-header: Az eredmények közzététele
+    publication-content: A tanulmány eredményeit tudományos konferenciákon elöadhatják vagy tudományos folyóiratokban megjelenhet. Közzétehetünk olyan egyéni válaszokat, amelyek nalapján nem lehet {only_adult, select, true {Önt} other {gyermeket}} beazonosítani, mint például a megfigyelési időket vagy a gombnyomásai sorozatát. Soha nem teszünk közzé {only_adult, select, true {} other {gyermekek}} születési dátumát vagy nevét. Még ha úgy is dönt, hogy felvételeit megosztja, soha nem teszünk közzé olyan információkat, amelyek lehetővé tennék a felvételek összekapcsolását demográfiai adataival.
+    research-subject-rights-header: Az Ön résztvevõk jogai
+    gdpr-header: Általános adatvédelmi inormáciök (GDPR)
+    gdpr-personal: Az Ön részvéte során bizonyos személyes adatokat gyűjtünk Önről, többek között
+    gdpr-sensitive: Ezenkívül különleges kategóriájú adatokat, különösen érzékeny személyes információkat gyűjtünk
+    gdpr-2: Személyes adatait az Egyesült Államokba lesznek továbbítva. Előfordulhat, hogy az Egyesült Államok adatvédelmi törvényei nem nyújtanak Önnek ugyanolyan szintű védelmet, mint a származási országában.
+    contact-header: Elérhetõségünk
+    contact-statement-1: Ez a tanulmány a {institution} intézményben {name} vezetésével fut. Ha {only_adult, select, true {Önnek} other {Önnek és/vagy gyermekének}} bármilyen kérdése vagy aggálya merülne fel a tanulmánnyal kapcsolatban, {omit_injury, select, true {} other { vagy abban a nagyon valószínűtlen esetben, ha kutatással kapcsolatos sérülés következik be,}} kérjük lepjen kapcsolatba  {contact}-val.
+    contact-statement-2:  Amennyiben {only_adult, select, true {Önnek} other { Önnek és/vagy gyermekének }} hbármilyen kérdése vagy aggálya merülne fel a Lookit platformmal kapcsolatban, kérjük lépjen kapcsolatba a Lookit személyzetével a lookit@mit.edu címen.
+
+consent-garden:
+    header: "Hozzájárulás a kísérletben való részvételhez: {experiment} a GARDEN projekthez"
+    intro-sentence: '{name} által vezetett kutatók {institution} vezetik ezt a tanulmányt, {experiment}, a Lookit-on.'
+    overview-header: Szeretnénk meghívni Önt, hogy vegyen részt tanulmányunkban!
+    overview-content: 'Gyermeke egyik fő gondozójaként (törvényes gyámként, például szülőként) meghívást kap a {experiment} programban való részvételre, amely része a Children Helping Science GARDEN projektjének (Growing and Advancing Research in Development and EducatioN; további információkért klikkeljen az alábbi linkre: <a href="https://childrenhelpingscience.com/garden/about" target="_blank" rel="noopener noreferrer">Mi az a Project GARDEN?</a>), amelynek célja, hogy jobban megértse, hogyan nőnek és fejlődnek a gyermekek gondolkodásmódjuk, tanulásuk és a körülöttük lévő világ megértése! Jelenleg a beleegyező nyilatkozatot olvassa, amely tájékoztatást nyújt erről a vizsgálatról, és segít eldönteni, hogy szeretne-e részt venni. Miután elolvasta ezeket az információkat, dönthet úgy, hogy kitölti az űrlapot az oldalon található utasításokat követve. Előfordulhat, hogy később meghívást kap más Project GARDEN-vizsgálatokban való részvételre, de ez a beleegyező nyilatkozat csak {experiment} esetén használható. Arra biztatjuk az embereket, hogy tegyenek fel kérdéseket, ezért kérjük, bátran vegye fel velünk a kapcsolatot e-mailben a {contact} címen, amennyiben  nem biztos a beleegyezési űrlap vagy a vizsgálat bármely részében, vagy mielőtt eldöntené, hogy szeretne-e részt venni a {experiment} kísérletben.'
+    study-info-header: Mi ez a tanulmány és ki vezeti?
+    study-info-content: 'Ez a {experiment} tanulmány {lab} laborban, a {institution} aintézményben folyik a Project GARDEN részeként (további információk:  <a href="https://childrenhelpingscience.com/garden/about" target="_blank" rel="noopener noreferrer" > Mi az a Project GARDEN?</a> for more details). Ebben a tanulmányban, {description}.'
+    purpose-header: Ki vezeti ezt a tanulmányt?
+    eligibility-header: Ki vehet részt?
+    procedures-header: Mi történik a kísérletben és mennyi ideig tart?
+    duration-statement: Ez a kísérlet teljesítési ideje körülbelül {duration}.
+    payment-header: Mit kapok a vizsgálatban való részvételért?
+    payment-content: A vizsgálatban való részvétel után a lehető leghamarabb (7 munkanapon belül) kap egy 5 dolláros Amazon.com ajándékkártyát (<u>amely csak az Egyesült Államok weboldalán használható fel</u>).
+    benefits-header: Miért vegyek részt?
+    risk-header: Miért ne vegyek részt?
+    risk-content-1: '{experiment} teljesítési ideje körülbelül csupán {duration}, de gyermeke néhány kérdést érdektelennek vagy unalmasnak találhat. '
+    risk-content-2: 'Gyermeke {risk_content_discontinue_options}bármikor választhatja, hogy abbahagyja.'
+    risk-content-3: Értesíteni fogjuk, ha tudomásunkra jut bármilyen más ok, amely miatt esetleg a jövőben nem szeretne részt venni.
+    data-collection-header: Milyen információkat fog gyűjteni ez a kísérlet?
+    data-collection-content: ' {omit_video, select, true {kettõ} other {három}} típusú informáciökat gyūjtünk ez a kísérlet során: <br><br><ol><li><strong>Személyes adatok</strong>, mint a neve, email címe és gyerekének neve és születési dátuma, amelyek által Ön beazonosítható. Ez magában foglalja a Lookit-fiók adatait és a beleegyezési videóját is (ahol rögzíti magát, amint kijelenti, hogy beleegyezik a vizsgálatban való részvételbe), és soha nem osztjuk meg az {institution} vagy a Lookit szolgáltatáson kívül. </li><li><strong>Információ a tanulmányròl</strong>, például az Ön vagy gyermeke által a kísérlett során feltett kérdésekre adott választási lehetőségek vagy válaszok, a vizsgálat során végzett tevékenységek írásbeli leírása, vagy a kísérletben való részvétel részeként megadott egyéb információk. Ezeket az információkat " alkalmatlanná teszik a személyek beazonosításra", és megosztják a GARDEN projekt más kutatóival és esetleg más, a GARDEN projekten kívüli gyermekfejlesztési kutatókkal. Az alábbiakban többet is megtudhat az azonosításra alkalmatlanná tételről és a vizsgálati információk megosztásáról.</li>{omit_video, select, true {} other {<li><strong>Videó felvételek</strong>, ahogy Ön és/vagy gyermeke kapcsolatba lép a kísérlet bármely részével. A videofelvétel egy speciális információtípus (valakit biztosan azonosíthat az arcáról!), ezért több választási lehetőséget kínálunk Önnek, hogy hogyan szeretné megosztani vagy nem visszatartani ezeket az információkat. További információkért és választási lehetőségekért lásd a <strong>&ldquo;"Ki láthatja a videofelvételeinket?" &rdquo;</strong>  részt.</li>}}</ol>'
+    data-use-researchers-header: Mire fogja felhasználni ezeket az információkat?
+    data-use-researchers-content: 'Soha nem használjuk fel az Ön adatait semmilyen más célra, mint nonprofit kutatásra. .<br><br>E tanulmány eredményeit tudományos találkozókon bemutahatásra kerülhetnek vagy tudományos folyóiratokban lesznek pubblikálva. Közzétehetjük az azonosításra alkalmatlanná tett (2) vizsgálati információkra adott egyéni válaszokat (lásd: <strong>"Hogyan győződhet meg arról, hogy a magánéletem védve van?" </strong>), például azt, hogy gyermeke mennyi ideig nézte a képet, vagy melyik gombot nyomta meg, de ezt csak hasonló módon osztjuk meg, mint "<strong> egy ötéves gyermek a sok közül ezt a lehetőséget választotta a vizsgálat során" vagy "az ötödik számú résztvevő ezt a lehetőséget választotta a vizsgálat során". Soha nem osztunk meg és nem teszünk közzé személyes adatokat, például e-mail-címét vagy gyermekei születési dátumát vagy nevét.'
+    data-access-header: Ki férhet hozzá ezekhez az adatokhoz?
+    data-access-content: 'A miénkhez hasonló tanulmányok online futtatásához arra van szükség, hogy van szükség, hogy két egyetemen lévõ kis létszámú speciális embereknek hozzáférhetõ legyen mindhârom tí[pusù információ. A(z) {institution}, kutatócsoportunk és az {institution} Institutional Review Board (Intézményi Felülvizsgálati Testület ,IRB) – amely egy olyan csoport, amely gondoskodik arról, hogy jogai védve legyenek a kutatásban való részvétel során – hozzáféréssel rendelkezik. Az MIT-n a Lookitot futtató adminisztratív személyzet szintén rendelkezik hozzáféréssel. Ha többet szeretne megtudni a Lookitról vagy az {institution} IRB-ről, kérjük, olvassa el az alábbi konkrét kérdéseket. <br><br>Csak az {institution} Intézményi Felülvizsgálati Testülete (IRB) által jóváhagyott személyek akik részt vesznek a tanulmány kutatócsoportjában vagy a Lookit munkatársaiban férhetnek hozzá az Ön személyes adataihoz. Személyes adatait csak arra használjuk fel, hogy megbizonyosodjunk arról, hogy Ön beleegyezett a vizsgálatba, és hogy kapcsolatba lépjünk Önnel a vizsgálattal vagy a jövőbeli Project GARDEN tanulmányokkal kapcsolatban, beleértve az ajándékkártyák küldését is.<br><br> Vizsgálati adatait megosztjuk a Project GARDEN más kutatóival és esetleg a Project GARDEN-en kívüli más gyermekfejlesztési kutatókkal, de több lépést teszünk az Ön azonosításra alkalmatlanná tétele és személy azonosságának védelmének érdekében azáltal, hogy ezt megelőzően eltávolítjuk a személyes adatokat. A videofelvételeket a vizsgálat végén az Ön által kiválasztott lehetőségnek megfelelően osztjuk meg vagy nem osztjuk meg.'
+    data-management-header: '"Hogyan biztosítják, hogy a szem;lyes informáciòimat "személyazonosításra alkalmatlanná tegyék"?'
+    data-management-content: ' <u>Vizsgálati adatait</u>  személyazonosításra alkalmatlanná tesszük azáltal, hogy Önnek és gyermekének adunk egy "Családi azonosítót", és eltávolítunk minden olyan személyes adatot, amely felhasználható az Ön azonosítására. Két példát tudunk mondani arra, hogyan működik ez az "azonosításra alkalmatlanná tételi folyamat":<br><br><u> Példa #1 </u>:  Kutatási táblázatainkban valami olyasmit fogunk használni, mint az "F32" vagy a "Family 32" a család / gyermek azonosítására a "Smith család" vagy a "Jane Smith" helyett. Ezeket az anonimizált <u>Vizsgálati adatait információkat</u>   más családok anonimizált vizsgálati információival együtt táblázatokba/adatfájlokba kerülnek. <br><br><u> Példa #2 </u>:  : Ha gyermeke 5 éves, akkor az adatait általában az adat táblázatokban szereplő sok más 5 éves gyermek egyikeként írják le, és az eredményekről valami ilyesmit fogunk jelenteni: "ebben a tanulmányban az ötéves gyerekek nagyobb valószínűséggel választották az A opciót gyakrabban, mint más lehetőségeket" vagy "200 ötéves család volt az Egyesült Államok délkeleti részén". Ha további kérdései vannak azzal kapcsolatban, hogy ki férhet hozzá az adataihoz, vagy hogyan fogják felhasználni azokat, kérjük, vegye fel velünk a kapcsolatot a hozzájárulási űrlap végén található információk segítségével. Örömmel osztanánk meg példákat a korábban közzétett tanulmányokból is, hogy láthassák, hogyan használjuk fel ezeket az információkat anélkül, hogy azonosítanánk a részt vevő családokat (kivéve azokat az eseteket, amikor úgy döntöttek, hogy megosztják videofelvételeiket a nyilvánossággal).'
+    data-sharing-header: Megosztja valaha az adataimat bárki mással?
+    data-sharing-content: 'Miután a <u>vizsgálati információkat</u> anonimizálták (lásd: <strong>"Hogyan győződik meg arról, hogy a magánéletem védve van?" </strong>), azokat megosztják más egyetemek GARDEN projektjének más kutatóival, és felhasználják a kutatási eredmények írására, amelyeket megosztanak a nyilvánossággal. Az azonosításra alkalmatlanná tett vizsgálati információkat végül megosztják a nyilvánossággal is, így más kutatók ellenőrizhetik ezeket az eredményeket, és megnézhetik, hogy vannak-e egyéb fontos dolgok, amelyeket megtudhatunk az adatokbòl. Ez lehetővé teszi a pedagógusok, családok és más kutatók számára, hogy az eredményeket {data_sharing_learn} használják. <br><br>Teljes mértékben ellenőrizheti, hogy mely Project GARDEN tanulmányokban vesz részt vagy nem kíván részt venni. Ön csak ezzel a beleegyező nyilatkozattal egyezik bele a(z) {experiment} programban való részvételbe.'
+    research-rights-irb-header: Mi az a {institution} IRB és mivel foglalkozik?
+    research-rights-irb-content: "Az Intézményi Felülvizsgálati Testület (Institutional Review Board, IRB) az {institution} egyik osztálya, amely biztosítja a kutatásban részt vevő emberek jogainak védelmét. {include_irb_contact_statement, select, true {Az IRB képviselője felveheti Önnel a kapcsolatot, hogy információkat gyűjtsön a kutatásban való részvétellel kapcsolatos tapasztalatairól. Csakúgy, mint maga a kutatás, eldöntheti, hogy válaszol-e vagy sem válaszol az IRB képviselője által feltett kérdésekre.} other {}} <br><br>Ha Önnek vagy gyermekének kérdései vagy aggályai vannak gyermeke kutatási alanyként őt megillető jogokkal kapcsolatban, vagy ha információt szeretne kapni, észrevételeket szeretne tenni, vagy kutatással kapcsolatos problémát szeretne bejelenteni, vegye fel a kapcsolatot a következő címen: {irb_contact}. {irb_extra}"
+    lookit-info-header: Mi az a Lookit és mire használják fel az informáciòimat?
+    lookit-info-content: Lookit egy weboldal, amelyet az MIT kutatócsoportja üzemeltet, és amelyet jelenleg használ, hogy részt vegyen ebben a tanulmányban. Amikor feliratkozik a Lookit-ra, információkat ad meg nekik MAgáròl és családjáról, hogy megtalálják azokat a tanulmányokat, amelyekben részt vehet. Mivel a Lookit csak azért létezik, hogy segítse a weboldalon végzett kutatást, nem használják fel az Ön adatait semmire, kivéve a webhely futtatását, és csak akkor osztják meg adatait a kutatókkal, ha beleegyezik abba, hogy részt vesz egy tanulmányban. A Lookit adminisztratív csapata hozzáférhet mindhárom típusú információhoz (videofelvételekhez, személyes adatokhoz és tanulmányi információkhoz), így ellenőrizhetik és megbizonyosodhatnak arról, hogy a Lookit jól működik-e minden család és kutató számára, és javíthatja-e a Lookit működését. A Lookit mindaddig tárolja az információkat a fiókjában, amíg megtartja a Lookit-fiókot, de bármikor lehetősége van visszavonni adatait.
+    voluntary-participation-header: Mi történik, ha úgy döntök, hogy nem veszek részt, vagy meggondolom magam a részvételemmel kapcsolatban?
+    voluntary-participation-content: "Ön és gyermeke bármikor dönthet úgy, hogy nem vesz részt ebben a vizsgálatban. Bármikor meggondolhatja magát. Ha úgy dönt, hogy nem vesz részt a továbbiakban, vagy később meggondolja magát a részvételéről, nincsen Önre nézve hátranya, és nem veszíti el a kutatás juttatásait. <br><br>Ha úgy dönt, hogy részt vesz, akkor a munkamenet során bármikor abbahagyhatja. Kérjük, nyugodtan pihenjen, tartson egy gyors szünetet, vagy állítsa le a foglalkozást, ha gyermeke kényelmetlenül érzi magát, unatkozik, vagy úgy dönt, hogy már nem kíván a továbbiakban részt venni!"
+    video-sharing-header: Ki láthatja a videò felvételt?
+    video-sharing-consent: A vizsgálat kezdetén megkérjük, hogy webkamerája segítségével rögzítse a vizsgálatban való részvételbe való beleegyezését. Ezt nevezzük az Ön beleegyezési felvételének, és felülvizsgáljuk, hogy megerősítsük, beleegyezett a vizsgálatban való részvételbe és jogosult-e. Soha nem osztjuk meg és nem használjuk fel semmilyen más célra.
+    video-sharing-study-all-1: ' A vizsgálat részeként felkérik, hogy webkamerájával rögzítse Önt és gyermekét, miközben végigmegy a vizsgálaton. A tanulmány végén adunk néhány választási lehetőséget arra vonatkozóan, hogy megoszthatjuk-e ezeket a felvételeket, és ha igen, mikor. Ezek a lehetőségek: <br><br><ul><li><strong>Privát </strong>: "Videóim privátként tartása": A videofelvételeket csak ehhez a tanulmányhoz használjuk fel, és nem osztjuk meg senkivel (még a Project GARDEN más kutatóival sem).</li><li><strong> Tudományos és oktatási</strong>: "A videofelvételeimet csak tudományos célokra oszthatja meg". A videofelvételek megoszthatók tudományos vagy oktatási célokra, például egy példa bemutatására egy egyetemi órán, egy tudományos konferencián más kutatóknak való bemutatásra, vagy más Project GARDEN kutatókkal való megosztásra. </li><li><strong>Nyilvános</strong> : "Megoszthatja videofelvételeimet a nyilvánossággal". Bár soha nem említjük meg az Ön nevét vagy más személyes adatait, videofelvételeit hozzáadhatjuk nyilvános kutatási adatbázisokhoz, vagy megoszthatjuk a nyilvánossággal, például a kutatásról szóló hírszegmensben, vagy további résztvevők toborzása érdekében.</li></ul>"'
+    video-sharing-study-all-databrary: 'Ha a "Tudományos és oktatási" vagy a "nyilvános" megosztást választja, akkor azt is választhatja, hogy videói hozzáadódjanak a "Databrary" -hez, amely a New York-i Egyetem nonprofit videoadatbázisa, amelyhez csak hozzánk hasonló felhatalmazott kutatók férhetnek hozzá, és csak nonprofit tudományos és oktatási célokra használhatók. A Databrary-ról itt olvashat bővebben: https://databrary.org/about.html.<br><br>'
+    video-sharing-study-all-2: 'Dönthet úgy is, hogy a videofelvételeket teljesen eltávolítja a vizsgálatból a Lookitban. Ebben az esetben csak a hozzájárulási felvételét őrizzük meg, az összes többi videofelvételt töröljük.'
+    video-sharing-study-private: A felvételeihez hozzáférő kutatók nem osztják meg azokat senki mással. A folyamat végén lehetősége lesz visszavonni felvételei engedélyeztetését. Ebben az esetben csak a hozzájárulási felvételét őrizzük meg, az összes többi felvételt töröljük.
+    databrary-header: Databrary engedélyezési lehetőség megosztáshoz
+    databrary-content: 'Külön dönthet úgy, hogy hozzáférést biztosít felvételeihez és egyéb adataihoz a Databrary biztonságos adatkönyvtár jogosult felhasználói számára. Ez azt jelenti, hogy a tanulmányt végzőkön kívül más kutatók is hozzáférhetnek a felvételekhez, és felhasználhatják azokat a gyermek fejlődésével kapcsolatos egyéb kérdések megválaszolására. Az adatmegosztás gyorsabb előrehaladáshoz vezethet az emberi fejlődéssel és viselkedéssel kapcsolatos kutatásokban. A Databrary felhatalmazott kutatóinak bele kell egyezniük abba, hogy fenntartják a titoktartást, és nem használják fel az adatokat kereskedelmi célokra. Ha bármilyen kérdése van ezzel az adatmegosztási tárral kapcsolatban, látogasson el ide: <a href="https://nyu.databrary.org/" target="_blank" rel="noopener noreferrer">Databrary</a> or email ethics@databrary.org.'
+    contact-header: Hogyan lehet velünk kapcsolatba lépni
+    contact-content: 'Ezt a tanulmányt {name} vezeti a(z) {institution} intézményben. Ha Önnek vagy gyermekének bármilyen kérdése vagy aggálya van a vizsgálattal kapcsolatban, vagy abban a nagyon valószínűtlen esetben, ha kutatással kapcsolatos sérülés következik be, kérjük, vegye fel a kapcsolatot a következõ címen: {contact}. <br><br>Ha Önnek vagy gyermekének bármilyen kérdése vagy aggálya van a Lookit platformmal kapcsolatban, kérjük, vegye fel a kapcsolatot a Lookit munkatársaival (lookit@mit.edu).'
+
+exp-lookit-observation:
+    Hide: Takarás
+    Show: Mutatás
+    webcam-feed-not-displayed: Webkamera <br>nem jelenik meg
+    Recording: Felvétel
+    not-recording-yet: Not recording yet
+    Record: Felvesz
+    recording-required-warning: Felvétel szükséges a folytatáshoz
+    stopping-and-uploading: Megállítás és feltöltés
+    Paused: Szünet
+
+exp-video-config:
+    title: Webkamera beállítások
+    not-recording-note: Ennél a résznél nincs video felvétel
+    Microphone: Mikrofon
+    Camera: Kamera
+    Note: Jegyzet
+    support-message: A Lookit jelenleg csak a Firefox és a Chrome legújabb verzióiban támogatott. Még nem működik mobileszközökön, például telefonokon vagy táblagépeken!
+    no-connection: Nem sikerült csatlakozni a webkamerához. Kérjük, győződjön meg róla, hogy van csatlakoztatva webkamera és
+    click-here-to-detect: klikkeljen ide
+    see-troubleshooting: Ha problémába ütközöl, olvasd el az alábbi hibaelhárítási utasításokat!
+    step-1: Győződjön meg róla, hogy a bal oldalon látja magát! Előfordulhat, hogy az "Engedélyezés" gombra kell kattintania, hogy hozzáférhessünk webkamerájához és mikrofonjához. Firefoxban jelölje be a "Jegyezze meg ezt a döntést" jelölőnégyzetet is!
+    looks-good: Minden rendben!
+    no-webcam-detected: Nincs webkamera
+    step-2-click-directions: 'Győződjön meg arról, hogy a webkamera beállításai el lettek mentve: kattintson'
+    reload-button-label: ide
+    step-2-what-should-happen: A webkamerának újra meg kell jelennie ANÉLKÜL, hogy újra engedélyeznie kellene a hozzáférést. (Ha lát egy párbeszédablakot, kattintson a "Emlékezzen erre a döntésre" vagy a "Mindig engedélyezze" gombra, és próbálja újra!)
+    step-3: Győződjön meg róla, hogy halljuk Önt! Ez a mező akkor lesz teli, ha elég hangos hangot hallunk
+    sounds-good: Jòl hallhatò!
+    try-clapping: Pròbáljon tapsolni vagy köszönjön.
+    step-2-warning: Kérjük, először nyomja meg a "webkamera újrabetöltése" gombot, hogy megbizonyosodjon arról, hogy újra megjelenik-e anélkül, hogy rákattintana az engedélyezésre.
+    step-3-warning: Először ellenőrizze, hogy a rögzített hang elég hangos-e. Csapjon egy kis zajt!
+    camera-access-warning: Úgy tűnik, nincs hozzáférésünk kamerájához. Ha számítógépet használ (nem telefont vagy táblagépet), és Chrome-ot vagy Firefoxot használ, akkor tekintse meg az alábbi hibaelhárítási információkat.
+    setup-tips-header: Telepítési és hibaelhárítási tippek
+    supported-setup: Ellenőrizze eszközét és böngészőjét
+    mobile-devices: A Telefont vagy táblagépet használ? A Lookit még csak számítógépeken működik - reméljük, hogy hamarosan támogatni tudjuk a mobil eszközöket is! Kérjük, látogasson el újra számítógépről.
+    browser-support: Más böngészőt hasznàl, mint Chrome vagy Firefox? (Mint pl. Internet Explorer vagy Safari?) Ha igen, kérjük hasznàljon Firefox-öt vagy Google Chrome-öt, jelenleg a Lookit csak ezeket a böngészőket támogatja.
+    chrome-instructions-header: Chrome kamera beállítások
+    chrome-directions-prompt: Amikor először tölti be ezt az oldalt, az alábbihoz hasonló üzenetnek kell megjelennie. Kattintson az "Engedélyezés" gombra, hogy a Lookit hozzáférjen a webkamerához és a mikrofonhoz.
+    chrome-directions-set-perms: Ha nem látta ezt az értesítést, vagy ha a "Letiltás" gombra kattintott, módosíthatja a beállításokat az URL melletti zöld lakat ikonra kattintva. Állítsa a Kamera és a Mikrofon (és a Hang, ha látható) beállítást "Engedélyezés" értékre, majd frissítse ezt az oldalt.
+    chrome-select-mic: '<em>Problémái vannak a hangellenőrzéssel?</em> Lehet, hogy a Chrome rossz beviteli eszközt használ és nem engedi, hogy kiválassza, melyik mikrofont választja, amikor az "Engedélyezés" gombra kattint. Kiválaszthatja a megfelelő mikrofont  az alábbi címen: chrome://settings/content/microphone (másolja és illessze be URL-ként). Ezután frissítse ezt az oldalt, és próbálkozzon újra.'
+    chrome-select-camera: <em> Nem a megfelelő kameranézet jelenik meg </em> - inkább a beépített laptop kameráját használná az USB webkamera helyett? Kiválaszthatja a megfelelő kamerát az alábbi címen chrome://settings/content/camera (másolja és illessze be URL-ként). Ezután frissítse ezt az oldalt, és próbálkozzon újra.
+    chrome-further-help: Megnézheti a <a href="https://support.google.com/chrome/answer/2693767?hl=en" target="_blank" rel="noopener noreferrer"> Chrome  ùtbaigazítását is</a>.
+    firefox-instructions-header: Kamera beállítási útmutató Firefoxhoz
+    firefox-directions-prompt: Az oldal első betöltésekor az alábbihoz hasonló üzenetnek kell megjelennie. Válassza ki a használni kívánt kamerát és mikrofont, jelölje be a "Emlékezzen erre a döntésre" lehetőséget, majd kattintson az "Engedélyezés" gombra.
+    firefox-directions-set-perms: Ha nem látta ezt az üzenetet, vagy ha először a "Ne engedélyezze" gombra kattintott, módosíthatja a beállításokat az URL melletti áthúzott kamera és/vagy mikrofon gombra kattintva. Tegyen egy X-et minden kamera  beállítások melletti opciökhoz, majd frissítse az oldalt.
+    additional-troubleshooting-header: Semmi se mūködik, mit lehet tenni?
+    additional-troubleshooting-intro: Először is, Ön egy nagyon elkötelezett civil tudós, és hálásak vagyunk a segítségéért! Sajnáljuk, hogy problémáadödtak.
+    camera-check: Győződjön meg arról, hogy meg használni tudja a webkameráját a Lookiton kívül. (Például Mac gépen próbálja ki a Photobooth alkalmazást.)
+    try-another-browser: A legegyszerűbb megoldás egy másik webböngésző kipróbálása, ha van telepítve ilyen. Például, ha Firefoxot használ, váltson Chrome-ra, vagy fordítva. Frissítse a böngészőt is, ha nem a legújabb verziót használja. Ellenőrizheti a menüsor "Chrome" -> "About Chrome" vagy "Firefox" -> "About Firefox" menüpontjában. (Ez egy jó ötlet, hogy megbizonyosodjon arról, hogy egyébként is beszerezte-e a biztonsági frissítéseket.)
+    chrome-incognito: Chrome-ot használ? Győződjön meg arról, hogy nem inkognitó ablakot használ – a vizsgálat során nem fogja tudni menteni és használni a beállításokat.
+    additional-troubleshooting-contact: Ha elakad, az a mi hibánk. Kérjük, tudassa velünk, hogy javíthassuk az oldalt! Írjon nekünk e-mailt a lookit-tech@mit.edu címre a történések rövid leírásával. Kérjük, adja meg a használt webböngészőt (Firefox, Chrome, IE, Safari stb.), a kipróbált lépéseket és ezt a munkamenet-azonosítót
+
+exp-video-config-quality:
+    checkbox-warning: Kérjük jelölje be a "{completedItemText}" mezõt minden utasítás alatt a folytatáshoz.
+    recording-warning: Kérjük, próbálja meg rögzíteni és megnézni a videót, mielőtt folytatná.
+

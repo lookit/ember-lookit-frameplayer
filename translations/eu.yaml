@@ -1,0 +1,246 @@
+No: Ez
+Yes: Bai
+Next: Hurrengoa
+Previous: Aurrekoa
+Replay: Berriz
+Pause: Gelditu
+Resume: Aurrera
+Continue: Jarraitu
+Cancel: Kantzelatu
+Exit: Atera
+Submit: Bidali
+Really exit study: Benetan ikerketa utzi? <br> Atera klikatu ikerketa gelditzeko eta zure bideoendako pribatutasun maila bat hautatu.
+establishing video connection: bideo konexioa ezartzen
+please wait: itxaron mesedez
+uploading video: bideoa igotzen
+return to fullscreen: pantaila osora itzuli
+please wait, setting up: itxaron mesedez, abian paratzen
+Reload webcam: webcama berrabiarazi
+this-field-is-required: Eremu hau derrigorrezkoa da.
+
+exp-lookit-exit-survey:
+    confirm-birthdate: Mesedez, haurraren jaiotze eguna baieztatu
+    why-birthdate: Berriz galdetzen dugu izena ematean idatzitako hutsak zuzendu edo hasieran nahi gabe beste haur bat aukeratu ez dela egiaztatzeko.
+    q-databrary: Saio honetako bideoa eta beste datu batzuk partekatuko zenituzke baimena duten Databrary datu liburutegi seguruko erabiltzaileekin?
+    databrary-info: Baimena duten ikertzaileak baizik ez dute liburutegiko sarbidea izango. Sarbidea duten ikertzaileek konfidentzialtasuna gordeko dutela eta informazioa merkataritzarako erabiliko ez dutela agindu behar dute. Datuak partekatzeak giza garapenaren eta jarreraren ikerketak aurrera azkarrago egin dezan lagunduko du. Datuak partekatzeko liburutegiaren inguruan galdera izanez gero, mesedez joan hona <a href="https://nyu.databrary.org/" target="_blank" rel="noopener noreferrer">Databrary</a> edo bidali email bat hona ethics@databrary.org.
+    acceptable-use-header: Bideoen eta irudien erabilera
+    private-option-part-1: <strong>Pribatua:</strong> Bideoa baimena duten zientzialariek baizik ez dute ikusiko
+    private-option-list-with-databrary: Lookit proiektuko langileek, {contact}rekin batera "{name}" ikerketan lanean ari diren ikertzaileek, eta baimena duten Databraryko erabiltzaileek.
+    private-option-list-without-databrary: Lookit proiektuko langileek eta {contact}rekin batera "{name}" ikerketan lanean ari diren ikertzaileek.
+    scientific-option: <strong>Zientzia eta irakaskuntzarako:</strong> Zientzia helburu zientifikoetarako edo irakaskuntzarako erabil daiteke. Adibidez, bideo zati bat konferentzia zientifiko bateko hitzaldi batean edo garapen kognitiboaren inguruko unibertsitateko eskola batean erabil dezakegu, edo argitalpen zientifiko batean bideo edo irudi bat gehi genezake. Batzuetan, bideoa edo irudiak sarean eskuragarri egon litezke, esate baterako argitalpen zientifiko baten material gehigarri modura.
+    publicity-option: <strong>Publikoa:</strong> Mesedez, aukera hau hautatu zure haurra Lookiteko webgunean edo ikerketa honen inguruko berrietan ikusi nahiko bazenu! Zure bideoa iragarkietarako erabili liteke, baita irakaskuntza eta helburu zientifikoetarako ere; ez da sekula merkataritza helburuetarako erabiliko. Bideoak sarean egon litezke jendeak ikus ditzan.
+    withdrawal-header: Bideoak ezabatzea
+    withdrawal-details: Bideo guztiek laguntzen gaituzte, baita zerbaitek huts egiten duenean ere! Hala ere, bideo bat ezabatzea nahi baduzu{include_example, select, true { (bikotekidea estatu mailako sekretuen inguruan hizketa ari zen atzekaldean, etab.)} other {}}, sakatu hemen ikerketa honetako saio honetako bideo guztiak ezabatzeko. Zuk onartzen dituzun bideoak baizik ez dira gordeko, Lookit proiektuko langileek eta {contact}rekin batera "{name}" ikerketan ari diren ikertzaileek ikusteko; beste bideoak inork ikusi gabe ezabatuko dira.
+    feedback-label: Zer moduz joan da? Ikerketa hobetzeko iradokizunik duzu?
+    withdrawal-confirmation: Ikerketako bideoak ezabatzeko eskatu duzu. Zure baimena ez duten bideo guztiak inork ikusi gabe ezabatuko dira. Ziur zaude?
+    Withdraw: Ezabatu
+    facebook-share: Ikerketa Facebooken partekatu!
+
+exp-lookit-video-assent:
+    header: Haurrek buruarekin baietz egin behar du parte hartzeko
+    explanation-1: Haur zaharragoak dituzten ikerketan, gurasoak <em>eta</em> haurrak parte hartzea onartzen dutela egiaztatu behar dugu. <strong>Orrialde hau haurrarendako da!</strong>
+    explanation-2: Gurasoak, behar izanez gero, haurrari irakurtzen eta orrialdetik mugitzen lagundu ahal diozue.
+    step-1: Ikerketa ezagutu
+    Download: Jaitsi
+    step-2: Gero erabaki
+    chose-not-to-participate:  Parte ez hartzea hautatu duzu. 'Bidali' sakatzeak Lookiteko webgune nagusira eramango zaitu.
+    Image: Irudia
+    Video: Bideoa
+
+exp-lookit-video-consent:
+    consent-step-1: Baimenaren inguruko fitxategi hau irakurri
+    download: Jaitsi
+    click-to: Honetarako klikatu
+    start-consent-recording: baimena grabatzen hasi
+    Recording: Grabatzen
+    read-statement-below: Irakurri beheko esaldia <em class="video-consent-outloud"> ozenki </em>
+    signed-alternative: edo ure zeinu hizkuntzan
+    prompt: Baimen dokumentua irakurri eta ulertu dut. Haur honen gurasoa edo tutore legala naiz eta biok onartzen dugu ikerketa parte hartzea.
+    prompt-adult-only: Baimen dokumentua irakrrui eta ulertu dut. Ikerketan parte hartzea onartzen dut.
+    additional-adult-question: Beste heldurik dago gelan? Hala bada, heldu bakoitzak irakurri eta irakurri beharko luke baimena ozen
+    additional-adult-prompt: Baimen dokumentua irakurri eta ulertu dut. Nik ere ikerketan parte hartzea onartzen dut.
+    stop-recording: grabatzeari utzi
+    play-consent-video-button: Baimen bideoa abiarazi
+    review-video: bideoa grabatu dela ziurtatzeko. (Ez bada grabatu, berriz saia zaitezke!)
+    play-video-warning: Mesedez, zure bideoa abiarazi baimen adierazpena entzuten dela baieztatzeko!
+    consent-recording-warning: Mesedez, baimena grabatu aurrera egiteko.
+    Not-recording-yet: Oraindik ez da grabatzen ari
+    Error-starting-recorder: Akatsa grabagailua abian paratzean
+    Starting-recorder: Grabagailua abian paratzen
+    Not-recording: Ez da grabatzen ari
+    Stopping-and-uploading: Gelditzen eta igotzen
+
+consent-template-2:
+    header: Ikerketan parte hartzeko onarpena
+    intro-sentence: '{institution}-(e)ko ikertzaileak, {name} buru dutela, "{experiment}" ikerketa Lookiten egiten ari dira.'
+    purpose-header: Helburua
+    procedures-header: Prozedurak
+    duration-statement: Ikerketak {duration} inguru eskatzen du.
+    participation-header: Parte hartzea
+    participation-content: Zu zeu eta haurra ikerketan parte hartzeko aske zarete. Parte hartzea erabakitzen baduzue ere, saioko edozein unetan gelditzea ongi dago. Mesedez saioa eten edo berta behera utzi haurra urduritzen bada edo ez badu parte hartu nahi! Ikerketak zenbait saio baditu, saio guztiak guztiz ez bukatzea ongi dago.
+    payment-header: Ordaintzea
+    data-collection-header: Datuak biltzea eta eta webcamaren bidez grabatzea
+    data-collection-1: Saioan, zu zeu eta haurra ordenagailuko webcamaren eta mikrofonoaren bidez grabatuko zaituztegu. Grabazioak eta gainerako datuak era seguruan bidaltzen dira Lookiten plataformara eta han gordetzen dira. Saioaren amaieran, grabazioendako pribatutasun maila bat hautatu beharko duzu. Grabazioa ezabatzeko aukera ere emango zaizu. Zure aurreko grabazioak edozein unetan ikus ditzakezu Lookiten.
+    data-collection-2: Datuak era seguruan gordetzen dira, bai Lookiten, bai ikertzaileen sistemetan. Hala ere, informazioa internet bidez bidaltzen denean, beti dago bidean atzemateko edo gordetako informazioa lapurtzeko arrisku txiki bat.
+    data-collection-3: Bideoak ez dira argitaratuko edo partekatuko, pribatutasun maila hautatzean horretarako baimenik ematen ez baduzu. Saioaren baimen grabaziorik jasotzen ez badugu (eskubitara egingo duzun bideoa) eta, beraz, ezin badugu nahita parte hartu duzula egiaztatu, ez dugu zure saioko bideorik ikusiko.
+    data-use-researchers-header: Ikerketzaileek datuak nola erabiliko dituzten
+    data-use-researchers-content: '{institution}-(e)ko ikertzaileak, {name} buru dutela, saioko bideoa eta beste datuak ikusi ahalko dituzte. Zure profila ere ikusi ahalko dute, baita galdetegi demografikoa eta parte hartzen duen haurraren profila ere, etorkizunean egiten dituzun aldaketak barne. Haurrerak gure proiektuko beste ikerketa batzuetan parte hartu badu, ikerketa baten eta bestearen erantzunak alderatuko ditugu. Anaia-arreben erantzunak eta galdetegi demografikoak ere elkarren artean alderatuko digugu.'
+    data-use-Lookit-header: Lookit-ek datuak nola erabiliko dituen
+    data-use-Lookit-content: 'Ikerketa Lookit plataforma egiten denez, MITeko Lookit proiektuko ikertzaileek ere saioko datuetara sartzeko aukera izango dute, baita zure profilera, haurren profiletara, eta galdetegi demografikora sartzekoa ere. Datuok Lookitek erabil ditzake: arazo teknikoak hauteman eta konpontzeko; lagungarriak izan daitezkeen ezaugarri berriak bilatzeko; ikerketatzaileak laguntzeko; datuen kalitatea aztertzeko (esaterako, zeinen ongi jakin daitekeen haurrak nora begiratzen duen); webguneak askotariko jendearengana iristen duen arrakasta neurtzeko; eta familien konpromisoa neurtzeko (adibidez, zerk egiten duen gurasoek beste ikerketa batean parte hartu nahi izatea).'
+    publication-header: Emaitzak argitaratzea
+    publication-contents: Ikerketaren emaitzak bilera zientifikoetan erakutsi eta aldizkari zientifikoetan argitaratuko dira. Data gordina (adibidez, pantailaren ezkerretara edo eskubitara zenbatetan begiratzen den) argitara liteke, beti ere haurra identifikatzea ezinezkoa bada. Haurren jaiotze egunak edo izenak ez dira sekula partekatzen, ezta datu demografikoak irudiekin batera ere.
+    research-subject-rights-header: Ikerketa subjektuen eskubideak
+    gdpr-header: Datuak Babesteko Araudia Orokorraren inguruko informazioa
+    gdpr-personal: 'Parte hartzen duzunez, zeure buruaren inguruko informazio zenbait jasoko ditugu, hala nola:'
+    gdpr-sensitive: Horrez gain, kategoria bereziko datuak jasoko ditugu, sentsiblea den informazio pertsonala
+    gdpr-2: Zeure informazioa Ameriketako Estatu Batuetara bidaliko da. Ulertu behar duzu Ameriketako Estatu Batuetako datu-babes eta pribatutasun legeek beharbada ez zaituztela zeure herrialdeko legeek bezain beste babestuko.
+    contact-header: Ikertzailearekin harremanetan paratzeko informazioa
+    contact-statement-1: Ikerketa hau {institution}-eko {name} ikertzaileak egiten du. Zuk zeuk edo haurrak ikerketaren inguruko galderak edo kezkak badituzue, edo edozerrengatik ikerketak kalteren bat eragiten badu, mesedez harremanetan jarri {contact}.
+    contact-statement-2: Zuk zeuk edo haurrak Lookit plataformaren inguruko galderarik edo kezkarik izanez gero, mesedez Lookiteko langileekin jarri harremaneta lookit@mit.edu  helbidean edo 617 324 4859 zenbakian.
+
+consent-template-5:
+    header: Ikerketan parte hartzea onartzea
+    intro-sentence: '{institution}/-(e)ko ikertzaileak, {name} buru dutela, "{experiment}" ikerketa Lookiten egiten ari dira'
+    purpose-header: Ikerketaren zergatia
+    procedures-header: Ikerketa egin bitartean
+    duration-statement: Ikerketak {duration} inguru eskatzen du.
+    participation-header: Parte hartzea ez da derrigorrezkoa
+    participation-content: Zu eta haurra askeak zarete ikerketan parte hartu nahi duzuen erabakitzeko. Parte hartzea erabakitzen baduzu, ez izan eragozpenik saioa edozein momentutan uzteko. {only_adult, select, true {} other {Haurra haserretzen hasten bada edo ez badu parte hartu nahi, pausatu edo utzi saioa mesedez.}}
+    risk-header: Zer arrisku dago?
+    benefits-header: Zer onura dago?
+    data-collection-header: Datuak biltzea eta webcamaren bidez grabatzea
+    data-collection-1: Saioan, zu {only_adult, select, true {} other {eta zure haurra}} ordengailuko webcamaren eta mikrofonoaren bidez grabatuko zaituztegu.
+    data-collection-2: Webcamaren grabazioak eta galdetegietan emandako erantzunak Lookit plataformara bidaltzen diran era seguruan. Aurreko grabazioak Lookiten ikus ditzakezu edozein unetan.
+    data-collection-3: Datuak modu seguruan gordetzen dira Lookiten serbidoreetan eta ikertzaileen ordenagailuetan, eta hemen deskribatzen den bezala baizik ez dira partekatuko. Hala ere, therebeti dago internet bidez bidaltzen diren datuak lapurtuak izateko edo datuak babesteko segurtasuna gainditua izateko arrisku txiki bat.
+    video-privacy-header: Nork ikusi ahalko ditu zure webcamaren grabazioak?
+    video-privacy-consent: Lehenik eta behin baimen informatua egiaztatuko dugu, benetan nahita parte hartu duzula ziurtatzeko. Ezin badugu nahita parte hartzen duzula egiaztatu, inork ez du saioko bideorik ikusiko.
+    video-privacy-overview: 'Saioaren amaieran, webcamaren grabazioendako pribatutasun maila bat hautatuko duzu. Pribatutasun maila hauetako bat hauta dezakezu:'
+    video-privacy-Private: Pribatua
+    video-privacy-Scientific: Zientifikoa
+    video-privacy-Publicity: Publikoa
+    video-privacy-private-description: Zure grabazioetara sar daitezkeen ikertzaileak ez dituzte beste inorekin partekatuko.
+    video-privacy-scientific-description: Zure grabazioetara sarbidea duten ikertzaileek helburu zientifikoekin edo hezkuntzarako zabal ditzakete; esaterako, eskolan edo konferentzia zientifiko batean adibide bat erakus dezakete.
+    video-privacy-publicity-description: Zure grabazioetara sarbidea duten ikerleek publikoki zabal ditzakete; esaterako, ikerketaren inguruko berri batean edo parte hartzaile gehiago erakartzeko.
+    video-privacy-withdraw: Grabazioak kentzeko aukera ere izango duzu. Kentzen badituzu, baimena emateko grabazioa baizik ez da gordeko eta gainerako guztiak ezabatuko dira.
+    video-privacy-withdraw-private-only: Saioaren amaieran, grabazioak ezabatzeko aukera izango duzu. Ezabatzen badituzu, baimena emateko grabazioa baizik ez da gordeko eta gainerako guztiak ezabatuko dira.
+    databrary: Bestalde, baimena duten Databrary datu liburutegiko erabiltzaileei ere sarbidea eman ahal diezu. Ikerketa egiten duten ikertzaileez harago, beste ikertzaile batzuek ere sarbidea izango dute, eta haurren garapenaren inguruko beste galdera batzei erantzuteko erabil ditzakete. Datuak partekatzeak giza garapen eta jarrera azkarrago ikertzen lagundu dezake. Baimena duten Databraryko erabiltzaileek konfidentzialtasuna mantenduko dutela eta grabazioak diru irabaziak lortzeko erabiliko ez dituztela agindu behar dute. Datuak partekatzeko liburutegi honen inguruko galderarik baduzu, joan <a href="https://nyu.databrary.org/" target="_blank" rel="noopener noreferrer">Databrary</a>  webgunera edo bidali email bat ethics@databrary.org helbidera.
+    data-use-researchers-header: Nola erabiltzen ditugu zure datuak?
+    data-use-researchers-content-1: 'Ikerketa honetan parte hartzen baduzu, guk ({name} buru duen {institution}(e)ko ikerketa taldeak) hauek izango ditu eskura:'
+    data-use-researchers-item-1: webcamaren grabazioak eta saioan jasotako beste edozein datu
+    data-use-researchers-item-2: zure profileko informazioa eta galdetegi demografikoa
+    data-use-researchers-item-3: Parte hartzen duen {only_adult, select, true {} other {haurra}} profile for the {only_adult, select, true {familia kidea} other {haurra}}
+    data-use-researchers-content-2: Horrek etorkizunean informazio honetan egiten dituzun aldaketak barne hartzen ditu. Zenbait informazio mota jar ditzakegu batera haurren garapenaren inguruan gehiago ikasteko. Adibidez, {only_adult, select, true {zuk zeuk} other {zure haurrak}} haurrak gure taldeko zenbait ikerketatan parte hartuz gero, ikerketatik ikerketara zer emaitza duen begiradu dezakegu, edo anaia-arrebek antzera erantzuten duten begiratu dezakegu. Haurren erantzunen eta familien informazio demografikoaren harremanak ere azter ditzakegu.
+    data-use-Lookit-header: Nola erabiltzen ditu Lookitek zure datuak?
+    data-use-Lookit-content: Lookiteko taldeak ere, MITen, saioan jasotako informazioa eskuragarri izango du, zure kontuko informazioaz gain. Lookit ibil dadin eta hobetzeko erabiltzen dituzte datu horiek, hala nola laguntza teknikoa emateko, datuen bilketa ongi dabilen egiaztatzeko, edo Lookit askotariko talde eta familiei heltzen zaien egiaztatzeko. Lookitek denbora mugarik gabe gordeko ditu datuak, amaieran ezabatzeko eskatu ezean.
+    publication-header: Ikerketa honen emaitzak argitaratzea
+    publication-content: Ikerketa honen emaitzak mintegi edo aldizkari zientfikoetan argitaratu daitezke. Baliteke norbanakoen emaitzak argitaratzea, beti ere pertsona identifikatzea ezinezkoa bada; adibidez, zenbatetan begiratu den edo sakatutako botoien sekuentzia. Jaiotze egunak edo izean-abizenak ez dira sekula argitaratzen. Nahiz eta grabazioak partekatzeko baimena eman, grabazioak eta {only_adult, select, true {zure} other {haurraren}} datu demografioak lot ditzakeen informaziorik ez da inoriz argitaratzen.
+    research-subject-rights-header: Parte hartzaileen eskubideak
+    gdpr-header: Datuak Babesteko Araudia Orokorraren (DBAO) inguruko informazioa
+    gdpr-personal: 'Parte hartzaile zaren neurrian, zeure inguruko zenbait informazioa jasoko dugu, hala nola:'
+    gdpr-sensitive: Horrez gain, kategoria bereziko datuak jasoko ditugu, zuri buruzko informazioa eta hori informazio sentsiblea da.
+    gdpr-2: Zeure informazioa Ameriketako Estatu Batuetara bidaliko da. Ulertu behar duzu Ameriketako Estatu Batuetako datu-babes eta pribatutasun legeek beharbada ez zaituztela zeure herrialdeko legeek bezain beste babestuko.
+    contact-header: Nola jarri gurekin harremanetan?
+    contact-statement-1: Ikerketa hau {institution}-eko {name} ikertzaileak egiten du. {only_adult, select, true {Zeuk} other {Zuk zeuk edo zure haurrak}} ikerketaren inguruko galderak edo kezkak izanez gero, {omit_injury, select, true {} other {edo edozerrengatik ikerketak kalteren bat eragiten badu,}} mesedez harremanetan jarri {contact}.
+    contact-statement-2: '{only_adult, select, true {Zeuk} other {Zuk zeuk edo zure haurrak}} Lookit plataformaren inguruko galderarik edo kezkarik izanez gero, mesedez Lookiteko langileekin jarri harremaneta lookit@mit.edu helbidean.'
+
+consent-garden:
+    header: "Ikerketan parte hartzeko baimena: GARDEN proiektuko {experiment}"
+    intro-sentence: Ikerketa hau, {experiment}, {name} buru duten {institution}(e)ko ikertzaileek daramate, Lookiten.
+    overview-header: Gure ikerketan parte hartzera gonbidatzen zaitugu!
+    overview-content: Haurraren zaintzaileetako bat zarenez (arduradun legala, hala nola gurasoa), {experiment} esperimentuan parte hartzera gonbidaturik zaude. Esperimentua Haurrak Laguntzeko Zientziaren GARDEN (Growing and Advancing Research in Development and EducatioN; ikusi <a href="https://childrenhelpingscience.com/garden/about" target="_blank" rel="noopener noreferrer">Zer da GARDEN proiektua?</a> xehetasunetarako) proiektuaren parte da. Haurrek pentsatzeko, ikasteko eta inguratzen dituen mundua ulertzeko gaitasunak nola garatzen dituzten hobekiago ulertzea da proiektuaren helburua!<br><br>Oraintxe baimen inprimakia irakurtzen ari zara. Ikerketaren inguruko informazioa emango dizu, parte hartu nahi duzun erabaki dezazun. Informazio hau irakurri ondoren, inprimakia betetzea erabaki dezakezu, orrialdeko jarraibideei segituz. Beharbada GARDEN proiektuko beste ikerketa batzuetan parte hartzeko gonbidatuko zaitugu aurrerago, baina baimen inprimaki hau {experiment} esperimenturako baino ez da.<br><br>Galderak egitera gonbidatzen dugu eta, beraz, {contact} helbidera idazteko eskatzen dizugu, baimen inprimakiaren edo esperimentuaren alderdiren batekin zalantzak badituzu {experiment} esperimentuan parte hartu aurretik.
+    study-info-header: Zer da ikerketa hau eta nork darama?
+    study-info-content: '{experiment} esperimentua {institution} erakundeko {lab} laboratorioak darama eta GARDEN proiektuaren parte da (ikusi <a href="https://childrenhelpingscience.com/garden/about" target="_blank" rel="noopener noreferrer" >Zer da GARDEN proiektua?</a> xehetasunetarako). Ikerketa honetan, {description}.'
+    purpose-header: Zergatik egiten dugu ikerketa hau?
+    eligibility-header: Nork parte har dezake?
+    procedures-header: Zer egiten da esperimentuan eta zenbat irauten du?
+    duration-statement: Ikerketa honek {duration} inguru hartzen du.
+    payment-header: Zer jasotzen dut ikerketan parte hartzearen truke?
+    payment-content: Amazon.com-eko 5 $-eko gutun sari bat jasoko duzu (<u>AEBetako webgunean baizik ezin da erabili</u>) parte hartu eta ahal bezain laster (7 lan egunen barruan).
+    benefits-header: Zergatik parte hartu nahiko nuke?
+    risk-header: Zergatik ez nuke parte hartu nahiko?
+    risk-content-1: '{experiment} esperimentuak {duration} inguru baizik ez du hartzen, baina haurrak zenbait galdera interesik gabetzat edo aspergarritzat jo ditzake. '
+    risk-content-2: 'Haurrak {risk_content_discontinue_options} edozein unetan erabaki dezake ez duela gehigo parte hartu nahi. '
+    risk-content-3: Etorkizunean, parte hartu nahi ez izateko beste arrazoirik balego, jakinaraziko dizugu.
+    data-collection-header: Zer-nolako informazioa jasoko da ikerketa honetan?
+    data-collection-content: Ikerketa honetan hiru informazio mota jasoko dira:<br><br><ol><li><strong>Informazio pertsonala</strong>, hala nola izena, emaila eta haurreraren izena eta jaiotze eguna, zu identifikatzeko balio duena. Horrek Lookiteko kontua eta baimen bideoa hartzen ditu (ikerketa parte hartzearekin ados zaudela grabatzen duzun bideoa), eta ez dira {institution} edo Lookitetik kanpo zabalduko.</li><li><strong>Ikerketako informazioa</strong>, hala nola ikerketako galderei zuk edo haurrak ematen dizkiezuen erantzunak, ikerketan egiten dituzuen gauzen idatzizko deskribapenak, edo ikerketari loturik ematen duzun beste edozein informazio. Informazioa “des-identifikatu” egingo da eta GARDEN proiektuko beste ikertzaile batzuekin partekatuko da, baita, agian, GARDEN proiektukoak ez diren baina haurren garapenean lan egiten duten beste ikertzaile batzuekin ere. Azpian gehiago ikas dezakezu des-identifikazioaz eta ikerketako informazioaren partekatzeaz.</li>{omit_video, select, true {} other {<li><strong>Bideo grabazioak</strong>, zureak edo haurrarenak ikerketan parte hartzen. Bideoak informazio berezia dira (jakina, norbait nor den jakin dezakezu aurpegia ikusirik!), eta, beraz, zenbait aukera dituzu informazio hori nola partekatu edo ez partekatu erabakitzeko. Ikusi <strong>&ldquo;Nork ikusiko du nire bideoa&rdquo;</strong> informazio gehiago eta aukera ikusteko.</li>}}</ol>"
+    data-use-researchers-header: Zertarako erabiliko da informazio hori?
+    data-use-researchers-content: 'Informazioa diru etekinik sortzen ez duen ikerketarako baizik ez dugu erabiliko.<br><br>Ikerketa honetako emaitzak bilkura edo aldizkari zientifikoetan argitaratu litezke. Norbanakoen erantzunak argitaratu litezke, beti ere  des-identifikaturik (2) (ikusi <strong>“Nola ziurtatzen da nire pribatutasuna babesten dela?”</strong>), hala nola haurrak zenbat begiratu zion irudi bati edo zer botoi sakatu zuen. Partekatzekotan, honelakoak erabiliz egingo da: “ikerketan parte hartu duten bost urteko aurren artean, batek hau aukeratu zuen” edo “bostgarren parte-hartzaileak hau aukeratu zuen.”<br><br><strong>Ez dugu inoiz informazio pertsonalik partekatu edo argitaratuko</strong>, hala nola zure email helbidea edo aurraren jaiotzen eguna edo izean-abizenak.'
+    data-access-header: Nork izango du informazio hau eskura?
+    data-access-content: Gurearen moduko sareko ikerketek bi unibertsitatetako lagun zenbaitek hiru informazio motak eskura izatea eskatzen dute. {institution}(e)an, gure ikertaldeak eta {institution}(e)ko Erakundeko Berrikusketa Taldeak (EBT) izango dute sarbidea. EBT erakundeko talde bat da eta bere egitekoa ikerketan parte hartzen dutenen eskubideak bermatzea da. MITen, Lookit daramaten administrazioko langileek izango dute sarbidea. Lookiteko edo {institution}(e)ko EBTren inguruan gehiago jakiteko, mesedez irakurri beherago agertzen diren galderak.<br><br>{institution}(e)ko Erakundeko Berrikusketa Taldeak (EBT) ikerketan egoteko baimendutako lagunek eta Lookiteko langileek baizik ez dute zure informazio pertsonala ikusiko. Zure informazio pertsonala ikerketan parte hartzea onartzen duzula egiaztatzeko baizik ez da erabiliko, baita ikerketan honen edo GARDEN proiektuko beste ikerketa batzuen berri emateko ere, opari gutunak bidaltzea barne.<br><br>Ikerketako informazioa GARDEN proiektuko beste ikertzaile batzuekin partekatuko da, baita, agian, GARDEN proiektukoak ez diren baina haurren garapenean lan egiten duten beste ikertzaile batzuekin ere. Hala ere, zenbait neurri hartzen ditugu informazio pertsonala ezabatu eta datuak des-identifikatzeko.<br><br>Grabazioak parteka daitezke edo ez, ikerketaren amaieran aukeratzen duzunaren arabera.
+    data-management-header: 'Nola ziurtatzen dugu "des-identifikazioak" pribatutasuna bermatzen duela?'
+    data-management-content: '<u>Ikerketa informazioa</u> des-identifikatzeko, zuri eta haurrari “Familia ID” bat emango dizkizuegu eta zuek identifikaztzkeo informazio pertsonal guztia ezabatuko dugu. “Des-identifikazio prozesua”ren adibide bezala:<br><br><u>1. adibidea</u>: Ikerketako kalkulu-orrietan, “F32” edo “32 familia” erabiliko dugu zure familia edo haurra identifikatzeko, eta ez “Lizarditarrak” edo “Ane Lizardi”. Des-identifikatutako <u>ikerketa informazio</u> hori beste familia batzuen des-identifikatutako informazioarekin batera paratuko da kalkulu / datu orrietan.<br><br><u>2. adibidea</u>: Zure haurrak 5 urte baditu, bere informazioa datu taulako beste 5 urteko edozein haurren informazioa bezala deskribatuko da, eta aurkikuntzak honelakoen bidez deskribatuko ditugu: “Ikerketa honetan, bost urteko haurrek A aukera besteak aukerak hautatzeko baino joera handiagoa zuten" edo “bost urteko haurrak dituzten 200 familia izan dira Larrunen”.<br><br>Zure datuetarako sarbidea nork izango duen edo nola erabiliko den xehekiago jakin nahi baduzu, mesedez jarri gurekin harremanetan baimen inprimaki honen amaieran agertzen den informazioa erabiliz. Pozez erantzungu zaitugu eta argitaratutako artikuluak erakutsiko dizkizugu, informazioa familiak identifikatu gabe nola erabiltzen dugun ikus dezazun (bideo grabazioak arazorik gabe partekatzeko baimena eman duten kasuetan izan ezik).'
+    data-sharing-header: Nire informazioa beste inorekin partekatuko duzue inoiz?
+    data-sharing-content: Behin <u>ikerketako informazioa</u> des-identifikaturik dagoenean (ikusi <strong>“Nola bermatzen dugu pribatutasuna babesturik dagoela?”</strong>), GARDEN proiektuko beste unibertsitateetako beste ikertzaile batzuekin partekatuko dugu, eta aurkikuntzak idazteko erabiliko da, ondoren argitaratzeko. Des-identifikatutako ikerketako informazioa beste ikertzaile batzuekin ere parteka liteke, aurkikuntzak egiazta ditzaten eta ikas daitekeen besterik dagoen ikus dezaten. Horri esker, hezitzaileek, familiek eta ikertzaileek aurkikuntzak erabiliko dituzte {data_sharing_learn}. <br><br>GARDEN proiektuko zer ikerketatan parte hartzen duzun zure esku baizik ez dago. Baimen inprimaki honekin {experiment} esperimentuan parte hartzea baizik ez duzu onartzen.
+    research-rights-irb-header: Zer da {institution}(e)ko EBT eta zertaz arduratzen da?
+    research-rights-irb-content: "Erakundeko Berrikusketa Taldea (EBT) {institution}(e)ko sail bat da eta ikerketetan parte hartzen dutenen eskubideak betetzen direla egiaztatzeaz arduratzen da. {include_irb_contact_statement, select, true {EBTko ordezkariren bat zurekin harremanetan jar liteke ikerketa honekin zer esperientzia izan duzun jakiteko. Ikerketarekin bezala, EBTk egindako edozein galderari erantzun edo ez erabaki dezakezu.} other {}}<br><br>Zuk edo haurrak haurrek ikerketa subjektu bezala dituzten eskubideez galderarik edo kezkarik bazenu, edo ikerketarekin lotutako arazoren baten inguruko informazioa eskatu, eskaini edo salatu nahiko bazenu, hemen jar zaitezke EBTarekin harremanetan: {irb_contact}. {irb_extra}"
+    lookit-info-header: Nor da Lookit eta zer egiten dute nire informazioarekin?
+    lookit-info-content: Lookit webgune bat da eta MITeko ikertzaile talde batek darama. Hain zuzen, oraintxe Lookit erabiltzen ari zara ikerketan parte hartzeko. Lookiten izena ematen duzunean, zure eta zure familiaren inguruko informazioa eskaintzen dituzu, zer ikerketatan parte hartu nahi duzun bilatzeko.<br><br>Lookiten helburu bakarra sareko ikerketan laguntzea denez, zure informazioa webgunean ibilarazteko eta, ikerketa batean parte hartuko duzula erabakitzean, ikertzaileekin partekatzeko baizik ez dute erabiltzen. Lookiteko administrazio taldeak hiru informazio motak ditu eskura (bideo grabazioak, informazio pertsonala, eta ikerketako informazioa), Lookit familia eta ikertzaile guztientzat ongi dabilela egiaztatzeko eta Lookit hobetzeko. Lookitek zure informazioa zure kontuan gordetzen du, Lookit kontua duzun bitartean, baina zure informazioa erabazteko aukera duzu beti.
+    voluntary-participation-header: Zer gertatzen da parte ez hartzea erabakitzen edo parte hartzeaz iritzia aldatzen badut?
+    voluntary-participation-content: "Zuk eta haurrak edozein unetan erabaki dezakezue ikerketan ez parte hartzea. Berdin, edozein unetan alda dezakezue iritzia. Parte ez hartzea erabakiz edo iritziz aldatuz gero, ez dago kalterik eta ikerketaren parte hartu izanaren onurak ez dituzu galduko.<br><br>Parte hartzea erabakitzen baduzu, ongi dago edozein unetan gelditzea. Mesedez, lasaitasun osoz hartu gelditu eta atseden hartu, edo eten saioa haurra ez badago eroso, aspertzen bada edo ez duela jarraitu nahi erabakitzen badu!"
+    video-sharing-header: Nork ikusiko ditu nire bideo grabazioak?
+    video-sharing-consent: Ikerketaren hasieran, ikerketan parte hartu nahi duzula dioen bideo bat grabatzeko eskatuko zaizu. Baimen grabazio esaten zaio, eta ikerketan parte hartzeko baimena ematen duzula eta parte har dezakezula baieztatzeko ikusiko dugu. Ez da inoiz partekatuko edo beste ezertarako erabiliko.
+    video-sharing-study-all-1: 'Ikerketan, zu eta haurra webcamarekin grabatzeko eskatuko zaizu. Ikerketa bukatzean, zenbait aukera emango zaizkizu grabazioak parteka daitezkeen eta, hala bada, nola adieraz dezazun. Hauek dira aukerak:<br><br><ul><li><strong>Pribatua</strong>: "Bideoak pribatu mantendu": Bideoak ikerketa honetan baino ez dira erabiliko eta ez dira beste inorekin partekatuko (ezta GARDEN proiektuko beste ikertzaileekin ere).</li><li><strong>Zientziarako eta hezkuntzarako</strong>: "Bideoak helburu zientifikoekin baino ezin dira erabili". Bideoak helburu zientifikoekin edo hezkuntzarako parteka daitezke, hala nola unibertsitateko eskoletarako, mintegi zientifikoetan beste ikertzaile batzuei erakusteko, edo GARDEN proiektuko beste ikertzaileekin partekatzeko.</li><li><strong>Publikoa</strong>: “Nire bideoak publiko egin daitezke. Zure izena edo informazio pertsonala inon agertuko ez bada ere, zure bideoak ikerketa datubase publikoetara igo edo publiko egin litezke; adibidez, ikerketaren inguruko berrietan, parte hartzaile gehiago erakartzeko.</li></ul>'
+    video-sharing-study-all-databrary: '“Zientzirako eta hezkuntzarako” edo “publiko” aukeratzen baduzu, bideoak “Databrary”n gehi daitezen ere aukeratu dezakezu. Databrary New York Unibersityko diru asmorik gabeko bideo datu base bat da. Baimendutako ikertzaileek baino ez dute sarbidea eta dirua irabazteko asmorik ez duten ikerketetarako edo heziketarako baino ezin da erabili. Databraryren inguruko xehetasun gehiago hemen: https://databrary.org/about.html.<br><br>'
+    video-sharing-study-all-2: 'Halaber, Lookiten ikerketako bideoak guztiz ezabatzea aukeratu dezakezu. Hala eginez gero, baimen grabazioa baizik ez da gordeko eta gainerakoak ezabatuko dira.'
+    video-sharing-study-private: Bideoetara sarbidea duten ikertzaileek ez dituzte beste inorekin partekatuko. Saioaren amaieran, grabazioak ezabatzeko aukera izango duzu. Hala eginez gero, baimen grabazioa baizik ez da gordeko eta gainerakoak ezabatuko dira.
+    databrary-header: Databraryrekin partekatzeko baimena
+    databrary-content: Bestalde, Databrary datu liburutegi seguruko erabiltzaileei zure grabazioetarako edo beste datuetarako sarbidea eman diezaiekezu. Ondorioz, ikerketa egiten duten ikertzaileez harago, beste ikertzaile batzuek ere sarbidea izango dute, eta haurren garapenaren inguruko beste galdera batzuk erantzuteko erabil ditzakete. Datuak partekatzeak giza garapen eta jarrera azkarrago ikertzen lagundu dezake. Baimena duten Databraryko erabiltzaileek konfidentzialtasuna mantenduko dutela eta grabazioak diru irabaziak lortzeko erabiliko ez dituztela agindu behar dute. Datuak partekatzeko liburutegi honen inguruko galderarik baduzu, joan <a href="https://nyu.databrary.org/" target="_blank" rel="noopener noreferrer">Databrary</a>  webgunera edo bidali email bat ethics@databrary.org helbidera.
+    contact-header: Gurekin harremanetan jartzeko
+    contact-content: Ikerketa hau {institution}(e)ko {name} ikertzaileak darama. Zuk edo haurrak ikerketaren inguruko galderarik edo kezkarik izanez gero, edo arraroa bada ere ikerketarekin lotutako kalterik sortuko balitz, mesedez jarri harremanetan hemen {contact}.<br><br>Zuk edo haurrak Lookiten inguruko galderak edo kezkak badituzue, mesedez Lookiteko langileekin jarri harremanetan lookit@mit.edu helbidean.
+
+exp-lookit-observation:
+    Hide: Ezkutatu
+    Show: Erakutsi
+    webcam-feed-not-displayed: Webcameko edukia <br>ez da ikusten
+    Recording: Grabatzen
+    not-recording-yet: Oraindik ez dabil grabatzen
+    Record: Grabatu
+    recording-required-warning: Aurrera egiteko grabazioa beharrezkoa da
+    stopping-and-uploading: Eteten eta igotzen
+    Paused: Etenik
+
+exp-video-config:
+    title: Webcamaren ezarpenak
+    not-recording-note: Atal honetan ez dago grabaziorik
+    Microphone: Mikrofonoa
+    Camera: Kamera
+    Note: Oharra
+    support-message: Lookit Firefox eta Chromeko azken bertsioetan baizik ez dabil. Oraindik ez dabil gailu eramangarrietan, hala nola sakelekoetan edo tabletetan!
+    no-connection: Ezin izan gara zure webcamera konektatu. Mesedez, egiaztatu webcam bat konektaturik dagoela eta
+    click-here-to-detect: klikatu hemen kamera hautemateko
+    see-troubleshooting: Arazorik baduzu, ikusi behean dauden arazoak konpontzeko jarraibideak!
+    step-1: Ziurtatu zeure burua ezkerretara ikusten duzula! Beharbada "Baimendu" klikatu beharko duzu webcamerako eta mikrofonorako sarbidea izan dezagun. Firefoxen, ziurtatu "Aukera hau gogoratu" tikatzen duzula!
+    looks-good: Itxura ona du!
+    no-webcam-detected: Ez da webcamik hauteman
+    step-2-click-directions: Ziurtatu webcam ezarpenak gorde direla
+    reload-button-label: botoi hau klikatuz
+    step-2-what-should-happen: Webcamak berriz agertu beharko luke berriz baimenik eman GABE. (Dialogo bat agertzen bada, sakatu "Gogoratu aukera hau" edo "Beti baimendu" eta berriz saiatu!)
+    step-3: Entzun zaitzakegula egiaztatu! Hotsa behar bezain altua denean kutxa hau beteko da
+    sounds-good: Itxura ona du!
+    try-clapping: Txalo egin edo kaixo esan.
+    step-2-warning: Mesedez 'webcama berriz kargatu' botoia sakatu hasi aurretik, berriz baimena eskatu gabe agertzen dela egiaztatzeko.
+    step-3-warning: Mesedez, hasi aurretik audioa probatu. Egin hotsen bat!
+    camera-access-warning: Itxuraz ez dugu webcamera sartzerik. Ordenagailu batekin zaude (ez telefono edo tablet batekin), eta Chrome edo Firefox ari zara erabiltzen? Hala bada, hala bada, ikusi behean dauden arazoak konpontzeko jarraibideak.
+    setup-tips-header: Ezarpenetarako gomendioak eta arazoak konpontzeko jarraibideak
+    supported-setup: Egiaztatu gailua eta bilatzailea
+    mobile-devices: Sakelekoarekin edo tablet batekin ari zara? Oraingoz Lookit ordenagailuetan baino ez dabil - laster gailu eramangarrietan ibiliko dela espero dugu! Mesedez, ordenagailu batekin saiatu.
+    browser-support: Chrome edo Firefox ez den web bilatzaileren batekin ari zara (hala nola Internet Explorer edo Safarirekin)? Hala bada, mesedez saiatu berriro Chrome edo Firefoxekin. Oraingoz Lookit horiekin baino ez dabil.
+    chrome-instructions-header: Camera Chromen abiarazteko jarraibideak
+    chrome-directions-prompt: Orri hau lehenengoz kargatzen duzunean, Honelako lauki bat ikusi beharko zenuke. Klikatu "Baimendu" Lookitek webcamerako eta mikrofonorako sarbidea izan dezan.
+    chrome-directions-set-perms: Laukirik ez bada agertu edo "Blokatu" aukeratu baduzu, URLaren ondoan ageri den giltzarrapo berdean klikatuz alda ditzakezu. Aldatu Kamera eta Mikrofonoa (eta Audioa agertzen bada) "Baimendu"ra, eta freskatu orrialdea.
+    chrome-select-mic: '<em>Audioa ezin egiaztatu?</em> Beharbada Chrome behar ez den sarrera gailua erabiltzen ari da - zoritxarrez "Baimendu" aukeratzean ez dizu mikrofonoa aukeratzen uzten. Behar den mikronoa aukeratzeko joan hona: chrome://settings/content/microphone (URL bezala kopiatu eta pegatu). Ondoren, orrialde hau freskatu eta berriz saiatu.'
+    chrome-select-camera: '<em>Behar ez den kamera ikusten da</em> - adibidez, portatilak dakarren kamera eta ez USB bidez konektatu nahi duzun bat? Behar den kamera aukeratzeko joan hona: chrome://settings/content/camera (URL bezala kopiatu eta pegatu). Ondoren, orrialde hau freskatu eta berriz saiatu.
+    chrome-further-help: Chromeren jarraibideak ere ikus ditzakezu: <a href="https://support.google.com/chrome/answer/2693767?hl=en" target="_blank" rel="noopener noreferrer"></a>.'
+    firefox-instructions-header: Camera Firefoxen abiarazteko jarraibideak
+    firefox-directions-prompt: Orri hau lehenengoz kargatzen duzunean, Honelako lauki bat ikusi beharko zenuke. Erabili nahi dituzun kamera eta mikrofonoa aukeratu, "Gogoratu aukera hau" tikatu eta "Baimendu" sakatu.
+    firefox-directions-set-perms: Laukirik ez bada agertu edo "Blokatu" aukeratu baduzu, ezarpenak alda ditzakezu URLaren ondoan agertzen den eta gurutze bat daraman camera / mikrofonoa klikatuz. Ezarpen bakoitzaren ondoan ageri den "X" sakatu, eta orrialdea freskatu.
+    additional-troubleshooting-header: Ez dabil - beste zer egin dezaket?
+    additional-troubleshooting-intro: Lehenik, konpromisodun hiritar zientzialaria zara eta laguntza eskertu nahi dizugu! Sentitzen dugu arazoak izatea.
+    camera-check: Egiaztatu Lookitetik kanpo webcama ikusten duzula. (Adibidez, Mac batean, probatu Photobooth).
+    try-another-browser: Errazena beste web bilatzaile bat instalaturik baduzu harekin saiatzea da. Esaterako, Firefoxekin bazabiltza, Chromera aldatu, edo alderantziz. Halaber, ez baduzu azken bertsioa instalaturik, eguneratu bilatzailea. Hori egiaztatzeko, joan "Chrome" -> "Chromeren inguruan" edo "Firefox" -> "About Firefox" menura. (Edozein kasutan, hau ideia ona da segurtasun eguneratzeak jaso dituzula ziurtatzeko).
+    chrome-incognito: Chrome erabiltzen duzu? Egiaztatu ez duzula Incognito erabiltzen - ezingo dituzu ezarpenak gorde eta ikerketan erabili.
+    additional-troubleshooting-contact: Ezinean ari bazara, gure errua da. Mesedez, jakinarazi iguzu webgunea hobetzen jarrai dezagun! Bidali email bat lookit-tech@mit.edu helbidera eta eman gertatzen denaren deskribapen labur bat. Mesedez, darabilzun web bilatzailea adierazi (Firefox, Chrome, IE, Safari, etab.), zer urratsi jarraitu diozun, eta saio honen IDa
+
+exp-video-config-quality:
+    checkbox-warning: Mesedez kendu jarraibide bakoitzaren azpiko "{completedItemText}" laukitxoa jarraitu aurretik.
+    recording-warning: Mesedez, jarraitu aurretik saiatu bideo bat grabatzeneta ikusten.
