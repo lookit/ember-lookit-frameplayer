@@ -11,7 +11,7 @@ list of indices of which ones to actually show.
 
 The frame(s) will be inserted into the sequence of frames for this study on the fly, so that you can use a custom
 :ref:`generateProperties<generateProperties>` function to select which frame(s) to show. (For more information on
-making study behavior conditional on data collected, see :ref:`conditional_logic`.)
+making study behavior conditional on data collected, see :ref:`Conditional Logic<conditional_logic>`.)
 
 This frame serves as a wrapper for the randomizer :ref:`select<select>`,
 which is evaluated during experiment parsing and cannot be modified on the fly.

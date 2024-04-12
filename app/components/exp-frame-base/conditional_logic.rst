@@ -1,4 +1,4 @@
-.. _Conditional logic:
+.. _conditional_logic:
 
 Conditional logic
 -----------------
