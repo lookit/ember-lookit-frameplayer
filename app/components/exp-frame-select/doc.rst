@@ -20,7 +20,7 @@ Warning: no ``selectNextFrame`` available
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To avoid unpredictable behavior, this frame does not itself use any
-:ref:`selectNextFrame<selectNextFrame>` passed to it. (Frames *within* the ``frameOptions`` list are welcome to make use of
+:ref:`selectNextFrame<selectnextframe>` passed to it. (Frames *within* the ``frameOptions`` list are welcome to make use of
 ``selectNextFrame``, though!)
 
 Finding data from frames created by exp-lookit-select
