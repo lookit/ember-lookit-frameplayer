@@ -1,7 +1,6 @@
 import layout from './template';
 import ExpFrameBaseComponent from '../exp-frame-base/component';
 import { addSearchParams } from '../../utils/add-search-params';
-import $ from 'jquery';
 
 
 export default ExpFrameBaseComponent.extend({
@@ -42,16 +41,15 @@ export default ExpFrameBaseComponent.extend({
         const hashChildId = this.get('session.hash_child_id');
         const responseId =  this.get('session.id');
         this.set('frameConfig.iframeSrc', addSearchParams(iframeSrc, responseId, hashChildId));
+    },
+
+    didInsertElement() {
+        this._super(...arguments);
+        function enableNextbutton(){
+            document.querySelector('#nextbutton').removeAttribute('disabled')
+        }
+        setTimeout(enableNextbutton, 3000);
+        document.querySelector('iframe').onload = enableNextbutton
     }
 
-});
-
-
-function enableNextbutton(){
-    document.querySelector('#nextbutton').removeAttribute('disabled')
-}
-
-$(function() {
-    setTimeout(enableNextbutton, 3000);
-    document.querySelector('iframe').onload = enableNextbutton
 });
