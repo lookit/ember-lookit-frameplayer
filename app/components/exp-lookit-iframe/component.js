@@ -36,11 +36,12 @@ export default ExpFrameBaseComponent.extend({
     },
 
     didReceiveAttrs() {
-        const iframeSrc = this.get('frameConfig.iframeSrc');
+        // call super first in case iframeSrc comes from generateProperties
+        this._super(...arguments);
+        const iframeSrc = this.get('iframeSrc');
         const hashChildId = this.get('session.hash_child_id');
         const responseId =  this.get('session.id');
         this.set('frameConfig.iframeSrc', addSearchParams(iframeSrc, responseId, hashChildId));
-        this._super(...arguments);
     }
 
 });
