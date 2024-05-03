@@ -40,7 +40,7 @@ export default ExpFrameBaseComponent.extend({
         const iframeSrc = this.get('iframeSrc');
         const hashChildId = this.get('session.hash_child_id');
         const responseId =  this.get('session.id');
-        this.set('frameConfig.iframeSrc', addSearchParams(iframeSrc, responseId, hashChildId));
+        this.set('iframeSrc', addSearchParams(iframeSrc, responseId, hashChildId));
     },
 
     didInsertElement() {
