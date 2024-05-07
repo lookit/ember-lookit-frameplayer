@@ -130,6 +130,14 @@ export default Ember.Mixin.create({
     recorderReady: false,
 
     /**
+     * Upper limit on recording length in seconds. Used to enforce a hard limit on the
+     * user-defined maxRecordingLength value.
+     * @property {Number} recordingLengthUpperLimit
+     * @private
+     */
+    recordingLengthUpperLimit: 7200,
+
+    /**
      * Maximum recording length in seconds. Can be overridden by consuming frame.
      * Default for trial recordings is 7200 seconds (120 minutes)
      * @property {Number} maxRecordingLength
@@ -306,8 +314,15 @@ export default Ember.Mixin.create({
         this.set('videoId', videoId);
         const recorder = new VideoRecorder({element: element});
         const s3vars = Ember.getOwner(this).resolveRegistration('config:environment').awsRecording;
-        const installPromise = recorder.install(this.get('videoId'), 
-            this.get('maxRecordingLength'), this.get('checkMic'), s3vars);
+        let maxRecLength = this.get('maxRecordingLength');
+        if (maxRecLength > this.recordingLengthUpperLimit) {
+            console.warn(`video-record warning: maximum recording length must be less than or equal to ${this.recordingLengthUpperLimit} seconds.`)
+            maxRecLength = this.recordingLengthUpperLimit;
+        } else if (maxRecLength < 1) {
+            console.warn('video-record warning: maximum recording length must be at least 1 second.');
+            maxRecLength = 1;
+        }
+        const installPromise = recorder.install(this.get('videoId'), maxRecLength, this.get('checkMic'), s3vars);
 
         // Track specific events for all frames that use VideoRecorder
         var _this = this;
