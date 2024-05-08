@@ -169,7 +169,7 @@ const VideoRecorder = Ember.Object.extend({
      * @return {Promise} Resolves when widget successfully installed and started
      */
 
-    install(videoFilename = '', maxRecordingTime = 100000000, checkMic = false, s3vars = {}) {
+    install(videoFilename = '', maxRecordingTime = 7200, checkMic = false, s3vars = {}) {
 
         let origDivId = this.get('divId');
 

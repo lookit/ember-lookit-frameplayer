@@ -47,8 +47,8 @@ If your frame uses the video-record mixin, you can specify the following in addi
 
 .. glossary::
 
-    maxRecordingLength [Number | ``7200``]
-        Maximum recording length in seconds
+    maxRecordingLength [Number (1-7200) | ``7200``]
+        Maximum recording length in seconds. The default is 7200 seconds, which is also the upper limit. The maximum recording length must be at least 1 second. Recording will automatically stop if this duration is reached.
 
     maxUploadSeconds [Number | ``5``]
         Maximum time allowed for video upload before proceeding to next frame, in seconds. Can be overridden by

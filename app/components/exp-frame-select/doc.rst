@@ -11,7 +11,7 @@ list of indices of which ones to actually show.
 
 The frame(s) will be inserted into the sequence of frames for this study on the fly, so that you can use a custom
 :ref:`generateProperties<generateProperties>` function to select which frame(s) to show. (For more information on
-making study behavior conditional on data collected, see :ref:`conditional_logic`.)
+making study behavior conditional on data collected, see :ref:`Conditional Logic<conditional_logic>`.)
 
 This frame serves as a wrapper for the randomizer :ref:`select<select>`,
 which is evaluated during experiment parsing and cannot be modified on the fly.
@@ -20,7 +20,7 @@ Warning: no ``selectNextFrame`` available
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To avoid unpredictable behavior, this frame does not itself use any
-:ref:`selectNextFrame<selectNextFrame>` passed to it. (Frames *within* the ``frameOptions`` list are welcome to make use of
+:ref:`selectNextFrame<selectnextframe>` passed to it. (Frames *within* the ``frameOptions`` list are welcome to make use of
 ``selectNextFrame``, though!)
 
 Finding data from frames created by exp-lookit-select

@@ -146,7 +146,7 @@ export default Ember.Mixin.create({
         $('#' + this.get('elementId')).parent().append($sessionRecorderElement);
         var $element = $('#' + recorderElementId);
 
-        const maxRecordingLength = 100000000;
+        const maxRecordingLength = 7200;
         const sessionVideoId = this._generateSessionVideoId();
         this.get('session').set('videoId', sessionVideoId);
         const sessionRecorder = new VideoRecorder({element: $element});
