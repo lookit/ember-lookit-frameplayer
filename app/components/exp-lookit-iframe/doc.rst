@@ -54,28 +54,28 @@ and data collected that come from the following more general sources:
 Examples
 ----------------
 
-This will present the website "example.com" inside an iframe within the Lookit experiment.
+This will present the website "example.com" inside an iframe within the Lookit experiment. The `iframe` frame will automatically add two query parameters to the end of the `iframeSrc` link: "child" (the child ID) and "response" (the response ID). This allows researchers to automatically link responses obtained via the external site embedded in the iframe to Lookit data.
 
 .. code:: javascript
 
-    "study-survey": {
+    "embedded-survey": {
         "kind": "exp-lookit-iframe",
         "iframeSrc": "https://example.com",
         "iframeHeight": "700px",
         "iframeWidth": "100%",
-        "optionalText": "Message to the participant."
+        "optionalText": "Please complete the survey above. When finished, click the green 'Next' button to continue with the experiment."
     }
 
-This example uses the `generateProperties` parameter to generate an iframe URL that contains custom query parameters: 'a1' for the child ID and 'a2' for the response ID.
+Some external websites require specific names for URL query parameters. In this case, researchers can use the `generateProperties` parameter to dynamically create an iframe URL that uses custom names for the child and response query parameters. In the example below, the `generateProperties` function generates the `iframeSrc` value during each session by combining the base URL ("https://example.com") with two query parameters: one called 'a1', which contains the child ID, and one called 'a2', which contains the response ID. This same approach can be used to add any other information to the iframe URL query parameters using the information that the `generatePropeties` function has access to, such as the randomized condition, previous responses, and child's demographics (language, gender, age etc.).
 
 .. code:: javascript
 
-    "iframe-calendly": {
+    "custom-query-parameters": {
         "kind": "exp-lookit-iframe",
         "iframeHeight": "1000px",
         "iframeWidth": "100%",
         "optionalText": "Please schedule a time to participate. When you are finished, click the green 'Next' button to move on.",
-        "generateProperties": "function(expData, sequence, child, pastSessions, conditions) { return { 'iframeSrc': `https://calendly.com/example-link/30min?a1=${pastSessions[0].get('hash_child_id')}&a2=${pastSessions[0].get('id')}` }; }"
+        "generateProperties": "function(expData, sequence, child, pastSessions, conditions) { return { 'iframeSrc': `https://example.com?a1=${pastSessions[0].get('hash_child_id')}&a2=${pastSessions[0].get('id')}` }; }"
     }
 
 Parameters
