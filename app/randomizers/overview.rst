@@ -30,7 +30,7 @@ For complex counterbalancing designs, this may be simpler to reason about and de
 without having to learn any special Lookit syntax. See :ref:`'Protocol generators'<generators>` for more information.
 
 A protocol generator function can do anything that a randomizer frame can do. But to set up
-:ref:`conditional logic<Conditional logic>` (doing different things depending on what the family does *this session*),
+:ref:`conditional logic<conditional_logic>` (doing different things depending on what the family does *this session*),
 you will still need to use ``generateProperties`` or ``selectNextFrame`` parameters within the protocol you generate.
 
 3. Randomizer frames

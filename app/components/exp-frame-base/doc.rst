@@ -59,7 +59,7 @@ language [String]
 
 There are several parameters that ALL frames accept to allow you to customize the study "flow," which are:
 
-.. _select next frame:
+.. _selectnextframe:
 
 selectNextFrame [String]
     Function to select which frame index to go to when using the 'next' action on this

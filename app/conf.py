@@ -28,7 +28,7 @@ author = 'MIT'
 # ones.
 extensions = ['sphinx.ext.intersphinx']
 
-intersphinx_mapping = {'docs': ('https://lookit.readthedocs.io/en/latest/', None)}
+intersphinx_mapping = {'docs': ('https://lookit.readthedocs.io/en/develop/', None)}
 
 
 # Add any paths that contain templates here, relative to this directory.
