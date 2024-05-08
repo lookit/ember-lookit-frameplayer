@@ -54,6 +54,8 @@ and data collected that come from the following more general sources:
 Examples
 ----------------
 
+This will present the website "example.com" inside an iframe within the Lookit experiment.
+
 .. code:: javascript
 
     "study-survey": {
@@ -62,6 +64,18 @@ Examples
         "iframeHeight": "700px",
         "iframeWidth": "100%",
         "optionalText": "Message to the participant."
+    }
+
+This example uses the `generateProperties` parameter to generate an iframe URL that contains custom query parameters: 'a1' for the child ID and 'a2' for the response ID.
+
+.. code:: javascript
+
+    "iframe-calendly": {
+        "kind": "exp-lookit-iframe",
+        "iframeHeight": "1000px",
+        "iframeWidth": "100%",
+        "optionalText": "Please schedule a time to participate. When you are finished, click the green 'Next' button to move on.",
+        "generateProperties": "function(expData, sequence, child, pastSessions, conditions) { return { 'iframeSrc': `https://calendly.com/example-link/30min?a1=${pastSessions[0].get('hash_child_id')}&a2=${pastSessions[0].get('id')}` }; }"
     }
 
 Parameters
@@ -73,6 +87,7 @@ iframeSrc [String]
     responses and child's Lookit account without having to ask the family to enter additional information. See 
     `this page <https://lookit.readthedocs.io/en/develop/researchers-set-study-fields.html#study-url-external-studies>`_
     for information on how to use these query strings.
+    If you need to customize the names of your query parameters, you can use the `generateProperties` parameter to generate your `iframeSrc` - see the example above.
 
 iframeHeight [String | ``700px``]
     Set the height of the iframe. You can use CSS units ("700px", "4in"), but not percents ("100%"). Make sure to preview your study 
