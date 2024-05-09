@@ -54,14 +54,28 @@ and data collected that come from the following more general sources:
 Examples
 ----------------
 
+This will present the website "example.com" inside an iframe within the Lookit experiment. The `iframe` frame will automatically add two query parameters to the end of the `iframeSrc` link: "child" (the child ID) and "response" (the response ID). This allows researchers to automatically link responses obtained via the external site embedded in the iframe to Lookit data.
+
 .. code:: javascript
 
-    "study-survey": {
+    "embedded-survey": {
         "kind": "exp-lookit-iframe",
         "iframeSrc": "https://example.com",
         "iframeHeight": "700px",
         "iframeWidth": "100%",
-        "optionalText": "Message to the participant."
+        "optionalText": "Please complete the survey above. When finished, click the green 'Next' button to continue with the experiment."
+    }
+
+Some external websites require specific names for URL query parameters. In this case, researchers can use the `generateProperties` parameter to dynamically create an iframe URL that uses custom names for the child and response query parameters. In the example below, the `generateProperties` function generates the `iframeSrc` value during each session by combining the base URL ("https://example.com") with two query parameters: one called 'a1', which contains the child ID, and one called 'a2', which contains the response ID. This same approach can be used to add any other information to the iframe URL query parameters using the information that the `generatePropeties` function has access to, such as the randomized condition, previous responses, and child's demographics (language, gender, age etc.).
+
+.. code:: javascript
+
+    "custom-query-parameters": {
+        "kind": "exp-lookit-iframe",
+        "iframeHeight": "1000px",
+        "iframeWidth": "100%",
+        "optionalText": "Please schedule a time to participate. When you are finished, click the green 'Next' button to move on.",
+        "generateProperties": "function(expData, sequence, child, pastSessions, conditions) { return { 'iframeSrc': `https://example.com?a1=${pastSessions[0].get('hash_child_id')}&a2=${pastSessions[0].get('id')}` }; }"
     }
 
 Parameters
@@ -73,6 +87,7 @@ iframeSrc [String]
     responses and child's Lookit account without having to ask the family to enter additional information. See 
     `this page <https://lookit.readthedocs.io/en/develop/researchers-set-study-fields.html#study-url-external-studies>`_
     for information on how to use these query strings.
+    If you need to customize the names of your query parameters, you can use the `generateProperties` parameter to generate your `iframeSrc` - see the example above.
 
 iframeHeight [String | ``700px``]
     Set the height of the iframe. You can use CSS units ("700px", "4in"), but not percents ("100%"). Make sure to preview your study 
