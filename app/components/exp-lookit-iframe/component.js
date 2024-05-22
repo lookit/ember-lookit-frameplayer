@@ -19,11 +19,19 @@ export default ExpFrameBaseComponent.extend({
             type:'string',
             default:'100%'
         },
-        optionalText:{
+        instructionText:{
             type:'string'
         },
         optionalExternalLink:{
             type:'boolean'
+        },
+        nextButtonText: {
+            type: 'string',
+            default: 'Next'
+        },
+        warningMessageText:{
+            type: 'string',
+            default: 'Please confirm that you have finished the task above! When you have finished, click the button to continue.'
         }
     },
 
