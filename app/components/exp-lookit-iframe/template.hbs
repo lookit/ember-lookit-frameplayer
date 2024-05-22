@@ -1,34 +1,23 @@
-{{#if instructionText }}<p>{{ instructionText }}</p>{{/if}}
-<iframe 
-    height={{ iframeHeight }}
-    width={{ iframeWidth }}
-    src={{ iframeSrc }}
-    sandbox="allow-scripts allow-same-origin allow-forms"
-    referrerpolicy="no-referrer"
-></iframe>
-{{#if optionalExternalLink }}
-    <p>
-        If you don't see anything in the space above, there might have been a problem loading this part of the study. Click 
-        <a href={{ iframeSrc }} target="_blank" rel="noopener noreferrer">here</a>
-        to open this part of the study in a new tab. Make sure to keep this tab open so you can continue to the rest of the study.
-    </p>
-{{/if}}
-<p id="warningmessage" style="display: none;">{{ warningMessageText }}</p>
-<div class="row exp-controls">
-    <div class="col-md-12">
-        <button type="button" id="nextbutton" disabled="" class="btn btn-success pull-right next" {{ action "next" }}  > {{exp-format nextButtonText}} </button>
-        <button type="button" id="fakenextbutton" class="btn btn-success pull-right next"> {{exp-format nextButtonText}} </button>
+<div class="exp-lookit-iframe">
+    {{#if instructionText }}<p>{{ instructionText }}</p>{{/if}}
+    <iframe
+        height={{ iframeHeight }}
+        width={{ iframeWidth }}
+        src={{ iframeSrc }}
+        sandbox="allow-scripts allow-same-origin allow-forms"
+        referrerpolicy="no-referrer"
+    ></iframe>
+    {{#if optionalExternalLink }}
+        <p>
+            If you don't see anything in the space above, there might have been a problem loading this part of the study. Click 
+            <a href={{ iframeSrc }} target="_blank" rel="noopener noreferrer">here</a>
+            to open this part of the study in a new tab. Make sure to keep this tab open so you can continue to the rest of the study.
+        </p>
+    {{/if}}
+    <div class="center-text" id="warningmessage" style="display: none;"><p class="warning">{{ warningMessageText }}</p></div>
+    <div class="row exp-controls">
+        <div class="col-md-12">
+            <button type="button" id="nextbutton" disabled="" class="btn btn-success pull-right next" > {{exp-format nextButtonText}} </button>
+        </div>
     </div>
 </div>
-<script>
-    const nextButton = document.querySelector("#nextbutton");
-    const nextButtonDisplay = nextButton.style.display;
-    nextButton.style.display = 'none';
-    document.querySelector("#fakenextbutton").addEventListener('click', (event) => {
-        document.querySelector("#warningmessage").style.display = "";
-        setTimeout(() => {
-            event.target.style.display = 'none';
-            nextButton.style.display = nextButtonDisplay;
-        }, 2000);
-    });
-</script>
