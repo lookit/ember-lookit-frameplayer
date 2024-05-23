@@ -55,21 +55,21 @@ export default ExpFrameBaseComponent.extend({
 
     didInsertElement() {
         this._super(...arguments);
-        const nextButton = document.querySelector("#nextbutton");
         // When the next button is first clicked, display the warning/confirmation message,
         // and then wait 2 sec before allowing another click.
         // On the subsequent button click, trigger the next frame action.
-        // eslint-disable-next-line no-unused-vars
-        nextButton.addEventListener('click', (event) => {
-            if (!this.confirmedContinue) {
-                document.querySelector("#warningmessage").style.display = "";
-                setTimeout(() => {
-                    this.confirmedContinue = true;
-                }, 2000);
-            } else {
-                this.next();
-            }
-        });
+        let timer;
+        document.querySelector("#nextbutton")
+            .addEventListener('click', () => {
+                if (!this.confirmedContinue && !timer) {
+                    document.querySelector("#warningmessage").style.visibility = "visible";
+                    timer = setTimeout(() => {
+                        this.confirmedContinue = true;
+                    }, 2000);
+                } else {
+                    this.next();
+                }
+            });
         function enableNextbutton(){
             document.querySelector('#nextbutton').removeAttribute('disabled')
         }
