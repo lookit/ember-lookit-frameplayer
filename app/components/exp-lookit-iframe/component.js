@@ -61,12 +61,13 @@ export default ExpFrameBaseComponent.extend({
         let timer;
         document.querySelector("#nextbutton")
             .addEventListener('click', () => {
-                if (!this.confirmedContinue && !timer) {
+                if (!timer) {
                     document.querySelector("#warningmessage").style.visibility = "visible";
                     timer = setTimeout(() => {
                         this.confirmedContinue = true;
                     }, 2000);
-                } else {
+                } 
+                if (this.confirmedContinue) {
                     this.next();
                 }
             });
