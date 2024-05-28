@@ -40,8 +40,8 @@ The consent document can be downloaded as PDF document by participant.
 export default ExpFrameBaseComponent.extend(VideoRecord, {
     layout: layout,
     frameType: 'CONSENT',
-    disableRecord: Em.computed('recorder.recording', 'recorder.hasCamAccess', function () {
-        return !this.get('recorder.hasCamAccess') || this.get('recorder.recording');
+    disableRecord: Em.computed('recorder.recording', 'recorder.hasCamAccess', 'recorderReady', function () {
+        return !(this.get('recorder.hasCamAccess') && this.recorderReady && !this.get('recorder.recording'));
     }),
     startedRecording: false,
     hasCheckedVideo: false,
@@ -641,7 +641,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, {
         this.set('consentFormText', $('#consent-form-text').text());
         $('#recordingIndicator').hide();
         $('#recordingText').text(this._translate('exp-lookit-video-consent.Not-recording-yet'));
-        $('#recordbutton').prop('disabled', false);
+        $('#recordbutton').prop('disabled', true);
         $('#stopbutton').prop('disabled', true);
         $('#playbutton').prop('disabled', true);
     }
