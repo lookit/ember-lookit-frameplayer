@@ -1,8 +1,7 @@
 .exp-lookit-iframe {
-    .warning {
-        color: red;
-    }
     #warningmessage {
-        visibility: hidden
+        visibility: hidden;
+        overflow-wrap: break-word;
+        color: red;
     }
 }
