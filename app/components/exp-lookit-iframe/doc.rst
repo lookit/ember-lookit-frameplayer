@@ -68,7 +68,7 @@ Some external websites require specific names for URL query parameters. In this 
 parameter to dynamically create an iframe URL that uses custom names for the child and response query parameters. In the example below, 
 the `generateProperties` function generates the `iframeSrc` value during each session by combining the base URL ("https://example.com") 
 with two query parameters: one called 'a1', which contains the child ID, and one called 'a2', which contains the response ID. This same 
-approach can be used to add any other information to the iframe URL query parameters using the information that the `generatePropeties` 
+approach can be used to add any other information to the iframe URL query parameters using the information that the `generateProperties` 
 function has access to, such as the randomized condition, previous responses, and child's demographics (language, gender, age etc.).
 
 .. code:: javascript
