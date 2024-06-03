@@ -50,7 +50,9 @@ and data collected that come from the following more general sources:
 Examples
 ----------------
 
-This will present the website "example.com" inside an iframe within the Lookit experiment. The `iframe` frame will automatically add two query parameters to the end of the `iframeSrc` link: "child" (the child ID) and "response" (the response ID). This allows researchers to automatically link responses obtained via the external site embedded in the iframe to Lookit data.
+This will present the website "example.com" inside an iframe within the Lookit experiment. The `iframe` frame will automatically add two 
+query parameters to the end of the `iframeSrc` link: "child" (the child ID) and "response" (the response ID). This allows researchers to 
+automatically link responses obtained via the external site embedded in the iframe to Lookit data.
 
 .. code:: javascript
 
@@ -62,7 +64,12 @@ This will present the website "example.com" inside an iframe within the Lookit e
         "instructionText": "Please complete the survey above. When finished, click the green 'Next' button to continue with the experiment."
     }
 
-Some external websites require specific names for URL query parameters. In this case, researchers can use the `generateProperties` parameter to dynamically create an iframe URL that uses custom names for the child and response query parameters. In the example below, the `generateProperties` function generates the `iframeSrc` value during each session by combining the base URL ("https://example.com") with two query parameters: one called 'a1', which contains the child ID, and one called 'a2', which contains the response ID. This same approach can be used to add any other information to the iframe URL query parameters using the information that the `generatePropeties` function has access to, such as the randomized condition, previous responses, and child's demographics (language, gender, age etc.).
+Some external websites require specific names for URL query parameters. In this case, researchers can use the `generateProperties` 
+parameter to dynamically create an iframe URL that uses custom names for the child and response query parameters. In the example below, 
+the `generateProperties` function generates the `iframeSrc` value during each session by combining the base URL ("https://example.com") 
+with two query parameters: one called 'a1', which contains the child ID, and one called 'a2', which contains the response ID. This same 
+approach can be used to add any other information to the iframe URL query parameters using the information that the `generatePropeties` 
+function has access to, such as the randomized condition, previous responses, and child's demographics (language, gender, age etc.).
 
 .. code:: javascript
 
@@ -72,6 +79,19 @@ Some external websites require specific names for URL query parameters. In this 
         "iframeWidth": "100%",
         "instructionText": "Please schedule a time to participate. When you are finished, click the green 'Next' button to move on.",
         "generateProperties": "function(expData, sequence, child, pastSessions, conditions) { return { 'iframeSrc': `https://example.com?a1=${pastSessions[0].get('hash_child_id')}&a2=${pastSessions[0].get('id')}` }; }"
+    }
+
+Here's an example of how to set the warning message.
+
+.. code:: javascript
+
+    "embedded-survey": {
+        "kind": "exp-lookit-iframe",
+        "iframeSrc": "https://example.com",
+        "iframeHeight": "700px",
+        "iframeWidth": "100%",
+        "instructionText": "Please complete the survey above. When finished, click the green 'Next' button to continue with the experiment.",
+        "warningMessageText": "Please confirm that you have finished the survey above before continuing to the next part of the study. You should see a screen that says 'Thank you, your response has been recorded'."
     }
 
 Parameters
@@ -107,7 +127,11 @@ nextButtonText [String | ``Next`` ]
     Text to display on the 'next frame' button.
 
 warningMessageText [String | ``Please confirm that you have finished the task above! When you have finished, click the button to continue.``]
-    Red text displayed above next button to confirm that the user understands that there's  a task above to be completed before moving to next frame.
+    Red text displayed above next button to confirm that the user understands that there's a task above to be completed before moving 
+    to next frame. If no value is given, the default text (shown above) will be used, otherwise you can provide a custom message. This 
+    message will appear after the user first clicks the 'Next' button, at which point the 'Next' button will be briefly disabled to 
+    encourage users to check that they've finished the iframe task and are clicking the correct button.
+
 Data collected
 ----------------
 
