@@ -5,7 +5,7 @@ import ExpFrameBaseComponent from '../exp-frame-base/component';
 import VideoRecord from '../../mixins/video-record';
 import ExpandAssets from '../../mixins/expand-assets';
 import { audioAssetOptions, videoAssetOptions, imageAssetOptions } from '../../mixins/expand-assets';
-import { computed } from '@ember/object';
+import { computed, observer } from '@ember/object';
 
 let {
     $
@@ -29,8 +29,11 @@ let {
 export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
     layout,
     frameType: 'CONSENT',
-    disableRecord: Em.computed('recorder.recording', 'recorder.hasCamAccess', function () {
-        return !this.get('recorder.hasCamAccess') || this.get('recorder.recording');
+    doUseCamera: Em.computed('recordWholeProcedure', 'recordLastPage', function() {
+        return (this.get('recordWholeProcedure') || this.get('recordLastPage'));
+    }),
+    recorderInitializing: Em.computed('recorder.hasCamAccess', 'recorderReady', 'doUseCamera', function () {
+        return (this.doUseCamera && (!this.get('recorder.hasCamAccess') || !this.recorderReady));
     }),
     // keep track of whether a recorder has already started,
     // in case of recording last page and moving forward/backward through pages,
@@ -200,7 +203,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
                 {childResponse: this.get('childResponse')});
 
             if (this.get('childResponse') === 'Yes') {
-                if (this.get('sessionRecorder') && this.get('sessionRecordingInProgress')) {
+                if (!this.get('doUseCamera') || (this.get('sessionRecorder') && this.get('sessionRecordingInProgress'))) {
                     this.send('next');
                 } else {
                     if (!this.get('stoppedRecording') && (!this.get('stopping')))  {
@@ -443,6 +446,27 @@ export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
         }
     },
 
+    // Trigger the start of the stimuli presentation for whole trial recording
+    onRecordingStarted() {
+        this.set('recordingStarted', true);
+        this.set('startedRecording', true);
+        if (this.get('startRecordingAutomatically'))  {
+            this.send('nextVideo');
+        }
+    },
+
+    // Override to delay stimuli presentation until recorder is ready
+    whenPossibleToRecordObserver: observer('recorder.hasCamAccess', 'recorderReady', function() {
+        if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
+            if (this.get('recordLastPage') && this.get('pageIndex') === -1) {
+                this.send('nextVideo');
+            } else if (this.get('doUseCamera') && this.get('startRecordingAutomatically') && !(this.get('recorder.recording')) && !(this.get('starting'))) {
+                this.set('starting', true);
+                this.startRecorder();
+            }
+        }
+    }),
+
     didInsertElement() {
         // Decide whether to skip based on age - do this BEFORE _super() to avoid setting up camera but immediately moving on
         if (this.get('session').get('child') && this.get('session').get('child').get('birthday')) { // always show frame in preview mode
@@ -488,7 +512,10 @@ export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
         this.set('hasCompletedEachPageVideo', hasCompletedEachPageVideo);
 
         this.set('pageIndex', -1);
-        this.send('nextVideo');
+        if (!this.get('recordLastPage') && !this.get('startRecordingAutomatically')) {
+            // no recording, start immediately
+            this.send('nextVideo');
+        }
 
     }
 

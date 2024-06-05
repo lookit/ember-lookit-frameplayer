@@ -19,11 +19,19 @@ export default ExpFrameBaseComponent.extend({
             type:'string',
             default:'100%'
         },
-        optionalText:{
+        instructionText:{
             type:'string'
         },
         optionalExternalLink:{
             type:'boolean'
+        },
+        nextButtonText: {
+            type: 'string',
+            default: 'Next'
+        },
+        warningMessageText:{
+            type: 'string',
+            default: 'Please confirm that you have finished the task above! When you have finished, click the button to continue.'
         }
     },
 
@@ -33,6 +41,8 @@ export default ExpFrameBaseComponent.extend({
             properties: {}
         }
     },
+
+    confirmedContinue: false,
 
     didReceiveAttrs() {
         // call super first in case iframeSrc comes from generateProperties
@@ -45,6 +55,22 @@ export default ExpFrameBaseComponent.extend({
 
     didInsertElement() {
         this._super(...arguments);
+        // When the next button is first clicked, display the warning/confirmation message,
+        // and then wait 2 sec before allowing another click.
+        // On the subsequent button click, trigger the next frame action.
+        let timer;
+        document.querySelector("#nextbutton")
+            .addEventListener('click', () => {
+                if (!timer) {
+                    document.querySelector("#warningmessage").style.visibility = "visible";
+                    timer = setTimeout(() => {
+                        this.confirmedContinue = true;
+                    }, 2000);
+                } 
+                if (this.confirmedContinue) {
+                    this.next();
+                }
+            });
         function enableNextbutton(){
             document.querySelector('#nextbutton').removeAttribute('disabled')
         }
