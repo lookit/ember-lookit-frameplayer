@@ -458,7 +458,7 @@ const VideoRecorder = Ember.Object.extend({
         var recorder = this.get('recorder');
         if (recorder) {
             try {
-                recorder.stopRecording();
+                await recorder.stopRecording();
                 _this.get('recorder').onRecordingStopped.call(_this);
                 await this.get('s3').completeUpload();
                 _this._onUploadDone(this.get('recorderId'), this.get('s3').key); // clears the upload timeout, sets isUploaded to true, resolves stop promise
