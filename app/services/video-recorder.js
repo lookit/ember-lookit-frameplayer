@@ -464,6 +464,7 @@ const VideoRecorder = Ember.Object.extend({
                 _this._onUploadDone(this.get('recorderId'), this.get('s3').key); // clears the upload timeout, sets isUploaded to true, resolves stop promise
             } catch (e) {
                 console.warn(`Error stopping video ${_this.get('videoName')}: ${e}`);
+                throw new Error('Error stopping video.');
             }
         }
         return _stopPromise;
@@ -477,7 +478,7 @@ const VideoRecorder = Ember.Object.extend({
      */
     pause() {
         this.get('recorder').getState().then((curr_state) => {
-            return new RSVP.Promise((resolve, reject) => {
+            return new RSVP.Promise((resolve) => {
                 if (curr_state == "recording") {
                     this.get('recorder').pauseRecording()
                         .then(() => {
@@ -486,7 +487,7 @@ const VideoRecorder = Ember.Object.extend({
                         .catch((err) => {
                             console.error(`Error pausing recorder:\n${err.name}: ${err.message}`);
                             console.trace();
-                            reject();
+                            throw new Error('Error pausing recorder');
                         });
                 } else {
                     resolve();
@@ -503,7 +504,7 @@ const VideoRecorder = Ember.Object.extend({
      */
     resume() {
         this.get('recorder').getState().then((curr_state) => {
-            return new RSVP.Promise((resolve, reject) => {
+            return new RSVP.Promise((resolve) => {
                 if (curr_state == "paused") {
                     this.get('recorder').resumeRecording()
                         .then(() => {
@@ -512,7 +513,7 @@ const VideoRecorder = Ember.Object.extend({
                         .catch((err) => {
                             console.error(`Error resuming recording:\n${err.name}: ${err.message}`);
                             console.trace();
-                            reject();
+                            throw new Error('Error resuming recorder');
                         });
                 } else {
                     resolve();

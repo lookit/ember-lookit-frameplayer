@@ -444,6 +444,7 @@ export default Ember.Mixin.create({
             .catch((err) => {
                 console.error(`Error playing video: ${err.name}: ${err.message}`);
                 console.trace();
+                throw new Error('Error playing video');
             });
     },
 
