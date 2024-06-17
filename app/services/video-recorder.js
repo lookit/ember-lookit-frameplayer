@@ -354,7 +354,7 @@ const VideoRecorder = Ember.Object.extend({
             const catch_install_error = (err) => {
                 console.error(`Recorder installation error:\n${err.name}: ${err.message}`);
                 console.trace();
-                return reject();
+                throw new Error(`Recorder installation error: ${err}`);
             }
 
             navigator.mediaDevices.getUserMedia({audio: {noiseSuppression: true}, video: {width: 1280, height: 720, frameRate: 30}})
