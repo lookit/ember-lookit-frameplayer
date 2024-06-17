@@ -347,7 +347,7 @@ const VideoRecorder = Ember.Object.extend({
                         resolve(); // skip mic check and resolve the install promise
                     }
                 } else {
-                    reject();
+                    reject(new Error(`Mic check error: no input stream.`));
                 }
             };
 
