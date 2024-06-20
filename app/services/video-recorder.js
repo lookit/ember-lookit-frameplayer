@@ -347,14 +347,14 @@ const VideoRecorder = Ember.Object.extend({
                         resolve(); // skip mic check and resolve the install promise
                     }
                 } else {
-                    reject();
+                    reject(new Error(`Mic check error: no input stream.`));
                 }
             };
 
             const catch_install_error = (err) => {
                 console.error(`Recorder installation error:\n${err.name}: ${err.message}`);
                 console.trace();
-                return reject();
+                throw new Error(`Recorder installation error: ${err}`);
             }
 
             navigator.mediaDevices.getUserMedia({audio: {noiseSuppression: true}, video: {width: 1280, height: 720, frameRate: 30}})
@@ -458,12 +458,13 @@ const VideoRecorder = Ember.Object.extend({
         var recorder = this.get('recorder');
         if (recorder) {
             try {
-                recorder.stopRecording();
+                await recorder.stopRecording();
                 _this.get('recorder').onRecordingStopped.call(_this);
                 await this.get('s3').completeUpload();
                 _this._onUploadDone(this.get('recorderId'), this.get('s3').key); // clears the upload timeout, sets isUploaded to true, resolves stop promise
             } catch (e) {
                 console.warn(`Error stopping video ${_this.get('videoName')}: ${e}`);
+                throw new Error('Error stopping video.');
             }
         }
         return _stopPromise;
@@ -477,7 +478,7 @@ const VideoRecorder = Ember.Object.extend({
      */
     pause() {
         this.get('recorder').getState().then((curr_state) => {
-            return new RSVP.Promise((resolve, reject) => {
+            return new RSVP.Promise((resolve) => {
                 if (curr_state == "recording") {
                     this.get('recorder').pauseRecording()
                         .then(() => {
@@ -486,7 +487,7 @@ const VideoRecorder = Ember.Object.extend({
                         .catch((err) => {
                             console.error(`Error pausing recorder:\n${err.name}: ${err.message}`);
                             console.trace();
-                            reject();
+                            throw new Error('Error pausing recorder');
                         });
                 } else {
                     resolve();
@@ -503,7 +504,7 @@ const VideoRecorder = Ember.Object.extend({
      */
     resume() {
         this.get('recorder').getState().then((curr_state) => {
-            return new RSVP.Promise((resolve, reject) => {
+            return new RSVP.Promise((resolve) => {
                 if (curr_state == "paused") {
                     this.get('recorder').resumeRecording()
                         .then(() => {
@@ -512,7 +513,7 @@ const VideoRecorder = Ember.Object.extend({
                         .catch((err) => {
                             console.error(`Error resuming recording:\n${err.name}: ${err.message}`);
                             console.trace();
-                            reject();
+                            throw new Error('Error resuming recorder');
                         });
                 } else {
                     resolve();

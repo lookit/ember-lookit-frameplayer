@@ -32,7 +32,11 @@ class S3 {
             Bucket: this.env.bucket,
             Key: this.key,
             ContentType: "video/webm",
-        }).promise();
+        }).promise()
+            .catch((e) => {
+                this.logRecordingEvent(`Error creating upload: ${e}`);
+                throw new Error(`Error creating upload: ${e}`);
+            });
         this.uploadId = createResponse.UploadId;
         this.logRecordingEvent(`Connection established.`);
     }
@@ -81,6 +85,10 @@ class S3 {
         }).promise()
             .then((resp) => {
                 this.logRecordingEvent(`Upload complete: ${resp.Location}`);
+            })
+            .catch((e) => {
+                this.logRecordingEvent(`Error completing upload: ${e}`);
+                throw new Error(`Error completing upload: ${e}`);
             });
     }
 
