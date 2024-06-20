@@ -403,7 +403,10 @@ export default Ember.Mixin.create({
                 $('.video-record-mixin-wait-for-video-text').html(`${expFormat(this.get('waitForUploadMessage'))}`);
                 this.showWaitForVideoCover();
             }
-            return recorder.stop(this.get('maxUploadSeconds') * 1000);
+            return recorder.stop(this.get('maxUploadSeconds') * 1000)
+                .catch((e) => {
+                    throw new Error(`Error stopping recorder and uploading: ${e}`);
+                });
         } else {
             // reject the promise because the recorder is in one of the following states:
             // - doesn't exist, or is not recording, or has been destroyed
@@ -444,6 +447,7 @@ export default Ember.Mixin.create({
             .catch((err) => {
                 console.error(`Error playing video: ${err.name}: ${err.message}`);
                 console.trace();
+                throw new Error('Error playing video');
             });
     },
 
