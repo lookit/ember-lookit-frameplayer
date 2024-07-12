@@ -55,6 +55,10 @@ and data collected that come from the following more general sources:
 - :ref:`video-record`
 - :ref:`expand-assets`
 
+.. admonition:: Do not use with session recording
+    :class: warning
+
+    The video-consent frame is not meant to be used with simultaneous session recording. If you'd like to use session recording during your experiment, you should start the session recording *after* the video-consent frame.
 
 Example
 ----------------

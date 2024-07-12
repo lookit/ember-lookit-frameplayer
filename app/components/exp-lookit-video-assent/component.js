@@ -29,9 +29,14 @@ let {
 export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
     layout,
     frameType: 'CONSENT',
+    anyPageHasWebcam: function() {
+        return this.pages.some( page => page['showWebcam'] )
+    },
+    // True if there is any recording or webcam display, otherwise false.
     doUseCamera: Em.computed('recordWholeProcedure', 'recordLastPage', function() {
-        return (this.get('recordWholeProcedure') || this.get('recordLastPage'));
+        return (this.get('recordWholeProcedure') || this.get('recordLastPage') || this.anyPageHasWebcam());
     }),
+    // Determines the presence/absence of 'please wait' text in the template
     recorderInitializing: Em.computed('recorder.hasCamAccess', 'recorderReady', 'doUseCamera', function () {
         return (this.doUseCamera && (!this.get('recorder.hasCamAccess') || !this.recorderReady));
     }),
@@ -455,14 +460,20 @@ export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
         }
     },
 
-    // Override to delay stimuli presentation until recorder is ready
+    // Override to delay first page stimulus presentation until recorder is ready
     whenPossibleToRecordObserver: observer('recorder.hasCamAccess', 'recorderReady', function() {
-        if (this.get('recorder.hasCamAccess') && this.get('recorderReady')) {
-            if (this.get('recordLastPage') && this.get('pageIndex') === -1) {
+        if (this.get('recorder.hasCamAccess') && this.get('recorderReady') && (this.get('pageIndex') == -1)) {
+            if (this.get('startRecordingAutomatically')) {
+                // Start recording, and the 'recording started' callback will
+                // trigger the first page stimulus presentation.
+                if (!(this.get('recorder.recording')) && !(this.get('starting'))) {
+                    this.set('starting', true);
+                    this.startRecorder();
+                }
+            } else {
+                // If we're only recording the last page and/or showing the webcam
+                // in any of the pages, then we can present the first page stimulus.
                 this.send('nextVideo');
-            } else if (this.get('doUseCamera') && this.get('startRecordingAutomatically') && !(this.get('recorder.recording')) && !(this.get('starting'))) {
-                this.set('starting', true);
-                this.startRecorder();
             }
         }
     }),
@@ -512,8 +523,9 @@ export default ExpFrameBaseComponent.extend(VideoRecord, ExpandAssets, {
         this.set('hasCompletedEachPageVideo', hasCompletedEachPageVideo);
 
         this.set('pageIndex', -1);
-        if (!this.get('recordLastPage') && !this.get('startRecordingAutomatically')) {
-            // no recording, start immediately
+        if (!this.get('doUseCamera')) {
+            // If there's no webcam display or recording, then show the first page immediately.
+            // Otherwise the 'when possible to record' callback will trigger the first page presentation.
             this.send('nextVideo');
         }
 
