@@ -714,9 +714,13 @@ let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
                     _this.sendAction('next', frameIndex);
                 } else {
                     this.get('session').set('recordingInProgress', false);
-                    this.stopSessionRecorder().finally(() => {
-                        _this.sendAction('next', frameIndex);
-                    });
+                    // Error catching/logging for stopping/upload problems is
+                    // handled inside stopSessionRecorder. The finally callback ensures that the
+                    // participant moves on after the stop promise is no longer pending.
+                    this.stopSessionRecorder()
+                        .finally(() => {
+                            _this.sendAction('next', frameIndex);
+                        });
                 }
             } else {
                 this.sendAction('next', frameIndex);
