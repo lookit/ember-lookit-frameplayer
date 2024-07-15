@@ -52,8 +52,7 @@ let {
  * See 'methods' for the functions you can use on a frame that extends VideoRecord.
  *
  * Events recorded in a frame that extends VideoRecord will automatically have additional
- * fields videoId (video filename), pipeId (temporary filename initially assigned by
- * the recording service), and streamTime (when in the video they happened, in s).
+ * fields videoId (video filename) and streamTime (when in the video they happened, in s).
  *
  * Setting up the camera is handled in didInsertElement, and making sure recording is
  * stopped is handled in willDestroyElement (Ember hooks that fire during the component

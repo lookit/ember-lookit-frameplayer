@@ -33,9 +33,7 @@ let {
  * See 'methods' for the functions you can use on a frame that extends SessionRecord.
  *
  * Events recorded in a frame that extends SessionRecord will automatically have additional
- * fields sessionVideoId (video filename), pipeId (temporary filename initially assigned by
- * the recording service),
- * and streamTime (when in the video they happened, in s).
+ * fields sessionVideoId (video filename), and streamTime (when in the video they happened, in s).
  *
  * @class Session-record
  */
