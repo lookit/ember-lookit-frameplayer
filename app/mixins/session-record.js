@@ -160,14 +160,16 @@ export default Ember.Mixin.create({
             _this.get('sessionRecorder').set('hasCamAccess', hasAccess);
             if (!(_this.get('isDestroyed') || _this.get('isDestroying'))) {
                 _this.send('setTimeEvent', 'sessionRecorder.hasCamAccess', {
-                    hasCamAccess: hasAccess
+                    hasCamAccess: hasAccess,
+                    sessionVideoId: sessionVideoId,
                 });
             }
         });
         sessionRecorder.on('onConnectionStatus', (recId, status) => {   // eslint-disable-line no-unused-vars
             if (!(_this.get('isDestroyed') || _this.get('isDestroying'))) {
                 _this.send('setTimeEvent', 'videoStreamConnection', {
-                    status: status
+                    status: status,
+                    sessionVideoId: sessionVideoId
                 });
                 _this.notifyPropertyChange('whenPossibleToRecordSession');
             }
@@ -194,9 +196,7 @@ export default Ember.Mixin.create({
                  *
                  * @event startSessionRecording
                  */
-                _this.send('setTimeEvent', 'startSessionRecording', {
-                    sessionPipeId: sessionRecorder.get('videoName')
-                });
+                _this.send('setTimeEvent', 'startSessionRecording');
             });
         } else {
             return Ember.RSVP.reject();
@@ -217,7 +217,9 @@ export default Ember.Mixin.create({
              * @event stopSessionRecording
              */
             this.get('session').set('recordingInProgress',false);
-            this.send('setTimeEvent', 'stopSessionRecording');
+            this.send('setTimeEvent', 'stopSessionRecording', {
+                sessionVideoId: this.get('session').get('videoId')
+            });
             return sessionRecorder.stop(this.get('sessionMaxUploadSeconds') * 1000);
         } else {
             return Ember.RSVP.reject();
@@ -232,7 +234,9 @@ export default Ember.Mixin.create({
         const recorder = this.get('sessionRecorder');
         if (recorder) {
             if (!(this.get('isDestroyed') || this.get('isDestroying'))) {
-                this.send('setTimeEvent', 'destroyingRecorder');
+                this.send('setTimeEvent', 'destroyingRecorder', {
+                    sessionVideoId: this.get('session').get('videoId')
+                });
             }
             recorder.destroy();
             $(`#${this.get('sessionRecorderElement')}`).remove();
@@ -249,7 +253,9 @@ export default Ember.Mixin.create({
                  *
                  * @event sessionRecorderReady
                  */
-                _this.send('setTimeEvent', 'sessionRecorderReady');
+                _this.send('setTimeEvent', 'sessionRecorderReady', {
+                    sessionVideoId: this.get('session').get('videoId')
+                });
                 _this.get('session').set('recordingInProgress', true);
                 _this.set('sessionRecorderReady', true);
                 _this.whenPossibleToRecordSessionObserver(); // make sure this fires
