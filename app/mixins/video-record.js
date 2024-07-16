@@ -358,19 +358,26 @@ export default Ember.Mixin.create({
         const recorder = this.get('recorder');
         var _this = this;
         if (recorder) {
-            return recorder.record().then(() => {
-                this.send('setTimeEvent', 'startRecording');
-                if (this.get('videoList') == null) {
-                    this.set('videoList', [this.get('videoId')]);
-                } else {
-                    this.set('videoList', this.get('videoList').concat([this.get('videoId')]));
-                }
-                _this.set('starting', false);
-                _this.hideWaitForVideoCover();
-                _this.onRecordingStarted();
-            });
+            return recorder.record()
+                .then(() => {
+                    this.send('setTimeEvent', 'startRecording');
+                    if (this.get('videoList') == null) {
+                        this.set('videoList', [this.get('videoId')]);
+                    } else {
+                        this.set('videoList', this.get('videoList').concat([this.get('videoId')]));
+                    }
+                    _this.set('starting', false);
+                    _this.hideWaitForVideoCover();
+                    _this.onRecordingStarted();
+                })
+                .catch((err) => {
+                    this.send('setTimeEvent', 'errorStartingRecording', {
+                        error: err
+                    });
+                    console.error(`Error starting recording for file: ${_this.get('videoName')}\n${err.name}: ${err.message}`);
+                });
         } else {
-            return Ember.RSVP.resolve();
+            return Ember.RSVP.reject(new Error('Must call setupRecorder before startRecorder'));
         }
     },
 
@@ -402,8 +409,21 @@ export default Ember.Mixin.create({
                 this.showWaitForVideoCover();
             }
             return recorder.stop(this.get('maxUploadSeconds') * 1000)
+                .then(() => {
+                    this.send('setTimeEvent', 'uploadComplete');
+                })
                 .catch((e) => {
-                    throw new Error(`Error stopping recorder and uploading: ${e}`);
+                    // This block catches upload timeouts and any other errors related to stopping the recorder or uploading the data.
+                    // This session recorder stop promise rejection will not cause the experiment to stop with an error,
+                    // because the code waiting on this promise is in a "finally" block (rather than "then").
+                    if (e == 'uploadTimedout') {
+                        this.send('setTimeEvent', 'recordingUploadTimedout');
+                    } else {
+                        this.send('setTimeEvent', 'errorStoppingRecorder', {
+                            error: e
+                        });
+                        throw new Error(`Error stopping recorder and uploading: ${e}`);
+                    }
                 });
         } else {
             // reject the promise because the recorder is in one of the following states:
