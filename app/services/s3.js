@@ -70,23 +70,29 @@ class S3 {
         throw Error(`Upload part failed after 3 attempts.\nError: ${err}`);
     }
 
-    async completeUpload() {
+    completeUpload() {
         this.hasStartedCompletingUpload = true;
         this.addUploadPartPromise();
-        this.parts = await Promise.all(this.promises);
 
-        return this.s3.completeMultipartUpload({
-            Bucket: this.env.bucket,
-            Key: this.key,
-            MultipartUpload: {
-                Parts: this.parts
-            },
-            UploadId: this.uploadId
-        }).promise()
+        return Promise.all(this.promises)
+            .then((parts) => {
+                this.parts = parts;
+                return this.s3.completeMultipartUpload({
+                    Bucket: this.env.bucket,
+                    Key: this.key,
+                    MultipartUpload: {
+                        Parts: this.parts
+                    },
+                    UploadId: this.uploadId
+                }).promise();
+            })
             .then((resp) => {
                 this.logRecordingEvent(`Upload complete: ${resp.Location}`);
             })
             .catch((e) => {
+                // This block will catch any errors in promise chain (uploadPart and completeMultipartUpload).
+                // Throwing another error here ensures it will be caught and logged in the researcher data
+                // via the video/session-record mixin's stop method.
                 this.logRecordingEvent(`Error completing upload: ${e}`);
                 throw new Error(`Error completing upload: ${e}`);
             });
