@@ -547,7 +547,7 @@ const VideoRecorder = Ember.Object.extend({
 
     on(hookName, func) {
         if (this.get('hooks').indexOf(hookName) === -1) {
-            throw `Invalid event ${hookName}`;
+            throw new Error(`Invalid event ${hookName}`);
         }
         this.set(hookName, func);
     },
