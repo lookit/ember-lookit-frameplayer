@@ -371,7 +371,7 @@ const VideoRecorder = Ember.Object.extend({
      * @method record
      * @return {Promise}
      */
-    async record() {
+    record() {
         if (!this.get('started')) {
             throw new Error('Must call install before record');
         }
@@ -381,38 +381,40 @@ const VideoRecorder = Ember.Object.extend({
             return null;
         }
         
-        await _this.get('s3').createUpload();
-
-        if (_this.get('recorder').onConnectionStatus) {
-            let id = _this.get('recorderId');
-            _this.get('recorder').onConnectionStatus.call(_this, id, 'connected'); 
-        }
-            
-        _this.get('recorder').startRecording()
-            .then(()=> {
+        return _this.get('s3').createUpload()
+            .then(() => {
+                if (_this.get('recorder').onConnectionStatus) {
+                    let id = _this.get('recorderId');
+                    _this.get('recorder').onConnectionStatus.call(_this, id, 'connected');
+                }
+                return _this.get('recorder').startRecording();
+            })
+            .then(() => {
                 _this.set('_startTime', performance.now());
-                _this.get('recorder').onRecordingStarted.call(_this); 
+                _this.get('recorder').onRecordingStarted.call(_this);
                 if (_this.get('maxRecordingTime') !== null) {
                     _this.set('_stopTimeout', window.setTimeout(function() {
                         console.warn(`Reached max recording time for file: ${_this.get('videoName')}`);
                         _this.stop();
                     }, _this.get('maxRecordingTime')*1000));
                 }
-            })
-            .catch((err) => {
-                console.error(`Error starting recording for file: ${_this.get('videoName')}\n${err.name}: ${err.message}`);
-            });
-
-        return new RSVP.Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
-            if (_this.get('recording')) {
-                resolve(this);
-            } else {
-                _this.set('_recordPromise', {
-                    resolve,
-                    reject
+                return new RSVP.Promise((resolve, reject) => {
+                    // Return new promise that either resolves immediately, if recording has started,
+                    // or is saved so that it can be resolved via the onRecordingStarted callback.
+                    if (_this.get('recording')) {
+                        resolve(this);
+                    } else {
+                        _this.set('_recordPromise', {
+                            resolve,
+                            reject
+                        });
+                    }
                 });
-            }
-        });
+            })
+            .catch((e) => {
+                console.error(`Error starting recorder:\n${e}`);
+                throw new Error(`Error starting recorder:  ${e}`);
+            })
     },
 
     /**
