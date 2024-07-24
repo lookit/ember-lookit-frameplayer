@@ -130,8 +130,8 @@ If your frame uses the video-record mixin, you may see the following in addition
 
 :startRecording: When video recorder has actually started recording
 
-    :pipeId: [String] Original filename assigned by the Pipe client. May be used for troubleshooting.
-
 :stoppingCapture: Just before stopping webcam video capture
 
 :destroyingRecorder: When video recorder is about to be destroyed before next frame
+
+All video-related events should include the ``videoId`` (video filename).

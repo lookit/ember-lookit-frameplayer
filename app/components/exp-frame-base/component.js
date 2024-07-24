@@ -621,10 +621,11 @@ let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
             timestamp: curTime.toISOString()
         };
         Ember.assign(eventData, extra);
-        // Add some extra info if there's session recording ongoing
+        // Add some extra info if there's session recording in progress (stream time and video ID)
         if (this.get('sessionRecorder') && this.get('sessionRecordingInProgress')) {
             Ember.assign(eventData, {
-                sessionStreamTime: this.get('sessionRecorder').getTime()
+                sessionStreamTime: this.get('sessionRecorder').getTime(),
+                sessionVideoId: this.get('sessionRecorder').get('videoName')
             });
         }
         return eventData;
