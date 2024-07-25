@@ -416,7 +416,7 @@ export default Ember.Mixin.create({
                     // This block catches upload timeouts and any other errors related to stopping the recorder or uploading the data.
                     // This session recorder stop promise rejection will not cause the experiment to stop with an error,
                     // because the code waiting on this promise is in a "finally" block (rather than "then").
-                    if (e == 'uploadTimedout') {
+                    if (e.message == 'uploadTimedout') {
                         this.send('setTimeEvent', 'recordingUploadTimedout');
                     } else {
                         this.send('setTimeEvent', 'errorStoppingRecorder', {
