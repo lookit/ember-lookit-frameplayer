@@ -466,7 +466,7 @@ const VideoRecorder = Ember.Object.extend({
                 })
                 .then(() => {
                     // After upload completed successfully
-                    _this._onUploadDone(this.get('recorderId'), this.get('s3').key);
+                    _this.onUploadDone(this.get('recorderId'), this.get('s3').key);
                 })
                 .catch((e) => {
                     throw new Error(`${e}`);
