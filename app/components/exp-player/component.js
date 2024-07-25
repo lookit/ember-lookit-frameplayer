@@ -99,7 +99,6 @@ export default Ember.Component.extend(FullScreen, {
     stopAndDestroyRecorders() {
         // Stop/destroy session recorder if needed
         if (this.get('session').get('recorder')) {
-            console.log('try to upload session recording');
             var sessionRecorder = this.get('session').get('recorder');
             this.get('session').set('recordingInProgress', false);
             if (sessionRecorder.get('recording')) {
@@ -113,7 +112,6 @@ export default Ember.Component.extend(FullScreen, {
 
         // stop/destroy trial recorder if needed
         if (this.get('recorder') && this.get('recorder').get('recording')) {
-            console.log('try to upload trial recording');
             this.stopRecorder().finally(() => {
                 this.destroyRecorder();
             });
