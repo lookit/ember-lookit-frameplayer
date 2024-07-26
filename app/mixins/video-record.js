@@ -375,6 +375,7 @@ export default Ember.Mixin.create({
                         error: err
                     });
                     console.error(`Error starting recording for file: ${_this.get('videoName')}\n${err.name}: ${err.message}`);
+                    throw new Error(`Error starting recording for file: ${_this.get('videoName')}\n${err.name}: ${err.message}`)
                 });
         } else {
             return Ember.RSVP.reject(new Error('Must call setupRecorder before startRecorder'));
