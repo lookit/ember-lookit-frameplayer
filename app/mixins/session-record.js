@@ -194,13 +194,21 @@ export default Ember.Mixin.create({
         const sessionRecorder = this.get('sessionRecorder');
         if (sessionRecorder) {
             var _this = this;
-            return sessionRecorder.record().then(() => {
-                /**
-                 * When session video recorder has begun recording
-                 *
-                 * @event startSessionRecording
-                 */
-                _this.send('setTimeEvent', 'startSessionRecording');
+            return sessionRecorder.record()
+                .then(() => {
+                    /**
+                     * When session video recorder has begun recording
+                     *
+                     * @event startSessionRecording
+                     */
+                    _this.send('setTimeEvent', 'startSessionRecording');
+                })
+                .catch((err) => {
+                    this.send('setTimeEvent', 'errorStartingSessionRecording', {
+                        error: err
+                    });
+                    console.error(`Error starting session recording for file: ${_this.get('session').get('videoId')}\n${err.name}: ${err.message}`);
+                    throw new Error(`Error starting session recording for file: ${_this.get('session').get('videoId')}\n${err.name}: ${err.message}`)
                 });
         } else {
             return Ember.RSVP.reject(new Error('Must call setupSessionRecorder before startSessionRecorder'));
