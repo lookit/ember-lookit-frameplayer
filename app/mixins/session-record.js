@@ -205,7 +205,7 @@ export default Ember.Mixin.create({
                 })
                 .catch((err) => {
                     this.send('setTimeEvent', 'errorStartingSessionRecording', {
-                        error: err
+                        error: err.message
                     });
                     console.error(`Error starting session recording for file: ${_this.get('session').get('videoId')}\n${err.name}: ${err.message}`);
                     throw new Error(`Error starting session recording for file: ${_this.get('session').get('videoId')}\n${err.name}: ${err.message}`)
@@ -251,7 +251,7 @@ export default Ember.Mixin.create({
                         });
                     } else {
                         this.send('setTimeEvent', 'errorStoppingSessionRecording', {
-                            error: e,
+                            error: e.message,
                             sessionVideoId: this.get('session').get('videoId')
                         });
                         throw new Error(`Error stopping session recorder and uploading: ${e}`);

@@ -372,7 +372,7 @@ export default Ember.Mixin.create({
                 })
                 .catch((err) => {
                     this.send('setTimeEvent', 'errorStartingRecording', {
-                        error: err
+                        error: err.message
                     });
                     console.error(`Error starting recording for file: ${_this.get('videoName')}\n${err.name}: ${err.message}`);
                     throw new Error(`Error starting recording for file: ${_this.get('videoName')}\n${err.name}: ${err.message}`)
@@ -421,7 +421,7 @@ export default Ember.Mixin.create({
                         this.send('setTimeEvent', 'recordingUploadTimedout');
                     } else {
                         this.send('setTimeEvent', 'errorStoppingRecorder', {
-                            error: e
+                            error: e.message
                         });
                         throw new Error(`Error stopping recorder and uploading: ${e}`);
                     }
