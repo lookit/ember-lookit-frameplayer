@@ -33,20 +33,28 @@
 
                 <div class="exp-lookit-assent-visual-container">
 
-                    {{#if currentPage.imgSrc}}
-                        <img class="exp-lookit-assent-image" src={{currentPage.imgSrc}} alt={{currentPage.altText}}>
-                    {{/if}}
-
                     <div class="row recorder-container {{unless currentPage.showWebcam "hidden-webcam"}}">
                         <div id="recorder" class="col-xs-12"></div>
                     </div>
 
-                    <video id="assent-video" class="exp-lookit-assent-image {{unless currentPage.video "hidden"}}" controls onended={{action "videoCompleted"}}>
-                        {{#each currentPage.video as |vidsource|}}
-                            <source src={{vidsource.src}} type={{vidsource.type}}>
-                        {{/each}}
-                        Your browser does not support the video tag.
-                    </video>
+                    {{#if recorderInitializing}}
+
+                        ({{t "please wait, setting up" }}...)
+
+                    {{else}}
+
+                        {{#if currentPage.imgSrc}}
+                            <img class="exp-lookit-assent-image" src={{currentPage.imgSrc}} alt={{currentPage.altText}}>
+                        {{/if}}
+
+                        <video id="assent-video" class="exp-lookit-assent-image {{unless currentPage.video "hidden"}}" controls onended={{action "videoCompleted"}}>
+                            {{#each currentPage.video as |vidsource|}}
+                                <source src={{vidsource.src}} type={{vidsource.type}}>
+                            {{/each}}
+                            Your browser does not support the video tag.
+                        </video>
+
+                    {{/if}}
 
                 </div>
 
