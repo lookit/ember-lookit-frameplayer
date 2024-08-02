@@ -14,10 +14,10 @@ Submit: 送信する
 consent-template-5:
   benefits-header: 研究・調査に参加するメリットは何ですか？
   contact-header: 私たちへの連絡方法
-  contact-statement-1: この研究・調査は、{name}の{institution}によって運営されています。この研究について質問や懸念がある場合、{omit_injury, select, true
+  contact-statement-1: この研究・調査は、{name}の{institution}によって運営されています。この研究について{only_adult, select, true {} other {}}質問や懸念がある場合、{omit_injury, select, true
     {} other {あるいは、万が一、研究・調査に関して傷害が発生した場合、}} {contact}までご連絡ください。
-  contact-statement-2: Lookitプラットフォームに関する質問や懸念をお持ちの場合は、Lookitスタッフ（lookit@mit.edu）までご連絡ください。
-  data-collection-1: 研究・調査の間、参加者は、コンピュータについているウェブカメラとマイクで録画・録音されます。
+  contact-statement-2: {only_adult, select, true {} other {}}Lookitプラットフォームに関する質問や懸念をお持ちの場合は、Lookitスタッフ（lookit@mit.edu）までご連絡ください。
+  data-collection-1: 研究・調査の間、参加者{only_adult, select, true {} other {}}は、コンピュータについているウェブカメラとマイクで録画・録音されます。
   data-collection-2: 録画されたウェブカメラのデータや、フォームに記入された回答などの他のデータは、Lookitプラットフォームに安全に送信されます。Lookit上で、参加者はいつでも過去の録画を閲覧することができます。
   data-collection-3: データは、Lookitのサーバおよび研究グループによって安全に保管され、こちらの文書に記載された方法でのみ共有されます。ただし、インターネットを介してデータを扱う特性上、データが傍受されたり、保存されたデータのセキュリティーが損なわれたりする可能性がないとは言えません。
   data-collection-header: データ収集とウェブカメラでの録画について
