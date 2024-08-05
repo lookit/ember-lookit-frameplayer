@@ -21,7 +21,7 @@ this-field-is-required: champ requis
 exp-lookit-exit-survey:
     confirm-birthdate: Veuillez confirmer la date de naissance de votre enfant
     why-birthdate: Nous vous demandons à nouveau en cas d'erreur lors de l'enregistrement ou de sélection par erreur d'un enfant différent au début de l'étude.
-    q-databrary: Voulez-vous partager votre vidéo et autres données provenant de cette session avec les utilisateurs autorisés ayant accès à la banque de données sécuritaire Databrary?
+    q-databrary: Voulez-vous partager votre vidéo et autres données provenant de cette session avec les utilisateurs autorisés ayant accès à la banque de données sécurisée Databrary?
     databrary-info: Seuls les utilisateurs autorisés auront accès aux renseignements contenus dans cette banque de données. Pour avoir y avoir accès, les chercheurs doivent accepter de préserver la confidentialité des renseignements et de ne pas les utiliser à des fins commerciales. Le partage des données aide à accélérer le progrès de la recherche sur le développement et le comportement humains. Pour plus d'informations sur la banque de données et le partage des données, voir <a href="https://nyu.databrary.org/" target="_blank" rel="noopener noreferrer">Databrary</a> ou écrire à ethics@databrary.org.
     acceptable-use-header: Usage d'extraits et images vidéo
     private-option-part-1: <strong>Privé:</strong> La vidéo ne peut être visionnée que par des chercheurs autorisés
@@ -128,7 +128,7 @@ consent-template-5:
     data-use-researchers-content-1: Si vous participez à cette étude, nous (les chercheurs de {institution} sous la direction de {name}) auront accès à
     data-use-researchers-item-1: enregistrements à partir de votre webcam et autre données recueillies durant cette session
     data-use-researchers-item-2: le profil de votre compte et votre questionnaire démographique
-    data-use-researchers-item-3: le profil {only_adult, select, true {} other {enfant}} pour le/la/l' {only_adult, select, true {membre de la famille} other {enfant}} qui participe
+    data-use-researchers-item-3: le profil {only_adult, select, true {} other {enfant}} pour {only_adult, select, true {le/la membre de la famille} other {l'enfant}} qui participe
     data-use-researchers-content-2: Ceci inclut toute modification future que vous apporterez à ces informations. Nous pourrions rassembler divers types d'informations pour en apprendre plus sur le développement de l'enfant. Par exemple, si {only_adult, select, true {vous participez} other {votre enfant participe}} à plus d'une étude menée par notre groupe de recherche, nous pourrions comparer {only_adult, select, true {vos} other {ses}} réponses provenant de différentes études, ou encore déterminer {only_adult, select, true {comment vos réponses sont liées à celles d'autres membres de votre famille} other {si frères et sœurs ont tendance à répondre de façon similaire}}. Nous pourrions aussi étudier les liens entre {only_adult, select, true {vos réponses} other {les réponses de vos enfants}} et les données du questionnaire démographique de votre famille.
     data-use-Lookit-header: Comment Lookit utilise vos données
     data-use-Lookit-content: L'équipe centrale de Lookit à MIT aura aussi accès aux données recueillies pendant cette session, ainsi qu'aux données de votre compte. Ces données seront utilisées pour maintenir et améliorer Lookit, par exemple afin de fournir un soutien technique, de vérifier le fonctionnement de la collecte de données, ou afin de déterminer si Lookit parvient à rejoindre des populations diversifiées. Les données seront conservées en permanence à moins que vous ne retiriez vos enregistrements à la fin de l'étude. 
@@ -239,9 +239,9 @@ exp-video-config:
     camera-check: Assurez-vous d'être en mesure de voir la vidéo de votre webcam à l'extérieur de Lookit. (Par exemple, sur un Mac, essayez Photobooth.)
     try-another-browser: L'approche la plus simple serait d'utiliser un navigateur différent si vous en avez un qui est installé. Par exemple, si vous utilisez Firefox, essayez avec Chrome, ou vice versa. D'autre part, mettez à jour le navigateur si vous n'avez pas la version la plus récente. Vous pouvez vérifier ceci en sélectionnant «Chrome» -> «À propos de Chrome» ou «Firefox» -> «À propos de Firefox» dans la barre des menus. (Ceci est souhaitable de toute façon pour vous assurer d'avoir les mises à jour de sécurité les plus récentes). 
     chrome-incognito: Utilisez-vous Chrome? Assurez-vous de ne pas utiliser une fenêtre Incognito - vous seriez incapable de sauvegarder et d'utiliser les paramètres pendant la durée l'étude. 
-    additional-troubleshooting-contact: Si vous n'arrivez toujours pas à trouver, c'est de notre faute. S'il vous plaît, faites-le-nous savoir pour que nous puissions améliorer le site! Écrivez-nous à lookit-tech@mit.edu avec une brève description de ce qui s'est passé. Veuillez aussi inclure le navigateur web que vous utilisez (Firefox, Chrome, IE, Safari, etc.), les mesures vous avez essayées, et l'ID de cette session.
+    additional-troubleshooting-contact: Si vous n'arrivez toujours pas à trouver, c'est de notre faute. S'il vous plaît, faites-le-nous savoir pour que nous puissions améliorer le site! Écrivez-nous à lookit-tech@mit.edu avec une brève description de ce qui s'est passé. Veuillez aussi inclure le navigateur web que vous utilisez (Firefox, Chrome, IE, Safari, etc.), les mesures que vous avez essayées, et l'ID de cette session.
 
 
 exp-video-config-quality:
     checkbox-warning: Veuillez sélectionner la boîte «{completedItemText}» en-dessous de chaque instruction avant de poursuivre.
-    recording-warning: Veuillez essayer d'enregistrer et de visionner une vidéo avant de poursuivre. 
+    recording-warning: Veuillez essayer d'enregistrer et de visionner une vidéo avant de poursuivre.
