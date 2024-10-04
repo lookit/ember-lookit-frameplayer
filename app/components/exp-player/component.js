@@ -96,6 +96,28 @@ export default Ember.Component.extend(FullScreen, {
             });
     },
 
+    stopAndDestroyRecorders() {
+        // Stop/destroy session recorder if needed
+        if (this.get('session').get('recorder')) {
+            var sessionRecorder = this.get('session').get('recorder');
+            this.get('session').set('recordingInProgress', false);
+            if (sessionRecorder.get('recording')) {
+                sessionRecorder.stop().finally(() => {
+                    sessionRecorder.destroy();
+                });
+            } else {
+                sessionRecorder.destroy();
+            }
+        }
+
+        // stop/destroy trial recorder if needed
+        if (this.get('recorder') && this.get('recorder').get('recording')) {
+            this.stopRecorder().finally(() => {
+                this.destroyRecorder();
+            });
+        }
+    },
+
     _registerHandlers() {
         $(window).on('beforeunload', this.beforeUnload.bind(this));
         var _this = this;
@@ -260,18 +282,8 @@ export default Ember.Component.extend(FullScreen, {
         },
 
         exitEarly() {
-            // Stop/destroy session recorder if needed
-            if (this.get('session').get('recorder')) {
-                var sessionRecorder = this.get('session').get('recorder');
-                this.get('session').set('recordingInProgress', false);
-                if (sessionRecorder.get('recording')) {
-                    sessionRecorder.stop().finally(() => {
-                        sessionRecorder.destroy();
-                    });
-                } else {
-                    sessionRecorder.destroy();
-                }
-            }
+
+            this.stopAndDestroyRecorders();
 
             Ember.$(window).off('keydown');
             // Save any available data immediately

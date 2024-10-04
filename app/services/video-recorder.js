@@ -116,7 +116,6 @@ const VideoRecorder = Ember.Object.extend({
     _micChecked: false, // Has the microphone ever exceeded minVolume?
     _recordPromise: null,
     _stopTimeout: null,
-    _stopPromise: null,
     _isUploaded: false,
     _processorNode: null,
     _lastState: null,
@@ -371,7 +370,7 @@ const VideoRecorder = Ember.Object.extend({
      * @method record
      * @return {Promise}
      */
-    async record() {
+    record() {
         if (!this.get('started')) {
             throw new Error('Must call install before record');
         }
@@ -381,38 +380,40 @@ const VideoRecorder = Ember.Object.extend({
             return null;
         }
         
-        await _this.get('s3').createUpload();
-
-        if (_this.get('recorder').onConnectionStatus) {
-            let id = _this.get('recorderId');
-            _this.get('recorder').onConnectionStatus.call(_this, id, 'connected'); 
-        }
-            
-        _this.get('recorder').startRecording()
-            .then(()=> {
+        return _this.get('s3').createUpload()
+            .then(() => {
+                if (_this.get('recorder').onConnectionStatus) {
+                    let id = _this.get('recorderId');
+                    _this.get('recorder').onConnectionStatus.call(_this, id, 'connected');
+                }
+                return _this.get('recorder').startRecording();
+            })
+            .then(() => {
                 _this.set('_startTime', performance.now());
-                _this.get('recorder').onRecordingStarted.call(_this); 
+                _this.get('recorder').onRecordingStarted.call(_this);
                 if (_this.get('maxRecordingTime') !== null) {
                     _this.set('_stopTimeout', window.setTimeout(function() {
                         console.warn(`Reached max recording time for file: ${_this.get('videoName')}`);
                         _this.stop();
                     }, _this.get('maxRecordingTime')*1000));
                 }
-            })
-            .catch((err) => {
-                console.error(`Error starting recording for file: ${_this.get('videoName')}\n${err.name}: ${err.message}`);
-            });
-
-        return new RSVP.Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
-            if (_this.get('recording')) {
-                resolve(this);
-            } else {
-                _this.set('_recordPromise', {
-                    resolve,
-                    reject
+                return new RSVP.Promise((resolve, reject) => {
+                    // Return new promise that either resolves immediately, if recording has started,
+                    // or is saved so that it can be resolved via the onRecordingStarted callback.
+                    if (_this.get('recording')) {
+                        resolve(this);
+                    } else {
+                        _this.set('_recordPromise', {
+                            resolve,
+                            reject
+                        });
+                    }
                 });
-            }
-        });
+            })
+            .catch((e) => {
+                console.error(`Error starting recorder:\n${e}`);
+                throw new Error(`Error starting recorder:  ${e}`);
+            })
     },
 
     /**
@@ -423,7 +424,7 @@ const VideoRecorder = Ember.Object.extend({
      */
     getTime() {
         let recorder = this.get('recorder');
-        if (recorder && this._started && this._startTime) {
+        if (recorder && this._started && this._startTime && this.get('_recording')) {
             let ts = Math.round(performance.now() - this._startTime);
             return ts; 
         }
@@ -435,39 +436,44 @@ const VideoRecorder = Ember.Object.extend({
      * @method stop
      * @return {Promise}
      */
-    async stop(maxUploadTimeMs = 7000) {
+    stop(maxUploadTimeMs = 7000) {
         
         if (this.get('_stopTimeout') !== null) {
             window.clearTimeout(this.get('_stopTimeout'));
         }
         var _this = this;
-        var _stopPromise = new RSVP.Promise((resolve, reject) => {
-            // If we reach the upload time limit maxUploadTimeMs, call reject
-            _this.set('uploadTimeout', window.setTimeout(function () {
-                console.warn(`Waiting for upload timed out: ${_this.get('videoName')}`);
-                window.clearTimeout(_this.get('uploadTimeout'));
-                reject();
-            }, maxUploadTimeMs));
-            if (!_this.get('_isUploaded')) {
-                _this.set('_stopPromise', {
-                    resolve: resolve,
-                    reject: reject
-                });
-            }
-        });
         var recorder = this.get('recorder');
         if (recorder) {
-            try {
-                await recorder.stopRecording();
-                _this.get('recorder').onRecordingStopped.call(_this);
-                await this.get('s3').completeUpload();
-                _this._onUploadDone(this.get('recorderId'), this.get('s3').key); // clears the upload timeout, sets isUploaded to true, resolves stop promise
-            } catch (e) {
-                console.warn(`Error stopping video ${_this.get('videoName')}: ${e}`);
-                throw new Error('Error stopping video.');
-            }
+            // Allow errors to propagate back to the stopRecorder/stopSessionRecorder async functions (which call recorder.stop).
+            // The video/session record mixins can catch errors there and log them in the experiment data.
+            return recorder.stopRecording()
+                .then(() => {
+                    return new RSVP.Promise((resolve, reject) => {
+                        // Return a new promise that resolves via the S3 upload completion,
+                        // and rejects (with 'uploadTimeout' as reason) via the upload timer.
+                        // The rejection is caught and logged in the video/session-record mixins.
+                        _this.get('recorder').onRecordingStopped.call(_this);
+    
+                        _this.set('uploadTimeout', window.setTimeout(function () {
+                            console.warn(`Waiting for upload timed out: ${_this.get('videoName')}`);
+                            window.clearTimeout(_this.get('uploadTimeout'));
+                            reject('uploadTimedout');
+                        }, maxUploadTimeMs));
+                        return this.get('s3').completeUpload()
+                            .then(() => { resolve() })
+                            .catch((e) => { reject(new Error(`${e}`))});
+                    })
+                })
+                .then(() => {
+                    // After upload completed successfully
+                    _this.onUploadDone(this.get('recorderId'), this.get('s3').key);
+                })
+                .catch((e) => {
+                    throw new Error(`${e}`);
+                })
+        } else {
+            throw new Error('Video recorder error: attempting to stop a recorder that does not exist.');
         }
-        return _stopPromise;
     },
 
     /**
@@ -545,7 +551,7 @@ const VideoRecorder = Ember.Object.extend({
 
     on(hookName, func) {
         if (this.get('hooks').indexOf(hookName) === -1) {
-            throw `Invalid event ${hookName}`;
+            throw new Error(`Invalid event ${hookName}`);
         }
         this.set(hookName, func);
     },
@@ -572,19 +578,15 @@ const VideoRecorder = Ember.Object.extend({
         }
     },
 
-    // Once recording finishes uploading, resolve call to stop
-    _onUploadDone(recorderId, streamName, streamDuration, audioCodec, videoCodec, fileType, location) { // eslint-disable-line no-unused-vars
+    // Once recording finishes uploading: clear the upload timeout, set isUploaded flag, and call the on connection closed callback
+    onUploadDone(recorderId, streamName, streamDuration, audioCodec, videoCodec, fileType, location) { // eslint-disable-line no-unused-vars
         window.clearTimeout(this.get('uploadTimeout'));
         this.set('_isUploaded', true);
-        if (this.get('_stopPromise')) {
-            console.log('Upload completed for file: ' + streamName);
-            this.get('_stopPromise').resolve(this);
-            this.set('_stopPromise', null);
-        }
         if (this.get('recorder').onConnectionClosed) {
             let id = this.get('recorderId');
             this.get('recorder').onConnectionClosed(id); 
         }
+        return streamName;
     },
 
     _onCamAccess(recorderId, allowed) { // eslint-disable-line no-unused-vars
