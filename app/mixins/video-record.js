@@ -52,8 +52,7 @@ let {
  * See 'methods' for the functions you can use on a frame that extends VideoRecord.
  *
  * Events recorded in a frame that extends VideoRecord will automatically have additional
- * fields videoId (video filename), pipeId (temporary filename initially assigned by
- * the recording service), and streamTime (when in the video they happened, in s).
+ * fields videoId (video filename) and streamTime (when in the video they happened, in s).
  *
  * Setting up the camera is handled in didInsertElement, and making sure recording is
  * stopped is handled in willDestroyElement (Ember hooks that fire during the component
@@ -295,11 +294,14 @@ export default Ember.Mixin.create({
      * @return {Object} Event data object
      */
     makeTimeEvent(eventName, extra) {
-        // All frames using this mixin will add streamTime to every server event
+        // All frames using this mixin will add streamTime and video ID to every event
         let base = this._super(eventName, extra);
-        Ember.assign(base, {
-            streamTime: this.get('recorder') ? this.get('recorder').getTime() : null
-        });
+        if (this.get('recorder') && this.get('videoId')) {
+            Ember.assign(base, {
+                streamTime: this.get('recorder').getTime(),
+                videoId: this.get('videoId')
+            });
+        }
         return base;
     },
 
@@ -342,9 +344,7 @@ export default Ember.Mixin.create({
             }
         });
         this.set('recorder', recorder);
-        this.send('setTimeEvent', 'setupVideoRecorder', {
-            videoId: videoId
-        });
+        this.send('setTimeEvent', 'setupVideoRecorder');
         
         return installPromise;
     },
@@ -359,9 +359,7 @@ export default Ember.Mixin.create({
         var _this = this;
         if (recorder) {
             return recorder.record().then(() => {
-                this.send('setTimeEvent', 'startRecording', {
-                    pipeId: recorder.get('videoName') // TO DO: change 'pipeId' to something else 
-                });
+                this.send('setTimeEvent', 'startRecording');
                 if (this.get('videoList') == null) {
                     this.set('videoList', [this.get('videoId')]);
                 } else {

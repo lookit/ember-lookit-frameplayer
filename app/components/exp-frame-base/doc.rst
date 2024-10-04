@@ -37,6 +37,7 @@ language [String]
     
     - 'en-us': English, US
     - 'eu': Basque
+    - 'fr': French
     - 'hu': Hungarian
     - 'it': Italian
     - 'ja': Japanese
