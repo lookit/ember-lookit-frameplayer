@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Experiment runner'
+project = 'Lookit Ember Frameplayer'
 copyright = '2020, MIT'
 author = 'MIT'
 
