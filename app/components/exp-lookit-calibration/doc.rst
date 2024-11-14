@@ -269,24 +269,24 @@ rename ``calibrationAudioSources`` and ``calibrationVideoSources``, and remove t
 .. code:: javascript
 
     "sample-physics-calibration": {
-        "kind": "exp-lookit-calibration", <-- change the "kind"
-        "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/", <-- leave this the same
-        "audioTypes": [ <-- leave this the same
+        "kind": "exp-lookit-calibration", // <--  change the "kind"
+        "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/", // <--  leave this the same
+        "audioTypes": [ // <--  leave this the same
             "ogg",
             "mp3"
         ],
-        "videoTypes": [ <-- leave this the same
+        "videoTypes": [ // <--  leave this the same
             "webm",
             "mp4"
         ],
 
-        "calibrationLength": 3000,  <-- leave this the same
-        "calibrationAudio": "chimes",  <-- just rename from "calibrationAudioSources"
-        "calibrationVideo": "attentiongrabber",  <-- just rename from "calibrationVideoSources"
+        "calibrationLength": 3000,  // <--  leave this the same
+        "calibrationAudio": "chimes",  // <--  just rename from "calibrationAudioSources"
+        "calibrationVideo": "attentiongrabber",  // <--  just rename from "calibrationVideoSources"
 
-        "pauseAudio": "pause", <-- leave these the same
+        "pauseAudio": "pause", // <--  leave these the same
         "unpauseAudio": "return_after_pause",
-        "pauseVideo": "attentiongrabber" <-- just rename from "attnSources"
+        "pauseVideo": "attentiongrabber" // <--  just rename from "attnSources"
     }
 
 If your old frame defined ``calibrationPositions``, you can leave that the same too. Otherwise this will continue to
@@ -341,22 +341,22 @@ You can change it to an ``exp-lookit-calibration`` frame just by changing the ``
 .. code:: javascript
 
     "sample-trial": {
-        "kind": "exp-lookit-calibration", <-- change the "kind"
-        "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/", <-- leave this the same
-        "audioTypes": [ <-- leave this the same
+        "kind": "exp-lookit-calibration", // <--  change the "kind"
+        "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/", // <--  leave this the same
+        "audioTypes": [ // <--  leave this the same
             "ogg",
             "mp3"
         ],
-        "videoTypes": [ <-- leave this the same
+        "videoTypes": [ // <--  leave this the same
             "webm",
             "mp4"
         ],
 
-        "calibrationLength": 0, <-- leave this the same
-        "calibrationAudio": "chimes", <-- leave this the same
-        "calibrationVideo": "attentiongrabber", <-- leave this the same
+        "calibrationLength": 0, // <--  leave this the same
+        "calibrationAudio": "chimes", // <--  leave this the same
+        "calibrationVideo": "attentiongrabber", // <--  leave this the same
 
-        "pauseAudio": "pause", <-- leave these the same
+        "pauseAudio": "pause", // <--  leave these the same
         "unpauseAudio": "return_after_pause",
-        "pauseVideo": "attentiongrabber" <-- copy this from announcementVideo
+        "pauseVideo": "attentiongrabber" // <--  copy this from announcementVideo
     }

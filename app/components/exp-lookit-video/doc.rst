@@ -468,36 +468,36 @@ We'll use an ``exp-lookit-video`` frame for this.
 
        "sample-physics-announcement": {
            "kind": "exp-lookit-video",
-           "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/", <-- just keep this from your old frame
-           "audioTypes": [ <-- just keep this from your old frame
+           "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/", // <-- just keep this from your old frame
+           "audioTypes": [ // <-- just keep this from your old frame
                "ogg",
                "mp3"
            ],
-           "videoTypes": [ <-- just keep this from your old frame
+           "videoTypes": [ // <-- just keep this from your old frame
                "webm",
                "mp4"
            ],
 
           "video": {
-               "source": "attentiongrabber", <-- "attnSources"
+               "source": "attentiongrabber", // <-- "attnSources"
                "left": 40,
-               "width": 20, <-- make this fairly small and center it
+               "width": 20, // <-- make this fairly small and center it
                "top": 30,
-               "loop": true <-- video should loop
+               "loop": true // <-- video should loop
            },
            "audio": {
-               "source": "video_02", <-- "audioSources"
-               "loop": false <-- audio should not loop
+               "source": "video_02", // <-- "audioSources"
+               "loop": false // <-- audio should not loop
            },
 
-           "requiredDuration": 2, <-- "announceLength"
+           "requiredDuration": 2, // <-- "announceLength"
            "requireVideoCount": 0,
            "requireAudioCount": 1,
            "doRecording": false,
 
-           "pauseVideo": "attentiongrabber", <-- "attnSources"
-           "pauseAudio": "pause", <-- just keep this from your old frame
-           "unpauseAudio": "return_after_pause" <-- just keep this from your old frame
+           "pauseVideo": "attentiongrabber", // <-- "attnSources"
+           "pauseAudio": "pause", // <-- just keep this from your old frame
+           "unpauseAudio": "return_after_pause" // <-- just keep this from your old frame
       }
 
 The intro phase
@@ -511,32 +511,32 @@ announcement trial looked like above, and just edit the "video" and duration/cou
 
     "sample-physics-intro":
         "kind": "exp-lookit-video",
-        "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/", <-- just keep this from your old frame
-        "audioTypes": [ <-- just keep this from your old frame
+        "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/", // <-- just keep this from your old frame
+        "audioTypes": [ // <-- just keep this from your old frame
            "ogg",
            "mp3"
         ],
-        "videoTypes": [ <-- just keep this from your old frame
+        "videoTypes": [ // <-- just keep this from your old frame
            "webm",
            "mp4"
         ],
 
         "video": {
-           "source": "example_pairing", <-- value of "introSources"
+           "source": "example_pairing", // <-- value of "introSources"
            "width": 40,
-           "left": 30, <-- make this a bit bigger and adjust top/width accordingly
+           "left": 30, // <-- make this a bit bigger and adjust top/width accordingly
            "top": 20,
-           "loop": false <-- don't loop this video
+           "loop": false // <-- don't loop this video
         },
 
-        "requiredDuration": 0, <-- no required duration this time
-        "requireVideoCount": 1, <-- play the video once through
-        "requireAudioCount": 0, <-- no audio to play
-        "doRecording": true, <-- probably do want to record this (unless you're using session recording)
+        "requiredDuration": 0, // <-- no required duration this time
+        "requireVideoCount": 1, // <-- play the video once through
+        "requireAudioCount": 0, // <-- no audio to play
+        "doRecording": true, // <-- probably do want to record this (unless you're using session recording)
 
-        "pauseVideo": "attentiongrabber", <-- "attnSources"
-        "pauseAudio": "pause", <-- just keep this from your old frame
-        "unpauseAudio": "return_after_pause" <-- just keep this from your old frame
+        "pauseVideo": "attentiongrabber", // <-- "attnSources"
+        "pauseAudio": "pause", // <-- just keep this from your old frame
+        "unpauseAudio": "return_after_pause" // <-- just keep this from your old frame
     }
 
 If you're doing recording, you may also want to review the :ref:`video-record` parameters which allow you to specify
@@ -552,34 +552,34 @@ Again, the test phase will be similar to the announcement phase, except that we 
 
     "sample-physics-test": {
        "kind": "exp-lookit-video",
-       "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/", <-- just keep this from your old frame
-       "audioTypes": [ <-- just keep this from your old frame
+       "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/", // <-- just keep this from your old frame
+       "audioTypes": [ // <-- just keep this from your old frame
            "ogg",
            "mp3"
        ],
-       "videoTypes": [ <-- just keep this from your old frame
+       "videoTypes": [ // <-- just keep this from your old frame
            "webm",
            "mp4"
        ],
 
       "video": {
-           "source": "attentiongrabber", <-- "attnSources"
-           "position": "fill", <-- maximize while preserving aspect ratio
-           "loop": true <-- video should loop
+           "source": "attentiongrabber", // <-- "attnSources"
+           "position": "fill", // <--  maximize while preserving aspect ratio
+           "loop": true // <--  video should loop
        },
        "audio": {
-           "source": "music_02", <-- "music_sources"
-           "loop": true <-- audio should loop (although it doesn't have to anymore!)
+           "source": "music_02", // <--  "music_sources"
+           "loop": true // <--  audio should loop (although it doesn't have to anymore!)
        },
 
-       "requiredDuration": 0, <-- if your old frame has "testLength" defined, put it here; otherwise 0
-       "requireVideoCount": 2, <-- if your old frame has "testCount" defined, put it here; otherwise 0
+       "requiredDuration": 0, // <--  if your old frame has "testLength" defined, put it here; otherwise 0
+       "requireVideoCount": 2, // <--  if your old frame has "testCount" defined, put it here; otherwise 0
        "requireAudioCount": 0,
        "doRecording": true,
 
-       "pauseVideo": "attentiongrabber", <-- "attnSources"
-       "pauseAudio": "pause", <-- just keep this from your old frame
-       "unpauseAudio": "return_after_pause" <-- just keep this from your old frame
+       "pauseVideo": "attentiongrabber", // <--  "attnSources"
+       "pauseAudio": "pause", // <--  just keep this from your old frame
+       "unpauseAudio": "return_after_pause" // <--  just keep this from your old frame
     }
 
 Again, you may want to review the new :ref:`video-record` parameters which allow you to specify
@@ -600,71 +600,71 @@ put together all four phases (including the calibration phase as discussed :ref:
     "sample-physics-trial": {
         "kind": "group",
         "frameList": [
-            { <-- This is the announcement
+            { // <--  This is the announcement
                 "video": {
-                   "source": "attentiongrabber", <-- "attnSources"
+                   "source": "attentiongrabber", // <--  "attnSources"
                    "left": 40,
-                   "width": 20, <-- make this fairly small and center it
+                   "width": 20, // <--  make this fairly small and center it
                    "top": 30,
-                   "loop": true <-- video should loop
+                   "loop": true // <--  video should loop
                 },
                 "audio": {
-                   "source": "video_02", <-- "audioSources"
-                   "loop": false <-- audio should not loop
+                   "source": "video_02", // <--  "audioSources"
+                   "loop": false // <--  audio should not loop
                 },
-                "requiredDuration": 2, <-- "announceLength"
+                "requiredDuration": 2, // <--  "announceLength"
                 "requireAudioCount": 1,
                 "doRecording": false
             },
-            { <-- This is calibration
-                "kind": "exp-lookit-calibration" <-- everything else we need is down in commonFrameProperties
+            { // <--  This is calibration
+                "kind": "exp-lookit-calibration" // <--  everything else we need is down in commonFrameProperties
             },
-            { <-- This is the intro
+            { // <--  This is the intro
                 "video": {
-                   "source": "example_pairing", <-- value of "introSources"
-                   "position": "fill" <-- maximize video on screen (preserving aspect ratio)
-                   "loop": true <-- loop this video
+                   "source": "example_pairing", // <--  value of "introSources"
+                   "position": "fill" // <--  maximize video on screen (preserving aspect ratio)
+                   "loop": true // <--  loop this video
                 },
-                "requireVideoCount": 1 <-- play the video once through
+                "requireVideoCount": 1 // <--  play the video once through
             },
-            { <-- This is the test
+            { // <--  This is the test
                 "video": {
-                   "source": "attentiongrabber", <-- "attnSources"
-                   "position": "fill"  <-- maximize while preserving aspect ratio
-                   "loop": true <-- video should loop
+                   "source": "attentiongrabber", // <--  "attnSources"
+                   "position": "fill"  // <--  maximize while preserving aspect ratio
+                   "loop": true // <--  video should loop
                 },
                 "audio": {
-                   "source": "music_02", <-- "music_sources"
-                   "loop": loop <-- audio should loop
+                   "source": "music_02", // <--  "music_sources"
+                   "loop": loop // <--  audio should loop
                 },
-                "requiredDuration": 0, <-- if your old frame has "testLength" defined, put it here; otherwise omit
-                "requireVideoCount": 2 <-- if your old frame has "testCount" defined, put it here; otherwise omit
+                "requiredDuration": 0, // <--  if your old frame has "testLength" defined, put it here; otherwise omit
+                "requireVideoCount": 2 // <--  if your old frame has "testCount" defined, put it here; otherwise omit
             }
         ],
         "commonFrameProperties": {
-            "kind": "exp-lookit-video", <-- we'll overwrite this just for calibration
-            "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/", <-- just keep this from your old frame
-            "audioTypes": [ <-- just keep this from your old frame
+            "kind": "exp-lookit-video", // <--  we'll overwrite this just for calibration
+            "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/", // <--  just keep this from your old frame
+            "audioTypes": [ // <--  just keep this from your old frame
                "ogg",
                "mp3"
             ],
-            "videoTypes": [ <-- just keep this from your old frame
+            "videoTypes": [ // <--  just keep this from your old frame
                "webm",
                "mp4"
             ],
 
-            "requiredDuration": 0,  <-- we'll overwrite this for particular frames
-            "requireVideoCount": 0, <-- we'll overwrite this for particular frames
-            "requireAudioCount": 0, <-- we'll overwrite this for particular frames
-            "doRecording": true, <-- we'll overwrite this for particular frames
+            "requiredDuration": 0,  // <--  we'll overwrite this for particular frames
+            "requireVideoCount": 0, // <--  we'll overwrite this for particular frames
+            "requireAudioCount": 0, // <--  we'll overwrite this for particular frames
+            "doRecording": true, // <--  we'll overwrite this for particular frames
 
-            "pauseVideo": "attentiongrabber", <-- "attnSources"
-            "pauseAudio": "pause", <-- just keep this from your old frame
-            "unpauseAudio": "return_after_pause" <-- just keep this from your old frame
+            "pauseVideo": "attentiongrabber", // <--  "attnSources"
+            "pauseAudio": "pause", // <--  just keep this from your old frame
+            "unpauseAudio": "return_after_pause" // <--  just keep this from your old frame
 
-            "calibrationLength": 3000, <-- just keep this from your old frame. We can put the calibration info here even though it's only used for the calibration frame
-            "calibrationAudio": "chimes", <-- "calibrationAudioSources"
-            "calibrationVideo": "attentiongrabber" <-- "calibrationAudioSources"
+            "calibrationLength": 3000, // <--  just keep this from your old frame. We can put the calibration info here even though it's only used for the calibration frame
+            "calibrationAudio": "chimes", // <--  "calibrationAudioSources"
+            "calibrationVideo": "attentiongrabber" // <--  "calibrationAudioSources"
         }
     }
 
@@ -798,36 +798,36 @@ We'll use an ``exp-lookit-video`` frame for this.
 
        "sample-preflook-announcement": {
            "kind": "exp-lookit-video",
-           "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/", <-- just keep this from your old frame
-           "audioTypes": [ <-- just keep this from your old frame
+           "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/", // <--  just keep this from your old frame
+           "audioTypes": [ // <--  just keep this from your old frame
                "ogg",
                "mp3"
            ],
-           "videoTypes": [ <-- just keep this from your old frame
+           "videoTypes": [ // <--  just keep this from your old frame
                "webm",
                "mp4"
            ],
 
           "video": {
-               "source": "attentiongrabber", <-- "announcementVideo"
+               "source": "attentiongrabber", // <--  "announcementVideo"
                "left": 40,
-               "width": 20, <-- make this fairly small and center it
+               "width": 20, // <--  make this fairly small and center it
                "top": 30,
-               "loop": true <-- video should loop
+               "loop": true // <--  video should loop
            },
            "audio": {
-               "source": "video_02", <-- "announcementAudio"
-               "loop": false <-- audio should not loop
+               "source": "video_02", // <--  "announcementAudio"
+               "loop": false // <--  audio should not loop
            },
 
-           "requiredDuration": 2, <-- "announcementLength" or 2 if not defind
+           "requiredDuration": 2, // <--  "announcementLength" or 2 if not defind
            "requireVideoCount": 0,
            "requireAudioCount": 1,
            "doRecording": false,
 
-           "pauseVideo": "attentiongrabber", <-- "announcementVideo"
-           "pauseAudio": "pause", <-- just keep this from your old frame
-           "unpauseAudio": "return_after_pause" <-- just keep this from your old frame
+           "pauseVideo": "attentiongrabber", // <--  "announcementVideo"
+           "pauseAudio": "pause", // <--  just keep this from your old frame
+           "unpauseAudio": "return_after_pause" // <--  just keep this from your old frame
       }
 
 The intro phase
@@ -841,32 +841,32 @@ announcement trial looked like above, and just edit the "video" and duration/cou
 
    "sample-preflook-announcement": {
        "kind": "exp-lookit-video",
-       "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/", <-- just keep this from your old frame
-       "audioTypes": [ <-- just keep this from your old frame
+       "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/", // <--  just keep this from your old frame
+       "audioTypes": [ // <--  just keep this from your old frame
            "ogg",
            "mp3"
        ],
-       "videoTypes": [ <-- just keep this from your old frame
+       "videoTypes": [ // <--  just keep this from your old frame
            "webm",
            "mp4"
        ],
 
       "video": {
-           "source": "cropped_book", <-- value of "introVideo"
+           "source": "cropped_book", // <--  value of "introVideo"
            "left": 30,
-           "width": 40, <-- make this a bit bigger
+           "width": 40, // <--  make this a bit bigger
            "top": 30,
-           "loop": false <-- video shouldn't loop
+           "loop": false // <--  video shouldn't loop
        },
 
-       "requiredDuration": 0, <-- no required duration this time
-       "requireVideoCount": 1, <-- play the video once through
-       "requireAudioCount": 0, <-- no audio to play
-       "doRecording": true, <-- probably do want to record this (unless you're using session recording)
+       "requiredDuration": 0, // <--  no required duration this time
+       "requireVideoCount": 1, // <--  play the video once through
+       "requireAudioCount": 0, // <--  no audio to play
+       "doRecording": true, // <--  probably do want to record this (unless you're using session recording)
 
-       "pauseVideo": "attentiongrabber", <-- "announcementVideo"
-       "pauseAudio": "pause", <-- just keep this from your old frame
-       "unpauseAudio": "return_after_pause" <-- just keep this from your old frame
+       "pauseVideo": "attentiongrabber", // <--  "announcementVideo"
+       "pauseAudio": "pause", // <--  just keep this from your old frame
+       "unpauseAudio": "return_after_pause" // <--  just keep this from your old frame
   }
 
 If you're doing recording, you may also want to review the :ref:`video-record` parameters which allow you to specify
@@ -883,33 +883,33 @@ used the ``testVideo`` property rather than ``leftImage``, ``rightImage``, etc. 
 
    "sample-preflook-test": {
        "kind": "exp-lookit-video",
-       "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/", <-- just keep this from your old frame
-       "audioTypes": [ <-- just keep this from your old frame
+       "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/", // <--  just keep this from your old frame
+       "audioTypes": [ // <--  just keep this from your old frame
            "ogg",
            "mp3"
        ],
-       "videoTypes": [ <-- just keep this from your old frame
+       "videoTypes": [ // <--  just keep this from your old frame
            "webm",
            "mp4"
        ],
 
       "video": {
-           "source": "cropped_book", <-- value of "testVideo"
-           "position": "fill", <-- maximize test video while preserving aspect ratio
-           "loop": true <-- video should loop
+           "source": "cropped_book", // <--  value of "testVideo"
+           "position": "fill", // <--  maximize test video while preserving aspect ratio
+           "loop": true // <--  video should loop
        },
       "audio": {
-           "source": "400Hz_tones", <-- value of "testAudio"
-           "loop": true <-- value of "loopTestAudio"
+           "source": "400Hz_tones", // <--  value of "testAudio"
+           "loop": true // <--  value of "loopTestAudio"
        },
 
-       "requiredDuration": 8, <-- testLength, if defined; otherwise 0
-       "requireVideoCount": 0, <-- testCount, if defined; otherwise 0
-       "requireAudioCount": 0, <-- don't require playing audio through
-       "doRecording": true, <-- probably do want to record this (unless you're using session recording)
+       "requiredDuration": 8, // <--  testLength, if defined; otherwise 0
+       "requireVideoCount": 0, // <--  testCount, if defined; otherwise 0
+       "requireAudioCount": 0, // <--  don't require playing audio through
+       "doRecording": true, // <--  probably do want to record this (unless you're using session recording)
 
-       "pauseVideo": "attentiongrabber", <-- "announcementVideo"
-       "pauseAudio": "pause", <-- just keep this from your old frame
-       "unpauseAudio": "return_after_pause" <-- just keep this from your old frame
+       "pauseVideo": "attentiongrabber", // <--  "announcementVideo"
+       "pauseAudio": "pause", // <--  just keep this from your old frame
+       "unpauseAudio": "return_after_pause" // <--  just keep this from your old frame
   }
 
