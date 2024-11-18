@@ -676,13 +676,13 @@ To create the test trial portion as an exp-lookit-images-audio frame, we will:
    .. code:: javascript
 
         "test-trial": {
-            "kind": "exp-lookit-images-audio", <-- update the "kind"
-            "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/", <-- keep this the same
-            "audioTypes": [ <-- keep this the same
+            "kind": "exp-lookit-images-audio", // <-- update the "kind"
+            "baseDir": "https://s3.amazonaws.com/lookitcontents/labelsconcepts/", // <-- keep this the same
+            "audioTypes": [ // <-- keep this the same
                 "ogg",
                 "mp3"
             ],
-            "videoTypes": [ <-- keep this the same
+            "videoTypes": [ // <-- keep this the same
                 "webm",
                 "mp4"
             ],
@@ -700,17 +700,17 @@ To create the test trial portion as an exp-lookit-images-audio frame, we will:
             ...
             "images": [
                 {
-                    "id": "left" <-- you can actually name this whatever you want
+                    "id": "left", // <-- you can actually name this whatever you want
                     "src": "stapler_test_02.jpg", <-- "leftImage"
                     "position": "left"
                 },
                 {
-                    "id": "right" <-- you can actually name this whatever you want
-                    "src": "novel_02.jpg", <-- "rightImage"
+                    "id": "right", // <-- you can actually name this whatever you want
+                    "src": "novel_02.jpg", // <-- "rightImage"
                     "position": "right"
                 }
             ],
-            "audio": "400Hz_tones" <-- "testAudio"
+            "audio": "400Hz_tones" // <-- "testAudio"
         }
 
    Note that it is not yet possible to make the audio loop. If you need audio to loop, for now please create a version
@@ -726,17 +726,17 @@ To create the test trial portion as an exp-lookit-images-audio frame, we will:
             ...
             "images": [
                 {
-                    "id": "left" <-- you can actually name this whatever you want
-                    "src": "POSSIBLEIMAGES#1", <-- "POSSIBLEIMAGES#leftImageIndex
+                    "id": "left", // <-- you can actually name this whatever you want
+                    "src": "POSSIBLEIMAGES#1", // <-- "POSSIBLEIMAGES#leftImageIndex
                     "position": "left"
                 },
                 {
-                    "id": "right" <-- you can actually name this whatever you want
-                    "src": "POSSIBLEIMAGES#0", <-- "POSSIBLEIMAGES#rightImageIndex
+                    "id": "right", // <-- you can actually name this whatever you want
+                    "src": "POSSIBLEIMAGES#0", // <-- "POSSIBLEIMAGES#rightImageIndex
                     "position": "right"
                 }
             ],
-            "audio": "400Hz_tones" <-- "testAudio",
+            "audio": "400Hz_tones", // <-- "testAudio",
             "parameters": {
                 "POSSIBLEIMAGES": ["novel_02.jpg", "stapler_test_02.jpg"]
             }
