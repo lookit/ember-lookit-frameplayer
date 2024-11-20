@@ -210,7 +210,7 @@ You have a variety of options for how to accomplish random condition assignment:
         ]
     }
 
-3. You can use the ``#RAND`` syntax and `frame parameters <https://lookit.github.io/lookit-frameplayer-docs/classes/Exp-frame-base.html#property_parameters>`_ to substitute in one of the two options for each condition:
+3. You can use the ``#RAND`` syntax and :ref:`frame parameters <frame parameters>` to substitute in one of the two options for each condition:
 
 ::
 
