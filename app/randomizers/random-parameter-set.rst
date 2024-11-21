@@ -59,7 +59,7 @@ use the ``random-parameter-set`` randomizer:
 
 .. admonition:: Advanced options for choosing the parameterSet
 
-   You can `determine the weights based on the child's age <https://lookit.github.io/lookit-frameplayer-docs/classes/Random-parameter-set.html#property_parameterSetWeights>`_, to maintain balanced conditions.) You can also `keep kids in the same condition across all sessions they complete, or rotate them through conditions in order  <https://lookit.github.io/lookit-frameplayer-docs/classes/Random-parameter-set.html#property_conditionForAdditionalSessions>`_.
+   You can :ref:`determine the weights based on the child's age<parameter-set-weights>` to maintain balanced conditions. You can also :ref:`keep kids in the same condition across all sessions they complete, or rotate them through conditions in order<condition-for-additional-sessions>`.
 
 
 Examples
@@ -226,7 +226,7 @@ pairs):
 Next, one of the two objects in ``parameterSets`` is selected randomly.
 (By default, parameter sets are weighted equally, but
 ``parameterSetWeights`` can be provided as an optional key in the
-``random-parameter-set`` frame. If provided, ``parameterSetWeights``
+``random-parameter-set`` frame.) If provided, ``parameterSetWeights``
 should be an array of relative weights for the parameter sets,
 corresponding to the order they are listed. For instance, if we wanted
 75% of participants to think about how tasty broccoli is, we could set
@@ -474,8 +474,9 @@ parameterSets [Array]
 
     A single element of `parameterSets` will be applied to a given session.
 
-conditionForAdditionalSessions [String | ``'random'``]
+.. _condition-for-additional-sessions:
 
+conditionForAdditionalSessions [String | ``'random'``]
     [Optional] How to select a parameterSet for a participant who has previously
     participated in this study. Must be one of ``'random'`` (default), ``'persist'``, or
     ``'rotate'``. Meanings:
@@ -513,8 +514,9 @@ conditionForAdditionalSessions [String | ``'random'``]
     but then you changed ``parameterSets`` to have only 3 elements) and ``conditionForAdditionalSessions`` is
     ``"persist"``, then the participant is assigned to the last element of ``parameterSets``.
 
-parameterSetWeights [Array]
+.. _parameter-set-weights:
 
+parameterSetWeights [Array]
     [Optional] Array of weights for parameter sets; elements correspond to
     elements of parameterSets. The probability of selecting an element
     ``parameterSets[i]`` is ``parameterSetWeights[i]/sum(parameterSetWeights)``.
