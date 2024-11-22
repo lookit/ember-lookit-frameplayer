@@ -96,6 +96,28 @@ export default Ember.Component.extend(FullScreen, {
             });
     },
 
+    stopAndDestroyRecorders() {
+        // Stop/destroy session recorder if needed
+        if (this.get('session').get('recorder')) {
+            var sessionRecorder = this.get('session').get('recorder');
+            this.get('session').set('recordingInProgress', false);
+            if (sessionRecorder.get('recording')) {
+                sessionRecorder.stop().finally(() => {
+                    sessionRecorder.destroy();
+                });
+            } else {
+                sessionRecorder.destroy();
+            }
+        }
+
+        // stop/destroy trial recorder if needed
+        if (this.get('recorder') && this.get('recorder').get('recording')) {
+            this.stopRecorder().finally(() => {
+                this.destroyRecorder();
+            });
+        }
+    },
+
     _registerHandlers() {
         $(window).on('beforeunload', this.beforeUnload.bind(this));
         var _this = this;
@@ -173,7 +195,7 @@ export default Ember.Component.extend(FullScreen, {
             var availableFrames = Ember.getOwner(this).lookup(`container-debug-adapter:main`).catalogEntriesByType('component')
                 .filter(componentName => componentName.includes('component') && componentName.includes('exp-') && !['components/exp-blank', 'components/exp-frame-base', 'components/exp-text-block', 'components/exp-player'].includes(componentName))
                 .map(componentName => componentName.replace('components/', ''));
-            console.error(`Unknown frame kind '${componentName}' specified. Check that 'kind' is specified for all frames and that it is always one of the following available frame kinds:\n\t${availableFrames.join('\n\t')}\nFrames are described in more detail https://lookit.github.io/ember-lookit-frameplayer/modules/frames.html. Frame kinds are all lowercase, like 'exp-lookit-exit-survey'. If you are trying to use a newer frame, you may need to update the frameplayer code for your study; see https://lookit.readthedocs.io/en/develop/researchers-update-code.html.`);
+            console.error(`Unknown frame kind '${componentName}' specified. Check that 'kind' is specified for all frames and that it is always one of the following available frame kinds:\n\t${availableFrames.join('\n\t')}\nFrames are described in more detail https://lookit.readthedocs.io/projects/frameplayer/en/latest/utils/protocol.html#study-protocol-structure. Frame kinds are all lowercase, like 'exp-lookit-exit-survey'. If you are trying to use a newer frame, you may need to update the frameplayer code for your study; see https://lookit.readthedocs.io/en/master/researchers-update-code.html.`);
         }
         return componentName;
     }),
@@ -260,18 +282,8 @@ export default Ember.Component.extend(FullScreen, {
         },
 
         exitEarly() {
-            // Stop/destroy session recorder if needed
-            if (this.get('session').get('recorder')) {
-                var sessionRecorder = this.get('session').get('recorder');
-                this.get('session').set('recordingInProgress', false);
-                if (sessionRecorder.get('recording')) {
-                    sessionRecorder.stop().finally(() => {
-                        sessionRecorder.destroy();
-                    });
-                } else {
-                    sessionRecorder.destroy();
-                }
-            }
+
+            this.stopAndDestroyRecorders();
 
             Ember.$(window).off('keydown');
             // Save any available data immediately

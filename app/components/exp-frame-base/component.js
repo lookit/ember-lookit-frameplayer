@@ -488,7 +488,7 @@ let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
             }
         }
         catch (error) {
-            console.error(`Failed to compile frameSchemaProperties to use for validating researcher usage of frame type '${this.get('kind')}.`);
+            console.error(`Failed to compile frameSchemaProperties to use for validating researcher usage of frame type '${this.get('kind')}'. Compile error message='${error.message}`);
         }
 
         // Set the language (do this after generating properties to allow use of a generated language property)
@@ -714,9 +714,13 @@ let ExpFrameBase = Ember.Component.extend(FullScreen, SessionRecord, {
                     _this.sendAction('next', frameIndex);
                 } else {
                     this.get('session').set('recordingInProgress', false);
-                    this.stopSessionRecorder().finally(() => {
-                        _this.sendAction('next', frameIndex);
-                    });
+                    // Error catching/logging for stopping/upload problems is
+                    // handled inside stopSessionRecorder. The finally callback ensures that the
+                    // participant moves on after the stop promise is no longer pending.
+                    this.stopSessionRecorder()
+                        .finally(() => {
+                            _this.sendAction('next', frameIndex);
+                        });
                 }
             } else {
                 this.sendAction('next', frameIndex);

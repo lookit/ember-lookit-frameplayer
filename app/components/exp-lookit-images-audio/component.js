@@ -253,7 +253,7 @@ export default ExpFrameBaseComponent.extend(VideoRecord, PauseUnpause, ExpandAss
                 * @attribute {Boolean} correctImageSelected
                 */
                 correctImageSelected: {
-                    type: 'Boolean'
+                    type: 'boolean'
                 },
                 /**
                 * Source URL of audio played, if any. If multiple sources provided (e.g.

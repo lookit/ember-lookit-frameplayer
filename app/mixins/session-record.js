@@ -117,6 +117,12 @@ export default Ember.Mixin.create({
     */
     _starting: false,
 
+    /**
+     * Private flag that is set when the async stopRecording method is first called
+     * to prevent record from being called multiple times
+    */
+    _stopping: false,
+
     _generateSessionVideoId() {
         return [
             'videoStream',
@@ -188,16 +194,24 @@ export default Ember.Mixin.create({
         const sessionRecorder = this.get('sessionRecorder');
         if (sessionRecorder) {
             var _this = this;
-            return sessionRecorder.record().then(() => {
-                /**
-                 * When session video recorder has begun recording
-                 *
-                 * @event startSessionRecording
-                 */
-                _this.send('setTimeEvent', 'startSessionRecording');
-            });
+            return sessionRecorder.record()
+                .then(() => {
+                    /**
+                     * When session video recorder has begun recording
+                     *
+                     * @event startSessionRecording
+                     */
+                    _this.send('setTimeEvent', 'startSessionRecording');
+                })
+                .catch((err) => {
+                    this.send('setTimeEvent', 'errorStartingSessionRecording', {
+                        error: err.message
+                    });
+                    console.error(`Error starting session recording for file: ${_this.get('session').get('videoId')}\n${err.name}: ${err.message}`);
+                    throw new Error(`Error starting session recording for file: ${_this.get('session').get('videoId')}\n${err.name}: ${err.message}`)
+                });
         } else {
-            return Ember.RSVP.reject();
+            return Ember.RSVP.reject(new Error('Must call setupSessionRecorder before startSessionRecorder'));
         }
     },
 
@@ -208,7 +222,8 @@ export default Ember.Mixin.create({
      */
     stopSessionRecorder() {
         const sessionRecorder = this.get('sessionRecorder');
-        if (sessionRecorder) {
+        if (sessionRecorder && this.get('session').get('recordingInProgress') && !(this.get('_stopping'))) {
+            this.set('_stopping', true);
             /**
              * When session video recorder is stopped (upload may continue afterwards)
              *
@@ -218,9 +233,35 @@ export default Ember.Mixin.create({
             this.send('setTimeEvent', 'stopSessionRecording', {
                 sessionVideoId: this.get('session').get('videoId')
             });
-            return sessionRecorder.stop(this.get('sessionMaxUploadSeconds') * 1000);
+            return sessionRecorder.stop(this.get('sessionMaxUploadSeconds') * 1000)
+                .then(() => {
+                    this.set('_stopping', false);
+                    this.send('setTimeEvent', 'uploadComplete', {
+                        sessionVideoId: this.get('session').get('videoId')
+                    });
+                })
+                .catch((e) => {
+                    this.set('_stopping', false);
+                    // This block catches upload timeouts and any other errors related to stopping the recorder or uploading the data.
+                    // This session recorder stop promise rejection will not cause the experiment to stop with an error,
+                    // because the code waiting on this promise is in a "finally" block (rather than "then").
+                    if (e.message == 'uploadTimedout') {
+                        this.send('setTimeEvent', 'sessionRecordingUploadTimedout', {
+                            sessionVideoId: this.get('session').get('videoId')
+                        });
+                    } else {
+                        this.send('setTimeEvent', 'errorStoppingSessionRecording', {
+                            error: e.message,
+                            sessionVideoId: this.get('session').get('videoId')
+                        });
+                        throw new Error(`Error stopping session recorder and uploading: ${e}`);
+                    }
+                });
         } else {
-            return Ember.RSVP.reject();
+            // reject the promise because the recorder is in one of the following states:
+            // - doesn't exist, or is not recording, or has been destroyed
+            // - exists and is recording, but is already in the process of stopping and uploading
+            return Ember.RSVP.reject(new Error(`Unable to stop recorder for ${this.get('session').get('videoId')}. Maybe it does not exist, is not recording, has been destroyed, or is already stopping.`));
         }
     },
 
